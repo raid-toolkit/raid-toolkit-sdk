@@ -1,0 +1,3 @@
+[submodule "Il2CppToolkit"]
+	path = Il2CppToolkit
+	url = https://github.com/IL2CPP-Toolkit/Core.git
