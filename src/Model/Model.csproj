@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\IL2CppToolkit\Common\Common.csproj" />
+    <ProjectReference Include="..\..\IL2CppToolkit\Metadata\Metadata.csproj" />
+    <ProjectReference Include="..\..\IL2CppToolkit\ReverseCompiler\ReverseCompiler.csproj" />
+    <ProjectReference Include="..\..\IL2CppToolkit\Runtime\Runtime.csproj" />
+    <ProjectReference Include="..\..\IL2CppToolkit\ILPack\src\Lokad.ILPack.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Raid.Model</AssemblyName>
+    <RootNamespace>Raid.Model</RootNamespace>
+  </PropertyGroup>
+
+</Project>
