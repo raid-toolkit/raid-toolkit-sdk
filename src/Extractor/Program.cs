@@ -20,6 +20,8 @@ using SharedModel.Meta.Artifacts;
 using SharedModel.Meta.Artifacts.ArtifactStorage;
 using SharedModel.Meta.Heroes;
 using SharedModel.Meta.Heroes.Dtos;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 
 [assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]
 
@@ -27,42 +29,36 @@ namespace Raid.Extractor
 {
     static class Program
     {
+        public static JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
+        {
+            Formatting = Formatting.Indented,
+            ContractResolver = new DefaultContractResolver
+            {
+                NamingStrategy = new CamelCaseNamingStrategy
+                {
+                    ProcessDictionaryKeys = true,
+                    OverrideSpecifiedNames = false
+                },
+            },
+        };
+
         static int Main(string[] args)
         {
+            Process raidProc = GetRaidProcess();
             using (new ModelAssemblyResolver())
             {
-                UseModel();
+                var dump = Extract(raidProc);
+                var json = JsonConvert.SerializeObject(dump, Formatting.Indented, SerializerSettings);
+                File.WriteAllText("artifacts.json", json);
                 return 0;
             }
         }
 
-        private static void UseModel()
+        private static RaidExtractor.Core.AccountDump Extract(Process process)
         {
-            Process raidProc = GetRaidProcess();
-            Il2CsRuntimeContext runtime = new(raidProc);
-            //runtime.ObjectCreated += Runtime_ObjectCreated;
-            var statics = Client.App.SingleInstance<Client.Model.AppModel>.method_get_Instance.GetMethodInfo(runtime).DeclaringClass.StaticFields
-                .As<AppModelStaticFields>();
-            Client.Model.AppModel appModel = statics.Instance;
-            var sdm = appModel.StaticDataManager as ClientStaticDataManager;
-            var instance = SharedModel.Meta.Artifacts.ArtifactStorage.ArtifactStorageResolver.GetInstance(runtime);
-            UserWrapper userWrapper = appModel._userWrapper;
-            IReadOnlyList<Artifact> artifacts;
-            if (userWrapper.Artifacts.ArtifactData.StorageMigrationState == ArtifactStorageMigrationState.Migrated)
-            {
-                var storage = instance._implementation as ExternalArtifactsStorage;
-                List<Artifact> innerList = new();
-                foreach ((var key, var value) in storage._state._artifacts)
-                {
-                    innerList.Add(value);
-                }
+            Extractor extractor = new(process);
 
-                artifacts = innerList;
-            }
-            else
-            {
-                artifacts = userWrapper.Artifacts.ArtifactData.Artifacts;
-            }
+            return extractor.Extract();
         }
 
 
@@ -76,6 +72,7 @@ namespace Raid.Extractor
 
             return process;
         }
+
         [Size(16)]
         public struct AppModelStaticFields
         {
