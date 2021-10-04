@@ -17,6 +17,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <Reference Include="Raid.Interop.dll">
       <HintPath>$(SolutionDir)bin\Raid.Interop.dll</HintPath>
+      <Private>false</Private>
     </Reference>
   </ItemGroup>
 
