@@ -66,9 +66,14 @@ namespace Raid.Extractor
 
         public AccountDump Extract()
         {
+            Console.WriteLine($"Extracting {m_artifacts.Count} artifacts...");
             List<Artifact> artifacts = new();
             foreach (var artifact in m_artifacts)
             {
+                if (artifacts.Count % 100 == 0)
+                {
+                    Console.WriteLine($"{artifacts.Count} / {m_artifacts.Count}");
+                }
                 artifacts.Add(new Artifact
                 {
                     Id = artifact._id,

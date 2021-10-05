@@ -5,11 +5,33 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": ".NET Core Launch (console)",
+            "name": "Launch Extractor",
             "type": "coreclr",
             "request": "launch",
             // "preLaunchTask": "build",
             "program": "${workspaceFolder}/src/Extractor/bin/Debug/net5.0/Raid.Extractor.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Extractor",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Launch Extractor (Release)",
+            "type": "coreclr",
+            "request": "launch",
+            // "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/Extractor/bin/Release/net5.0/Raid.Extractor.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Extractor",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": "Launch PreBuild",
+            "type": "coreclr",
+            "request": "launch",
+            // "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/Model.PreBuild/bin/Debug/net5.0/Model.PreBuild.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Extractor",
             "console": "internalConsole",
