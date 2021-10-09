@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using Il2CppToolkit.Runtime;
 using RaidExtractor.Core;
@@ -38,6 +39,13 @@ namespace Raid.Extractor
             SecondaryBonuses = artifact._secondaryBonuses?.Select(bonus => bonus.Dump()).ToList()
         };
 
+        public static Skill Dump(this SharedModel.Meta.Skills.Skill skill) => new Skill
+        {
+            Id = skill.Id,
+            TypeId = skill.TypeId,
+            Level = skill.Level
+        };
+
         public static ICollection<Hero> Dump(
             this IEnumerable<SharedModel.Meta.Heroes.Hero> heroes,
             IReadOnlyDictionary<int, SharedModel.Meta.Artifacts.HeroArtifactData> artifactData,
@@ -45,7 +53,7 @@ namespace Raid.Extractor
         ) => heroes.Select(hero =>
         {
             SharedModel.Meta.Heroes.HeroType heroType = heroData[hero.TypeId];
-            return new Hero
+            Hero result = new()
             {
                 // instance fields
                 Id = hero.Id,
@@ -58,15 +66,16 @@ namespace Raid.Extractor
                 InStorage = hero.InStorage,
                 Marker = hero.Marker.ToString(),
                 // extras
-                Masteries = hero.MasteryData?.Masteries.ToList(),
+                Masteries = hero.MasteryData?.Masteries.ToList() ?? new(),
                 Artifacts = artifactData.TryGetValue(hero.Id, out SharedModel.Meta.Artifacts.HeroArtifactData data) ? data?.ArtifactIdByKind.Values.ToList() ?? new() : new(),
+                Skills = hero.Skills?.Select(Extensions.Dump).ToList() ?? new(),
                 // type fields
                 Name = heroType.Name.DefaultValue,
                 Fraction = heroType.Fraction.ToString(),
                 Element = heroType.Element.ToString(),
                 Rarity = heroType.Rarity.ToString(),
                 Role = heroType.Role.ToString(),
-                AwakenLevel = heroType.Id % 6,
+                AwakenLevel = heroType.Id % 10,
                 Accuracy = heroType.BaseStats.Accuracy.AsFloat(),
                 Attack = heroType.BaseStats.Attack.AsFloat(),
                 Defense = heroType.BaseStats.Defence.AsFloat(),
@@ -77,6 +86,13 @@ namespace Raid.Extractor
                 CriticalDamage = heroType.BaseStats.CriticalDamage.AsFloat(),
                 CriticalHeal = heroType.BaseStats.CriticalHeal.AsFloat(),
             };
+
+            var multiplier = StaticResources.Multipliers.First(m => m.stars == hero.Grade && m.level == hero.Level);
+            result.Attack = (int)Math.Round(result.Attack * multiplier.multiplier);
+            result.Defense = (int)Math.Round(result.Defense * multiplier.multiplier);
+            result.Health = (int)Math.Round(result.Health * multiplier.multiplier) * 15;
+
+            return result;
         }).ToList();
     }
     public class Extractor
@@ -123,7 +139,7 @@ namespace Raid.Extractor
                 GreatHall = new(m_appModel._userWrapper.Village.VillageData.CapitolBonusLevelByStatByElement.Select((kvp) =>
                     new KeyValuePair<SharedModel.Meta.Heroes.Element, Dictionary<SharedModel.Battle.Effects.StatKindId, int>>(kvp.Key, new Dictionary<SharedModel.Battle.Effects.StatKindId, int>(kvp.Value))
                 )),
-                Heroes = m_appModel._userWrapper.Heroes.HeroData.HeroById.Values.Dump(artifactData, heroData).ToList()
+                Heroes = m_appModel._userWrapper.Heroes.HeroData.HeroById.Values.Dump(artifactData, heroData).ToList(),
             };
         }
 
