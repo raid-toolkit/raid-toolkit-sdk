@@ -140,6 +140,8 @@ namespace Raid.Extractor
                     new KeyValuePair<SharedModel.Meta.Heroes.Element, Dictionary<SharedModel.Battle.Effects.StatKindId, int>>(kvp.Key, new Dictionary<SharedModel.Battle.Effects.StatKindId, int>(kvp.Value))
                 )),
                 Heroes = m_appModel._userWrapper.Heroes.HeroData.HeroById.Values.Dump(artifactData, heroData).ToList(),
+                StagePresets = new(m_appModel._userWrapper.Heroes.HeroData.BattlePresets),
+                Shards = new(m_appModel._userWrapper.Shards.ShardData.Shards.Select(shard => new KeyValuePair<string, ShardInfo>(shard.TypeId.ToString(), new ShardInfo() { Count = shard.Count })))
             };
         }
 
