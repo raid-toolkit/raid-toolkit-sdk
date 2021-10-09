@@ -1,36 +1,83 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Reflection;
-using Il2CppToolkit.Common.Errors;
-using Il2CppToolkit.Model;
-using Il2CppToolkit.ReverseCompiler;
 using Il2CppToolkit.Runtime;
-using Microsoft.Win32;
-using Raid.Model;
 using RaidExtractor.Core;
 
 namespace Raid.Extractor
 {
     public static class Extensions
     {
-        public static float AsFloat(this Plarium.Common.Numerics.Fixed num)
+        public static float AsFloat(this Plarium.Common.Numerics.Fixed num) => (float)Math.Round(num.m_rawValue / (double)uint.MaxValue, 2);
+
+        public static ArtifactBonus Dump(this SharedModel.Meta.Artifacts.Bonuses.ArtifactBonus bonus) => new ArtifactBonus
         {
-            return (float)Math.Round(num.m_rawValue / (double)uint.MaxValue, 2);
-        }
-        public static ArtifactBonus AsBonus(this SharedModel.Meta.Artifacts.Bonuses.ArtifactBonus bonus)
+            Kind = bonus._kindId.ToString(), // TODO: Is this equivalent?
+            IsAbsolute = bonus._value._isAbsolute,
+            Value = bonus._value._value.AsFloat(),
+            Enhancement = bonus._powerUpValue.AsFloat(),
+            Level = bonus._level
+        };
+
+        public static Artifact Dump(this SharedModel.Meta.Artifacts.Artifact artifact) => new Artifact
         {
-            return new ArtifactBonus
+            Id = artifact._id,
+            SellPrice = artifact._sellPrice,
+            Price = artifact._price,
+            Level = artifact._level,
+            IsActivated = artifact._isActivated,
+            Kind = artifact._kindId.ToString(), // TODO: Is this equivalent?
+            Rank = artifact._rankId.ToString(), // TODO: Is this equivalent?
+            Rarity = artifact._rarityId.ToString(), // TODO: Is this equivalent?
+            SetKind = artifact._setKindId.ToString(), // TODO: Is this equivalent?
+            IsSeen = artifact._isSeen,
+            FailedUpgrades = artifact._failedUpgrades,
+            PrimaryBonus = artifact._primaryBonus.Dump(),
+            RequiredFraction = artifact._requiredFraction.ToString(), // TODO: Is this equivalent?
+            SecondaryBonuses = artifact._secondaryBonuses?.Select(bonus => bonus.Dump()).ToList()
+        };
+
+        public static ICollection<Hero> Dump(
+            this IEnumerable<SharedModel.Meta.Heroes.Hero> heroes,
+            IReadOnlyDictionary<int, SharedModel.Meta.Artifacts.HeroArtifactData> artifactData,
+            IReadOnlyDictionary<int, SharedModel.Meta.Heroes.HeroType> heroData
+        ) => heroes.Select(hero =>
+        {
+            SharedModel.Meta.Heroes.HeroType heroType = heroData[hero.TypeId];
+            return new Hero
             {
-                Kind = bonus._kindId.ToString(), // TODO: Is this equivalent?
-                IsAbsolute = bonus._value._isAbsolute,
-                Value = bonus._value._value.AsFloat(),
-                Enhancement = bonus._powerUpValue.AsFloat(),
-                Level = bonus._level
+                // instance fields
+                Id = hero.Id,
+                TypeId = hero.TypeId,
+                Grade = hero.Grade.ToString(),
+                Level = hero.Level,
+                Experience = hero.Experience,
+                FullExperience = hero.FullExperience,
+                Locked = hero.Locked,
+                InStorage = hero.InStorage,
+                Marker = hero.Marker.ToString(),
+                // extras
+                Masteries = hero.MasteryData?.Masteries.ToList(),
+                Artifacts = artifactData.TryGetValue(hero.Id, out SharedModel.Meta.Artifacts.HeroArtifactData data) ? data?.ArtifactIdByKind.Values.ToList() ?? new() : new(),
+                // type fields
+                Name = heroType.Name.DefaultValue,
+                Fraction = heroType.Fraction.ToString(),
+                Element = heroType.Element.ToString(),
+                Rarity = heroType.Rarity.ToString(),
+                Role = heroType.Role.ToString(),
+                AwakenLevel = heroType.Id % 6,
+                Accuracy = heroType.BaseStats.Accuracy.AsFloat(),
+                Attack = heroType.BaseStats.Attack.AsFloat(),
+                Defense = heroType.BaseStats.Defence.AsFloat(),
+                Health = heroType.BaseStats.Health.AsFloat(),
+                Speed = heroType.BaseStats.Speed.AsFloat(),
+                Resistance = heroType.BaseStats.Resistance.AsFloat(),
+                CriticalChance = heroType.BaseStats.CriticalChance.AsFloat(),
+                CriticalDamage = heroType.BaseStats.CriticalDamage.AsFloat(),
+                CriticalHeal = heroType.BaseStats.CriticalHeal.AsFloat(),
             };
-        }
+        }).ToList();
     }
     public class Extractor
     {
@@ -66,35 +113,17 @@ namespace Raid.Extractor
 
         public AccountDump Extract()
         {
-            Console.WriteLine($"Extracting {m_artifacts.Count} artifacts...");
-            List<Artifact> artifacts = new();
-            foreach (var artifact in m_artifacts)
-            {
-                if (artifacts.Count % 100 == 0)
-                {
-                    Console.WriteLine($"{artifacts.Count} / {m_artifacts.Count}");
-                }
-                artifacts.Add(new Artifact
-                {
-                    Id = artifact._id,
-                    SellPrice = artifact._sellPrice,
-                    Price = artifact._price,
-                    Level = artifact._level,
-                    IsActivated = artifact._isActivated,
-                    Kind = artifact._kindId.ToString(), // TODO: Is this equivalent?
-                    Rank = artifact._rankId.ToString(), // TODO: Is this equivalent?
-                    Rarity = artifact._rarityId.ToString(), // TODO: Is this equivalent?
-                    SetKind = artifact._setKindId.ToString(), // TODO: Is this equivalent?
-                    IsSeen = artifact._isSeen,
-                    FailedUpgrades = artifact._failedUpgrades,
-                    PrimaryBonus = artifact._primaryBonus.AsBonus(),
-                    RequiredFraction = artifact._requiredFraction.ToString(), // TODO: Is this equivalent?
-                    SecondaryBonuses = artifact._secondaryBonuses?.Select(bonus => bonus.AsBonus()).ToList()
-                });
-            }
+            IReadOnlyDictionary<int, SharedModel.Meta.Artifacts.HeroArtifactData> artifactData = m_appModel._userWrapper.Artifacts.ArtifactData.ArtifactDataByHeroId;
+            IReadOnlyDictionary<int, SharedModel.Meta.Heroes.HeroType> heroData = (m_appModel.StaticDataManager as Client.Model.Gameplay.StaticData.ClientStaticDataManager).StaticData.HeroData.HeroTypeById;
+            List<Artifact> artifacts = m_artifacts.Select(Extensions.Dump).ToList();
             return new AccountDump
             {
-                Artifacts = artifacts
+                Artifacts = artifacts,
+                ArenaLeague = m_appModel._userWrapper.Arena.LeagueId.HasValue ? m_appModel._userWrapper.Arena.LeagueId.Value.ToString() : null,
+                GreatHall = new(m_appModel._userWrapper.Village.VillageData.CapitolBonusLevelByStatByElement.Select((kvp) =>
+                    new KeyValuePair<SharedModel.Meta.Heroes.Element, Dictionary<SharedModel.Battle.Effects.StatKindId, int>>(kvp.Key, new Dictionary<SharedModel.Battle.Effects.StatKindId, int>(kvp.Value))
+                )),
+                Heroes = m_appModel._userWrapper.Heroes.HeroData.HeroById.Values.Dump(artifactData, heroData).ToList()
             };
         }
 
