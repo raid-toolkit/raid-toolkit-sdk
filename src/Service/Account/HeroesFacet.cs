@@ -30,7 +30,7 @@ namespace Raid.Service
             var heroesById = userHeroData.HeroById;
 
             // copy all previous deleted elements to save cost when looking later
-            Dictionary<int, Hero> result = new(previous.Where(kvp => kvp.Value.Deleted));
+            Dictionary<int, Hero> result = previous != null ? new(previous.Where(kvp => kvp.Value.Deleted)) : new();
             foreach ((var id, var hero) in heroesById)
             {
                 IReadOnlyDictionary<ArtifactKindId, int> equippedArtifacts = null;
@@ -53,27 +53,30 @@ namespace Raid.Service
                     InVault = hero.InStorage,
                     Experience = hero.Experience,
                     FullExperience = hero.FullExperience,
-                    Masteries = hero.MasteryData.Masteries.ToList(),
+                    Masteries = hero.MasteryData?.Masteries.ToList(),
                     EquippedArtifactIds = equippedArtifacts,
                     SkillLevelsByTypeId = skillLevels
                 });
             }
 
-            foreach (var kvp in previous)
+            if (previous != null)
             {
-                // deleted hero?
-                if (!result.ContainsKey(kvp.Key))
+                foreach (var kvp in previous)
                 {
-                    // find any hero which was added at a higher ascension level
-                    var ascendedVersion = result.Values.FirstOrDefault(hero => hero.TypeId == (kvp.Value.TypeId + 1) && !previous.ContainsKey(hero.Id));
-                    if (ascendedVersion != null)
+                    // deleted hero?
+                    if (!result.ContainsKey(kvp.Key))
                     {
-                        ascendedVersion.OriginalId = kvp.Key;
-                    }
-                    else
-                    {
-                        kvp.Value.Deleted = true;
-                        result.Add(kvp.Key, kvp.Value);
+                        // find any hero which was added at a higher ascension level
+                        var ascendedVersion = result.Values.FirstOrDefault(hero => hero.TypeId == (kvp.Value.TypeId + 1) && !previous.ContainsKey(hero.Id));
+                        if (ascendedVersion != null)
+                        {
+                            ascendedVersion.OriginalId = kvp.Key;
+                        }
+                        else
+                        {
+                            kvp.Value.Deleted = true;
+                            result.Add(kvp.Key, kvp.Value);
+                        }
                     }
                 }
             }
