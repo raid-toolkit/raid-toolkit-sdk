@@ -6,6 +6,8 @@ using Il2CppToolkit.ReverseCompiler;
 using System.Reflection;
 using System.Runtime.Loader;
 using Il2CppToolkit.Common.Errors;
+using System.Collections.Generic;
+using Il2CppToolkit.ReverseCompiler.Target.NetCore;
 
 namespace Raid.Model
 {
@@ -58,14 +60,20 @@ namespace Raid.Model
             Loader loader = new();
             loader.Init(gasmPath, metadataPath);
             TypeModel model = new(loader);
-            AssemblyGenerator asmGen = new(model);
-            asmGen.TypeSelectors.Add(td => td.Name == "Client.Model.AppModel");
-            asmGen.TypeSelectors.Add(td => td.Name == "Client.Model.Gameplay.Artifacts.ExternalArtifactsStorage");
-            asmGen.TypeSelectors.Add(td => td.Name == "Client.Model.Gameplay.StaticData.ClientStaticDataManager");
-            asmGen.TypeSelectors.Add(td => td.Name == "SharedModel.Meta.Artifacts.ArtifactStorage.ArtifactStorageResolver");
-            asmGen.AssemblyName = "Raid.Interop";
-            asmGen.OutputPath = dllPath;
-            asmGen.GenerateAssembly().Wait();
+            Compiler compiler = new(model);
+            compiler.AddTarget(new NetCoreTarget());
+            compiler.AddConfiguration(
+            ArtifactSpecs.TypeSelectors.MakeValue(new List<Func<TypeDescriptor, bool>>{
+                {td => td.Name == "Client.Model.AppModel"},
+                {td => td.Name == "Client.Model.Gameplay.Artifacts.ExternalArtifactsStorage"},
+                {td => td.Name == "Client.Model.Gameplay.StaticData.ClientStaticDataManager"},
+                {td => td.Name == "SharedModel.Meta.Artifacts.ArtifactStorage.ArtifactStorageResolver"}
+            }),
+            ArtifactSpecs.AssemblyName.MakeValue("Raid.Interop"),
+            ArtifactSpecs.OutputPath.MakeValue(dllPath)
+        );
+
+            compiler.Compile().Wait();
         }
     }
 }

@@ -5,6 +5,30 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch Compiler",
+            "type": "coreclr",
+            "request": "launch",
+            // "preLaunchTask": "build",
+            "program": "${workspaceFolder}/Il2CppToolkit/ReverseCompiler.Cli/bin/Debug/net5.0/Il2CppToolkit.ReverseCompiler.Cli.dll",
+            "args": [
+                "--name",
+                "Raid.Interop",
+                "--game-assembly",
+                "C:\\Users\\PowerSpec\\AppData\\Local\\Plarium\\PlariumPlay\\StandAloneApps\\raid\\251\\GameAssembly.dll",
+                "--metadata",
+                "C:\\Users\\PowerSpec\\AppData\\Local\\Plarium\\PlariumPlay\\StandAloneApps\\raid\\251\\Raid_Data\\il2cpp_data\\Metadata\\global-metadata.dat",
+                "--out-path",
+                "D:\\temp",
+                "--target",
+                "NetCore",
+                "--include",
+                "Client.Model.Gameplay.Artifacts.ExternalArtifactsStorage"
+            ],
+            "cwd": "${workspaceFolder}/Il2CppToolkit/ReverseCompiler.Cli",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
             "name": "Launch Extractor",
             "type": "coreclr",
             "request": "launch",
