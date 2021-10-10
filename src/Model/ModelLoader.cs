@@ -63,15 +63,15 @@ namespace Raid.Model
             Compiler compiler = new(model);
             compiler.AddTarget(new NetCoreTarget());
             compiler.AddConfiguration(
-            ArtifactSpecs.TypeSelectors.MakeValue(new List<Func<TypeDescriptor, bool>>{
-                {td => td.Name == "Client.Model.AppModel"},
-                {td => td.Name == "Client.Model.Gameplay.Artifacts.ExternalArtifactsStorage"},
-                {td => td.Name == "Client.Model.Gameplay.StaticData.ClientStaticDataManager"},
-                {td => td.Name == "SharedModel.Meta.Artifacts.ArtifactStorage.ArtifactStorageResolver"}
-            }),
-            ArtifactSpecs.AssemblyName.MakeValue("Raid.Interop"),
-            ArtifactSpecs.OutputPath.MakeValue(dllPath)
-        );
+                ArtifactSpecs.TypeSelectors.MakeValue(new List<Func<TypeDescriptor, bool>>{
+                    {td => td.Name == "Client.Model.AppModel"},
+                    {td => td.Name == "Client.Model.Gameplay.Artifacts.ExternalArtifactsStorage"},
+                    {td => td.Name == "Client.Model.Gameplay.StaticData.ClientStaticDataManager"},
+                    {td => td.Name == "SharedModel.Meta.Artifacts.ArtifactStorage.ArtifactStorageResolver"}
+                }),
+                ArtifactSpecs.AssemblyName.MakeValue("Raid.Interop"),
+                ArtifactSpecs.OutputPath.MakeValue(dllPath)
+            );
 
             compiler.Compile().Wait();
         }

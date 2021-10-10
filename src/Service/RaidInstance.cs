@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Il2CppToolkit.Runtime;
-using Raid.Model;
 using Raid.Service.DataModel;
 
 namespace Raid.Service
@@ -56,7 +55,9 @@ namespace Raid.Service
         private struct AppModelStaticFields
         {
             [Offset(8)]
+#pragma warning disable 649
             public Client.Model.AppModel Instance;
+#pragma warning restore 649
         }
     }
 }
