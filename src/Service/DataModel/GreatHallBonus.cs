@@ -10,6 +10,6 @@ namespace Raid.Service.DataModel
         public Element Affinity;
 
         [JsonProperty("bonus")]
-        public List<StatBonus> Bonus;
+        public IReadOnlyList<StatBonus> Bonus;
     }
 }

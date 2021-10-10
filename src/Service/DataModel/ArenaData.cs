@@ -11,6 +11,6 @@ namespace Raid.Service.DataModel
         public ArenaLeagueId LeagueId;
 
         [JsonProperty("greatHallBonuses")]
-        public List<GreatHallBonus> GreatHallBonuses;
+        public IReadOnlyList<GreatHallBonus> GreatHallBonuses;
     }
 }
