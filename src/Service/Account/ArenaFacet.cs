@@ -11,34 +11,31 @@ namespace Raid.Service
     {
         public override string Id => "arena";
 
-        private Dictionary<StatKindId, List<StatBonus>> m_staticBonusData;
-        private Dictionary<StatKindId, List<StatBonus>> EnsureStaticBonusData(ModelScope scope)
+        private static LazyInitializer<Dictionary<StatKindId, List<StatBonus>>, ModelScope> StaticBonusData = new(scope =>
         {
-            if (m_staticBonusData == null)
+            Dictionary<StatKindId, List<StatBonus>> staticBonusData = new();
+            var runtimeData = scope.StaticDataManager.StaticData.VillageData.CapitolBonusByStatKind;
+            foreach (StatKindId statKindId in Enum.GetValues(typeof(StatKindId)))
             {
-                Dictionary<StatKindId, List<StatBonus>> staticBonusData = new();
-                var runtimeData = scope.StaticDataManager.StaticData.VillageData.CapitolBonusByStatKind;
-                foreach (StatKindId statKindId in Enum.GetValues(typeof(StatKindId)))
+                if (!runtimeData.TryGetValue(statKindId, out var bonusValues))
+                    continue;
+                staticBonusData.Add(statKindId, bonusValues.Select(bonusValue => new StatBonus()
                 {
-                    if (!runtimeData.TryGetValue(statKindId, out var bonusValues))
-                        continue;
-                    staticBonusData.Add(statKindId, bonusValues.Select(bonusValue => new StatBonus()
-                    {
-                        KindId = statKindId,
-                        Absolute = bonusValue._isAbsolute,
-                        Value = bonusValue._value.AsFloat()
-                    }).ToList());
-                }
-                m_staticBonusData = staticBonusData;
+                    KindId = statKindId,
+                    Absolute = bonusValue._isAbsolute,
+                    Value = bonusValue._value.AsFloat()
+                }).ToList());
             }
-            return m_staticBonusData;
-        }
+            return staticBonusData;
+        });
 
         protected override ArenaData Merge(ModelScope scope, ArenaData previous = null)
         {
+            var staticBonusData = StaticBonusData.GetValue(scope);
+
             var userWrapper = scope.AppModel._userWrapper;
             var capitalLevels = userWrapper.Village.VillageData.CapitolBonusLevelByStatByElement;
-            var staticBonusData = EnsureStaticBonusData(scope);
+
             List<GreatHallBonus> ghBonus = new();
             foreach ((var element, var bonus) in capitalLevels)
             {
@@ -56,6 +53,7 @@ namespace Raid.Service
                 }
                 ghBonus.Add(new() { Affinity = element, Bonus = bonuses });
             }
+
             return new ArenaData
             {
                 LeagueId = userWrapper.Arena.ArenaData.ArenaDefenseTeamSetup.ArenaLeagueId,
