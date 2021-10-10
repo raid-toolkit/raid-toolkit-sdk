@@ -20,7 +20,7 @@
                 "--out-path",
                 "D:\\temp",
                 "--target",
-                "NetCore",
+                "NetCore,TSDef",
                 "--include",
                 "Client.Model.Gameplay.Artifacts.ExternalArtifactsStorage"
             ],
