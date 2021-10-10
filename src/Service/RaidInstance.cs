@@ -10,10 +10,16 @@ namespace Raid.Service
 {
     public class RaidInstance
     {
+        static List<Type> s_facetTypes;
+        static RaidInstance()
+        {
+            s_facetTypes = new(typeof(RaidInstance).Assembly.GetTypes().Where(type => !type.IsAbstract && type.IsAssignableTo(typeof(IFacet))));
+        }
         public static IEnumerable<RaidInstance> Instances { get { return m_instances.Values.ToArray(); } }
         private static ConcurrentDictionary<int, RaidInstance> m_instances = new();
         private Process m_process;
         private readonly Il2CsRuntimeContext m_runtime;
+        private readonly Dictionary<IFacet, object> m_facets;
 
         public RaidInstance(Process process)
         {
@@ -21,6 +27,7 @@ namespace Raid.Service
             m_runtime = new Il2CsRuntimeContext(process);
             m_instances.TryAdd(process.Id, this);
             m_process.Disposed += HandleProcessDisposed;
+            m_facets = new(s_facetTypes.Select(type => new KeyValuePair<IFacet, object>((IFacet)Activator.CreateInstance(type), null)));
         }
 
         private void HandleProcessDisposed(object sender, EventArgs e)
@@ -29,26 +36,14 @@ namespace Raid.Service
             m_instances.TryRemove(new(m_process.Id, this));
         }
 
-        private Account account;
         public void Update()
         {
-            var statics = Client.App.SingleInstance<Client.Model.AppModel>.method_get_Instance.GetMethodInfo(m_runtime).DeclaringClass.StaticFields
-                .As<AppModelStaticFields>();
-            var appModel = statics.Instance;
-            var userWrapper = appModel._userWrapper;
-            var accountData = userWrapper.Account.AccountData;
-            var gameSettings = userWrapper.UserGameSettings.GameSettings;
-            var socialWrapper = userWrapper.Social.SocialData;
-            var globalId = socialWrapper.PlariumGlobalId;
-            var socialId = socialWrapper.SocialId;
-            account = new Account
+            ModelScope scope = new(m_runtime);
+            foreach ((IFacet facet, object currentValue) in m_facets)
             {
-                Id = String.Join('_', globalId, socialId).Sha256(),
-                Avatar = gameSettings.Avatar,
-                Name = gameSettings.Name,
-                Level = accountData.Level,
-                Power = (int)Math.Round(accountData.TotalPower, 0)
-            };
+                object newValue = facet.Merge(scope, currentValue);
+                m_facets[facet] = newValue;
+            }
         }
 
         [Size(16)]
