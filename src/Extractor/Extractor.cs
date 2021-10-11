@@ -46,6 +46,17 @@ namespace Raid.Extractor
             Level = skill.Level
         };
 
+        public static MasteryData Dump(this SharedModel.Meta.Masteries.HeroMasteryData masteryData)
+        {
+	        return new()
+	        {
+		        Masteries = masteryData?.Masteries.ToList() ?? new List<int>(),
+		        CurrentAmount = masteryData?.CurrentAmount?.ToDictionary(pair => pair.Key, pair => pair.Value),
+		        TotalAmount = masteryData?.TotalAmount?.ToDictionary(pair => pair.Key, pair => pair.Value),
+		        ResetCount = masteryData?.ResetCount ?? 0
+	        };
+        }
+
         public static ICollection<Hero> Dump(
             this IEnumerable<SharedModel.Meta.Heroes.Hero> heroes,
             IReadOnlyDictionary<int, SharedModel.Meta.Artifacts.HeroArtifactData> artifactData,
@@ -66,7 +77,7 @@ namespace Raid.Extractor
                 InStorage = hero.InStorage,
                 Marker = hero.Marker.ToString(),
                 // extras
-                Masteries = hero.MasteryData?.Masteries.ToList() ?? new(),
+                MasteryData = hero.MasteryData.Dump(),
                 Artifacts = artifactData.TryGetValue(hero.Id, out SharedModel.Meta.Artifacts.HeroArtifactData data) ? data?.ArtifactIdByKind.Values.ToList() ?? new() : new(),
                 Skills = hero.Skills?.Select(Extensions.Dump).ToList() ?? new(),
                 // type fields

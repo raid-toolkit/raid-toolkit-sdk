@@ -32,6 +32,7 @@ namespace Raid.Extractor
         public static JsonSerializerSettings SerializerSettings = new JsonSerializerSettings
         {
             Formatting = Formatting.Indented,
+            NullValueHandling = NullValueHandling.Ignore,
             ContractResolver = new DefaultContractResolver
             {
                 NamingStrategy = new CamelCaseNamingStrategy

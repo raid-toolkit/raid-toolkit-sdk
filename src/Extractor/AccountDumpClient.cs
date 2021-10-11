@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using SharedModel.Battle.Effects;
 using SharedModel.Meta.Heroes;
+using SharedModel.Meta.Masteries;
 
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
@@ -191,11 +192,27 @@ namespace RaidExtractor.Core
         [Newtonsoft.Json.JsonProperty("speed", Required = Newtonsoft.Json.Required.Always)]
         public float Speed { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("masteries", Required = Newtonsoft.Json.Required.Always)]
-        public List<int> Masteries { get; set; }
+        [Newtonsoft.Json.JsonProperty("masteryData", Required = Newtonsoft.Json.Required.Always)]
+        public MasteryData MasteryData { get; set; }
 
         [Newtonsoft.Json.JsonProperty("skills", Required = Newtonsoft.Json.Required.Always)]
         public List<Skill> Skills { get; set; }
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
+    public partial class MasteryData
+    {
+	    [Newtonsoft.Json.JsonProperty("currentAmount", Required = Newtonsoft.Json.Required.AllowNull)]
+	    public Dictionary<MasteryPointType, int> CurrentAmount { get; set; }
+
+	    [Newtonsoft.Json.JsonProperty("totalAmount", Required = Newtonsoft.Json.Required.AllowNull)]
+	    public Dictionary<MasteryPointType, int> TotalAmount { get; set; }
+
+	    [Newtonsoft.Json.JsonProperty("masteries", Required = Newtonsoft.Json.Required.Always)]
+	    public List<int> Masteries { get; set; }
+
+	    [Newtonsoft.Json.JsonProperty("resetCount", Required = Newtonsoft.Json.Required.Always)]
+	    public int ResetCount { get; set; }
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.24.0 (Newtonsoft.Json v11.0.0.0)")]
