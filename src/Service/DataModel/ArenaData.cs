@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using SharedModel.Meta.Battle.Arena;
-using SharedModel.Meta.Heroes;
 
 namespace Raid.Service.DataModel
 {
