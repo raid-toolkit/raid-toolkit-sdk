@@ -44,8 +44,10 @@ namespace Raid.Service
     {
         [JsonProperty(Order = 0)]
         public string Scope;
+
         [JsonProperty(Order = 1)]
         public string Channel;
+
         [JsonProperty(Order = 2)]
         public JRaw Message;
     }
