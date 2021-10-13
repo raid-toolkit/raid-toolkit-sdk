@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
 
-namespace Raid.Service
+namespace Raid.Service.Messages
 {
     internal class SocketMessageConverter : JsonConverter
     {
@@ -29,13 +29,18 @@ namespace Raid.Service
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var properties = value.GetType().GetFields().Select(field => new { Attribute = field.GetCustomAttribute<JsonPropertyAttribute>(), Field = field }).OrderBy(entry => entry.Attribute.Order);
-            var array = new JArray();
+            var properties = value.GetType().GetFields()
+                .Select(field => new { Attribute = field.GetCustomAttribute<JsonPropertyAttribute>(), Field = field })
+                .OrderBy(entry => entry.Attribute.Order)
+                .ToList();
+            object[] array = new object[properties.Count];
             foreach (var entry in properties)
             {
-                array[entry.Attribute.Order] = JObject.FromObject(entry.Field.GetValue(value), serializer);
+                array[entry.Attribute.Order] = JToken.FromObject(entry.Field.GetValue(value), serializer);
             }
-            array.WriteTo(writer);
+
+            JArray jarray = new JArray(array);
+            jarray.WriteTo(writer);
         }
     }
 
@@ -49,6 +54,6 @@ namespace Raid.Service
         public string Channel;
 
         [JsonProperty(Order = 2)]
-        public JRaw Message;
+        public JToken Message;
     }
 }

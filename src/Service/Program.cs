@@ -9,6 +9,7 @@ namespace Raid.Service
 {
     static class Program
     {
+        private static ModelService modelService;
         static int Main(string[] args)
         {
             ManualResetEvent mre = new ManualResetEvent(false);
@@ -21,6 +22,8 @@ namespace Raid.Service
                 Start();
 
                 mre.WaitOne();
+
+                modelService.Stop();
             }
             return 0;
         }
@@ -30,6 +33,9 @@ namespace Raid.Service
             ProcessWatcher processWatcher = new("Raid");
             processWatcher.ProcessFound += ProcessFound;
             TaskExtensions.RunAfter(2000, UpdateAccounts);
+
+            modelService = new();
+            modelService.Start();
         }
 
         private static void UpdateAccounts()

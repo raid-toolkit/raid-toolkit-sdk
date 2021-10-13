@@ -13,7 +13,7 @@ namespace Raid.Service
         static List<Type> s_facetTypes;
         static RaidInstance()
         {
-            s_facetTypes = new(typeof(RaidInstance).Assembly.GetTypes().Where(type => !type.IsAbstract && type.IsAssignableTo(typeof(IFacet))));
+            s_facetTypes = typeof(RaidInstance).Assembly.GetTypesAssignableTo<IFacet>().ToList();
         }
         public static IEnumerable<RaidInstance> Instances { get { return m_instances.Values.ToArray(); } }
         private static ConcurrentDictionary<int, RaidInstance> m_instances = new();
@@ -44,6 +44,11 @@ namespace Raid.Service
                 object newValue = facet.Merge(scope, currentValue);
                 m_facets[facet] = newValue;
             }
+        }
+
+        public T GetFacetValue<T>(string id)
+        {
+            return (T)m_facets.First(facet => facet.Key.Id == id).Value;
         }
 
         [Size(16)]
