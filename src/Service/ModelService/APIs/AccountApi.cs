@@ -5,10 +5,9 @@ using Raid.Service.DataModel;
 
 namespace Raid.Service
 {
+    [PublicApi("account-api")]
     internal class AccountApi : ApiHandler
     {
-        public override string Name => "account-api";
-
         [PublicApi("updated")]
         public event EventHandler<SerializableEventArgs> Updated;
 

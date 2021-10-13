@@ -15,10 +15,11 @@ namespace Raid.Service
         private Dictionary<string, EventHandler<SerializableEventArgs>> m_eventHandlerDelegates = new();
         private IReadOnlyDictionary<string, ApiMemberDefinition> m_methods;
 
-        public abstract string Name { get; }
+        public string Name { get; }
 
         public ApiHandler()
         {
+            Name = GetType().GetCustomAttribute<PublicApiAttribute>().Name;
             m_methods = GetType().GetMembers()
                 .Select(member => new ApiMemberDefinition(member, member.GetCustomAttribute<PublicApiAttribute>()))
                 .Where(member => member.Attribute != null)
