@@ -42,7 +42,14 @@ namespace Raid.Service
         {
             foreach (var instance in RaidInstance.Instances)
             {
-                instance.Update();
+                try
+                {
+                    instance.Update();
+                }
+                catch (Exception)
+                {
+                    // TODO: Logging
+                }
             }
             TaskExtensions.RunAfter(10000, UpdateAccounts);
         }

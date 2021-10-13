@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Raid.Service.Messages;
 using SuperSocket.WebSocket.Server;
 
@@ -10,7 +12,7 @@ namespace Raid.Service
 {
     internal abstract class ApiHandler : IMessageScopeHandler
     {
-        private Dictionary<string, Delegate> m_eventHandlerDelegates = new();
+        private Dictionary<string, EventHandler<SerializableEventArgs>> m_eventHandlerDelegates = new();
         private IReadOnlyDictionary<string, ApiMemberDefinition> m_methods;
 
         public abstract string Name { get; }
@@ -42,20 +44,15 @@ namespace Raid.Service
             }
         }
 
-
-        private void HandleEvent(object sender, BaseSerializableEventArgs args)
-        {
-        }
-
-        private void Unsubscribe(SubscriptionMessage subscriptionMessage, WebSocketSession session)
+        private void Subscribe(SubscriptionMessage subscriptionMessage, WebSocketSession session)
         {
             try
             {
                 EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName);
-                if (!m_eventHandlerDelegates.TryGetValue(subscriptionMessage.EventName, out Delegate handler))
+                if (!m_eventHandlerDelegates.TryGetValue($"{session.SessionID}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
                 {
-                    handler = Delegate.CreateDelegate(eventInfo.EventHandlerType, this, "HandleEvent");
-                    m_eventHandlerDelegates.Add(subscriptionMessage.EventName, handler);
+                    handler = (object sender, SerializableEventArgs args) => SendEvent(eventInfo, session, args);
+                    m_eventHandlerDelegates.Add($"{session.SessionID}:{subscriptionMessage.EventName}", handler);
                 }
                 eventInfo.AddEventHandler(this, handler);
             }
@@ -64,12 +61,37 @@ namespace Raid.Service
                 // TODO: Logging
             }
         }
-        private void Subscribe(SubscriptionMessage subscriptionMessage, WebSocketSession session)
+
+        private async Task SendEvent(EventInfo eventInfo, WebSocketSession session, SerializableEventArgs args)
+        {
+            if (session.State != SuperSocket.SessionState.Connected)
+            {
+                if (m_eventHandlerDelegates.Remove($"{session.SessionID}:{args.EventName}", out var handler))
+                {
+                    eventInfo.RemoveEventHandler(this, handler);
+                }
+                return;
+            }
+            SendEventMessage eventMsg = new()
+            {
+                EventName = args.EventName,
+                Payload = JArray.FromObject(args.EventArguments)
+            };
+            SocketMessage message = new()
+            {
+                Scope = Name,
+                Channel = "send-event",
+                Message = JToken.FromObject(eventMsg)
+            };
+            await session.SendAsync(JsonConvert.SerializeObject(message));
+        }
+
+        private void Unsubscribe(SubscriptionMessage subscriptionMessage, WebSocketSession session)
         {
             try
             {
                 EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName);
-                if (!m_eventHandlerDelegates.TryGetValue(subscriptionMessage.EventName, out Delegate handler))
+                if (!m_eventHandlerDelegates.TryGetValue($"{session.SessionID}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
                     return;
 
                 eventInfo.RemoveEventHandler(this, handler);

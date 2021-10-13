@@ -2,14 +2,10 @@ using System;
 
 namespace Raid.Service
 {
-    public abstract class BaseSerializableEventArgs : EventArgs
+    public class SerializableEventArgs : EventArgs
     {
-        public abstract object ObjectValue { get; }
+        public string EventName { get; set; }
+        public object[] EventArguments { get; set; }
     }
 
-    public class SerializableEventArgs<T> : BaseSerializableEventArgs
-    {
-        public override object ObjectValue => Value;
-        public T Value { get; set; }
-    }
 }
