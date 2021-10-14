@@ -14,7 +14,13 @@ namespace Raid.Service
         [PublicApi("getAccounts")]
         public async Task<Account[]> GetAccounts()
         {
-            return RaidInstance.Instances.Select(inst => inst.GetFacetValue<Account>("account")).Where(acct => acct != null).ToArray();
+            return UserData.Instance.UserAccounts.Select(AccountFacet.ReadValue).ToArray();
+        }
+
+        [PublicApi("accountInfo")]
+        public async Task<Account> GetAccount(string accountId)
+        {
+            return AccountFacet.ReadValue(UserData.Instance.GetAccount(accountId));
         }
     }
 }

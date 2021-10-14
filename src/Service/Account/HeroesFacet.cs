@@ -6,12 +6,12 @@ using SharedModel.Meta.Artifacts;
 
 namespace Raid.Service
 {
-    public class HeroesFacet : Facet<IReadOnlyDictionary<int, Hero>>
+    [Facet("heroes")]
+    public class HeroesFacet : Facet<IReadOnlyDictionary<int, Hero>, HeroesFacet>
     {
         private const int kForceRefreshInterval = 30000;
         private DateTime m_nextForcedRefresh = DateTime.MinValue;
         private int m_lastHeroId;
-        public override string Id => "heroes";
 
         protected override IReadOnlyDictionary<int, Hero> Merge(ModelScope scope, IReadOnlyDictionary<int, Hero> previous = null)
         {

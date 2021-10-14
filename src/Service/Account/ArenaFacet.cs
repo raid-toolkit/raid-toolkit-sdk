@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using Raid.Service.DataModel;
 using SharedModel.Battle.Effects;
-using SharedModel.Meta.Artifacts;
 
 namespace Raid.Service
 {
-    public class ArenaFacet : Facet<ArenaData>
+    [Facet("arena")]
+    public class ArenaFacet : Facet<ArenaData, ArenaFacet>
     {
-        public override string Id => "arena";
-
         private static LazyInitializer<Dictionary<StatKindId, List<StatBonus>>, ModelScope> StaticBonusData = new(scope =>
         {
             Dictionary<StatKindId, List<StatBonus>> staticBonusData = new();

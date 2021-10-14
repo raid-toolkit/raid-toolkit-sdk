@@ -3,10 +3,9 @@ using Raid.Service.DataModel;
 
 namespace Raid.Service
 {
-    public class ResourcesFacet : Facet<Resources>
+    [Facet("resources")]
+    public class ResourcesFacet : Facet<Resources, ResourcesFacet>
     {
-        public override string Id => "resources";
-
         protected override Resources Merge(ModelScope scope, Resources previous = null)
         {
             var userWrapper = scope.AppModel._userWrapper;

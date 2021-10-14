@@ -22,13 +22,9 @@ namespace Raid.Service
                 .UseWebSocketMessageHandler(ProcessMessage)
                 .ConfigureAppConfiguration((hostCtx, configApp) =>
                 {
-                    configApp.AddInMemoryCollection(new Dictionary<string, string>
-                    {
-                        { "serverOptions:name", "raid-toolkit-service" },
-                        { "serverOptions:listeners:0:ip", "Any" },
-                        { "serverOptions:listeners:0:port", "9090" }
-                    });
+                    configApp.AddJsonFile("appsettings.json");
                 })
+
                 .Build();
         }
 

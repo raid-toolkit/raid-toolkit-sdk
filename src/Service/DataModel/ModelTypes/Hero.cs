@@ -13,7 +13,7 @@ namespace Raid.Service.DataModel
         [JsonProperty("idOrigin")]
         public int OriginalId;
 
-        [JsonProperty("id")]
+        [JsonProperty("typeId")]
         public int TypeId;
 
         [JsonProperty("level")]

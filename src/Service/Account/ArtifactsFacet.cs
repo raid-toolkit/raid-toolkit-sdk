@@ -5,14 +5,13 @@ using Raid.Service.DataModel;
 
 namespace Raid.Service
 {
-    public class ArtifactsFacet : Facet<IReadOnlyDictionary<int, Artifact>>
+    [Facet("artifacts")]
+    public class ArtifactsFacet : Facet<IReadOnlyDictionary<int, Artifact>, ArtifactsFacet>
     {
         private const int kForceRefreshInterval = 30000;
         private DateTime m_nextForcedRefresh = DateTime.MinValue;
         private int m_nextId;
         private int m_nextRevisionId;
-
-        public override string Id => "artifacts";
 
         protected override IReadOnlyDictionary<int, Artifact> Merge(ModelScope scope, IReadOnlyDictionary<int, Artifact> previous = null)
         {
