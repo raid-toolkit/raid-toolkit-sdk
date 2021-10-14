@@ -11,16 +11,53 @@ namespace Raid.Service
         [PublicApi("updated")]
         public event EventHandler<SerializableEventArgs> Updated;
 
+        // [PublicApi("getAccounts")]
+        // public Account[] GetAccountDump()
+        // {
+        //     return UserData.Instance.UserAccounts.Select(AccountFacet.ReadValue).ToArray();
+        // }
+
         [PublicApi("getAccounts")]
-        public async Task<Account[]> GetAccounts()
+        public Account[] GetAccounts()
         {
             return UserData.Instance.UserAccounts.Select(AccountFacet.ReadValue).ToArray();
         }
 
         [PublicApi("accountInfo")]
-        public async Task<Account> GetAccount(string accountId)
+        public Account GetAccount(string accountId)
         {
             return AccountFacet.ReadValue(UserData.Instance.GetAccount(accountId));
+        }
+
+        [PublicApi("getArtifacts")]
+        public Artifact[] GetArtifacts(string accountId)
+        {
+            return ArtifactsFacet.ReadValue(UserData.Instance.GetAccount(accountId)).Values.ToArray();
+        }
+
+        [PublicApi("getArtifactById")]
+        public Artifact GetArtifactById(string accountId, int artifactId)
+        {
+            return ArtifactsFacet.ReadValue(UserData.Instance.GetAccount(accountId))[artifactId];
+        }
+
+        [PublicApi("getHeroes")]
+        public Hero[] GetHeroes(string accountId, bool snapshot)
+        {
+            // TODO: Snapshots
+            return HeroesFacet.ReadValue(UserData.Instance.GetAccount(accountId)).Values.ToArray();
+        }
+
+        [PublicApi("getHeroById")]
+        public Hero GetHeroById(string accountId, int heroId, bool snapshot)
+        {
+            return HeroesFacet.ReadValue(UserData.Instance.GetAccount(accountId))[heroId];
+        }
+
+        [PublicApi("getAllResources")]
+        public Resources GetAllResources(string accountId)
+        {
+            return ResourcesFacet.ReadValue(UserData.Instance.GetAccount(accountId));
         }
     }
 }

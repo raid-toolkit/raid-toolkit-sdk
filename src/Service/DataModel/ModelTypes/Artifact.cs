@@ -32,6 +32,15 @@ namespace Raid.Service.DataModel
         [JsonProperty("seen")]
         public bool Seen;
 
+        [JsonProperty("activated")]
+        public bool Activated;
+
+        [JsonProperty("sellPrice")]
+        public int SellPrice;
+
+        [JsonProperty("price")]
+        public int Price;
+
         [JsonProperty("failedUpgrades")]
         public int FailedUpgrades;
 
