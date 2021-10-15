@@ -11,7 +11,7 @@ namespace Raid.Service
         protected override StaticData Merge(ModelScope scope, StaticData previous = null)
         {
             var hash = scope.StaticDataManager._hash;
-            if (previous.Hash == hash)
+            if (previous?.Hash == hash)
             {
                 return previous;
             }

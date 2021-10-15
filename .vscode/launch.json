@@ -33,7 +33,7 @@
             "type": "coreclr",
             "request": "launch",
             // "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/Service/bin/Debug/net5.0/Raid.Service.dll",
+            "program": "${workspaceFolder}/src/Service/bin/Debug/net5.0-windows/Raid.Service.exe",
             "args": [],
             "cwd": "${workspaceFolder}/src/Service",
             "console": "internalConsole",

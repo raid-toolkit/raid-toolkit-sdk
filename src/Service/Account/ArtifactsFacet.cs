@@ -59,8 +59,8 @@ namespace Raid.Service
                     Faction = artifact._requiredFraction,
                     FailedUpgrades = artifact._failedUpgrades,
                     Revision = artifact._revision,
-                    PrimaryBonus = artifact._primaryBonus.ToDataModel(),
-                    SecondaryBonuses = artifact._secondaryBonuses.Select(ModelConverters.ToDataModel).ToList()
+                    PrimaryBonus = artifact._primaryBonus.ToModel(),
+                    SecondaryBonuses = artifact._secondaryBonuses.Select(bonus => bonus.ToModel()).ToList()
                 });
             }
             return result;

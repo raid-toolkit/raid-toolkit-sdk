@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ using SuperSocket.WebSocket.Server;
 
 namespace Raid.Service
 {
-    public class ModelService
+    public class ModelService : IDisposable
     {
         private IReadOnlyDictionary<string, IMessageScopeHandler> m_scopeHandlers;
         private IHost m_host;
@@ -28,12 +29,17 @@ namespace Raid.Service
                 .Build();
         }
 
+        public void Dispose()
+        {
+            m_host.Dispose();
+        }
+
         public async void Start()
         {
             await m_host.StartAsync();
         }
 
-        public async void Stop()
+        public async Task Stop()
         {
             await m_host.StopAsync();
         }
