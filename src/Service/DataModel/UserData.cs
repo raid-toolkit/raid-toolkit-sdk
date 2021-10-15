@@ -25,6 +25,7 @@ namespace Raid.Service.DataModel
 
         private readonly string m_storagePath;
         private readonly string m_accountsPath;
+        private readonly string m_staticDataPath;
         private readonly Dictionary<string, UserAccount> m_userAccounts;
 
         public IEnumerable<UserAccount> UserAccounts => m_userAccounts.Values;
@@ -40,6 +41,8 @@ namespace Raid.Service.DataModel
             // create basic directories
             m_accountsPath = Path.Join(m_storagePath, "accounts");
             Directory.CreateDirectory(m_accountsPath);
+            m_staticDataPath = Path.Join(m_storagePath, "staticData");
+            Directory.CreateDirectory(m_staticDataPath);
 
             // enumerate accounts
             m_userAccounts = Directory.GetDirectories(m_accountsPath).ToDictionary(id => Path.GetFileName(id), id => new UserAccount(Path.GetFileName(id)));
@@ -53,6 +56,23 @@ namespace Raid.Service.DataModel
                 m_userAccounts.Add(id, account);
             }
             return account;
+        }
+
+        public T ReadStaticData<T>(string key) where T : class
+        {
+            string filePath = Path.Join(m_staticDataPath, key);
+            if (!File.Exists(filePath))
+            {
+                return null;
+            }
+            return JsonConvert.DeserializeObject<T>(File.ReadAllText(filePath));
+        }
+
+        public void WriteStaticData<T>(string key, T value) where T : class
+        {
+            string filePath = Path.Join(m_staticDataPath, key);
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            File.WriteAllText(filePath, JsonConvert.SerializeObject(value));
         }
 
         public T ReadAccountData<T>(string userId, string key) where T : class

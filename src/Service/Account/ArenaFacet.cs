@@ -7,7 +7,7 @@ using SharedModel.Battle.Effects;
 namespace Raid.Service
 {
     [Facet("arena")]
-    public class ArenaFacet : Facet<ArenaData, ArenaFacet>
+    public class ArenaFacet : UserAccountFacetBase<ArenaData, ArenaFacet>
     {
         private static LazyInitializer<Dictionary<StatKindId, List<StatBonus>>, ModelScope> StaticBonusData = new(scope =>
         {

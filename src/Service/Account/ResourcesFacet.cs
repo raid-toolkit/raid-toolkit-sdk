@@ -4,7 +4,7 @@ using Raid.Service.DataModel;
 namespace Raid.Service
 {
     [Facet("resources")]
-    public class ResourcesFacet : Facet<Resources, ResourcesFacet>
+    public class ResourcesFacet : UserAccountFacetBase<Resources, ResourcesFacet>
     {
         protected override Resources Merge(ModelScope scope, Resources previous = null)
         {

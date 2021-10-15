@@ -7,7 +7,7 @@ using SharedModel.Meta.Artifacts;
 namespace Raid.Service
 {
     [Facet("heroes")]
-    public class HeroesFacet : Facet<IReadOnlyDictionary<int, Hero>, HeroesFacet>
+    public class HeroesFacet : UserAccountFacetBase<IReadOnlyDictionary<int, Hero>, HeroesFacet>
     {
         private const int kForceRefreshInterval = 30000;
         private DateTime m_nextForcedRefresh = DateTime.MinValue;

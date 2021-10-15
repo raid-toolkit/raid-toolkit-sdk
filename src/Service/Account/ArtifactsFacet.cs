@@ -6,7 +6,7 @@ using Raid.Service.DataModel;
 namespace Raid.Service
 {
     [Facet("artifacts")]
-    public class ArtifactsFacet : Facet<IReadOnlyDictionary<int, Artifact>, ArtifactsFacet>
+    public class ArtifactsFacet : UserAccountFacetBase<IReadOnlyDictionary<int, Artifact>, ArtifactsFacet>
     {
         private const int kForceRefreshInterval = 30000;
         private DateTime m_nextForcedRefresh = DateTime.MinValue;
