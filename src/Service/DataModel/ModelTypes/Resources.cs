@@ -11,10 +11,10 @@ namespace Raid.Service.DataModel
         [JsonProperty("shards")]
         public IReadOnlyDictionary<ShardTypeId, int> Shards;
 
-        [JsonProperty("blackMarket")]
+        [JsonProperty("market")]
         public IReadOnlyDictionary<BlackMarketItemId, int> BlackMarket;
 
-        [JsonProperty("account")]
+        [JsonProperty("basic")]
         public IReadOnlyDictionary<ResourceTypeId, double> Account;
     }
 }
