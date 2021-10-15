@@ -55,7 +55,8 @@ namespace Raid.Service
                     FullExperience = hero.FullExperience,
                     Masteries = hero.MasteryData?.Masteries.ToList(),
                     EquippedArtifactIds = equippedArtifacts,
-                    SkillLevelsByTypeId = skillLevels
+                    SkillLevelsByTypeId = hero.Skills.ToDictionary(skill => skill.TypeId, skill => skill.Level),
+                    SkillsById = hero.Skills.ToDictionary(skill => skill.Id, skill => skill.ToModel()),
                 });
             }
 

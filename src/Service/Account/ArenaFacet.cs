@@ -49,7 +49,7 @@ namespace Raid.Service
                         bonuses.Add(bonusValues[level - 1]);
                     }
                 }
-                ghBonus.Add(new() { Affinity = element, Bonus = bonuses });
+                ghBonus.Add(new() { Affinity = element, Bonus = bonuses, Levels = bonus.UnderlyingDictionary });
             }
 
             return new ArenaData

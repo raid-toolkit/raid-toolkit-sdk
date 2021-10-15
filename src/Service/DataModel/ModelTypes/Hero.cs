@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using SharedModel.Meta.Artifacts;
@@ -47,6 +48,10 @@ namespace Raid.Service.DataModel
         public IReadOnlyDictionary<ArtifactKindId, int> EquippedArtifactIds;
 
         [JsonProperty("skillLevelsByTypeId")]
+        [Obsolete("Use Skills instead")]
         public IReadOnlyDictionary<int, int> SkillLevelsByTypeId;
+
+        [JsonProperty("SkillsById")]
+        public IReadOnlyDictionary<int, Skill> SkillsById;
     }
 }

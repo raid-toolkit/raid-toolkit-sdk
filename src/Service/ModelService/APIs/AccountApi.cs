@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Threading.Tasks;
 using Raid.Service.DataModel;
 
 namespace Raid.Service
@@ -11,11 +10,11 @@ namespace Raid.Service
         [PublicApi("updated")]
         public event EventHandler<SerializableEventArgs> Updated;
 
-        // [PublicApi("getAccounts")]
-        // public Account[] GetAccountDump()
-        // {
-        //     return UserData.Instance.UserAccounts.Select(AccountFacet.ReadValue).ToArray();
-        // }
+        [PublicApi("dump")]
+        public RaidExtractor.Core.AccountDump GetAccountDump(string accountId)
+        {
+            return RaidExtractor.Core.Extractor.DumpAccount(UserData.Instance.GetAccount(accountId));
+        }
 
         [PublicApi("getAccounts")]
         public Account[] GetAccounts()

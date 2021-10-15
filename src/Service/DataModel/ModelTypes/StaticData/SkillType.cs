@@ -7,6 +7,18 @@ using SharedModel.Battle.Effects;
 
 namespace Raid.Service.DataModel
 {
+    public class Skill
+    {
+        [JsonProperty("typeId")]
+        public int TypeId;
+
+        [JsonProperty("id")]
+        public int Id;
+
+        [JsonProperty("level")]
+        public int Level;
+    }
+
     public class SkillType
     {
         [JsonProperty("typeId")]
@@ -81,6 +93,15 @@ namespace Raid.Service.DataModel
                 Unblockable = type.Unblockable.ToNullable(),
                 Upgrades = type.SkillLevelBonuses?.Select(bonus => bonus.ToModel()).ToArray(),
                 Visibility = type.Visibility,
+            };
+        }
+        public static Skill ToModel(this SharedModel.Meta.Skills.Skill skill)
+        {
+            return new Skill()
+            {
+                Id = skill.Id,
+                TypeId = skill.Id,
+                Level = skill.Level,
             };
         }
         public static EffectType ToModel(this SharedModel.Battle.Effects.EffectType type)

@@ -31,7 +31,7 @@ namespace RaidExtractor.Core
         public string ArenaLeague { get; set; }
 
         [Newtonsoft.Json.JsonProperty("greatHall", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Dictionary<Element, Dictionary<StatKindId, int>> GreatHall { get; set; }
+        public IReadOnlyDictionary<Element, IReadOnlyDictionary<StatKindId, int>> GreatHall { get; set; }
 
         [Newtonsoft.Json.JsonProperty("shards", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Dictionary<string, ShardInfo> Shards { get; set; }
