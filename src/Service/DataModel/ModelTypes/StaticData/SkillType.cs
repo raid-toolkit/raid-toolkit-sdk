@@ -33,6 +33,8 @@ namespace Raid.Service.DataModel
         [JsonProperty("upgrades")]
         public SkillUpgrade[] Upgrades;
 
+        [JsonProperty("doesDamage")]
+        public bool DoesDamage => Effects?.Any(effect => effect.KindId == EffectKindId.Damage) ?? false;
         // TODO: there's a lot more data here we could extract
     }
 
@@ -50,7 +52,7 @@ namespace Raid.Service.DataModel
         [JsonProperty("stack")]
         public int StackCount;
 
-        [JsonProperty("stack")]
+        [JsonProperty("kindId")]
         public EffectKindId KindId;
 
         // TODO: there's a lot more data here we could extract
@@ -77,7 +79,7 @@ namespace Raid.Service.DataModel
                 Effects = type.Effects.Select(effect => effect.ToModel()).ToArray(),
                 Name = type.Name.ToModel(),
                 Unblockable = type.Unblockable.ToNullable(),
-                Upgrades = type.SkillLevelBonuses.Select(bonus => bonus.ToModel()).ToArray(),
+                Upgrades = type.SkillLevelBonuses?.Select(bonus => bonus.ToModel()).ToArray(),
                 Visibility = type.Visibility,
             };
         }

@@ -10,10 +10,10 @@ namespace Raid.Service
 {
     public class RaidInstance
     {
-        static List<Type> s_facetTypes;
+        static List<Type> s_accountFacets;
         static RaidInstance()
         {
-            s_facetTypes = typeof(RaidInstance).Assembly.GetTypesAssignableTo<IFacet>().ToList();
+            s_accountFacets = typeof(RaidInstance).Assembly.GetTypesAssignableTo<IAccountFacet>().ToList();
         }
         public static IEnumerable<RaidInstance> Instances { get { return s_instances.Values.ToArray(); } }
         private static ConcurrentDictionary<int, RaidInstance> s_instances = new();
@@ -25,7 +25,7 @@ namespace Raid.Service
 
         private Process m_process;
         private readonly Il2CsRuntimeContext m_runtime;
-        private readonly Dictionary<IFacet, object> m_facets;
+        private readonly Dictionary<IAccountFacet, object> m_facets;
         private readonly string m_id;
         private readonly UserAccount m_userAccount;
 
@@ -37,8 +37,17 @@ namespace Raid.Service
             m_runtime = new Il2CsRuntimeContext(process);
             m_id = GetAccountId();
             m_userAccount = UserData.Instance.GetAccount(m_id);
-            IFacet currentFacet = null;
-            m_facets = s_facetTypes.ToDictionary(type => (currentFacet = (IFacet)Activator.CreateInstance(type)), _ => currentFacet.GetValue(m_userAccount));
+
+            {
+                IAccountFacet currentFacet = null;
+                m_facets = s_accountFacets.ToDictionary(type => (currentFacet = (IAccountFacet)Activator.CreateInstance(type)), _ => currentFacet.GetValue(m_userAccount));
+            }
+
+            // preload
+            foreach (IFacet facet in m_facets.Keys)
+            {
+                facet.GetValue(m_userAccount);
+            }
 
             s_instances.TryAdd(process.Id, this);
         }
@@ -52,7 +61,12 @@ namespace Raid.Service
         public void Update()
         {
             ModelScope scope = new(m_runtime);
-            foreach ((IFacet facet, object currentValue) in m_facets)
+            StaticDataCache.Instance.Update(m_runtime);
+            if (!StaticDataCache.Instance.IsReady)
+            {
+                return;
+            }
+            foreach ((IAccountFacet facet, object currentValue) in m_facets)
             {
                 object newValue = facet.Merge(scope, currentValue);
                 m_facets[facet] = newValue;

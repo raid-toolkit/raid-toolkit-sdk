@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using SharedModel.Meta.Artifacts.Sets;
@@ -32,13 +33,17 @@ namespace Raid.Service.DataModel
     {
         public static ArtifactSetKind ToModel(this ArtifactSetInfo artifactSetInfo)
         {
+            List<ArtifactSetStatBonus> statBonuses = new();
+            if (artifactSetInfo.StatBonus != null) statBonuses.Add(artifactSetInfo.StatBonus);
+            if (artifactSetInfo.StatBonuses != null) statBonuses.AddRange(artifactSetInfo.StatBonuses);
+
             return new()
             {
                 SetKindId = artifactSetInfo.ArtifactSetKindId,
                 ArtifactCount = artifactSetInfo.ArtifactCount,
                 Name = artifactSetInfo.Name.ToModel(),
                 SkillBonus = artifactSetInfo.SkillBonus?.SkillTypeId,
-                StatBonuses = artifactSetInfo.StatBonuses.Prepend(artifactSetInfo.StatBonus).Select(bonus => bonus.ToModel()).ToArray(),
+                StatBonuses = statBonuses.Select(bonus => bonus.ToModel()).ToArray(),
                 LongDescription = artifactSetInfo.Description.ToModel(),
                 ShortDescription = artifactSetInfo.ShortDescription.ToModel(),
             };
