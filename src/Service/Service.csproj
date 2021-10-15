@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
     <ProjectReference Include="..\..\IL2CppToolkit\Common\Common.csproj" />
@@ -8,6 +8,7 @@
     <ProjectReference Include="..\..\IL2CppToolkit\ILPack\src\Lokad.ILPack.csproj" />
     <ProjectReference Include="..\Model.PreBuild\Model.PreBuild.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>false</Private>
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj" />
   </ItemGroup>
@@ -38,6 +39,11 @@
     <TargetFramework>net5.0-windows</TargetFramework>
     <OutputType>WinExe</OutputType>
     <UseWindowsForms>true</UseWindowsForms>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+    <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
     <AssemblyName>Raid.Service</AssemblyName>
     <RootNamespace>Raid.Service</RootNamespace>
     <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
