@@ -2,10 +2,20 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using CommandLine;
 using Raid.Model;
 
 namespace Raid.Service
 {
+    [Verb("run", isDefault: true, HelpText = "Runs the service")]
+    public class RunOptions
+    {
+        [Option('s', "--standalone", HelpText = "Runs in standalone mode")]
+        public bool Standalone { get; set; }
+
+        [Option('n', "--no-ui", HelpText = "Runs without UI (only valid for standalone mode)")]
+        public bool NoUI { get; set; }
+    }
     static class RunAction
     {
         private static ModelService modelService;
@@ -61,7 +71,7 @@ namespace Raid.Service
                 }
             });
             Application.Run();
-            await modelService.Stop();
+            await modelService?.Stop();
             modelService.Dispose();
         }
 

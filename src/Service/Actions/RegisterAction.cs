@@ -1,9 +1,20 @@
 using System.Reflection;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using CommandLine;
 using Microsoft.Win32;
 
 namespace Raid.Service
 {
+    [Verb("register", HelpText = "Registers the service with your system")]
+    public class RegisterOptions
+    {
+        [Option('s', "--startup", HelpText = "Registers the service to start when windows starts")]
+        public bool RunOnStartup { get; set; }
+
+        [Option('r', "--register-protocol-handler", HelpText = "Registers rtk:// protocol handler")]
+        public bool RegisterProtocolHandler { get; set; }
+    }
     static class RegisterAction
     {
         private const string StartupName = "RaidToolkitService";
@@ -22,7 +33,7 @@ namespace Raid.Service
             runKey.DeleteValue(StartupName, false);
             if (runOnStartup)
             {
-                runKey.SetValue(StartupName, Assembly.GetExecutingAssembly().Location);
+                runKey.SetValue(StartupName, Application.ExecutablePath);
             }
         }
 
@@ -36,7 +47,7 @@ namespace Raid.Service
                 classKey.SetValue(null, "URL:Raid Toolkit");
                 classKey.SetValue("URL Protocol", "");
                 var cmdKey = classKey.CreateSubKey("shell").CreateSubKey("open").CreateSubKey("command");
-                cmdKey.SetValue(null, $"\"{Assembly.GetExecutingAssembly().Location}\" \"%1\"");
+                cmdKey.SetValue(null, $"\"{Application.ExecutablePath}\" open \"%1\"");
             }
         }
 
