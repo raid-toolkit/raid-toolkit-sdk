@@ -53,15 +53,7 @@ namespace Raid.Service.DataModel
         public IReadOnlyList<int> Masteries;
 
         [JsonProperty("equippedArtifactIds")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyDictionary<int, int> _EquippedArtifactIds
-        {
-            get { return EquippedArtifactIds?.ToDictionary(kvp => (int)kvp.Key, kvp => kvp.Value); }
-            set { EquippedArtifactIds = value?.ToDictionary(kvp => (ArtifactKindId)kvp.Key, kvp => kvp.Value); }
-        }
-
-        [JsonIgnore]
-        public IReadOnlyDictionary<ArtifactKindId, int> EquippedArtifactIds;
+        public NumericDictionary<ArtifactKindId, int> EquippedArtifactIds;
 
         [JsonProperty("skillLevelsByTypeId")]
         [Obsolete("Use Skills instead")]

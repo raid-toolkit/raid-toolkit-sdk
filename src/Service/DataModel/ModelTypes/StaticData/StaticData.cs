@@ -40,15 +40,7 @@ namespace Raid.Service.DataModel
     public class StaticArtifactData
     {
         [JsonProperty("setKinds")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyDictionary<int, ArtifactSetKind> _ArtifactSetKinds
-        {
-            get { return ArtifactSetKinds?.ToDictionary(kvp => (int)kvp.Key, kvp => kvp.Value); }
-            set { ArtifactSetKinds = value?.ToDictionary(kvp => (SharedModel.Meta.Artifacts.Sets.ArtifactSetKindId)kvp.Key, kvp => kvp.Value); }
-        }
-
-        [JsonIgnore]
-        public IReadOnlyDictionary<SharedModel.Meta.Artifacts.Sets.ArtifactSetKindId, ArtifactSetKind> ArtifactSetKinds;
+        public NumericDictionary<SharedModel.Meta.Artifacts.Sets.ArtifactSetKindId, ArtifactSetKind> ArtifactSetKinds;
     }
 
     public class StaticSkillData
@@ -60,40 +52,16 @@ namespace Raid.Service.DataModel
     public class StaticArenaData
     {
         [JsonProperty("leagues")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyDictionary<int, ArenaLeague> _Leagues
-        {
-            get { return Leagues?.ToDictionary(kvp => (int)kvp.Key, kvp => kvp.Value); }
-            set { Leagues = value?.ToDictionary(kvp => (ArenaLeagueId)kvp.Key, kvp => kvp.Value); }
-        }
-
-        [JsonIgnore]
-        public IReadOnlyDictionary<ArenaLeagueId, ArenaLeague> Leagues;
+        public NumericDictionary<ArenaLeagueId, ArenaLeague> Leagues;
     }
 
     public class StaticStageData
     {
         [JsonProperty("areas")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyDictionary<int, AreaData> _Areas
-        {
-            get { return Areas?.ToDictionary(kvp => (int)kvp.Key, kvp => kvp.Value); }
-            set { Areas = value?.ToDictionary(kvp => (AreaTypeId)kvp.Key, kvp => kvp.Value); }
-        }
-
-        [JsonIgnore]
-        public IReadOnlyDictionary<AreaTypeId, AreaData> Areas;
+        public NumericDictionary<AreaTypeId, AreaData> Areas;
 
         [JsonProperty("regions")]
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public IReadOnlyDictionary<int, RegionData> _Regions
-        {
-            get { return Regions?.ToDictionary(kvp => (int)kvp.Key, kvp => kvp.Value); }
-            set { Regions = value?.ToDictionary(kvp => (RegionTypeId)kvp.Key, kvp => kvp.Value); }
-        }
-
-        [JsonIgnore]
-        public IReadOnlyDictionary<RegionTypeId, RegionData> Regions;
+        public NumericDictionary<RegionTypeId, RegionData> Regions;
 
         [JsonProperty("stages")]
         public IReadOnlyDictionary<int, StageData> Stages;

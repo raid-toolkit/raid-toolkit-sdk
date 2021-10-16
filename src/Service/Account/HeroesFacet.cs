@@ -35,7 +35,7 @@ namespace Raid.Service
             foreach ((var id, var hero) in heroesById)
             {
                 var heroType = heroTypes[hero.TypeId];
-                IReadOnlyDictionary<ArtifactKindId, int> equippedArtifacts = null;
+                Dictionary<ArtifactKindId, int> equippedArtifacts = null;
                 if (artifactsByHeroId.TryGetValue(id, out HeroArtifactData artifactData))
                 {
                     equippedArtifacts = artifactData.ArtifactIdByKind.UnderlyingDictionary;
