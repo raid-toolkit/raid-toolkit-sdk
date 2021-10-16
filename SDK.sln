@@ -15,11 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Runtime", "IL2CppToolkit\Ru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Il2CppToolkit", "Il2CppToolkit", "{59897739-2113-443B-AE3E-B27E8B51F8D0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extractor", "src\Extractor\Extractor.csproj", "{9A096D16-B1BF-42A7-B808-2EE067384624}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extractor", "SDK\Extractor\Extractor.csproj", "{9A096D16-B1BF-42A7-B808-2EE067384624}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "src\Model\Model.csproj", "{36CD0B45-CBC1-43E7-A748-87780606BD92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "SDK\Model\Model.csproj", "{36CD0B45-CBC1-43E7-A748-87780606BD92}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model.PreBuild", "src\Model.PreBuild\Model.PreBuild.csproj", "{1876116F-70F1-40B1-BEA3-93B193B75853}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model.PreBuild", "SDK\Model.PreBuild\Model.PreBuild.csproj", "{1876116F-70F1-40B1-BEA3-93B193B75853}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReverseCompiler.Target.NetCore", "Il2CppToolkit\ReverseCompiler.Target.NetCore\ReverseCompiler.Target.NetCore.csproj", "{6825C84D-1204-488B-86A1-83DC7D5A96A4}"
 EndProject
@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReverseCompiler.Cli", "Il2C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReverseCompiler.Target.TSDef", "Il2CppToolkit\ReverseCompiler.Target.TSDef\ReverseCompiler.Target.TSDef.csproj", "{5A43CE54-6727-4C13-AFF0-D8BF5FC89554}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "src\Service\Service.csproj", "{4F52C292-6270-4520-8C32-25785249531C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "SDK\Service\Service.csproj", "{4F52C292-6270-4520-8C32-25785249531C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
