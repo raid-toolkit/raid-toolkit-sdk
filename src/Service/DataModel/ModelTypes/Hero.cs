@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using Newtonsoft.Json;
 using SharedModel.Meta.Artifacts;
 using SharedModel.Meta.Heroes;
@@ -51,6 +53,14 @@ namespace Raid.Service.DataModel
         public IReadOnlyList<int> Masteries;
 
         [JsonProperty("equippedArtifactIds")]
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public IReadOnlyDictionary<int, int> _EquippedArtifactIds
+        {
+            get { return EquippedArtifactIds?.ToDictionary(kvp => (int)kvp.Key, kvp => kvp.Value); }
+            set { EquippedArtifactIds = value?.ToDictionary(kvp => (ArtifactKindId)kvp.Key, kvp => kvp.Value); }
+        }
+
+        [JsonIgnore]
         public IReadOnlyDictionary<ArtifactKindId, int> EquippedArtifactIds;
 
         [JsonProperty("skillLevelsByTypeId")]
