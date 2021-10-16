@@ -100,7 +100,7 @@ namespace Raid.Service.DataModel
             return new Skill()
             {
                 Id = skill.Id,
-                TypeId = skill.Id,
+                TypeId = skill.TypeId,
                 Level = skill.Level,
             };
         }

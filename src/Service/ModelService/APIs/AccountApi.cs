@@ -41,14 +41,14 @@ namespace Raid.Service
         }
 
         [PublicApi("getHeroes")]
-        public Hero[] GetHeroes(string accountId, bool snapshot)
+        public Hero[] GetHeroes(string accountId, bool snapshot = false)
         {
             // TODO: Snapshots
             return HeroesFacet.ReadValue(UserData.Instance.GetAccount(accountId)).Values.ToArray();
         }
 
         [PublicApi("getHeroById")]
-        public Hero GetHeroById(string accountId, int heroId, bool snapshot)
+        public Hero GetHeroById(string accountId, int heroId, bool snapshot = false)
         {
             return HeroesFacet.ReadValue(UserData.Instance.GetAccount(accountId))[heroId];
         }

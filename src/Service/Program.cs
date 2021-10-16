@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using CommandLine;
 
@@ -9,6 +10,7 @@ namespace Raid.Service
     {
         static int Main(string[] args)
         {
+            Type t = typeof(Newtonsoft.Json.JsonSerializer);
             return Parser.Default.ParseArguments<RegisterOptions, OpenOptions, RunOptions>(args)
                 .MapResult<RegisterOptions, OpenOptions, RunOptions, int>(RegisterAction.Execute, OpenAction.Execute, RunAction.Execute, HandleErrors);
         }

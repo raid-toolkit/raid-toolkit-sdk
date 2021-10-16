@@ -113,11 +113,16 @@ namespace Raid.Service
                 if (methodParameters.Length < message.Parameters.Count)
                     throw new TargetParameterCountException();
 
-                object[] args = new object[message.Parameters.Count];
+                object[] args = new object[methodParameters.Length];
                 for (int p = 0; p < methodParameters.Length; ++p)
                 {
-                    if (p >= message.Parameters.Count && !methodParameters[p].IsOptional)
-                        throw new TargetParameterCountException();
+                    if (p >= message.Parameters.Count)
+                    {
+                        if (!methodParameters[p].IsOptional)
+                            throw new TargetParameterCountException();
+                        args[p] = Type.Missing;
+                        continue;
+                    }
 
                     args[p] = message.Parameters[p]?.ToObject(methodParameters[p].ParameterType);
                 }
