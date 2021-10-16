@@ -8,14 +8,20 @@ namespace Raid.Service.DataModel
 {
     public class Hero
     {
+        [JsonProperty("typeId")]
+        public int TypeId;
+
+        [JsonProperty("type")]
+        public HeroType Type;
+
+        [JsonProperty("name")]
+        public string Name;
+
         [JsonProperty("id")]
         public int Id;
 
         [JsonProperty("idOrigin")]
         public int OriginalId;
-
-        [JsonProperty("typeId")]
-        public int TypeId;
 
         [JsonProperty("level")]
         public int Level;

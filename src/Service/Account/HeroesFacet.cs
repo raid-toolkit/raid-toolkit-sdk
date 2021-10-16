@@ -17,6 +17,7 @@ namespace Raid.Service
         {
             var userWrapper = scope.AppModel._userWrapper;
             var userHeroData = userWrapper.Heroes.HeroData;
+            var heroTypes = StaticDataFacet.ReadValue(StaticDataCache.Instance).HeroData.HeroTypes;
 
             // Only refresh if lastHeroId changed since last read, or after we've exceeded the forced read interval
             if (DateTime.UtcNow < m_nextForcedRefresh && userHeroData.LastHeroId == m_lastHeroId)
@@ -33,6 +34,7 @@ namespace Raid.Service
             Dictionary<int, Hero> result = previous != null ? new(previous.Where(kvp => kvp.Value.Deleted)) : new();
             foreach ((var id, var hero) in heroesById)
             {
+                var heroType = heroTypes[hero.TypeId];
                 IReadOnlyDictionary<ArtifactKindId, int> equippedArtifacts = null;
                 if (artifactsByHeroId.TryGetValue(id, out HeroArtifactData artifactData))
                 {
@@ -55,6 +57,8 @@ namespace Raid.Service
                     FullExperience = hero.FullExperience,
                     Masteries = hero.MasteryData?.Masteries.ToList(),
                     EquippedArtifactIds = equippedArtifacts,
+                    Type = heroType,
+                    Name = heroType.Name.EnValue ?? heroType.Name.DefaultValue,
                     SkillLevelsByTypeId = hero.Skills.ToDictionary(skill => skill.TypeId, skill => skill.Level),
                     SkillsById = hero.Skills.ToDictionary(skill => skill.Id, skill => skill.ToModel()),
                 });

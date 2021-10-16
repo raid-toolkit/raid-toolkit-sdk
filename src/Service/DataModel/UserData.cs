@@ -65,7 +65,14 @@ namespace Raid.Service.DataModel
             {
                 return null;
             }
-            return JsonConvert.DeserializeObject<T>(File.ReadAllText(filePath));
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(File.ReadAllText(filePath));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public void WriteStaticData<T>(string key, T value) where T : class
@@ -82,7 +89,14 @@ namespace Raid.Service.DataModel
             {
                 return null;
             }
-            return JsonConvert.DeserializeObject<T>(File.ReadAllText(filePath));
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(File.ReadAllText(filePath));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public void WriteAccountData<T>(string userId, string key, T value) where T : class

@@ -33,7 +33,7 @@
             "type": "coreclr",
             "request": "launch",
             // "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/Service/bin/Debug/net5.0-windows/Raid.Service.exe",
+            "program": "${workspaceFolder}/src/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
             "args": [],
             "cwd": "${workspaceFolder}/src/Service",
             "console": "internalConsole",
@@ -44,7 +44,7 @@
             "type": "coreclr",
             "request": "launch",
             // "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/Service/bin/Debug/net5.0-windows/Raid.Service.exe",
+            "program": "${workspaceFolder}/src/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
             "args": [
                 "open"
             ],
