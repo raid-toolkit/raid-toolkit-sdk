@@ -55,7 +55,7 @@ namespace Raid.Service
                     InVault = hero.InStorage,
                     Experience = hero.Experience,
                     FullExperience = hero.FullExperience,
-                    Masteries = hero.MasteryData?.Masteries?.Cast<MasteryKindId>().ToList(),
+                    Masteries = hero.MasteryData?.Masteries?.Cast<MasteryKindId>().ToArray() ?? Array.Empty<MasteryKindId>(),
                     EquippedArtifactIds = equippedArtifacts,
                     Type = heroType,
                     Name = heroType.Name.Localize(),

@@ -48,7 +48,7 @@ namespace Raid.Service.DataModel
         public HeroMarker Marker;
 
         [JsonProperty("masteries")]
-        public IReadOnlyList<MasteryKindId> Masteries;
+        public MasteryKindId[] Masteries;
 
         [JsonProperty("equippedArtifactIds")]
         public NumericDictionary<ArtifactKindId, int> EquippedArtifactIds;

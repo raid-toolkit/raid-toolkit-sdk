@@ -3,7 +3,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CommandLine;
+using Newtonsoft.Json;
 using Raid.Model;
+using Raid.Service.DataModel;
 
 namespace Raid.Service
 {
@@ -62,6 +64,7 @@ namespace Raid.Service
             {
                 using (new ModelAssemblyResolver())
                 {
+                    ConfigureJsonSerialization();
                     ProcessWatcher processWatcher = new("Raid");
                     processWatcher.ProcessFound += ProcessFound;
                     TaskExtensions.RunAfter(2000, UpdateAccounts);
@@ -84,6 +87,12 @@ namespace Raid.Service
             notifyIcon.ContextMenuStrip = new ContextMenuStrip();
             notifyIcon.ContextMenuStrip.Items.Add("Close", null, OnClose);
             notifyIcon.Visible = true;
+        }
+
+        private static void ConfigureJsonSerialization()
+        {
+            var settings = new JsonSerializerSettings { ContractResolver = new StatsContractResolver() };
+            JsonConvert.DefaultSettings = () => settings;
         }
 
         private static void OnClose(object sender, EventArgs e)

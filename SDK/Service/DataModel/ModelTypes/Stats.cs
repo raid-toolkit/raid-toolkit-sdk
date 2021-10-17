@@ -1,9 +1,67 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 using SharedModel.Battle.Effects;
 
 namespace Raid.Service.DataModel
 {
+    public class StatsContractResolver : DefaultContractResolver
+    {
+        private class StatsConverter<T> : JsonConverter
+        {
+            private Type UnderlyingType;
+            public StatsConverter(Type underlyingType)
+            {
+                UnderlyingType = underlyingType.IsAbstract ? typeof(Dictionary<StatKindId, T>) : underlyingType;
+            }
+            public override bool CanConvert(Type objectType)
+            {
+                return true;
+            }
+
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            {
+                JObject obj = serializer.Deserialize<JObject>(reader);
+                IReadOnlyDictionary<string, T> dict = obj.ToObject<IReadOnlyDictionary<string, T>>();
+                IDictionary<StatKindId, T> stats = (IDictionary<StatKindId, T>)Activator.CreateInstance(UnderlyingType);
+                foreach (var kvp in dict)
+                {
+                    if (Enum.TryParse<StatKindId>(kvp.Key, out StatKindId key))
+                        stats[key] = kvp.Value;
+                    else if (kvp.Key == "Defense")
+                        stats[StatKindId.Defence] = kvp.Value;
+                    else
+                        throw new InvalidOperationException();
+                }
+                return stats;
+            }
+
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                IDictionary<StatKindId, T> from = (IDictionary<StatKindId, T>)value;
+                IDictionary<string, T> to = from.ToDictionary(kvp => kvp.Key == StatKindId.Defence ? "Defense" : kvp.Key.ToString(), kvp => kvp.Value);
+                serializer.Serialize(writer, to);
+            }
+        }
+
+        protected override JsonDictionaryContract CreateDictionaryContract(Type objectType)
+        {
+            JsonDictionaryContract contract = base.CreateDictionaryContract(objectType);
+            if (contract.DictionaryKeyType == typeof(StatKindId))
+            {
+                contract.Converter = (JsonConverter)Activator.CreateInstance(
+                    typeof(StatsConverter<>).MakeGenericType(contract.DictionaryValueType),
+                    new object[] { contract.UnderlyingType }
+                    );
+            }
+
+            return contract;
+        }
+    }
     public class Stats : Dictionary<StatKindId, float>
     {
         public Stats()
