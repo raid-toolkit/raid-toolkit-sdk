@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace Raid.Model
 {
-    internal class PlariumPlayAdapter
+    public class PlariumPlayAdapter
     {
         public class GameInfo
         {

@@ -1,5 +1,8 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Newtonsoft.Json;
+using SharedModel.Meta.Heroes;
 
 namespace Raid.Service
 {
@@ -7,15 +10,22 @@ namespace Raid.Service
     {
         public struct Multiplier
         {
-            public SharedModel.Meta.Heroes.HeroGrade stars;
+            public HeroGrade stars;
             public int level;
             public float multiplier;
         }
         public static readonly Multiplier[] Multipliers;
+        public static readonly Dictionary<HeroGrade, Dictionary<int, float>> MultiplierLookup;
 
         static StaticResources()
         {
             Multipliers = Deserialize<Multiplier[]>("Multipliers.json");
+            MultiplierLookup = Multipliers
+                .GroupBy(mult => mult.stars)
+                .ToDictionary(
+                    grp => grp.Key,
+                    grp => grp.ToDictionary(lvl2Mult => lvl2Mult.level, lvl2Mult => lvl2Mult.multiplier)
+                );
         }
 
         private static T Deserialize<T>(string resourceName)

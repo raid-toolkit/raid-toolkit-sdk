@@ -19,5 +19,10 @@ namespace Raid.Service
             }
             return new NumericDictionary<K, V>(value);
         }
+
+        public bool TryGetValue(K key, out V value)
+        {
+            return TryGetValue((int)(object)key, out value);
+        }
     }
 }

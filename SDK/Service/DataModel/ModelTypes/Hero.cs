@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
 using Newtonsoft.Json;
 using SharedModel.Meta.Artifacts;
 using SharedModel.Meta.Heroes;
@@ -50,7 +48,7 @@ namespace Raid.Service.DataModel
         public HeroMarker Marker;
 
         [JsonProperty("masteries")]
-        public IReadOnlyList<int> Masteries;
+        public IReadOnlyList<MasteryKindId> Masteries;
 
         [JsonProperty("equippedArtifactIds")]
         public NumericDictionary<ArtifactKindId, int> EquippedArtifactIds;

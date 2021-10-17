@@ -64,7 +64,7 @@ namespace RaidExtractor.Core
                         InStorage = hero.InVault,
                         Marker = hero.Marker.ToString(),
                         // extras
-                        Masteries = hero.Masteries?.ToList() ?? new(),
+                        Masteries = hero.Masteries?.Cast<int>().ToList() ?? new(),
                         Artifacts = hero.EquippedArtifactIds?.Values.ToArray(),
                         Skills = hero.SkillsById?.Values.Select(skill => new Skill() { TypeId = skill.TypeId, Id = skill.Id, Level = skill.Level, }).ToList() ?? new(),
                         // type fields

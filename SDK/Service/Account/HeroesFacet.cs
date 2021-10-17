@@ -55,10 +55,10 @@ namespace Raid.Service
                     InVault = hero.InStorage,
                     Experience = hero.Experience,
                     FullExperience = hero.FullExperience,
-                    Masteries = hero.MasteryData?.Masteries.ToList(),
+                    Masteries = hero.MasteryData?.Masteries?.Cast<MasteryKindId>().ToList(),
                     EquippedArtifactIds = equippedArtifacts,
                     Type = heroType,
-                    Name = heroType.Name.EnValue ?? heroType.Name.DefaultValue,
+                    Name = heroType.Name.Localize(),
                     SkillLevelsByTypeId = hero.Skills.ToDictionary(skill => skill.TypeId, skill => skill.Level),
                     SkillsById = hero.Skills.ToDictionary(skill => skill.Id, skill => skill.ToModel()),
                 });

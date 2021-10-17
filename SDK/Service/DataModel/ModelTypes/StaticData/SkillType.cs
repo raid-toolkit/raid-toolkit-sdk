@@ -1,7 +1,5 @@
 using Newtonsoft.Json;
 using System.Linq;
-using SharedModel.Meta.Heroes;
-using SharedModel.Battle.AI.Utility;
 using SharedModel.Meta.Skills;
 using SharedModel.Battle.Effects;
 
@@ -19,19 +17,13 @@ namespace Raid.Service.DataModel
         public int Level;
     }
 
-    public class SkillType
+    public abstract class BaseSkillData
     {
         [JsonProperty("typeId")]
         public int TypeId;
 
-        [JsonProperty("name")]
-        public LocalizedText Name;
-
         [JsonProperty("cooldown")]
         public int Cooldown;
-
-        [JsonProperty("description")]
-        public LocalizedText Description;
 
         [JsonProperty("visibility")]
         public Visibility Visibility;
@@ -40,7 +32,7 @@ namespace Raid.Service.DataModel
         public bool Unblockable;
 
         [JsonProperty("effects")]
-        public EffectType[] Effects;// TODO
+        public EffectType[] Effects;
 
         [JsonProperty("upgrades")]
         public SkillUpgrade[] Upgrades;
@@ -48,6 +40,39 @@ namespace Raid.Service.DataModel
         [JsonProperty("doesDamage")]
         public bool DoesDamage => Effects?.Any(effect => effect.KindId == EffectKindId.Damage) ?? false;
         // TODO: there's a lot more data here we could extract
+    }
+
+    public class SkillType : BaseSkillData
+    {
+        [JsonProperty("name")]
+        public LocalizedText Name;
+
+        [JsonProperty("description")]
+        public LocalizedText Description;
+    }
+
+    public class SkillSnapshot : BaseSkillData
+    {
+        [JsonProperty("name")]
+        public string Name;
+
+        [JsonProperty("description")]
+        public string Description;
+
+        [JsonProperty("level")]
+        public int Level;
+
+        public SkillSnapshot(SkillType skill)
+        {
+            Name = skill.Name.Localize();
+            Description = skill.Description.Localize();
+            TypeId = skill.TypeId;
+            Cooldown = skill.Cooldown;
+            Visibility = skill.Visibility;
+            Unblockable = skill.Unblockable;
+            Effects = skill.Effects;
+            Upgrades = skill.Upgrades;
+        }
     }
 
     public class EffectType
