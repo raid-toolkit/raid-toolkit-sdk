@@ -172,7 +172,15 @@ namespace Raid.Service
 
         private float GetFactorStatIncrease(StatKindId statKind, float rawValue)
         {
-            return Snapshot.BaseStats[statKind] * rawValue;
+            switch (statKind)
+            {
+                case StatKindId.CriticalChance:
+                case StatKindId.CriticalDamage:
+                case StatKindId.CriticalHeal:
+                    return rawValue * 100;
+                default:
+                    return Snapshot.BaseStats[statKind] * rawValue;
+            }
         }
 
         private float GetArenaStatIncrease(StatKindId statKind, float rawValue)

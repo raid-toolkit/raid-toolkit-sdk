@@ -35,7 +35,7 @@ namespace Raid.Service
         public Hero[] GetHeroes(string accountId, bool snapshot = false)
         {
             var heroes = HeroesFacet.ReadValue(UserData.Instance.GetAccount(accountId)).Values;
-            if (snapshot)
+            if (!snapshot)
                 return heroes.ToArray();
 
             return heroes.Select(hero => GetSnapshot(accountId, hero)).ToArray();
