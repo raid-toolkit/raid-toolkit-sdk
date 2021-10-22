@@ -24,6 +24,17 @@ namespace Raid.Service
         [JsonProperty("origin")]
         public string Origin;
     }
+    public class UnauthorizedMessage
+    {
+        [JsonProperty("type")]
+        public string Type = "unauthorized";
+
+        [JsonProperty("channelId")]
+        public string ChannelId;
+
+        [JsonProperty("reason")]
+        public string Reason;
+    }
     public class SendMessage
     {
         [JsonProperty("type")]
@@ -96,6 +107,25 @@ namespace Raid.Service
             Socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "SHUTDOWN", CancellationToken.None);
         }
 
+        public async void Reject(string channelId)
+        {
+            if (ConnectTask == null)
+            {
+                return;
+            }
+            await ConnectTask;
+            if (Socket.State == WebSocketState.Aborted)
+            {
+                Start();
+            }
+            await ConnectTask;
+            UnauthorizedMessage message = new()
+            {
+                ChannelId = channelId,
+                Reason = "User rejected the request"
+            };
+            await Socket.SendAsync(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message)).AsMemory(), WebSocketMessageType.Text, true, CancelToken?.Token ?? CancellationToken.None);
+        }
         public async void Accept(string channelId, string origin)
         {
             if (ConnectTask == null)

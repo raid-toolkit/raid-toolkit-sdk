@@ -1,6 +1,7 @@
 using System;
 using System.Web;
 using Raid.Service.Messages;
+using Raid.Service.UI;
 using SuperSocket.WebSocket.Server;
 
 namespace Raid.Service
@@ -20,7 +21,14 @@ namespace Raid.Service
                         var query = HttpUtility.ParseQueryString(rtkUri.Query);
                         var channel = query["channel"];
                         var origin = query["origin"];
-                        ChannelService.Instance.Accept(channel, origin);
+                        if (PermissionsRequest.RequestPermissions(origin))
+                        {
+                            ChannelService.Instance.Accept(channel, origin);
+                        }
+                        else
+                        {
+                            ChannelService.Instance.Reject(channel);
+                        }
                         break;
                     }
             }
