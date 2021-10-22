@@ -60,12 +60,12 @@ namespace Raid.Service
 
         public void Update()
         {
-            ModelScope scope = new(m_runtime);
             StaticDataCache.Instance.Update(m_runtime);
             if (!StaticDataCache.Instance.IsReady)
             {
                 return;
             }
+            ModelScope scope = new(m_runtime);
             foreach ((IAccountFacet facet, object currentValue) in m_facets)
             {
                 object newValue = facet.Merge(scope, currentValue);
