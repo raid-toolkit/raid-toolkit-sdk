@@ -15,10 +15,7 @@ namespace Raid.Service.DataModel
         public static UserData Instance => s_instance;
         static UserData()
         {
-            var config = new ConfigurationBuilder()
-                .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
-                .AddJsonFile("appsettings.json").Build();
-            s_settings = config.GetSection("storage").Get<StorageSettings>();
+            s_settings = AppConfiguration.Configuration.GetSection("storage").Get<StorageSettings>();
             s_instance = new UserData();
         }
         #endregion

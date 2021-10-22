@@ -40,6 +40,20 @@
             "stopAtEntry": false
         },
         {
+            "name": "Launch Service (Protocol)",
+            "type": "coreclr",
+            "request": "launch",
+            // "preLaunchTask": "build",
+            "program": "${workspaceFolder}/SDK/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
+            "args": [
+                "open",
+                "rtk://open?channel=CNTvMrQnRF3li0hGX2Apj&origin=chrome-extension://omalebghpgejjiaoknljcfmglgbpocdp"
+            ],
+            "cwd": "${workspaceFolder}/SDK/Service",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
             "name": "Register Service",
             "type": "coreclr",
             "request": "launch",
