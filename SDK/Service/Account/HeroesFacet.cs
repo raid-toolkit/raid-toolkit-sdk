@@ -56,6 +56,7 @@ namespace Raid.Service
                     Experience = hero.Experience,
                     FullExperience = hero.FullExperience,
                     Masteries = hero.MasteryData?.Masteries?.Cast<MasteryKindId>().ToArray() ?? Array.Empty<MasteryKindId>(),
+                    MasteryScrolls = hero.MasteryData?.TotalAmount?.ToDictionary(mastery => mastery.Key.ToString(), mastery => mastery.Value) ?? new Dictionary<string, int>(),
                     EquippedArtifactIds = equippedArtifacts,
                     Type = heroType,
                     Name = heroType.Name.Localize(),

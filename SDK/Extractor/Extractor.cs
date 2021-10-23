@@ -67,6 +67,7 @@ namespace Raid.Extractor
                 Marker = hero.Marker.ToString(),
                 // extras
                 Masteries = hero.MasteryData?.Masteries.ToList() ?? new(),
+                MasteryScrolls = new(hero.MasteryData?.TotalAmount.Select(mastery => new KeyValuePair<string, int>(mastery.Key.ToString(), mastery.Value)) ?? new Dictionary<string, int>()),
                 Artifacts = artifactData.TryGetValue(hero.Id, out SharedModel.Meta.Artifacts.HeroArtifactData data) ? data?.ArtifactIdByKind.Values.ToList() ?? new() : new(),
                 Skills = hero.Skills?.Select(Extensions.Dump).ToList() ?? new(),
                 // type fields

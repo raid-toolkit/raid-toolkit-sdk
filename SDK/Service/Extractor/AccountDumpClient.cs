@@ -194,6 +194,9 @@ namespace RaidExtractor.Core
         [Newtonsoft.Json.JsonProperty("masteries", Required = Newtonsoft.Json.Required.Always)]
         public List<int> Masteries { get; set; }
 
+        [Newtonsoft.Json.JsonProperty("masteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
+        public Dictionary<string, int> MasteryScrolls { get; set; }
+
         [Newtonsoft.Json.JsonProperty("skills", Required = Newtonsoft.Json.Required.Always)]
         public List<Skill> Skills { get; set; }
     }

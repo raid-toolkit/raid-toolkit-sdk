@@ -50,6 +50,9 @@ namespace Raid.Service.DataModel
         [JsonProperty("masteries")]
         public MasteryKindId[] Masteries;
 
+        [JsonProperty("masteryScrolls")]
+        public IReadOnlyDictionary<string, int> MasteryScrolls;
+
         [JsonProperty("equippedArtifactIds")]
         public NumericDictionary<ArtifactKindId, int> EquippedArtifactIds;
 
