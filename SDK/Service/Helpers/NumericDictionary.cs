@@ -25,6 +25,11 @@ namespace Raid.Service
             return new NumericDictionary<K, V>(value);
         }
 
+        public Dictionary<K, V> ToEnumDictionary()
+        {
+            return this.ToDictionary(kvp => (K)(object)kvp.Key, kvp => kvp.Value);
+        }
+
         public bool TryGetValue(K key, out V value)
         {
             return TryGetValue((int)(object)key, out value);

@@ -53,7 +53,7 @@ namespace RaidExtractor.Core
                 {
                     var heroType = staticData.HeroData.HeroTypes[hero.TypeId];
                     var multiplier = StaticResources.Multipliers.First(m => m.stars == hero.Rank && m.level == hero.Level);
-                    Hero NewHero = new Hero()
+                    Hero newHero = new Hero()
                     {
                         // instance fields
                         Id = hero.Id,
@@ -67,9 +67,9 @@ namespace RaidExtractor.Core
                         Marker = hero.Marker.ToString(),
                         // extras
                         Masteries = hero.Masteries?.Cast<int>().ToList() ?? new(),
-                        AssignedMasteryScrolls = new(hero.AssignedMasteryScrolls?.Select(mastery => new KeyValuePair<MasteryPointType, int>((MasteryPointType)mastery.Key, mastery.Value)) ?? new Dictionary<MasteryPointType, int>()),
-                        UnassignedMasteryScrolls = new(hero.UnassignedMasteryScrolls?.Select(mastery => new KeyValuePair<MasteryPointType, int>((MasteryPointType)mastery.Key, mastery.Value)) ?? new Dictionary<MasteryPointType, int>()),
-                        TotalMasteryScrolls = new Dictionary<MasteryPointType, int>(),
+                        AssignedMasteryScrolls = hero.AssignedMasteryScrolls?.ToEnumDictionary() ?? new(),
+                        UnassignedMasteryScrolls = hero.UnassignedMasteryScrolls?.ToEnumDictionary() ?? new(),
+                        TotalMasteryScrolls = hero.TotalMasteryScrolls?.ToEnumDictionary() ?? new(),
                         Artifacts = hero.EquippedArtifactIds?.Values.ToArray(),
                         Skills = hero.SkillsById?.Values.Select(skill => new Skill() { TypeId = skill.TypeId, Id = skill.Id, Level = skill.Level, }).ToList() ?? new(),
                         // type fields
@@ -90,12 +90,12 @@ namespace RaidExtractor.Core
                         CriticalHeal = heroType.UnscaledStats.CriticalHeal,
                     };
 
-                    NewHero.TotalMasteryScrolls = (Dictionary<MasteryPointType, int>)(NewHero.TotalMasteryScrolls.Concat(NewHero.AssignedMasteryScrolls)
-                        .Concat(NewHero.UnassignedMasteryScrolls)
+                    newHero.TotalMasteryScrolls = (Dictionary<MasteryPointType, int>)(newHero.TotalMasteryScrolls.Concat(newHero.AssignedMasteryScrolls)
+                        .Concat(newHero.UnassignedMasteryScrolls)
                         .GroupBy(x => x.Key)
                         .ToDictionary(x => x.Key, x => x.Sum(y => y.Value)));
 
-                    return NewHero;
+                    return newHero;
                 }).ToArray()
             };
         }
