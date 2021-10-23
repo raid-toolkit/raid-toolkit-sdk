@@ -44,7 +44,7 @@ namespace Raid.Service
 
                 IReadOnlyDictionary<int, int> skillLevels = hero.Skills.ToDictionary(skill => skill.TypeId, skill => skill.Level);
 
-                Hero NewHero = new()
+                Hero newHero = new()
                 {
                     Id = id,
                     TypeId = hero.TypeId,
@@ -67,12 +67,12 @@ namespace Raid.Service
                     SkillsById = hero.Skills.ToDictionary(skill => skill.Id, skill => skill.ToModel()),
                 };
 
-                NewHero.TotalMasteryScrolls = (NumericDictionary<MasteryPointType, int>)(NewHero.TotalMasteryScrolls.Concat(NewHero.AssignedMasteryScrolls)
-                   .Concat(NewHero.UnassignedMasteryScrolls)
+                newHero.TotalMasteryScrolls = new(newHero.TotalMasteryScrolls.Concat(newHero.AssignedMasteryScrolls)
+                   .Concat(newHero.UnassignedMasteryScrolls)
                    .GroupBy(x => x.Key)
                    .ToDictionary(x => x.Key, x => x.Sum(y => y.Value)));
 
-                result.Add(id, NewHero);
+                result.Add(id, newHero);
             }
 
             if (previous != null)

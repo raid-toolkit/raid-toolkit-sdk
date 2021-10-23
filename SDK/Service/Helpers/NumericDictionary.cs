@@ -11,6 +11,11 @@ namespace Raid.Service
         : base(dict.ToDictionary(kvp => (int)(object)kvp.Key, kvp => kvp.Value))
         {
         }
+        public NumericDictionary(Dictionary<int, V> dict)
+        : base(dict)
+        {
+        }
+
         public static implicit operator NumericDictionary<K, V>(Dictionary<K, V> value)
         {
             if (value == null)
