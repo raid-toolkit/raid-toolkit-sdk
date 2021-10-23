@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Raid.Service.DataModel;
 using SharedModel.Meta.Artifacts;
+using SharedModel.Meta.Masteries;
 
 namespace Raid.Service
 {
@@ -43,7 +44,7 @@ namespace Raid.Service
 
                 IReadOnlyDictionary<int, int> skillLevels = hero.Skills.ToDictionary(skill => skill.TypeId, skill => skill.Level);
 
-                result.Add(id, new()
+                Hero newHero = new()
                 {
                     Id = id,
                     TypeId = hero.TypeId,
@@ -56,12 +57,22 @@ namespace Raid.Service
                     Experience = hero.Experience,
                     FullExperience = hero.FullExperience,
                     Masteries = hero.MasteryData?.Masteries?.Cast<MasteryKindId>().ToArray() ?? Array.Empty<MasteryKindId>(),
+                    AssignedMasteryScrolls = hero.MasteryData?.TotalAmount?.UnderlyingDictionary ?? new NumericDictionary<MasteryPointType, int>(),
+                    UnassignedMasteryScrolls = hero.MasteryData?.CurrentAmount?.UnderlyingDictionary ?? new NumericDictionary<MasteryPointType, int>(),
+                    TotalMasteryScrolls = new NumericDictionary<MasteryPointType, int>(),
                     EquippedArtifactIds = equippedArtifacts,
                     Type = heroType,
                     Name = heroType.Name.Localize(),
                     SkillLevelsByTypeId = hero.Skills.ToDictionary(skill => skill.TypeId, skill => skill.Level),
                     SkillsById = hero.Skills.ToDictionary(skill => skill.Id, skill => skill.ToModel()),
-                });
+                };
+
+                newHero.TotalMasteryScrolls = new(newHero.TotalMasteryScrolls.Concat(newHero.AssignedMasteryScrolls)
+                   .Concat(newHero.UnassignedMasteryScrolls)
+                   .GroupBy(x => x.Key)
+                   .ToDictionary(x => x.Key, x => x.Sum(y => y.Value)));
+
+                result.Add(id, newHero);
             }
 
             if (previous != null)
