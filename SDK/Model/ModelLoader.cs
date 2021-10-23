@@ -32,7 +32,7 @@ namespace Raid.Model
                 throw new InvalidOperationException("Game is not installed");
             }
 
-            string executingPath = Assembly.GetExecutingAssembly().Location;
+            string executingPath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
             string dllPath = Path.Join(Path.GetDirectoryName(executingPath), gameInfo.Version, "Raid.Interop.dll");
 
             if (!File.Exists(dllPath))

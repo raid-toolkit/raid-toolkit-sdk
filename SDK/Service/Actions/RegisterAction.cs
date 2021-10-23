@@ -11,9 +11,6 @@ namespace Raid.Service
     {
         [Option('s', "--startup", HelpText = "Registers the service to start when windows starts")]
         public bool RunOnStartup { get; set; }
-
-        [Option('r', "--register-protocol-handler", HelpText = "Registers rtk:// protocol handler")]
-        public bool RegisterProtocolHandler { get; set; }
     }
     static class RegisterAction
     {
@@ -23,21 +20,21 @@ namespace Raid.Service
         public static int Execute(RegisterOptions options)
         {
             RegisterStartup(options.RunOnStartup);
-            RegisterProtocol(options.RegisterProtocolHandler);
+            RegisterProtocol(true);
             return 0;
         }
 
-        private static void RegisterStartup(bool runOnStartup)
+        public static void RegisterStartup(bool runOnStartup)
         {
             RegistryKey runKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Microsoft\Windows\CurrentVersion\Run", true);
             runKey.DeleteValue(StartupName, false);
             if (runOnStartup)
             {
-                runKey.SetValue(StartupName, Application.ExecutablePath);
+                runKey.SetValue(StartupName, AppConfiguration.ExecutablePath);
             }
         }
 
-        private static void RegisterProtocol(bool registerProtocolHandler)
+        public static void RegisterProtocol(bool registerProtocolHandler)
         {
             RegistryKey classesKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Classes", true);
             classesKey.DeleteSubKeyTree(Protocol, false);
@@ -47,7 +44,7 @@ namespace Raid.Service
                 classKey.SetValue(null, "URL:Raid Toolkit");
                 classKey.SetValue("URL Protocol", "");
                 var cmdKey = classKey.CreateSubKey("shell").CreateSubKey("open").CreateSubKey("command");
-                cmdKey.SetValue(null, $"\"{Application.ExecutablePath}\" open \"%1\"");
+                cmdKey.SetValue(null, $"\"{AppConfiguration.ExecutablePath}\" open \"%1\"");
             }
         }
 

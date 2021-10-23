@@ -52,6 +52,10 @@ namespace Raid.Service
 
         private static async Task Run(RunOptions options)
         {
+            if (!options.Standalone)
+            {
+                RegisterAction.RegisterProtocol(true);
+            }
             if (!options.NoUI)
             {
                 CreateTrayIcon();
@@ -81,7 +85,7 @@ namespace Raid.Service
         private static void CreateTrayIcon()
         {
             notifyIcon = new NotifyIcon();
-            notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(AppConfiguration.ExecutablePath);
             notifyIcon.Text = "Raid Toolkit";
             // notifyIcon.MouseClick += ClickTrayIcon;
             notifyIcon.ContextMenuStrip = new ContextMenuStrip();

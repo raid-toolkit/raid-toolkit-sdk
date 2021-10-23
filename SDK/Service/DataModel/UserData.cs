@@ -32,7 +32,7 @@ namespace Raid.Service.DataModel
             m_storagePath = s_settings.StorageLocation ?? "data";
             if (!Path.IsPathFullyQualified(m_storagePath))
             {
-                m_storagePath = Path.Join(AppDomain.CurrentDomain.BaseDirectory, m_storagePath);
+                m_storagePath = Path.Join(AppConfiguration.ExecutableDirectory, m_storagePath);
             }
 
             // create basic directories

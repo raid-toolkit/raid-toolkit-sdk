@@ -41,7 +41,7 @@ namespace Raid.Service
         {
             if (!IsRunning)
             {
-                Process.Start(Application.ExecutablePath);
+                Process.Start(AppConfiguration.ExecutablePath);
             }
 
             int portNumber = AppConfiguration.Configuration.GetValue<int>("serverOptions:listeners:0:port");
