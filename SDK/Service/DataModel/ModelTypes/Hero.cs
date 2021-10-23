@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using SharedModel.Meta.Artifacts;
 using SharedModel.Meta.Heroes;
+using SharedModel.Meta.Masteries;
 
 namespace Raid.Service.DataModel
 {
@@ -50,8 +51,14 @@ namespace Raid.Service.DataModel
         [JsonProperty("masteries")]
         public MasteryKindId[] Masteries;
 
-        [JsonProperty("masteryScrolls")]
-        public IReadOnlyDictionary<string, int> MasteryScrolls;
+        [JsonProperty("assignedMasteryScrolls")]
+        public NumericDictionary<MasteryPointType, int> AssignedMasteryScrolls;
+
+        [JsonProperty("unassignedMasteryScrolls")]
+        public NumericDictionary<MasteryPointType, int> UnassignedMasteryScrolls;
+
+        [JsonProperty("totalMasteryScrolls")]
+        public NumericDictionary<MasteryPointType, int> TotalMasteryScrolls;
 
         [JsonProperty("equippedArtifactIds")]
         public NumericDictionary<ArtifactKindId, int> EquippedArtifactIds;

@@ -7,6 +7,7 @@
 using System.Collections.Generic;
 using SharedModel.Battle.Effects;
 using SharedModel.Meta.Heroes;
+using SharedModel.Meta.Masteries;
 
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
@@ -194,8 +195,14 @@ namespace RaidExtractor.Core
         [Newtonsoft.Json.JsonProperty("masteries", Required = Newtonsoft.Json.Required.Always)]
         public List<int> Masteries { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("masteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Dictionary<string, int> MasteryScrolls { get; set; }
+        [Newtonsoft.Json.JsonProperty("assignedMasteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
+        public Dictionary<MasteryPointType, int> AssignedMasteryScrolls { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("unassignedMasteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
+        public Dictionary<MasteryPointType, int> UnassignedMasteryScrolls { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("totalMasteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
+        public Dictionary<MasteryPointType, int> TotalMasteryScrolls { get; set; }
 
         [Newtonsoft.Json.JsonProperty("skills", Required = Newtonsoft.Json.Required.Always)]
         public List<Skill> Skills { get; set; }

@@ -194,8 +194,14 @@ namespace RaidExtractor.Core
         [Newtonsoft.Json.JsonProperty("masteries", Required = Newtonsoft.Json.Required.Always)]
         public List<int> Masteries { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("masteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Dictionary<string, int> MasteryScrolls { get; set; }
+        [Newtonsoft.Json.JsonProperty("assignedMasteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
+        public Dictionary<string, int> AssignedMasteryScrolls { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("unassignedMasteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
+        public Dictionary<string, int> UnassignedMasteryScrolls { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("totalMasteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
+        public Dictionary<string, int> TotalMasteryScrolls { get; set; }
 
         [Newtonsoft.Json.JsonProperty("skills", Required = Newtonsoft.Json.Required.Always)]
         public List<Skill> Skills { get; set; }
