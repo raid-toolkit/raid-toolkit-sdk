@@ -1,6 +1,4 @@
 using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -15,8 +13,9 @@ namespace Raid.Service
     {
         private static IHost Host;
 
-        private static IHostBuilder CreateHostBuilder() =>
-            WebSocketHostBuilder.Create()
+        private static IHostBuilder CreateHostBuilder()
+        {
+            return WebSocketHostBuilder.Create()
             .UseWebSocketMessageHandler(ModelService.HandleMessage)
             .ConfigureServices((ctx, services) => services
                 .Configure<AppSettings>(opts => ctx.Configuration.GetSection("app").Bind(opts))
@@ -33,7 +32,8 @@ namespace Raid.Service
                 .AddTypesAssignableToFactories<IStaticFacet>(collection => collection.AddSingleton)
                 .AddTypesAssignableToFactories<IAccountFacet>(collection => collection.AddSingleton)
             )
-            .ConfigureLogging(configureLogging => configureLogging.AddDebug());
+            .ConfigureLogging(configureLogging => configureLogging.ClearProviders().AddDebug());
+        }
 
         public static IHost CreateHost()
         {

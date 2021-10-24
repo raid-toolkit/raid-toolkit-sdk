@@ -18,25 +18,34 @@ namespace Raid.Service
 
         public void HandleMessage(SocketMessage message, WebSocketSession session)
         {
-            switch (message.Channel)
+            using (Logger.BeginScope($"Handle Message from session {session.SessionID}"))
             {
-                case "open":
-                    {
-                        OpenOptions openOptions = message.Message.ToObject<OpenOptions>();
-                        Uri rtkUri = new Uri(openOptions.Uri);
-                        var query = HttpUtility.ParseQueryString(rtkUri.Query);
-                        var channel = query["channel"];
-                        var origin = query["origin"];
-                        if (PermissionsRequest.RequestPermissions(origin))
+                Logger.LogInformation(ServiceEvent.ProtocolHandlerHandleMessage.EventId(), $"Channel = {message.Channel}");
+
+                switch (message.Channel)
+                {
+                    case "open":
                         {
-                            ChannelService.Accept(channel, origin);
+                            OpenOptions openOptions = message.Message.ToObject<OpenOptions>();
+                            Logger.LogInformation(ServiceEvent.ProtocolHandlerOpen.EventId(), $"Uri = {openOptions.Uri}");
+
+                            Uri rtkUri = new Uri(openOptions.Uri);
+                            var query = HttpUtility.ParseQueryString(rtkUri.Query);
+                            var channel = query["channel"];
+                            var origin = query["origin"];
+                            if (PermissionsRequest.RequestPermissions(origin))
+                            {
+                                Logger.LogInformation(ServiceEvent.ProtocolHandlerAccept.EventId(), "User accepted");
+                                ChannelService.Accept(channel, origin);
+                            }
+                            else
+                            {
+                                Logger.LogInformation(ServiceEvent.ProtocolHandlerReject.EventId(), "User rejected");
+                                ChannelService.Reject(channel);
+                            }
+                            break;
                         }
-                        else
-                        {
-                            ChannelService.Reject(channel);
-                        }
-                        break;
-                    }
+                }
             }
         }
     }
