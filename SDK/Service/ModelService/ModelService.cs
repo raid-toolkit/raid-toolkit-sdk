@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Raid.Service.Messages;
@@ -11,48 +12,30 @@ using SuperSocket.WebSocket.Server;
 
 namespace Raid.Service
 {
-    public class ModelService : IDisposable
+    public class ModelService
     {
-        private IReadOnlyDictionary<string, IMessageScopeHandler> m_scopeHandlers;
-        private IHost m_host;
-
-        public ModelService()
+        private readonly IReadOnlyDictionary<string, IMessageScopeHandler> ScopeHandlers;
+        public ModelService(IEnumerable<IMessageScopeHandler> handlers)
         {
-            m_scopeHandlers = typeof(ModelService).Assembly.ConstructTypesAssignableTo<IMessageScopeHandler>().ToDictionary(handler => handler.Name);
-            m_host = WebSocketHostBuilder.Create()
-                .UseWebSocketMessageHandler(ProcessMessage)
-                .ConfigureAppConfiguration((hostCtx, configApp) =>
-                {
-                    configApp.AddJsonFile("appsettings.json");
-                })
-
-                .Build();
-        }
-
-        public void Dispose()
-        {
-            m_host.Dispose();
-        }
-
-        public async void Start()
-        {
-            await m_host.StartAsync();
-        }
-
-        public async Task Stop()
-        {
-            await m_host.StopAsync();
+            ScopeHandlers = handlers.ToDictionary(handler => handler.Name);
         }
 
         private ValueTask ProcessMessage(WebSocketSession session, WebSocketPackage message)
         {
             var socketMessage = JsonConvert.DeserializeObject<SocketMessage>(message.Message);
-            if (m_scopeHandlers.TryGetValue(socketMessage.Scope, out IMessageScopeHandler handler))
+
+            if (ScopeHandlers.TryGetValue(socketMessage.Scope, out IMessageScopeHandler handler))
             {
                 handler.HandleMessage(socketMessage, session);
             }
+
             // TODO: Error handling/logging
             return ValueTask.CompletedTask;
+        }
+
+        public static ValueTask HandleMessage(WebSocketSession session, WebSocketPackage message)
+        {
+            return RaidHost.Services.GetRequiredService<ModelService>().ProcessMessage(session, message);
         }
     }
 }

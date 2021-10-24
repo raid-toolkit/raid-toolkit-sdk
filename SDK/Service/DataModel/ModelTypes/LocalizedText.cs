@@ -27,9 +27,10 @@ namespace Raid.Service.DataModel
         }
         public static string Localize(this LocalizedText key)
         {
-            var localizedStrings = StaticDataFacet.ReadValue(StaticDataCache.Instance).LocalizedStrings;
-            if (localizedStrings.TryGetValue(key.Key, out string value))
-                return value;
+            // TODO NOW
+            // var localizedStrings = StaticDataFacet.ReadValue(StaticDataCache.Instance).LocalizedStrings;
+            // if (localizedStrings.TryGetValue(key.Key, out string value))
+            //     return value;
             return key.EnValue ?? key.DefaultValue;
         }
     }

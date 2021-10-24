@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using Microsoft.Extensions.Logging;
 using Raid.Model;
 
 namespace Raid.Service
@@ -17,6 +18,8 @@ namespace Raid.Service
             }
             s_installPath = Path.Join(gameInfo.InstallPath, gameInfo.Version);
         }
+
+        public MetadataApi(ILogger<ApiHandler> logger) : base(logger) { }
 
         [PublicApi("getInstallPath")]
         public string getInstallPath() => s_installPath;

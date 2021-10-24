@@ -2,24 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
 namespace Raid.Service.DataModel
 {
     public class UserData
     {
-        #region Static init
-        private static readonly UserData s_instance;
-        private static readonly StorageSettings s_settings;
-        public static UserData Instance => s_instance;
-        static UserData()
-        {
-            s_settings = AppConfiguration.Configuration.GetSection("storage").Get<StorageSettings>();
-            s_instance = new UserData();
-        }
-        #endregion
-
         private readonly string m_storagePath;
         private readonly string m_accountsPath;
         private readonly string m_staticDataPath;
@@ -27,9 +16,9 @@ namespace Raid.Service.DataModel
 
         public IEnumerable<UserAccount> UserAccounts => m_userAccounts.Values;
 
-        private UserData()
+        public UserData(IOptions<AppSettings> settings)
         {
-            m_storagePath = s_settings.StorageLocation ?? "data";
+            m_storagePath = settings.Value.StorageLocation ?? "data";
             if (!Path.IsPathFullyQualified(m_storagePath))
             {
                 m_storagePath = Path.Join(AppConfiguration.ExecutableDirectory, m_storagePath);
@@ -42,14 +31,14 @@ namespace Raid.Service.DataModel
             Directory.CreateDirectory(m_staticDataPath);
 
             // enumerate accounts
-            m_userAccounts = Directory.GetDirectories(m_accountsPath).ToDictionary(id => Path.GetFileName(id), id => new UserAccount(Path.GetFileName(id)));
+            m_userAccounts = Directory.GetDirectories(m_accountsPath).ToDictionary(id => Path.GetFileName(id), id => new UserAccount(Path.GetFileName(id), this));
         }
 
         public UserAccount GetAccount(string id)
         {
             if (!m_userAccounts.TryGetValue(id, out UserAccount account))
             {
-                account = new UserAccount(id);
+                account = new UserAccount(id, this);
                 m_userAccounts.Add(id, account);
             }
             return account;

@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using CommandLine;
 using Microsoft.Extensions.Configuration;
@@ -37,7 +38,7 @@ namespace Raid.Service
             }
         }
 
-        public static int Execute(OpenOptions options)
+        public static Task<int> Execute(OpenOptions options)
         {
             if (!IsRunning)
             {
@@ -57,7 +58,7 @@ namespace Raid.Service
 
             socket.SendAsync(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(msg)).AsMemory(), WebSocketMessageType.Text, true, CancellationToken.None).AsTask().Wait();
             socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Done", CancellationToken.None).Wait();
-            return 0;
+            return Task.FromResult(0);
         }
     }
 }

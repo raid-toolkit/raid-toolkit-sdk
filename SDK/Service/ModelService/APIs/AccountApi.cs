@@ -1,40 +1,47 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 using Raid.Service.DataModel;
-using SharedModel.Meta.Artifacts.Sets;
 using SharedModel.Meta.Skills;
+using Extractor = RaidExtractor.Core.Extractor;
 
 namespace Raid.Service
 {
     [PublicApi("account-api")]
     internal class AccountApi : ApiHandler
     {
+        private readonly StaticDataCache StaticDataCache;
+        private readonly UserData UserData;
+        private readonly Extractor Extractor;
+        public AccountApi(ILogger<ApiHandler> logger, UserData userData, StaticDataCache staticData, Extractor extractor)
+            : base(logger) => (UserData, StaticDataCache, Extractor) = (userData, staticData, extractor);
+
         [PublicApi("updated")]
         public event EventHandler<SerializableEventArgs> Updated;
 
         [PublicApi("dump")]
-        public RaidExtractor.Core.AccountDump GetAccountDump(string accountId) => RaidExtractor.Core.Extractor.DumpAccount(UserData.Instance.GetAccount(accountId));
+        public RaidExtractor.Core.AccountDump GetAccountDump(string accountId) => Extractor.DumpAccount(UserData.GetAccount(accountId));
 
         [PublicApi("getAllResources")]
-        public Resources GetAllResources(string accountId) => ResourcesFacet.ReadValue(UserData.Instance.GetAccount(accountId));
+        public Resources GetAllResources(string accountId) => ResourcesFacet.ReadValue(UserData.GetAccount(accountId));
 
         [PublicApi("getAccounts")]
-        public Account[] GetAccounts() => UserData.Instance.UserAccounts.Select(AccountFacet.ReadValue).ToArray();
+        public Account[] GetAccounts() => UserData.UserAccounts.Select(AccountFacet.ReadValue).ToArray();
 
         [PublicApi("accountInfo")]
-        public Account GetAccount(string accountId) => AccountFacet.ReadValue(UserData.Instance.GetAccount(accountId));
+        public Account GetAccount(string accountId) => AccountFacet.ReadValue(UserData.GetAccount(accountId));
 
         [PublicApi("getArtifacts")]
-        public Artifact[] GetArtifacts(string accountId) => ArtifactsFacet.ReadValue(UserData.Instance.GetAccount(accountId)).Values.ToArray();
+        public Artifact[] GetArtifacts(string accountId) => ArtifactsFacet.ReadValue(UserData.GetAccount(accountId)).Values.ToArray();
 
         [PublicApi("getArtifactById")]
-        public Artifact GetArtifactById(string accountId, int artifactId) => ArtifactsFacet.ReadValue(UserData.Instance.GetAccount(accountId))[artifactId];
+        public Artifact GetArtifactById(string accountId, int artifactId) => ArtifactsFacet.ReadValue(UserData.GetAccount(accountId))[artifactId];
 
         [PublicApi("getHeroes")]
         public Hero[] GetHeroes(string accountId, bool snapshot = false)
         {
-            var heroes = HeroesFacet.ReadValue(UserData.Instance.GetAccount(accountId)).Values;
+            var heroes = HeroesFacet.ReadValue(UserData.GetAccount(accountId)).Values;
             if (!snapshot)
                 return heroes.ToArray();
 
@@ -44,7 +51,7 @@ namespace Raid.Service
         [PublicApi("getHeroById")]
         public Hero GetHeroById(string accountId, int heroId, bool snapshot = false)
         {
-            var hero = HeroesFacet.ReadValue(UserData.Instance.GetAccount(accountId))[heroId];
+            var hero = HeroesFacet.ReadValue(UserData.GetAccount(accountId))[heroId];
             if (!snapshot)
                 return hero;
 
@@ -71,9 +78,9 @@ namespace Raid.Service
 
         private HeroSnapshot GetSnapshot(string accountId, Hero hero)
         {
-            var staticData = StaticDataFacet.ReadValue(StaticDataCache.Instance);
-            var arenaData = ArenaFacet.ReadValue(UserData.Instance.GetAccount(accountId));
-            var artifactData = ArtifactsFacet.ReadValue(UserData.Instance.GetAccount(accountId));
+            var staticData = StaticDataFacet.ReadValue(StaticDataCache);
+            var arenaData = ArenaFacet.ReadValue(UserData.GetAccount(accountId));
+            var artifactData = ArtifactsFacet.ReadValue(UserData.GetAccount(accountId));
             HeroType type = hero.Type;
             HeroStatsCalculator stats = new(type, hero.Rank, hero.Level);
 

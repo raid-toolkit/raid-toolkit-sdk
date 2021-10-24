@@ -1,5 +1,6 @@
 using System;
 using System.Web;
+using Microsoft.Extensions.Logging;
 using Raid.Service.Messages;
 using Raid.Service.UI;
 using SuperSocket.WebSocket.Server;
@@ -9,6 +10,11 @@ namespace Raid.Service
     internal class ProtocolHandler : IMessageScopeHandler
     {
         public string Name => "$rtk";
+        private ILogger<ProtocolHandler> Logger;
+        private ChannelService ChannelService;
+
+        public ProtocolHandler(ILogger<ProtocolHandler> logger, ChannelService channelService) =>
+            (Logger, ChannelService) = (logger, channelService);
 
         public void HandleMessage(SocketMessage message, WebSocketSession session)
         {
@@ -23,11 +29,11 @@ namespace Raid.Service
                         var origin = query["origin"];
                         if (PermissionsRequest.RequestPermissions(origin))
                         {
-                            ChannelService.Instance.Accept(channel, origin);
+                            ChannelService.Accept(channel, origin);
                         }
                         else
                         {
-                            ChannelService.Instance.Reject(channel);
+                            ChannelService.Reject(channel);
                         }
                         break;
                     }

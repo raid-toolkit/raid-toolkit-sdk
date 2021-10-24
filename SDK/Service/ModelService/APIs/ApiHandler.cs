@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Raid.Service.Messages;
@@ -12,15 +13,17 @@ namespace Raid.Service
 {
     internal abstract class ApiHandler : IMessageScopeHandler
     {
-        private Dictionary<string, EventHandler<SerializableEventArgs>> m_eventHandlerDelegates = new();
-        private IReadOnlyDictionary<string, ApiMemberDefinition> m_methods;
+        private Dictionary<string, EventHandler<SerializableEventArgs>> EventHandlerDelegates = new();
+        private IReadOnlyDictionary<string, ApiMemberDefinition> Methods;
+        protected ILogger<ApiHandler> Logger;
 
         public string Name { get; }
 
-        public ApiHandler()
+        public ApiHandler(ILogger<ApiHandler> logger)
         {
+            Logger = logger;
             Name = GetType().GetCustomAttribute<PublicApiAttribute>().Name;
-            m_methods = GetType().GetMembers()
+            Methods = GetType().GetMembers()
                 .Select(member => new ApiMemberDefinition(member, member.GetCustomAttribute<PublicApiAttribute>()))
                 .Where(member => member.Attribute != null)
                 .ToDictionary(member => member.Attribute.Name ?? member.Name);
@@ -50,10 +53,10 @@ namespace Raid.Service
             try
             {
                 EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName);
-                if (!m_eventHandlerDelegates.TryGetValue($"{session.SessionID}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
+                if (!EventHandlerDelegates.TryGetValue($"{session.SessionID}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
                 {
                     handler = (object sender, SerializableEventArgs args) => SendEvent(eventInfo, session, args);
-                    m_eventHandlerDelegates.Add($"{session.SessionID}:{subscriptionMessage.EventName}", handler);
+                    EventHandlerDelegates.Add($"{session.SessionID}:{subscriptionMessage.EventName}", handler);
                 }
                 eventInfo.AddEventHandler(this, handler);
             }
@@ -67,7 +70,7 @@ namespace Raid.Service
         {
             if (session.State != SuperSocket.SessionState.Connected)
             {
-                if (m_eventHandlerDelegates.Remove($"{session.SessionID}:{args.EventName}", out var handler))
+                if (EventHandlerDelegates.Remove($"{session.SessionID}:{args.EventName}", out var handler))
                 {
                     eventInfo.RemoveEventHandler(this, handler);
                 }
@@ -92,7 +95,7 @@ namespace Raid.Service
             try
             {
                 EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName);
-                if (!m_eventHandlerDelegates.TryGetValue($"{session.SessionID}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
+                if (!EventHandlerDelegates.TryGetValue($"{session.SessionID}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
                     return;
 
                 eventInfo.RemoveEventHandler(this, handler);
@@ -160,7 +163,7 @@ namespace Raid.Service
 
         private T GetPublicApi<T>(string name) where T : MemberInfo
         {
-            if (m_methods.TryGetValue(name, out ApiMemberDefinition member) && member.MemberInfo is T result)
+            if (Methods.TryGetValue(name, out ApiMemberDefinition member) && member.MemberInfo is T result)
             {
                 return result;
             }

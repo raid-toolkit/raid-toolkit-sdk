@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace Raid.Service
 {
-    public class ProcessWatcher
+    public class ProcessWatcher : BackgroundService
     {
         public class ProcessWatcherEventArgs : EventArgs
         {
@@ -21,42 +25,42 @@ namespace Raid.Service
             }
         }
 
-        private readonly Dictionary<int, Process> m_processes = new();
-        private readonly string m_processName;
-        private readonly int m_pollIntervalMs;
+        private readonly Dictionary<int, Process> ActiveProcesses = new();
+        private readonly ProcessWatcherSettings Settings;
 
         public event EventHandler<ProcessWatcherEventArgs> ProcessFound;
         public event EventHandler<ProcessWatcherEventArgs> ProcessClosed;
 
-        public ProcessWatcher(string processName, int pollIntervalMs = 10000)
+        public ProcessWatcher(IOptions<AppSettings> settings) => Settings = settings.Value.ProcessWatcher;
+
+        protected override System.Threading.Tasks.Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            m_pollIntervalMs = pollIntervalMs;
-            m_processName = processName;
-            TaskExtensions.RunAfter(1, RefreshProcesses);
+            RefreshProcesses();
+            return Task.Delay(-1, stoppingToken);
         }
 
         private void RefreshProcesses()
         {
-            Process[] processes = Process.GetProcessesByName("Raid");
-            HashSet<int> currentIds = new(m_processes.Keys);
+            Process[] processes = Process.GetProcessesByName(Settings.ProcessName);
+            HashSet<int> currentIds = new(ActiveProcesses.Keys);
             foreach (Process process in processes)
             {
                 currentIds.Remove(process.Id);
-                if (!m_processes.ContainsKey(process.Id))
+                if (!ActiveProcesses.ContainsKey(process.Id))
                 {
-                    m_processes.Add(process.Id, process);
+                    ActiveProcesses.Add(process.Id, process);
                     ProcessFound?.Invoke(this, new ProcessWatcherEventArgs(process));
                 }
             }
             foreach (int closedProcessId in currentIds)
             {
-                if (m_processes.TryGetValue(closedProcessId, out Process closedProcess))
+                if (ActiveProcesses.TryGetValue(closedProcessId, out Process closedProcess))
                 {
                     ProcessClosed?.Invoke(this, new ProcessWatcherEventArgs(closedProcessId));
                     closedProcess.Dispose();
                 }
             }
-            TaskExtensions.RunAfter(m_pollIntervalMs, RefreshProcesses);
+            TaskExtensions.RunAfter(Settings.PollIntervalMs, RefreshProcesses);
         }
     }
 }

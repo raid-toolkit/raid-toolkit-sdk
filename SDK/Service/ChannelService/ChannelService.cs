@@ -1,11 +1,11 @@
 using System;
-using System.Diagnostics;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Raid.Service.DataModel;
@@ -24,6 +24,7 @@ namespace Raid.Service
         [JsonProperty("origin")]
         public string Origin;
     }
+
     public class UnauthorizedMessage
     {
         [JsonProperty("type")]
@@ -35,6 +36,7 @@ namespace Raid.Service
         [JsonProperty("reason")]
         public string Reason;
     }
+
     public class SendMessage
     {
         [JsonProperty("type")]
@@ -46,33 +48,33 @@ namespace Raid.Service
         [JsonProperty("message")]
         public JToken Message;
     }
-    public class ChannelService
+
+    public class ChannelService : BackgroundService
     {
-        public static ChannelService Instance = new ChannelService();
-
-        private CancellationTokenSource CancelToken;
-        private ClientWebSocket Socket = new ClientWebSocket();
-        private Uri HostUri;
+        private readonly ClientWebSocket Socket = new ClientWebSocket();
+        private readonly Uri HostUri;
         private Task ConnectTask;
+        private readonly UserData UserData;
+        private readonly Extractor Extractor;
 
-        public ChannelService()
+        public ChannelService(IOptions<AppSettings> settings, UserData userData, Extractor extractor)
         {
-            string publicServer = AppConfiguration.Configuration.GetValue<string>("publicServer");
-            HostUri = new Uri(publicServer);
-            Start();
+            HostUri = new Uri(settings.Value.PublicServer);
+            UserData = userData;
+            Extractor = extractor;
         }
 
-        public void Start()
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            CancelToken = new();
-            ConnectTask = Socket.ConnectAsync(HostUri, CancelToken.Token);
-            Run(CancelToken.Token);
+            ConnectTask = Socket.ConnectAsync(HostUri, stoppingToken);
+            await ConnectTask;
+            await Run(stoppingToken);
+            await Socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "SHUTDOWN", CancellationToken.None);
         }
 
-        private async void Run(CancellationToken token)
+        private async Task Run(CancellationToken token)
         {
             Memory<byte> buffer = new Memory<byte>(new byte[1024 * 1024 * 3]);
-            await ConnectTask;
             while (!token.IsCancellationRequested)
             {
                 var result = await Socket.ReceiveAsync(buffer, token);
@@ -88,62 +90,48 @@ namespace Raid.Service
                 }
                 if (sendMessage.Message.ToObject<string>() == "dump")
                 {
-                    var account = UserData.Instance.UserAccounts.FirstOrDefault();
+                    var account = UserData.UserAccounts.FirstOrDefault();
                     var dump = Extractor.DumpAccount(account);
                     var response = new SendMessage()
                     {
                         ChannelId = sendMessage.ChannelId,
                         Message = JObject.FromObject(dump),
                     };
-                    await Socket.SendAsync(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(response)).AsMemory(), WebSocketMessageType.Text, true, CancelToken?.Token ?? CancellationToken.None);
+                    await SendAsync(response);
                 }
             }
         }
 
-        public void Stop()
+        private async Task SendAsync<T>(T value)
         {
-            ConnectTask = null;
-            CancelToken?.Cancel();
-            Socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "SHUTDOWN", CancellationToken.None);
+            await Socket.SendAsync(
+                        Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(value)).AsMemory(),
+                        WebSocketMessageType.Text,
+                        true,
+                        CancellationToken.None
+                        );
         }
 
         public async void Reject(string channelId)
         {
-            if (ConnectTask == null)
-            {
-                return;
-            }
-            await ConnectTask;
-            if (Socket.State == WebSocketState.Aborted)
-            {
-                Start();
-            }
             await ConnectTask;
             UnauthorizedMessage message = new()
             {
                 ChannelId = channelId,
                 Reason = "User rejected the request"
             };
-            await Socket.SendAsync(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message)).AsMemory(), WebSocketMessageType.Text, true, CancelToken?.Token ?? CancellationToken.None);
+            await SendAsync(message);
         }
+
         public async void Accept(string channelId, string origin)
         {
-            if (ConnectTask == null)
-            {
-                return;
-            }
-            await ConnectTask;
-            if (Socket.State == WebSocketState.Aborted)
-            {
-                Start();
-            }
             await ConnectTask;
             AuthorizeMessage message = new()
             {
                 ChannelId = channelId,
                 Origin = origin
             };
-            await Socket.SendAsync(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message)).AsMemory(), WebSocketMessageType.Text, true, CancelToken?.Token ?? CancellationToken.None);
+            await SendAsync(message);
         }
     }
 }
