@@ -12,9 +12,16 @@ namespace Raid.Service
             return assembly.GetTypes().Where(type => !type.IsAbstract && type.IsAssignableTo(typeof(T)));
         }
 
-        public static IEnumerable<Tuple<Type, T>> GetTypesWithAttribute<T>(this Assembly assembly) where T : Attribute
+        public static IEnumerable<Type> GetTypesWithAttribute<T>(this Assembly assembly) where T : Attribute
         {
-            return assembly.GetTypes().Where(type => !type.IsAbstract).Select(type => new Tuple<Type, T>(type, type.GetCustomAttribute<T>())).Where(tuple => tuple.Item2 != null);
+            return assembly.GetTypes().Where(type => !type.IsAbstract).Select(type => new Tuple<Type, T>(type, type.GetCustomAttribute<T>())).Where(tuple => tuple.Item2 != null).Select(tuple => tuple.Item1);
+        }
+
+        public static IEnumerable<U> GetAttributes<T, U>(this Assembly assembly, Func<T, Type, U> valueSelector) where T : Attribute
+        {
+            return assembly.GetTypes().Where(type => !type.IsAbstract)
+                .Select(type => new Tuple<Type, T>(type, type.GetCustomAttribute<T>()))
+                .Where(tuple => tuple.Item2 != null).Select(tuple => valueSelector(tuple.Item2, tuple.Item1));
         }
 
         public static IEnumerable<T> ConstructTypesAssignableTo<T>(this Assembly assembly, params object[] arguments)

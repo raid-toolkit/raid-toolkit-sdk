@@ -1,8 +1,11 @@
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CommandLine;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Raid.Model;
 using Raid.Service.DataModel;
@@ -20,10 +23,7 @@ namespace Raid.Service
     }
     static class RunAction
     {
-        private static ModelService modelService;
-        private static NotifyIcon notifyIcon;
-
-        public static int Execute(RunOptions options)
+        public static Task<int> Execute(RunOptions options)
         {
             if (!options.Standalone)
             {
@@ -34,7 +34,7 @@ namespace Raid.Service
                 bool isAnotherInstanceOpen = !mutex.WaitOne(TimeSpan.Zero);
                 if (isAnotherInstanceOpen && !options.Standalone)
                 {
-                    return 1;
+                    return Task.FromResult(1);
                 }
 
                 try
@@ -47,84 +47,21 @@ namespace Raid.Service
                 }
             }
             Application.ExitThread();
-            return 0;
+            return Task.FromResult(0);
         }
 
-        private static async Task Run(RunOptions options)
+        private static Task Run(RunOptions options)
         {
-            if (!options.Standalone)
+            using (new ModelAssemblyResolver())
             {
-                RegisterAction.RegisterProtocol(true);
-            }
-            if (!options.NoUI)
-            {
-                CreateTrayIcon();
-            }
-            Console.CancelKeyPress += delegate
-            {
-                Application.Exit();
-            };
-            var task = Task.Run(() =>
-            {
-                using (new ModelAssemblyResolver())
+                var host = RaidHost.CreateHost();
+                var task = Task.Run(async () =>
                 {
-                    ConfigureJsonSerialization();
-                    ProcessWatcher processWatcher = new("Raid");
-                    processWatcher.ProcessFound += ProcessFound;
-                    TaskExtensions.RunAfter(2000, UpdateAccounts);
-
-                    modelService = new();
-                    modelService.Start();
-                }
-            });
-            Application.Run();
-            await modelService?.Stop();
-            modelService.Dispose();
-        }
-
-        private static void CreateTrayIcon()
-        {
-            notifyIcon = new NotifyIcon();
-            notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(AppConfiguration.ExecutablePath);
-            notifyIcon.Text = "Raid Toolkit";
-            // notifyIcon.MouseClick += ClickTrayIcon;
-            notifyIcon.ContextMenuStrip = new ContextMenuStrip();
-            notifyIcon.ContextMenuStrip.Items.Add("Close", null, OnClose);
-            notifyIcon.Visible = true;
-        }
-
-        private static void ConfigureJsonSerialization()
-        {
-            var settings = new JsonSerializerSettings { ContractResolver = new StatsContractResolver() };
-            JsonConvert.DefaultSettings = () => settings;
-        }
-
-        private static void OnClose(object sender, EventArgs e)
-        {
-            notifyIcon.Dispose();
-            TaskExtensions.Shutdown();
-            Application.Exit();
-        }
-
-        private static void UpdateAccounts()
-        {
-            foreach (var instance in RaidInstance.Instances)
-            {
-                try
-                {
-                    instance.Update();
-                }
-                catch (Exception)
-                {
-                    // TODO: Logging
-                }
+                    await host.RunAsync();
+                });
+                RaidHost.Services.GetRequiredService<MainService>().Run(options);
+                return task;
             }
-            TaskExtensions.RunAfter(10000, UpdateAccounts);
-        }
-
-        private static void ProcessFound(object sender, ProcessWatcher.ProcessWatcherEventArgs e)
-        {
-            RaidInstance instance = new(e.Process);
         }
     }
 }

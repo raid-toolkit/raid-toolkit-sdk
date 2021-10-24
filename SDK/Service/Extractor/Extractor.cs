@@ -7,9 +7,12 @@ using SharedModel.Meta.Masteries;
 
 namespace RaidExtractor.Core
 {
-    public static class Extractor
+    public class Extractor
     {
-        private static ArtifactBonus FromStatBonus(ArtifactStatBonus bonus) => new ArtifactBonus()
+        private readonly StaticDataCache StaticDataCache;
+        public Extractor(StaticDataCache staticData) => StaticDataCache = staticData;
+
+        private ArtifactBonus FromStatBonus(ArtifactStatBonus bonus) => new ArtifactBonus()
         {
             Enhancement = (float)bonus.GlyphPower,
             IsAbsolute = bonus.Absolute,
@@ -18,14 +21,14 @@ namespace RaidExtractor.Core
             Value = bonus.Value
         };
 
-        public static AccountDump DumpAccount(UserAccount account)
+        public AccountDump DumpAccount(UserAccount account)
         {
             var artifacts = ArtifactsFacet.ReadValue(account);
             var heroes = HeroesFacet.ReadValue(account);
             var arena = ArenaFacet.ReadValue(account);
             var resources = ResourcesFacet.ReadValue(account);
             // var shards = ArenaFacet.ReadValue(account);
-            var staticData = StaticDataFacet.ReadValue(StaticDataCache.Instance);
+            var staticData = StaticDataFacet.ReadValue(StaticDataCache);
 
             return new AccountDump()
             {
@@ -47,7 +50,7 @@ namespace RaidExtractor.Core
                     SellPrice = artifact.SellPrice,
                     Price = artifact.Price,
                     PrimaryBonus = FromStatBonus(artifact.PrimaryBonus),
-                    SecondaryBonuses = artifact.SecondaryBonuses.Select(FromStatBonus).ToArray(),
+                    SecondaryBonuses = artifact.SecondaryBonuses?.Select(FromStatBonus).ToArray(),
                 }).ToArray(),
                 Heroes = heroes.Values.Select(hero =>
                 {

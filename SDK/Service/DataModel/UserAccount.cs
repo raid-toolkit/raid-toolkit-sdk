@@ -4,27 +4,30 @@ namespace Raid.Service.DataModel
 {
     public class UserAccount : IModelDataSource
     {
-        private Dictionary<string, object> m_data = new();
-        private string m_userId;
-        public UserAccount(string userId)
+        private Dictionary<string, object> Data = new();
+        private string UserId;
+        private UserData UserData;
+
+        public UserAccount(string userId, UserData userData)
         {
-            m_userId = userId;
+            UserData = userData;
+            UserId = userId;
         }
 
         public T Get<T>(string key) where T : class
         {
-            if (!m_data.TryGetValue(key, out object value))
+            if (!Data.TryGetValue(key, out object value))
             {
-                value = UserData.Instance.ReadAccountData<T>(m_userId, key);
-                m_data.Add(key, value);
+                value = UserData.ReadAccountData<T>(UserId, key);
+                Data.Add(key, value);
             }
             return (T)value;
         }
 
         public void Set<T>(string key, T value) where T : class
         {
-            m_data[key] = value;
-            UserData.Instance.WriteAccountData<T>(m_userId, key, value);
+            Data[key] = value;
+            UserData.WriteAccountData<T>(UserId, key, value);
         }
     }
 }

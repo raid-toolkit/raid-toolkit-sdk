@@ -4,82 +4,78 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Il2CppToolkit.Runtime;
+using Microsoft.Extensions.Logging;
 using Raid.Service.DataModel;
 
 namespace Raid.Service
 {
-    public class RaidInstance
+    public class RaidInstance : IDisposable
     {
-        static List<Type> s_accountFacets;
-        static RaidInstance()
+        public string Id;
+        private Il2CsRuntimeContext Runtime;
+        private Dictionary<IAccountFacet, object> FacetToValueMap;
+        private UserAccount UserAccount;
+
+        private readonly UserData UserData;
+        private readonly StaticDataCache StaticDataCache;
+        private readonly IReadOnlyList<IAccountFacet> Facets;
+        private readonly ILogger<RaidInstance> Logger;
+
+        public RaidInstance(UserData userData, StaticDataCache staticDataCache, IEnumerable<IAccountFacet> facets, ILogger<RaidInstance> logger)
         {
-            s_accountFacets = typeof(RaidInstance).Assembly.GetTypesAssignableTo<IAccountFacet>().ToList();
+            UserData = userData;
+            StaticDataCache = staticDataCache;
+            Logger = logger;
+            Facets = facets.ToList();
         }
-        public static IEnumerable<RaidInstance> Instances { get { return s_instances.Values.ToArray(); } }
-        private static ConcurrentDictionary<int, RaidInstance> s_instances = new();
 
-        public static RaidInstance GetById(string id)
+        public RaidInstance Attach(Process process)
         {
-            return s_instances.Single(instance => instance.Value.m_id == id).Value;
-        }
-
-        private Process m_process;
-        private readonly Il2CsRuntimeContext m_runtime;
-        private readonly Dictionary<IAccountFacet, object> m_facets;
-        private readonly string m_id;
-        private readonly UserAccount m_userAccount;
-
-        public RaidInstance(Process process)
-        {
-            m_process = process;
-            m_process.Disposed += HandleProcessDisposed;
-
-            m_runtime = new Il2CsRuntimeContext(process);
-            m_id = GetAccountId();
-            m_userAccount = UserData.Instance.GetAccount(m_id);
-
-            {
-                IAccountFacet currentFacet = null;
-                m_facets = s_accountFacets.ToDictionary(type => (currentFacet = (IAccountFacet)Activator.CreateInstance(type)), _ => currentFacet.GetValue(m_userAccount));
-            }
+            Runtime = new Il2CsRuntimeContext(process);
+            Id = GetAccountId();
+            UserAccount = UserData.GetAccount(Id);
+            FacetToValueMap = Facets.ToDictionary(facet => facet, facet => facet.GetValue(UserAccount));
 
             // preload
-            foreach (IFacet facet in m_facets.Keys)
+            foreach (IFacet facet in FacetToValueMap.Keys)
             {
-                facet.GetValue(m_userAccount);
+                facet.GetValue(UserAccount);
             }
-
-            s_instances.TryAdd(process.Id, this);
-        }
-
-        private void HandleProcessDisposed(object sender, EventArgs e)
-        {
-            m_runtime.Dispose();
-            s_instances.TryRemove(new(m_process.Id, this));
+            return this;
         }
 
         public void Update()
         {
-            StaticDataCache.Instance.Update(m_runtime);
-            if (!StaticDataCache.Instance.IsReady)
+            StaticDataCache.Update(Runtime);
+            if (!StaticDataCache.IsReady)
             {
                 return;
             }
-            ModelScope scope = new(m_runtime);
-            foreach ((IAccountFacet facet, object currentValue) in m_facets)
+            ModelScope scope = new(Runtime);
+            foreach ((IAccountFacet facet, object currentValue) in FacetToValueMap)
             {
-                object newValue = facet.Merge(scope, currentValue);
-                m_facets[facet] = newValue;
-                if (newValue != currentValue)
+                string facetName = FacetAttribute.GetName(facet.GetType());
+                try
                 {
-                    m_userAccount.Set(FacetAttribute.GetName(facet.GetType()), newValue);
+                    using var loggerScope = Logger.BeginScope(facet);
+
+                    object newValue = facet.Merge(scope, currentValue);
+                    FacetToValueMap[facet] = newValue;
+                    if (newValue != currentValue)
+                    {
+                        UserAccount.Set(facetName, newValue);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account facet '{facetName}'");
                 }
             }
         }
 
         private string GetAccountId()
         {
-            ModelScope scope = new(m_runtime);
+            ModelScope scope = new(Runtime);
             var userWrapper = scope.AppModel._userWrapper;
             var socialWrapper = userWrapper.Social.SocialData;
             var globalId = socialWrapper.PlariumGlobalId;
@@ -87,13 +83,9 @@ namespace Raid.Service
             return string.Join('_', globalId, socialId).Sha256();
         }
 
-        [Size(16)]
-        private struct AppModelStaticFields
+        public void Dispose()
         {
-            [Offset(8)]
-#pragma warning disable 649
-            public Client.Model.AppModel Instance;
-#pragma warning restore 649
+            Runtime.Dispose();
         }
     }
 }

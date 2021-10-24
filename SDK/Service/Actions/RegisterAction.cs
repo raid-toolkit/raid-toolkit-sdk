@@ -1,6 +1,4 @@
-using System.Reflection;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using CommandLine;
 using Microsoft.Win32;
 
@@ -17,11 +15,11 @@ namespace Raid.Service
         private const string StartupName = "RaidToolkitService";
         private const string Protocol = "rtk";
 
-        public static int Execute(RegisterOptions options)
+        public static Task<int> Execute(RegisterOptions options)
         {
             RegisterStartup(options.RunOnStartup);
             RegisterProtocol(true);
-            return 0;
+            return Task.FromResult(0);
         }
 
         public static void RegisterStartup(bool runOnStartup)

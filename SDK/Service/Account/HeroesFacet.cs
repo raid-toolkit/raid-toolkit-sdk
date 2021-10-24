@@ -11,22 +11,26 @@ namespace Raid.Service
     public class HeroesFacet : UserAccountFacetBase<IReadOnlyDictionary<int, Hero>, HeroesFacet>
     {
         private const int kForceRefreshInterval = 30000;
-        private DateTime m_nextForcedRefresh = DateTime.MinValue;
-        private int m_lastHeroId;
+        private DateTime NextForcedRefresh = DateTime.MinValue;
+        private int LastHeroId;
+
+        private StaticDataCache StaticDataCache;
+        public HeroesFacet(StaticDataCache staticDataCache) =>
+            (StaticDataCache) = (staticDataCache);
 
         protected override IReadOnlyDictionary<int, Hero> Merge(ModelScope scope, IReadOnlyDictionary<int, Hero> previous = null)
         {
             var userWrapper = scope.AppModel._userWrapper;
             var userHeroData = userWrapper.Heroes.HeroData;
-            var heroTypes = StaticDataFacet.ReadValue(StaticDataCache.Instance).HeroData.HeroTypes;
+            var heroTypes = StaticDataFacet.ReadValue(StaticDataCache).HeroData.HeroTypes;
 
             // Only refresh if lastHeroId changed since last read, or after we've exceeded the forced read interval
-            if (DateTime.UtcNow < m_nextForcedRefresh && userHeroData.LastHeroId == m_lastHeroId)
+            if (DateTime.UtcNow < NextForcedRefresh && userHeroData.LastHeroId == LastHeroId)
             {
                 return previous;
             }
-            m_nextForcedRefresh = DateTime.UtcNow.AddMilliseconds(kForceRefreshInterval);
-            m_lastHeroId = userHeroData.LastHeroId;
+            NextForcedRefresh = DateTime.UtcNow.AddMilliseconds(kForceRefreshInterval);
+            LastHeroId = userHeroData.LastHeroId;
 
             var artifactsByHeroId = scope.AppModel._userWrapper.Artifacts.ArtifactData.ArtifactDataByHeroId;
             var heroesById = userHeroData.HeroById;
@@ -63,7 +67,9 @@ namespace Raid.Service
                     EquippedArtifactIds = equippedArtifacts,
                     Type = heroType,
                     Name = heroType.Name.Localize(),
+#pragma warning disable 0618
                     SkillLevelsByTypeId = hero.Skills.ToDictionary(skill => skill.TypeId, skill => skill.Level),
+#pragma warning restore 0618
                     SkillsById = hero.Skills.ToDictionary(skill => skill.Id, skill => skill.ToModel()),
                 };
 

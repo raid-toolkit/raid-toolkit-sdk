@@ -9,5 +9,8 @@
         "**/bin": true,
         "**/obj": true,
         "**/.vs": true
+    },
+    "files.associations": {
+        "appsettings*.json": "jsonc"
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Raid.Service.Messages;
@@ -12,15 +13,17 @@ namespace Raid.Service
 {
     internal abstract class ApiHandler : IMessageScopeHandler
     {
-        private Dictionary<string, EventHandler<SerializableEventArgs>> m_eventHandlerDelegates = new();
-        private IReadOnlyDictionary<string, ApiMemberDefinition> m_methods;
+        private Dictionary<string, EventHandler<SerializableEventArgs>> EventHandlerDelegates = new();
+        private IReadOnlyDictionary<string, ApiMemberDefinition> Methods;
+        protected ILogger<ApiHandler> Logger;
 
         public string Name { get; }
 
-        public ApiHandler()
+        public ApiHandler(ILogger<ApiHandler> logger)
         {
+            Logger = logger;
             Name = GetType().GetCustomAttribute<PublicApiAttribute>().Name;
-            m_methods = GetType().GetMembers()
+            Methods = GetType().GetMembers()
                 .Select(member => new ApiMemberDefinition(member, member.GetCustomAttribute<PublicApiAttribute>()))
                 .Where(member => member.Attribute != null)
                 .ToDictionary(member => member.Attribute.Name ?? member.Name);
@@ -50,41 +53,48 @@ namespace Raid.Service
             try
             {
                 EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName);
-                if (!m_eventHandlerDelegates.TryGetValue($"{session.SessionID}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
+                if (!EventHandlerDelegates.TryGetValue($"{session.SessionID}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
                 {
-                    handler = (object sender, SerializableEventArgs args) => SendEvent(eventInfo, session, args);
-                    m_eventHandlerDelegates.Add($"{session.SessionID}:{subscriptionMessage.EventName}", handler);
+                    handler = async (object sender, SerializableEventArgs args) => await SendEvent(eventInfo, session, args);
+                    EventHandlerDelegates.Add($"{session.SessionID}:{subscriptionMessage.EventName}", handler);
                 }
                 eventInfo.AddEventHandler(this, handler);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: Logging
+                Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Failed to subscribe");
             }
         }
 
         private async Task SendEvent(EventInfo eventInfo, WebSocketSession session, SerializableEventArgs args)
         {
-            if (session.State != SuperSocket.SessionState.Connected)
+            try
             {
-                if (m_eventHandlerDelegates.Remove($"{session.SessionID}:{args.EventName}", out var handler))
+                if (session.State != SuperSocket.SessionState.Connected)
                 {
-                    eventInfo.RemoveEventHandler(this, handler);
+                    if (EventHandlerDelegates.Remove($"{session.SessionID}:{args.EventName}", out var handler))
+                    {
+                        eventInfo.RemoveEventHandler(this, handler);
+                    }
+                    return;
                 }
-                return;
+                SendEventMessage eventMsg = new()
+                {
+                    EventName = args.EventName,
+                    Payload = JArray.FromObject(args.EventArguments)
+                };
+                SocketMessage message = new()
+                {
+                    Scope = Name,
+                    Channel = "send-event",
+                    Message = JToken.FromObject(eventMsg)
+                };
+                await session.SendAsync(JsonConvert.SerializeObject(message));
             }
-            SendEventMessage eventMsg = new()
+            catch (Exception ex)
             {
-                EventName = args.EventName,
-                Payload = JArray.FromObject(args.EventArguments)
-            };
-            SocketMessage message = new()
-            {
-                Scope = Name,
-                Channel = "send-event",
-                Message = JToken.FromObject(eventMsg)
-            };
-            await session.SendAsync(JsonConvert.SerializeObject(message));
+                Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Failed to send event");
+            }
         }
 
         private void Unsubscribe(SubscriptionMessage subscriptionMessage, WebSocketSession session)
@@ -92,14 +102,14 @@ namespace Raid.Service
             try
             {
                 EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName);
-                if (!m_eventHandlerDelegates.TryGetValue($"{session.SessionID}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
+                if (!EventHandlerDelegates.TryGetValue($"{session.SessionID}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
                     return;
 
                 eventInfo.RemoveEventHandler(this, handler);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: Logging
+                Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Failed to unsubscribe");
             }
         }
 
@@ -134,7 +144,7 @@ namespace Raid.Service
             }
             catch (Exception ex)
             {
-                // TODO: Logging
+                Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Api call failed");
                 var response = new SocketMessage() { Scope = Name, Channel = "set-promise", Message = message.Reject(ex) };
                 await session.SendAsync(JsonConvert.SerializeObject(response));
             }
@@ -152,7 +162,7 @@ namespace Raid.Service
             }
             catch (Exception ex)
             {
-                // TODO: Logging
+                Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Api property access failed");
                 var response = new SocketMessage() { Scope = Name, Channel = "set-promise", Message = message.Reject(ex) };
                 await session.SendAsync(JsonConvert.SerializeObject(response));
             }
@@ -160,7 +170,7 @@ namespace Raid.Service
 
         private T GetPublicApi<T>(string name) where T : MemberInfo
         {
-            if (m_methods.TryGetValue(name, out ApiMemberDefinition member) && member.MemberInfo is T result)
+            if (Methods.TryGetValue(name, out ApiMemberDefinition member) && member.MemberInfo is T result)
             {
                 return result;
             }

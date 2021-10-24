@@ -45,7 +45,7 @@ namespace Raid.Service.Messages
     }
 
     [JsonConverter(typeof(SocketMessageConverter))]
-    internal class SocketMessage
+    public class SocketMessage
     {
         [JsonProperty(Order = 0)]
         public string Scope;
