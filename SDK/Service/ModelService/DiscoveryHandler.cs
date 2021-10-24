@@ -13,13 +13,6 @@ namespace Raid.Service
 
         public string Name => "$router/discover";
 
-        private ILogger<DiscoveryHandler> Logger;
-        private ChannelService ChannelService;
-
-        public DiscoveryHandler(ILogger<DiscoveryHandler> logger, ChannelService channelService) =>
-            (Logger, ChannelService) = (logger, channelService);
-
-
         public async void HandleMessage(SocketMessage message, WebSocketSession session)
         {
             switch (message.Channel)

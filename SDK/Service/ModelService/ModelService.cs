@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Raid.Service.Messages;
 using SuperSocket.WebSocket;
@@ -15,21 +16,38 @@ namespace Raid.Service
     public class ModelService
     {
         private readonly IReadOnlyDictionary<string, IMessageScopeHandler> ScopeHandlers;
-        public ModelService(IEnumerable<IMessageScopeHandler> handlers)
+        private ILogger<ModelService> Logger;
+        public ModelService(ILogger<ModelService> logger, IEnumerable<IMessageScopeHandler> handlers)
         {
+            Logger = logger;
             ScopeHandlers = handlers.ToDictionary(handler => handler.Name);
         }
 
         private ValueTask ProcessMessage(WebSocketSession session, WebSocketPackage message)
         {
-            var socketMessage = JsonConvert.DeserializeObject<SocketMessage>(message.Message);
+            Logger.LogInformation(ServiceEvent.HandleMessage.EventId(), "ProcessMessage");
+            using var sessionScope = Logger.BeginScope(new KeyValuePair<string, string>("SessionId", "session.SessionID"));
 
-            if (ScopeHandlers.TryGetValue(socketMessage.Scope, out IMessageScopeHandler handler))
+            try
             {
-                handler.HandleMessage(socketMessage, session);
+                var socketMessage = JsonConvert.DeserializeObject<SocketMessage>(message.Message);
+
+                using var messageScope = Logger.BeginScope(new Dictionary<string, string>() { { "Scope", socketMessage.Scope }, { "Channel", socketMessage.Channel } });
+
+                if (ScopeHandlers.TryGetValue(socketMessage.Scope, out IMessageScopeHandler handler))
+                {
+                    handler.HandleMessage(socketMessage, session);
+                }
+                else
+                {
+                    Logger.LogWarning(ServiceError.UnknownMessageScope.EventId(), $"Unknown scope '{socketMessage.Scope}'");
+                }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ServiceError.MessageHandlerFailure.EventId(), ex, "Failed to handle message");
             }
 
-            // TODO: Error handling/logging
             return ValueTask.CompletedTask;
         }
 

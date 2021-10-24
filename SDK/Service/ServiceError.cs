@@ -5,6 +5,10 @@ namespace Raid.Service
     [ErrorCategory("Service Error", "SE")]
     public enum ServiceError
     {
-        MessageProcessingFailure = 5000,
+        MessageHandlerFailure = 5000,
+        UnknownMessageScope,
+        MessageProcessingFailure,
+        ApiProxyException,
+        AccountUpdateFailed,
     }
 }

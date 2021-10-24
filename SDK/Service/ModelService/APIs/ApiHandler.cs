@@ -60,34 +60,41 @@ namespace Raid.Service
                 }
                 eventInfo.AddEventHandler(this, handler);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: Logging
+                Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Failed to subscribe");
             }
         }
 
         private async Task SendEvent(EventInfo eventInfo, WebSocketSession session, SerializableEventArgs args)
         {
-            if (session.State != SuperSocket.SessionState.Connected)
+            try
             {
-                if (EventHandlerDelegates.Remove($"{session.SessionID}:{args.EventName}", out var handler))
+                if (session.State != SuperSocket.SessionState.Connected)
                 {
-                    eventInfo.RemoveEventHandler(this, handler);
+                    if (EventHandlerDelegates.Remove($"{session.SessionID}:{args.EventName}", out var handler))
+                    {
+                        eventInfo.RemoveEventHandler(this, handler);
+                    }
+                    return;
                 }
-                return;
+                SendEventMessage eventMsg = new()
+                {
+                    EventName = args.EventName,
+                    Payload = JArray.FromObject(args.EventArguments)
+                };
+                SocketMessage message = new()
+                {
+                    Scope = Name,
+                    Channel = "send-event",
+                    Message = JToken.FromObject(eventMsg)
+                };
+                await session.SendAsync(JsonConvert.SerializeObject(message));
             }
-            SendEventMessage eventMsg = new()
+            catch (Exception ex)
             {
-                EventName = args.EventName,
-                Payload = JArray.FromObject(args.EventArguments)
-            };
-            SocketMessage message = new()
-            {
-                Scope = Name,
-                Channel = "send-event",
-                Message = JToken.FromObject(eventMsg)
-            };
-            await session.SendAsync(JsonConvert.SerializeObject(message));
+                Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Failed to send event");
+            }
         }
 
         private void Unsubscribe(SubscriptionMessage subscriptionMessage, WebSocketSession session)
@@ -100,9 +107,9 @@ namespace Raid.Service
 
                 eventInfo.RemoveEventHandler(this, handler);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TODO: Logging
+                Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Failed to unsubscribe");
             }
         }
 
@@ -137,7 +144,7 @@ namespace Raid.Service
             }
             catch (Exception ex)
             {
-                // TODO: Logging
+                Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Api call failed");
                 var response = new SocketMessage() { Scope = Name, Channel = "set-promise", Message = message.Reject(ex) };
                 await session.SendAsync(JsonConvert.SerializeObject(response));
             }
@@ -155,7 +162,7 @@ namespace Raid.Service
             }
             catch (Exception ex)
             {
-                // TODO: Logging
+                Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Api property access failed");
                 var response = new SocketMessage() { Scope = Name, Channel = "set-promise", Message = message.Reject(ex) };
                 await session.SendAsync(JsonConvert.SerializeObject(response));
             }

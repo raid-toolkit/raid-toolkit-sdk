@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Raid.Service.DataModel;
 
 namespace Raid.Service
@@ -12,14 +13,15 @@ namespace Raid.Service
     {
         private NotifyIcon notifyIcon;
         private readonly RaidInstanceFactory Factory;
+        private readonly ILogger<MainService> Logger;
         public MainService(
             ProcessWatcher processWatcher,
-            UserData userData,
-            StaticDataCache staticData,
+            ILogger<MainService> logger,
             RaidInstanceFactory factory,
             IServiceProvider serviceProvider)
         {
             Factory = factory;
+            Logger = logger;
             processWatcher.ProcessFound += (object sender, ProcessWatcher.ProcessWatcherEventArgs e) =>
             {
                 Factory.Create(e.Process, serviceProvider.CreateScope());
@@ -69,9 +71,9 @@ namespace Raid.Service
                 {
                     instance.Update();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    // TODO: Logging
+                    Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account {instance.Id}");
                 }
             }
             TaskExtensions.RunAfter(10000, UpdateAccounts);

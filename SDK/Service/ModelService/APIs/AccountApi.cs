@@ -121,8 +121,10 @@ namespace Raid.Service
             foreach (var skill in hero.SkillsById.Values)
             {
                 if (!staticData.SkillData.SkillTypes.TryGetValue(skill.TypeId, out var skillType))
-                    // TODO: Logging
+                {
+                    Logger.LogWarning(ServiceEvent.MissingSkill.EventId(), $"Skill '{skill.TypeId}' is missing from static data");
                     continue;
+                }
 
                 skillSnapshots.Add(GetSkillSnapshot(skillType, skill.Level));
             }

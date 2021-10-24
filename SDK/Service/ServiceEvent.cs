@@ -6,10 +6,11 @@ namespace Raid.Service
 {
     public enum ServiceEvent : int
     {
-        ProtocolHandlerOpen = 0,
-        ProtocolHandlerHandleMessage = 1,
-        ProtocolHandlerAccept = 2,
-        ProtocolHandlerReject = 3,
+        HandleMessage = 0,
+        UserPermissionRequest,
+        UserPermissionAccept,
+        UserPermissionReject,
+        MissingSkill,
     }
 
     internal static class ServiceMessageExtensions
