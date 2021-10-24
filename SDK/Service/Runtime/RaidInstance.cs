@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Il2CppToolkit.Runtime;
+using Microsoft.Extensions.Logging;
 using Raid.Service.DataModel;
 
 namespace Raid.Service
@@ -18,11 +19,13 @@ namespace Raid.Service
         private readonly UserData UserData;
         private readonly StaticDataCache StaticDataCache;
         private readonly IReadOnlyList<IAccountFacet> Facets;
+        private readonly ILogger<RaidInstance> Logger;
 
-        public RaidInstance(UserData userData, StaticDataCache staticDataCache, IEnumerable<IAccountFacet> facets)
+        public RaidInstance(UserData userData, StaticDataCache staticDataCache, IEnumerable<IAccountFacet> facets, ILogger<RaidInstance> logger)
         {
             UserData = userData;
             StaticDataCache = staticDataCache;
+            Logger = logger;
             Facets = facets.ToList();
         }
 
@@ -51,11 +54,21 @@ namespace Raid.Service
             ModelScope scope = new(Runtime);
             foreach ((IAccountFacet facet, object currentValue) in FacetToValueMap)
             {
-                object newValue = facet.Merge(scope, currentValue);
-                FacetToValueMap[facet] = newValue;
-                if (newValue != currentValue)
+                string facetName = FacetAttribute.GetName(facet.GetType());
+                try
                 {
-                    UserAccount.Set(FacetAttribute.GetName(facet.GetType()), newValue);
+                    using var loggerScope = Logger.BeginScope(facet);
+
+                    object newValue = facet.Merge(scope, currentValue);
+                    FacetToValueMap[facet] = newValue;
+                    if (newValue != currentValue)
+                    {
+                        UserAccount.Set(facetName, newValue);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account facet '{facetName}'");
                 }
             }
         }

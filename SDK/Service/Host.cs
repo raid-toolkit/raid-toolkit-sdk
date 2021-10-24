@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -17,6 +18,11 @@ namespace Raid.Service
             .UseWebSocketMessageHandler(ModelService.HandleMessage)
             .ConfigureServices((ctx, services) => services
                 .Configure<AppSettings>(opts => ctx.Configuration.GetSection("app").Bind(opts))
+                .AddLogging(builder =>
+                {
+                    builder.AddConfiguration(ctx.Configuration.GetSection("Logging"));
+                    builder.AddFile(o => o.RootPath = AppConfiguration.ExecutableDirectory);
+                })
                 .AddHostedServiceSingleton<MainService>()
                 .AddHostedServiceSingleton<ProcessWatcher>()
                 .AddHostedServiceSingleton<ChannelService>()

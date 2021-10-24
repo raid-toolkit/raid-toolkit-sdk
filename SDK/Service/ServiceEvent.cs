@@ -11,6 +11,7 @@ namespace Raid.Service
         UserPermissionAccept,
         UserPermissionReject,
         MissingSkill,
+        DataUpdated,
     }
 
     internal static class ServiceMessageExtensions

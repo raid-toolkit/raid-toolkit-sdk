@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -56,9 +58,11 @@ namespace Raid.Service
         private Task ConnectTask;
         private readonly UserData UserData;
         private readonly Extractor Extractor;
+        private readonly ILogger<ChannelService> Logger;
 
-        public ChannelService(IOptions<AppSettings> settings, UserData userData, Extractor extractor)
+        public ChannelService(ILogger<ChannelService> logger, IOptions<AppSettings> settings, UserData userData, Extractor extractor)
         {
+            Logger = logger;
             HostUri = new Uri(settings.Value.PublicServer);
             UserData = userData;
             Extractor = extractor;
@@ -84,21 +88,38 @@ namespace Raid.Service
                     continue;
                 }
                 var sendMessage = JsonConvert.DeserializeObject<SendMessage>(Encoding.UTF8.GetString(buffer.Slice(0, result.Count).Span));
-                if (sendMessage?.Type != "send")
+                HandleMessage(sendMessage);
+            }
+        }
+
+        private async void HandleMessage(SendMessage message)
+        {
+            using var scope = Logger.BeginScope($"[ChannelId = {message.ChannelId}, Type = {message.Type}]");
+            Logger.LogInformation($"Processing message");
+
+            if (message?.Type != "send")
+            {
+                Logger.LogError($"Message type not supported");
+                return;
+            }
+            try
+            {
+                if (message.Message.ToObject<string>() == "dump")
                 {
-                    continue;
-                }
-                if (sendMessage.Message.ToObject<string>() == "dump")
-                {
+                    Logger.LogInformation("Sending account dump via websocket");
                     var account = UserData.UserAccounts.FirstOrDefault();
                     var dump = Extractor.DumpAccount(account);
                     var response = new SendMessage()
                     {
-                        ChannelId = sendMessage.ChannelId,
+                        ChannelId = message.ChannelId,
                         Message = JObject.FromObject(dump),
                     };
                     await SendAsync(response);
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ServiceError.MessageHandlerFailure.EventId(), ex, "Failed to process message");
             }
         }
 

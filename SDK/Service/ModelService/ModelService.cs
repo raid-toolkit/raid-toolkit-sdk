@@ -26,13 +26,13 @@ namespace Raid.Service
         private ValueTask ProcessMessage(WebSocketSession session, WebSocketPackage message)
         {
             Logger.LogInformation(ServiceEvent.HandleMessage.EventId(), "ProcessMessage");
-            using var sessionScope = Logger.BeginScope(new KeyValuePair<string, string>("SessionId", "session.SessionID"));
+            using var sessionScope = Logger.BeginScope($"[SessionId = {session.SessionID}");
 
             try
             {
                 var socketMessage = JsonConvert.DeserializeObject<SocketMessage>(message.Message);
 
-                using var messageScope = Logger.BeginScope(new Dictionary<string, string>() { { "Scope", socketMessage.Scope }, { "Channel", socketMessage.Channel } });
+                using var messageScope = Logger.BeginScope($"[Scope = {socketMessage.Scope}, Channel = {socketMessage.Channel}]");
 
                 if (ScopeHandlers.TryGetValue(socketMessage.Scope, out IMessageScopeHandler handler))
                 {
