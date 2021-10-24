@@ -28,9 +28,8 @@ namespace Raid.Service
                 .AddScoped<RaidInstance>()
                 .AddTypesAssignableTo<IMessageScopeHandler>(collection => collection.AddSingleton)
                 .AddTypesAssignableToFactories<IStaticFacet>(collection => collection.AddSingleton)
-                .AddTypesAssignableToFactories<IAccountFacet>(collection => collection.AddSingleton)
-            )
-            .ConfigureLogging(configureLogging => configureLogging.ClearProviders().AddDebug().AddConsole(config => { config.IncludeScopes = true; }));
+                .AddTypesAssignableToFactories<IAccountFacet>(collection => collection.AddScoped)
+            );
 
         public static IHost CreateHost()
         {

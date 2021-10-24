@@ -18,7 +18,9 @@ namespace Raid.Service
             : base(logger) => (UserData, StaticDataCache, Extractor) = (userData, staticData, extractor);
 
         [PublicApi("updated")]
+#pragma warning disable 0067
         public event EventHandler<SerializableEventArgs> Updated;
+#pragma warning restore 0067
 
         [PublicApi("dump")]
         public RaidExtractor.Core.AccountDump GetAccountDump(string accountId) => Extractor.DumpAccount(UserData.GetAccount(accountId));

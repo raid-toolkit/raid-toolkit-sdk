@@ -30,7 +30,9 @@ namespace Raid.Service.DataModel
             Marker = hero.Marker;
             Masteries = hero.Masteries;
             EquippedArtifactIds = hero.EquippedArtifactIds;
+#pragma warning disable 0618
             SkillLevelsByTypeId = hero.SkillLevelsByTypeId;
+#pragma warning restore 0618
             SkillsById = hero.SkillsById;
         }
     }

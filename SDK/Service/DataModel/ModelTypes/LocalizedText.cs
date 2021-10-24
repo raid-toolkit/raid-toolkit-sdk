@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using SharedModel.Common.Localization;
 
@@ -17,6 +19,10 @@ namespace Raid.Service.DataModel
 
     public static partial class ModelExtensions
     {
+        static class LocalizationStrings
+        {
+            public static IReadOnlyDictionary<string, string> LocalizedStrings = StaticDataFacet.ReadValue(RaidHost.Services.GetService<StaticDataCache>()).LocalizedStrings;
+        }
         public static LocalizedText ToModel(this SharedLTextKey key)
         {
             return new()
@@ -27,10 +33,8 @@ namespace Raid.Service.DataModel
         }
         public static string Localize(this LocalizedText key)
         {
-            // TODO NOW
-            // var localizedStrings = StaticDataFacet.ReadValue(StaticDataCache.Instance).LocalizedStrings;
-            // if (localizedStrings.TryGetValue(key.Key, out string value))
-            //     return value;
+            if (LocalizationStrings.LocalizedStrings.TryGetValue(key.Key, out string value))
+                return value;
             return key.EnValue ?? key.DefaultValue;
         }
     }

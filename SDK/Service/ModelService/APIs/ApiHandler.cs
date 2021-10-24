@@ -55,7 +55,7 @@ namespace Raid.Service
                 EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName);
                 if (!EventHandlerDelegates.TryGetValue($"{session.SessionID}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
                 {
-                    handler = (object sender, SerializableEventArgs args) => SendEvent(eventInfo, session, args);
+                    handler = async (object sender, SerializableEventArgs args) => await SendEvent(eventInfo, session, args);
                     EventHandlerDelegates.Add($"{session.SessionID}:{subscriptionMessage.EventName}", handler);
                 }
                 eventInfo.AddEventHandler(this, handler);

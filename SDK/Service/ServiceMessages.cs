@@ -16,7 +16,7 @@ namespace Raid.Service
     {
         class EventIds<T> where T : System.Enum
         {
-            public static IReadOnlyDictionary<T, EventId> Mapping = typeof(T).GetEnumValues().Cast<T>().ToDictionary(value => value, value => new EventId((int)value, value.ToString()));
+            public static IReadOnlyDictionary<T, EventId> Mapping = typeof(T).GetEnumValues().Cast<T>().ToDictionary(value => value, value => new EventId((int)(object)value, value.ToString()));
         }
         public static EventId EventId<T>(this T serviceEvent) where T : System.Enum
         {
