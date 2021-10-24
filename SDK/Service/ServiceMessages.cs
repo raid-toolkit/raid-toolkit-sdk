@@ -14,10 +14,13 @@ namespace Raid.Service
 
     internal static class ServiceMessageExtensions
     {
-        private static IReadOnlyDictionary<ServiceEvent, EventId> EventIds = typeof(ServiceEvent).GetEnumValues().Cast<ServiceEvent>().ToDictionary(value => value, value => new EventId((int)value, value.ToString()));
-        public static EventId EventId(this ServiceEvent serviceEvent)
+        class EventIds<T> where T : System.Enum
         {
-            return EventIds[serviceEvent];
+            public static IReadOnlyDictionary<T, EventId> Mapping = typeof(T).GetEnumValues().Cast<T>().ToDictionary(value => value, value => new EventId((int)value, value.ToString()));
+        }
+        public static EventId EventId<T>(this T serviceEvent) where T : System.Enum
+        {
+            return EventIds<T>.Mapping[serviceEvent];
         }
     }
 }

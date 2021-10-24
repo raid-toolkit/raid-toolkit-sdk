@@ -13,9 +13,7 @@ namespace Raid.Service
     {
         private static IHost Host;
 
-        private static IHostBuilder CreateHostBuilder()
-        {
-            return WebSocketHostBuilder.Create()
+        private static IHostBuilder CreateHostBuilder() => WebSocketHostBuilder.Create()
             .UseWebSocketMessageHandler(ModelService.HandleMessage)
             .ConfigureServices((ctx, services) => services
                 .Configure<AppSettings>(opts => ctx.Configuration.GetSection("app").Bind(opts))
@@ -32,8 +30,7 @@ namespace Raid.Service
                 .AddTypesAssignableToFactories<IStaticFacet>(collection => collection.AddSingleton)
                 .AddTypesAssignableToFactories<IAccountFacet>(collection => collection.AddSingleton)
             )
-            .ConfigureLogging(configureLogging => configureLogging.ClearProviders().AddDebug());
-        }
+            .ConfigureLogging(configureLogging => configureLogging.ClearProviders().AddDebug().AddConsole(config => { config.IncludeScopes = true; }));
 
         public static IHost CreateHost()
         {

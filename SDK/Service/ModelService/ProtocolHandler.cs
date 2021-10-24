@@ -18,10 +18,12 @@ namespace Raid.Service
 
         public void HandleMessage(SocketMessage message, WebSocketSession session)
         {
-            using (Logger.BeginScope($"Handle Message from session {session.SessionID}"))
-            {
-                Logger.LogInformation(ServiceEvent.ProtocolHandlerHandleMessage.EventId(), $"Channel = {message.Channel}");
+            using var scope = Logger.BeginScope($"SessionId = {session.SessionID}");
 
+            Logger.LogInformation(ServiceEvent.ProtocolHandlerHandleMessage.EventId(), $"Channel = {message.Channel}");
+
+            try
+            {
                 switch (message.Channel)
                 {
                     case "open":
@@ -46,6 +48,10 @@ namespace Raid.Service
                             break;
                         }
                 }
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ServiceError.MessageProcessingFailure.EventId(), ex, "Failed to handle message");
             }
         }
     }
