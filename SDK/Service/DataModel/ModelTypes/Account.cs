@@ -21,10 +21,5 @@ namespace Raid.Service.DataModel
 
         [JsonProperty("power")]
         public int Power;
-
-        internal static IReadOnlyDictionary<int, ArtifactSetKind> ToDictionary(Func<object, int> p1, Func<object, object> p2)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

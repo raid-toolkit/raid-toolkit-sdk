@@ -35,6 +35,7 @@
             // "preLaunchTask": "build",
             "program": "${workspaceFolder}/SDK/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
             "args": [],
+            "justMyCode": false,
             "cwd": "${workspaceFolder}/SDK/Service",
             "console": "internalConsole",
             "stopAtEntry": false

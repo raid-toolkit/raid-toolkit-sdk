@@ -24,7 +24,15 @@ namespace Raid.Service
             Logger = logger;
             processWatcher.ProcessFound += (object sender, ProcessWatcher.ProcessWatcherEventArgs e) =>
             {
-                Factory.Create(e.Process, serviceProvider.CreateScope());
+                try
+                {
+                    Factory.Create(e.Process, serviceProvider.CreateScope());
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ServiceError.AccoutNotReady.EventId(), ex, "Account is not ready");
+                    e.Retry = true;
+                }
             };
         }
 
