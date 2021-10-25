@@ -10,5 +10,6 @@ namespace Raid.Service
         MessageProcessingFailure,
         ApiProxyException,
         AccountUpdateFailed,
+        AccoutNotReady,
     }
 }

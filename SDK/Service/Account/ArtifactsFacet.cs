@@ -60,7 +60,7 @@ namespace Raid.Service
                     FailedUpgrades = artifact._failedUpgrades,
                     Revision = artifact._revision,
                     PrimaryBonus = artifact._primaryBonus.ToModel(),
-                    SecondaryBonuses = artifact._secondaryBonuses?.Select(bonus => bonus.ToModel()).ToList()
+                    SecondaryBonuses = artifact._secondaryBonuses.Select(bonus => bonus.ToModel()).ToList()
                 });
             }
             return result;

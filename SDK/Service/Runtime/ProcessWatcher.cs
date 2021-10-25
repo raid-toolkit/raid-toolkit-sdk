@@ -14,6 +14,7 @@ namespace Raid.Service
         {
             public int Id { get; }
             public Process Process { get; }
+            public bool Retry { get; set; } = false;
             public ProcessWatcherEventArgs(Process process)
             {
                 Process = process;
@@ -48,8 +49,10 @@ namespace Raid.Service
                 currentIds.Remove(process.Id);
                 if (!ActiveProcesses.ContainsKey(process.Id))
                 {
-                    ActiveProcesses.Add(process.Id, process);
-                    ProcessFound?.Invoke(this, new ProcessWatcherEventArgs(process));
+                    ProcessWatcherEventArgs args = new(process);
+                    ProcessFound?.Invoke(this, args);
+                    if (!args.Retry)
+                        ActiveProcesses.Add(process.Id, process);
                 }
             }
             foreach (int closedProcessId in currentIds)
