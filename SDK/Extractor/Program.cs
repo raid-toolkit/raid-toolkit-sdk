@@ -1,29 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using Il2CppToolkit.Common.Errors;
-using Il2CppToolkit.Model;
-using Il2CppToolkit.ReverseCompiler;
 using Il2CppToolkit.Runtime;
-using Microsoft.Win32;
 using Raid.Model;
-
-using Client.Model.Gameplay.Artifacts;
-using Client.Model.Gameplay.Heroes;
-using Client.Model.Gameplay.Heroes.Data;
-using Client.Model.Gameplay.StaticData;
-using Client.Model.Guard;
-using SharedModel.Meta.Artifacts;
-using SharedModel.Meta.Artifacts.ArtifactStorage;
-using SharedModel.Meta.Heroes;
-using SharedModel.Meta.Heroes.Dtos;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-
-[assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]
 
 namespace Raid.Extractor
 {
