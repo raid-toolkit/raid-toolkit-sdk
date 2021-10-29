@@ -29,7 +29,7 @@ namespace Raid.Service
                 .ToDictionary(member => member.Attribute.Name ?? member.Name);
         }
 
-        public void HandleMessage(SocketMessage message, WebSocketSession session)
+        public void HandleMessage(SocketMessage message, ISocketSession session)
         {
             switch (message.Channel)
             {
@@ -48,15 +48,15 @@ namespace Raid.Service
             }
         }
 
-        private void Subscribe(SubscriptionMessage subscriptionMessage, WebSocketSession session)
+        private void Subscribe(SubscriptionMessage subscriptionMessage, ISocketSession session)
         {
             try
             {
                 EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName);
-                if (!EventHandlerDelegates.TryGetValue($"{session.SessionID}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
+                if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
                 {
                     handler = async (object sender, SerializableEventArgs args) => await SendEvent(eventInfo, session, args);
-                    EventHandlerDelegates.Add($"{session.SessionID}:{subscriptionMessage.EventName}", handler);
+                    EventHandlerDelegates.Add($"{session.Id}:{subscriptionMessage.EventName}", handler);
                 }
                 eventInfo.AddEventHandler(this, handler);
             }
@@ -66,13 +66,13 @@ namespace Raid.Service
             }
         }
 
-        private async Task SendEvent(EventInfo eventInfo, WebSocketSession session, SerializableEventArgs args)
+        private async Task SendEvent(EventInfo eventInfo, ISocketSession session, SerializableEventArgs args)
         {
             try
             {
-                if (session.State != SuperSocket.SessionState.Connected)
+                if (!session.Connected)
                 {
-                    if (EventHandlerDelegates.Remove($"{session.SessionID}:{args.EventName}", out var handler))
+                    if (EventHandlerDelegates.Remove($"{session.Id}:{args.EventName}", out var handler))
                     {
                         eventInfo.RemoveEventHandler(this, handler);
                     }
@@ -89,7 +89,7 @@ namespace Raid.Service
                     Channel = "send-event",
                     Message = JToken.FromObject(eventMsg)
                 };
-                await session.SendAsync(JsonConvert.SerializeObject(message));
+                await session.Send(message);
             }
             catch (Exception ex)
             {
@@ -97,12 +97,12 @@ namespace Raid.Service
             }
         }
 
-        private void Unsubscribe(SubscriptionMessage subscriptionMessage, WebSocketSession session)
+        private void Unsubscribe(SubscriptionMessage subscriptionMessage, ISocketSession session)
         {
             try
             {
                 EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName);
-                if (!EventHandlerDelegates.TryGetValue($"{session.SessionID}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
+                if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
                     return;
 
                 eventInfo.RemoveEventHandler(this, handler);
@@ -113,7 +113,7 @@ namespace Raid.Service
             }
         }
 
-        private async void CallMethod(CallMethodMessage message, WebSocketSession session)
+        private async void CallMethod(CallMethodMessage message, ISocketSession session)
         {
             try
             {
@@ -140,17 +140,17 @@ namespace Raid.Service
                 object result = methodInfo.Invoke(this, args);
                 var returnValue = await message.Resolve(result);
                 var response = new SocketMessage() { Scope = Name, Channel = "set-promise", Message = returnValue };
-                await session.SendAsync(JsonConvert.SerializeObject(response));
+                await session.Send(response);
             }
             catch (Exception ex)
             {
                 Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Api call failed");
                 var response = new SocketMessage() { Scope = Name, Channel = "set-promise", Message = message.Reject(ex) };
-                await session.SendAsync(JsonConvert.SerializeObject(response));
+                await session.Send(response);
             }
         }
 
-        private async void GetProperty(GetPropertyMessage message, WebSocketSession session)
+        private async void GetProperty(GetPropertyMessage message, ISocketSession session)
         {
             try
             {
@@ -158,13 +158,13 @@ namespace Raid.Service
                 object result = propertyInfo.GetValue(this);
                 var returnValue = await message.Resolve(result);
                 var response = new SocketMessage() { Scope = Name, Channel = "set-promise", Message = returnValue };
-                await session.SendAsync(JsonConvert.SerializeObject(response));
+                await session.Send(response);
             }
             catch (Exception ex)
             {
                 Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Api property access failed");
                 var response = new SocketMessage() { Scope = Name, Channel = "set-promise", Message = message.Reject(ex) };
-                await session.SendAsync(JsonConvert.SerializeObject(response));
+                await session.Send(response);
             }
         }
 

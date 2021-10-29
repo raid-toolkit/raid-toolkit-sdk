@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
@@ -54,6 +53,7 @@ namespace Raid.Service
     public class ChannelService : BackgroundService
     {
         private readonly ClientWebSocket Socket = new ClientWebSocket();
+        private readonly ClientWebSocketAdapter SocketAdapter;
         private readonly Uri HostUri;
         private Task ConnectTask;
         private readonly UserData UserData;
@@ -62,6 +62,7 @@ namespace Raid.Service
 
         public ChannelService(ILogger<ChannelService> logger, IOptions<AppSettings> settings, UserData userData, Extractor extractor)
         {
+            SocketAdapter = new(Socket);
             Logger = logger;
             HostUri = new Uri(settings.Value.PublicServer);
             UserData = userData;
@@ -92,7 +93,7 @@ namespace Raid.Service
             }
         }
 
-        private async void HandleMessage(SendMessage message)
+        private void HandleMessage(SendMessage message)
         {
             using var scope = Logger.BeginScope($"[ChannelId = {message.ChannelId}, Type = {message.Type}]");
             Logger.LogInformation($"Processing message");
@@ -104,18 +105,8 @@ namespace Raid.Service
             }
             try
             {
-                if (message.Message.ToObject<string>() == "dump")
-                {
-                    Logger.LogInformation("Sending account dump via websocket");
-                    var account = UserData.UserAccounts.FirstOrDefault();
-                    var dump = Extractor.DumpAccount(account);
-                    var response = new SendMessage()
-                    {
-                        ChannelId = message.ChannelId,
-                        Message = JObject.FromObject(dump),
-                    };
-                    await SendAsync(response);
-                }
+                SocketMessage socketMessage = message.Message.ToObject<SocketMessage>();
+                ModelService.HandleMessage(SocketAdapter, socketMessage);
             }
             catch (Exception ex)
             {

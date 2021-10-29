@@ -5,7 +5,7 @@ using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
 
-namespace Raid.Service.Messages
+namespace Raid.Service
 {
     internal class SocketMessageConverter : JsonConverter
     {

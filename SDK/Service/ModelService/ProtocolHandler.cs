@@ -1,9 +1,7 @@
 using System;
 using System.Web;
 using Microsoft.Extensions.Logging;
-using Raid.Service.Messages;
 using Raid.Service.UI;
-using SuperSocket.WebSocket.Server;
 
 namespace Raid.Service
 {
@@ -16,7 +14,7 @@ namespace Raid.Service
         public ProtocolHandler(ILogger<ProtocolHandler> logger, ChannelService channelService) =>
             (Logger, ChannelService) = (logger, channelService);
 
-        public void HandleMessage(SocketMessage message, WebSocketSession session)
+        public void HandleMessage(SocketMessage message, ISocketSession session)
         {
             Logger.LogInformation(ServiceEvent.HandleMessage.EventId(), $"Channel = {message.Channel}");
 
