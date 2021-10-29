@@ -11,6 +11,7 @@
       <Private>false</Private>
     </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj" />
+    <ProjectReference Include="..\DataModel\DataModel.csproj" />
   </ItemGroup>
 
   <ItemGroup>

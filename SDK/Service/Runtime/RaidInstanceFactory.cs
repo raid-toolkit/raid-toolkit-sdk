@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
-using Raid.Service.DataModel;
+using Raid.DataModel;
 
 namespace Raid.Service
 {

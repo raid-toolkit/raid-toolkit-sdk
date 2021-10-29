@@ -32,13 +32,13 @@ namespace RaidExtractor.Core
         public string ArenaLeague { get; set; }
 
         [Newtonsoft.Json.JsonProperty("greatHall", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public IReadOnlyDictionary<Element, IReadOnlyDictionary<StatKindId, int>> GreatHall { get; set; }
+        public IReadOnlyDictionary<string, IReadOnlyDictionary<string, int>> GreatHall { get; set; }
 
         [Newtonsoft.Json.JsonProperty("shards", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Dictionary<string, ShardInfo> Shards { get; set; }
+        public IReadOnlyDictionary<string, ShardInfo> Shards { get; set; }
 
         [Newtonsoft.Json.JsonProperty("stagePresets", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Dictionary<int, int[]> StagePresets { get; set; }
+        public IReadOnlyDictionary<int, int[]> StagePresets { get; set; }
 
         [Newtonsoft.Json.JsonProperty("fileVersion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string FileVersion { get; set; }
@@ -196,13 +196,13 @@ namespace RaidExtractor.Core
         public List<int> Masteries { get; set; }
 
         [Newtonsoft.Json.JsonProperty("assignedMasteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Dictionary<MasteryPointType, int> AssignedMasteryScrolls { get; set; }
+        public IReadOnlyDictionary<string, int> AssignedMasteryScrolls { get; set; }
 
         [Newtonsoft.Json.JsonProperty("unassignedMasteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Dictionary<MasteryPointType, int> UnassignedMasteryScrolls { get; set; }
+        public IReadOnlyDictionary<string, int> UnassignedMasteryScrolls { get; set; }
 
         [Newtonsoft.Json.JsonProperty("totalMasteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Dictionary<MasteryPointType, int> TotalMasteryScrolls { get; set; }
+        public IReadOnlyDictionary<string, int> TotalMasteryScrolls { get; set; }
 
         [Newtonsoft.Json.JsonProperty("skills", Required = Newtonsoft.Json.Required.Always)]
         public List<Skill> Skills { get; set; }

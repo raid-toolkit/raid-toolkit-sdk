@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using SharedModel.Meta.Artifacts;
-using SharedModel.Meta.Heroes;
-using SharedModel.Meta.Masteries;
 
-namespace Raid.Service.DataModel
+namespace Raid.DataModel
 {
     public class Hero
     {
@@ -28,7 +25,7 @@ namespace Raid.Service.DataModel
         public int Level;
 
         [JsonProperty("rank")]
-        public HeroGrade Rank;
+        public int Rank;
 
         [JsonProperty("exp")]
         public int Experience;
@@ -46,22 +43,22 @@ namespace Raid.Service.DataModel
         public bool InVault;
 
         [JsonProperty("marker")]
-        public HeroMarker Marker;
+        public string Marker;
 
         [JsonProperty("masteries")]
         public MasteryKindId[] Masteries;
 
         [JsonProperty("assignedMasteryScrolls")]
-        public NumericDictionary<MasteryPointType, int> AssignedMasteryScrolls;
+        public IReadOnlyDictionary<string, int> AssignedMasteryScrolls;
 
         [JsonProperty("unassignedMasteryScrolls")]
-        public NumericDictionary<MasteryPointType, int> UnassignedMasteryScrolls;
+        public IReadOnlyDictionary<string, int> UnassignedMasteryScrolls;
 
         [JsonProperty("totalMasteryScrolls")]
-        public NumericDictionary<MasteryPointType, int> TotalMasteryScrolls;
+        public IReadOnlyDictionary<string, int> TotalMasteryScrolls;
 
         [JsonProperty("equippedArtifactIds")]
-        public NumericDictionary<ArtifactKindId, int> EquippedArtifactIds;
+        public IReadOnlyDictionary<string, int> EquippedArtifactIds;
 
         [JsonProperty("skillLevelsByTypeId")]
         [Obsolete("Use Skills instead")]

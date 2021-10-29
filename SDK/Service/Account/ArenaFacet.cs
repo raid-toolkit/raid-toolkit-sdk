@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Raid.Service.DataModel;
+using Raid.DataModel;
 using SharedModel.Battle.Effects;
 
 namespace Raid.Service
@@ -17,12 +17,7 @@ namespace Raid.Service
             {
                 if (!runtimeData.TryGetValue(statKindId, out var bonusValues))
                     continue;
-                staticBonusData.Add(statKindId, bonusValues.Select(bonusValue => new StatBonus()
-                {
-                    KindId = statKindId,
-                    Absolute = bonusValue._isAbsolute,
-                    Value = bonusValue._value.AsFloat()
-                }).ToList());
+                staticBonusData.Add(statKindId, bonusValues.Select(bonusValue => bonusValue.ToModel(statKindId)).ToList());
             }
             return staticBonusData;
         });
@@ -49,12 +44,17 @@ namespace Raid.Service
                         bonuses.Add(bonusValues[level - 1]);
                     }
                 }
-                ghBonus.Add(new() { Affinity = element, Bonus = bonuses, Levels = bonus.UnderlyingDictionary });
+                ghBonus.Add(new()
+                {
+                    Affinity = element.ToString(),
+                    Bonus = bonuses,
+                    Levels = bonus.UnderlyingDictionary.ToModel()
+                });
             }
 
             return new ArenaData
             {
-                LeagueId = userWrapper.Arena.ArenaData.ArenaDefenseTeamSetup.ArenaLeagueId,
+                LeagueId = userWrapper.Arena.ArenaData.ArenaDefenseTeamSetup.ArenaLeagueId.ToString(),
                 GreatHallBonuses = ghBonus
             };
         }

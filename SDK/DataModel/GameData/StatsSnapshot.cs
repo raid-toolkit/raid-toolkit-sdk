@@ -22,8 +22,8 @@ namespace Raid.DataModel
 
         public float Defense
         {
-            get => EffectiveStats.Defense;
-            set => EffectiveStats.Defense = value;
+            get => EffectiveStats.Defence;
+            set => EffectiveStats.Defence = value;
         }
 
         public float Speed

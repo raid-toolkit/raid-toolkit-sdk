@@ -1,5 +1,5 @@
 using System.Linq;
-using Raid.Service.DataModel;
+using Raid.DataModel;
 
 namespace Raid.Service
 {
@@ -14,9 +14,9 @@ namespace Raid.Service
             var accountResources = userWrapper.Account.AccountData.Resources.RawValues;
             return new Resources
             {
-                BlackMarket = blackMarketItems.ToDictionary(bmi => bmi.Key, bmi => bmi.Value.Count),
-                Shards = shards.ToDictionary(shard => shard.TypeId, shard => shard.Count),
-                Account = accountResources.UnderlyingDictionary
+                BlackMarket = blackMarketItems.ToDictionary(bmi => bmi.Key.ToString(), bmi => bmi.Value.Count),
+                Shards = shards.ToDictionary(shard => shard.TypeId.ToString(), shard => shard.Count),
+                Account = accountResources.UnderlyingDictionary.ToModel()
             };
         }
     }

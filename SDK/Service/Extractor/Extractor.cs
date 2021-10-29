@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Raid.Service;
-using Raid.Service.DataModel;
+using Raid.DataModel;
 using SharedModel.Meta.Masteries;
 
 namespace RaidExtractor.Core
@@ -33,8 +33,12 @@ namespace RaidExtractor.Core
             return new AccountDump()
             {
                 ArenaLeague = arena.LeagueId.ToString(),
-                GreatHall = arena.GreatHallBonuses.ToDictionary(bonus => bonus.Affinity, bonus => bonus.Levels),
-                Shards = resources.Shards.ToDictionary(shard => shard.Key.ToString(), shard => new ShardInfo() { Count = shard.Value, SummonData = new() }),
+                GreatHall = arena.GreatHallBonuses.ToDictionary(
+                    bonus => bonus.Affinity.ToString(),
+                    bonus => bonus.Levels),
+                Shards = resources.Shards.ToDictionary(
+                    shard => shard.Key.ToString(),
+                    shard => new ShardInfo() { Count = shard.Value, SummonData = new() }),
                 Artifacts = artifacts.Values.Select(artifact => new Artifact()
                 {
                     Id = artifact.Id,
@@ -70,9 +74,9 @@ namespace RaidExtractor.Core
                         Marker = hero.Marker.ToString(),
                         // extras
                         Masteries = hero.Masteries?.Cast<int>().ToList() ?? new(),
-                        AssignedMasteryScrolls = hero.AssignedMasteryScrolls?.ToEnumDictionary() ?? new(),
-                        UnassignedMasteryScrolls = hero.UnassignedMasteryScrolls?.ToEnumDictionary() ?? new(),
-                        TotalMasteryScrolls = hero.TotalMasteryScrolls?.ToEnumDictionary() ?? new(),
+                        AssignedMasteryScrolls = hero.AssignedMasteryScrolls,
+                        UnassignedMasteryScrolls = hero.UnassignedMasteryScrolls,
+                        TotalMasteryScrolls = hero.TotalMasteryScrolls,
                         Artifacts = hero.EquippedArtifactIds?.Values.ToArray(),
                         Skills = hero.SkillsById?.Values.Select(skill => new Skill() { TypeId = skill.TypeId, Id = skill.Id, Level = skill.Level, }).ToList() ?? new(),
                         // type fields
@@ -84,7 +88,7 @@ namespace RaidExtractor.Core
                         AwakenLevel = heroType.TypeId % 10,
                         Accuracy = heroType.UnscaledStats.Accuracy,
                         Attack = (int)Math.Round(heroType.UnscaledStats.Attack * multiplier.multiplier),
-                        Defense = (int)Math.Round(heroType.UnscaledStats.Defense * multiplier.multiplier),
+                        Defense = (int)Math.Round(heroType.UnscaledStats.Defence * multiplier.multiplier),
                         Health = (int)Math.Round(heroType.UnscaledStats.Health * multiplier.multiplier) * 15,
                         Speed = heroType.UnscaledStats.Speed,
                         Resistance = heroType.UnscaledStats.Resistance,
@@ -93,7 +97,7 @@ namespace RaidExtractor.Core
                         CriticalHeal = heroType.UnscaledStats.CriticalHeal,
                     };
 
-                    newHero.TotalMasteryScrolls = (Dictionary<MasteryPointType, int>)(newHero.TotalMasteryScrolls.Concat(newHero.AssignedMasteryScrolls)
+                    newHero.TotalMasteryScrolls = (newHero.TotalMasteryScrolls.Concat(newHero.AssignedMasteryScrolls)
                         .Concat(newHero.UnassignedMasteryScrolls)
                         .GroupBy(x => x.Key)
                         .ToDictionary(x => x.Key, x => x.Sum(y => y.Value)));

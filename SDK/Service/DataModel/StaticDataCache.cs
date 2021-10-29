@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Il2CppToolkit.Runtime;
 
-namespace Raid.Service.DataModel
+namespace Raid.Service
 {
     public class StaticDataCache : IModelDataSource
     {

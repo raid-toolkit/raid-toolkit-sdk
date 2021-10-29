@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Raid.Service.DataModel;
+using Raid.DataModel;
 using RaidExtractor.Core;
 
 namespace Raid.Service
