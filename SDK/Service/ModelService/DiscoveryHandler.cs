@@ -1,10 +1,6 @@
 using System.Linq;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Raid.Service.Messages;
-using SuperSocket.WebSocket.Server;
-
+using Raid.DataModel;
 namespace Raid.Service
 {
     internal class DiscoveryHandler : IMessageScopeHandler

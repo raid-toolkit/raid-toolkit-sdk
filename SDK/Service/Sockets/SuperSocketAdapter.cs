@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using SuperSocket.WebSocket.Server;
+using Raid.DataModel;
 
 namespace Raid.Service
 {

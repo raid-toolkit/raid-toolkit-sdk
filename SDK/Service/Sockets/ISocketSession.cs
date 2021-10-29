@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Raid.DataModel;
 
 namespace Raid.Service
 {

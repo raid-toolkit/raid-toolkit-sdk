@@ -1,3 +1,5 @@
+using Raid.DataModel;
+
 namespace Raid.Service
 {
     public interface IMessageScopeHandler
