@@ -40,53 +40,60 @@ name: .NET Core Desktop
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
-
   build:
-
     strategy:
       matrix:
         configuration: [Debug, Release]
 
-    runs-on: windows-latest  # For a list of available runner types, refer to
-                             # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+    runs-on:
+      windows-latest # For a list of available runner types, refer to
+      # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
 
     env:
       IS_CI: true
       Solution_Name: SDK.sln
+      Service_csproj: SDK\Service\Service.csproj
+      Extractor_csproj: SDK\Extractor\Extractor.csproj
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        submodules: recursive
-        fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
 
-    # Install the .NET Core workload
-    - name: Install .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
+      # Install the .NET Core workload
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
 
-    # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
-    - name: Setup MSBuild.exe
-      uses: microsoft/setup-msbuild@v1.0.2
+      # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+      - name: Setup MSBuild.exe
+        uses: microsoft/setup-msbuild@v1.0.2
 
-    # Restore the application to populate the obj folder with RuntimeIdentifiers
-    - name: Restore the application
-      run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
-      env:
-        Configuration: ${{ matrix.configuration }}
+      # Restore the application to populate the obj folder with RuntimeIdentifiers
+      - name: Restore the application
+        run: msbuild $env:Solution_Name /t:Restore /p:Configuration=$env:Configuration
+        env:
+          Configuration: ${{ matrix.configuration }}
 
-    # Restore the application to populate the obj folder with RuntimeIdentifiers
-    - name: Build the application
-      run: msbuild $env:Solution_Name /t:Build;Publish /p:Configuration=$env:Configuration /p:Platform=x64 /p:PublishProfile=x64Profile /p:OutputPath=bin/Publish/x64
-      env:
-        Configuration: ${{ matrix.configuration }}
+      # Build the application
+      - name: Build the application
+        run: msbuild $env:Solution_Name /t:Build /p:Configuration=$env:Configuration /p:Platform=x64
+        env:
+          Configuration: ${{ matrix.configuration }}
+
+      # Publish the application
+      - name: Publish Service
+        run: dotnet publish $env:Service_csproj /p:Configuration=$env:Configuration /p:Platform=x64 /p:DeployOnBuild=true /p:PublishProfile=SDK\Service\Properties\PublishProfiles\FolderProfile.pubxml
+        env:
+          Configuration: ${{ matrix.configuration }}
 
     # Decode the base 64 encoded pfx and save the Signing_Certificate
     #- name: Decode the pfx
@@ -109,8 +116,8 @@ jobs:
     #  run: Remove-Item -path $env:Wap_Project_Directory\$env:Signing_Certificate
 
     # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
-    #- name: Upload build artifacts
-    #  uses: actions/upload-artifact@v2
-    #  with:
-    #    name: MSIX Package
-    #    path: ${{ env.Wap_Project_Directory }}\AppPackages
+    - name: Upload build artifacts
+     uses: actions/upload-artifact@v2
+     with:
+       name: Raid.Toolkit
+       path: publish
