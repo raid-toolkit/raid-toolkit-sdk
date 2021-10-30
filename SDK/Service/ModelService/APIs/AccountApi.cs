@@ -22,7 +22,7 @@ namespace Raid.Service
         public event EventHandler<SerializableEventArgs> Updated;
 #pragma warning restore 0067
 
-        [PublicApi("dump")]
+        [PublicApi("getAccountDump")]
         public RaidExtractor.Core.AccountDump GetAccountDump(string accountId) => Extractor.DumpAccount(UserData.GetAccount(accountId));
 
         [PublicApi("getAllResources")]

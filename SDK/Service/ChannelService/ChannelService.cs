@@ -50,10 +50,32 @@ namespace Raid.Service
         public JToken Message;
     }
 
+    public class ChannelSocketAdapter : ISocketSession
+    {
+        ClientWebSocket Session;
+        SendMessage ReceivedMessage;
+        public ChannelSocketAdapter(ClientWebSocket session, SendMessage receivedMessage) => (Session, ReceivedMessage) = (session, receivedMessage);
+
+        public string Id => "ClientSocket";
+        public bool Connected => Session.State == WebSocketState.Open;
+
+        public async Task Send(SocketMessage message)
+        {
+            SendMessage sendMessage = new()
+            {
+                ChannelId = ReceivedMessage.ChannelId,
+                Message = JToken.FromObject(message)
+            };
+            await Session.SendAsync(
+                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(sendMessage)).AsMemory(),
+                WebSocketMessageType.Text,
+                true,
+                CancellationToken.None);
+        }
+    }
     public class ChannelService : BackgroundService
     {
         private readonly ClientWebSocket Socket = new ClientWebSocket();
-        private readonly ClientWebSocketAdapter SocketAdapter;
         private readonly Uri HostUri;
         private Task ConnectTask;
         private readonly UserData UserData;
@@ -62,7 +84,6 @@ namespace Raid.Service
 
         public ChannelService(ILogger<ChannelService> logger, IOptions<AppSettings> settings, UserData userData, Extractor extractor)
         {
-            SocketAdapter = new(Socket);
             Logger = logger;
             HostUri = new Uri(settings.Value.PublicServer);
             UserData = userData;
@@ -94,6 +115,7 @@ namespace Raid.Service
 
         private async Task Run(CancellationToken token)
         {
+            await ConnectTask;
             Memory<byte> buffer = new Memory<byte>(new byte[1024 * 1024 * 3]);
             while (Socket.State == WebSocketState.Open && !token.IsCancellationRequested)
             {
@@ -121,7 +143,7 @@ namespace Raid.Service
             try
             {
                 SocketMessage socketMessage = message.Message.ToObject<SocketMessage>();
-                ModelService.HandleMessage(SocketAdapter, socketMessage);
+                ModelService.HandleMessage(new ChannelSocketAdapter(Socket, message), socketMessage);
             }
             catch (Exception ex)
             {

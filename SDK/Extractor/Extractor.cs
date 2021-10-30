@@ -64,7 +64,7 @@ namespace RaidExtractor
 
         public Task<AccountDump> GetAccountDump(string accountId)
         {
-            return Call<AccountDump>("account-api", "dump", accountId);
+            return Call<AccountDump>("account-api", "getAccountDump", accountId);
         }
 
         private void HandleMessage(SocketMessage socketMessage)
