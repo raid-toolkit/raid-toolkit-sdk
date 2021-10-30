@@ -122,7 +122,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.extractor_version.outputs.SemVer2 }}
+          tag_name: raidextractor_v${{ steps.extractor_version.outputs.SemVer2 }}
           release_name: RaidExtractor v${{ steps.extractor_version.outputs.SemVer2 }}
           body: RaidExtractor v${{ steps.extractor_version.outputs.SemVer2 }}
           draft: false
@@ -145,7 +145,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: v${{ steps.service_version.outputs.SemVer2 }}
+          tag_name: raidservice_v${{ steps.service_version.outputs.SemVer2 }}
           release_name: RaidService v${{ steps.service_version.outputs.SemVer2 }}
           body: RaidService v${{ steps.service_version.outputs.SemVer2 }}
           draft: false
