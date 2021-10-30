@@ -89,15 +89,26 @@ jobs:
         env:
           Configuration: ${{ matrix.configuration }}
 
-      # Publish the application
+      # Publish RTK
       - name: Publish Service
-        run: dotnet publish $env:Service_csproj --output publish /p:Configuration=$env:Configuration /p:Platform=x64 /p:DeployOnBuild=true /p:PublishProfile=SDK/Service/Properties/PublishProfiles/FolderProfile.pubxml
+        run: dotnet publish $env:Service_csproj --output publish/RTK /p:Configuration=$env:Configuration /p:Platform=x64 /p:DeployOnBuild=true
         env:
           Configuration: ${{ matrix.configuration }}
 
-      # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
-      - name: Upload build artifacts
+      # Publish Extractor
+      - name: Publish Service
+        run: dotnet publish $env:Extractor_csproj --output publish/Extractor /p:Configuration=$env:Configuration /p:Platform=x64 /p:DeployOnBuild=true
+        env:
+          Configuration: ${{ matrix.configuration }}
+
+      - name: Upload RTK artifact
         uses: actions/upload-artifact@v2
         with:
           name: RaidToolkit
-          path: publish
+          path: publish/RTK
+
+      - name: Upload Extractor artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: RaidExtractor
+          path: publish/Extractor
