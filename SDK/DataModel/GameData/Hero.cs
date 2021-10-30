@@ -25,7 +25,7 @@ namespace Raid.DataModel
         public int Level;
 
         [JsonProperty("rank")]
-        public int Rank;
+        public string Rank;
 
         [JsonProperty("exp")]
         public int Experience;

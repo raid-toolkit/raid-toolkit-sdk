@@ -116,7 +116,7 @@ namespace Raid.DataModel
                 TypeId = hero.TypeId,
                 Level = hero.Level,
                 Marker = hero.Marker.ToString(),
-                Rank = (int)hero.Grade,
+                Rank = hero.Grade.ToString(),
                 Locked = hero.Locked,
                 Deleted = false,
                 InVault = hero.InStorage,

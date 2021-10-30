@@ -76,7 +76,7 @@ namespace Raid.Service
             var arenaData = ArenaFacet.ReadValue(UserData.GetAccount(accountId));
             var artifactData = ArtifactsFacet.ReadValue(UserData.GetAccount(accountId));
             HeroType type = hero.Type;
-            HeroStatsCalculator stats = new(type, hero.Rank, hero.Level);
+            HeroStatsCalculator stats = new(type, (int)Enum.Parse<SharedModel.Meta.Heroes.HeroGrade>(hero.Rank), hero.Level);
 
             // arena
             var greatHallBonus = arenaData.GreatHallBonuses?.FirstOrDefault(ghb => ghb.Affinity == type.Affinity);
