@@ -44,6 +44,7 @@
     <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
     <AssemblyName>Raid.Extractor</AssemblyName>
     <RootNamespace>Raid.Extractor</RootNamespace>
+    <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
   </PropertyGroup>
 
 </Project>

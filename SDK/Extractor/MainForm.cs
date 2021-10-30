@@ -1,12 +1,9 @@
 using System;
-using System.Diagnostics;
 using System.IO;
-using System.Net.Http;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using RaidExtractor.Core;
 using System.IO.Compression;
-using Newtonsoft.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace RaidExtractor
@@ -18,7 +15,8 @@ namespace RaidExtractor
         public MainForm()
         {
             InitializeComponent();
-            //this.Icon = Properties.Resources.AppIcon;
+            this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+            ShowIcon = true;
             raidExtractor = new Extractor();
         }
 
