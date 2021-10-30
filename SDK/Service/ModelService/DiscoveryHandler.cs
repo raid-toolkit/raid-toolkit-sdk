@@ -1,10 +1,6 @@
 using System.Linq;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Raid.Service.Messages;
-using SuperSocket.WebSocket.Server;
-
+using Raid.DataModel;
 namespace Raid.Service
 {
     internal class DiscoveryHandler : IMessageScopeHandler
@@ -13,18 +9,18 @@ namespace Raid.Service
 
         public string Name => "$router/discover";
 
-        public async void HandleMessage(SocketMessage message, WebSocketSession session)
+        public async void HandleMessage(SocketMessage message, ISocketSession session)
         {
             switch (message.Channel)
             {
                 case "request":
                     {
-                        await session.SendAsync(JsonConvert.SerializeObject(new SocketMessage()
+                        await session.Send(new SocketMessage()
                         {
                             Scope = Name,
                             Channel = "response",
                             Message = JArray.FromObject(Types)
-                        }));
+                        });
                         break;
                     }
                 case "response":

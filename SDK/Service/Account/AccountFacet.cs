@@ -1,5 +1,5 @@
 using System;
-using Raid.Service.DataModel;
+using Raid.DataModel;
 
 namespace Raid.Service
 {
@@ -18,7 +18,7 @@ namespace Raid.Service
             return new Account
             {
                 Id = string.Join('_', globalId, socialId).Sha256(),
-                Avatar = gameSettings.Avatar,
+                Avatar = gameSettings.Avatar.ToString(),
                 Name = gameSettings.Name,
                 Level = accountData.Level,
                 Power = (int)Math.Round(accountData.TotalPower, 0)

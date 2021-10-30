@@ -1,8 +1,3 @@
-using System;
-using System.Reflection;
-using Il2CppToolkit.Runtime;
-using Raid.Service.DataModel;
-
 namespace Raid.Service
 {
     public abstract class FacetBase<T, U, D> : IFacet

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Raid.Service.DataModel;
+using Raid.DataModel;
 
 namespace Raid.Service
 {
@@ -44,24 +44,7 @@ namespace Raid.Service
                     artifact = artifactEntry;
                 }
 
-                result.Add(artifact._id, new Artifact()
-                {
-                    Id = artifact._id,
-                    KindId = artifact._kindId,
-                    SetKindId = artifact._setKindId,
-                    Level = artifact._level,
-                    Rank = artifact._rankId,
-                    RarityId = artifact._rarityId,
-                    Seen = artifact._isSeen,
-                    Activated = artifact._isActivated,
-                    SellPrice = artifact._sellPrice,
-                    Price = artifact._price,
-                    Faction = artifact._requiredFraction,
-                    FailedUpgrades = artifact._failedUpgrades,
-                    Revision = artifact._revision,
-                    PrimaryBonus = artifact._primaryBonus.ToModel(),
-                    SecondaryBonuses = artifact._secondaryBonuses.Select(bonus => bonus.ToModel()).ToList()
-                });
+                result.Add(artifact._id, artifact.ToModel());
             }
             return result;
         }

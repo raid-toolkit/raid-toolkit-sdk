@@ -1,4 +1,4 @@
-using Raid.Service.DataModel;
+using Raid.DataModel;
 
 namespace Raid.Service
 {

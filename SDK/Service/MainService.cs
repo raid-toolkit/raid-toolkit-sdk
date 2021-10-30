@@ -5,7 +5,7 @@ using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Raid.Service.DataModel;
+using Raid.DataModel;
 
 namespace Raid.Service
 {

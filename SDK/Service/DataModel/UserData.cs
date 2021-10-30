@@ -5,7 +5,7 @@ using System.Linq;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Raid.Service.DataModel
+namespace Raid.Service
 {
     public class UserData
     {

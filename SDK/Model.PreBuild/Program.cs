@@ -7,18 +7,22 @@ using System.Reflection;
 
 namespace Model.PreBuild
 {
-	class Program
-	{
-		static void Main(string[] args)
-		{
-			using ModelAssemblyResolver resolver = new();
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            if (Environment.GetEnvironmentVariable("IS_CI") == "true")
+            {
+                return;
+            }
+            using ModelAssemblyResolver resolver = new();
 
-			Assembly asm = AppDomain.CurrentDomain.Load("Raid.Interop");
-			string targetFile = Path.Join(args[0], Path.GetFileName(asm.Location));
-			Console.WriteLine($"Copying [{asm.Location}] to [{targetFile}]");
-			Directory.CreateDirectory(Path.GetDirectoryName(targetFile));
-			File.Delete(targetFile);
-			File.Copy(asm.Location, targetFile);
-		}
-	}
+            Assembly asm = AppDomain.CurrentDomain.Load("Raid.Interop");
+            string targetFile = Path.Join(args[0], Path.GetFileName(asm.Location));
+            Console.WriteLine($"Copying [{asm.Location}] to [{targetFile}]");
+            Directory.CreateDirectory(Path.GetDirectoryName(targetFile));
+            File.Delete(targetFile);
+            File.Copy(asm.Location, targetFile);
+        }
+    }
 }

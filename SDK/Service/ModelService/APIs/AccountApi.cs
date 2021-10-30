@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
-using Raid.Service.DataModel;
+using Raid.DataModel;
 using SharedModel.Meta.Skills;
 using Extractor = RaidExtractor.Core.Extractor;
 
@@ -70,7 +70,7 @@ namespace Raid.Service
             {
                 foreach (var upgrade in skill.Upgrades)
                 {
-                    if (upgrade.SkillBonusType == SkillBonusType.CooltimeTurn)
+                    if (upgrade.SkillBonusType == SkillBonusType.CooltimeTurn.ToString())
                         snapshot.Cooldown -= (int)Math.Round(upgrade.Value);
                 }
             }
@@ -91,7 +91,7 @@ namespace Raid.Service
             if (greatHallBonus != null)
                 stats.ApplyBonuses(StatSource.GreatHall, greatHallBonus.Bonus.ToArray());
 
-            if (staticData.ArenaData.Leagues.TryGetValue((int)arenaData.LeagueId, out var league))
+            if (staticData.ArenaData.Leagues.TryGetValue(arenaData.LeagueId, out var league))
                 stats.applyArenaStats(league.StatBonus);
 
             // masteries

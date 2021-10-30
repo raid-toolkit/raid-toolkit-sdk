@@ -1,8 +1,8 @@
 using System.Linq;
 using System.Collections.Generic;
-using Raid.Service.DataModel;
+using Raid.DataModel;
 using SharedModel.Battle.Effects;
-using SharedModel.Meta.Heroes;
+using System;
 
 namespace Raid.Service
 {
@@ -25,21 +25,21 @@ namespace Raid.Service
             }
         };
 
-        public HeroStatsCalculator(DataModel.HeroType heroType, HeroGrade rank, int level)
+        public HeroStatsCalculator(Raid.DataModel.HeroType heroType, int rank, int level)
         {
             foreach (StatKindId statKind in typeof(StatKindId).GetEnumValues())
             {
-                Snapshot.EffectiveStats[statKind]
-                    = Snapshot.BaseStats[statKind]
-                    = Snapshot.StatSources[StatSource.Base][statKind]
-                    = GetBaseStat(statKind, rank, level, heroType.UnscaledStats[statKind]);
+                float baseStat = GetBaseStat(statKind, rank, level, heroType.UnscaledStats.GetStat(statKind));
+                Snapshot.EffectiveStats.SetStat(statKind, baseStat);
+                Snapshot.BaseStats.SetStat(statKind, baseStat);
+                Snapshot.StatSources[StatSource.Base].SetStat(statKind, baseStat);
             }
         }
 
         public void AddStat(StatSource source, StatKindId statKind, float value)
         {
-            Snapshot.EffectiveStats[statKind] += value;
-            Snapshot.StatSources[source][statKind] += value;
+            Snapshot.EffectiveStats.AddStat(statKind, value);
+            Snapshot.StatSources[source].AddStat(statKind, value);
         }
 
         public void ApplyMasteries(IEnumerable<MasteryKindId> masteries)
@@ -87,12 +87,13 @@ namespace Raid.Service
         {
             foreach (var bonus in bonuses)
             {
+                var statKindId = Enum.Parse<StatKindId>(bonus.KindId);
                 AddStat(
                     source,
-                    bonus.KindId,
+                    statKindId,
                     bonus.Absolute
-                    ? GetAbsoluteStatIncrease(bonus.KindId, bonus.Value)
-                    : GetFactorStatIncrease(bonus.KindId, bonus.Value)
+                    ? GetAbsoluteStatIncrease(statKindId, bonus.Value)
+                    : GetFactorStatIncrease(statKindId, bonus.Value)
                 );
             }
         }
@@ -101,25 +102,27 @@ namespace Raid.Service
         {
             foreach (var bonus in bonuses)
             {
+                var statKindId = Enum.Parse<StatKindId>(bonus.KindId);
                 AddStat(
                     StatSource.GearSets,
-                    bonus.KindId,
+                    statKindId,
                     bonus.Absolute
-                    ? GetAbsoluteStatIncrease(bonus.KindId, numberOfSets * bonus.Value)
-                    : GetFactorStatIncrease(bonus.KindId, numberOfSets * bonus.Value * (HasLoreOfSteel ? 1.15f : 1))
+                    ? GetAbsoluteStatIncrease(statKindId, numberOfSets * bonus.Value)
+                    : GetFactorStatIncrease(statKindId, numberOfSets * bonus.Value * (HasLoreOfSteel ? 1.15f : 1))
                 );
             }
         }
 
         public void ApplyArtifactBonuses(ArtifactStatBonus bonus)
         {
+            var statKindId = Enum.Parse<StatKindId>(bonus.KindId);
             var value = bonus.Value + (float)bonus.GlyphPower;
             AddStat(
                 StatSource.Gear,
-                bonus.KindId,
+                statKindId,
                 bonus.Absolute
-                ? GetAbsoluteStatIncrease(bonus.KindId, value)
-                : GetFactorStatIncrease(bonus.KindId, value)
+                ? GetAbsoluteStatIncrease(statKindId, value)
+                : GetFactorStatIncrease(statKindId, value)
             );
         }
 
@@ -137,13 +140,13 @@ namespace Raid.Service
         }
         public void applyArenaStats(Stats battleStats)
         {
-            foreach ((StatKindId id, float value) in battleStats)
+            foreach (StatKindId statKindId in Enum.GetValues<StatKindId>())
             {
-                AddStat(StatSource.Arena, id, GetArenaStatIncrease(id, value));
+                AddStat(StatSource.Arena, statKindId, GetArenaStatIncrease(statKindId, battleStats.GetStat(statKindId)));
             }
         }
 
-        private static float GetBaseStat(StatKindId statKind, HeroGrade rank, int level, float rawValue)
+        private static float GetBaseStat(StatKindId statKind, int rank, int level, float rawValue)
         {
             switch (statKind)
             {
@@ -179,7 +182,7 @@ namespace Raid.Service
                 case StatKindId.CriticalHeal:
                     return rawValue * 100;
                 default:
-                    return Snapshot.BaseStats[statKind] * rawValue;
+                    return Snapshot.BaseStats.GetStat(statKind) * rawValue;
             }
         }
 
