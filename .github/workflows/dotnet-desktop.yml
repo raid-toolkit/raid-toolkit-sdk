@@ -160,28 +160,6 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Upload RaidExtractor Asset
-        id: upload-raidextractor-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
-          asset_path: ./publish/Raid.Extractor.zip
-          asset_name: Raid.Extractor.zip
-          asset_content_type: application/zip
-
-      - name: Upload RaidExtractor Asset
-        id: upload-raidextractor-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
-          asset_path: ./publish/Raid.Extractor.zip
-          asset_name: Raid.Extractor.zip
-          asset_content_type: application/zip
-
       - name: Upload Client Asset
         id: upload-client-asset
         uses: actions/upload-release-asset@v1
@@ -192,6 +170,17 @@ jobs:
           asset_path: ./publish/Raid.Client.${{ steps.client_version.outputs.SemVer2 }}.nupkg
           asset_name: Raid.Client.${{ steps.client_version.outputs.SemVer2 }}.nupkg
           asset_content_type: application/x-msdownload
+
+      - name: Upload RaidExtractor Asset
+        id: upload-raidextractor-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
+          asset_path: ./publish/Raid.Extractor.zip
+          asset_name: Raid.Extractor.zip
+          asset_content_type: application/zip
 
       - name: Upload RaidService Asset
         id: upload-raidservice-asset
