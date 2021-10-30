@@ -22,7 +22,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="SuperSocket.WebSocket.Server" Version="2.0.0-beta.10" />
     <Reference Include="Raid.Interop.dll">
-      <HintPath>$(SolutionDir)bin\Raid.Interop.dll</HintPath>
+      <HintPath>..\..\bin\Raid.Interop.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>
