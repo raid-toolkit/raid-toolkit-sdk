@@ -72,16 +72,17 @@ namespace RaidExtractor
                             raidExtractor.Connect();
                             var accounts = await raidExtractor.GetAccounts();
                             dump = await raidExtractor.GetAccountDump(accounts[0].Id);
+                            dump.FileVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
                         }
                         catch (Exception ex)
                         {
                             Console.WriteLine($"There was an error during Extraction: {ex.Message}");
                             return;
                         }
-						finally
-						{
+                        finally
+                        {
                             raidExtractor.Disconnect();
-						}
+                        }
 
                         var outFile = o.OutputFile;
                         var json = JsonConvert.SerializeObject(dump, Formatting.Indented, SerializerSettings);
