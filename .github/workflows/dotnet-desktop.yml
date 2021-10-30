@@ -114,6 +114,13 @@ jobs:
       #     path: publish/Extractor
 
       - uses: dotnet/nbgv@master
-        id: nbgv
+        id: extractor_version
+        path: SDK/Extractor
 
-      - run: echo 'SemVer2=${{ steps.nbgv.outputs.SemVer2 }}'
+      - uses: dotnet/nbgv@master
+        id: service_version
+        path: SDK/Service
+
+      - run: echo 'SemVer2=${{ steps.extractor_version.outputs.SemVer2 }}'
+
+      - run: echo 'SemVer2=${{ steps.service_version.outputs.SemVer2 }}'
