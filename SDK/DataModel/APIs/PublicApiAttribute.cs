@@ -1,8 +1,8 @@
 using System;
 
-namespace Raid.Service
+namespace Raid.DataModel
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Event | AttributeTargets.Class)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Event | AttributeTargets.Class | AttributeTargets.Interface)]
     public class PublicApiAttribute : Attribute
     {
         public string Name { get; }

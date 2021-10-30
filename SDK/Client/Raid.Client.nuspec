@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Raid.Model</id>
-    <version>0.1.0</version>
-    <title>Raid Toolkit Model SDK</title>
+    <id>Raid.Client</id>
+    <version>$version$</version>
+    <title>Raid Toolkit Client SDK</title>
     <authors>dnchattan</authors>
     <owners>dnchattan</owners>
-    <description>Dynamically-generated model SDK for Raid: Shadow Legends</description>
+    <description>RaidToolkit Client SDK for Raid: Shadow Legends</description>
     <repository type="git" url="https://github.com/raid-toolkit/raid-toolkit-sdk.git" />
     <dependencies>
       <group targetFramework="net5.0" />

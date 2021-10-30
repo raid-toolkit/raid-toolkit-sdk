@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Raid.DataModel;
 using SharedModel.Meta.Skills;
@@ -8,8 +9,7 @@ using Extractor = RaidExtractor.Core.Extractor;
 
 namespace Raid.Service
 {
-    [PublicApi("account-api")]
-    internal class AccountApi : ApiHandler
+    internal class AccountApi : ApiHandler, IAccountApi
     {
         private readonly StaticDataCache StaticDataCache;
         private readonly UserData UserData;
@@ -22,42 +22,34 @@ namespace Raid.Service
         public event EventHandler<SerializableEventArgs> Updated;
 #pragma warning restore 0067
 
-        [PublicApi("getAccountDump")]
-        public RaidExtractor.Core.AccountDump GetAccountDump(string accountId) => Extractor.DumpAccount(UserData.GetAccount(accountId));
+        public Task<RaidExtractor.Core.AccountDump> GetAccountDump(string accountId) => Task.FromResult(Extractor.DumpAccount(UserData.GetAccount(accountId)));
 
-        [PublicApi("getAllResources")]
-        public Resources GetAllResources(string accountId) => ResourcesFacet.ReadValue(UserData.GetAccount(accountId));
+        public Task<Resources> GetAllResources(string accountId) => Task.FromResult(ResourcesFacet.ReadValue(UserData.GetAccount(accountId)));
 
-        [PublicApi("getAccounts")]
-        public Account[] GetAccounts() => UserData.UserAccounts.Select(AccountFacet.ReadValue).ToArray();
+        public Task<Account[]> GetAccounts() => Task.FromResult(UserData.UserAccounts.Select(AccountFacet.ReadValue).ToArray());
 
-        [PublicApi("accountInfo")]
-        public Account GetAccount(string accountId) => AccountFacet.ReadValue(UserData.GetAccount(accountId));
+        public Task<Account> GetAccount(string accountId) => Task.FromResult(AccountFacet.ReadValue(UserData.GetAccount(accountId)));
 
-        [PublicApi("getArtifacts")]
-        public Artifact[] GetArtifacts(string accountId) => ArtifactsFacet.ReadValue(UserData.GetAccount(accountId)).Values.ToArray();
+        public Task<Artifact[]> GetArtifacts(string accountId) => Task.FromResult(ArtifactsFacet.ReadValue(UserData.GetAccount(accountId)).Values.ToArray());
 
-        [PublicApi("getArtifactById")]
-        public Artifact GetArtifactById(string accountId, int artifactId) => ArtifactsFacet.ReadValue(UserData.GetAccount(accountId))[artifactId];
+        public Task<Artifact> GetArtifactById(string accountId, int artifactId) => Task.FromResult(ArtifactsFacet.ReadValue(UserData.GetAccount(accountId))[artifactId]);
 
-        [PublicApi("getHeroes")]
-        public Hero[] GetHeroes(string accountId, bool snapshot = false)
+        public Task<Hero[]> GetHeroes(string accountId, bool snapshot = false)
         {
             var heroes = HeroesFacet.ReadValue(UserData.GetAccount(accountId)).Values;
             if (!snapshot)
-                return heroes.ToArray();
+                return Task.FromResult(heroes.ToArray());
 
-            return heroes.Select(hero => GetSnapshot(accountId, hero)).ToArray();
+            return Task.FromResult<Hero[]>(heroes.Select(hero => GetSnapshot(accountId, hero)).ToArray());
         }
 
-        [PublicApi("getHeroById")]
-        public Hero GetHeroById(string accountId, int heroId, bool snapshot = false)
+        public Task<Hero> GetHeroById(string accountId, int heroId, bool snapshot = false)
         {
             var hero = HeroesFacet.ReadValue(UserData.GetAccount(accountId))[heroId];
             if (!snapshot)
-                return hero;
+                return Task.FromResult(hero);
 
-            return GetSnapshot(accountId, hero);
+            return Task.FromResult<Hero>(GetSnapshot(accountId, hero));
         }
 
         private SkillSnapshot GetSkillSnapshot(DataModel.SkillType skill, int level)

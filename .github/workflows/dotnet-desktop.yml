@@ -57,6 +57,7 @@ jobs:
       Solution_Name: SDK.sln
       Service_csproj: SDK\Service\Service.csproj
       Extractor_csproj: SDK\Extractor\Extractor.csproj
+      Client_csproj: SDK\Client\Client.csproj
 
     steps:
       - name: Checkout
@@ -83,6 +84,9 @@ jobs:
 
       # Versions
       - uses: dotnet/nbgv@master
+        id: rtk_version
+
+      - uses: dotnet/nbgv@master
         id: extractor_version
         with:
           path: SDK/Extractor
@@ -91,6 +95,11 @@ jobs:
         id: service_version
         with:
           path: SDK/Service
+
+      - uses: dotnet/nbgv@master
+        id: client_version
+        with:
+          path: SDK/Client
 
       # Publish RTK
       - name: Publish Service
@@ -104,6 +113,13 @@ jobs:
         env:
           Configuration: ${{ matrix.configuration }}
 
+      # Pack Client
+      - name: Publish Client
+        run: dotnet pack $env:Client_csproj --output publish -c Release -p:NuspecFile=Raid.Client.nuspec -p:NuspecProperties="version=${{ steps.client_version.outputs.SemVer2 }}"
+        env:
+          Configuration: ${{ matrix.configuration }}
+
+      # Zip
       - name: Zip Service
         uses: thedoctor0/zip-release@master
         with:
@@ -118,6 +134,7 @@ jobs:
           path: 'publish\Extractor'
           filename: 'publish\Raid.Extractor.zip'
 
+      # Upload build artifacts
       - name: Upload RTK artifact
         uses: actions/upload-artifact@v2
         with:
@@ -130,15 +147,16 @@ jobs:
           name: RaidExtractor
           path: publish/Extractor
 
-      - name: Create RaidExtractor Release
-        id: raidextractor_release
+      # Create releases
+      - name: Create RaidToolkit Release
+        id: rtk_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: raidextractor_v${{ steps.extractor_version.outputs.SemVer2 }}
-          release_name: RaidExtractor v${{ steps.extractor_version.outputs.SemVer2 }}
-          body: RaidExtractor v${{ steps.extractor_version.outputs.SemVer2 }}
+          tag_name: v${{ steps.rtk_version.outputs.SemVer2 }}
+          release_name: RaidToolkit v${{ steps.rtk_version.outputs.SemVer2 }}
+          body: RaidToolkit v${{ steps.rtk_version.outputs.SemVer2 }}
           draft: false
           prerelease: false
 
@@ -148,22 +166,32 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.raidextractor_release.outputs.upload_url }}
+          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
           asset_path: ./publish/Raid.Extractor.zip
           asset_name: Raid.Extractor.zip
           asset_content_type: application/zip
 
-      - name: Create RaidService Release
-        id: raidservice_release
-        uses: actions/create-release@v1
+      - name: Upload RaidExtractor Asset
+        id: upload-raidextractor-asset
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: raidservice_v${{ steps.service_version.outputs.SemVer2 }}
-          release_name: RaidService v${{ steps.service_version.outputs.SemVer2 }}
-          body: RaidService v${{ steps.service_version.outputs.SemVer2 }}
-          draft: false
-          prerelease: false
+          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
+          asset_path: ./publish/Raid.Extractor.zip
+          asset_name: Raid.Extractor.zip
+          asset_content_type: application/zip
+
+      - name: Upload Client Asset
+        id: upload-client-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
+          asset_path: ./publish/Raid.Client.${{ steps.client_version.outputs.SemVer2 }}.nupkg
+          asset_name: Raid.Client.${{ steps.client_version.outputs.SemVer2 }}.nupkg
+          asset_content_type: application/x-msdownload
 
       - name: Upload RaidService Asset
         id: upload-raidservice-asset
@@ -171,7 +199,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.raidservice_release.outputs.upload_url }}
+          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
           asset_path: ./publish/Raid.Service.zip
           asset_name: Raid.Service.zip
           asset_content_type: application/zip

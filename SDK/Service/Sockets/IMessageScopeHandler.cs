@@ -4,7 +4,7 @@ namespace Raid.Service
 {
     public interface IMessageScopeHandler
     {
-        string Name { get; }
+        bool SupportsScope(string scopeName);
         void HandleMessage(SocketMessage message, ISocketSession session);
     }
 }

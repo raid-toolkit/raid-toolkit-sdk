@@ -6,6 +6,7 @@ using CommandLine;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using RaidExtractor.Core;
+using Raid.Client;
 
 namespace RaidExtractor
 {
@@ -65,13 +66,13 @@ namespace RaidExtractor
                             return;
                         }
 
-                        Extractor raidExtractor = new Extractor();
+                        RaidToolkitClient client = new RaidToolkitClient();
                         AccountDump dump;
                         try
                         {
-                            raidExtractor.Connect();
-                            var accounts = await raidExtractor.GetAccounts();
-                            dump = await raidExtractor.GetAccountDump(accounts[0].Id);
+                            client.Connect();
+                            var accounts = await client.AccountApi.GetAccounts();
+                            dump = await client.AccountApi.GetAccountDump(accounts[0].Id);
                             dump.FileVersion = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString(2);
                         }
                         catch (Exception ex)
@@ -81,7 +82,7 @@ namespace RaidExtractor
                         }
                         finally
                         {
-                            raidExtractor.Disconnect();
+                            client.Disconnect();
                         }
 
                         var outFile = o.OutputFile;

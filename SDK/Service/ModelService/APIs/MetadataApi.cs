@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Microsoft.Extensions.Logging;
+using Raid.DataModel;
 using Raid.Model;
 
 namespace Raid.Service

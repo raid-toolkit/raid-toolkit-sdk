@@ -8,12 +8,17 @@ namespace Raid.Service
 {
     internal class ProtocolHandler : IMessageScopeHandler
     {
-        public string Name => "$rtk";
+        private string Name => "$rtk";
         private ILogger<ProtocolHandler> Logger;
         private ChannelService ChannelService;
 
         public ProtocolHandler(ILogger<ProtocolHandler> logger, ChannelService channelService) =>
             (Logger, ChannelService) = (logger, channelService);
+
+        public bool SupportsScope(string scopeName)
+        {
+            return scopeName == Name;
+        }
 
         public void HandleMessage(SocketMessage message, ISocketSession session)
         {
@@ -44,5 +49,6 @@ namespace Raid.Service
                     }
             }
         }
+
     }
 }

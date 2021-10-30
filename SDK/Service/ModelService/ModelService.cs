@@ -13,12 +13,12 @@ namespace Raid.Service
 {
     public class ModelService
     {
-        private readonly IReadOnlyDictionary<string, IMessageScopeHandler> ScopeHandlers;
+        private readonly List<IMessageScopeHandler> ScopeHandlers;
         private ILogger<ModelService> Logger;
         public ModelService(ILogger<ModelService> logger, IEnumerable<IMessageScopeHandler> handlers)
         {
             Logger = logger;
-            ScopeHandlers = handlers.ToDictionary(handler => handler.Name);
+            ScopeHandlers = handlers.ToList();
         }
 
         private ValueTask ProcessMessage(ISocketSession session, WebSocketPackage message)
@@ -45,7 +45,8 @@ namespace Raid.Service
 
             try
             {
-                if (ScopeHandlers.TryGetValue(socketMessage.Scope, out IMessageScopeHandler handler))
+                IMessageScopeHandler handler = ScopeHandlers.FirstOrDefault(handler => handler.SupportsScope(socketMessage.Scope));
+                if (handler != null)
                 {
                     handler.HandleMessage(socketMessage, session);
                 }

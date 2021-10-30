@@ -5,19 +5,20 @@ using Newtonsoft.Json;
 using RaidExtractor.Core;
 using System.IO.Compression;
 using System.Threading.Tasks;
+using Raid.Client;
 
 namespace RaidExtractor
 {
     public partial class MainForm : Form
     {
-        private readonly Extractor raidExtractor;
+        private readonly RaidToolkitClient client;
 
         public MainForm()
         {
             InitializeComponent();
             this.Icon = System.Drawing.Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             ShowIcon = true;
-            raidExtractor = new Extractor();
+            client = new RaidToolkitClient();
         }
 
         private async void SaveButton_Click(object sender, EventArgs e)
@@ -62,9 +63,9 @@ namespace RaidExtractor
         {
             try
             {
-                raidExtractor.Connect();
-                var accounts = await raidExtractor.GetAccounts();
-                return await raidExtractor.GetAccountDump(accounts[0].Id);
+                client.Connect();
+                var accounts = await client.AccountApi.GetAccounts();
+                return await client.AccountApi.GetAccountDump(accounts[0].Id);
             }
             catch (Exception ex)
             {
@@ -73,7 +74,7 @@ namespace RaidExtractor
             }
             finally
             {
-                raidExtractor.Disconnect();
+                client.Disconnect();
             }
         }
     }

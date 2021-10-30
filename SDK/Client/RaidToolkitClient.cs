@@ -1,10 +1,5 @@
 using System;
-using System.Windows.Forms;
-using System.IO;
-using System.IO.Compression;
-using CommandLine;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
 using System.Net.WebSockets;
 using Raid.Extractor;
 using System.Threading;
@@ -13,24 +8,30 @@ using Raid.DataModel;
 using System.Text;
 using Raid.Service.Messages;
 using Newtonsoft.Json.Linq;
-using RaidExtractor.Core;
 
-namespace RaidExtractor
+namespace Raid.Client
 {
-    public class Extractor
+    public class RaidToolkitClient
     {
         private readonly PromiseStore Promises = new();
         private readonly ClientWebSocket Socket = new();
-        private CancellationTokenSource CancellationTokenSource;
+        private readonly Uri EndpointUri;
+        private CancellationTokenSource CancellationTokenSource = new();
 
-        public Extractor()
+        public RaidToolkitClient(Uri endpointUri = null) => EndpointUri = (endpointUri ?? new Uri("ws://localhost:9090"));
+
+        public IAccountApi AccountApi
         {
+            get { return new AccountApi(this); }
         }
 
         public void Connect()
         {
-            Socket.ConnectAsync(new Uri("ws://localhost:9090"), CancellationToken.None).Wait();
-            Listen();
+            if (Socket.State == WebSocketState.None)
+            {
+                Socket.ConnectAsync(new Uri("ws://localhost:9090"), CancellationToken.None).Wait();
+                Listen();
+            }
         }
 
         public void Disconnect()
@@ -41,12 +42,10 @@ namespace RaidExtractor
 
         private async void Listen()
         {
-            CancellationTokenSource = new();
-            CancellationToken token = CancellationTokenSource.Token;
             Memory<byte> buffer = new Memory<byte>(new byte[1024 * 1024 * 3]);
             while (Socket.State == WebSocketState.Open)
             {
-                var result = await Socket.ReceiveAsync(buffer, token);
+                var result = await Socket.ReceiveAsync(buffer, CancellationTokenSource.Token);
                 if (!result.EndOfMessage)
                 {
                     // TODO: throw away messages until next EndOfMessage is reached (inclusive)
@@ -55,16 +54,6 @@ namespace RaidExtractor
                 var socketMessage = JsonConvert.DeserializeObject<SocketMessage>(Encoding.UTF8.GetString(buffer.Slice(0, result.Count).Span));
                 HandleMessage(socketMessage);
             }
-        }
-
-        public Task<Account[]> GetAccounts()
-        {
-            return Call<Account[]>("account-api", "getAccounts");
-        }
-
-        public Task<AccountDump> GetAccountDump(string accountId)
-        {
-            return Call<AccountDump>("account-api", "getAccountDump", accountId);
         }
 
         private void HandleMessage(SocketMessage socketMessage)
@@ -92,7 +81,7 @@ namespace RaidExtractor
             }
         }
 
-        private async Task<T> Call<T>(string apiName, string methodName, params object[] args)
+        internal async Task<T> Call<T>(string apiName, string methodName, params object[] args)
         {
             string promiseId = Promises.Create();
             await Send(new SocketMessage()
