@@ -41,8 +41,6 @@ name: .NET Core Desktop
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
   build:
@@ -83,36 +81,7 @@ jobs:
         env:
           Configuration: ${{ matrix.configuration }}
 
-      # Build the application
-      - name: Build the application
-        run: msbuild $env:Solution_Name /t:Build /p:Configuration=$env:Configuration /p:Platform=x64
-        env:
-          Configuration: ${{ matrix.configuration }}
-
-      # Publish RTK
-      - name: Publish Service
-        run: dotnet publish $env:Service_csproj --output publish/RTK /p:Configuration=$env:Configuration /p:Platform=x64 /p:DeployOnBuild=true
-        env:
-          Configuration: ${{ matrix.configuration }}
-
-      # Publish Extractor
-      - name: Publish Service
-        run: dotnet publish $env:Extractor_csproj --output publish/Extractor /p:Configuration=$env:Configuration /p:Platform=x64 /p:DeployOnBuild=true
-        env:
-          Configuration: ${{ matrix.configuration }}
-
-      # - name: Upload RTK artifact
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: RaidToolkit
-      #     path: publish/RTK
-
-      # - name: Upload Extractor artifact
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: RaidExtractor
-      #     path: publish/Extractor
-
+      # Versions
       - uses: dotnet/nbgv@master
         id: extractor_version
         with:
@@ -123,6 +92,72 @@ jobs:
         with:
           path: SDK/Service
 
-      - run: echo 'SemVer2=${{ steps.extractor_version.outputs.SemVer2 }}'
+      # Publish RTK
+      - name: Publish Service
+        run: dotnet publish $env:Service_csproj --output publish/RTK /p:Configuration=$env:Configuration /p:Platform=x64 /p:DeployOnBuild=true /property:Version=${{ steps.service_version.outputs.SemVer2 }}
+        env:
+          Configuration: ${{ matrix.configuration }}
 
-      - run: echo 'SemVer2=${{ steps.service_version.outputs.SemVer2 }}'
+      # Publish Extractor
+      - name: Publish Service
+        run: dotnet publish $env:Extractor_csproj --output publish/Extractor /p:Configuration=$env:Configuration /p:Platform=x64 /p:DeployOnBuild=true /property:Version=${{ steps.extractor_version.outputs.SemVer2 }}
+        env:
+          Configuration: ${{ matrix.configuration }}
+
+      - name: Upload RTK artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: RaidToolkit
+          path: publish/RTK
+
+      - name: Upload Extractor artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: RaidExtractor
+          path: publish/Extractor
+
+      - name: Create RaidExtractor Release
+        id: raidextractor_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.extractor_version.outputs.SemVer2 }}
+          release_name: RaidExtractor v${{ steps.extractor_version.outputs.SemVer2 }}
+          body: RaidExtractor v${{ steps.extractor_version.outputs.SemVer2 }}
+          draft: false
+          prerelease: false
+
+      - name: Upload RaidExtractor Asset
+        id: upload-raidextractor-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.raidextractor_release.outputs.upload_url }}
+          asset_path: ./publish/Extractor/Raid.Extractor.exe
+          asset_name: Raid.Extractor.exe
+          asset_content_type: application/exe
+
+      - name: Create RaidService Release
+        id: raidservice_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.service_version.outputs.SemVer2 }}
+          release_name: RaidService v${{ steps.service_version.outputs.SemVer2 }}
+          body: RaidService v${{ steps.service_version.outputs.SemVer2 }}
+          draft: false
+          prerelease: false
+
+      - name: Upload RaidService Asset
+        id: upload-raidservice-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.raidservice_release.outputs.upload_url }}
+          asset_path: ./publish/Extractor/Raid.Extractor.exe
+          asset_name: Raid.Extractor.exe
+          asset_content_type: application/exe
