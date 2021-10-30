@@ -94,3 +94,10 @@ jobs:
         run: dotnet publish $env:Service_csproj /p:Configuration=$env:Configuration /p:Platform=x64 /p:DeployOnBuild=true /p:PublishProfile=SDK/Service/Properties/PublishProfiles/FolderProfile.pubxml
         env:
           Configuration: ${{ matrix.configuration }}
+
+    # Upload the MSIX package: https://github.com/marketplace/actions/upload-a-build-artifact
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: RaidToolkit
+        path: \publish
