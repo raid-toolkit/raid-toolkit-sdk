@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Raid.Extractor" GeneratedClassName="AppSettings">
+  <Profiles />
+  <Settings>
+    <Setting Name="PublicServer" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">wss://raid-toolkit.azurewebsites.net/target</Value>
+    </Setting>
+    <Setting Name="PrivateServer" Type="(Web Service URL)" Scope="Application">
+      <Value Profile="(Default)">ws://localhost:9090</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

@@ -11,6 +11,10 @@ namespace Raid.DataModel
 
         public static IReadOnlyDictionary<string, V> ToModel<K, V>(this IDictionary<K, V> dict) where K : Enum
         {
+            if (dict == null)
+            {
+                return new Dictionary<string, V>();
+            }
             return dict.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value);
         }
 

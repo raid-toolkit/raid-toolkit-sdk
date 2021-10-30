@@ -5,8 +5,6 @@
 //----------------------
 
 using System.Collections.Generic;
-using SharedModel.Battle.Effects;
-using SharedModel.Meta.Heroes;
 
 #pragma warning disable 108 // Disable "CS0108 '{derivedDto}.ToJson()' hides inherited member '{dtoBase}.ToJson()'. Use the new keyword if hiding was intended."
 #pragma warning disable 114 // Disable "CS0114 '{derivedDto}.RaisePropertyChanged(String)' hides inherited member 'dtoBase.RaisePropertyChanged(String)'. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword."
@@ -31,13 +29,13 @@ namespace RaidExtractor.Core
         public string ArenaLeague { get; set; }
 
         [Newtonsoft.Json.JsonProperty("greatHall", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Dictionary<Element, Dictionary<StatKindId, int>> GreatHall { get; set; }
+        public IReadOnlyDictionary<string, IReadOnlyDictionary<string, int>> GreatHall { get; set; }
 
         [Newtonsoft.Json.JsonProperty("shards", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Dictionary<string, ShardInfo> Shards { get; set; }
+        public IReadOnlyDictionary<string, ShardInfo> Shards { get; set; }
 
         [Newtonsoft.Json.JsonProperty("stagePresets", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public Dictionary<int, int[]> StagePresets { get; set; }
+        public IReadOnlyDictionary<int, int[]> StagePresets { get; set; }
 
         [Newtonsoft.Json.JsonProperty("fileVersion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string FileVersion { get; set; }
@@ -195,13 +193,13 @@ namespace RaidExtractor.Core
         public List<int> Masteries { get; set; }
 
         [Newtonsoft.Json.JsonProperty("assignedMasteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Dictionary<string, int> AssignedMasteryScrolls { get; set; }
+        public IReadOnlyDictionary<string, int> AssignedMasteryScrolls { get; set; }
 
         [Newtonsoft.Json.JsonProperty("unassignedMasteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Dictionary<string, int> UnassignedMasteryScrolls { get; set; }
+        public IReadOnlyDictionary<string, int> UnassignedMasteryScrolls { get; set; }
 
         [Newtonsoft.Json.JsonProperty("totalMasteryScrolls", Required = Newtonsoft.Json.Required.AllowNull)]
-        public Dictionary<string, int> TotalMasteryScrolls { get; set; }
+        public IReadOnlyDictionary<string, int> TotalMasteryScrolls { get; set; }
 
         [Newtonsoft.Json.JsonProperty("skills", Required = Newtonsoft.Json.Required.Always)]
         public List<Skill> Skills { get; set; }

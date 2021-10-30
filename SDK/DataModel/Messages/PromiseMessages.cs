@@ -24,7 +24,7 @@ namespace Raid.Service.Messages
     public class ErrorInfo
     {
         [JsonProperty("message")]
-        string Message;
+        public string Message;
 
         public ErrorInfo() { }
         public ErrorInfo(Exception ex)
