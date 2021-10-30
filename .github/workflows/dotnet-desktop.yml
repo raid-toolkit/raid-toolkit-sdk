@@ -149,7 +149,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.raidextractor_release.outputs.upload_url }}
-          asset_path: ./publish/Extractor/Raid.Extractor.zip
+          asset_path: ./publish/Raid.Extractor.zip
           asset_name: Raid.Extractor.zip
           asset_content_type: application/zip
 
@@ -172,6 +172,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.raidservice_release.outputs.upload_url }}
-          asset_path: ./publish/RTK/Raid.Service.zip
+          asset_path: ./publish/Raid.Service.zip
           asset_name: Raid.Service.zip
           asset_content_type: application/zip
