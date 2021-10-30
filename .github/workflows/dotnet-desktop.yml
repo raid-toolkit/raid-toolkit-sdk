@@ -158,6 +158,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.raidservice_release.outputs.upload_url }}
-          asset_path: ./publish/Extractor/Raid.Extractor.exe
-          asset_name: Raid.Extractor.exe
+          asset_path: ./publish/RTK/Raid.Service.exe
+          asset_name: Raid.Service.exe
           asset_content_type: application/exe
