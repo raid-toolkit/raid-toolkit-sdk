@@ -91,7 +91,7 @@ jobs:
 
       # Publish the application
       - name: Publish Service
-        run: dotnet publish $env:Service_csproj /p:Configuration=$env:Configuration /p:Platform=x64 /p:DeployOnBuild=true /p:PublishProfile=SDK/Service/Properties/PublishProfiles/FolderProfile.pubxml
+        run: dotnet publish $env:Service_csproj --output publish /p:Configuration=$env:Configuration /p:Platform=x64 /p:DeployOnBuild=true /p:PublishProfile=SDK/Service/Properties/PublishProfiles/FolderProfile.pubxml
         env:
           Configuration: ${{ matrix.configuration }}
 
