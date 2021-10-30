@@ -1,14 +1,14 @@
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
 using Raid.Model;
-using Raid.DataModel;
+using System.IO;
+using System.Linq;
+using System.Diagnostics;
 
 namespace Raid.Service
 {
@@ -28,6 +28,22 @@ namespace Raid.Service
             if (!options.Standalone)
             {
                 options.NoUI = false;
+            }
+            if (Environment.GetEnvironmentVariable("RTK_DEBUG") != "true")
+            {
+                string expectedInstallPath = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "RaidToolkit");
+                string exeDir = Path.GetDirectoryName(AppConfiguration.ExecutablePath);
+                string exeName = Path.GetFileName(AppConfiguration.ExecutablePath);
+                string expectedExePath = Path.Join(expectedInstallPath, exeName);
+                string expectedConfigPath = Path.Join(expectedInstallPath, "appsettings.json");
+                if (!AppConfiguration.ExecutablePath.Equals(expectedExePath, StringComparison.OrdinalIgnoreCase))
+                {
+                    Directory.CreateDirectory(expectedInstallPath);
+                    File.Copy(AppConfiguration.ExecutablePath, expectedExePath, true);
+                    File.Copy(Path.Join(exeDir, "appsettings.json"), expectedConfigPath, true);
+                    Process.Start(expectedExePath, Environment.GetCommandLineArgs().Skip(1));
+                    return Task.FromResult(0);
+                }
             }
             using (var mutex = new Mutex(false, "RaidToolkit Singleton"))
             {

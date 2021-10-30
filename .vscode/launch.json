@@ -35,6 +35,9 @@
             // "preLaunchTask": "build",
             "program": "${workspaceFolder}/SDK/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
             "args": [],
+            "env": {
+                "RTK_DEBUG": "true"
+            },
             "justMyCode": false,
             "cwd": "${workspaceFolder}/SDK/Service",
             "console": "internalConsole",
@@ -50,6 +53,9 @@
                 "open",
                 "rtk://open?channel=CNTvMrQnRF3li0hGX2Apj&origin=chrome-extension://omalebghpgejjiaoknljcfmglgbpocdp"
             ],
+            "env": {
+                "RTK_DEBUG": "true"
+            },
             "cwd": "${workspaceFolder}/SDK/Service",
             "console": "internalConsole",
             "stopAtEntry": false
@@ -63,6 +69,9 @@
             "args": [
                 "open"
             ],
+            "env": {
+                "RTK_DEBUG": "true"
+            },
             "cwd": "${workspaceFolder}/SDK/Service",
             "console": "internalConsole",
             "stopAtEntry": false
@@ -74,6 +83,9 @@
             // "preLaunchTask": "build",
             "program": "${workspaceFolder}/SDK/Extractor/bin/Debug/net5.0-windows/win-x64/Raid.Extractor.exe",
             "args": [],
+            "env": {
+                "RTK_DEBUG": "true"
+            },
             "cwd": "${workspaceFolder}/SDK/Extractor",
             "console": "internalConsole",
             "stopAtEntry": false
@@ -85,6 +97,9 @@
             // "preLaunchTask": "build",
             "program": "${workspaceFolder}/SDK/Extractor/bin/Release/net5.0-windows/win-x64/Raid.Extractor.exe",
             "args": [],
+            "env": {
+                "RTK_DEBUG": "true"
+            },
             "cwd": "${workspaceFolder}/SDK/Extractor",
             "console": "internalConsole",
             "stopAtEntry": false
