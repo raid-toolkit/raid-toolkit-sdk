@@ -71,16 +71,31 @@ namespace Raid.Service
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            ConnectTask = Socket.ConnectAsync(HostUri, stoppingToken);
-            await ConnectTask;
-            await Run(stoppingToken);
-            await Socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "SHUTDOWN", CancellationToken.None);
+            try
+            {
+                await Task.Delay(-1, stoppingToken);
+            }
+            catch { }
+            if (Socket.State == WebSocketState.Open)
+            {
+                await Socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "SHUTDOWN", CancellationToken.None);
+            }
+        }
+
+        private Task EnsureConnected()
+        {
+            if (ConnectTask == null)
+            {
+                ConnectTask = Socket.ConnectAsync(HostUri, CancellationToken.None);
+                Run(CancellationToken.None);
+            }
+            return ConnectTask;
         }
 
         private async Task Run(CancellationToken token)
         {
             Memory<byte> buffer = new Memory<byte>(new byte[1024 * 1024 * 3]);
-            while (!token.IsCancellationRequested)
+            while (Socket.State == WebSocketState.Open && !token.IsCancellationRequested)
             {
                 var result = await Socket.ReceiveAsync(buffer, token);
                 if (!result.EndOfMessage)
@@ -126,7 +141,7 @@ namespace Raid.Service
 
         public async void Reject(string channelId)
         {
-            await ConnectTask;
+            await EnsureConnected();
             UnauthorizedMessage message = new()
             {
                 ChannelId = channelId,
@@ -137,7 +152,7 @@ namespace Raid.Service
 
         public async void Accept(string channelId, string origin)
         {
-            await ConnectTask;
+            await EnsureConnected();
             AuthorizeMessage message = new()
             {
                 ChannelId = channelId,

@@ -73,7 +73,11 @@ namespace Raid.Service
                 var host = RaidHost.CreateHost();
                 var task = Task.Run(async () =>
                 {
-                    await host.RunAsync();
+                    try
+                    {
+                        await host.RunAsync();
+                    }
+                    catch (OperationCanceledException) { }
                 });
                 RaidHost.Services.GetRequiredService<MainService>().Run(options);
                 return task;

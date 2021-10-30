@@ -5,7 +5,6 @@ using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Raid.DataModel;
 
 namespace Raid.Service
 {
@@ -14,14 +13,17 @@ namespace Raid.Service
         private NotifyIcon notifyIcon;
         private readonly RaidInstanceFactory Factory;
         private readonly ILogger<MainService> Logger;
+        private readonly IHostApplicationLifetime Lifetime;
         public MainService(
             ProcessWatcher processWatcher,
             ILogger<MainService> logger,
             RaidInstanceFactory factory,
-            IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider,
+            IHostApplicationLifetime appLifetime)
         {
             Factory = factory;
             Logger = logger;
+            Lifetime = appLifetime;
             processWatcher.ProcessFound += (object sender, ProcessWatcher.ProcessWatcherEventArgs e) =>
             {
                 try
@@ -36,9 +38,13 @@ namespace Raid.Service
             };
         }
 
-        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            return Task.Delay(-1, stoppingToken);
+            try
+            {
+                await Task.Delay(-1, stoppingToken);
+            }
+            catch { }
         }
 
         public void Run(RunOptions options)
@@ -69,6 +75,7 @@ namespace Raid.Service
             notifyIcon.Dispose();
             TaskExtensions.Shutdown();
             Application.Exit();
+            Lifetime.StopApplication();
         }
 
         private void UpdateAccounts()

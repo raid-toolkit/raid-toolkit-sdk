@@ -34,10 +34,14 @@ namespace Raid.Service
 
         public ProcessWatcher(IOptions<AppSettings> settings) => Settings = settings.Value.ProcessWatcher;
 
-        protected override System.Threading.Tasks.Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             RefreshProcesses();
-            return Task.Delay(-1, stoppingToken);
+            try
+            {
+                await Task.Delay(-1, stoppingToken);
+            }
+            catch { }
         }
 
         private void RefreshProcesses()
