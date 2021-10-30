@@ -4,12 +4,11 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using CommandLine;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Raid.Service.Messages;
+using Raid.DataModel;
 
 namespace Raid.Service
 {

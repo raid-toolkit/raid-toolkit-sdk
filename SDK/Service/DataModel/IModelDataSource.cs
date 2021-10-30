@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-
-namespace Raid.Service.DataModel
+namespace Raid.Service
 {
     public interface IModelDataSource
     {

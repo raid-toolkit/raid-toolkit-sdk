@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Raid.Service.DataModel;
+using Raid.DataModel;
 using SharedModel.Meta.Stages;
 
 namespace Raid.Service
@@ -44,13 +44,13 @@ namespace Raid.Service
             {
                 Hash = hash,
                 HeroData = new() { HeroTypes = heroTypes, },
-                ArtifactData = new() { ArtifactSetKinds = artifactTypes },
+                ArtifactData = new() { ArtifactSetKinds = artifactTypes.ToModel() },
                 SkillData = new() { SkillTypes = skillTypes },
-                ArenaData = new() { Leagues = arenaLeagues },
+                ArenaData = new() { Leagues = arenaLeagues.ToModel() },
                 StageData = new()
                 {
-                    Areas = areas,
-                    Regions = regions,
+                    Areas = areas.ToModel(),
+                    Regions = regions.ToModel(),
                     Stages = new Dictionary<int, StageData>(stages)
                 },
                 LocalizedStrings = localizedStrings

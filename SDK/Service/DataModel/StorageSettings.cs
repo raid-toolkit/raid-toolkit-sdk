@@ -1,4 +1,4 @@
-namespace Raid.Service.DataModel
+namespace Raid.Service
 {
     public class StorageSettings
     {
