@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "outDir": "lib",
+        "rootDir": "src",
+        "target": "es2018",
+        "module": "commonjs",
+        "importHelpers": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true,
+        "jsx": "preserve",
+        "lib": [
+            "DOM",
+            "esnext",
+            "es2018"
+        ],
+        "strict": true,
+        "alwaysStrict": true,
+        "declaration": true,
+        "sourceMap": true,
+        "moduleResolution": "node",
+        "skipLibCheck": true,
+        "resolveJsonModule": true
+    }
+}
