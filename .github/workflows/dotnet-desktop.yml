@@ -193,6 +193,17 @@ jobs:
           asset_name: Raid.Service.zip
           asset_content_type: application/zip
 
+      - name: Upload TPN Asset
+        id: upload-tpn-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
+          asset_path: ThirdPartyNotice.txt
+          asset_name: ThirdPartyNotice.txt
+          asset_content_type: text/plain
+
       - name: Push client package to GitHub registry
         run: dotnet nuget push publish/Raid.Client.${{ steps.client_version.outputs.SemVer2 }}.nupkg -k %PUBLISH_TOKEN% -s https://api.nuget.org/v3/index.json --skip-duplicate
         env:
