@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Raid.Service;
 using Raid.DataModel;
-using SharedModel.Meta.Masteries;
 
 namespace RaidExtractor.Core
 {
@@ -23,6 +21,7 @@ namespace RaidExtractor.Core
 
         public AccountDump DumpAccount(UserAccount account)
         {
+            var accountFacet = AccountFacet.ReadValue(account);
             var artifacts = ArtifactsFacet.ReadValue(account);
             var heroes = HeroesFacet.ReadValue(account);
             var arena = ArenaFacet.ReadValue(account);
@@ -32,6 +31,7 @@ namespace RaidExtractor.Core
 
             return new AccountDump()
             {
+                LastUpdated = accountFacet.LastUpdated,
                 ArenaLeague = arena.LeagueId.ToString(),
                 GreatHall = arena.GreatHallBonuses.ToDictionary(
                     bonus => bonus.Affinity.ToString(),

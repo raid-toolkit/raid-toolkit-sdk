@@ -4,4 +4,5 @@ export interface AccountInfo {
   name: string;
   level: number;
   power: number;
+  lastUpdated: string;
 }

@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Raid.DataModel
@@ -20,5 +18,8 @@ namespace Raid.DataModel
 
         [JsonProperty("power")]
         public int Power;
+
+        [JsonProperty("lastUpdated")]
+        public string LastUpdated;
     }
 }
