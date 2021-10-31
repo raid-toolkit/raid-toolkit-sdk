@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.IO;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,6 +17,7 @@ namespace Raid.Service
 
         private static IHostBuilder CreateHostBuilder() => WebSocketHostBuilder.Create()
             .UseWebSocketMessageHandler(ModelService.HandleMessage)
+            .ConfigureAppConfiguration(config => config.AddJsonFile(Path.Join(AppConfiguration.ExecutableDirectory, "appsettings.json"), false))
             .ConfigureServices((ctx, services) => services
                 .Configure<AppSettings>(opts => ctx.Configuration.GetSection("app").Bind(opts))
                 .AddLogging(builder =>
