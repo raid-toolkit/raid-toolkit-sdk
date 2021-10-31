@@ -21,7 +21,8 @@ namespace Raid.Service
                 Avatar = gameSettings.Avatar.ToString(),
                 Name = gameSettings.Name,
                 Level = accountData.Level,
-                Power = (int)Math.Round(accountData.TotalPower, 0)
+                Power = (int)Math.Round(accountData.TotalPower, 0),
+                LastUpdated = DateTime.UtcNow.ToString("o")
             };
         }
     }
