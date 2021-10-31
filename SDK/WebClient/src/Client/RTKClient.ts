@@ -1,8 +1,6 @@
-export type EventName =
-  | "data"
-  | "access-rejected"
-  | "access-granted"
-  | "request-access";
+import { showConnectDialog } from '../UI';
+
+export type EventName = 'data' | 'access-rejected' | 'access-granted' | 'request-access';
 
 export const enum ClientState {
   None,
@@ -17,16 +15,15 @@ export class RaidToolkitClient {
   private ws?: WebSocket;
   private state: ClientState = ClientState.None;
   private error?: any;
-  constructor(
-    private readonly serviceUri = "wss://raid-toolkit.azurewebsites.net/target"
-  ) {
+  constructor(private readonly serviceUri = 'wss://raid-toolkit.azurewebsites.net/target') {
     this.serviceUri = serviceUri;
   }
 
-  connect(): Promise<this> {
+  async connect(): Promise<this> {
     if (!this.ws) {
+      await showConnectDialog();
       this.ws = new WebSocket(this.serviceUri);
-      this.ws.addEventListener("message", this.onMessage);
+      this.ws.addEventListener('message', this.onMessage);
       this.state = ClientState.Pending;
     }
     return this.waitForConnection();
@@ -37,22 +34,19 @@ export class RaidToolkitClient {
       case ClientState.None:
       case ClientState.Pending:
         return new Promise((resolve, reject) =>
-          this.once("access-granted", () => resolve(this)).once(
-            "access-rejected",
-            reject
-          )
+          this.once('access-granted', () => resolve(this)).once('access-rejected', reject)
         );
       case ClientState.Aborted:
         return Promise.reject(this.error);
       case ClientState.Connected:
         return Promise.resolve(this);
       default:
-        return Promise.reject("internal error");
+        return Promise.reject('internal error');
     }
   }
 
   close(): any {
-    this.ws?.close(0, "Done");
+    this.ws?.close(0, 'Done');
     delete this.ws;
     delete this.error;
     delete this.channelId;
@@ -62,7 +56,7 @@ export class RaidToolkitClient {
   send(message: any) {
     this.ws?.send(
       JSON.stringify({
-        type: "send",
+        type: 'send',
         channelId: this.channelId,
         message,
       })
@@ -86,9 +80,7 @@ export class RaidToolkitClient {
   }
 
   off(eventName: EventName, callback: (...args: any[]) => void) {
-    const idx = this.events.findIndex(
-      (e) => e[0] === eventName && e[1] === callback
-    );
+    const idx = this.events.findIndex((e) => e[0] === eventName && e[1] === callback);
     if (idx > -1) {
       this.events.splice(idx, 1);
     }
@@ -104,26 +96,26 @@ export class RaidToolkitClient {
   private onMessage = (event: any) => {
     const msg = JSON.parse(event.data);
     switch (msg.type) {
-      case "ack": {
-        this.emit("request-access");
+      case 'ack': {
+        this.emit('request-access');
         this.channelId = msg.channelId;
         const href = `rtk://open?channel=${msg.channelId}&origin=${document.location.origin}`;
         document.location.href = href;
         break;
       }
-      case "reject": {
+      case 'reject': {
         this.state = ClientState.Aborted;
-        this.emit("access-rejected", msg.reason);
+        this.emit('access-rejected', msg.reason);
         document.body.innerHTML = `Access denied: ${msg.reason}`;
         break;
       }
-      case "accept": {
+      case 'accept': {
         this.state = ClientState.Connected;
-        this.emit("access-granted");
+        this.emit('access-granted');
         break;
       }
-      case "send": {
-        this.emit("data", msg.message);
+      case 'send': {
+        this.emit('data', msg.message);
         break;
       }
       default:
