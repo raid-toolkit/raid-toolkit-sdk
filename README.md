@@ -31,6 +31,12 @@ All RTK builds are built directly in our CI and uploaded as a github release, bu
 
 Developer? Check out these additional links:
 
-- [Developers](DEVELOPERS.md)
-- [Contributing](CONTRIBUTING.md)
-- [Nitty Gritty](NITTYGRITTY.md)
+- [Developers](./DEVELOPERS.md)
+- [Contributing](./CONTRIBUTING.md)
+- [Nitty Gritty](./NITTYGRITTY.md)
+
+## Acknolwedgements
+
+This software uses components based on Il2CppDumper by Prefare, as well as leveraging several other great open-source libraries.
+
+Please check [Third Party Notice](./ThirdPartyNotice.txt) for the full list and go support their authors
