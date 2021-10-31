@@ -204,7 +204,7 @@ jobs:
           asset_name: ThirdPartyNotice.txt
           asset_content_type: text/plain
 
-      - name: Push client package to GitHub registry
-        run: dotnet nuget push publish/Raid.Client.${{ steps.client_version.outputs.SemVer2 }}.nupkg -k %PUBLISH_TOKEN% -s https://api.nuget.org/v3/index.json --skip-duplicate
-        env:
-          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
+      # - name: Push client package to GitHub registry
+      #   run: dotnet nuget push publish/Raid.Client.${{ steps.client_version.outputs.SemVer2 }}.nupkg -k %PUBLISH_TOKEN% -s https://api.nuget.org/v3/index.json --skip-duplicate
+      #   env:
+      #     PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
