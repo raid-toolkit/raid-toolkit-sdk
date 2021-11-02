@@ -64,7 +64,10 @@ namespace Raid.Service
                         var ascendedVersion = result.Values.FirstOrDefault(hero => hero.TypeId == (kvp.Value.TypeId + 1) && !previous.ContainsKey(hero.Id));
                         if (ascendedVersion != null)
                         {
-                            ascendedVersion.OriginalId = kvp.Key;
+                            if (ascendedVersion.OriginalId == 0)
+                            {
+                                ascendedVersion.OriginalId = kvp.Key;
+                            }
                         }
                         else
                         {

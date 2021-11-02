@@ -39,6 +39,9 @@ namespace RaidExtractor.Core
 
         [Newtonsoft.Json.JsonProperty("fileVersion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string FileVersion { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("lastUpdated", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string LastUpdated { get; set; }
     }
 
 
