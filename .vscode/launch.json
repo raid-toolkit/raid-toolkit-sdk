@@ -45,7 +45,8 @@
             "program": "${workspaceFolder}/SDK/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
             "args": [],
             "env": {
-                "RTK_DEBUG": "true"
+                "RTK_DEBUG": "true",
+                "app:MemoryLogging": "Error"
             },
             "justMyCode": false,
             "cwd": "${workspaceFolder}/SDK/Service",

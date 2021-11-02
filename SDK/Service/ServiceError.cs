@@ -11,5 +11,6 @@ namespace Raid.Service
         ApiProxyException,
         AccountUpdateFailed,
         AccoutNotReady,
+        ObjectReadError,
     }
 }

@@ -19,7 +19,8 @@ namespace Raid.Service
             ILogger<MainService> logger,
             RaidInstanceFactory factory,
             IServiceProvider serviceProvider,
-            IHostApplicationLifetime appLifetime)
+            IHostApplicationLifetime appLifetime,
+            MemoryLogger memoryLogger)
         {
             Factory = factory;
             Logger = logger;

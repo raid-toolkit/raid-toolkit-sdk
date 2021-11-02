@@ -1,10 +1,8 @@
 using System;
-using System.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Raid.DataModel;
 using RaidExtractor.Core;
 using SuperSocket.WebSocket.Server;
 
@@ -31,6 +29,7 @@ namespace Raid.Service
                 .AddSingleton<StaticDataCache>()
                 .AddSingleton<RaidInstanceFactory>()
                 .AddSingleton<Extractor>()
+                .AddSingleton<MemoryLogger>()
                 .AddScoped<RaidInstance>()
                 .AddTypesAssignableTo<IMessageScopeHandler>(collection => collection.AddSingleton)
                 .AddTypesAssignableToFactories<IStaticFacet>(collection => collection.AddSingleton)
