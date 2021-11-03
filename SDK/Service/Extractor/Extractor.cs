@@ -56,7 +56,7 @@ namespace RaidExtractor.Core
                     PrimaryBonus = FromStatBonus(artifact.PrimaryBonus),
                     SecondaryBonuses = artifact.SecondaryBonuses?.Select(FromStatBonus).ToArray(),
                 }).ToArray(),
-                Heroes = heroes.Values.Select(hero =>
+                Heroes = heroes.Values.Where(hero => !hero.Deleted).Select(hero =>
                 {
                     var heroType = staticData.HeroData.HeroTypes[hero.TypeId];
                     var multiplier = StaticResources.Multipliers.First(m => m.stars == (int)Enum.Parse<SharedModel.Meta.Heroes.HeroGrade>(hero.Rank) && m.level == hero.Level);
