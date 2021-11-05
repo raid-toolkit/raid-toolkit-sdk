@@ -9,16 +9,19 @@ namespace Raid.Service
     public class UpdateService : BackgroundService
     {
         private ILogger<UpdateService> Logger;
-        public UpdateService(ILogger<UpdateService> logger)
+        private GitHub.Updater Updater;
+        public UpdateService(ILogger<UpdateService> logger, GitHub.Updater updater)
         {
             Logger = logger;
+            Updater = updater;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             try
             {
-                using (var mgr = new Squirrel.UpdateManager("C:\\Projects\\MyApp\\Releases"))
+                var release = await Updater.GetLatest();
+                // using (var mgr = new Squirrel.UpdateManager("C:\\Projects\\MyApp\\Releases"))
                 {
                     await Task.Delay(-1, stoppingToken);
                 }
