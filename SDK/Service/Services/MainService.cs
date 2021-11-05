@@ -14,8 +14,9 @@ namespace Raid.Service
         private readonly RaidInstanceFactory Factory;
         private readonly ILogger<MainService> Logger;
         private readonly IHostApplicationLifetime Lifetime;
+        
         public MainService(
-            ProcessWatcher processWatcher,
+            ProcessWatcherService processWatcher,
             ILogger<MainService> logger,
             RaidInstanceFactory factory,
             IServiceProvider serviceProvider,
@@ -25,7 +26,7 @@ namespace Raid.Service
             Factory = factory;
             Logger = logger;
             Lifetime = appLifetime;
-            processWatcher.ProcessFound += (object sender, ProcessWatcher.ProcessWatcherEventArgs e) =>
+            processWatcher.ProcessFound += (object sender, ProcessWatcherService.ProcessWatcherEventArgs e) =>
             {
                 try
                 {

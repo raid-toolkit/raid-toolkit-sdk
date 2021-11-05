@@ -24,7 +24,7 @@ namespace Raid.Service
                     builder.AddFile(o => o.RootPath = AppConfiguration.ExecutableDirectory);
                 })
                 .AddHostedServiceSingleton<MainService>()
-                .AddHostedServiceSingleton<ProcessWatcher>()
+                .AddHostedServiceSingleton<ProcessWatcherService>()
                 .AddHostedServiceSingleton<ChannelService>()
                 .AddSingleton<ModelService>()
                 .AddSingleton<UserData>()
