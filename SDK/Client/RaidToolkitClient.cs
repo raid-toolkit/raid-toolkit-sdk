@@ -20,10 +20,8 @@ namespace Raid.Client
 
         public RaidToolkitClient(Uri endpointUri = null) => EndpointUri = (endpointUri ?? new Uri("ws://localhost:9090"));
 
-        public IAccountApi AccountApi
-        {
-            get { return new AccountApi(this); }
-        }
+        public IAccountApi AccountApi => new AccountApi(this);
+        public IStaticDataApi StaticDataApi => new StaticDataApi(this);
 
         public void Connect()
         {

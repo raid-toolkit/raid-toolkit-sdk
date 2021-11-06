@@ -10,6 +10,11 @@
       "versionIncrement": "build",
       "firstUnstableTag": "alpha"
     },
+    "pathFilters": [
+        "SDK",
+        "Il2CppToolkit",
+        ":!SDK/WebClient"
+    ],
     "cloudBuild": {
       "buildNumber": {
         "enabled": true
