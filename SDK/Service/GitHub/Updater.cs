@@ -1,8 +1,8 @@
 using System;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading.Tasks;
 using GitHub.Schema;
-using Newtonsoft.Json;
 
 namespace GitHub
 {
@@ -10,15 +10,16 @@ namespace GitHub
     {
         private Uri UpdateUri = new($"https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/latest");
         private HttpClient Client;
+
         public Updater()
         {
             Client = new HttpClient();
-            Client.DefaultRequestHeaders.UserAgent.Add(new("RaidToolkit", "1.0"));
+            Client.DefaultRequestHeaders.UserAgent.Add(new("RaidToolkit", Assembly.GetExecutingAssembly().GetName().Version.ToString(2)));
         }
 
-        public async Task<Release> GetLatest()
+        public Task<Release> GetLatestRelease()
         {
-            return JsonConvert.DeserializeObject<Release>(await Client.GetStringAsync(UpdateUri));
+            return Client.GetObjectAsync<Release>(UpdateUri);
         }
     }
 }

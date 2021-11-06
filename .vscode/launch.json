@@ -17,7 +17,7 @@
             "name": "Launch Compiler",
             "type": "coreclr",
             "request": "launch",
-            // "preLaunchTask": "build",
+            "preLaunchTask": "build",
             "program": "${workspaceFolder}/Il2CppToolkit/ReverseCompiler.Cli/bin/Debug/net5.0/Il2CppToolkit.ReverseCompiler.Cli.dll",
             "args": [
                 "--name",
@@ -41,7 +41,7 @@
             "name": "Launch Service",
             "type": "coreclr",
             "request": "launch",
-            // "preLaunchTask": "build",
+            "preLaunchTask": "build",
             "program": "${workspaceFolder}/SDK/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
             "args": [],
             "env": {
@@ -57,7 +57,7 @@
             "name": "Launch Service (Protocol)",
             "type": "coreclr",
             "request": "launch",
-            // "preLaunchTask": "build",
+            "preLaunchTask": "build",
             "program": "${workspaceFolder}/SDK/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
             "args": [
                 "open",
@@ -74,7 +74,7 @@
             "name": "Register Service",
             "type": "coreclr",
             "request": "launch",
-            // "preLaunchTask": "build",
+            "preLaunchTask": "build",
             "program": "${workspaceFolder}/SDK/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
             "args": [
                 "open"
@@ -90,7 +90,7 @@
             "name": "Launch Extractor",
             "type": "coreclr",
             "request": "launch",
-            // "preLaunchTask": "build",
+            "preLaunchTask": "build",
             "program": "${workspaceFolder}/SDK/Extractor/bin/Debug/net5.0-windows/win-x64/Raid.Extractor.exe",
             "args": [],
             "env": {
@@ -104,7 +104,7 @@
             "name": "Launch Extractor (Release)",
             "type": "coreclr",
             "request": "launch",
-            // "preLaunchTask": "build",
+            "preLaunchTask": "build",
             "program": "${workspaceFolder}/SDK/Extractor/bin/Release/net5.0-windows/win-x64/Raid.Extractor.exe",
             "args": [],
             "env": {
@@ -118,7 +118,7 @@
             "name": "Launch PreBuild",
             "type": "coreclr",
             "request": "launch",
-            // "preLaunchTask": "build",
+            "preLaunchTask": "build",
             "program": "${workspaceFolder}/SDK/Model.PreBuild/bin/Debug/net5.0/Model.PreBuild.dll",
             "args": [],
             "cwd": "${workspaceFolder}/SDK/Extractor",
