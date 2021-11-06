@@ -6,7 +6,7 @@ namespace Raid.DataModel
     {
         public float Health;
         public float Attack;
-        public float Defence;
+        public float Defense;
         public float Speed;
         public float Resistance;
         public float Accuracy;

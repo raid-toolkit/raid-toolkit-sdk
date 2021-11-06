@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using SharedModel.Meta.Artifacts;
+using Raid.Service;
 
 namespace Raid.DataModel
 {
@@ -33,7 +34,7 @@ namespace Raid.DataModel
                 case SharedModel.Battle.Effects.StatKindId.CriticalHeal:
                     return stats.CriticalHeal = value;
                 case SharedModel.Battle.Effects.StatKindId.Defence:
-                    return stats.Defence = value;
+                    return stats.Defense = value;
                 case SharedModel.Battle.Effects.StatKindId.Health:
                     return stats.Health = value;
                 case SharedModel.Battle.Effects.StatKindId.Resistance:
@@ -59,7 +60,7 @@ namespace Raid.DataModel
                 case SharedModel.Battle.Effects.StatKindId.CriticalHeal:
                     return stats.CriticalHeal += value;
                 case SharedModel.Battle.Effects.StatKindId.Defence:
-                    return stats.Defence += value;
+                    return stats.Defense += value;
                 case SharedModel.Battle.Effects.StatKindId.Health:
                     return stats.Health += value;
                 case SharedModel.Battle.Effects.StatKindId.Resistance:
@@ -85,7 +86,7 @@ namespace Raid.DataModel
                 case SharedModel.Battle.Effects.StatKindId.CriticalHeal:
                     return stats.CriticalHeal;
                 case SharedModel.Battle.Effects.StatKindId.Defence:
-                    return stats.Defence;
+                    return stats.Defense;
                 case SharedModel.Battle.Effects.StatKindId.Health:
                     return stats.Health;
                 case SharedModel.Battle.Effects.StatKindId.Resistance:
@@ -150,7 +151,7 @@ namespace Raid.DataModel
             {
                 Health = stats.Health.AsFloat(),
                 Attack = stats.Attack.AsFloat(),
-                Defence = stats.Defence.AsFloat(),
+                Defense = stats.Defence.AsFloat(),
                 Accuracy = stats.Accuracy.AsFloat(),
                 Resistance = stats.Resistance.AsFloat(),
                 Speed = stats.Speed.AsFloat(),
@@ -167,6 +168,15 @@ namespace Raid.DataModel
                 Id = arenaLeague.Id.ToString(),
                 StatBonus = arenaLeague.BattleBonuses.ToModel(),
             };
+        }
+
+        public static string ToModel(this SharedModel.Battle.Effects.StatKindId statKind)
+        {
+            if (statKind == SharedModel.Battle.Effects.StatKindId.Defence)
+            {
+                return "Defense";
+            }
+            return statKind.ToString();
         }
 
         public static Artifact ToModel(this SharedModel.Meta.Artifacts.Artifact artifact)
@@ -195,7 +205,7 @@ namespace Raid.DataModel
         {
             return new()
             {
-                KindId = bonus._kindId.ToString(),
+                KindId = bonus._kindId.ToModel().ToCamelCase(),
                 Absolute = bonus._value._isAbsolute,
                 Value = bonus._value._value.AsFloat(),
                 GlyphPower = bonus._powerUpValue.AsFloat(),
@@ -208,7 +218,7 @@ namespace Raid.DataModel
             return new()
             {
                 Absolute = bonus.IsAbsolute,
-                KindId = bonus.StatKindId.ToString(),
+                KindId = bonus.StatKindId.ToModel().ToCamelCase(),
                 Value = bonus.Value.AsFloat(),
             };
         }
@@ -218,7 +228,7 @@ namespace Raid.DataModel
             return new()
             {
                 Absolute = bonus._isAbsolute,
-                KindId = statKindId.ToString(),
+                KindId = statKindId.ToModel().ToCamelCase(),
                 Value = bonus._value.AsFloat(),
             };
         }

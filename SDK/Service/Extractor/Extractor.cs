@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Raid.Service;
 using Raid.DataModel;
+using System.Collections.Generic;
 
 namespace RaidExtractor.Core
 {
@@ -34,8 +35,8 @@ namespace RaidExtractor.Core
                 LastUpdated = accountFacet.LastUpdated,
                 ArenaLeague = arena.LeagueId.ToString(),
                 GreatHall = arena.GreatHallBonuses.ToDictionary(
-                    bonus => bonus.Affinity.ToString(),
-                    bonus => bonus.Levels),
+                    bonus => bonus.Affinity.ToString().ToCamelCase(),
+                    bonus => (IReadOnlyDictionary<string, int>)bonus.Levels.ToDictionary(levels => levels.Key.ToCamelCase(), levels => levels.Value)),
                 Shards = resources.Shards.ToDictionary(
                     shard => shard.Key.ToString(),
                     shard => new ShardInfo() { Count = shard.Value, SummonData = new() }),
@@ -88,7 +89,7 @@ namespace RaidExtractor.Core
                         AwakenLevel = heroType.TypeId % 10,
                         Accuracy = heroType.UnscaledStats.Accuracy,
                         Attack = (int)Math.Round(heroType.UnscaledStats.Attack * multiplier.multiplier),
-                        Defense = (int)Math.Round(heroType.UnscaledStats.Defence * multiplier.multiplier),
+                        Defense = (int)Math.Round(heroType.UnscaledStats.Defense * multiplier.multiplier),
                         Health = (int)Math.Round(heroType.UnscaledStats.Health * multiplier.multiplier) * 15,
                         Speed = heroType.UnscaledStats.Speed,
                         Resistance = heroType.UnscaledStats.Resistance,

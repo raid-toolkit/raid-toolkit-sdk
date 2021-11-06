@@ -48,7 +48,7 @@ namespace Raid.Service
                 {
                     Affinity = element.ToString(),
                     Bonus = bonuses,
-                    Levels = bonus.UnderlyingDictionary.ToModel()
+                    Levels = bonus.UnderlyingDictionary.ToDictionary(kvp => kvp.Key.ToModel().ToCamelCase(), kvp => kvp.Value)
                 });
             }
 
