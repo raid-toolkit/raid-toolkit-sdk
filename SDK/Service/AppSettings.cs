@@ -6,6 +6,11 @@ namespace Raid.Service
         public string StorageLocation { get; set; }
         public string PublicServer { get; set; }
         public ProcessWatcherSettings ProcessWatcher { get; set; }
+        public UpdateSettings UpdateManager { get; set; }
+    }
+    public class UpdateSettings
+    {
+        public int PollIntervalMs { get; set; }
     }
     public class ProcessWatcherSettings
     {

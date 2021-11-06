@@ -8,7 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace Raid.Service
 {
-    public class ProcessWatcher : BackgroundService
+    public class ProcessWatcherService : BackgroundService
     {
         public class ProcessWatcherEventArgs : EventArgs
         {
@@ -32,7 +32,7 @@ namespace Raid.Service
         public event EventHandler<ProcessWatcherEventArgs> ProcessFound;
         public event EventHandler<ProcessWatcherEventArgs> ProcessClosed;
 
-        public ProcessWatcher(IOptions<AppSettings> settings) => Settings = settings.Value.ProcessWatcher;
+        public ProcessWatcherService(IOptions<AppSettings> settings) => Settings = settings.Value.ProcessWatcher;
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {

@@ -12,5 +12,6 @@ namespace Raid.Service
         AccountUpdateFailed,
         AccoutNotReady,
         ObjectReadError,
+        MissingUpdateAsset,
     }
 }

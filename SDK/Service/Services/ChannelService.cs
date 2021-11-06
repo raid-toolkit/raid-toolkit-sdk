@@ -108,18 +108,18 @@ namespace Raid.Service
             if (ConnectTask == null)
             {
                 ConnectTask = Socket.ConnectAsync(HostUri, CancellationToken.None);
-                Run(CancellationToken.None);
+                Task.Run(Run);
             }
             return ConnectTask;
         }
 
-        private async Task Run(CancellationToken token)
+        private async Task Run()
         {
             await ConnectTask;
             Memory<byte> buffer = new Memory<byte>(new byte[1024 * 1024 * 3]);
-            while (Socket.State == WebSocketState.Open && !token.IsCancellationRequested)
+            while (Socket.State == WebSocketState.Open)
             {
-                var result = await Socket.ReceiveAsync(buffer, token);
+                var result = await Socket.ReceiveAsync(buffer, CancellationToken.None);
                 if (!result.EndOfMessage)
                 {
                     // TODO: throw away messages until next EndOfMessage is reached (inclusive)

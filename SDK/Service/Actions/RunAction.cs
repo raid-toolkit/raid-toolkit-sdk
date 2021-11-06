@@ -20,6 +20,9 @@ namespace Raid.Service
 
         [Option('n', "--no-ui", HelpText = "Runs without UI (only valid for standalone mode)")]
         public bool NoUI { get; set; }
+
+        [Option('w', "--wait", HelpText = "Wait <ms> for an existing instance to shut down before starting")]
+        public int? Wait { get; set; }
     }
     static class RunAction
     {
@@ -48,7 +51,7 @@ namespace Raid.Service
             }
             using (var mutex = new Mutex(false, "RaidToolkit Singleton"))
             {
-                bool isAnotherInstanceOpen = !mutex.WaitOne(TimeSpan.Zero);
+                bool isAnotherInstanceOpen = !mutex.WaitOne(options.Wait.HasValue ? TimeSpan.FromMilliseconds(options.Wait.Value) : TimeSpan.Zero);
                 if (isAnotherInstanceOpen && !options.Standalone)
                 {
                     return Task.FromResult(1);
