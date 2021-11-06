@@ -37,7 +37,7 @@ namespace Raid.Service
             if (Environment.GetEnvironmentVariable("RTK_DEBUG") != "true" && parentDirName != "win-x64")
             {
                 string expectedInstallPath = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "RaidToolkit");
-                string exeName = ThisAssembly.AssemblyName;
+                string exeName = $"{ThisAssembly.AssemblyName}.exe";
                 string expectedExePath = Path.Join(expectedInstallPath, exeName);
                 string expectedConfigPath = Path.Join(expectedInstallPath, "appsettings.json");
                 if (!AppConfiguration.ExecutablePath.Equals(expectedExePath, StringComparison.OrdinalIgnoreCase))
