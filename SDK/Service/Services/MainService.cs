@@ -48,6 +48,9 @@ namespace Raid.Service
 
         private void OnUpdateAvailable(object sender, UpdateService.UpdateAvailbleEventArgs e)
         {
+            if (LatestRelease.TagName == e.Release.TagName)
+                return; // already notified for this update
+
             LatestRelease = e.Release;
             notifyIcon.ShowBalloonTip(10000, "Update available", $"A new version has been released!\n{e.Release.TagName} is now available for install. Click here to install and update!", ToolTipIcon.Info);
             if (notifyIcon.ContextMenuStrip.Items.Count == 1)
@@ -80,7 +83,7 @@ namespace Raid.Service
 
         public void Restart()
         {
-            Process.Start(AppConfiguration.ExecutablePath, "--wait 5000");
+            Process.Start(AppConfiguration.ExecutablePath, new string[] { "--wait", "30000" });
             Exit();
         }
 

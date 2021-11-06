@@ -15,15 +15,23 @@ namespace Raid.Service
     {
         static Task<int> Main(string[] args)
         {
-            string appSettingsPath = Path.Join(AppConfiguration.ExecutableDirectory, "appsettings.json");
-            if (!File.Exists(appSettingsPath))
+            try
             {
-                File.WriteAllText(appSettingsPath, GetBuiltInSettings().ToString());
-            }
+                string appSettingsPath = Path.Join(AppConfiguration.ExecutableDirectory, "appsettings.json");
+                if (!File.Exists(appSettingsPath))
+                {
+                    File.WriteAllText(appSettingsPath, GetBuiltInSettings().ToString());
+                }
 
-            Type t = typeof(Newtonsoft.Json.JsonSerializer);
-            return Parser.Default.ParseArguments<RegisterOptions, OpenOptions, RunOptions>(args)
-                .MapResult<RegisterOptions, OpenOptions, RunOptions, Task<int>>(RegisterAction.Execute, OpenAction.Execute, RunAction.Execute, HandleErrors);
+                Type t = typeof(Newtonsoft.Json.JsonSerializer);
+                return Parser.Default.ParseArguments<RegisterOptions, OpenOptions, RunOptions>(args)
+                    .MapResult<RegisterOptions, OpenOptions, RunOptions, Task<int>>(RegisterAction.Execute, OpenAction.Execute, RunAction.Execute, HandleErrors);
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine(ex.ToString());
+                return Task.FromResult(3);
+            }
         }
 
         private static Task<int> HandleErrors(IEnumerable<Error> _)
