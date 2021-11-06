@@ -1,9 +1,9 @@
 {
-    "url": "https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/52845807",
-    "assets_url": "https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/52845807/assets",
-    "upload_url": "https://uploads.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/52845807/assets{?name,label}",
-    "html_url": "https://github.com/raid-toolkit/raid-toolkit-sdk/releases/tag/v1.2.1.18631",
-    "id": 52845807,
+    "url": "https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/52846200",
+    "assets_url": "https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/52846200/assets",
+    "upload_url": "https://uploads.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/52846200/assets{?name,label}",
+    "html_url": "https://github.com/raid-toolkit/raid-toolkit-sdk/releases/tag/v1.2.5.38510",
+    "id": 52846200,
     "author": {
         "login": "github-actions[bot]",
         "id": 41898282,
@@ -24,19 +24,19 @@
         "type": "Bot",
         "site_admin": false
     },
-    "node_id": "RE_kwDOGJ-ids4DJlzv",
-    "tag_name": "v5.2.2.18631",
-    "target_commitish": "c748d3a34bea725f468b133ebc8f56c61d15ce8a",
-    "name": "RaidToolkit v1.2.1.18631",
+    "node_id": "RE_kwDOGJ-ids4DJl54",
+    "tag_name": "v5.2.5.38510",
+    "target_commitish": "6e96943c63526e997f00fd72d903f08eb41b9f97",
+    "name": "RaidToolkit v1.2.5.38510",
     "draft": false,
     "prerelease": false,
-    "created_at": "2021-11-06T13:33:43Z",
-    "published_at": "2021-11-06T13:35:35Z",
+    "created_at": "2021-11-06T13:58:12Z",
+    "published_at": "2021-11-06T14:00:29Z",
     "assets": [
         {
-            "url": "https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/assets/48776017",
-            "id": 48776017,
-            "node_id": "RA_kwDOGJ-ids4C6ENR",
+            "url": "https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/assets/48776874",
+            "id": 48776874,
+            "node_id": "RA_kwDOGJ-ids4C6Eaq",
             "name": "Raid.Service.exe",
             "label": "",
             "uploader": {
@@ -62,15 +62,15 @@
             "content_type": "application/zip",
             "state": "uploaded",
             "size": 3176577,
-            "download_count": 0,
-            "created_at": "2021-11-06T13:35:36Z",
-            "updated_at": "2021-11-06T13:35:37Z",
-            "browser_download_url": "https://github.com/raid-toolkit/raid-toolkit-sdk/releases/download/v1.2.1.18631/Raid.Service.exe"
+            "download_count": 1,
+            "created_at": "2021-11-06T14:00:31Z",
+            "updated_at": "2021-11-06T14:00:31Z",
+            "browser_download_url": "https://github.com/raid-toolkit/raid-toolkit-sdk/releases/download/v1.2.5.38510/Raid.Service.exe"
         },
         {
-            "url": "https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/assets/48776019",
-            "id": 48776019,
-            "node_id": "RA_kwDOGJ-ids4C6ENT",
+            "url": "https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/assets/48776876",
+            "id": 48776876,
+            "node_id": "RA_kwDOGJ-ids4C6Eas",
             "name": "ThirdPartyNotice.txt",
             "label": "",
             "uploader": {
@@ -97,12 +97,12 @@
             "state": "uploaded",
             "size": 21531,
             "download_count": 0,
-            "created_at": "2021-11-06T13:35:38Z",
-            "updated_at": "2021-11-06T13:35:38Z",
-            "browser_download_url": "https://github.com/raid-toolkit/raid-toolkit-sdk/releases/download/v1.2.1.18631/ThirdPartyNotice.txt"
+            "created_at": "2021-11-06T14:00:33Z",
+            "updated_at": "2021-11-06T14:00:33Z",
+            "browser_download_url": "https://github.com/raid-toolkit/raid-toolkit-sdk/releases/download/v1.2.5.38510/ThirdPartyNotice.txt"
         }
     ],
-    "tarball_url": "https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/tarball/v1.2.1.18631",
-    "zipball_url": "https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/zipball/v1.2.1.18631",
-    "body": "RaidToolkit v1.2.1.18631"
+    "tarball_url": "https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/tarball/v1.2.5.38510",
+    "zipball_url": "https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/zipball/v1.2.5.38510",
+    "body": "RaidToolkit v1.2.5.38510"
 }
