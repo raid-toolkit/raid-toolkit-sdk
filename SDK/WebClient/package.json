@@ -1,6 +1,6 @@
 {
   "name": "@raid-toolkit/webclient",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "description": "Webclient for RaidToolkit API access",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -13,7 +13,7 @@
   ],
   "dependencies": {
     "@remote-ioc/runtime": "^2.0.4",
-    "@remote-ioc/ws-router": "^0.1.1",
+    "@remote-ioc/ws-router": "^0.1.2",
     "events": "^3.3.0",
     "tslib": "^2.3.1"
   },
