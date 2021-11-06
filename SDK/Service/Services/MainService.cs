@@ -11,12 +11,11 @@ namespace Raid.Service
 {
     public class MainService : BackgroundService
     {
-        private NotifyIcon notifyIcon;
         private readonly RaidInstanceFactory Factory;
         private readonly ILogger<MainService> Logger;
         private readonly IHostApplicationLifetime Lifetime;
         private readonly UpdateService UpdateService;
-        private GitHub.Schema.Release LatestRelease;
+        private readonly IServiceProvider ServiceProvider;
 
         public MainService(
             ProcessWatcherService processWatcher,
@@ -31,7 +30,7 @@ namespace Raid.Service
             Logger = logger;
             Lifetime = appLifetime;
             UpdateService = updateService;
-            UpdateService.UpdateAvailable += OnUpdateAvailable;
+            ServiceProvider = serviceProvider;
             processWatcher.ProcessFound += (object sender, ProcessWatcherService.ProcessWatcherEventArgs e) =>
             {
                 try
@@ -44,19 +43,6 @@ namespace Raid.Service
                     e.Retry = true;
                 }
             };
-        }
-
-        private void OnUpdateAvailable(object sender, UpdateService.UpdateAvailbleEventArgs e)
-        {
-            if (LatestRelease.TagName == e.Release.TagName)
-                return; // already notified for this update
-
-            LatestRelease = e.Release;
-            notifyIcon.ShowBalloonTip(10000, "Update available", $"A new version has been released!\n{e.Release.TagName} is now available for install. Click here to install and update!", ToolTipIcon.Info);
-            if (notifyIcon.ContextMenuStrip.Items.Count == 1)
-            {
-                notifyIcon.ContextMenuStrip.Items.Add("Install update", null, OnUpdateClicked);
-            }
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -73,12 +59,10 @@ namespace Raid.Service
             if (!options.Standalone)
                 RegisterAction.RegisterProtocol(true);
 
-            if (!options.NoUI)
-                CreateTrayIcon();
-
             Console.CancelKeyPress += (sender, e) => Application.Exit();
             TaskExtensions.RunAfter(1, UpdateAccounts);
-            Application.Run();
+
+            Application.Run(ServiceProvider.GetRequiredService<UI.MainWindow>());
         }
 
         public void Restart()
@@ -89,31 +73,16 @@ namespace Raid.Service
 
         public void Exit()
         {
-            notifyIcon.Dispose();
             TaskExtensions.Shutdown();
             Application.Exit();
             Lifetime.StopApplication();
         }
 
-        private void CreateTrayIcon()
+        public async void InstallUpdate(GitHub.Schema.Release release)
         {
-            notifyIcon = new NotifyIcon();
-            notifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(AppConfiguration.ExecutablePath);
-            notifyIcon.Text = "Raid Toolkit";
-            notifyIcon.ContextMenuStrip = new ContextMenuStrip();
-            notifyIcon.ContextMenuStrip.Items.Add("Close", null, OnClose);
-            notifyIcon.BalloonTipClicked += OnUpdateClicked;
-            notifyIcon.Visible = true;
-        }
-
-        private async void OnUpdateClicked(object sender, EventArgs e)
-        {
-            if (LatestRelease == null)
-                return;
-
             try
             {
-                await UpdateService.InstallRelease(LatestRelease);
+                await UpdateService.InstallRelease(release);
                 Restart();
             }
             catch { }

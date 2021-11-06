@@ -8,6 +8,7 @@ namespace Raid.Service
     {
         HandleMessage = 0,
         UserPermissionRequest,
+        UserPermissionCached,
         UserPermissionAccept,
         UserPermissionReject,
         MissingSkill,

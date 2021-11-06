@@ -42,12 +42,14 @@ namespace Raid.Service
         private void HandleMessageCore(ISocketSession session, SocketMessage socketMessage)
         {
             var messageScope = Logger.BeginScope($"[Scope = {socketMessage.Scope}, Channel = {socketMessage.Channel}]");
+            Logger.LogInformation(ServiceEvent.HandleMessage.EventId(), "HandleMessage");
 
             try
             {
                 IMessageScopeHandler handler = ScopeHandlers.FirstOrDefault(handler => handler.SupportsScope(socketMessage.Scope));
                 if (handler != null)
                 {
+                    Logger.LogInformation(ServiceEvent.HandleMessage.EventId(), $"Dispatch message to {handler.GetType().FullName}");
                     handler.HandleMessage(socketMessage, session);
                 }
                 else
@@ -75,7 +77,7 @@ namespace Raid.Service
             string origin = session.HttpHeader.Items.Get("origin");
             if (!string.IsNullOrEmpty(origin))
             {
-                if (!RaidHost.Services.GetRequiredService<UI.PermissionsService>().RequestPermissions(origin))
+                if (!RaidHost.Services.GetRequiredService<UI.MainWindow>().RequestPermissions(origin))
                 {
                     session.CloseAsync(CloseReason.ViolatePolicy, "User denied access");
                 }

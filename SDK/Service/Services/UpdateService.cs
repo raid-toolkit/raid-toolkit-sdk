@@ -54,7 +54,7 @@ namespace Raid.Service
             }
         }
 
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
@@ -68,7 +68,7 @@ namespace Raid.Service
             }
         }
 
-        private async Task CheckForUpdates()
+        public async Task CheckForUpdates()
         {
             Release release = await Updater.GetLatestRelease();
             if (!Version.TryParse(release.TagName.TrimStart('v').Split('-')[0], out Version releaseVersion))

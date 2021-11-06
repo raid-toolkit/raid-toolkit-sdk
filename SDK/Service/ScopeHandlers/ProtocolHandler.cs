@@ -33,11 +33,11 @@ namespace Raid.Service
                         OpenOptions openOptions = message.Message.ToObject<OpenOptions>();
                         Logger.LogInformation(ServiceEvent.UserPermissionRequest.EventId(), $"Uri = {openOptions.Uri}");
 
-                        Uri rtkUri = new Uri(openOptions.Uri);
+                        Uri rtkUri = new(openOptions.Uri);
                         var query = HttpUtility.ParseQueryString(rtkUri.Query);
                         var channel = query["channel"];
                         var origin = query["origin"];
-                        if (ServiceProvider.GetRequiredService<UI.PermissionsService>().RequestPermissions(origin))
+                        if (ServiceProvider.GetRequiredService<UI.MainWindow>().RequestPermissions(origin))
                         {
                             Logger.LogInformation(ServiceEvent.UserPermissionAccept.EventId(), "User accepted");
                             ChannelService.Accept(channel, origin);
