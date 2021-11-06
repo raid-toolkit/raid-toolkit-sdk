@@ -108,8 +108,12 @@ namespace Raid.Service
             if (LatestRelease == null)
                 return;
 
-            await UpdateService.InstallRelease(LatestRelease);
-            Restart();
+            try
+            {
+                await UpdateService.InstallRelease(LatestRelease);
+                Restart();
+            }
+            catch { }
         }
 
         private void OnClose(object sender, EventArgs e)

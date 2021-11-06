@@ -35,11 +35,14 @@ namespace Raid.Service
             {
                 Stream newRelease = await Updater.DownloadRelease(release);
                 string tempDownload = Path.Join(AppConfiguration.ExecutableDirectory, $"{AppConfiguration.ExecutableName}.update");
-                string currentBackup = Path.Join(AppConfiguration.ExecutableDirectory, $"{AppConfiguration.ExecutableName}.update");
+                string currentBackup = Path.Join(AppConfiguration.ExecutableDirectory, $"{AppConfiguration.ExecutableName}.backup");
                 using (Stream newFile = File.Create(tempDownload))
                 {
                     newRelease.CopyTo(newFile);
                 }
+
+                if (File.Exists(currentBackup))
+                    File.Delete(currentBackup);
 
                 File.Move(AppConfiguration.ExecutablePath, currentBackup);
                 File.Move(tempDownload, AppConfiguration.ExecutablePath);
@@ -47,6 +50,7 @@ namespace Raid.Service
             catch (Exception ex)
             {
                 Logger.LogError(ServiceError.MissingUpdateAsset.EventId(), ex, $"Failed to update to {release.TagName}");
+                throw;
             }
         }
 
@@ -70,7 +74,7 @@ namespace Raid.Service
             if (!Version.TryParse(release.TagName.TrimStart('v').Split('-')[0], out Version releaseVersion))
                 return;
 
-            // if (releaseVersion > AppConfiguration.AppVersion)
+            if (releaseVersion > AppConfiguration.AppVersion)
             {
                 if (PendingRelease?.TagName != release.TagName)
                 {

@@ -15,13 +15,13 @@ namespace Raid.Service
     [Verb("run", isDefault: true, HelpText = "Runs the service")]
     public class RunOptions
     {
-        [Option('s', "--standalone", HelpText = "Runs in standalone mode")]
+        [Option('s', "standalone", HelpText = "Runs in standalone mode")]
         public bool Standalone { get; set; }
 
-        [Option('n', "--no-ui", HelpText = "Runs without UI (only valid for standalone mode)")]
+        [Option('n', "no-ui", HelpText = "Runs without UI (only valid for standalone mode)")]
         public bool NoUI { get; set; }
 
-        [Option('w', "--wait", HelpText = "Wait <ms> for an existing instance to shut down before starting")]
+        [Option('w', "wait", HelpText = "Wait <ms> for an existing instance to shut down before starting")]
         public int? Wait { get; set; }
     }
     static class RunAction
