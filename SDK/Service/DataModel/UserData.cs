@@ -12,6 +12,7 @@ namespace Raid.Service
         private readonly string m_storagePath;
         private readonly string m_accountsPath;
         private readonly string m_staticDataPath;
+        private readonly string m_settingsFilePath;
         private readonly Dictionary<string, UserAccount> m_userAccounts;
 
         public IEnumerable<UserAccount> UserAccounts => m_userAccounts.Values;
@@ -29,6 +30,7 @@ namespace Raid.Service
             Directory.CreateDirectory(m_accountsPath);
             m_staticDataPath = Path.Join(m_storagePath, "staticData");
             Directory.CreateDirectory(m_staticDataPath);
+            m_settingsFilePath = Path.Join(m_storagePath, ".settings");
 
             // enumerate accounts
             m_userAccounts = Directory.GetDirectories(m_accountsPath).ToDictionary(id => Path.GetFileName(id), id => new UserAccount(Path.GetFileName(id), this));
@@ -42,6 +44,28 @@ namespace Raid.Service
                 m_userAccounts.Add(id, account);
             }
             return account;
+        }
+
+        public UserSettings ReadUserSettings()
+        {
+            if (!File.Exists(m_settingsFilePath))
+            {
+                return new UserSettings();
+            }
+            try
+            {
+                return JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(m_settingsFilePath));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public void WriteUserSettings(UserSettings settings)
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(m_settingsFilePath));
+            File.WriteAllText(m_settingsFilePath, JsonConvert.SerializeObject(settings));
         }
 
         public T ReadStaticData<T>(string key) where T : class

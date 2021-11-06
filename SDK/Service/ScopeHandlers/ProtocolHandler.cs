@@ -1,5 +1,6 @@
 using System;
 using System.Web;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Raid.DataModel;
 using Raid.Service.UI;
@@ -9,11 +10,12 @@ namespace Raid.Service
     internal class ProtocolHandler : IMessageScopeHandler
     {
         private string Name => "$rtk";
-        private ILogger<ProtocolHandler> Logger;
-        private ChannelService ChannelService;
+        private readonly ILogger<ProtocolHandler> Logger;
+        private readonly ChannelService ChannelService;
+        private readonly IServiceProvider ServiceProvider;
 
-        public ProtocolHandler(ILogger<ProtocolHandler> logger, ChannelService channelService) =>
-            (Logger, ChannelService) = (logger, channelService);
+        public ProtocolHandler(ILogger<ProtocolHandler> logger, ChannelService channelService, IServiceProvider serviceProvider) =>
+            (Logger, ChannelService, ServiceProvider) = (logger, channelService, serviceProvider);
 
         public bool SupportsScope(string scopeName)
         {
@@ -35,7 +37,7 @@ namespace Raid.Service
                         var query = HttpUtility.ParseQueryString(rtkUri.Query);
                         var channel = query["channel"];
                         var origin = query["origin"];
-                        if (PermissionsRequest.RequestPermissions(origin))
+                        if (ServiceProvider.GetRequiredService<UI.PermissionsService>().RequestPermissions(origin))
                         {
                             Logger.LogInformation(ServiceEvent.UserPermissionAccept.EventId(), "User accepted");
                             ChannelService.Accept(channel, origin);

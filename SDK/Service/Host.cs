@@ -35,6 +35,7 @@ namespace Raid.Service
                 .AddSingleton<Extractor>()
                 .AddSingleton<MemoryLogger>()
                 .AddSingleton<GitHub.Updater>()
+                .AddScoped<UI.PermissionsService>()
                 .AddScoped<RaidInstance>()
                 .AddTypesAssignableTo<IMessageScopeHandler>(collection => collection.AddSingleton)
                 .AddTypesAssignableToFactories<IStaticFacet>(collection => collection.AddSingleton)

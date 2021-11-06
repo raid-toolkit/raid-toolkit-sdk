@@ -14,8 +14,8 @@ namespace Raid.Service
     public class ModelService
     {
         private readonly List<IMessageScopeHandler> ScopeHandlers;
-        private ILogger<ModelService> Logger;
-        public ModelService(ILogger<ModelService> logger, IEnumerable<IMessageScopeHandler> handlers)
+        private readonly ILogger<ModelService> Logger;
+        public ModelService(ILogger<ModelService> logger, IEnumerable<IMessageScopeHandler> handlers, IServiceProvider serviceProvider)
         {
             Logger = logger;
             ScopeHandlers = handlers.ToList();
@@ -67,8 +67,19 @@ namespace Raid.Service
                 .HandleMessageCore(session, message);
         }
 
+        /**
+         * Handles messages from the public socket API
+        **/
         public static ValueTask HandleMessage(WebSocketSession session, WebSocketPackage message)
         {
+            string origin = session.HttpHeader.Items.Get("origin");
+            if (!string.IsNullOrEmpty(origin))
+            {
+                if (!RaidHost.Services.GetRequiredService<UI.PermissionsService>().RequestPermissions(origin))
+                {
+                    session.CloseAsync(CloseReason.ViolatePolicy, "User denied access");
+                }
+            }
             return RaidHost.Services.GetRequiredService<ModelService>()
                 .ProcessMessage(new SuperSocketAdapter(session), message);
         }

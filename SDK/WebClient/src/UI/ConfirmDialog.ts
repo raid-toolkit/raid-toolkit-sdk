@@ -20,6 +20,7 @@ position: fixed;
 display: flex;
 justify-content: center;
 align-items: center;
+z-index: 99999;
  `
     );
 
