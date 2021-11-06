@@ -14,14 +14,15 @@ namespace Raid.Service
             );
         public static IConfigurationRoot Configuration => _configuration.Value;
         public static readonly string ExecutablePath;
+        public static readonly string ExecutableName;
         public static readonly string ExecutableDirectory;
-        public static readonly Version AppVersion;
+        public static readonly Version AppVersion = new Version(ThisAssembly.AssemblyFileVersion);
 
         static AppConfiguration()
         {
             ExecutablePath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
+            ExecutableName = Path.GetFileName(ExecutablePath);
             ExecutableDirectory = Path.GetDirectoryName(ExecutablePath);
-            AppVersion = Assembly.GetExecutingAssembly().GetName().Version ?? new Version(0, 0, 0);
         }
     }
 }

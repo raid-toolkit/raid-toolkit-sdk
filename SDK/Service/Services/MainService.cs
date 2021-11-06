@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -14,11 +15,14 @@ namespace Raid.Service
         private readonly RaidInstanceFactory Factory;
         private readonly ILogger<MainService> Logger;
         private readonly IHostApplicationLifetime Lifetime;
-        
+        private readonly UpdateService UpdateService;
+        private GitHub.Schema.Release LatestRelease;
+
         public MainService(
             ProcessWatcherService processWatcher,
             ILogger<MainService> logger,
             RaidInstanceFactory factory,
+            UpdateService updateService,
             IServiceProvider serviceProvider,
             IHostApplicationLifetime appLifetime,
             MemoryLogger memoryLogger)
@@ -26,6 +30,8 @@ namespace Raid.Service
             Factory = factory;
             Logger = logger;
             Lifetime = appLifetime;
+            UpdateService = updateService;
+            UpdateService.UpdateAvailable += OnUpdateAvailable;
             processWatcher.ProcessFound += (object sender, ProcessWatcherService.ProcessWatcherEventArgs e) =>
             {
                 try
@@ -38,6 +44,16 @@ namespace Raid.Service
                     e.Retry = true;
                 }
             };
+        }
+
+        private void OnUpdateAvailable(object sender, UpdateService.UpdateAvailbleEventArgs e)
+        {
+            LatestRelease = e.Release;
+            notifyIcon.ShowBalloonTip(10000, "Update available", $"A new version has been released!\n{e.Release.TagName} is now available for install. Click here to install and update!", ToolTipIcon.Info);
+            if (notifyIcon.ContextMenuStrip.Items.Count == 1)
+            {
+                notifyIcon.ContextMenuStrip.Items.Add("Install update", null, OnUpdateClicked);
+            }
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -62,6 +78,20 @@ namespace Raid.Service
             Application.Run();
         }
 
+        public void Restart()
+        {
+            Process.Start(AppConfiguration.ExecutablePath, "--wait 5000");
+            Exit();
+        }
+
+        public void Exit()
+        {
+            notifyIcon.Dispose();
+            TaskExtensions.Shutdown();
+            Application.Exit();
+            Lifetime.StopApplication();
+        }
+
         private void CreateTrayIcon()
         {
             notifyIcon = new NotifyIcon();
@@ -69,15 +99,22 @@ namespace Raid.Service
             notifyIcon.Text = "Raid Toolkit";
             notifyIcon.ContextMenuStrip = new ContextMenuStrip();
             notifyIcon.ContextMenuStrip.Items.Add("Close", null, OnClose);
+            notifyIcon.BalloonTipClicked += OnUpdateClicked;
             notifyIcon.Visible = true;
+        }
+
+        private async void OnUpdateClicked(object sender, EventArgs e)
+        {
+            if (LatestRelease == null)
+                return;
+
+            await UpdateService.InstallRelease(LatestRelease);
+            Restart();
         }
 
         private void OnClose(object sender, EventArgs e)
         {
-            notifyIcon.Dispose();
-            TaskExtensions.Shutdown();
-            Application.Exit();
-            Lifetime.StopApplication();
+            Exit();
         }
 
         private void UpdateAccounts()

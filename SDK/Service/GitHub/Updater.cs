@@ -1,4 +1,6 @@
 using System;
+using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -20,6 +22,15 @@ namespace GitHub
         public Task<Release> GetLatestRelease()
         {
             return Client.GetObjectAsync<Release>(UpdateUri);
+        }
+
+        public Task<Stream> DownloadRelease(Release release)
+        {
+            Asset asset = release.Assets.FirstOrDefault(asset => asset.Name == "Raid.Service.exe");
+            if (asset == null)
+                throw new FileNotFoundException("Update is missing required assets");
+
+            return Client.GetStreamAsync(asset.BrowserDownloadUrl);
         }
     }
 }
