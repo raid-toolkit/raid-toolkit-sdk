@@ -1,3 +1,4 @@
+using System;
 using Newtonsoft.Json;
 
 namespace Raid.DataModel
@@ -30,9 +31,6 @@ namespace Raid.DataModel
             Marker = hero.Marker;
             Masteries = hero.Masteries;
             EquippedArtifactIds = hero.EquippedArtifactIds;
-#pragma warning disable 0618
-            SkillLevelsByTypeId = hero.SkillLevelsByTypeId;
-#pragma warning restore 0618
             SkillsById = hero.SkillsById;
         }
     }

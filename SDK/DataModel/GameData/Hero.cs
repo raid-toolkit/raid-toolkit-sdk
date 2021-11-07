@@ -60,10 +60,6 @@ namespace Raid.DataModel
         [JsonProperty("equippedArtifactIds")]
         public IReadOnlyDictionary<string, int> EquippedArtifactIds;
 
-        [JsonProperty("skillLevelsByTypeId")]
-        [Obsolete("Use Skills instead")]
-        public IReadOnlyDictionary<int, int> SkillLevelsByTypeId;
-
         [JsonProperty("SkillsById")]
         public IReadOnlyDictionary<int, Skill> SkillsById;
     }

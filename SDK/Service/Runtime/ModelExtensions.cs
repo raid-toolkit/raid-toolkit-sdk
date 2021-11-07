@@ -130,9 +130,6 @@ namespace Raid.DataModel
                 EquippedArtifactIds = equippedArtifacts.ToModel(),
                 Type = heroType,
                 Name = heroType.Name.Localize(),
-#pragma warning disable 0618
-                SkillLevelsByTypeId = hero.Skills.ToDictionary(skill => skill.TypeId, skill => skill.Level),
-#pragma warning restore 0618
                 SkillsById = hero.Skills.ToDictionary(skill => skill.Id, skill => skill.ToModel()),
             };
 
