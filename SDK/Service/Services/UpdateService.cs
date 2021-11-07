@@ -54,11 +54,20 @@ namespace Raid.Service
             }
         }
 
-		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested)
             {
-                await CheckForUpdates();
+                try
+                {
+                    await CheckForUpdates();
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ServiceError.UnhandledException.EventId(), ex, "Unhandled exception");
+                }
+
+                // ensure delay is included if an exception is thrown above
                 try
                 {
                     await Task.Delay((int)PollInterval.TotalMilliseconds, stoppingToken);

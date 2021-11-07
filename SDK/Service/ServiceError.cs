@@ -13,5 +13,7 @@ namespace Raid.Service
         AccoutNotReady,
         ObjectReadError,
         MissingUpdateAsset,
+        UnhandledException,
+        ThreadException,
     }
 }

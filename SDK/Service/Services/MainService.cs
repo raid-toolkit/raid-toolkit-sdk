@@ -43,6 +43,18 @@ namespace Raid.Service
                     e.Retry = true;
                 }
             };
+            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+            Application.ThreadException += OnThreadException;
+        }
+
+        private void OnThreadException(object sender, ThreadExceptionEventArgs e)
+        {
+            Logger.LogError(ServiceError.ThreadException.EventId(), e.Exception, "Unhandled thread exception");
+        }
+
+        private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Logger.LogError(ServiceError.UnhandledException.EventId(), (Exception)e.ExceptionObject, "Unhandled exception");
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)

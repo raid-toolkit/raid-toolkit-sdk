@@ -119,14 +119,21 @@ namespace Raid.Service
             Memory<byte> buffer = new Memory<byte>(new byte[1024 * 1024 * 3]);
             while (Socket.State == WebSocketState.Open)
             {
-                var result = await Socket.ReceiveAsync(buffer, CancellationToken.None);
-                if (!result.EndOfMessage)
+                try
                 {
-                    // TODO: throw away messages until next EndOfMessage is reached (inclusive)
-                    continue;
+                    var result = await Socket.ReceiveAsync(buffer, CancellationToken.None);
+                    if (!result.EndOfMessage)
+                    {
+                        // TODO: throw away messages until next EndOfMessage is reached (inclusive)
+                        continue;
+                    }
+                    var sendMessage = JsonConvert.DeserializeObject<SendMessage>(Encoding.UTF8.GetString(buffer.Slice(0, result.Count).Span));
+                    HandleMessage(sendMessage);
                 }
-                var sendMessage = JsonConvert.DeserializeObject<SendMessage>(Encoding.UTF8.GetString(buffer.Slice(0, result.Count).Span));
-                HandleMessage(sendMessage);
+                catch (Exception ex)
+                {
+                    Logger.LogError(ServiceError.UnhandledException.EventId(), ex, "Unhandled exception");
+                }
             }
         }
 
