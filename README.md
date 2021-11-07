@@ -23,6 +23,18 @@ In order to take advantage of RTK-powered applications, you need to install the 
 1. Head on over to [Releases](https://github.com/raid-toolkit/raid-toolkit-sdk/releases) and download the `Raid.Service.exe` artifact from the most recent release.
 2. Run `Raid.Service.exe` and it will copy itself to your user directory (under `%USERPROFILE%\AppData\RaidToolkit`), and start itself. You can find it in your system tray while it is running. Magical!
 
+## Updates
+
+By default, RTK will automatically check for updates while it is running. If you want to disable this, you can edit the file at `%USERPROFILE%\AppData\RaidToolkit\appsettings.json` and add the following under the `app` key:
+
+```json
+"app": {
+  "UpdateManager": {
+    "Enabled": false
+  }
+}
+```
+
 ### Building from source
 
 All RTK builds are built directly in our CI and uploaded as a github release, but if you'd feel more comfortable building it locally you can clone the repo and build it yourself. Simply follow the details over at [Developers](DEVELOPERS.md).

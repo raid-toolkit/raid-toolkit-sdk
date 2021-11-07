@@ -16,6 +16,7 @@ namespace Raid.Service
         private readonly ILogger<UpdateService> Logger;
         private readonly Updater Updater;
         private readonly TimeSpan PollInterval;
+        private readonly bool Enabled;
         private Release PendingRelease;
 
         public event EventHandler<UpdateAvailbleEventArgs> UpdateAvailable;
@@ -24,9 +25,16 @@ namespace Raid.Service
         {
             Logger = logger;
             Updater = updater;
-            PollInterval = appSettings.Value.UpdateManager != null
-                ? TimeSpan.FromMilliseconds(appSettings.Value.UpdateManager.PollIntervalMs)
-                : new TimeSpan(0, 15, 0);
+            if (appSettings.Value.UpdateManager != null)
+            {
+                PollInterval = TimeSpan.FromMilliseconds(appSettings.Value.UpdateManager.PollIntervalMs);
+                Enabled = appSettings.Value.UpdateManager.Enabled;
+            }
+            else
+            {
+                PollInterval = new TimeSpan(0, 15, 0);
+                Enabled = true;
+            }
         }
 
         public async Task InstallRelease(Release release)
@@ -60,7 +68,10 @@ namespace Raid.Service
             {
                 try
                 {
-                    await CheckForUpdates();
+                    if (Enabled)
+                    {
+                        await CheckForUpdates();
+                    }
                 }
                 catch (Exception ex)
                 {
