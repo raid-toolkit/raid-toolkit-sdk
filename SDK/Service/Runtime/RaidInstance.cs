@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using Il2CppToolkit.Runtime;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace Raid.Service
 {
@@ -61,7 +62,10 @@ namespace Raid.Service
                     FacetToValueMap[facet] = newValue;
                     if (newValue != currentValue)
                     {
-                        UserAccount.Set(facetName, newValue);
+                        if (JsonConvert.SerializeObject(newValue) != JsonConvert.SerializeObject(currentValue))
+                        {
+                            UserAccount.Set(facetName, newValue);
+                        }
                     }
                 }
                 catch (Exception ex)

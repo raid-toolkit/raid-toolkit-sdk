@@ -14,9 +14,18 @@ namespace Raid.Client
             Client = client;
         }
 
+        protected void Subscribe(EventInfo eventInfo)
+        {
+            if (!Api.Members.TryGetValue(eventInfo.Name, out var def))
+            {
+                throw new MissingMethodException(typeof(T).Name, eventInfo.Name);
+            }
+            Client.Subscribe(def.Scope, def.Attribute.Name);
+        }
+
         protected Task<U> CallMethod<U>(MethodBase method, params object[] args)
         {
-            if (!Api.Methods.TryGetValue(method.Name, out var def))
+            if (!Api.Members.TryGetValue(method.Name, out var def))
             {
                 return Task.FromException<U>(new MissingMethodException(typeof(T).Name, method.Name));
             }

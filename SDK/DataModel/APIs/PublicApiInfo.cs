@@ -8,12 +8,12 @@ namespace Raid.DataModel
     public class PublicApiInfo<T>
     {
         public readonly string Name;
-        public readonly IReadOnlyDictionary<string, ApiMemberDefinition> Methods;
+        public readonly IReadOnlyDictionary<string, ApiMemberDefinition> Members;
 
         public PublicApiInfo()
         {
             Name = typeof(T).GetCustomAttribute<PublicApiAttribute>().Name;
-            Methods = typeof(T).GetMembers()
+            Members = typeof(T).GetMembers()
                     .Select(member => new ApiMemberDefinition(Name, member, member.GetCustomAttribute<PublicApiAttribute>()))
                     .Where(member => member.Attribute != null)
                     .ToDictionary(entry => entry.Name);
@@ -21,7 +21,7 @@ namespace Raid.DataModel
 
         public U GetPublicApi<U>(string name, out string scope) where U : MemberInfo
         {
-            if (Methods.TryGetValue(name, out ApiMemberDefinition member) && member.MemberInfo is U result)
+            if (Members.TryGetValue(name, out ApiMemberDefinition member) && member.MemberInfo is U result)
             {
                 scope = member.Scope;
                 return result;

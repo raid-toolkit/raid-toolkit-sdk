@@ -1,3 +1,4 @@
+using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using Raid.DataModel;
@@ -6,7 +7,19 @@ namespace Raid.Client
 {
     public class AccountApi : ApiBase<IAccountApi>, IAccountApi
     {
-        internal AccountApi(RaidToolkitClient client) : base(client) { }
+        public event EventHandler<AccountChangedEventArgs> OnChange
+        {
+            add
+            {
+
+            }
+            remove { }
+        }
+
+        internal AccountApi(RaidToolkitClient client) : base(client)
+        {
+
+        }
 
         public Task<Account> GetAccount(string accountId) =>
             CallMethod<Account>(MethodBase.GetCurrentMethod(), accountId);

@@ -79,6 +79,32 @@ namespace Raid.Client
             }
         }
 
+        internal async void Subscribe(string apiName, string eventName)
+        {
+            await Send(new SocketMessage()
+            {
+                Scope = apiName,
+                Channel = "sub",
+                Message = JObject.FromObject(new SubscriptionMessage()
+                {
+                    EventName = eventName
+                })
+            });
+        }
+
+        internal async void Unsubscribe(string apiName, string eventName)
+        {
+            await Send(new SocketMessage()
+            {
+                Scope = apiName,
+                Channel = "unsub",
+                Message = JObject.FromObject(new SubscriptionMessage()
+                {
+                    EventName = eventName
+                })
+            });
+        }
+
         internal async Task<T> Call<T>(string apiName, string methodName, params object[] args)
         {
             string promiseId = Promises.Create();
