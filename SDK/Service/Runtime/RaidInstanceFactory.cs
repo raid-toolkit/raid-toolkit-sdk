@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
-using Raid.DataModel;
 
 namespace Raid.Service
 {
@@ -30,21 +29,16 @@ namespace Raid.Service
         {
             RaidInstance instance = scope.ServiceProvider.GetService<RaidInstance>().Attach(process);
             Instances.TryAdd(process.Id, instance);
-            process.Disposed += HandleProcessDisposed;
             return instance;
         }
 
-        private void HandleProcessDisposed(object sender, EventArgs e)
+        public void Destroy(int processId)
         {
-            if (sender is Process process)
+            if (Instances.TryGetValue(processId, out RaidInstance instance))
             {
-                if (Instances.TryGetValue(process.Id, out RaidInstance instance))
-                {
-                    instance.Dispose();
-                    Instances.TryRemove(new(process.Id, instance));
-                }
+                instance.Dispose();
+                Instances.TryRemove(new(processId, instance));
             }
         }
-
     }
 }

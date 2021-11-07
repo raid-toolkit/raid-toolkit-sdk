@@ -31,20 +31,35 @@ namespace Raid.Service
             Lifetime = appLifetime;
             UpdateService = updateService;
             ServiceProvider = serviceProvider;
-            processWatcher.ProcessFound += (object sender, ProcessWatcherService.ProcessWatcherEventArgs e) =>
-            {
-                try
-                {
-                    Factory.Create(e.Process, serviceProvider.CreateScope());
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogError(ServiceError.AccoutNotReady.EventId(), ex, "Account is not ready");
-                    e.Retry = true;
-                }
-            };
+            processWatcher.ProcessFound += OnProcessFound;
+            processWatcher.ProcessClosed += OnProcessClosed;
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
             Application.ThreadException += OnThreadException;
+        }
+
+        private void OnProcessFound(object sender, ProcessWatcherService.ProcessWatcherEventArgs e)
+        {
+            try
+            {
+                Factory.Create(e.Process, ServiceProvider.CreateScope());
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ServiceError.AccoutNotReady.EventId(), ex, "Account is not ready");
+                e.Retry = true;
+            }
+        }
+
+        private void OnProcessClosed(object sender, ProcessWatcherService.ProcessWatcherEventArgs e)
+        {
+            try
+            {
+                Factory.Destroy(e.Id);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ServiceError.AccoutNotReady.EventId(), ex, "Failed to dispose account instance");
+            }
         }
 
         private void OnThreadException(object sender, ThreadExceptionEventArgs e)

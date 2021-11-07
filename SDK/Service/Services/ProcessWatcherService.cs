@@ -61,7 +61,7 @@ namespace Raid.Service
             }
             foreach (int closedProcessId in currentIds)
             {
-                if (ActiveProcesses.TryGetValue(closedProcessId, out Process closedProcess))
+                if (ActiveProcesses.Remove(closedProcessId, out Process closedProcess))
                 {
                     ProcessClosed?.Invoke(this, new ProcessWatcherEventArgs(closedProcessId));
                     closedProcess.Dispose();
