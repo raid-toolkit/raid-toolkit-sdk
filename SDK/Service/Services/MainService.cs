@@ -84,7 +84,10 @@ namespace Raid.Service
         public void Run(RunOptions options)
         {
             if (!options.Standalone)
+            {
                 RegisterAction.RegisterProtocol(true);
+                RegisterAction.RegisterStartup(true);
+            }
 
             Console.CancelKeyPress += (sender, e) => Application.Exit();
             TaskExtensions.RunAfter(1, UpdateAccounts);
