@@ -61,7 +61,7 @@ namespace Raid.Service.UI
 
         private void OnUpdateAvailable(object sender, UpdateService.UpdateAvailbleEventArgs e)
         {
-            if (LatestRelease.TagName == e.Release.TagName)
+            if (LatestRelease?.TagName == e.Release.TagName)
                 return; // already notified for this update
 
             LatestRelease = e.Release;
