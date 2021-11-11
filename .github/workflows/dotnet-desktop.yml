@@ -41,6 +41,9 @@ name: .NET Core Desktop
 on:
   push:
     branches: [main]
+    paths:
+      - Il2CppToolkit
+      - SDK/**
 
 jobs:
   build:
