@@ -3,15 +3,7 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "compounds": [
-        {
-            "name": "Launch Service + Extractor",
-            "configurations": [
-                "Launch Service",
-                "Launch Extractor"
-            ]
-        }
-    ],
+    "compounds": [],
     "configurations": [
         {
             "name": "Launch Compiler",
@@ -83,45 +75,6 @@
                 "RTK_DEBUG": "true"
             },
             "cwd": "${workspaceFolder}/SDK/Service",
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
-            "name": "Launch Extractor",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/SDK/Extractor/bin/Debug/net5.0-windows/win-x64/Raid.Extractor.exe",
-            "args": [],
-            "env": {
-                "RTK_DEBUG": "true"
-            },
-            "cwd": "${workspaceFolder}/SDK/Extractor",
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
-            "name": "Launch Extractor (Release)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/SDK/Extractor/bin/Release/net5.0-windows/win-x64/Raid.Extractor.exe",
-            "args": [],
-            "env": {
-                "RTK_DEBUG": "true"
-            },
-            "cwd": "${workspaceFolder}/SDK/Extractor",
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
-            "name": "Launch PreBuild",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/SDK/Model.PreBuild/bin/Debug/net5.0/Model.PreBuild.dll",
-            "args": [],
-            "cwd": "${workspaceFolder}/SDK/Extractor",
             "console": "internalConsole",
             "stopAtEntry": false
         },
