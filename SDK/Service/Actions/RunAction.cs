@@ -34,15 +34,13 @@ namespace Raid.Service
             {
                 options.NoUI = false;
 
-                if (Environment.GetEnvironmentVariable("RTK_DEBUG") != "true")
+                if (!AppConfiguration.IsInstalled ||
+                    (Environment.GetEnvironmentVariable("RTK_DEBUG") != "true" && AppConfiguration.ExecutablePath.ToLowerInvariant() != AppConfiguration.InstalledExecutablePath.ToLowerInvariant()))
                 {
-                    if (!AppConfiguration.IsInstalled || AppConfiguration.ExecutablePath.ToLowerInvariant() != AppConfiguration.InstalledExecutablePath.ToLowerInvariant())
-                    {
-                        Application.EnableVisualStyles();
-                        Application.SetCompatibleTextRenderingDefault(false);
-                        Application.Run(new InstallWindow());
-                        return Task.FromResult(0);
-                    }
+                    Application.EnableVisualStyles();
+                    Application.SetCompatibleTextRenderingDefault(false);
+                    Application.Run(new InstallWindow());
+                    return Task.FromResult(0);
                 }
             }
 
