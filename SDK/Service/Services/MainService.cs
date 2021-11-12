@@ -119,6 +119,11 @@ namespace Raid.Service
 
         private void UpdateAccounts()
         {
+            if (Model.ModelAssemblyResolver.CurrentVersion != Model.ModelAssemblyResolver.LoadedVersion)
+            {
+                Restart();
+                return;
+            }
             foreach (var instance in Factory.Instances.Values)
             {
                 try

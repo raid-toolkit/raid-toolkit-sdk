@@ -31,7 +31,7 @@ namespace Raid.Service
                 .AddLogging(builder =>
                 {
                     builder.AddConfiguration(ctx.Configuration.GetSection("Logging"));
-                    builder.AddFile(o => o.RootPath = AppConfiguration.ExecutableDirectory);
+                    builder.AddFile(o => o.RootPath = AppConfiguration.InstallationPath);
                 })
                 .AddHttpClient()
                 .AddHostedServiceSingleton<MainService>()
