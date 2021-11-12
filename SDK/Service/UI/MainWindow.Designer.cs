@@ -82,8 +82,9 @@ namespace Raid.Service.UI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(534, 167);
+			this.Icon = global::Raid.Service.Properties.Resources.AppIcon;
 			this.Name = "MainWindow";
-			this.Text = "MainWindow";
+			this.Text = "Raid Toolkit";
 			this.Load += new System.EventHandler(this.MainWindow_Load);
 			this.appTrayMenu.ResumeLayout(false);
 			this.ResumeLayout(false);

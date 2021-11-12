@@ -22,7 +22,7 @@ namespace Raid.Service
             m_storagePath = settings.Value.StorageLocation ?? "data";
             if (!Path.IsPathFullyQualified(m_storagePath))
             {
-                m_storagePath = Path.Join(AppConfiguration.ExecutableDirectory, m_storagePath);
+                m_storagePath = Path.Join(AppConfiguration.InstallationPath, m_storagePath);
             }
 
             // create basic directories

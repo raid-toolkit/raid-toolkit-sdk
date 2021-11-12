@@ -10,9 +10,9 @@ namespace Raid.Service
     public class RaidInstanceFactory
     {
         public readonly ConcurrentDictionary<int, RaidInstance> Instances = new();
-        private IReadOnlyList<IDependencyTypeFactory<IAccountFacet>> AccountFacets;
-        private UserData UserData;
-        private StaticDataCache StaticDataCache;
+        private readonly IReadOnlyList<IDependencyTypeFactory<IAccountFacet>> AccountFacets;
+        private readonly UserData UserData;
+        private readonly StaticDataCache StaticDataCache;
 
         public RaidInstanceFactory(
             IEnumerable<IDependencyTypeFactory<IAccountFacet>> accountFacets,
@@ -27,6 +27,7 @@ namespace Raid.Service
 
         public RaidInstance Create(Process process, IServiceScope scope)
         {
+            process.MainModule.FileName.ToString();
             RaidInstance instance = scope.ServiceProvider.GetService<RaidInstance>().Attach(process);
             Instances.TryAdd(process.Id, instance);
             return instance;

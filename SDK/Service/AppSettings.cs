@@ -10,7 +10,6 @@ namespace Raid.Service
     }
     public class UpdateSettings
     {
-        public bool Enabled { get; set; }
         public int PollIntervalMs { get; set; }
     }
     public class ProcessWatcherSettings
