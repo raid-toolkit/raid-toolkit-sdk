@@ -9,6 +9,7 @@ using Raid.Model;
 using System.IO;
 using System.Linq;
 using System.Diagnostics;
+using Raid.Service.UI;
 
 namespace Raid.Service
 {
@@ -24,6 +25,7 @@ namespace Raid.Service
         [Option('w', "wait", HelpText = "Wait <ms> for an existing instance to shut down before starting")]
         public int? Wait { get; set; }
     }
+
     static class RunAction
     {
         public static Task<int> Execute(RunOptions options)
@@ -31,24 +33,22 @@ namespace Raid.Service
             if (!options.Standalone)
             {
                 options.NoUI = false;
-            }
-            string exeDir = Path.GetDirectoryName(AppConfiguration.ExecutablePath);
-            string parentDirName = Path.GetFileName(exeDir);
-            if (Environment.GetEnvironmentVariable("RTK_DEBUG") != "true" && parentDirName != "win-x64")
-            {
-                string expectedInstallPath = Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "RaidToolkit");
-                string exeName = $"{ThisAssembly.AssemblyName}.exe";
-                string expectedExePath = Path.Join(expectedInstallPath, exeName);
-                string expectedConfigPath = Path.Join(expectedInstallPath, "appsettings.json");
-                if (!AppConfiguration.ExecutablePath.Equals(expectedExePath, StringComparison.OrdinalIgnoreCase))
+
+                if (!AppConfiguration.IsInstalled || AppConfiguration.ExecutablePath.ToLowerInvariant() != AppConfiguration.InstalledExecutablePath.ToLowerInvariant())
                 {
-                    Directory.CreateDirectory(expectedInstallPath);
-                    File.Copy(AppConfiguration.ExecutablePath, expectedExePath, true);
-                    File.Copy(Path.Join(exeDir, "appsettings.json"), expectedConfigPath, true);
-                    Process.Start(expectedExePath, Environment.GetCommandLineArgs().Skip(1));
+                    Application.EnableVisualStyles();
+                    Application.SetCompatibleTextRenderingDefault(false);
+                    Application.Run(new InstallWindow());
                     return Task.FromResult(0);
                 }
             }
+
+            if (!options.NoUI)
+            {
+                Application.EnableVisualStyles();
+                Application.SetCompatibleTextRenderingDefault(false);
+            }
+
             using (var mutex = new Mutex(false, "RaidToolkit Singleton"))
             {
                 bool isAnotherInstanceOpen = !mutex.WaitOne(options.Wait.HasValue ? TimeSpan.FromMilliseconds(options.Wait.Value) : TimeSpan.Zero);

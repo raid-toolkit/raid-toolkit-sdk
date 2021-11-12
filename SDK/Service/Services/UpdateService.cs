@@ -25,15 +25,14 @@ namespace Raid.Service
         {
             Logger = logger;
             Updater = updater;
+            Enabled = AppConfiguration.AutomaticallyCheckForUpdates;
             if (appSettings.Value.UpdateManager != null)
             {
                 PollInterval = TimeSpan.FromMilliseconds(appSettings.Value.UpdateManager.PollIntervalMs);
-                Enabled = appSettings.Value.UpdateManager.Enabled;
             }
             else
             {
                 PollInterval = new TimeSpan(0, 15, 0);
-                Enabled = true;
             }
         }
 
@@ -43,7 +42,7 @@ namespace Raid.Service
             {
                 Stream newRelease = await Updater.DownloadRelease(release);
                 string tempDownload = Path.Join(AppConfiguration.ExecutableDirectory, $"{AppConfiguration.ExecutableName}.update");
-                string currentBackup = Path.Join(AppConfiguration.ExecutableDirectory, $"{AppConfiguration.ExecutableName}.backup");
+                string currentBackup = Path.Join(AppConfiguration.ExecutableDirectory, $"{Path.GetFileNameWithoutExtension(AppConfiguration.ExecutableName)}.{ThisAssembly.AssemblyFileVersion}.exe");
                 using (Stream newFile = File.Create(tempDownload))
                 {
                     newRelease.CopyTo(newFile);

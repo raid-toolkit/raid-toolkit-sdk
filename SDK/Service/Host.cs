@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Reflection;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,9 +14,18 @@ namespace Raid.Service
     {
         private static IHost Host;
 
+        internal static Stream GetEmbeddedSettings()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            return assembly.GetManifestResourceStream($"{assembly.GetName().Name}.appsettings.json");
+        }
+
         private static IHostBuilder CreateHostBuilder() => WebSocketHostBuilder.Create()
             .UseWebSocketMessageHandler(ModelService.HandleMessage)
-            .ConfigureAppConfiguration(config => config.AddJsonFile(Path.Join(AppConfiguration.ExecutableDirectory, "appsettings.json"), false))
+            .ConfigureAppConfiguration(config => config
+                .AddJsonStream(GetEmbeddedSettings())
+                .AddJsonFile(Path.Join(AppConfiguration.ExecutableDirectory, "appsettings.json"), true)
+            )
             .ConfigureServices((ctx, services) => services
                 .Configure<AppSettings>(opts => ctx.Configuration.GetSection("app").Bind(opts))
                 .AddLogging(builder =>
