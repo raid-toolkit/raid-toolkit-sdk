@@ -34,12 +34,15 @@ namespace Raid.Service
             {
                 options.NoUI = false;
 
-                if (!AppConfiguration.IsInstalled || AppConfiguration.ExecutablePath.ToLowerInvariant() != AppConfiguration.InstalledExecutablePath.ToLowerInvariant())
+                if (Environment.GetEnvironmentVariable("RTK_DEBUG") != "true")
                 {
-                    Application.EnableVisualStyles();
-                    Application.SetCompatibleTextRenderingDefault(false);
-                    Application.Run(new InstallWindow());
-                    return Task.FromResult(0);
+                    if (!AppConfiguration.IsInstalled || AppConfiguration.ExecutablePath.ToLowerInvariant() != AppConfiguration.InstalledExecutablePath.ToLowerInvariant())
+                    {
+                        Application.EnableVisualStyles();
+                        Application.SetCompatibleTextRenderingDefault(false);
+                        Application.Run(new InstallWindow());
+                        return Task.FromResult(0);
+                    }
                 }
             }
 

@@ -13,6 +13,8 @@ namespace Raid.Model
 {
     internal class ModelLoader
     {
+        public string Version { get; private set; }
+
         class CollectibleAssemblyLoadContext : AssemblyLoadContext
         {
             public CollectibleAssemblyLoadContext() : base(isCollectible: true)
@@ -24,13 +26,11 @@ namespace Raid.Model
             }
         }
 
+
         internal Assembly Load()
         {
-            PlariumPlayAdapter pp = new();
-            if (!pp.TryGetGameVersion(101, "raid", out PlariumPlayAdapter.GameInfo gameInfo))
-            {
-                throw new InvalidOperationException("Game is not installed");
-            }
+            PlariumPlayAdapter.GameInfo gameInfo = GetGameInfo();
+            Version = gameInfo.Version;
 
             string executingPath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
             string dllPath = Path.Join(Path.GetDirectoryName(executingPath), gameInfo.Version, "Raid.Interop.dll");
@@ -41,6 +41,17 @@ namespace Raid.Model
             }
 
             return Assembly.LoadFrom(dllPath);
+        }
+
+        public static PlariumPlayAdapter.GameInfo GetGameInfo()
+        {
+            PlariumPlayAdapter pp = new();
+            if (!pp.TryGetGameVersion(101, "raid", out PlariumPlayAdapter.GameInfo gameInfo))
+            {
+                throw new InvalidOperationException("Game is not installed");
+            }
+
+            return gameInfo;
         }
 
         private static void GenerateAssembly(PlariumPlayAdapter.GameInfo gameInfo, string dllPath)
