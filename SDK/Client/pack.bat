@@ -1,2 +1,2 @@
 @echo off
-echo dotnet pack -c Release -p:NuspecFile=Raid.Client.nuspec
+dotnet pack -c Release -p:NuspecFile=Raid.Client.nuspec
