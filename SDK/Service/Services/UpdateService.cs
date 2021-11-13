@@ -87,11 +87,11 @@ namespace Raid.Service
             }
         }
 
-        public async Task CheckForUpdates()
+        public async Task<bool> CheckForUpdates()
         {
             Release release = await Updater.GetLatestRelease();
             if (!Version.TryParse(release.TagName.TrimStart('v').Split('-')[0], out Version releaseVersion))
-                return;
+                return false;
 
             if (releaseVersion > AppConfiguration.AppVersion)
             {
@@ -99,8 +99,10 @@ namespace Raid.Service
                 {
                     PendingRelease = release;
                     UpdateAvailable?.Invoke(this, new(release));
+                    return true;
                 }
             }
+            return false;
         }
 
         public class UpdateAvailbleEventArgs : EventArgs
