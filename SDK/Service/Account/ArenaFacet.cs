@@ -46,9 +46,9 @@ namespace Raid.Service
                 }
                 ghBonus.Add(new()
                 {
-                    Affinity = element.ToString(),
+                    Affinity = (DataModel.Enums.Element)element,
                     Bonus = bonuses,
-                    Levels = bonus.UnderlyingDictionary.ToDictionary(kvp => kvp.Key.ToModel().ToCamelCase(), kvp => kvp.Value)
+                    Levels = bonus.UnderlyingDictionary.ToDictionary(kvp => (DataModel.Enums.StatKindId)kvp.Key, kvp => kvp.Value)
                 });
             }
 

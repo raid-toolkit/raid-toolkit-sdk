@@ -6,12 +6,12 @@ namespace Raid.DataModel
     public class GreatHallBonus
     {
         [JsonProperty("affinity")]
-        public string Affinity;
+        public Enums.Element Affinity;
 
         [JsonProperty("bonus")]
         public IReadOnlyList<StatBonus> Bonus;
 
         [JsonProperty("levels")]
-        public IReadOnlyDictionary<string, int> Levels;
+        public IReadOnlyDictionary<Enums.StatKindId, int> Levels;
     }
 }

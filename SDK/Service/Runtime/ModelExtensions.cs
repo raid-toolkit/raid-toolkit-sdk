@@ -205,7 +205,7 @@ namespace Raid.DataModel
         {
             return new()
             {
-                KindId = bonus._kindId.ToModel().ToCamelCase(),
+                KindId = bonus._kindId.ToModel(),
                 Absolute = bonus._value._isAbsolute,
                 Value = bonus._value._value.AsFloat(),
                 GlyphPower = bonus._powerUpValue.AsFloat(),
@@ -218,7 +218,7 @@ namespace Raid.DataModel
             return new()
             {
                 Absolute = bonus.IsAbsolute,
-                KindId = bonus.StatKindId.ToModel().ToCamelCase(),
+                KindId = bonus.StatKindId.ToModel(),
                 Value = bonus.Value.AsFloat(),
             };
         }
@@ -228,7 +228,7 @@ namespace Raid.DataModel
             return new()
             {
                 Absolute = bonus._isAbsolute,
-                KindId = statKindId.ToModel().ToCamelCase(),
+                KindId = statKindId.ToModel(),
                 Value = bonus._value.AsFloat(),
             };
         }
