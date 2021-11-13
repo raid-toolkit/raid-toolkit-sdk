@@ -10,6 +10,14 @@ namespace Raid.Service
 {
     public static class AppConfiguration
     {
+        private const string RTKHive = @"SOFTWARE\RaidToolkit";
+        private const string InstallFolderKey = @"InstallFolder";
+        private const string AutoUpdateKey = @"AutoUpdate";
+        private const string IsInstalledKey = "IsInstalled";
+        private const string StartupName = "RaidToolkitService";
+        private const string Protocol = "rtk";
+        private const string StartupHive = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
+
         private static readonly Lazy<IConfigurationRoot> _configuration = new(
             () => new ConfigurationBuilder()
                 .SetBasePath(ExecutableDirectory)
