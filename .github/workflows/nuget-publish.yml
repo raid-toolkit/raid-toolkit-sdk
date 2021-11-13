@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - .github/workflows/nuget-publish.yml
       - SDK/Client/**
       - SDK/Common/**
       - SDK/DataModel/**
