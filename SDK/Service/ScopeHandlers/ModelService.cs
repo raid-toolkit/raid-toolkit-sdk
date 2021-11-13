@@ -15,7 +15,8 @@ namespace Raid.Service
     {
         private readonly List<IMessageScopeHandler> ScopeHandlers;
         private readonly ILogger<ModelService> Logger;
-        public ModelService(ILogger<ModelService> logger, IEnumerable<IMessageScopeHandler> handlers, IServiceProvider serviceProvider)
+
+        public ModelService(ILogger<ModelService> logger, IEnumerable<IMessageScopeHandler> handlers, MainService mainService, IServiceProvider serviceProvider)
         {
             Logger = logger;
             ScopeHandlers = handlers.ToList();

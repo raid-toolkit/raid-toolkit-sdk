@@ -26,9 +26,9 @@ namespace Raid.Service
             Logger = logger;
             Updater = updater;
             Enabled = AppConfiguration.AutomaticallyCheckForUpdates;
-            if (appSettings.Value.UpdateManager != null)
+            if (appSettings.Value.ApplicationUpdates != null)
             {
-                PollInterval = TimeSpan.FromMilliseconds(appSettings.Value.UpdateManager.PollIntervalMs);
+                PollInterval = TimeSpan.FromMilliseconds(appSettings.Value.ApplicationUpdates.PollIntervalMs);
             }
             else
             {

@@ -6,16 +6,22 @@ using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using SuperSocket;
 
 namespace Raid.Service
 {
     public class MainService : BackgroundService
     {
+        private readonly DataUpdateSettings DataSettings;
         private readonly RaidInstanceFactory Factory;
         private readonly ILogger<MainService> Logger;
         private readonly IHostApplicationLifetime Lifetime;
         private readonly UpdateService UpdateService;
         private readonly IServiceProvider ServiceProvider;
+        private readonly SessionFactory SessionFactory;
+
+        private DateTime ActiveUntil = DateTime.UtcNow;
 
         public MainService(
             ProcessWatcherService processWatcher,
@@ -24,13 +30,17 @@ namespace Raid.Service
             UpdateService updateService,
             IServiceProvider serviceProvider,
             IHostApplicationLifetime appLifetime,
-            MemoryLogger memoryLogger)
+            IOptions<AppSettings> settings,
+            MemoryLogger memoryLogger,
+            ISessionFactory sessionFactory)
         {
             Factory = factory;
             Logger = logger;
             Lifetime = appLifetime;
             UpdateService = updateService;
             ServiceProvider = serviceProvider;
+            DataSettings = settings.Value.DataSettings;
+            SessionFactory = sessionFactory as SessionFactory;
             processWatcher.ProcessFound += OnProcessFound;
             processWatcher.ProcessClosed += OnProcessClosed;
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
@@ -119,11 +129,21 @@ namespace Raid.Service
 
         private void UpdateAccounts()
         {
+            bool isActive = SessionFactory.SessionCount > 0;
+            if (isActive)
+            {
+                ActiveUntil = DateTime.UtcNow.AddMilliseconds(DataSettings.ActiveCooldownMs);
+            }
+            int nextDelay = ActiveUntil > DateTime.UtcNow ? DataSettings.ActiveIntervalMs : DataSettings.IdleIntervalMs;
+
             if (Model.ModelAssemblyResolver.CurrentVersion != Model.ModelAssemblyResolver.LoadedVersion)
             {
                 Restart();
                 return;
             }
+
+            Logger.LogDebug($"Updating game data for ({Factory.Instances.Count}) processes.");
+
             foreach (var instance in Factory.Instances.Values)
             {
                 try
@@ -135,7 +155,9 @@ namespace Raid.Service
                     Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account {instance.Id}");
                 }
             }
-            TaskExtensions.RunAfter(10000, UpdateAccounts);
+
+            Logger.LogDebug($"Scheduling next update in {nextDelay}ms (active={isActive};until={ActiveUntil:o})");
+            TaskExtensions.RunAfter(nextDelay, UpdateAccounts);
         }
     }
 }

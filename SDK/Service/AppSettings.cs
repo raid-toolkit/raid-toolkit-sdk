@@ -6,9 +6,16 @@ namespace Raid.Service
         public string StorageLocation { get; set; }
         public string PublicServer { get; set; }
         public ProcessWatcherSettings ProcessWatcher { get; set; }
-        public UpdateSettings UpdateManager { get; set; }
+        public ApplicationUpdateSettings ApplicationUpdates { get; set; }
+        public DataUpdateSettings DataSettings { get; set; }
     }
-    public class UpdateSettings
+    public class DataUpdateSettings
+    {
+        public int IdleIntervalMs { get; set; }
+        public int ActiveIntervalMs { get; set; }
+        public int ActiveCooldownMs { get; set; }
+    }
+    public class ApplicationUpdateSettings
     {
         public int PollIntervalMs { get; set; }
     }

@@ -21,6 +21,7 @@ namespace Raid.Service
         }
 
         private static IHostBuilder CreateHostBuilder() => WebSocketHostBuilder.Create()
+            .UseSessionFactory<SessionFactory>()
             .UseWebSocketMessageHandler(ModelService.HandleMessage)
             .ConfigureAppConfiguration(config => config
                 .AddJsonStream(GetEmbeddedSettings())
