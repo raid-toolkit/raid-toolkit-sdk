@@ -25,6 +25,7 @@ namespace Raid.Service.UI
             UserData = userData;
             MainService = mainService;
             UpdateService.UpdateAvailable += OnUpdateAvailable;
+            appTrayIcon.Text = $"Raid Toolkit v{ThisAssembly.AssemblyFileVersion}";
             appTrayIcon.Icon = Icon.ExtractAssociatedIcon(AppConfiguration.ExecutablePath);
             appTrayIcon.Visible = true;
         }
@@ -86,9 +87,17 @@ namespace Raid.Service.UI
             MainService.InstallUpdate(LatestRelease);
         }
 
-        private void checkUpdatesMenuItem_Click(object sender, EventArgs e)
+        private async void checkUpdatesMenuItem_Click(object sender, EventArgs e)
         {
-            Task.Run(UpdateService.CheckForUpdates);
+            bool hasUpdate = await UpdateService.CheckForUpdates();
+            if (!hasUpdate)
+            {
+                appTrayIcon.ShowBalloonTip(
+                10000,
+                "No updates",
+                $"You are already running the latest version!",
+                ToolTipIcon.None);
+            }
         }
 
         private void MainWindow_Load(object sender, EventArgs e)
