@@ -1,0 +1,55 @@
+name: Publish NuGet Client SDK
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - SDK/Client/**
+      - SDK/Common/**
+      - SDK/DataModel/**
+
+jobs:
+  build:
+    runs-on:
+      windows-latest # For a list of available runner types, refer to
+      # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+
+    env:
+      IS_CI: true
+      Solution_Name: SDK.sln
+      Client_csproj: SDK\Client\Client.csproj
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      # Install the .NET Core workload
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 5.0.x
+
+      # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+      - name: Setup MSBuild.exe
+        uses: microsoft/setup-msbuild@v1.0.2
+
+      # Restore the application to populate the obj folder with RuntimeIdentifiers
+      - name: Restore the application
+        run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Release
+
+      # Versions
+      - uses: dotnet/nbgv@master
+        id: rtk_version
+
+      # NuGet Pack
+      - name: Pack Client NuGet package
+        run: dotnet pack $env:Client_csproj --output publish\nuget -p:Configuration=Release
+
+      # NuGet Push
+      - name: Push client package to GitHub registry
+        run: dotnet nuget push publish/nuget/Raid.Client.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k %PUBLISH_TOKEN% -s https://api.nuget.org/v3/index.json --skip-duplicate
+        env:
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}

@@ -9,12 +9,12 @@
     <description>RaidToolkit Client SDK for Raid: Shadow Legends</description>
     <repository type="git" url="https://github.com/raid-toolkit/raid-toolkit-sdk.git" />
     <dependencies>
-      <group targetFramework="net5.0" />
+      <group targetFramework="net5.0-windows7.0" />
     </dependencies>
   </metadata>
    <files>
-     <file src="bin\Release\net5.0\*.dll" target="lib\net5.0" />
-     <file src="bin\Release\net5.0\*.exe" target="lib\net5.0" />
-     <file src="bin\Release\net5.0\*.pdb" target="lib\net5.0" />
+     <file src="bin\Release\net5.0-windows\*.dll" target="lib\net5.0-windows7.0" />
+     <file src="bin\Release\net5.0-windows\*.exe" target="lib\net5.0-windows7.0" />
+     <file src="bin\Release\net5.0-windows\*.pdb" target="lib\net5.0-windows7.0" />
   </files>
 </package>

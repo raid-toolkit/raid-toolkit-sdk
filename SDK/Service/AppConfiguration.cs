@@ -4,6 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Win32;
+using Raid.Common;
 
 namespace Raid.Service
 {
@@ -30,10 +31,12 @@ namespace Raid.Service
         public static readonly string DefaultInstallationPath;
         public static readonly Version AppVersion = new(ThisAssembly.AssemblyFileVersion);
 
+        // TODO: Reconcile this duplication with copy in Raid.Common.RegistrySettings
+
         public static bool IsInstalled
         {
-            get => Registry.CurrentUser.OpenSubKey(RTKHive)?.GetValue(IsInstalledKey) != null;
-            set => Registry.CurrentUser.CreateSubKey(RTKHive).SetValue(IsInstalledKey, 1, RegistryValueKind.DWord);
+            get => Registry.CurrentUser.OpenSubKey(RegistrySettings.RTKHive)?.GetValue(RegistrySettings.IsInstalledKey) != null;
+            set => Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.IsInstalledKey, 1, RegistryValueKind.DWord);
         }
 
         public static string InstalledExecutablePath => Path.Join(InstallationPath, ExecutableName);
@@ -42,28 +45,28 @@ namespace Raid.Service
         {
             get
             {
-                var hive = Registry.CurrentUser.OpenSubKey(RTKHive);
+                var hive = Registry.CurrentUser.OpenSubKey(RegistrySettings.RTKHive);
                 if (hive == null)
                     return DefaultInstallationPath;
 
-                return (string)hive.GetValue(InstallFolderKey, DefaultInstallationPath);
+                return (string)hive.GetValue(RegistrySettings.InstallFolderKey, DefaultInstallationPath);
             }
             set
             {
-                var hive = Registry.CurrentUser.CreateSubKey(RTKHive);
-                hive.SetValue(InstallFolderKey, value, RegistryValueKind.String);
+                var hive = Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive);
+                hive.SetValue(RegistrySettings.InstallFolderKey, value, RegistryValueKind.String);
             }
         }
 
         public static bool RunOnStartup
         {
-            get => Registry.CurrentUser.OpenSubKey(StartupHive).GetValue(StartupName) != null;
+            get => Registry.CurrentUser.OpenSubKey(RegistrySettings.StartupHive).GetValue(RegistrySettings.StartupName) != null;
             set
             {
                 if (value)
-                    Registry.CurrentUser.CreateSubKey(StartupHive).SetValue(StartupName, InstalledExecutablePath, RegistryValueKind.String);
+                    Registry.CurrentUser.CreateSubKey(RegistrySettings.StartupHive).SetValue(RegistrySettings.StartupName, InstalledExecutablePath, RegistryValueKind.String);
                 else
-                    Registry.CurrentUser.CreateSubKey(StartupHive).DeleteValue(StartupName);
+                    Registry.CurrentUser.CreateSubKey(RegistrySettings.StartupHive).DeleteValue(RegistrySettings.StartupName);
             }
         }
 
@@ -71,16 +74,16 @@ namespace Raid.Service
         {
             get
             {
-                var hive = Registry.CurrentUser.OpenSubKey(RTKHive);
+                var hive = Registry.CurrentUser.OpenSubKey(RegistrySettings.RTKHive);
                 if (hive == null)
                     return false;
 
-                return (int)hive.GetValue(AutoUpdateKey, DefaultInstallationPath) != 0;
+                return (int)hive.GetValue(RegistrySettings.AutoUpdateKey, DefaultInstallationPath) != 0;
             }
             set
             {
-                var hive = Registry.CurrentUser.CreateSubKey(RTKHive);
-                hive.SetValue(AutoUpdateKey, value ? 1 : 0, RegistryValueKind.DWord);
+                var hive = Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive);
+                hive.SetValue(RegistrySettings.AutoUpdateKey, value ? 1 : 0, RegistryValueKind.DWord);
             }
         }
 
@@ -96,13 +99,14 @@ namespace Raid.Service
             if (create)
                 Shortcut.Create(startMenuItem, InstalledExecutablePath, "Raid Toolkit");
         }
+
         public static void RegisterProtocol(bool registerProtocolHandler)
         {
             RegistryKey classesKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Classes", true);
-            classesKey.DeleteSubKeyTree(Protocol, false);
+            classesKey.DeleteSubKeyTree(RegistrySettings.Protocol, false);
             if (registerProtocolHandler)
             {
-                RegistryKey classKey = classesKey.CreateSubKey(Protocol);
+                RegistryKey classKey = classesKey.CreateSubKey(RegistrySettings.Protocol);
                 classKey.SetValue(null, "URL:Raid Toolkit");
                 classKey.SetValue("URL Protocol", "");
                 var cmdKey = classKey.CreateSubKey("shell").CreateSubKey("open").CreateSubKey("command");
