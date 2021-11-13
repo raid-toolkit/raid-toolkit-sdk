@@ -6,6 +6,7 @@
     <ProjectReference Include="..\..\IL2CppToolkit\ReverseCompiler\ReverseCompiler.csproj" />
     <ProjectReference Include="..\..\IL2CppToolkit\Runtime\Runtime.csproj" />
     <ProjectReference Include="..\..\IL2CppToolkit\ILPack\src\Lokad.ILPack.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Model.PreBuild\Model.PreBuild.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <Private>false</Private>

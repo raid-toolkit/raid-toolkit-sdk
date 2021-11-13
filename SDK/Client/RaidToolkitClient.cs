@@ -1,13 +1,17 @@
-using System;
 using Newtonsoft.Json;
-using System.Net.WebSockets;
+using Newtonsoft.Json.Linq;
+using Raid.Common;
+using Raid.DataModel;
 using Raid.Extractor;
+using Raid.Service.Messages;
+using System;
+using System.Net.WebSockets;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Raid.DataModel;
-using System.Text;
-using Raid.Service.Messages;
-using Newtonsoft.Json.Linq;
+using System.Windows.Forms;
+using System.IO;
+using System.Diagnostics;
 
 namespace Raid.Client
 {
@@ -23,11 +27,63 @@ namespace Raid.Client
         public IAccountApi AccountApi => new AccountApi(this);
         public IStaticDataApi StaticDataApi => new StaticDataApi(this);
 
+        public async Task EnsureInstalled()
+        {
+            if (!RegistrySettings.IsInstalled)
+            {
+                using var form = new Form { TopMost = true };
+                var response = MessageBox.Show(
+                    form,
+                    "Raid Toolkit is required to be installed to access game data, would you like to download and install it now?",
+                    "Installation required",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Question
+                    );
+                if (response != DialogResult.Yes)
+                {
+                    throw new NotSupportedException("Raid Toolkit must be installed");
+                }
+                try
+                {
+                    await InstallRTK();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(form, $"An error ocurred\n{ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private static async Task InstallRTK()
+        {
+            GitHub.Updater updater = new();
+            GitHub.Schema.Release release = await updater.GetLatestRelease();
+            if (release == null)
+            {
+                throw new FileNotFoundException("Could not find the latest release");
+            }
+
+            string tempFile = Path.Combine(Path.GetTempPath(), "Raid.Service.exe");
+            using (var stream = await updater.DownloadRelease(release))
+            {
+                using (Stream newFile = File.Create(tempFile))
+                {
+                    stream.CopyTo(newFile);
+                }
+            }
+            Process proc = Process.Start(tempFile);
+            await proc.WaitForExitAsync();
+        }
+
         public void Connect()
         {
+            if (!RegistrySettings.IsInstalled)
+            {
+                throw new NotSupportedException("Raid Toolkit must be installed");
+            }
             if (Socket.State == WebSocketState.None)
             {
-                Socket.ConnectAsync(new Uri("ws://localhost:9090"), CancellationToken.None).Wait();
+                Socket.ConnectAsync(EndpointUri, CancellationToken.None).Wait();
                 Listen();
             }
         }
@@ -40,7 +96,7 @@ namespace Raid.Client
 
         private async void Listen()
         {
-            Memory<byte> buffer = new Memory<byte>(new byte[1024 * 1024 * 3]);
+            Memory<byte> buffer = new(new byte[1024 * 1024 * 3]);
             while (Socket.State == WebSocketState.Open)
             {
                 var result = await Socket.ReceiveAsync(buffer, CancellationTokenSource.Token);
