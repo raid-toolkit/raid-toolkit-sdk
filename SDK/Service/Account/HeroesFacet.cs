@@ -27,6 +27,8 @@ namespace Raid.Service
             Dictionary<int, Hero> result = previous != null ? new(previous.Where(kvp => kvp.Value.Deleted)) : new();
             foreach ((var id, var hero) in heroesById)
             {
+                if (hero == null) continue;
+
                 var heroType = heroTypes[hero.TypeId];
                 Dictionary<ArtifactKindId, int> equippedArtifacts = null;
                 if (artifactsByHeroId.TryGetValue(id, out HeroArtifactData artifactData))

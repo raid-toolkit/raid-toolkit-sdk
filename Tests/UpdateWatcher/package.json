@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "start": "ts-node watch-account.ts",
+    "watch": "ts-node watch-account.ts",
     "extractor-poll": "ts-node extractor-poll"
   },
   "devDependencies": {
@@ -17,6 +18,7 @@
   "dependencies": {
     "@types/node": "^16.11.7",
     "@types/ws": "^8.2.0",
+    "jsondiffpatch": "^0.4.1",
     "node-localstorage": "^2.2.1",
     "ws": "^8.2.3"
   }

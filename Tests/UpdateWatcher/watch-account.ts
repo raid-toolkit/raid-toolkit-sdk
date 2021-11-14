@@ -1,18 +1,18 @@
 import './ws-polyfill';
 import { useRaidToolkitApi, IAccountApi } from '@raid-toolkit/webclient';
+import { diff } from 'jsondiffpatch';
+import { inspect } from 'util';
 
 async function run() {
   const api = useRaidToolkitApi(IAccountApi);
-  let lastUpdated;
+  const account = (await api.getAccounts())[0];
+  let lastDump = await api.getAccountDump(account.id);
   while (true) {
-    console.log(`getAccount: ${new Date().toISOString()}`);
-    const firstAccount = (await api.getAccounts())[0];
-    console.log(`getAccountDump: ${new Date().toISOString()}`);
-    await api.getAccountDump(firstAccount.id);
-    if (firstAccount.lastUpdated !== lastUpdated) {
-      console.log(firstAccount);
-      lastUpdated = firstAccount.lastUpdated;
-    }
+    let dump = await api.getAccountDump(account.id);
+    const patch = diff(lastDump, dump);
+    lastDump = dump;
+    if (!patch) continue;
+    console.log(inspect(patch, false, 5, true));
   }
 }
 

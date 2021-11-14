@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@types/json8-patch": "^1.0.0",
+    "json8-patch": "^1.0.6"
+  }
+}
