@@ -5,7 +5,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "ts-node index.ts"
+    "start": "ts-node watch-account.ts",
+    "extractor-poll": "ts-node extractor-poll"
   },
   "devDependencies": {
     "@raid-toolkit/webclient": "file:../../SDK/WebClient",
