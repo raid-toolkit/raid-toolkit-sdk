@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -99,9 +100,13 @@ namespace Raid.Service
             Application.Run(ServiceProvider.GetRequiredService<UI.MainWindow>());
         }
 
-        public void Restart()
+        public void Restart(bool postUpdate = false)
         {
-            Process.Start(AppConfiguration.ExecutablePath, new string[] { "--wait", "30000" });
+            List<string> args = new() { "--wait", "30000" };
+            if (postUpdate)
+                args.Add("--post-update");
+
+            Process.Start(AppConfiguration.ExecutablePath, args.ToArray());
             Exit();
         }
 
@@ -117,7 +122,7 @@ namespace Raid.Service
             try
             {
                 await UpdateService.InstallRelease(release);
-                Restart();
+                Restart(postUpdate: true);
             }
             catch { }
         }

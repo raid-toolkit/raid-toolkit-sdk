@@ -15,10 +15,12 @@ namespace Raid.Service.UI
         private readonly MainService MainService;
         private readonly UserData UserData;
         private readonly ILogger<MainWindow> Logger;
+        private readonly RunOptions RunOptions;
 
-        public MainWindow(ILogger<MainWindow> logger, UpdateService updateService, IHostApplicationLifetime appLifetime, MainService mainService, UserData userData)
+        public MainWindow(ILogger<MainWindow> logger, UpdateService updateService, IHostApplicationLifetime appLifetime, MainService mainService, UserData userData, RunOptions runOptions)
         {
             InitializeComponent();
+            RunOptions = runOptions;
             Lifetime = appLifetime;
             Logger = logger;
             UpdateService = updateService;
@@ -104,6 +106,14 @@ namespace Raid.Service.UI
         {
             Visible = false;
             ShowInTaskbar = false;
+            if (RunOptions.Update)
+            {
+                appTrayIcon.ShowBalloonTip(
+                    10000,
+                    "Updated successfully!",
+                    $"Raid Toolkit has been updated to v{ThisAssembly.AssemblyFileVersion}!",
+                    ToolTipIcon.Info);
+            }
         }
     }
 }

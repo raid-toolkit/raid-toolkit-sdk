@@ -20,7 +20,7 @@ namespace Raid.Service
             return assembly.GetManifestResourceStream($"{assembly.GetName().Name}.appsettings.json");
         }
 
-        private static IHostBuilder CreateHostBuilder() => WebSocketHostBuilder.Create()
+        private static IHostBuilder CreateHostBuilder(RunOptions options) => WebSocketHostBuilder.Create()
             .UseSessionFactory<SessionFactory>()
             .UseWebSocketMessageHandler(ModelService.HandleMessage)
             .ConfigureAppConfiguration(config => config
@@ -46,6 +46,7 @@ namespace Raid.Service
                 .AddSingleton<Extractor>()
                 .AddSingleton<MemoryLogger>()
                 .AddSingleton<GitHub.Updater>()
+                .AddSingleton<RunOptions>(options)
                 .AddScoped<UI.MainWindow>()
                 .AddScoped<RaidInstance>()
                 .AddTypesAssignableTo<IMessageScopeHandler>(collection => collection.AddSingleton)
@@ -53,9 +54,9 @@ namespace Raid.Service
                 .AddTypesAssignableToFactories<IAccountFacet>(collection => collection.AddScoped)
             );
 
-        public static IHost CreateHost()
+        public static IHost CreateHost(RunOptions options)
         {
-            return Host = CreateHostBuilder().Build();
+            return Host = CreateHostBuilder(options).Build();
         }
 
         public static IServiceProvider Services => Host.Services;

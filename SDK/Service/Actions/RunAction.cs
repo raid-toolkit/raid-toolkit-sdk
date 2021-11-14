@@ -24,6 +24,9 @@ namespace Raid.Service
 
         [Option('w', "wait", HelpText = "Wait <ms> for an existing instance to shut down before starting")]
         public int? Wait { get; set; }
+
+        [Option('u', "post-update")]
+        public bool Update { get; set; }
     }
 
     static class RunAction
@@ -75,7 +78,7 @@ namespace Raid.Service
         {
             using (new ModelAssemblyResolver())
             {
-                var host = RaidHost.CreateHost();
+                var host = RaidHost.CreateHost(options);
                 var task = Task.Run(async () =>
                 {
                     try
