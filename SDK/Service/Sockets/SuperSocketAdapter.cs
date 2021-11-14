@@ -2,6 +2,7 @@ using Newtonsoft.Json;
 using System.Threading.Tasks;
 using SuperSocket.WebSocket.Server;
 using Raid.DataModel;
+using System;
 
 namespace Raid.Service
 {
@@ -15,7 +16,12 @@ namespace Raid.Service
 
         public async Task Send(SocketMessage message)
         {
-            await Session.SendAsync(JsonConvert.SerializeObject(message));
+            try
+            {
+                await Session.SendAsync(JsonConvert.SerializeObject(message));
+            }
+            catch (Exception)
+            { }
         }
     }
 }
