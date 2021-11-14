@@ -10,10 +10,6 @@ namespace Raid.Service
     [Facet("heroes")]
     public class HeroesFacet : UserAccountFacetBase<IReadOnlyDictionary<int, Hero>, HeroesFacet>
     {
-        private const int kForceRefreshInterval = 30000;
-        private DateTime NextForcedRefresh = DateTime.MinValue;
-        private int LastHeroId;
-
         private StaticDataCache StaticDataCache;
         public HeroesFacet(StaticDataCache staticDataCache) =>
             (StaticDataCache) = (staticDataCache);
@@ -23,14 +19,6 @@ namespace Raid.Service
             var userWrapper = scope.AppModel._userWrapper;
             var userHeroData = userWrapper.Heroes.HeroData;
             var heroTypes = StaticDataFacet.ReadValue(StaticDataCache).HeroData.HeroTypes;
-
-            // Only refresh if lastHeroId changed since last read, or after we've exceeded the forced read interval
-            if (DateTime.UtcNow < NextForcedRefresh && userHeroData.LastHeroId == LastHeroId)
-            {
-                return previous;
-            }
-            NextForcedRefresh = DateTime.UtcNow.AddMilliseconds(kForceRefreshInterval);
-            LastHeroId = userHeroData.LastHeroId;
 
             var artifactsByHeroId = scope.AppModel._userWrapper.Artifacts.ArtifactData.ArtifactDataByHeroId;
             var heroesById = userHeroData.HeroById;

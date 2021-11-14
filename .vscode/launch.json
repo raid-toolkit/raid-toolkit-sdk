@@ -46,6 +46,22 @@
             "stopAtEntry": false
         },
         {
+            "name": "Launch Service (Release)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build release",
+            "program": "${workspaceFolder}/SDK/Service/bin/Release/net5.0-windows/win-x64/Raid.Service.exe",
+            "args": [],
+            "env": {
+                "RTK_DEBUG": "true",
+                "app:MemoryLogging": "Error"
+            },
+            "justMyCode": false,
+            "cwd": "${workspaceFolder}/SDK/Service",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
             "name": "Launch Service (Protocol)",
             "type": "coreclr",
             "request": "launch",

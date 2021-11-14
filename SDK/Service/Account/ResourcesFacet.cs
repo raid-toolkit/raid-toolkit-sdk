@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Raid.DataModel;
 
@@ -16,7 +17,7 @@ namespace Raid.Service
             {
                 BlackMarket = blackMarketItems.ToDictionary(bmi => bmi.Key.ToString(), bmi => bmi.Value.Count),
                 Shards = shards.ToDictionary(shard => shard.TypeId.ToString(), shard => shard.Count),
-                Account = accountResources.UnderlyingDictionary.ToModel()
+                Account = accountResources.ToDictionary(kvp => kvp.Key.ToString(), kvp => Math.Round(kvp.Value, 0))
             };
         }
     }

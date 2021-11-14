@@ -24,7 +24,7 @@ namespace Raid.Service
 
         private ValueTask ProcessMessage(ISocketSession session, WebSocketPackage message)
         {
-            Logger.LogInformation(ServiceEvent.HandleMessage.EventId(), "ProcessMessage");
+            Logger.LogDebug(ServiceEvent.HandleMessage.EventId(), "ProcessMessage");
             using var sessionScope = Logger.BeginScope($"[SessionId = {session.Id}");
 
             try
@@ -43,14 +43,14 @@ namespace Raid.Service
         private void HandleMessageCore(ISocketSession session, SocketMessage socketMessage)
         {
             var messageScope = Logger.BeginScope($"[Scope = {socketMessage.Scope}, Channel = {socketMessage.Channel}]");
-            Logger.LogInformation(ServiceEvent.HandleMessage.EventId(), "HandleMessage");
+            Logger.LogDebug(ServiceEvent.HandleMessage.EventId(), "HandleMessage");
 
             try
             {
                 IMessageScopeHandler handler = ScopeHandlers.FirstOrDefault(handler => handler.SupportsScope(socketMessage.Scope));
                 if (handler != null)
                 {
-                    Logger.LogInformation(ServiceEvent.HandleMessage.EventId(), $"Dispatch message to {handler.GetType().FullName}");
+                    Logger.LogDebug(ServiceEvent.HandleMessage.EventId(), $"Dispatch message to {handler.GetType().FullName}");
                     handler.HandleMessage(socketMessage, session);
                 }
                 else

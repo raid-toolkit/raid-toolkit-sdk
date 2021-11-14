@@ -1,8 +1,9 @@
+using System;
 using Newtonsoft.Json;
 
 namespace Raid.DataModel
 {
-    public class Account
+    public class AccountBase
     {
         [JsonProperty("id")]
         public string Id;
@@ -18,8 +19,23 @@ namespace Raid.DataModel
 
         [JsonProperty("power")]
         public int Power;
-
+    }
+    public class Account : AccountBase
+    {
         [JsonProperty("lastUpdated")]
-        public string LastUpdated;
+        public DateTime LastUpdated;
+
+        public static Account FromBase(AccountBase accountBase, DateTime lastUpdated)
+        {
+            return new Account()
+            {
+                Id = accountBase.Id,
+                Name = accountBase.Name,
+                Level = accountBase.Level,
+                Avatar = accountBase.Avatar,
+                Power = accountBase.Power,
+                LastUpdated = lastUpdated
+            };
+        }
     }
 }

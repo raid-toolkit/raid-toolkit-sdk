@@ -9,6 +9,9 @@ namespace Raid.Service
     public class SessionFactory : ISessionFactory
     {
         public int SessionCount { get; private set; }
+        public DateTime LastSessionActive => SessionCount > 0 ? DateTime.UtcNow : LastSessionDisconnect;
+        private DateTime LastSessionDisconnect;
+
         public SessionFactory()
         {
         }
@@ -26,6 +29,7 @@ namespace Raid.Service
         private ValueTask OnClosed(object sender, CloseEventArgs e)
         {
             --SessionCount;
+            LastSessionDisconnect = DateTime.UtcNow;
             return ValueTask.CompletedTask;
         }
 

@@ -129,12 +129,9 @@ namespace Raid.Service
 
         private void UpdateAccounts()
         {
-            bool isActive = SessionFactory.SessionCount > 0;
-            if (isActive)
-            {
-                ActiveUntil = DateTime.UtcNow.AddMilliseconds(DataSettings.ActiveCooldownMs);
-            }
-            int nextDelay = ActiveUntil > DateTime.UtcNow ? DataSettings.ActiveIntervalMs : DataSettings.IdleIntervalMs;
+            ActiveUntil = SessionFactory.LastSessionActive.AddMilliseconds(DataSettings.ActiveCooldownMs);
+            bool isActive = ActiveUntil > DateTime.UtcNow;
+            int nextDelay = isActive ? DataSettings.ActiveIntervalMs : DataSettings.IdleIntervalMs;
 
             if (Model.ModelAssemblyResolver.CurrentVersion != Model.ModelAssemblyResolver.LoadedVersion)
             {

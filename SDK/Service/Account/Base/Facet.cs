@@ -1,30 +1,30 @@
 namespace Raid.Service
 {
-    public abstract class FacetBase<T, U, D> : IFacet
-        where T : class
-        where U : FacetBase<T, U, D>
-        where D : IModelDataSource
+    public abstract class FacetBase<ValueType, FacetType, DataSourceType> : IFacet
+        where ValueType : class
+        where FacetType : FacetBase<ValueType, FacetType, DataSourceType>
+        where DataSourceType : IModelDataSource
     {
-        protected abstract T Merge(ModelScope scope, T previous = null);
+        protected abstract ValueType Merge(ModelScope scope, ValueType previous = null);
 
         object IFacet.Merge(ModelScope scope, object previous)
         {
-            return Merge(scope, (T)previous);
+            return Merge(scope, (ValueType)previous);
         }
 
         object IFacet.GetValue(IModelDataSource dataSource)
         {
-            return GetValue((D)dataSource);
+            return GetValue((DataSourceType)dataSource);
         }
 
-        public T GetValue(D account)
+        public ValueType GetValue(DataSourceType account)
         {
-            return account.Get<T>(FacetAttribute.GetName(typeof(U)));
+            return account.Get<ValueType>(FacetAttribute.GetName(typeof(FacetType)));
         }
 
-        public static T ReadValue(D account)
+        public static ValueType ReadValue(DataSourceType account)
         {
-            return account.Get<T>(FacetAttribute.GetName(typeof(U)));
+            return account.Get<ValueType>(FacetAttribute.GetName(typeof(FacetType)));
         }
     }
 }

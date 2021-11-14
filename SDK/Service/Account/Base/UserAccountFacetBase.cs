@@ -1,5 +1,3 @@
-using Raid.DataModel;
-
 namespace Raid.Service
 {
     public interface IAccountFacet : IFacet { }

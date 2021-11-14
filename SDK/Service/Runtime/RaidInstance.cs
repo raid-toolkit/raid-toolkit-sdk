@@ -4,6 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using Il2CppToolkit.Runtime;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Raid.DataModel;
 
 namespace Raid.Service
 {
@@ -44,6 +46,8 @@ namespace Raid.Service
 
         public void Update()
         {
+            AccountDataIndex index = new() { Facets = new Dictionary<string, AccountDataFacetInfo>() };
+
             StaticDataCache.Update(Runtime);
             if (!StaticDataCache.IsReady)
             {
@@ -59,8 +63,9 @@ namespace Raid.Service
 
                     object newValue = facet.Merge(scope, currentValue);
                     FacetToValueMap[facet] = newValue;
-                    if (newValue != currentValue)
+                    if (newValue != currentValue && JsonConvert.SerializeObject(newValue) != JsonConvert.SerializeObject(currentValue))
                     {
+                        Logger.LogInformation(ServiceEvent.DataUpdated.EventId(), $"Facet '{facet}' updated");
                         UserAccount.Set(facetName, newValue);
                     }
                 }

@@ -23,7 +23,11 @@ namespace Raid.Service
                 facet.GetValue(this);
             }
             IsReady = !Data.Values.Contains(null);
+            if (IsReady)
+                LastUpdated = DateTime.UtcNow;
         }
+
+        public DateTime LastUpdated { get; private set; }
 
         public void Update(Il2CsRuntimeContext runtime)
         {
@@ -51,6 +55,9 @@ namespace Raid.Service
             {
                 IsReady = !Data.Values.Contains(null);
             }
+
+            if (IsReady)
+                LastUpdated = DateTime.UtcNow;
         }
 
         public T Get<T>(string key) where T : class

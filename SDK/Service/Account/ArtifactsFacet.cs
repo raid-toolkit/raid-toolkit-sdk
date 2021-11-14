@@ -17,19 +17,24 @@ namespace Raid.Service
         {
             var artifactData = scope.AppModel._userWrapper.Artifacts.ArtifactData;
 
+            IReadOnlyList<Artifact> artifacts;
+
             // Only refresh if lastHeroId changed since last read, or after we've exceeded the forced read interval
-            if (DateTime.UtcNow < m_nextForcedRefresh
+            if (previous != null && DateTime.UtcNow < m_nextForcedRefresh
                 && artifactData.NextArtifactId == m_nextId
                 && artifactData.NextArtifactRevisionId == m_nextRevisionId)
             {
-                return previous;
+                artifacts = previous.Values.ToList();
             }
-            m_nextForcedRefresh = DateTime.UtcNow.AddMilliseconds(kForceRefreshInterval);
-            m_nextId = artifactData.NextArtifactId;
-            m_nextRevisionId = artifactData.NextArtifactRevisionId;
+            else
+            {
+                artifacts = GetArtifacts(scope);
+                m_nextForcedRefresh = DateTime.UtcNow.AddMilliseconds(kForceRefreshInterval);
+                m_nextId = artifactData.NextArtifactId;
+                m_nextRevisionId = artifactData.NextArtifactRevisionId;
+            }
 
             Dictionary<int, Artifact> result = new();
-            var artifacts = GetArtifacts(scope);
 
             var updatedArtifacts = artifactData.UpdatedArtifacts;
             var deletedArtifacts = artifactData.DeletedArtifactIds;
@@ -37,28 +42,31 @@ namespace Raid.Service
             foreach (var artifactEntry in artifacts)
             {
                 if (artifactEntry == null) continue;
-                if (deletedArtifacts.Contains(artifactEntry._id)) continue;
+                if (deletedArtifacts.Contains(artifactEntry.Id)) continue;
 
-                if (!updatedArtifacts.TryGetValue(artifactEntry._id, out var artifact))
+                if (updatedArtifacts.TryGetValue(artifactEntry.Id, out var artifact))
                 {
-                    artifact = artifactEntry;
+                    result.Add(artifactEntry.Id, artifact.ToModel());
+                }
+                else
+                {
+                    result.Add(artifactEntry.Id, artifactEntry);
                 }
 
-                result.Add(artifact._id, artifact.ToModel());
             }
             return result;
         }
 
-        private static IReadOnlyList<SharedModel.Meta.Artifacts.Artifact> GetArtifacts(ModelScope scope)
+        private static IReadOnlyList<Artifact> GetArtifacts(ModelScope scope)
         {
             Client.Model.Guard.UserWrapper userWrapper = scope.AppModel._userWrapper;
             var artifactStorageResolver = SharedModel.Meta.Artifacts.ArtifactStorage.ArtifactStorageResolver.GetInstance(scope.Context);
             if (userWrapper.Artifacts.ArtifactData.StorageMigrationState == SharedModel.Meta.Artifacts.ArtifactStorage.ArtifactStorageMigrationState.Migrated)
             {
                 var storage = artifactStorageResolver._implementation as Client.Model.Gameplay.Artifacts.ExternalArtifactsStorage;
-                return storage._state._artifacts.Values.ToList();
+                return storage._state._artifacts.Values.Select(ModelExtensions.ToModel).ToList();
             }
-            return userWrapper.Artifacts.ArtifactData.Artifacts;
+            return userWrapper.Artifacts.ArtifactData.Artifacts.Select(ModelExtensions.ToModel).ToList();
         }
     }
 }

@@ -32,7 +32,7 @@ namespace RaidExtractor.Core
 
             return new AccountDump()
             {
-                LastUpdated = accountFacet.LastUpdated,
+                LastUpdated = account.LastUpdated.ToString("o"),
                 ArenaLeague = arena.LeagueId.ToString(),
                 GreatHall = arena.GreatHallBonuses.ToDictionary(
                     bonus => bonus.Affinity,
