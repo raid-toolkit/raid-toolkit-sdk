@@ -62,7 +62,7 @@ namespace Raid.Service.UI
                 }
                 AppConfiguration.InstallationPath = installDir;
                 AppConfiguration.RunOnStartup = runOnStartCheckBox.Checked;
-                AppConfiguration.AutomaticallyCheckForUpdates = runOnStartCheckBox.Checked;
+                AppConfiguration.AutomaticallyCheckForUpdates = autoUpdateCheckBox.Checked;
                 AppConfiguration.UpdateStartMenuShortcut(createShortcutCheckBox.Checked);
                 AppConfiguration.RegisterProtocol(true);
                 AppConfiguration.IsInstalled = true;
