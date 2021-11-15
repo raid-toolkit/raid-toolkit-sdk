@@ -103,7 +103,11 @@ namespace Raid.Service
         public static void RegisterProtocol(bool registerProtocolHandler)
         {
             RegistryKey classesKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Classes", true);
-            classesKey.DeleteSubKeyTree(RegistrySettings.Protocol, false);
+            try
+            {
+                classesKey.DeleteSubKeyTree(RegistrySettings.Protocol, false);
+            }
+            catch (Exception) { }
             if (registerProtocolHandler)
             {
                 RegistryKey classKey = classesKey.CreateSubKey(RegistrySettings.Protocol);
