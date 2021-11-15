@@ -31,7 +31,7 @@ namespace Raid.Service
 
     static class RunAction
     {
-        public static Task<int> Execute(RunOptions options)
+        public static int Execute(RunOptions options)
         {
             if (!options.Standalone)
             {
@@ -43,7 +43,7 @@ namespace Raid.Service
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
                     Application.Run(new InstallWindow());
-                    return Task.FromResult(0);
+                    return 0;
                 }
             }
 
@@ -58,7 +58,7 @@ namespace Raid.Service
                 bool isAnotherInstanceOpen = !mutex.WaitOne(options.Wait.HasValue ? TimeSpan.FromMilliseconds(options.Wait.Value) : TimeSpan.Zero);
                 if (isAnotherInstanceOpen && !options.Standalone)
                 {
-                    return Task.FromResult(1);
+                    return 1;
                 }
 
                 try
@@ -71,7 +71,7 @@ namespace Raid.Service
                 }
             }
             Application.ExitThread();
-            return Task.FromResult(0);
+            return 0;
         }
 
         private static Task Run(RunOptions options)

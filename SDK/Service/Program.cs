@@ -9,23 +9,24 @@ namespace Raid.Service
 {
     static class Program
     {
-        static Task<int> Main(string[] args)
+        [STAThread]
+        static int Main(string[] args)
         {
             try
             {
                 return Parser.Default.ParseArguments<OpenOptions, RunOptions>(args)
-                    .MapResult<OpenOptions, RunOptions, Task<int>>(OpenAction.Execute, RunAction.Execute, HandleErrors);
+                    .MapResult<OpenOptions, RunOptions, int>(OpenAction.Execute, RunAction.Execute, HandleErrors);
             }
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex.ToString());
-                return Task.FromResult(3);
+                return 3;
             }
         }
 
-        private static Task<int> HandleErrors(IEnumerable<Error> _)
+        private static int HandleErrors(IEnumerable<Error> _)
         {
-            return Task.FromResult(1);
+            return 1;
         }
     }
 }

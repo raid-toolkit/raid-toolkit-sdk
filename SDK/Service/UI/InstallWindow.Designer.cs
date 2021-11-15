@@ -42,6 +42,7 @@ namespace Raid.Service.UI
 			this.label1 = new System.Windows.Forms.Label();
 			this.selectInstallFolderButton = new System.Windows.Forms.Button();
 			this.installationDirectory = new System.Windows.Forms.TextBox();
+			this.installFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.tableLayoutPanel2.SuspendLayout();
@@ -253,5 +254,6 @@ namespace Raid.Service.UI
 		private System.Windows.Forms.Button selectInstallFolderButton;
 		private System.Windows.Forms.TextBox installationDirectory;
 		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.FolderBrowserDialog installFolderDialog;
 	}
 }
