@@ -25,6 +25,7 @@ namespace Raid.Client
 
         public IAccountApi AccountApi => new AccountApi(this);
         public IStaticDataApi StaticDataApi => new StaticDataApi(this);
+        private readonly Memory<byte> Buffer = new(new byte[1024 * 1024 * 16]);
 
         public async Task EnsureInstalled()
         {
@@ -95,16 +96,15 @@ namespace Raid.Client
 
         private async void Listen()
         {
-            Memory<byte> buffer = new(new byte[1024 * 1024 * 3]);
             while (Socket.State == WebSocketState.Open)
             {
-                var result = await Socket.ReceiveAsync(buffer, CancellationTokenSource.Token);
+                var result = await Socket.ReceiveAsync(Buffer, CancellationTokenSource.Token);
                 if (!result.EndOfMessage)
                 {
                     // TODO: throw away messages until next EndOfMessage is reached (inclusive)
                     continue;
                 }
-                var socketMessage = JsonConvert.DeserializeObject<SocketMessage>(Encoding.UTF8.GetString(buffer.Slice(0, result.Count).Span));
+                var socketMessage = JsonConvert.DeserializeObject<SocketMessage>(Encoding.UTF8.GetString(Buffer.Slice(0, result.Count).Span));
                 HandleMessage(socketMessage);
             }
         }
