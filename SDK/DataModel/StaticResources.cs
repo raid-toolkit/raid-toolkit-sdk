@@ -40,7 +40,14 @@ namespace Raid.DataModel
         {
             if (LocalizedStrings.TryGetValue(key.Key, out string value))
                 return value;
-            return key.EnValue ?? key.DefaultValue;
+            return key.LocalizedValue ?? key.DefaultValue;
+        }
+
+        public static string LocalizeByKey(string key)
+        {
+            if (LocalizedStrings.TryGetValue(key, out string value))
+                return value;
+            return null;
         }
 
         private static T Deserialize<T>(string resourceName)

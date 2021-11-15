@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Raid.DataModel
@@ -11,7 +10,7 @@ namespace Raid.DataModel
         [JsonProperty("defaultValue")]
         public string DefaultValue;
 
-        [JsonProperty("EnValue")]
-        public string EnValue;
+        [JsonProperty("localizedValue")]
+        public string LocalizedValue;
     }
 }

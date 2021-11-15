@@ -99,10 +99,12 @@ namespace Raid.DataModel
 
         public static LocalizedText ToModel(this SharedModel.Common.Localization.SharedLTextKey key)
         {
+            string localizedValue = StaticResources.LocalizeByKey(key.Key);
             return new()
             {
                 Key = key.Key,
                 DefaultValue = key.DefaultValue,
+                LocalizedValue = localizedValue
             };
         }
 
