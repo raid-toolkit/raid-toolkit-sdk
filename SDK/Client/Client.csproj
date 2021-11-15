@@ -1,12 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\Common\Common.csproj">
-      <PrivateAssets>all</PrivateAssets>
-    </ProjectReference>
-    <ProjectReference Include="..\DataModel\DataModel.csproj">
-      <PrivateAssets>all</PrivateAssets>
-    </ProjectReference>
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\DataModel\DataModel.csproj" />
   </ItemGroup>
 
   <ItemGroup>

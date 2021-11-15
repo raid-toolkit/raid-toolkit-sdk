@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Raid.Service.Messages;
 
-namespace Raid.Extractor
+namespace Raid.Client
 {
     class PromiseStore
     {

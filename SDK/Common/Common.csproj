@@ -6,5 +6,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <OutputType>Library</OutputType>
+    <AssemblyName>Raid.Common</AssemblyName>
+    <RootNamespace>Raid.Common</RootNamespace>
   </PropertyGroup>
 </Project>

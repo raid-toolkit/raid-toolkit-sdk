@@ -47,10 +47,13 @@ jobs:
 
       # NuGet Pack
       - name: Pack Client NuGet package
-        run: dotnet pack $env:Client_csproj --output publish\nuget -p:Configuration=Release
+        run: dotnet pack $env:Client_csproj --output publish\nuget -p:Configuration=Release /p:DeployOnBuild=true
 
       # NuGet Push
       - name: Push client package to GitHub registry
-        run: dotnet nuget push publish/nuget/Raid.Client.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+        run: |
+          dotnet nuget push publish/nuget/Raid.Common.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.DataModel.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Client.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
         env:
           PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}

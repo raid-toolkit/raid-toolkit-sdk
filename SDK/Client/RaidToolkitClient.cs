@@ -2,7 +2,6 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Raid.Common;
 using Raid.DataModel;
-using Raid.Extractor;
 using Raid.Service.Messages;
 using System;
 using System.Net.WebSockets;
