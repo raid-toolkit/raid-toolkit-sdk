@@ -17,18 +17,14 @@ namespace Raid.Service.UI
         private void InstallWindow_Load(object sender, EventArgs e)
         {
             installationDirectory.Text = AppConfiguration.InstallationPath;
+            installFolderDialog.SelectedPath = installationDirectory.Text;
         }
 
         private void selectInstallFolderButton_Click(object sender, EventArgs e)
         {
-            using FolderBrowserDialog picker = new()
+            if (installFolderDialog.ShowDialog() == DialogResult.OK)
             {
-                SelectedPath = installationDirectory.Text
-            };
-
-            if (picker.ShowDialog() == DialogResult.OK)
-            {
-                installationDirectory.Text = picker.SelectedPath;
+                installationDirectory.Text = installFolderDialog.SelectedPath;
             }
         }
 

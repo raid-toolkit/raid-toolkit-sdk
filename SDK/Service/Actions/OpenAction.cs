@@ -37,7 +37,7 @@ namespace Raid.Service
             }
         }
 
-        public static async Task<int> Execute(OpenOptions options)
+        public static int Execute(OpenOptions options)
         {
             if (!IsRunning)
             {
@@ -51,7 +51,7 @@ namespace Raid.Service
 
             int portNumber = AppConfiguration.Configuration.GetValue<int>("serverOptions:listeners:0:port");
             ClientWebSocket socket = new();
-            await socket.ConnectAsync(new Uri($"ws://localhost:{portNumber}"), CancellationToken.None);
+            socket.ConnectAsync(new Uri($"ws://localhost:{portNumber}"), CancellationToken.None).Wait();
 
             SocketMessage msg = new()
             {
@@ -60,8 +60,8 @@ namespace Raid.Service
                 Message = JObject.FromObject(options)
             };
 
-            await socket.SendAsync(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(msg)).AsMemory(), WebSocketMessageType.Text, true, CancellationToken.None).AsTask();
-            await socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Done", CancellationToken.None);
+            socket.SendAsync(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(msg)).AsMemory(), WebSocketMessageType.Text, true, CancellationToken.None).AsTask().Wait();
+            socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Done", CancellationToken.None).Wait();
             return 0;
         }
     }
