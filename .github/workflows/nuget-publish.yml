@@ -47,7 +47,7 @@ jobs:
 
       # NuGet Pack
       - name: Pack Client NuGet package
-        run: dotnet pack $env:Client_csproj --output publish\nuget -p:Configuration=Release /p:DeployOnBuild=true
+        run: dotnet pack --output publish\nuget -p:Configuration=Release /p:DeployOnBuild=true
 
       # NuGet Push
       - name: Push client package to GitHub registry
