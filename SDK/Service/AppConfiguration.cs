@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Windows.Forms;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Win32;
 using Raid.Common;
@@ -102,20 +103,21 @@ namespace Raid.Service
 
         public static void RegisterProtocol(bool registerProtocolHandler)
         {
-            RegistryKey classesKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Classes", true);
             try
             {
+                RegistryKey classesKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Classes", true);
                 classesKey.DeleteSubKeyTree(RegistrySettings.Protocol, false);
+                if (registerProtocolHandler)
+                {
+                    RegistryKey classKey = classesKey.CreateSubKey(RegistrySettings.Protocol);
+                    classKey.SetValue(null, "URL:Raid Toolkit");
+                    classKey.SetValue("URL Protocol", "");
+                    var cmdKey = classKey.CreateSubKey("shell").CreateSubKey("open").CreateSubKey("command");
+                    cmdKey.SetValue(null, $"\"{InstalledExecutablePath}\" open \"%1\"");
+                }
             }
-            catch (Exception) { }
-            if (registerProtocolHandler)
-            {
-                RegistryKey classKey = classesKey.CreateSubKey(RegistrySettings.Protocol);
-                classKey.SetValue(null, "URL:Raid Toolkit");
-                classKey.SetValue("URL Protocol", "");
-                var cmdKey = classKey.CreateSubKey("shell").CreateSubKey("open").CreateSubKey("command");
-                cmdKey.SetValue(null, $"\"{InstalledExecutablePath}\" open \"%1\"");
-            }
+            catch (Exception)
+            { }
         }
 
         static AppConfiguration()
