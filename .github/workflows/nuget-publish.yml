@@ -18,6 +18,8 @@ jobs:
     env:
       IS_CI: true
       Solution_Name: SDK.sln
+      Common_csproj: SDK\Common\Common.csproj
+      DataModel_csproj: SDK\DataModel\DataModel.csproj
       Client_csproj: SDK\Client\Client.csproj
 
     steps:
@@ -47,7 +49,10 @@ jobs:
 
       # NuGet Pack
       - name: Pack Client NuGet package
-        run: dotnet pack --output publish\nuget -p:Configuration=Release /p:DeployOnBuild=true
+        run: |
+          dotnet pack $env:Common_csproj --output publish\nuget -p:Configuration=Release /p:DeployOnBuild=true
+          dotnet pack $env:DataModel_csproj --output publish\nuget -p:Configuration=Release /p:DeployOnBuild=true
+          dotnet pack $env:Client_csproj --output publish\nuget -p:Configuration=Release /p:DeployOnBuild=true
 
       # NuGet Push
       - name: Push client package to GitHub registry
