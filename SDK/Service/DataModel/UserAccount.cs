@@ -11,6 +11,7 @@ namespace Raid.Service
         private string UserId;
         private UserData UserData;
         private Dictionary<string, AccountDataFacetInfo> FacetInfoIndex = new();
+        private DateTime LastUpdatedAtRuntime = DateTime.UtcNow;
 
         public UserAccount(string userId, UserData userData)
         {
@@ -20,6 +21,11 @@ namespace Raid.Service
             // preload index
             var accountDataIndex = UserData.ReadAccountData<AccountDataIndex>(userId, "_index");
             FacetInfoIndex = accountDataIndex?.Facets != null ? new(accountDataIndex.Facets) : new();
+
+            if (FacetInfoIndex.Count == 0)
+                LastUpdatedAtRuntime = DateTime.UtcNow;
+            else
+                LastUpdatedAtRuntime = FacetInfoIndex.Values.Max(value => value.LastUpdated);
         }
 
         public T Get<T>(string key) where T : class
@@ -34,6 +40,7 @@ namespace Raid.Service
 
         public void Set<T>(string key, T value) where T : class
         {
+            LastUpdatedAtRuntime = DateTime.UtcNow;
             Data[key] = value;
             UserData.WriteAccountData(UserId, key, value);
 
@@ -42,12 +49,6 @@ namespace Raid.Service
             UserData.WriteAccountData(UserId, "_index", new AccountDataIndex() { Facets = FacetInfoIndex });
         }
 
-        public DateTime LastUpdated
-        {
-            get
-            {
-                return FacetInfoIndex.Values.Max(value => value.LastUpdated);
-            }
-        }
+        public DateTime LastUpdated => LastUpdatedAtRuntime;
     }
 }
