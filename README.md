@@ -1,3 +1,11 @@
+[![Nuget](https://img.shields.io/nuget/v/raid.client)](https://www.nuget.org/packages/Raid.Client)
+[![npm (scoped)](https://img.shields.io/npm/v/@raid-toolkit/webclient)](https://www.npmjs.com/package/@raid-toolkit/webclient)
+[![PyPI](https://img.shields.io/pypi/v/raidtoolkit)](https://pypi.org/project/raidtoolkit)
+[![GitHub release (latest by date)](https://img.shields.io/github/v/release/raid-toolkit/raid-toolkit-sdk)](https://github.com/raid-toolkit/raid-toolkit-sdk/releases/latest)
+![GitHub](https://img.shields.io/github/license/raid-toolkit/raid-toolkit-sdk)
+[![GitHub issues](https://img.shields.io/github/issues/raid-toolkit/raid-toolkit-sdk)](https://github.com/raid-toolkit/raid-toolkit-sdk/issues)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/raid-toolkit/raid-toolkit-sdk/.NET%20Core%20Desktop)
+
 # Raid Toolkit SDK
 
 The Raid Toolkit ("RTK") SDK is a set of tools and libraries that allow developers to write tools and scripts for **Raid: Shadow Legends** without needing to worry about game updates, memory addressing, or any of that (honestly pretty fun 😏) stuff.
