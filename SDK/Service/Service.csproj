@@ -1,11 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\IL2CppToolkit\Common\Common.csproj" />
-    <ProjectReference Include="..\..\IL2CppToolkit\Metadata\Metadata.csproj" />
-    <ProjectReference Include="..\..\IL2CppToolkit\ReverseCompiler\ReverseCompiler.csproj" />
-    <ProjectReference Include="..\..\IL2CppToolkit\Runtime\Runtime.csproj" />
-    <ProjectReference Include="..\..\IL2CppToolkit\ILPack\src\Lokad.ILPack.csproj" />
+    <PackageReference Include="il2cpptoolkit.common" Version="1.0.7-g88627b8737" />
+    <PackageReference Include="il2cpptoolkit.metadata" Version="1.0.7-g88627b8737" />
+    <PackageReference Include="il2cpptoolkit.reversecompiler" Version="1.0.7-g88627b8737" />
+    <PackageReference Include="il2cpptoolkit.runtime" Version="1.0.7-g88627b8737" />
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Model.PreBuild\Model.PreBuild.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
