@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Raid.DataModel;
 using SharedModel.Meta.Artifacts;
-using SharedModel.Meta.Masteries;
 
 namespace Raid.Service
 {
@@ -33,7 +31,7 @@ namespace Raid.Service
                 Dictionary<ArtifactKindId, int> equippedArtifacts = null;
                 if (artifactsByHeroId.TryGetValue(id, out HeroArtifactData artifactData))
                 {
-                    equippedArtifacts = artifactData.ArtifactIdByKind.UnderlyingDictionary;
+                    equippedArtifacts = new(artifactData.ArtifactIdByKind.UnderlyingDictionary.Where(kvp => kvp.Value != 0));
                 }
 
                 IReadOnlyDictionary<int, int> skillLevels = hero.Skills.ToDictionary(skill => skill.TypeId, skill => skill.Level);
