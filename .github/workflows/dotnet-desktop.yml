@@ -94,12 +94,6 @@ jobs:
           name: RaidToolkit
           path: publish/RTK
 
-      - name: Upload Extractor artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: RaidExtractor
-          path: publish/Extractor
-
       # Create releases
       - name: Create RaidToolkit Release
         id: rtk_release
