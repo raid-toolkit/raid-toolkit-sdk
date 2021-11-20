@@ -1,14 +1,14 @@
-﻿using System;
+using System;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 
 namespace Raid.Service
 {
-	internal static class Shortcut
-	{
+    internal static class Shortcut
+    {
         internal static void Create(string shortcutPath, string targetPath, string description)
-		{
+        {
             IShellLink link = (IShellLink)new ShellLink();
 
             link.SetDescription(description);

@@ -5,13 +5,13 @@ namespace Raid.DataModel
     public class AreaData : NamedValue
     {
         [JsonProperty("areaId")]
-        public string AreaId;
+        public int AreaId;
     }
 
     public class RegionData : AreaData
     {
         [JsonProperty("regionId")]
-        public string RegionId;
+        public int RegionId;
     }
 
     public class StageData : RegionData

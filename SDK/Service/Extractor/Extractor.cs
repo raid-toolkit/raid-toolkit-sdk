@@ -1,24 +1,30 @@
 using System;
-using System.Linq;
-using Raid.Service;
-using Raid.DataModel;
 using System.Collections.Generic;
+using System.Linq;
+using Raid.DataModel;
+using Raid.Service;
 
 namespace RaidExtractor.Core
 {
     public class Extractor
     {
         private readonly StaticDataCache StaticDataCache;
-        public Extractor(StaticDataCache staticData) => StaticDataCache = staticData;
-
-        private ArtifactBonus FromStatBonus(ArtifactStatBonus bonus) => new ArtifactBonus()
+        public Extractor(StaticDataCache staticData)
         {
-            Enhancement = (float)bonus.GlyphPower,
-            IsAbsolute = bonus.Absolute,
-            Kind = bonus.KindId.ToString(),
-            Level = bonus.Level,
-            Value = bonus.Value
-        };
+            StaticDataCache = staticData;
+        }
+
+        private ArtifactBonus FromStatBonus(ArtifactStatBonus bonus)
+        {
+            return new()
+            {
+                Enhancement = (float)bonus.GlyphPower,
+                IsAbsolute = bonus.Absolute,
+                Kind = bonus.KindId.ToString(),
+                Level = bonus.Level,
+                Value = bonus.Value
+            };
+        }
 
         public AccountDump DumpAccount(UserAccount account)
         {
@@ -57,11 +63,12 @@ namespace RaidExtractor.Core
                     PrimaryBonus = FromStatBonus(artifact.PrimaryBonus),
                     SecondaryBonuses = artifact.SecondaryBonuses?.Select(FromStatBonus).ToArray(),
                 }).ToArray(),
-                Heroes = heroes.Values.Where(hero => !hero.Deleted).Select(hero =>
+                StagePresets = heroes.BattlePresets,
+                Heroes = heroes.Heroes.Values.Where(hero => !hero.Deleted).Select(hero =>
                 {
                     var heroType = staticData.HeroData.HeroTypes[hero.TypeId];
                     var multiplier = StaticResources.Multipliers.First(m => m.stars == (int)Enum.Parse<SharedModel.Meta.Heroes.HeroGrade>(hero.Rank) && m.level == hero.Level);
-                    Hero newHero = new Hero()
+                    Hero newHero = new()
                     {
                         // instance fields
                         Id = hero.Id,
@@ -98,10 +105,10 @@ namespace RaidExtractor.Core
                         CriticalHeal = heroType.UnscaledStats.CriticalHeal,
                     };
 
-                    newHero.TotalMasteryScrolls = (newHero.TotalMasteryScrolls.Concat(newHero.AssignedMasteryScrolls)
+                    newHero.TotalMasteryScrolls = newHero.TotalMasteryScrolls.Concat(newHero.AssignedMasteryScrolls)
                         .Concat(newHero.UnassignedMasteryScrolls)
                         .GroupBy(x => x.Key)
-                        .ToDictionary(x => x.Key, x => x.Sum(y => y.Value)));
+                        .ToDictionary(x => x.Key, x => x.Sum(y => y.Value));
 
                     return newHero;
                 }).ToArray()

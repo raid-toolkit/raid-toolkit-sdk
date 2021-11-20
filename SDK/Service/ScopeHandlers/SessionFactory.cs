@@ -20,7 +20,7 @@ namespace Raid.Service
 
         public IAppSession Create()
         {
-            WebSocketSession session = new WebSocketSession();
+            WebSocketSession session = new();
             session.Connected += OnConnected;
             session.Closed += OnClosed;
             return session;

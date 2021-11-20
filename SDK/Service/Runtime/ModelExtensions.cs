@@ -1,8 +1,7 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
+using System.Linq;
 using SharedModel.Meta.Artifacts;
-using Raid.Service;
 
 namespace Raid.DataModel
 {
@@ -336,7 +335,7 @@ namespace Raid.DataModel
             return new()
             {
                 Name = area.Name.ToModel(),
-                AreaId = area.Id.ToString()
+                AreaId = (int)area.Id
             };
         }
 
@@ -345,8 +344,8 @@ namespace Raid.DataModel
             return new()
             {
                 Name = region.Name.ToModel(),
-                RegionId = region.Id.ToString(),
-                AreaId = areaTypeId.ToString()
+                RegionId = (int)region.Id,
+                AreaId = (int)areaTypeId
             };
         }
 
@@ -355,8 +354,8 @@ namespace Raid.DataModel
             return new()
             {
                 Name = stage.Name.ToModel(),
-                AreaId = areaTypeId.ToString(),
-                RegionId = regionTypeId.ToString(),
+                AreaId = (int)areaTypeId,
+                RegionId = (int)regionTypeId,
                 Difficulty = stage._difficulty.ToString(),
                 StageId = stage.Id,
             };

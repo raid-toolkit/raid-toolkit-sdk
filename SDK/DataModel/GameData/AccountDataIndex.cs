@@ -9,6 +9,9 @@ namespace Raid.DataModel
     {
         [JsonProperty("lastUpdated")]
         public DateTime LastUpdated;
+
+        [JsonProperty("version")]
+        public string Version;
     }
     public class AccountDataIndex
     {
@@ -20,6 +23,6 @@ namespace Raid.DataModel
         }
 
         [JsonProperty("facets")]
-        public IReadOnlyDictionary<string, AccountDataFacetInfo> Facets;
+        public IDictionary<string, AccountDataFacetInfo> Facets = new Dictionary<string, AccountDataFacetInfo>();
     }
 }

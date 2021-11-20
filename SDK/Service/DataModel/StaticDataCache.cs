@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Il2CppToolkit.Runtime;
 
 namespace Raid.Service
 {
@@ -29,9 +28,8 @@ namespace Raid.Service
 
         public DateTime LastUpdated { get; private set; }
 
-        public void Update(Il2CsRuntimeContext runtime)
+        public void Update(ModelScope scope)
         {
-            ModelScope scope = new(runtime);
             foreach ((IStaticFacet facet, bool successfulRead) in FacetState)
             {
                 if (successfulRead)
@@ -60,11 +58,16 @@ namespace Raid.Service
                 LastUpdated = DateTime.UtcNow;
         }
 
+        public T Read<T>(string key) where T : class
+        {
+            return UserData.ReadStaticData<T>(key);
+        }
+
         public T Get<T>(string key) where T : class
         {
             if (!Data.TryGetValue(key, out object value))
             {
-                value = UserData.ReadStaticData<T>(key);
+                value = Read<T>(key);
                 Data.Add(key, value);
             }
             return (T)value;

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using CommandLine;
 
 [assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]

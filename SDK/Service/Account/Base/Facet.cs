@@ -1,3 +1,5 @@
+using System;
+
 namespace Raid.Service
 {
     public abstract class FacetBase<ValueType, FacetType, DataSourceType> : IFacet
@@ -6,6 +8,23 @@ namespace Raid.Service
         where DataSourceType : IModelDataSource
     {
         protected abstract ValueType Merge(ModelScope scope, ValueType previous = null);
+
+        public virtual bool TryUpgrade(IModelDataSource dataSource, Version from, out ValueType upgradedData)
+        {
+            upgradedData = null;
+            return false;
+        }
+
+        bool IFacet.TryUpgrade(IModelDataSource dataSource, Version from, out object upgradedData)
+        {
+            if (TryUpgrade(dataSource, from, out ValueType newValue))
+            {
+                upgradedData = newValue;
+                return true;
+            }
+            upgradedData = null;
+            return false;
+        }
 
         object IFacet.Merge(ModelScope scope, object previous)
         {

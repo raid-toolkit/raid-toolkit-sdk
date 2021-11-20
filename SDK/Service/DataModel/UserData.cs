@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -13,12 +14,13 @@ namespace Raid.Service
         private readonly string m_accountsPath;
         private readonly string m_staticDataPath;
         private readonly string m_settingsFilePath;
-        private readonly Dictionary<string, UserAccount> m_userAccounts;
-
+        private Dictionary<string, UserAccount> m_userAccounts;
+        private readonly IServiceProvider ServiceProvider;
         public IEnumerable<UserAccount> UserAccounts => m_userAccounts.Values;
 
-        public UserData(IOptions<AppSettings> settings)
+        public UserData(IOptions<AppSettings> settings, IServiceProvider serviceProvider)
         {
+            ServiceProvider = serviceProvider;
             m_storagePath = settings.Value.StorageLocation ?? "data";
             if (!Path.IsPathFullyQualified(m_storagePath))
             {
@@ -27,20 +29,27 @@ namespace Raid.Service
 
             // create basic directories
             m_accountsPath = Path.Join(m_storagePath, "accounts");
-            Directory.CreateDirectory(m_accountsPath);
+            _ = Directory.CreateDirectory(m_accountsPath);
             m_staticDataPath = Path.Join(m_storagePath, "staticData");
-            Directory.CreateDirectory(m_staticDataPath);
+            _ = Directory.CreateDirectory(m_staticDataPath);
             m_settingsFilePath = Path.Join(m_storagePath, ".settings");
+        }
 
+        public void Load()
+        {
             // enumerate accounts
-            m_userAccounts = Directory.GetDirectories(m_accountsPath).ToDictionary(id => Path.GetFileName(id), id => new UserAccount(Path.GetFileName(id), this));
+            m_userAccounts = Directory.GetDirectories(m_accountsPath).ToDictionary(id => Path.GetFileName(id), id => new UserAccount(Path.GetFileName(id), this, ServiceProvider.CreateScope()));
+            foreach (UserAccount account in m_userAccounts.Values)
+            {
+                account.Load();
+            }
         }
 
         public UserAccount GetAccount(string id)
         {
             if (!m_userAccounts.TryGetValue(id, out UserAccount account))
             {
-                account = new UserAccount(id, this);
+                account = new UserAccount(id, this, ServiceProvider.CreateScope());
                 m_userAccounts.Add(id, account);
             }
             return account;
@@ -64,7 +73,7 @@ namespace Raid.Service
 
         public void WriteUserSettings(UserSettings settings)
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(m_settingsFilePath));
+            _ = Directory.CreateDirectory(Path.GetDirectoryName(m_settingsFilePath));
             File.WriteAllText(m_settingsFilePath, JsonConvert.SerializeObject(settings));
         }
 
@@ -88,7 +97,7 @@ namespace Raid.Service
         public void WriteStaticData<T>(string key, T value) where T : class
         {
             string filePath = Path.Join(m_staticDataPath, key);
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            _ = Directory.CreateDirectory(Path.GetDirectoryName(filePath));
             File.WriteAllText(filePath, JsonConvert.SerializeObject(value));
         }
 
@@ -112,7 +121,7 @@ namespace Raid.Service
         public void WriteAccountData<T>(string userId, string key, T value) where T : class
         {
             string filePath = Path.Join(m_accountsPath, userId, key);
-            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            _ = Directory.CreateDirectory(Path.GetDirectoryName(filePath));
             File.WriteAllText(filePath, JsonConvert.SerializeObject(value));
         }
     }
