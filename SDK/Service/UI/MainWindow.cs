@@ -1,8 +1,7 @@
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Microsoft.Extensions.Logging;
 
 namespace Raid.Service.UI
 {
@@ -10,21 +9,22 @@ namespace Raid.Service.UI
     {
         private GitHub.Schema.Release LatestRelease;
         private readonly UpdateService UpdateService;
-        private readonly IHostApplicationLifetime Lifetime;
         private readonly MainService MainService;
         private readonly UserData UserData;
         private readonly ILogger<MainWindow> Logger;
         private readonly RunOptions RunOptions;
 
-        public MainWindow(ILogger<MainWindow> logger, UpdateService updateService, IHostApplicationLifetime appLifetime, MainService mainService, UserData userData, RunOptions runOptions)
+        public MainWindow(ILogger<MainWindow> logger, UpdateService updateService, MainService mainService, UserData userData, RunOptions runOptions)
         {
             InitializeComponent();
             RunOptions = runOptions;
-            Lifetime = appLifetime;
             Logger = logger;
             UpdateService = updateService;
             UserData = userData;
             MainService = mainService;
+
+            // must trigger load here
+            UserData.Load();
             UpdateService.UpdateAvailable += OnUpdateAvailable;
             appTrayIcon.Text = $"Raid Toolkit v{ThisAssembly.AssemblyFileVersion}";
             appTrayIcon.Icon = Icon.ExtractAssociatedIcon(AppConfiguration.ExecutablePath);
@@ -55,7 +55,7 @@ namespace Raid.Service.UI
                 }
             }
 
-            settings.AllowedOrigins.Add(origin.ToLowerInvariant());
+            _ = settings.AllowedOrigins.Add(origin.ToLowerInvariant());
             UserData.WriteUserSettings(settings);
             Logger.LogInformation(ServiceEvent.UserPermissionAccept.EventId(), $"Permission accepted for {origin}");
             return true;

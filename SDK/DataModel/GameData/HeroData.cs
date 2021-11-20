@@ -7,5 +7,8 @@ namespace Raid.DataModel
     {
         [JsonProperty("heroes")]
         public IReadOnlyDictionary<int, Hero> Heroes;
+
+        [JsonProperty("stagePresets")]
+        public IReadOnlyDictionary<int, int[]> BattlePresets;
     }
 }

@@ -35,12 +35,12 @@ namespace Raid.Service
 
         public void Update()
         {
-            StaticDataCache.Update(Runtime);
+            ModelScope scope = new(Runtime);
+            StaticDataCache.Update(scope);
             if (!StaticDataCache.IsReady)
-            {
                 return;
-            }
-            UserAccount.Update(new(Runtime));
+
+            UserAccount.Update(scope);
         }
 
         private string GetAccountId()

@@ -10,15 +10,13 @@ namespace Raid.Service
 {
     public class UserAccount : IModelDataSource
     {
-        private Dictionary<string, object> Data = new();
-        private string UserId;
-        private UserData UserData;
-        private Dictionary<string, AccountDataFacetInfo> FacetInfoIndex = new();
-        private DateTime LastUpdatedAtRuntime = DateTime.UtcNow;
-
+        private readonly Dictionary<string, object> Data = new();
+        private readonly string UserId;
+        private readonly UserData UserData;
         private readonly IReadOnlyList<IAccountFacet> Facets;
         private Dictionary<IAccountFacet, object> FacetToValueMap;
         private readonly ILogger<UserAccount> Logger;
+        private readonly AccountDataIndex Index;
 
         public UserAccount(string userId, UserData userData, IServiceScope serviceScope)
         {
@@ -26,39 +24,40 @@ namespace Raid.Service
             UserId = userId;
             Logger = serviceScope.ServiceProvider.GetService<ILogger<UserAccount>>();
             Facets = serviceScope.ServiceProvider.GetServices<IAccountFacet>().ToList();
-            // TODO: avoid coupling with `this`?
-            FacetToValueMap = Facets.ToDictionary(facet => facet, facet => facet.GetValue(this));
 
             // preload index
-            var accountDataIndex = UserData.ReadAccountData<AccountDataIndex>(userId, "_index");
-            FacetInfoIndex = accountDataIndex?.Facets != null ? new(accountDataIndex.Facets) : new();
-
-            if (FacetInfoIndex.Count == 0)
-                LastUpdatedAtRuntime = DateTime.UtcNow;
-            else
-                LastUpdatedAtRuntime = FacetInfoIndex.Values.Max(value => value.LastUpdated);
+            Index = UserData.ReadAccountData<AccountDataIndex>(userId, "_index") ?? new();
+            LastUpdated = Index.Facets.Count == 0 ? DateTime.UtcNow : Index.Facets.Values.Max(value => value.LastUpdated);
         }
 
-        public void Upgrade()
+        public void Load()
         {
-
+            Upgrade();
+            FacetToValueMap = Facets.ToDictionary(facet => facet, facet => facet.GetValue(this));
         }
 
-        public void Update(ModelScope scope)
+        private void Upgrade()
         {
-            foreach ((IAccountFacet facet, object currentValue) in FacetToValueMap)
+            Logger.LogInformation($"Checking and upgrading account [${UserId}]");
+            foreach (IAccountFacet facet in Facets)
             {
                 string facetName = FacetAttribute.GetName(facet.GetType());
+                Version facetVersion = FacetAttribute.GetVersion(facet.GetType());
                 try
                 {
                     using var loggerScope = Logger.BeginScope(facet);
 
-                    object newValue = facet.Merge(scope, currentValue);
-                    FacetToValueMap[facet] = newValue;
-                    if (newValue != currentValue && JsonConvert.SerializeObject(newValue) != JsonConvert.SerializeObject(currentValue))
+                    // get version
+                    Version dataVersion = new(1, 0);
+                    if (Index.Facets.TryGetValue(facetName, out AccountDataFacetInfo facetInfo))
                     {
-                        Logger.LogInformation(ServiceEvent.DataUpdated.EventId(), $"Facet '{facet}' updated");
-                        Set(facetName, newValue);
+                        if (!string.IsNullOrEmpty(facetInfo.Version))
+                            dataVersion = Version.Parse(facetInfo.Version);
+                    }
+
+                    if (dataVersion != facetVersion && facet.TryUpgrade(this, dataVersion, out object upgradedData))
+                    {
+                        Set(facetName, upgradedData, facetVersion);
                     }
                 }
                 catch (Exception ex)
@@ -68,27 +67,63 @@ namespace Raid.Service
             }
         }
 
+        public void Update(ModelScope scope)
+        {
+            foreach ((IAccountFacet facet, object currentValue) in FacetToValueMap)
+            {
+                string facetName = FacetAttribute.GetName(facet.GetType());
+                Version facetVersion = FacetAttribute.GetVersion(facet.GetType());
+                try
+                {
+                    using var loggerScope = Logger.BeginScope(facet);
+
+                    object newValue = facet.Merge(scope, currentValue);
+                    FacetToValueMap[facet] = newValue;
+                    if (newValue != currentValue && JsonConvert.SerializeObject(newValue) != JsonConvert.SerializeObject(currentValue))
+                    {
+                        Logger.LogInformation(ServiceEvent.DataUpdated.EventId(), $"Facet '{facet}' updated");
+                        Set(facetName, newValue, facetVersion);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account facet '{facetName}'");
+                }
+            }
+        }
+
+        public T Read<T>(string key) where T : class
+        {
+            return UserData.ReadAccountData<T>(UserId, key);
+        }
+
         public T Get<T>(string key) where T : class
         {
             if (!Data.TryGetValue(key, out object value))
             {
-                value = UserData.ReadAccountData<T>(UserId, key);
+                value = Read<T>(key);
                 Data.Add(key, value);
             }
             return (T)value;
         }
 
-        public void Set<T>(string key, T value) where T : class
+        public void Set<T>(string key, T value, Version version) where T : class
         {
-            LastUpdatedAtRuntime = DateTime.UtcNow;
+            LastUpdated = DateTime.UtcNow;
             Data[key] = value;
             UserData.WriteAccountData(UserId, key, value);
 
             // update index
-            FacetInfoIndex[key] = new AccountDataFacetInfo() { LastUpdated = DateTime.UtcNow };
-            UserData.WriteAccountData(UserId, "_index", new AccountDataIndex() { Facets = FacetInfoIndex });
+            Index.Facets[key].LastUpdated = DateTime.UtcNow;
+            Index.Facets[key].Version = version.ToString();
+            UserData.WriteAccountData(UserId, "_index", Index);
         }
 
-        public DateTime LastUpdated => LastUpdatedAtRuntime;
+        public bool TryRead<T>(string key, out T value) where T : class
+        {
+            throw new NotImplementedException();
+        }
+
+        public DateTime LastUpdated { get; private set; } = DateTime.UtcNow;
     }
 }

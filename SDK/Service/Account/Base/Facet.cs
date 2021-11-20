@@ -8,9 +8,22 @@ namespace Raid.Service
         where DataSourceType : IModelDataSource
     {
         protected abstract ValueType Merge(ModelScope scope, ValueType previous = null);
-        public object Upgrade(IModelDataSource dataSource, Version from)
+
+        public virtual bool TryUpgrade(IModelDataSource dataSource, Version from, out ValueType upgradedData)
         {
-            throw new NotSupportedException("Upgrade not supported");
+            upgradedData = null;
+            return false;
+        }
+
+        bool IFacet.TryUpgrade(IModelDataSource dataSource, Version from, out object upgradedData)
+        {
+            if (TryUpgrade(dataSource, from, out ValueType newValue))
+            {
+                upgradedData = newValue;
+                return true;
+            }
+            upgradedData = null;
+            return false;
         }
 
         object IFacet.Merge(ModelScope scope, object previous)

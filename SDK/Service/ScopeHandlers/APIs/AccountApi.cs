@@ -15,22 +15,34 @@ namespace Raid.Service
         private readonly UserData UserData;
         private readonly Extractor Extractor;
         public AccountApi(ILogger<ApiHandler> logger, UserData userData, StaticDataCache staticData, Extractor extractor)
-            : base(logger) => (UserData, StaticDataCache, Extractor) = (userData, staticData, extractor);
+            : base(logger)
+        {
+            (UserData, StaticDataCache, Extractor) = (userData, staticData, extractor);
+        }
 
         [PublicApi("updated")]
 #pragma warning disable 0067
         public event EventHandler<SerializableEventArgs> Updated;
 #pragma warning restore 0067
 
-        public Task<RaidExtractor.Core.AccountDump> GetAccountDump(string accountId) => Task.FromResult(Extractor.DumpAccount(UserData.GetAccount(accountId)));
-
-        public Task<Resources> GetAllResources(string accountId) => Task.FromResult(ResourcesFacet.ReadValue(UserData.GetAccount(accountId)));
-
-        public Task<Account[]> GetAccounts() => Task.FromResult(UserData.UserAccounts.Select(account =>
+        public Task<RaidExtractor.Core.AccountDump> GetAccountDump(string accountId)
         {
-            AccountBase result = AccountFacet.ReadValue(account);
-            return Account.FromBase(result, account.LastUpdated);
-        }).ToArray());
+            return Task.FromResult(Extractor.DumpAccount(UserData.GetAccount(accountId)));
+        }
+
+        public Task<Resources> GetAllResources(string accountId)
+        {
+            return Task.FromResult(ResourcesFacet.ReadValue(UserData.GetAccount(accountId)));
+        }
+
+        public Task<Account[]> GetAccounts()
+        {
+            return Task.FromResult(UserData.UserAccounts.Select(account =>
+{
+    AccountBase result = AccountFacet.ReadValue(account);
+    return Account.FromBase(result, account.LastUpdated);
+}).ToArray());
+        }
 
         public Task<Account> GetAccount(string accountId)
         {
@@ -39,29 +51,31 @@ namespace Raid.Service
             return Task.FromResult(Account.FromBase(account, userAccount.LastUpdated));
         }
 
-        public Task<Artifact[]> GetArtifacts(string accountId) => Task.FromResult(ArtifactsFacet.ReadValue(UserData.GetAccount(accountId)).Values.ToArray());
+        public Task<Artifact[]> GetArtifacts(string accountId)
+        {
+            return Task.FromResult(ArtifactsFacet.ReadValue(UserData.GetAccount(accountId)).Values.ToArray());
+        }
 
-        public Task<Artifact> GetArtifactById(string accountId, int artifactId) => Task.FromResult(ArtifactsFacet.ReadValue(UserData.GetAccount(accountId))[artifactId]);
+        public Task<Artifact> GetArtifactById(string accountId, int artifactId)
+        {
+            return Task.FromResult(ArtifactsFacet.ReadValue(UserData.GetAccount(accountId))[artifactId]);
+        }
 
         public Task<Hero[]> GetHeroes(string accountId, bool snapshot = false)
         {
-            var heroes = HeroesFacet.ReadValue(UserData.GetAccount(accountId)).Values;
-            if (!snapshot)
-                return Task.FromResult(heroes.ToArray());
-
-            return Task.FromResult<Hero[]>(heroes.Select(hero => GetSnapshot(accountId, hero)).ToArray());
+            var heroes = HeroesFacet.ReadValue(UserData.GetAccount(accountId)).Heroes.Values;
+            return !snapshot
+                ? Task.FromResult(heroes.ToArray())
+                : Task.FromResult<Hero[]>(heroes.Select(hero => GetSnapshot(accountId, hero)).ToArray());
         }
 
         public Task<Hero> GetHeroById(string accountId, int heroId, bool snapshot = false)
         {
-            var hero = HeroesFacet.ReadValue(UserData.GetAccount(accountId))[heroId];
-            if (!snapshot)
-                return Task.FromResult(hero);
-
-            return Task.FromResult<Hero>(GetSnapshot(accountId, hero));
+            var hero = HeroesFacet.ReadValue(UserData.GetAccount(accountId)).Heroes[heroId];
+            return !snapshot ? Task.FromResult(hero) : Task.FromResult<Hero>(GetSnapshot(accountId, hero));
         }
 
-        private SkillSnapshot GetSkillSnapshot(DataModel.SkillType skill, int level)
+        private static SkillSnapshot GetSkillSnapshot(DataModel.SkillType skill, int level)
         {
             SkillSnapshot snapshot = new(skill)
             {
