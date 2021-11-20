@@ -16,7 +16,7 @@ namespace Raid.Service
         }
         public static string Sha256(this string value)
         {
-            StringBuilder Sb = new StringBuilder();
+            StringBuilder Sb = new();
 
             using (SHA256 hash = SHA256.Create())
             {

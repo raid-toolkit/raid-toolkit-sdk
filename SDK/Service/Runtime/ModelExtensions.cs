@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using SharedModel.Meta.Artifacts;
-using Raid.Service;
 
 namespace Raid.DataModel
 {

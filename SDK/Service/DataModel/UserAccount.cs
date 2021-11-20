@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Raid.DataModel;
 
 namespace Raid.Service
@@ -13,10 +16,18 @@ namespace Raid.Service
         private Dictionary<string, AccountDataFacetInfo> FacetInfoIndex = new();
         private DateTime LastUpdatedAtRuntime = DateTime.UtcNow;
 
-        public UserAccount(string userId, UserData userData)
+        private readonly IReadOnlyList<IAccountFacet> Facets;
+        private Dictionary<IAccountFacet, object> FacetToValueMap;
+        private readonly ILogger<UserAccount> Logger;
+
+        public UserAccount(string userId, UserData userData, IServiceScope serviceScope)
         {
             UserData = userData;
             UserId = userId;
+            Logger = serviceScope.ServiceProvider.GetService<ILogger<UserAccount>>();
+            Facets = serviceScope.ServiceProvider.GetServices<IAccountFacet>().ToList();
+            // TODO: avoid coupling with `this`?
+            FacetToValueMap = Facets.ToDictionary(facet => facet, facet => facet.GetValue(this));
 
             // preload index
             var accountDataIndex = UserData.ReadAccountData<AccountDataIndex>(userId, "_index");
@@ -26,6 +37,35 @@ namespace Raid.Service
                 LastUpdatedAtRuntime = DateTime.UtcNow;
             else
                 LastUpdatedAtRuntime = FacetInfoIndex.Values.Max(value => value.LastUpdated);
+        }
+
+        public void Upgrade()
+        {
+
+        }
+
+        public void Update(ModelScope scope)
+        {
+            foreach ((IAccountFacet facet, object currentValue) in FacetToValueMap)
+            {
+                string facetName = FacetAttribute.GetName(facet.GetType());
+                try
+                {
+                    using var loggerScope = Logger.BeginScope(facet);
+
+                    object newValue = facet.Merge(scope, currentValue);
+                    FacetToValueMap[facet] = newValue;
+                    if (newValue != currentValue && JsonConvert.SerializeObject(newValue) != JsonConvert.SerializeObject(currentValue))
+                    {
+                        Logger.LogInformation(ServiceEvent.DataUpdated.EventId(), $"Facet '{facet}' updated");
+                        Set(facetName, newValue);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account facet '{facetName}'");
+                }
+            }
         }
 
         public T Get<T>(string key) where T : class

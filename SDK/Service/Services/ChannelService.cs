@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
@@ -75,7 +74,7 @@ namespace Raid.Service
     }
     public class ChannelService : BackgroundService
     {
-        private readonly ClientWebSocket Socket = new ClientWebSocket();
+        private readonly ClientWebSocket Socket = new();
         private readonly Uri HostUri;
         private Task ConnectTask;
         private readonly UserData UserData;
@@ -116,7 +115,7 @@ namespace Raid.Service
         private async Task Run()
         {
             await ConnectTask;
-            Memory<byte> buffer = new Memory<byte>(new byte[1024 * 1024 * 3]);
+            Memory<byte> buffer = new(new byte[1024 * 1024 * 3]);
             while (Socket.State == WebSocketState.Open)
             {
                 try

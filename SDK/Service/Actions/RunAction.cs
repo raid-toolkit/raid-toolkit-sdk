@@ -6,9 +6,6 @@ using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Raid.Model;
-using System.IO;
-using System.Linq;
-using System.Diagnostics;
 using Raid.Service.UI;
 
 namespace Raid.Service

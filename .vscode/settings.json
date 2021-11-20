@@ -12,5 +12,16 @@
     },
     "files.associations": {
         "appsettings*.json": "jsonc"
-    }
+    },
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": true,
+        "source.fixAll": true
+    },
+    "omnisharp.enableEditorConfigSupport": true,
+    "omnisharp.organizeImportsOnFormat": true,
+    "omnisharp.enableRoslynAnalyzers": true,
+    // "omnisharp.useEditorFormattingSettings": true,
+    "[csharp]": {
+        "editor.defaultFormatter": "ms-dotnettools.csharp",
+    },
 }

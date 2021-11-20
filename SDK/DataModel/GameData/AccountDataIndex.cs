@@ -9,6 +9,9 @@ namespace Raid.DataModel
     {
         [JsonProperty("lastUpdated")]
         public DateTime LastUpdated;
+
+        [JsonProperty("version")]
+        public int[] Version;
     }
     public class AccountDataIndex
     {

@@ -11,7 +11,7 @@ namespace RaidExtractor.Core
         private readonly StaticDataCache StaticDataCache;
         public Extractor(StaticDataCache staticData) => StaticDataCache = staticData;
 
-        private ArtifactBonus FromStatBonus(ArtifactStatBonus bonus) => new ArtifactBonus()
+        private ArtifactBonus FromStatBonus(ArtifactStatBonus bonus) => new()
         {
             Enhancement = (float)bonus.GlyphPower,
             IsAbsolute = bonus.Absolute,
@@ -61,7 +61,7 @@ namespace RaidExtractor.Core
                 {
                     var heroType = staticData.HeroData.HeroTypes[hero.TypeId];
                     var multiplier = StaticResources.Multipliers.First(m => m.stars == (int)Enum.Parse<SharedModel.Meta.Heroes.HeroGrade>(hero.Rank) && m.level == hero.Level);
-                    Hero newHero = new Hero()
+                    Hero newHero = new()
                     {
                         // instance fields
                         Id = hero.Id,

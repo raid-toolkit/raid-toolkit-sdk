@@ -1,3 +1,5 @@
+using System;
+
 namespace Raid.Service
 {
     public abstract class FacetBase<ValueType, FacetType, DataSourceType> : IFacet
@@ -6,6 +8,10 @@ namespace Raid.Service
         where DataSourceType : IModelDataSource
     {
         protected abstract ValueType Merge(ModelScope scope, ValueType previous = null);
+        public object Upgrade(IModelDataSource dataSource, Version from)
+        {
+            throw new NotSupportedException("Upgrade not supported");
+        }
 
         object IFacet.Merge(ModelScope scope, object previous)
         {

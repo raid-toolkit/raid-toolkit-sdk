@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
@@ -14,11 +15,12 @@ namespace Raid.Service
         private readonly string m_staticDataPath;
         private readonly string m_settingsFilePath;
         private readonly Dictionary<string, UserAccount> m_userAccounts;
-
+        private readonly IServiceProvider ServiceProvider;
         public IEnumerable<UserAccount> UserAccounts => m_userAccounts.Values;
 
-        public UserData(IOptions<AppSettings> settings)
+        public UserData(IOptions<AppSettings> settings, IServiceProvider serviceProvider)
         {
+            ServiceProvider = serviceProvider;
             m_storagePath = settings.Value.StorageLocation ?? "data";
             if (!Path.IsPathFullyQualified(m_storagePath))
             {
@@ -33,14 +35,14 @@ namespace Raid.Service
             m_settingsFilePath = Path.Join(m_storagePath, ".settings");
 
             // enumerate accounts
-            m_userAccounts = Directory.GetDirectories(m_accountsPath).ToDictionary(id => Path.GetFileName(id), id => new UserAccount(Path.GetFileName(id), this));
+            m_userAccounts = Directory.GetDirectories(m_accountsPath).ToDictionary(id => Path.GetFileName(id), id => new UserAccount(Path.GetFileName(id), this, serviceProvider.CreateScope()));
         }
 
         public UserAccount GetAccount(string id)
         {
             if (!m_userAccounts.TryGetValue(id, out UserAccount account))
             {
-                account = new UserAccount(id, this);
+                account = new UserAccount(id, this, ServiceProvider.CreateScope());
                 m_userAccounts.Add(id, account);
             }
             return account;
