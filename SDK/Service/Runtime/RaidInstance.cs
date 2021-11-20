@@ -16,7 +16,7 @@ namespace Raid.Service
         private readonly ILogger<RaidInstance> Logger;
 
         public RaidInstance(
-                UserData userData,
+            UserData userData,
             StaticDataCache staticDataCache,
             ILogger<RaidInstance> logger)
         {
