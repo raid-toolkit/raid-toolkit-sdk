@@ -21,6 +21,7 @@ jobs:
       Common_csproj: SDK\Common\Common.csproj
       DataModel_csproj: SDK\DataModel\DataModel.csproj
       Client_csproj: SDK\Client\Client.csproj
+      Model_csproj: SDK\Model\Model.csproj
 
     steps:
       - name: Checkout
@@ -53,6 +54,7 @@ jobs:
           dotnet pack $env:Common_csproj --output publish\nuget -p:Configuration=Release /p:DeployOnBuild=true
           dotnet pack $env:DataModel_csproj --output publish\nuget -p:Configuration=Release /p:DeployOnBuild=true
           dotnet pack $env:Client_csproj --output publish\nuget -p:Configuration=Release /p:DeployOnBuild=true
+          dotnet pack $env:Model_csproj --output publish\nuget -p:Configuration=Release /p:DeployOnBuild=true
 
       # NuGet Push
       - name: Push client package to GitHub registry
@@ -60,5 +62,6 @@ jobs:
           dotnet nuget push publish/nuget/Raid.Common.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push publish/nuget/Raid.DataModel.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Client.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Model.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
         env:
           PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}

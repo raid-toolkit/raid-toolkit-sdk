@@ -9,6 +9,13 @@
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <Content Include="..\..\bin\Raid.Interop.dll" copyToOutput="true">
+      <Pack>true</Pack>
+      <PackagePath>lib\net5.0</PackagePath>
+    </Content>
+  </ItemGroup>
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
