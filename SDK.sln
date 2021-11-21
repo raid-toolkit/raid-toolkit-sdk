@@ -13,7 +13,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModel", "SDK\DataModel\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "SDK\Client\Client.csproj", "{C8F50AC1-41EC-4F1B-8883-F1786C828F30}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "SDK\Common\Common.csproj", "{4CDD09F0-5D87-42AC-BF89-00FCCCDC8CA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "SDK\Common\Common.csproj", "{4CDD09F0-5D87-42AC-BF89-00FCCCDC8CA5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9BA72BF2-DCF9-4F73-BC76-1C870239566D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

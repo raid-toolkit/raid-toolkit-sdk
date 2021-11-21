@@ -105,11 +105,6 @@ namespace RaidExtractor.Core
                         CriticalHeal = heroType.UnscaledStats.CriticalHeal,
                     };
 
-                    newHero.TotalMasteryScrolls = newHero.TotalMasteryScrolls.Concat(newHero.AssignedMasteryScrolls)
-                        .Concat(newHero.UnassignedMasteryScrolls)
-                        .GroupBy(x => x.Key)
-                        .ToDictionary(x => x.Key, x => x.Sum(y => y.Value));
-
                     return newHero;
                 }).ToArray()
             };

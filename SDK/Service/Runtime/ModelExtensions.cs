@@ -137,12 +137,11 @@ namespace Raid.DataModel
                 SkillsById = hero.Skills.ToDictionary(skill => skill.Id, skill => skill.ToModel()),
             };
 
-            result.TotalMasteryScrolls = new Dictionary<string, int>(
-                result.TotalMasteryScrolls.Concat(result.AssignedMasteryScrolls)
-                    .Concat(result.UnassignedMasteryScrolls)
-                    .GroupBy(x => x.Key)
-                    .ToDictionary(x => x.Key, x => x.Sum(y => y.Value))
-            );
+            result.TotalMasteryScrolls = result.AssignedMasteryScrolls
+                .Concat(result.UnassignedMasteryScrolls)
+                .GroupBy(x => x.Key)
+                .ToDictionary(x => x.Key, x => x.Sum(y => y.Value))
+            ;
             return result;
         }
 
