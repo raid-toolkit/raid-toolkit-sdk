@@ -41,8 +41,8 @@ namespace RaidExtractor.Core
                 LastUpdated = account.LastUpdated.ToString("o"),
                 ArenaLeague = arena.LeagueId.ToString(),
                 GreatHall = arena.GreatHallBonuses.ToDictionary(
-                    bonus => bonus.Affinity,
-                    bonus => (IReadOnlyDictionary<Raid.DataModel.Enums.StatKindId, int>)bonus.Levels.ToDictionary(levels => levels.Key, levels => levels.Value)),
+                    bonus => bonus.Affinity.ToString().ToCamelCase(),
+                    bonus => (IReadOnlyDictionary<string, int>)bonus.Levels.ToDictionary(levels => levels.Key.ToString().ToCamelCase(), levels => levels.Value)),
                 Shards = resources.Shards.ToDictionary(
                     shard => shard.Key.ToString(),
                     shard => new ShardInfo() { Count = shard.Value, SummonData = new() }),
