@@ -41,6 +41,8 @@ name: .NET Core Desktop
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - SDK/Python/**
     paths:
       - Il2CppToolkit
       - SDK/**
