@@ -28,5 +28,8 @@ namespace Raid.DataModel
 
         [PublicApi("getHeroById")]
         Task<Hero> GetHeroById(string accountId, int heroId, bool snapshot = false);
+
+        [PublicApi("getArena")]
+        Task<ArenaData> GetArena(string accountId);
     }
 }

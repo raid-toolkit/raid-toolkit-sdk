@@ -38,10 +38,10 @@ namespace Raid.Service
         public Task<Account[]> GetAccounts()
         {
             return Task.FromResult(UserData.UserAccounts.Select(account =>
-{
-    AccountBase result = AccountFacet.ReadValue(account);
-    return Account.FromBase(result, account.LastUpdated);
-}).ToArray());
+            {
+                AccountBase result = AccountFacet.ReadValue(account);
+                return Account.FromBase(result, account.LastUpdated);
+            }).ToArray());
         }
 
         public Task<Account> GetAccount(string accountId)
@@ -49,6 +49,11 @@ namespace Raid.Service
             UserAccount userAccount = UserData.GetAccount(accountId);
             AccountBase account = AccountFacet.ReadValue(userAccount);
             return Task.FromResult(Account.FromBase(account, userAccount.LastUpdated));
+        }
+
+        public Task<ArenaData> GetArena(string accountId)
+        {
+            return Task.FromResult(ArenaFacet.ReadValue(UserData.GetAccount(accountId)));
         }
 
         public Task<Artifact[]> GetArtifacts(string accountId)
@@ -106,7 +111,7 @@ namespace Raid.Service
             if (greatHallBonus != null)
                 stats.ApplyBonuses(StatSource.GreatHall, greatHallBonus.Bonus.ToArray());
 
-            if (staticData.ArenaData.Leagues.TryGetValue(arenaData.LeagueId, out var league))
+            if (staticData.ArenaData.Leagues.TryGetValue(arenaData.ClassicArena.LeagueId.ToString(), out var league))
                 stats.applyArenaStats(league.StatBonus);
 
             // masteries

@@ -5,7 +5,7 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "ts-node watch-account.ts",
+    "start": "node -r ./repl.js",
     "watch": "ts-node watch-account.ts",
     "extractor-poll": "ts-node extractor-poll"
   },

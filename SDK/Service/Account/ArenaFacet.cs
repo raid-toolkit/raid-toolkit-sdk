@@ -6,10 +6,10 @@ using SharedModel.Battle.Effects;
 
 namespace Raid.Service
 {
-    [Facet("arena")]
+    [Facet("arena", Version = "1.1")]
     public class ArenaFacet : UserAccountFacetBase<ArenaData, ArenaFacet>
     {
-        private static LazyInitializer<Dictionary<StatKindId, List<StatBonus>>, ModelScope> StaticBonusData = new(scope =>
+        private static readonly LazyInitializer<Dictionary<StatKindId, List<StatBonus>>, ModelScope> StaticBonusData = new(scope =>
         {
             Dictionary<StatKindId, List<StatBonus>> staticBonusData = new();
             var runtimeData = scope.StaticDataManager.StaticData.VillageData.CapitolBonusByStatKind;
@@ -52,10 +52,59 @@ namespace Raid.Service
                 });
             }
 
+            var arenaData = userWrapper.Arena.ArenaData;
+            var tagArenaData = userWrapper.Arena3x3.Data;
+
+            long tagArenaPoints = tagArenaData.ArenaPoints;
+            var leagueBorders = userWrapper.Arena3x3.League._leagueBorders;
+            TagArenaPlacement placement = TagArenaPlacement.Unknown;
+            if (leagueBorders.MaxSection.HasValue && leagueBorders.MinSection.HasValue)
+            {
+                if (tagArenaPoints > leagueBorders.MaxSection.Value)
+                {
+                    placement = TagArenaPlacement.Promotion;
+                }
+                else
+                {
+                    placement = tagArenaPoints < leagueBorders.MaxSection.Value ? TagArenaPlacement.Demotion : TagArenaPlacement.Retain;
+                }
+            }
+
+            TagArenaData tagArena = new()
+            {
+                ArenaPoints = tagArenaPoints,
+                LeagueId = (DataModel.Enums.ArenaLeagueId)tagArenaData.LeagueId,
+                WeeklyStats = new()
+                {
+                    Total = tagArenaData.BattlesStartedThisWeek,
+                    Losses = tagArenaData.LossesThisWeek,
+                    Wins = tagArenaData.VictoriesThisWeek
+                },
+                DefenseHeroIds = tagArenaData.Arena3X3DefenseTeamSetup
+                    .Select(team => team.HeroSlotSetups.Select(setup => setup.InventoryHeroId).ToArray())
+                    .ToArray(),
+                Placement = placement
+            };
+            ClassicArenaData classicArena = new()
+            {
+                ArenaPoints = arenaData.ArenaPoints,
+                LeagueId = (DataModel.Enums.ArenaLeagueId)arenaData.ArenaDefenseTeamSetup?.ArenaLeagueId,
+                WeeklyStats = new()
+                {
+                    Total = arenaData.BattlesStartedThisWeek,
+                    Losses = arenaData.LossesThisWeek,
+                    Wins = arenaData.VictoriesThisWeek
+                },
+                DefenseHeroIds = arenaData.ArenaDefenseTeamSetup.HeroSlotSetups
+                    .Select(setup => setup.InventoryHeroId)
+                    .ToArray(),
+            };
+
             return new ArenaData
             {
-                LeagueId = userWrapper.Arena.ArenaData.ArenaDefenseTeamSetup.ArenaLeagueId.ToString(),
-                GreatHallBonuses = ghBonus
+                GreatHallBonuses = ghBonus,
+                TagArena = tagArena,
+                ClassicArena = classicArena,
             };
         }
     }

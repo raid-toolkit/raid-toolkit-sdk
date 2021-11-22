@@ -39,7 +39,7 @@ namespace RaidExtractor.Core
             return new AccountDump()
             {
                 LastUpdated = account.LastUpdated.ToString("o"),
-                ArenaLeague = arena.LeagueId.ToString(),
+                ArenaLeague = arena.ClassicArena.LeagueId.ToString(),
                 GreatHall = arena.GreatHallBonuses.ToDictionary(
                     bonus => bonus.Affinity.ToString().ToCamelCase(),
                     bonus => (IReadOnlyDictionary<string, int>)bonus.Levels.ToDictionary(levels => levels.Key.ToString().ToCamelCase(), levels => levels.Value)),

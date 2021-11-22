@@ -1,7 +1,7 @@
-import './ws-polyfill';
-import { useRaidToolkitApi, IAccountApi } from '@raid-toolkit/webclient';
+import { IAccountApi, useRaidToolkitApi } from '@raid-toolkit/webclient';
 import { diff } from 'jsondiffpatch';
 import { inspect } from 'util';
+import './ws-polyfill';
 
 async function run() {
   const api = useRaidToolkitApi(IAccountApi);

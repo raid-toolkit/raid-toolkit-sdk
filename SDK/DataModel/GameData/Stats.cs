@@ -1,5 +1,3 @@
-using System;
-
 namespace Raid.DataModel
 {
     public class Stats

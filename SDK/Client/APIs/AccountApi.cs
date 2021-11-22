@@ -8,34 +8,49 @@ namespace Raid.Client
     {
         internal AccountApi(RaidToolkitClient client) : base(client) { }
 
-        public Task<Account> GetAccount(string accountId) =>
-            CallMethod<Account>(MethodBase.GetCurrentMethod(), accountId);
+        public Task<Account> GetAccount(string accountId)
+        {
+            return CallMethod<Account>(MethodBase.GetCurrentMethod(), accountId);
+        }
 
+        public Task<RaidExtractor.Core.AccountDump> GetAccountDump(string accountId)
+        {
+            return CallMethod<RaidExtractor.Core.AccountDump>(MethodBase.GetCurrentMethod(), accountId);
+        }
 
-        public Task<RaidExtractor.Core.AccountDump> GetAccountDump(string accountId) =>
-            CallMethod<RaidExtractor.Core.AccountDump>(MethodBase.GetCurrentMethod(), accountId);
+        public Task<Account[]> GetAccounts()
+        {
+            return CallMethod<Account[]>(MethodBase.GetCurrentMethod());
+        }
 
-        public Task<Account[]> GetAccounts() =>
-            CallMethod<Account[]>(MethodBase.GetCurrentMethod());
+        public Task<Resources> GetAllResources(string accountId)
+        {
+            return CallMethod<Resources>(MethodBase.GetCurrentMethod(), accountId);
+        }
 
+        public Task<Artifact> GetArtifactById(string accountId, int artifactId)
+        {
+            return CallMethod<Artifact>(MethodBase.GetCurrentMethod(), accountId, artifactId);
+        }
 
-        public Task<Resources> GetAllResources(string accountId) =>
-            CallMethod<Resources>(MethodBase.GetCurrentMethod(), accountId);
+        public Task<Artifact[]> GetArtifacts(string accountId)
+        {
+            return CallMethod<Artifact[]>(MethodBase.GetCurrentMethod(), accountId);
+        }
 
+        public Task<Hero> GetHeroById(string accountId, int heroId, bool snapshot = false)
+        {
+            return CallMethod<Hero>(MethodBase.GetCurrentMethod(), accountId, heroId, snapshot);
+        }
 
-        public Task<Artifact> GetArtifactById(string accountId, int artifactId) =>
-            CallMethod<Artifact>(MethodBase.GetCurrentMethod(), accountId, artifactId);
+        public Task<Hero[]> GetHeroes(string accountId, bool snapshot = false)
+        {
+            return CallMethod<Hero[]>(MethodBase.GetCurrentMethod(), accountId, snapshot);
+        }
 
-
-        public Task<Artifact[]> GetArtifacts(string accountId) =>
-            CallMethod<Artifact[]>(MethodBase.GetCurrentMethod(), accountId);
-
-
-        public Task<Hero> GetHeroById(string accountId, int heroId, bool snapshot = false) =>
-            CallMethod<Hero>(MethodBase.GetCurrentMethod(), accountId, heroId, snapshot);
-
-
-        public Task<Hero[]> GetHeroes(string accountId, bool snapshot = false) =>
-            CallMethod<Hero[]>(MethodBase.GetCurrentMethod(), accountId, snapshot);
+        public Task<ArenaData> GetArena(string accountId)
+        {
+            return CallMethod<ArenaData>(MethodBase.GetCurrentMethod(), accountId);
+        }
     }
 }
