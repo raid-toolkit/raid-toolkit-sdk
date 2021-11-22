@@ -2,18 +2,20 @@
 
 import { AccountInfo } from '@raid-toolkit/webclient';
 
-const { IAccountApi, useRaidToolkitApi } = require('@raid-toolkit/webclient');
+const { IAccountApi, IStaticDataApi, useRaidToolkitApi } = require('@raid-toolkit/webclient');
 require('./ws-polyfill');
 
 (async function run() {
-  const api = useRaidToolkitApi(IAccountApi);
-  const account = (await api.getAccounts())[0];
+  const accountApi = useRaidToolkitApi(IAccountApi);
+  const staticApi = useRaidToolkitApi(IStaticDataApi);
+  const account = (await accountApi.getAccounts())[0];
 
-  Object.assign(globalThis, { api, account });
+  Object.assign(globalThis, { accountApi, staticApi, account });
 })();
 
 export { IAccountApi };
 declare global {
-  const api: typeof IAccountApi;
+  const accountApi: typeof IAccountApi;
+  const staticApi: typeof IStaticDataApi;
   const account: AccountInfo;
 }
