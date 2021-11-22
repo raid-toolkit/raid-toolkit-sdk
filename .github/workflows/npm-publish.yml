@@ -29,6 +29,9 @@ jobs:
 
     - name: Yarn publish
       working-directory: SDK/WebClient
-      run: yarn publish --patch
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        yarn publish --patch
       env:
         NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
