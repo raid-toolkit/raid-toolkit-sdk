@@ -1,4 +1,4 @@
-name: Publish NuGet Client SDK
+name: Publish Python package
 
 on:
   push:
@@ -18,6 +18,8 @@ jobs:
       with:
         submodules: recursive
         fetch-depth: 0
+
+    - name: Setup Python
       uses: actions/setup-python@v2
       with:
         python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
