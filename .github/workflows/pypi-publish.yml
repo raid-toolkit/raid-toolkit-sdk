@@ -18,13 +18,13 @@ jobs:
       with:
         submodules: recursive
         fetch-depth: 0
-
-    - name: Build python package
       uses: actions/setup-python@v2
-      working-directory: SDK/Python
       with:
         python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
         architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+
+    - name: Build python package
+      working-directory: SDK/Python
       run: python -m build
 
     - name: Publish a Python distribution to PyPI
