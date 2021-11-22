@@ -17,6 +17,7 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '14'
+        always-auth: true
         cache: 'yarn'
         cache-dependency-path: SDK/WebClient/yarn.lock
 
