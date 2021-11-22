@@ -20,13 +20,13 @@ jobs:
         cache: 'yarn'
         cache-dependency-path: SDK/WebClient/yarn.lock
 
-    - name Yarn install, build
+    - name: Yarn install, build
       working-directory: SDK/WebClient
       run: |
         yarn install
         yarn build
 
-    - name Yarn publish
+    - name: Yarn publish
       working-directory: SDK/WebClient
       run: yarn publish --patch
       env:
