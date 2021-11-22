@@ -27,7 +27,10 @@ jobs:
 
     - name: Build python package
       working-directory: SDK/Python
-      run: python -m build
+      run: |
+        pip install --upgrade build
+        pip install --upgrade twine
+        python -m build
 
     - name: Publish a Python distribution to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
