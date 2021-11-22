@@ -1,1 +1,2 @@
-export * from "./IAccountApi";
+export * from './IAccountApi';
+export * from './IStaticDataApi';

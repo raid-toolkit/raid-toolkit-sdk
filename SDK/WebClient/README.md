@@ -46,5 +46,5 @@ async function loadAccount() {
 | `getArtifactById(accountId, artifactId)` | Get an artifact by id |
 | `getHeroes(accountId)` | Get all heroes for a given `accountId` |
 | `getHeroById(accountId, heroId)` | Get a hero by id |
+| `getArena(accountId)` | Get arena data for a given `accountId` |
 | `getAllResources(accountId)` | Get all resources for a given `accountId` |
-
