@@ -45,6 +45,7 @@ on:
       - 'Il2CppToolkit'
       - 'SDK/**'
       - '!SDK/Python/**'
+      - '!SDK/WebClient/**'
 
 jobs:
   build:
