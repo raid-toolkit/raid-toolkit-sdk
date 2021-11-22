@@ -1,9 +1,9 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
-using System.Reflection;
 
 namespace Raid.DataModel
 {
@@ -39,7 +39,7 @@ namespace Raid.DataModel
                 array[entry.Attribute.Order] = JToken.FromObject(entry.Field.GetValue(value), serializer);
             }
 
-            JArray jarray = new JArray(array);
+            JArray jarray = new(array);
             jarray.WriteTo(writer);
         }
     }

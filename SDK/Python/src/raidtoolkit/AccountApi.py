@@ -28,3 +28,6 @@ class AccountApi:
 
     def get_hero_by_id(self, accountId: str, heroId: str, snapshot: bool):
         return self.client.call("account-api", "getHeroById", [accountId, heroId, snapshot])
+
+    def get_arena(self, accountId: str):
+        return self.client.call("account-api", "getArena", [accountId])

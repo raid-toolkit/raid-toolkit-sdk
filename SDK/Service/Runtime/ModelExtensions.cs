@@ -18,6 +18,15 @@ namespace Raid.DataModel
             return dict.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value);
         }
 
+        public static IReadOnlyDictionary<K, V> ToModelEnum<K, V>(this IDictionary<K, V> dict) where K : Enum
+        {
+            if (dict == null)
+            {
+                return new Dictionary<K, V>();
+            }
+            return dict.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+        }
+
         public static float SetStat(this Stats stats, SharedModel.Battle.Effects.StatKindId statKind, float value)
         {
             switch (statKind)

@@ -8,7 +8,8 @@
         "**/Thumbs.db": true,
         "*/**/bin": true,
         "**/obj": true,
-        "**/.vs": true
+        "**/.vs": true,
+        "**/*.egg-info": true
     },
     "files.associations": {
         "appsettings*.json": "jsonc"

@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 
 namespace Raid.DataModel
 {
     public class GreatHallBonus
     {
-        [JsonProperty("affinity")]
+        [JsonProperty("affinity"), JsonConverter(typeof(StringEnumConverter), converterParameters: typeof(CamelCaseNamingStrategy))]
         public Enums.Element Affinity;
 
         [JsonProperty("bonus")]
