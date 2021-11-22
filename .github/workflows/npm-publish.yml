@@ -1,0 +1,33 @@
+name: Publish NPM package
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/npm-publish.yml
+      - SDK/WebClient/**
+
+jobs:
+  build:
+    runs-on:
+      ubuntu-latest
+        
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+        cache: 'yarn'
+        cache-dependency-path: SDK/WebClient/yarn.lock
+
+    - name Yarn install, build
+      working-directory: SDK/WebClient
+      run: |
+        yarn install
+        yarn build
+
+    - name Yarn publish
+      working-directory: SDK/WebClient
+      run: yarn publish --patch
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
