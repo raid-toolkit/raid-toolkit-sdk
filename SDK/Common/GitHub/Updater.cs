@@ -5,13 +5,16 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using GitHub.Schema;
+using Raid.Common;
 
 namespace GitHub
 {
-    public class Updater
+    public class Updater : IDisposable
     {
-        private Uri UpdateUri = new($"https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/latest");
-        private HttpClient Client;
+        private readonly Uri UpdateUri = new($"https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/latest");
+        private readonly Uri ReleasesUri = new($"https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases");
+        private readonly HttpClient Client;
+        private bool disposedValue;
 
         public Updater()
         {
@@ -19,18 +22,42 @@ namespace GitHub
             Client.DefaultRequestHeaders.UserAgent.Add(new("RaidToolkit", Assembly.GetExecutingAssembly().GetName().Version.ToString(2)));
         }
 
-        public Task<Release> GetLatestRelease()
+        public async Task<Release> GetLatestRelease()
         {
-            return Client.GetObjectAsync<Release>(UpdateUri);
+            if (!RegistrySettings.InstallPrereleases)
+            {
+                return await Client.GetObjectAsync<Release>(UpdateUri);
+            }
+            Release[] allReleases = await Client.GetObjectAsync<Release[]>(ReleasesUri);
+            Release latestPrerelease = allReleases.FirstOrDefault(release => release.Prerelease);
+            return latestPrerelease;
         }
 
         public Task<Stream> DownloadRelease(Release release)
         {
             Asset asset = release.Assets.FirstOrDefault(asset => asset.Name == "Raid.Service.exe");
-            if (asset == null)
-                throw new FileNotFoundException("Update is missing required assets");
+            return asset == null
+                ? throw new FileNotFoundException("Update is missing required assets")
+                : Client.GetStreamAsync(asset.BrowserDownloadUrl);
+        }
 
-            return Client.GetStreamAsync(asset.BrowserDownloadUrl);
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    Client.Dispose();
+                }
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

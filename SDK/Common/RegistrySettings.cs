@@ -12,6 +12,8 @@ namespace Raid.Common
         public const string InstallFolderKey = @"InstallFolder";
         public const string AutoUpdateKey = @"AutoUpdate";
         public const string IsInstalledKey = "IsInstalled";
+        public const string ClickToStartKey = "ClickToStart";
+        public const string InstallPrereleasesKey = "InstallPrereleases";
         public const string StartupName = "RaidToolkitService";
         public const string Protocol = "rtk";
         public const string StartupHive = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
@@ -20,18 +22,18 @@ namespace Raid.Common
         public static readonly string DefaultInstallationPath;
 
         public static string InstalledExecutablePath => Path.Join(InstallationPath, ExecutableName);
-        public static bool RunOnStartup => Registry.CurrentUser.OpenSubKey(StartupHive).GetValue(StartupName) != null;
-        public static bool IsInstalled => Registry.CurrentUser.OpenSubKey(RTKHive)?.GetValue(IsInstalledKey) != null;
+        public static bool RunOnStartup => DoesKeyExist(StartupHive, StartupName);
+        public static bool IsInstalled => IsSettingEnabled(RTKHive, IsInstalledKey);
+        public static bool ClickToStart => IsSettingEnabled(RTKHive, ClickToStartKey, defaultValue: true);
+        public static bool InstallPrereleases => IsSettingEnabled(RTKHive, InstallPrereleasesKey);
+        public static bool AutomaticallyCheckForUpdates => IsSettingEnabled(RTKHive, AutoUpdateKey);
 
         public static string InstallationPath
         {
             get
             {
                 var hive = Registry.CurrentUser.OpenSubKey(RTKHive);
-                if (hive == null)
-                    return DefaultInstallationPath;
-
-                return (string)hive.GetValue(InstallFolderKey, DefaultInstallationPath);
+                return hive == null ? DefaultInstallationPath : (string)hive.GetValue(InstallFolderKey, DefaultInstallationPath);
             }
         }
 
@@ -40,10 +42,7 @@ namespace Raid.Common
             get
             {
                 var hive = Registry.CurrentUser.OpenSubKey(RTKHive);
-                if (hive == null)
-                    return false;
-
-                return (int)hive.GetValue(AutoUpdateKey, DefaultInstallationPath) != 0;
+                return hive == null ? false : (int)hive.GetValue(AutoUpdateKey, DefaultInstallationPath) != 0;
             }
         }
 
