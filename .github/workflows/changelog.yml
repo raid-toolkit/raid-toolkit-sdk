@@ -25,4 +25,4 @@ jobs:
       - name: Print changelog
         run: echo $CHANGELOG
         env: 
-          CHANGELOG=${{ steps.github_release.outputs.changelog }}
+          CHANGELOG: ${{ steps.github_release.outputs.changelog }}
