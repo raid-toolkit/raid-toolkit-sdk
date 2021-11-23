@@ -2,7 +2,9 @@ name: App Publish
 
 on:
   push:
-    branches: [main]
+    branches: 
+      - main
+      - release/**
     paths:
       - 'SDK/**'
       - '!SDK/Python/**'
@@ -27,6 +29,15 @@ jobs:
           submodules: recursive
           fetch-depth: 0
 
+      - name: Set branch-based environment variables
+        uses: iamtheyammer/branch-env-vars@v1.0.4
+        with:
+          # optional, just an example of setting a setting
+          bevOverwrite: true
+          PRERELEASE: |
+            main:true
+            !default:false
+            
       # Install the .NET Core workload
       - name: Install .NET Core
         uses: actions/setup-dotnet@v1
@@ -67,7 +78,7 @@ jobs:
           release_name: RaidToolkit v${{ steps.rtk_version.outputs.Version }}
           body: RaidToolkit v${{ steps.rtk_version.outputs.Version }}
           draft: false
-          prerelease: true
+          prerelease: ${{ env.PRERELEASE }}
 
       - name: Upload RaidService Asset
         id: upload-raidservice-asset
