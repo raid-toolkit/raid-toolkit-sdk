@@ -37,13 +37,15 @@ namespace Raid.Common
             }
         }
 
-        public static bool AutomaticallyCheckForUpdates
+        private static bool IsSettingEnabled(string path, string key, bool defaultValue = false)
         {
-            get
-            {
-                var hive = Registry.CurrentUser.OpenSubKey(RTKHive);
-                return hive == null ? false : (int)hive.GetValue(AutoUpdateKey, DefaultInstallationPath) != 0;
-            }
+            var value = Registry.CurrentUser.OpenSubKey(path)?.GetValue(key, defaultValue ? 1 : 0);
+            return value is not null and int intValue && intValue != 0;
+        }
+
+        private static bool DoesKeyExist(string path, string key)
+        {
+            return Registry.CurrentUser.OpenSubKey(path)?.GetValue(key) != null;
         }
 
         static RegistrySettings()

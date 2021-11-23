@@ -1,4 +1,4 @@
-﻿
+
 namespace Raid.Service.UI
 {
 	partial class MainWindow
@@ -34,6 +34,7 @@ namespace Raid.Service.UI
 			this.appTrayMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.installUpdateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.checkUpdatesMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.settingsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.closeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.appTrayMenu.SuspendLayout();
 			this.SuspendLayout();
@@ -45,15 +46,17 @@ namespace Raid.Service.UI
 			this.appTrayIcon.Text = "Raid Toolkit";
 			this.appTrayIcon.Visible = true;
 			this.appTrayIcon.BalloonTipClicked += new System.EventHandler(this.installUpdateMenuItem_Click);
+			this.appTrayIcon.MouseClick += new System.Windows.Forms.MouseEventHandler(this.appTrayIcon_MouseClick);
 			// 
 			// appTrayMenu
 			// 
 			this.appTrayMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.installUpdateMenuItem,
             this.checkUpdatesMenuItem,
+            this.settingsMenuItem,
             this.closeMenuItem});
 			this.appTrayMenu.Name = "appTrayMenu";
-			this.appTrayMenu.Size = new System.Drawing.Size(180, 70);
+			this.appTrayMenu.Size = new System.Drawing.Size(180, 92);
 			// 
 			// installUpdateMenuItem
 			// 
@@ -69,6 +72,13 @@ namespace Raid.Service.UI
 			this.checkUpdatesMenuItem.Size = new System.Drawing.Size(179, 22);
 			this.checkUpdatesMenuItem.Text = "Check for updates...";
 			this.checkUpdatesMenuItem.Click += new System.EventHandler(this.checkUpdatesMenuItem_Click);
+			// 
+			// settingsMenuItem
+			// 
+			this.settingsMenuItem.Name = "settingsMenuItem";
+			this.settingsMenuItem.Size = new System.Drawing.Size(179, 22);
+			this.settingsMenuItem.Text = "Settings";
+			this.settingsMenuItem.Click += new System.EventHandler(this.settingsMenuItem_Click);
 			// 
 			// closeMenuItem
 			// 
@@ -98,5 +108,6 @@ namespace Raid.Service.UI
 		private System.Windows.Forms.ToolStripMenuItem installUpdateMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem checkUpdatesMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem closeMenuItem;
-	}
+        private System.Windows.Forms.ToolStripMenuItem settingsMenuItem;
+    }
 }

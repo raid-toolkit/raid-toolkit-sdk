@@ -27,8 +27,14 @@ namespace Raid.Service
 
         public static bool IsInstalled
         {
-            get => Registry.CurrentUser.OpenSubKey(RegistrySettings.RTKHive)?.GetValue(RegistrySettings.IsInstalledKey) != null;
+            get => RegistrySettings.IsInstalled;
             set => Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.IsInstalledKey, 1, RegistryValueKind.DWord);
+        }
+
+        public static bool ClickToStart
+        {
+            get => RegistrySettings.ClickToStart;
+            set => Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.ClickToStartKey, value ? 1 : 0, RegistryValueKind.DWord);
         }
 
         public static string InstalledExecutablePath => Path.Join(InstallationPath, ExecutableName);
@@ -38,10 +44,7 @@ namespace Raid.Service
             get
             {
                 var hive = Registry.CurrentUser.OpenSubKey(RegistrySettings.RTKHive);
-                if (hive == null)
-                    return DefaultInstallationPath;
-
-                return (string)hive.GetValue(RegistrySettings.InstallFolderKey, DefaultInstallationPath);
+                return hive == null ? DefaultInstallationPath : (string)hive.GetValue(RegistrySettings.InstallFolderKey, DefaultInstallationPath);
             }
             set
             {
@@ -52,7 +55,7 @@ namespace Raid.Service
 
         public static bool RunOnStartup
         {
-            get => Registry.CurrentUser.OpenSubKey(RegistrySettings.StartupHive).GetValue(RegistrySettings.StartupName) != null;
+            get => RegistrySettings.RunOnStartup;
             set
             {
                 if (value)
@@ -64,14 +67,7 @@ namespace Raid.Service
 
         public static bool AutomaticallyCheckForUpdates
         {
-            get
-            {
-                var hive = Registry.CurrentUser.OpenSubKey(RegistrySettings.RTKHive);
-                if (hive == null)
-                    return false;
-
-                return (int)hive.GetValue(RegistrySettings.AutoUpdateKey, DefaultInstallationPath) != 0;
-            }
+            get => RegistrySettings.AutomaticallyCheckForUpdates;
             set
             {
                 var hive = Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive);
@@ -79,7 +75,7 @@ namespace Raid.Service
             }
         }
 
-        [DllImport("coredll.dll")]
+        [DllImport("coredll.dll", CharSet = CharSet.Unicode)]
         private static extern int SHCreateShortcut(StringBuilder szShortcut, StringBuilder szTarget);
 
         internal static void UpdateStartMenuShortcut(bool create)
