@@ -114,8 +114,12 @@ namespace Raid.Service
             UserData.WriteAccountData(UserId, key, value);
 
             // update index
-            Index.Facets[key].LastUpdated = DateTime.UtcNow;
-            Index.Facets[key].Version = version.ToString();
+            if (!Index.Facets.TryGetValue(key, out var facetInfo))
+            {
+                Index.Facets[key] = facetInfo = new AccountDataFacetInfo();
+            }
+            facetInfo.LastUpdated = DateTime.UtcNow;
+            facetInfo.Version = version.ToString();
             UserData.WriteAccountData(UserId, "_index", Index);
         }
 
