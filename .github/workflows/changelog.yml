@@ -22,5 +22,5 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      -name: Print changelog
+      - name: Print changelog
         run: echo ${{steps.github_release.outputs.changelog}}
