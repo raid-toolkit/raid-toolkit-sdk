@@ -18,8 +18,3 @@ jobs:
       - uses: mikepenz/release-changelog-builder-action@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Print changelog
-        run: echo $CHANGELOG
-        env: 
-          CHANGELOG: ${{ steps.github_release.outputs.changelog }}
