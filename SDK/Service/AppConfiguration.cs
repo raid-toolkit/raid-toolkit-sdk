@@ -31,6 +31,12 @@ namespace Raid.Service
             set => Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.IsInstalledKey, 1, RegistryValueKind.DWord);
         }
 
+        public static bool ClickToStart
+        {
+            get => RegistrySettings.ClickToStart;
+            set => Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.ClickToStartKey, value ? 1 : 0, RegistryValueKind.DWord);
+        }
+
         public static string InstalledExecutablePath => Path.Join(InstallationPath, ExecutableName);
 
         public static string InstallationPath

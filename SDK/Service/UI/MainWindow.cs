@@ -37,12 +37,11 @@ namespace Raid.Service.UI
             appTrayIcon.Text = $"Raid Toolkit v{ThisAssembly.AssemblyFileVersion}";
             appTrayIcon.Icon = Icon.ExtractAssociatedIcon(AppConfiguration.ExecutablePath);
             appTrayIcon.Visible = true;
-            appTrayIcon.Click += OnAppTrayIconClicked;
         }
 
         [DllImport("user32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
-        private void OnAppTrayIconClicked(object sender, EventArgs e)
+        private void OnAppTrayIconClicked()
         {
             if (!RegistrySettings.ClickToStart)
                 return;
@@ -141,6 +140,20 @@ namespace Raid.Service.UI
                     $"Raid Toolkit has been updated to v{ThisAssembly.AssemblyFileVersion}!",
                     ToolTipIcon.Info);
             }
+        }
+
+        private void settingsMenuItem_Click(object sender, EventArgs e)
+        {
+            using SettingsWindow settingsWindow = new();
+            settingsWindow.ShowDialog();
+        }
+
+        private void appTrayIcon_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button != MouseButtons.Left)
+                return;
+
+            OnAppTrayIconClicked();
         }
     }
 }

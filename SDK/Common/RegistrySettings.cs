@@ -21,7 +21,7 @@ namespace Raid.Common
         public static readonly string DefaultInstallationPath;
 
         public static string InstalledExecutablePath => Path.Join(InstallationPath, ExecutableName);
-        public static bool RunOnStartup => IsSettingEnabled(StartupHive, StartupName);
+        public static bool RunOnStartup => DoesKeyExist(StartupHive, StartupName);
         public static bool IsInstalled => IsSettingEnabled(RTKHive, IsInstalledKey);
         public static bool ClickToStart => IsSettingEnabled(RTKHive, ClickToStartKey);
         public static bool AutomaticallyCheckForUpdates => IsSettingEnabled(RTKHive, AutoUpdateKey);
@@ -39,6 +39,11 @@ namespace Raid.Common
         {
             var value = Registry.CurrentUser.OpenSubKey(path)?.GetValue(key, 0);
             return value is not null and int intValue && intValue != 0;
+        }
+
+        private static bool DoesKeyExist(string path, string key)
+        {
+            return Registry.CurrentUser.OpenSubKey(path)?.GetValue(key) != null;
         }
 
         static RegistrySettings()
