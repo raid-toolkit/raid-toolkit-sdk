@@ -116,7 +116,7 @@ namespace Raid.Service
         static AppConfiguration()
         {
             ExecutablePath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
-            ExecutableName = Path.GetFileName(ExecutablePath);
+            ExecutableName = "Raid.Service.exe";
             ExecutableDirectory = Path.GetDirectoryName(ExecutablePath);
 
             DefaultInstallationPath = Path.Join(
