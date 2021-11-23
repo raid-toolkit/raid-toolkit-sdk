@@ -34,6 +34,7 @@ namespace Raid.Service.UI
 			this.clickToStartCheckBox = new System.Windows.Forms.CheckBox();
 			this.saveButton = new System.Windows.Forms.Button();
 			this.cancelButton = new System.Windows.Forms.Button();
+			this.prereleaseBuildsCheckBox = new System.Windows.Forms.CheckBox();
 			this.SuspendLayout();
 			// 
 			// runOnStartCheckBox
@@ -75,7 +76,7 @@ namespace Raid.Service.UI
 			// saveButton
 			// 
 			this.saveButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.saveButton.Location = new System.Drawing.Point(66, 119);
+			this.saveButton.Location = new System.Drawing.Point(66, 161);
 			this.saveButton.Name = "saveButton";
 			this.saveButton.Size = new System.Drawing.Size(75, 23);
 			this.saveButton.TabIndex = 10;
@@ -86,7 +87,7 @@ namespace Raid.Service.UI
 			// cancelButton
 			// 
 			this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cancelButton.Location = new System.Drawing.Point(147, 119);
+			this.cancelButton.Location = new System.Drawing.Point(147, 161);
 			this.cancelButton.Name = "cancelButton";
 			this.cancelButton.Size = new System.Drawing.Size(75, 23);
 			this.cancelButton.TabIndex = 11;
@@ -94,15 +95,28 @@ namespace Raid.Service.UI
 			this.cancelButton.UseVisualStyleBackColor = true;
 			this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
 			// 
+			// prereleaseBuildsCheckBox
+			// 
+			this.prereleaseBuildsCheckBox.AutoSize = true;
+			this.prereleaseBuildsCheckBox.Checked = true;
+			this.prereleaseBuildsCheckBox.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.prereleaseBuildsCheckBox.Location = new System.Drawing.Point(32, 106);
+			this.prereleaseBuildsCheckBox.Name = "prereleaseBuildsCheckBox";
+			this.prereleaseBuildsCheckBox.Size = new System.Drawing.Size(153, 19);
+			this.prereleaseBuildsCheckBox.TabIndex = 3;
+			this.prereleaseBuildsCheckBox.Text = "Install pre-release builds";
+			this.prereleaseBuildsCheckBox.UseVisualStyleBackColor = true;
+			// 
 			// SettingsWindow
 			// 
 			this.AcceptButton = this.saveButton;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.cancelButton;
-			this.ClientSize = new System.Drawing.Size(288, 167);
+			this.ClientSize = new System.Drawing.Size(288, 193);
 			this.Controls.Add(this.cancelButton);
 			this.Controls.Add(this.saveButton);
+			this.Controls.Add(this.prereleaseBuildsCheckBox);
 			this.Controls.Add(this.clickToStartCheckBox);
 			this.Controls.Add(this.runOnStartCheckBox);
 			this.Controls.Add(this.autoUpdateCheckBox);
@@ -123,5 +137,6 @@ namespace Raid.Service.UI
         private System.Windows.Forms.CheckBox clickToStartCheckBox;
         private System.Windows.Forms.Button saveButton;
         private System.Windows.Forms.Button cancelButton;
+        private System.Windows.Forms.CheckBox prereleaseBuildsCheckBox;
     }
 }

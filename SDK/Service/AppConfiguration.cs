@@ -37,6 +37,12 @@ namespace Raid.Service
             set => Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.ClickToStartKey, value ? 1 : 0, RegistryValueKind.DWord);
         }
 
+        public static bool InstallPrereleases
+        {
+            get => RegistrySettings.InstallPrereleases;
+            set => Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.InstallPrereleasesKey, value ? 1 : 0, RegistryValueKind.DWord);
+        }
+
         public static string InstalledExecutablePath => Path.Join(InstallationPath, ExecutableName);
 
         public static string InstallationPath
