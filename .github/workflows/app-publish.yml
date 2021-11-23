@@ -67,7 +67,7 @@ jobs:
           release_name: RaidToolkit v${{ steps.rtk_version.outputs.Version }}
           body: RaidToolkit v${{ steps.rtk_version.outputs.Version }}
           draft: false
-          prerelease: false
+          prerelease: true
 
       - name: Upload RaidService Asset
         id: upload-raidservice-asset
