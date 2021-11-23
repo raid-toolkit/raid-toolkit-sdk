@@ -1,24 +1,21 @@
 {
-    "$schema": "https://raw.githubusercontent.com/dotnet/Nerdbank.GitVersioning/master/src/NerdBank.GitVersioning/version.schema.json",
-    "version": "1.3",
-    "publicReleaseRefSpec": [
-      "^refs/heads/main$",
-      "^refs/heads/v\\d+(?:\\.\\d+)?$"
-    ],
-    "release": {
-      "branchName": "release/v{version}",
-      "versionIncrement": "minor",
-      "firstUnstableTag": "alpha"
-    },
-    "pathFilters": [
-        "SDK",
-        "Il2CppToolkit",
-        ":!SDK/WebClient"
-    ],
-    "cloudBuild": {
-      "buildNumber": {
-        "enabled": true
-      }
+  "$schema": "https://raw.githubusercontent.com/dotnet/Nerdbank.GitVersioning/master/src/NerdBank.GitVersioning/version.schema.json",
+  "version": "1.4-alpha",
+  "publicReleaseRefSpec": [
+    "^refs/heads/main$",
+    "^refs/heads/v\\d+(?:\\.\\d+)?$"
+  ],
+  "cloudBuild": {
+    "buildNumber": {
+      "enabled": true
     }
-  }
-  
+  },
+  "release": {
+    "branchName": "release/v{version}"
+  },
+  "pathFilters": [
+    "./SDK",
+    "./Il2CppToolkit",
+    ":!SDK/WebClient"
+  ]
+}
