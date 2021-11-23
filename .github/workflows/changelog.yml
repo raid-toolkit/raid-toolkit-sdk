@@ -1,0 +1,26 @@
+name: Changelog
+# on:
+#   release:
+#     types:
+#       - created
+
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/changelog.yml
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build Changelog
+        id: github_release
+      - uses: actions/checkout@v2
+      - uses: mikepenz/release-changelog-builder-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      -name: Print changelog
+        run: echo ${{steps.github_release.outputs.changelog}}
