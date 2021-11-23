@@ -5,6 +5,7 @@
     "^refs/heads/main$",
     "^refs/heads/v\\d+(?:\\.\\d+)?$"
   ],
+  "versionHeightOffset": 40,
   "cloudBuild": {
     "buildNumber": {
       "enabled": true
