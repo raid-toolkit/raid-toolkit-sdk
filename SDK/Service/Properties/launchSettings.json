@@ -2,6 +2,9 @@
   "profiles": {
     "Service": {
       "commandName": "Project",
+      "environmentVariables": {
+        "RTK_DEBUG": "true"
+      },
       "nativeDebugging": false
     }
   }

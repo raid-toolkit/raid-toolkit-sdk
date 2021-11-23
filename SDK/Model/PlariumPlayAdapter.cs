@@ -1,5 +1,5 @@
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 
@@ -14,15 +14,18 @@ namespace Raid.Model
             public string Name;
             public string Version;
             public string InstallPath;
+            public string PlariumPlayPath;
         }
-        class GameStorageEntry
+
+        private class GameStorageEntry
         {
             public int Id { get; set; }
             public int IntegrationType { get; set; }
             [JsonProperty("InsalledGames")]
             public IDictionary<string, string> InstalledGames { get; set; }
         }
-        class GameStorage
+
+        private class GameStorage
         {
             public IDictionary<string, GameStorageEntry> InstalledGames { get; set; }
         }
@@ -31,6 +34,7 @@ namespace Raid.Model
         private const string kInstallFolderKey = @"InstallFolder";
         private const string kGameStoragePath = @"PlariumPlay\gamestorage.gsfn";
         private const string kGameSubpath = @"PlariumPlay\StandaloneApps";
+        private const string kPlariumPlayExeSubPath = @"PlariumPlay\PlariumPlay.exe";
 
         private readonly GameStorage m_gameStorage;
         private readonly string m_installDir;
@@ -57,7 +61,8 @@ namespace Raid.Model
             {
                 InstallPath = Path.Join(m_installDir, kGameSubpath, gameName),
                 Name = gameName,
-                Version = version
+                Version = version,
+                PlariumPlayPath = Path.Join(m_installDir, kPlariumPlayExeSubPath)
             };
             return true;
         }
