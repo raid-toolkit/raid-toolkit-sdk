@@ -50,6 +50,7 @@ namespace Raid.Service
             if (!m_userAccounts.TryGetValue(id, out UserAccount account))
             {
                 account = new UserAccount(id, this, ServiceProvider.CreateScope());
+                account.Load();
                 m_userAccounts.Add(id, account);
             }
             return account;
