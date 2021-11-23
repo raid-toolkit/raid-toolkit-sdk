@@ -1,7 +1,13 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Raid.Common;
+using Raid.Model;
 
 namespace Raid.Service.UI
 {
@@ -13,8 +19,9 @@ namespace Raid.Service.UI
         private readonly UserData UserData;
         private readonly ILogger<MainWindow> Logger;
         private readonly RunOptions RunOptions;
+        private readonly ProcessWatcherSettings Settings;
 
-        public MainWindow(ILogger<MainWindow> logger, UpdateService updateService, MainService mainService, UserData userData, RunOptions runOptions)
+        public MainWindow(IOptions<AppSettings> settings, ILogger<MainWindow> logger, UpdateService updateService, MainService mainService, UserData userData, RunOptions runOptions)
         {
             InitializeComponent();
             RunOptions = runOptions;
@@ -22,6 +29,7 @@ namespace Raid.Service.UI
             UpdateService = updateService;
             UserData = userData;
             MainService = mainService;
+            Settings = settings.Value.ProcessWatcher;
 
             // must trigger load here
             UserData.Load();
@@ -29,6 +37,26 @@ namespace Raid.Service.UI
             appTrayIcon.Text = $"Raid Toolkit v{ThisAssembly.AssemblyFileVersion}";
             appTrayIcon.Icon = Icon.ExtractAssociatedIcon(AppConfiguration.ExecutablePath);
             appTrayIcon.Visible = true;
+            appTrayIcon.Click += OnAppTrayIconClicked;
+        }
+
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+        private void OnAppTrayIconClicked(object sender, EventArgs e)
+        {
+            if (!RegistrySettings.ClickToStart)
+                return;
+
+            var raidProcess = Process.GetProcessesByName(Settings.ProcessName).FirstOrDefault();
+            if (raidProcess != null)
+            {
+                _ = SetForegroundWindow(raidProcess.MainWindowHandle);
+            }
+            else
+            {
+                var gameInfo = ModelAssemblyResolver.GameInfo;
+                _ = Process.Start(gameInfo.PlariumPlayPath, new string[] { "--args", $"-gameid=101", "-tray-start" });
+            }
         }
 
         public bool RequestPermissions(string origin)

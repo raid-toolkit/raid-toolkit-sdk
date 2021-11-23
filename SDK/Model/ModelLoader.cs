@@ -1,12 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Il2CppToolkit.Model;
-using Il2CppToolkit.ReverseCompiler;
 using System.Reflection;
 using System.Runtime.Loader;
 using Il2CppToolkit.Common.Errors;
-using System.Collections.Generic;
+using Il2CppToolkit.Model;
+using Il2CppToolkit.ReverseCompiler;
 using Il2CppToolkit.ReverseCompiler.Target.NetCore;
 
 namespace Raid.Model
@@ -15,7 +15,7 @@ namespace Raid.Model
     {
         public string Version { get; private set; }
 
-        class CollectibleAssemblyLoadContext : AssemblyLoadContext
+        private class CollectibleAssemblyLoadContext : AssemblyLoadContext
         {
             public CollectibleAssemblyLoadContext() : base(isCollectible: true)
             { }
@@ -46,12 +46,9 @@ namespace Raid.Model
         public static PlariumPlayAdapter.GameInfo GetGameInfo()
         {
             PlariumPlayAdapter pp = new();
-            if (!pp.TryGetGameVersion(101, "raid", out PlariumPlayAdapter.GameInfo gameInfo))
-            {
-                throw new InvalidOperationException("Game is not installed");
-            }
-
-            return gameInfo;
+            return !pp.TryGetGameVersion(101, "raid", out PlariumPlayAdapter.GameInfo gameInfo)
+                ? throw new InvalidOperationException("Game is not installed")
+                : gameInfo;
         }
 
         private static void GenerateAssembly(PlariumPlayAdapter.GameInfo gameInfo, string dllPath)
