@@ -14,7 +14,7 @@ namespace Raid.Model
         {
             m_loader = new();
             AppDomain.CurrentDomain.AssemblyResolve += HandleAssemblyResolve;
-            _ = Assembly.Load("Raid.Interop");
+            _ = m_loader.Load();
             LoadedVersion = m_loader.Version;
         }
 
