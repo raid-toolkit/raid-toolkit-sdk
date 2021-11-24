@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Raid.DataModel.Enums;
 
 namespace Raid.DataModel
 {
-    public class StaticData
+    public class StaticDataBase
     {
         [JsonProperty("gameHash")]
         public string Hash;
-
+    }
+    public class StaticData : StaticDataBase
+    {
         [JsonProperty("heroData")]
         public StaticHeroData HeroData;
 
@@ -61,5 +64,11 @@ namespace Raid.DataModel
 
         [JsonProperty("stages")]
         public IReadOnlyDictionary<int, StageData> Stages;
+    }
+
+    public class StaticAcademyData : StaticDataBase
+    {
+        [JsonProperty("guardianBonusByRarity")]
+        public IReadOnlyDictionary<HeroRarity, StatBonus[][]> GuardianBonusByRarity;
     }
 }

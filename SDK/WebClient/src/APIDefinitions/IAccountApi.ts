@@ -32,4 +32,8 @@ export class IAccountApi {
   public async getArena(accountId: string): Promise<unknown> {
     methodStub(this, accountId);
   }
+
+  public async getAcademy(accountId: string): Promise<unknown> {
+    methodStub(this, accountId);
+  }
 }

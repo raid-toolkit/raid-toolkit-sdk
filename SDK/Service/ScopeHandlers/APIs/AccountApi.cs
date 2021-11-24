@@ -56,6 +56,11 @@ namespace Raid.Service
             return Task.FromResult(ArenaFacet.ReadValue(UserData.GetAccount(accountId)));
         }
 
+        public Task<AcademyData> GetAcademy(string accountId)
+        {
+            return Task.FromResult(AcademyFacet.ReadValue(UserData.GetAccount(accountId)));
+        }
+
         public Task<Artifact[]> GetArtifacts(string accountId)
         {
             return Task.FromResult(ArtifactsFacet.ReadValue(UserData.GetAccount(accountId)).Values.ToArray());
