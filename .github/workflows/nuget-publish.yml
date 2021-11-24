@@ -8,6 +8,7 @@ on:
       - SDK/Client/**
       - SDK/Common/**
       - SDK/DataModel/**
+      - SDK/Model/**
 
 jobs:
   build:
