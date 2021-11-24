@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Raid.DataModel
 {
-    public class AccountDataFacetInfo
+    public class SerializedFacetInfo
     {
         [JsonProperty("lastUpdated")]
         public DateTime LastUpdated;
@@ -13,7 +13,7 @@ namespace Raid.DataModel
         [JsonProperty("version")]
         public string Version;
     }
-    public class AccountDataIndex
+    public class SerializedDataIndex
     {
         [JsonProperty("lastUpdated")]
         public DateTime? LastUpdated
@@ -23,6 +23,6 @@ namespace Raid.DataModel
         }
 
         [JsonProperty("facets")]
-        public IDictionary<string, AccountDataFacetInfo> Facets = new Dictionary<string, AccountDataFacetInfo>();
+        public IDictionary<string, SerializedFacetInfo> Facets = new Dictionary<string, SerializedFacetInfo>();
     }
 }

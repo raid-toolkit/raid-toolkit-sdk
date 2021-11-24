@@ -7,19 +7,20 @@ namespace Raid.Service
     public class StaticDataCache : IModelDataSource
     {
         private readonly Dictionary<string, object> Data = new();
-        private readonly Dictionary<IStaticFacet, bool> FacetState;
+        private readonly List<IStaticFacet> Facets;
         private readonly UserData UserData;
         public bool IsReady { get; private set; }
 
         public StaticDataCache(UserData userData)
         {
             UserData = userData;
-            FacetState = typeof(RaidInstance).Assembly.GetTypesAssignableTo<IStaticFacet>()
-                .ToDictionary(type => (IStaticFacet)Activator.CreateInstance(type), _ => false);
+            Facets = typeof(RaidInstance).Assembly.GetTypesAssignableTo<IStaticFacet>()
+                .Select(type => (IStaticFacet)Activator.CreateInstance(type))
+                .ToList();
 
-            foreach (IStaticFacet facet in FacetState.Keys)
+            foreach (IStaticFacet facet in Facets)
             {
-                facet.GetValue(this);
+                _ = facet.GetValue(this);
             }
             IsReady = !Data.Values.Contains(null);
             if (IsReady)
@@ -30,19 +31,11 @@ namespace Raid.Service
 
         public void Update(ModelScope scope)
         {
-            foreach ((IStaticFacet facet, bool successfulRead) in FacetState)
+            foreach (IStaticFacet facet in Facets)
             {
-                if (successfulRead)
-                {
-                    continue;
-                }
                 string name = FacetAttribute.GetName(facet.GetType());
-                Data.TryGetValue(name, out object currentValue);
+                _ = Data.TryGetValue(name, out object currentValue);
                 object newValue = facet.Merge(scope, currentValue);
-                if (newValue != null)
-                {
-                    FacetState[facet] = true;
-                }
                 if (newValue != currentValue)
                 {
                     Set(name, newValue);
@@ -76,7 +69,7 @@ namespace Raid.Service
         public void Set<T>(string key, T value) where T : class
         {
             Data[key] = value;
-            UserData.WriteStaticData<T>(key, value);
+            UserData.WriteStaticData(key, value);
         }
     }
 }

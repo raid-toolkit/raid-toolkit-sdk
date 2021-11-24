@@ -7,24 +7,19 @@ namespace Raid.DataModel
 {
     public static partial class ModelExtensions
     {
-        public static float AsFloat(this Plarium.Common.Numerics.Fixed num) => (float)Math.Round(num.m_rawValue / (double)uint.MaxValue, 2);
+        public static float AsFloat(this Plarium.Common.Numerics.Fixed num)
+        {
+            return (float)Math.Round(num.m_rawValue / (double)uint.MaxValue, 2);
+        }
 
         public static IReadOnlyDictionary<string, V> ToModel<K, V>(this IDictionary<K, V> dict) where K : Enum
         {
-            if (dict == null)
-            {
-                return new Dictionary<string, V>();
-            }
-            return dict.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value);
+            return dict == null ? new Dictionary<string, V>() : dict.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value);
         }
 
         public static IReadOnlyDictionary<K, V> ToModelEnum<K, V>(this IDictionary<K, V> dict) where K : Enum
         {
-            if (dict == null)
-            {
-                return new Dictionary<K, V>();
-            }
-            return dict.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+            return dict == null ? new Dictionary<K, V>() : dict.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
         public static float SetStat(this Stats stats, SharedModel.Battle.Effects.StatKindId statKind, float value)
@@ -49,6 +44,8 @@ namespace Raid.DataModel
                     return stats.Resistance = value;
                 case SharedModel.Battle.Effects.StatKindId.Speed:
                     return stats.Speed = value;
+                default:
+                    break;
             }
             return value;
         }
@@ -75,6 +72,8 @@ namespace Raid.DataModel
                     return stats.Resistance += value;
                 case SharedModel.Battle.Effects.StatKindId.Speed:
                     return stats.Speed += value;
+                default:
+                    break;
             }
             return value;
         }
@@ -101,6 +100,8 @@ namespace Raid.DataModel
                     return stats.Resistance;
                 case SharedModel.Battle.Effects.StatKindId.Speed:
                     return stats.Speed;
+                default:
+                    break;
             }
             return 0f;
         }
@@ -181,11 +182,7 @@ namespace Raid.DataModel
 
         public static string ToModel(this SharedModel.Battle.Effects.StatKindId statKind)
         {
-            if (statKind == SharedModel.Battle.Effects.StatKindId.Defence)
-            {
-                return "Defense";
-            }
-            return statKind.ToString();
+            return statKind == SharedModel.Battle.Effects.StatKindId.Defence ? "Defense" : statKind.ToString();
         }
 
         public static Artifact ToModel(this SharedModel.Meta.Artifacts.Artifact artifact)
