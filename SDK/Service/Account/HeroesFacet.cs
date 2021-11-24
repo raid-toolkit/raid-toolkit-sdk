@@ -6,7 +6,7 @@ using SharedModel.Meta.Artifacts;
 
 namespace Raid.Service
 {
-    [Facet("heroes", Version = "2.0")]
+    [Facet("heroes", Version = "2.1")]
     public class HeroesFacet : UserAccountFacetBase<HeroData, HeroesFacet>
     {
         private readonly StaticDataCache StaticDataCache;

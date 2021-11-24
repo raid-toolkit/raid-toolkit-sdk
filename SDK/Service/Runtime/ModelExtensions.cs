@@ -126,6 +126,7 @@ namespace Raid.DataModel
                 Id = hero.Id,
                 TypeId = hero.TypeId,
                 Level = hero.Level,
+                EmpowerLevel = hero.EmpowerLevel,
                 Marker = hero.Marker.ToString(),
                 Rank = hero.Grade.ToString(),
                 Locked = hero.Locked,
@@ -232,7 +233,7 @@ namespace Raid.DataModel
             };
         }
 
-        public static StatBonus ToModel(this SharedModel.Meta.Artifacts.BonusValue bonus, SharedModel.Battle.Effects.StatKindId statKindId)
+        public static StatBonus ToModel(this BonusValue bonus, SharedModel.Battle.Effects.StatKindId statKindId)
         {
             return new()
             {

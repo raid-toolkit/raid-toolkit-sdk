@@ -24,6 +24,9 @@ namespace Raid.DataModel
         [JsonProperty("level")]
         public int Level;
 
+        [JsonProperty("empowerLevel")]
+        public int EmpowerLevel;
+
         [JsonProperty("rank")]
         public string Rank;
 
