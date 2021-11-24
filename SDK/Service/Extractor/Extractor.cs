@@ -33,6 +33,7 @@ namespace RaidExtractor.Core
             var heroes = HeroesFacet.ReadValue(account);
             var arena = ArenaFacet.ReadValue(account);
             var resources = ResourcesFacet.ReadValue(account);
+            var academy = AcademyFacet.ReadValue(account);
             // var shards = ArenaFacet.ReadValue(account);
             var staticData = StaticDataFacet.ReadValue(StaticDataCache);
 
@@ -43,6 +44,12 @@ namespace RaidExtractor.Core
                 GreatHall = arena.GreatHallBonuses.ToDictionary(
                     bonus => bonus.Affinity.ToString().ToCamelCase(),
                     bonus => (IReadOnlyDictionary<string, int>)bonus.Levels.ToDictionary(levels => levels.Key.ToString().ToCamelCase(), levels => levels.Value)),
+                FactionGuardians = academy.Guardians.ToDictionary(
+                    factionPair => factionPair.Key.ToString().ToCamelCase(),
+                    factionPair => (IReadOnlyDictionary<string, int>)factionPair.Value.ToDictionary(
+                        rarityPair => rarityPair.Key.ToString().ToCamelCase(),
+                        rarityPair => rarityPair.Value.AssignedHeroes.Length
+                    )),
                 Shards = resources.Shards.ToDictionary(
                     shard => shard.Key.ToString(),
                     shard => new ShardInfo() { Count = shard.Value, SummonData = new() }),

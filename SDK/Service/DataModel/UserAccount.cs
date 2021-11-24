@@ -16,7 +16,7 @@ namespace Raid.Service
         private readonly IReadOnlyList<IAccountFacet> Facets;
         private Dictionary<IAccountFacet, object> FacetToValueMap;
         private readonly ILogger<UserAccount> Logger;
-        private readonly AccountDataIndex Index;
+        private readonly SerializedDataIndex Index;
 
         public UserAccount(string userId, UserData userData, IServiceScope serviceScope)
         {
@@ -26,7 +26,7 @@ namespace Raid.Service
             Facets = serviceScope.ServiceProvider.GetServices<IAccountFacet>().ToList();
 
             // preload index
-            Index = UserData.ReadAccountData<AccountDataIndex>(userId, "_index") ?? new();
+            Index = UserData.ReadAccountData<SerializedDataIndex>(userId, "_index") ?? new();
             LastUpdated = Index.Facets.Count == 0 ? DateTime.UtcNow : Index.Facets.Values.Max(value => value.LastUpdated);
         }
 
@@ -49,7 +49,7 @@ namespace Raid.Service
 
                     // get version
                     Version dataVersion = new(1, 0);
-                    if (Index.Facets.TryGetValue(facetName, out AccountDataFacetInfo facetInfo))
+                    if (Index.Facets.TryGetValue(facetName, out SerializedFacetInfo facetInfo))
                     {
                         if (!string.IsNullOrEmpty(facetInfo.Version))
                             dataVersion = Version.Parse(facetInfo.Version);
@@ -116,7 +116,7 @@ namespace Raid.Service
             // update index
             if (!Index.Facets.TryGetValue(key, out var facetInfo))
             {
-                Index.Facets[key] = facetInfo = new AccountDataFacetInfo();
+                Index.Facets[key] = facetInfo = new SerializedFacetInfo();
             }
             facetInfo.LastUpdated = DateTime.UtcNow;
             facetInfo.Version = version.ToString();

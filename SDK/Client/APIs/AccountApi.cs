@@ -52,5 +52,10 @@ namespace Raid.Client
         {
             return CallMethod<ArenaData>(MethodBase.GetCurrentMethod(), accountId);
         }
+
+        public Task<AcademyData> GetAcademy(string accountId)
+        {
+            return CallMethod<AcademyData>(MethodBase.GetCurrentMethod(), accountId);
+        }
     }
 }
