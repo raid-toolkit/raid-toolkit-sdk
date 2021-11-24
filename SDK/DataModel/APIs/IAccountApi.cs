@@ -31,5 +31,8 @@ namespace Raid.DataModel
 
         [PublicApi("getArena")]
         Task<ArenaData> GetArena(string accountId);
+
+        [PublicApi("getAcademy")]
+        Task<AcademyData> GetAcademy(string accountId);
     }
 }

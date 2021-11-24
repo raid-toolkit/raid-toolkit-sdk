@@ -31,3 +31,6 @@ class AccountApi:
 
     def get_arena(self, accountId: str):
         return self.client.call("account-api", "getArena", [accountId])
+
+    def get_academy(self, accountId: str):
+        return self.client.call("account-api", "getAcademy", [accountId])
