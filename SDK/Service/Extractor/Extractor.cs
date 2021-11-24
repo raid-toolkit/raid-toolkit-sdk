@@ -82,6 +82,7 @@ namespace RaidExtractor.Core
                         TypeId = hero.TypeId,
                         Grade = hero.Rank.ToString(),
                         Level = hero.Level,
+                        EmpowerLevel = hero.EmpowerLevel,
                         Experience = hero.Experience,
                         FullExperience = hero.FullExperience,
                         Locked = hero.Locked,

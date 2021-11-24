@@ -133,6 +133,9 @@ namespace RaidExtractor.Core
         [Newtonsoft.Json.JsonProperty("level", Required = Newtonsoft.Json.Required.Always)]
         public int Level { get; set; }
 
+        [Newtonsoft.Json.JsonProperty("empowerLevel", Required = Newtonsoft.Json.Required.Always)]
+        public int EmpowerLevel { get; set; }
+
         [Newtonsoft.Json.JsonProperty("experience", Required = Newtonsoft.Json.Required.Always)]
         public int Experience { get; set; }
 
