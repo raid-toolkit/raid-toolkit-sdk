@@ -14,26 +14,21 @@
             "console": "integratedTerminal"
         },
         {
-            "name": "Launch Compiler",
+            "name": "Launch Prebuild",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/Il2CppToolkit/ReverseCompiler.Cli/bin/Debug/net5.0/Il2CppToolkit.ReverseCompiler.Cli.dll",
+            "program": "${workspaceFolder}/SDK/Model.PreBuild/bin/Debug/net5.0/Model.PreBuild.exe",
             "args": [
-                "--name",
-                "Raid.Interop",
-                "--game-assembly",
-                "C:\\Users\\PowerSpec\\AppData\\Local\\Plarium\\PlariumPlay\\StandAloneApps\\raid\\251\\GameAssembly.dll",
-                "--metadata",
-                "C:\\Users\\PowerSpec\\AppData\\Local\\Plarium\\PlariumPlay\\StandAloneApps\\raid\\251\\Raid_Data\\il2cpp_data\\Metadata\\global-metadata.dat",
-                "--out-path",
-                "D:\\temp",
-                "--target",
-                "NetCore,TSDef",
-                "--include",
-                "Client.Model.Gameplay.Artifacts.ExternalArtifactsStorage"
+                "${workspaceFolder}\\bin"
             ],
-            "cwd": "${workspaceFolder}/Il2CppToolkit/ReverseCompiler.Cli",
+            "env": {
+                "FORCE": "true",
+                "RTK_DEBUG": "true",
+                "app:MemoryLogging": "Error"
+            },
+            "justMyCode": false,
+            "cwd": "${workspaceFolder}/SDK/Model.PreBuild",
             "console": "internalConsole",
             "stopAtEntry": false
         },

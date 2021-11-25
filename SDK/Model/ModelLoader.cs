@@ -27,7 +27,7 @@ namespace Raid.Model
         }
 
 
-        internal Assembly Load()
+        internal Assembly Load(bool force = false)
         {
             PlariumPlayAdapter.GameInfo gameInfo = GetGameInfo();
             Version = gameInfo.Version;
@@ -35,7 +35,7 @@ namespace Raid.Model
             string executingPath = System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName;
             string dllPath = Path.Join(Path.GetDirectoryName(executingPath), gameInfo.Version, "Raid.Interop.dll");
 
-            if (!File.Exists(dllPath))
+            if (!File.Exists(dllPath) || force)
             {
                 GenerateAssembly(gameInfo, dllPath);
             }
@@ -72,6 +72,7 @@ namespace Raid.Model
             compiler.AddTarget(new NetCoreTarget());
             compiler.AddConfiguration(
                 ArtifactSpecs.TypeSelectors.MakeValue(new List<Func<TypeDescriptor, bool>>{
+                    {td => td.Name == "Client.ViewModel.AppViewModel"},
                     {td => td.Name == "Client.Model.AppModel"},
                     {td => td.Name == "Client.Model.Gameplay.Artifacts.ExternalArtifactsStorage"},
                     {td => td.Name == "Client.Model.Gameplay.StaticData.ClientStaticDataManager"},

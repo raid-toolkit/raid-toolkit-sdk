@@ -10,11 +10,11 @@ namespace Raid.Model
         public static string CurrentVersion => GameInfo.Version;
         public static PlariumPlayAdapter.GameInfo GameInfo => ModelLoader.GetGameInfo();
 
-        public ModelAssemblyResolver()
+        public ModelAssemblyResolver(bool force = false)
         {
             m_loader = new();
             AppDomain.CurrentDomain.AssemblyResolve += HandleAssemblyResolve;
-            _ = m_loader.Load();
+            _ = m_loader.Load(force);
             LoadedVersion = m_loader.Version;
         }
 

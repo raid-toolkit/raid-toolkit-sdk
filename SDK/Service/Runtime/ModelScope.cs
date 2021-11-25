@@ -1,4 +1,5 @@
 using Client.Model;
+using Client.ViewModel;
 using Client.Model.Gameplay.StaticData;
 using Il2CppToolkit.Runtime;
 
@@ -8,22 +9,24 @@ namespace Raid.Service
     {
         public Il2CsRuntimeContext Context { get; }
         public AppModel AppModel { get; }
+        public AppViewModel AppViewModel { get; }
         public ClientStaticDataManager StaticDataManager { get; }
         public ModelScope(Il2CsRuntimeContext context)
         {
             Context = context;
-            var statics = Client.App.SingleInstance<Client.Model.AppModel>.method_get_Instance.GetMethodInfo(Context).DeclaringClass.StaticFields
-                .As<AppModelStaticFields>();
-            AppModel = statics.Instance;
+            AppModel = Client.App.SingleInstance<AppModel>.method_get_Instance.GetMethodInfo(Context).DeclaringClass.StaticFields
+                .As<SingleInstanceStaticFields<AppModel>>().Instance;
+            AppViewModel = Client.App.SingleInstance<AppViewModel>.method_get_Instance.GetMethodInfo(Context).DeclaringClass.StaticFields
+                .As<SingleInstanceStaticFields<AppViewModel>>().Instance;
             StaticDataManager = AppModel.StaticDataManager as ClientStaticDataManager;
         }
 
         [Size(16)]
-        private struct AppModelStaticFields
+        private struct SingleInstanceStaticFields<T>
         {
             [Offset(8)]
 #pragma warning disable 649
-            public Client.Model.AppModel Instance;
+            public T Instance;
 #pragma warning restore 649
         }
     }

@@ -1,26 +1,26 @@
-﻿using Raid.Model;
-using System;
+﻿using System;
 using System.IO;
 using System.Reflection;
+using Raid.Model;
 
 [assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]
 
 namespace Model.PreBuild
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             if (Environment.GetEnvironmentVariable("IS_CI") == "true")
             {
                 return;
             }
-            using ModelAssemblyResolver resolver = new();
+            using ModelAssemblyResolver resolver = new(force: Environment.GetEnvironmentVariable("FORCE") == "true");
 
             Assembly asm = AppDomain.CurrentDomain.Load("Raid.Interop");
             string targetFile = Path.Join(args[0], Path.GetFileName(asm.Location));
             Console.WriteLine($"Copying [{asm.Location}] to [{targetFile}]");
-            Directory.CreateDirectory(Path.GetDirectoryName(targetFile));
+            _ = Directory.CreateDirectory(Path.GetDirectoryName(targetFile));
             File.Delete(targetFile);
             File.Copy(asm.Location, targetFile);
         }
