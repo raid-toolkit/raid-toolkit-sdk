@@ -19,7 +19,7 @@ namespace Raid.Service
             AppViewModel = Client.App.SingleInstance<AppViewModel>.method_get_Instance.GetMethodInfo(Context).DeclaringClass.StaticFields
                 .As<SingleInstanceStaticFields<AppViewModel>>().Instance;
 
-            var statics = Client.View.Views.BattleView.method_get_Game.GetMethodInfo(Context).DeclaringClass.StaticFields;
+            // var statics = Client.View.Views.BattleView.method_get_Game.GetMethodInfo(Context).DeclaringClass.StaticFields;
             StaticDataManager = AppModel.StaticDataManager as ClientStaticDataManager;
         }
 
