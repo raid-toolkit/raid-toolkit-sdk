@@ -8,6 +8,7 @@ namespace Raid.Model
         private readonly ModelLoader m_loader;
         public static string LoadedVersion { get; private set; }
         public static string CurrentVersion => GameInfo.Version;
+        public static Version InteropVersion { get; private set; }
         public static PlariumPlayAdapter.GameInfo GameInfo => ModelLoader.GetGameInfo();
 
         public ModelAssemblyResolver(bool force = false)
@@ -15,7 +16,8 @@ namespace Raid.Model
             m_loader = new();
             AppDomain.CurrentDomain.AssemblyResolve += HandleAssemblyResolve;
             _ = m_loader.Load(force);
-            LoadedVersion = m_loader.Version;
+            LoadedVersion = m_loader.GameVersion;
+            InteropVersion = m_loader.InteropVersion;
         }
 
         private Assembly HandleAssemblyResolve(object source, ResolveEventArgs e)
