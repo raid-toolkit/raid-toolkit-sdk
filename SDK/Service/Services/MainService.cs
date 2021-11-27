@@ -97,6 +97,7 @@ namespace Raid.Service
             Console.CancelKeyPress += (sender, e) => Application.Exit();
             TaskExtensions.RunAfter(1, UpdateAccounts);
 
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.Run(ServiceProvider.GetRequiredService<UI.MainWindow>());
         }
 
