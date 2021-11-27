@@ -72,6 +72,8 @@ namespace Raid.Model
             compiler.AddTarget(new NetCoreTarget());
             compiler.AddConfiguration(
                 ArtifactSpecs.TypeSelectors.MakeValue(new List<Func<TypeDescriptor, bool>>{
+                    {td => td.Name == "UnityEngine.GameObject"},
+                    {td => td.Name == "Client.View.Views.BattleView"},
                     {td => td.Name == "Client.ViewModel.AppViewModel"},
                     {td => td.Name == "Client.Model.AppModel"},
                     {td => td.Name == "Client.Model.Gameplay.Artifacts.ExternalArtifactsStorage"},

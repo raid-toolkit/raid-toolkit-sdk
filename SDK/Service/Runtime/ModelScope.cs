@@ -1,6 +1,6 @@
 using Client.Model;
-using Client.ViewModel;
 using Client.Model.Gameplay.StaticData;
+using Client.ViewModel;
 using Il2CppToolkit.Runtime;
 
 namespace Raid.Service
@@ -18,6 +18,8 @@ namespace Raid.Service
                 .As<SingleInstanceStaticFields<AppModel>>().Instance;
             AppViewModel = Client.App.SingleInstance<AppViewModel>.method_get_Instance.GetMethodInfo(Context).DeclaringClass.StaticFields
                 .As<SingleInstanceStaticFields<AppViewModel>>().Instance;
+
+            var statics = Client.View.Views.BattleView.method_get_Game.GetMethodInfo(Context).DeclaringClass.StaticFields;
             StaticDataManager = AppModel.StaticDataManager as ClientStaticDataManager;
         }
 
