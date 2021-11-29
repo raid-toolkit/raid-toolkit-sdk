@@ -17,4 +17,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [![Feature Request #58](https://img.shields.io/badge/Feature-%2358-yellowgreen)](https://github.com/raid-toolkit/raid-toolkit-sdk/issues/58) Add Academy data (Faction guardian bonuses)
 
-- [![Feature Request #64](https://img.shields.io/badge/Feature-%2364-yellowgreen)](https://github.com/raid-toolkit/raid-toolkit-sdk/issues/64) Add guardian data to internal model & dump format
+- [![Feature Request #62](https://img.shields.io/badge/Feature-%2362-yellowgreen)](https://github.com/raid-toolkit/raid-toolkit-sdk/issues/62) Add guardian data to internal model & dump format
