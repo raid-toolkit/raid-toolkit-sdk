@@ -19,9 +19,6 @@ namespace Raid.Service
             AppViewModel = Client.App.SingleInstance<AppViewModel>.method_get_Instance.GetMethodInfo(Context).DeclaringClass.StaticFields
                 .As<SingleInstanceStaticFields<AppViewModel>>().Instance;
 
-            // Contexts.StaticFields[]
-            _ = Contexts.GetStaticFields(context);
-
             StaticDataManager = AppModel.StaticDataManager as ClientStaticDataManager;
         }
 

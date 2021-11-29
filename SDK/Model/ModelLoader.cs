@@ -16,10 +16,6 @@ namespace Raid.Model
     {
         private static readonly Version CurrentInteropVersion;
         private static readonly string[] IncludeTypes = new[] {
-            "Contexts",
-            "GameContext",
-            "UnityEngine.GameObject",
-            "Client.View.Views.BattleView",
             "Client.ViewModel.AppViewModel",
             "Client.Model.AppModel",
             "Client.Model.Gameplay.Artifacts.ExternalArtifactsStorage",
@@ -31,7 +27,7 @@ namespace Raid.Model
         static ModelLoader()
         {
             int hashCode = string.Join(";", IncludeTypes).GetStableHashCode();
-            CurrentInteropVersion = new(1, 3, 0, Math.Abs(hashCode % 99999));
+            CurrentInteropVersion = new(1, 3, 0, Math.Abs(hashCode % 999));
         }
 
         public string GameVersion { get; private set; }
