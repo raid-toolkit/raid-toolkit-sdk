@@ -26,6 +26,15 @@ namespace RaidExtractor.Core
             };
         }
 
+        private static bool IsFactionGuardian(Raid.DataModel.Hero hero, AcademyData academy)
+        {
+            var guardiansByFaction = academy?.Guardians;
+            return guardiansByFaction != null
+                && guardiansByFaction.TryGetValue(hero.Type.Faction, out var guardiansByRarity)
+                && guardiansByRarity.TryGetValue(hero.Type.Rarity, out var data)
+                && data.AssignedHeroes.Any(slot => slot.FirstHero == hero.Id || slot.SecondHero == hero.Id);
+        }
+
         public AccountDump DumpAccount(UserAccount account)
         {
             var accountFacet = AccountFacet.ReadValue(account);
@@ -87,6 +96,7 @@ namespace RaidExtractor.Core
                         FullExperience = hero.FullExperience,
                         Locked = hero.Locked,
                         InStorage = hero.InVault,
+                        IsGuardian = IsFactionGuardian(hero, academy),
                         Marker = hero.Marker.ToString(),
                         // extras
                         Masteries = hero.Masteries?.Cast<int>().ToList() ?? new(),
@@ -97,10 +107,10 @@ namespace RaidExtractor.Core
                         Skills = hero.SkillsById?.Values.Select(skill => new Skill() { TypeId = skill.TypeId, Id = skill.Id, Level = skill.Level, }).ToList() ?? new(),
                         // type fields
                         Name = heroType.Name.DefaultValue,
-                        Fraction = heroType.Faction.ToString(),
-                        Element = heroType.Affinity.ToString(),
-                        Rarity = heroType.Rarity.ToString(),
-                        Role = heroType.Role.ToString(),
+                        Fraction = heroType.Faction,
+                        Element = heroType.Affinity,
+                        Rarity = heroType.Rarity,
+                        Role = heroType.Role,
                         AwakenLevel = heroType.TypeId % 10,
                         Accuracy = heroType.UnscaledStats.Accuracy,
                         Attack = (int)Math.Round(heroType.UnscaledStats.Attack * multiplier.multiplier),

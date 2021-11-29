@@ -1,4 +1,6 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Raid.DataModel.Enums;
 
 namespace Raid.DataModel
 {
@@ -10,17 +12,17 @@ namespace Raid.DataModel
         [JsonProperty("name")]
         public LocalizedText Name;
 
-        [JsonProperty("affinity")]
-        public string Affinity;
+        [JsonProperty("affinity"), JsonConverter(typeof(StringEnumConverter))]
+        public Element Affinity;
 
-        [JsonProperty("faction")]
-        public string Faction;
+        [JsonProperty("faction"), JsonConverter(typeof(StringEnumConverter))]
+        public HeroFraction Faction;
 
-        [JsonProperty("role")]
-        public string Role;
+        [JsonProperty("role"), JsonConverter(typeof(StringEnumConverter))]
+        public HeroRole Role;
 
-        [JsonProperty("rarity")]
-        public string Rarity;
+        [JsonProperty("rarity"), JsonConverter(typeof(StringEnumConverter))]
+        public HeroRarity Rarity;
 
         [JsonProperty("ascended")]
         public int Ascended;

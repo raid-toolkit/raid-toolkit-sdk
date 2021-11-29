@@ -21,7 +21,7 @@ namespace RaidExtractor.Core
     public partial class AccountDump
     {
         [Newtonsoft.Json.JsonProperty("fileVersion", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string FileVersion { get; set; } = "1.1";
+        public string FileVersion { get; set; } = "1.2";
 
         [Newtonsoft.Json.JsonProperty("artifacts", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public System.Collections.Generic.ICollection<Artifact> Artifacts { get; set; }
@@ -148,6 +148,9 @@ namespace RaidExtractor.Core
         [Newtonsoft.Json.JsonProperty("inStorage", Required = Newtonsoft.Json.Required.Always)]
         public bool InStorage { get; set; }
 
+        [Newtonsoft.Json.JsonProperty("isGuardian", Required = Newtonsoft.Json.Required.Always)]
+        public bool IsGuardian { get; set; }
+
         [Newtonsoft.Json.JsonProperty("marker", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string Marker { get; set; }
 
@@ -155,16 +158,20 @@ namespace RaidExtractor.Core
         public System.Collections.Generic.ICollection<int> Artifacts { get; set; }
 
         [Newtonsoft.Json.JsonProperty("fraction", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Fraction { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public HeroFraction Fraction { get; set; }
 
         [Newtonsoft.Json.JsonProperty("rarity", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Rarity { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public HeroRarity Rarity { get; set; }
 
         [Newtonsoft.Json.JsonProperty("role", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Role { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public HeroRole Role { get; set; }
 
         [Newtonsoft.Json.JsonProperty("element", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
-        public string Element { get; set; }
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
+        public Element Element { get; set; }
 
         [Newtonsoft.Json.JsonProperty("awakenLevel", Required = Newtonsoft.Json.Required.Always)]
         public int AwakenLevel { get; set; }

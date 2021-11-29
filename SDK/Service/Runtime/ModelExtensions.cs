@@ -262,14 +262,14 @@ namespace Raid.DataModel
         {
             return new HeroType()
             {
-                Affinity = type.Element.ToString(),
+                Affinity = (Enums.Element)type.Element,
                 Ascended = type.Id % 10,
                 AvatarKey = type.AvatarName,
-                Faction = type.Fraction.ToString(),
+                Faction = (Enums.HeroFraction)type.Fraction,
                 ModelName = type.ModelName,
                 Name = type.Name.ToModel(),
-                Rarity = type.Rarity.ToString(),
-                Role = type.Role.ToString(),
+                Rarity = (Enums.HeroRarity)type.Rarity,
+                Role = (Enums.HeroRole)type.Role,
                 LeaderSkill = type.LeaderSkill?.ToModel(),
                 SkillTypeIds = type.SkillTypeIds?.ToArray(),
                 TypeId = type.Id,

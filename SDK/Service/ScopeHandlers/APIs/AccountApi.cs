@@ -112,7 +112,7 @@ namespace Raid.Service
             HeroStatsCalculator stats = new(type, (int)Enum.Parse<SharedModel.Meta.Heroes.HeroGrade>(hero.Rank), hero.Level);
 
             // arena
-            var greatHallBonus = arenaData.GreatHallBonuses?.FirstOrDefault(ghb => ghb.Affinity.ToString() == type.Affinity);
+            var greatHallBonus = arenaData.GreatHallBonuses?.FirstOrDefault(ghb => ghb.Affinity == type.Affinity);
             if (greatHallBonus != null)
                 stats.ApplyBonuses(StatSource.GreatHall, greatHallBonus.Bonus.ToArray());
 
