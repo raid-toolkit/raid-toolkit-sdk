@@ -40,11 +40,11 @@ namespace RaidExtractor.Core
             return new AccountDump()
             {
                 LastUpdated = account.LastUpdated.ToString("o"),
-                ArenaLeague = arena.ClassicArena.LeagueId.ToString(),
+                ArenaLeague = arena.ClassicArena?.LeagueId.ToString(),
                 GreatHall = arena.GreatHallBonuses.ToDictionary(
                     bonus => bonus.Affinity.ToString().ToCamelCase(),
                     bonus => (IReadOnlyDictionary<string, int>)bonus.Levels.ToDictionary(levels => levels.Key.ToString().ToCamelCase(), levels => levels.Value)),
-                FactionGuardians = academy.Guardians.ToDictionary(
+                FactionGuardians = academy?.Guardians?.ToDictionary(
                     factionPair => factionPair.Key.ToString().ToCamelCase(),
                     factionPair => (IReadOnlyDictionary<string, int>)factionPair.Value.ToDictionary(
                         rarityPair => rarityPair.Key.ToString().ToCamelCase(),
