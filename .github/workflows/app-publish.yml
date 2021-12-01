@@ -6,6 +6,7 @@ on:
       - main
       - release/**
     paths:
+      - version.json
       - .github/workflows/app-publish.yml
       - 'SDK/**'
       - '!SDK/Python/**'
