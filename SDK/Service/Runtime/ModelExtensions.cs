@@ -315,6 +315,23 @@ namespace Raid.DataModel
             };
         }
 
+        public static EffectGroup ToModel(this SharedModel.Battle.Effects.EffectGroup type)
+        {
+            return (EffectGroup)type;
+        }
+
+        public static TargetParamsStub ToModel(this SharedModel.Battle.Effects.EffectTargetParams.TargetParams type)
+        {
+            return new TargetParamsStub
+            {
+                TargetType = (EffectTargetType)type.TargetType,
+                Exclusion = (TargetExclusion)type.Exclusion.Value,
+                Exclusive = type.Exclusive,
+                FirstHitInSelected = type.FirstHitInSelected,
+                Condition = type.Condition,
+            };
+        }
+
         public static EffectRelationStub ToModel(this SharedModel.Battle.Effects.EffectRelation type)
         {
             return new EffectRelationStub
@@ -620,7 +637,6 @@ namespace Raid.DataModel
             };
         }
 
-
         public static ChangeEffectTargetParamsStub ToModel(
             this SharedModel.Battle.Effects.EffectParams.ChangeEffectTargetParams type)
         {
@@ -630,15 +646,6 @@ namespace Raid.DataModel
                 ApplyMode = (ApplyMode)type.ApplyMode.Value,
             };
         }
-
-        //public static EffectContainerParamsStub ToModel(
-        //    this SharedModel.Battle.Effects.EffectParams.EffectContainerParams type)
-        //{
-        //    return new EffectContainerParamsStub
-        //    {
-        //        Effect = (EffectType)type.Effect,
-        //    };
-        //}
 
         public static EffectType ToModel(this SharedModel.Battle.Effects.EffectType type)
         {
@@ -650,14 +657,8 @@ namespace Raid.DataModel
                 StackCount = type.StackCount,
                 Multiplier = type.MultiplierFormula,
 
-                IsActive = type.Group == SharedModel.Battle.Effects.EffectGroup.Active,
-
-                TargetType = type.TargetParams.TargetType.ToString(),
-                TargetExclusion = type.TargetParams.Exclusion.ToString(),
-                IsTargetExclusive = type.TargetParams.Exclusive,
-                IsTargetFirstHitInSelected = type.TargetParams.FirstHitInSelected,
-                TargetCondition = type.TargetParams.Condition,
-
+                Group = type.Group.ToModel(),
+                TargetParams = type.TargetParams.ToModel(),
                 IsEffectDescription = type.IsEffectDescription,
                 ConsidersDead = type.ConsidersDead,
                 LeaveThroughDeath = type.LeaveThroughDeath,
@@ -701,7 +702,6 @@ namespace Raid.DataModel
                 MultiplyStatusEffectParams = type.MultiplyStatusEffectParams?.ToModel(),
                 IgnoreProtectionEffectsParams = type.IgnoreProtectionEffectsParams?.ToModel(),
                 ChangeEffectTargetParams = type.ChangeEffectTargetParams?.ToModel(),
-                //EffectContainerParams = type.EffectContainerParams?.ToModel(),
                 MultiplierDependsOnRelation = type.MultiplierDependsOnRelation,
             };
         }

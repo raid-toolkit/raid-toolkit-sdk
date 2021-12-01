@@ -74,6 +74,12 @@ namespace Raid.DataModel
         }
     }
 
+    public enum EffectGroup
+    {
+        Active,
+        Passive,
+    }
+
     public enum EffectKindId
     {
         Revive = 0,
@@ -222,6 +228,14 @@ namespace Raid.DataModel
         EnemyWithLowestStamina = 38, // 0x00000026
         EnemyWithHighestStamina = 39, // 0x00000027
         RelationProducerOrTeamAttackInitiator = 40, // 0x00000028
+    }
+
+    public enum TargetExclusion
+    {
+        Target,
+        Producer,
+        RelationTarget,
+        RelationProducer,
     }
 
     public enum StatusEffectTypeId
@@ -411,6 +425,27 @@ namespace Raid.DataModel
         ShieldCreation = 2,
         StaminaRecovery = 3,
         ArtifactSetStats = 4,
+    }
+
+    public class EffectGroupStub
+    {}
+
+    public class TargetParamsStub
+    {
+        [JsonProperty("targetType")]
+        public EffectTargetType TargetType;
+
+        [JsonProperty("exclusion")]
+        public TargetExclusion Exclusion;
+
+        [JsonProperty("exclusive")]
+        public bool Exclusive;
+
+        [JsonProperty("firstHitInSelected")]
+        public bool FirstHitInSelected;
+
+        [JsonProperty("condition")]
+        public string Condition;
     }
 
     public class EffectRelationStub
@@ -774,13 +809,6 @@ namespace Raid.DataModel
         public ApplyMode ApplyMode;
     }
 
-
-    //public class EffectContainerParamsStub
-    //{
-    //    [JsonProperty("effect")]
-    //    public EffectType Effect;
-    //}
-
     public class EffectType
     {
         [JsonProperty("id")]
@@ -800,23 +828,11 @@ namespace Raid.DataModel
 
         // TODO: there's a lot more data here we could extract
 
-        [JsonProperty("isActive")]
-        public bool IsActive;
+        [JsonProperty("group")]
+        public EffectGroup Group;
 
-        [JsonProperty("targetType")]
-        public string TargetType;
-
-        [JsonProperty("targetExclusion")]
-        public string TargetExclusion;
-
-        [JsonProperty("isTargetExclusive")]
-        public bool IsTargetExclusive;
-
-        [JsonProperty("isTargetFirstHitInSelected")]
-        public bool IsTargetFirstHitInSelected;
-
-        [JsonProperty("targetCondition")]
-        public string TargetCondition;
+        [JsonProperty("targetParams")]
+        public TargetParamsStub TargetParams;
 
         [JsonProperty("isEffectDescription")]
         public bool IsEffectDescription;
@@ -946,9 +962,6 @@ namespace Raid.DataModel
 
         [JsonProperty("changeEffectTargetParams")]
         public ChangeEffectTargetParamsStub ChangeEffectTargetParams;
-
-        //[JsonProperty("effectContainerParams")]
-        //public EffectContainerParamsStub EffectContainerParams;
 
         [JsonProperty("multiplierDependsOnRelation")]
         public bool MultiplierDependsOnRelation;
