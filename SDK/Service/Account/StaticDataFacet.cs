@@ -20,7 +20,10 @@ namespace Raid.Service
             var artifactTypes = staticData.ArtifactData._setInfoByKind.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ToModel());
             var skillTypes = staticData.SkillData._skillTypeById.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ToModel());
             var arenaLeagues = staticData.ArenaData.LeagueInfoById.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ToModel());
-            var localizedStrings = new Dictionary<string, string>(staticData.ClientLocalization.Concat(staticData.StaticDataLocalization));
+            var localizedStrings = new Dictionary<string, string>(staticData.ClientLocalization
+                .Concat(staticData.StaticDataLocalization)
+                .GroupBy(x => x.Key)
+                .Select(g => g.First()));
 
             var areas = new Dictionary<AreaTypeId, AreaData>();
             var regions = new Dictionary<RegionTypeId, RegionData>();
