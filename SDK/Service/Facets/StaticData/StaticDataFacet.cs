@@ -24,7 +24,9 @@ namespace Raid.Service
                 kvp => (DataModel.Enums.HeroRarity)kvp.Key,
                 kvp => kvp.Value.Select(bonuses => bonuses.Bonuses.Select(bonus => bonus.Value.ToModel(bonus.Key)).ToArray()).ToArray()
             );
-            var localizedStrings = new Dictionary<string, string>(staticData.ClientLocalization.Concat(staticData.StaticDataLocalization));
+            var localizedStrings = new Dictionary<string, string>(staticData.ClientLocalization.Concat(staticData.StaticDataLocalization)
+                .GroupBy(x => x.Key)
+                .Select(g => g.First()));
 
             var areas = new Dictionary<AreaTypeId, AreaData>();
             var regions = new Dictionary<RegionTypeId, RegionData>();
