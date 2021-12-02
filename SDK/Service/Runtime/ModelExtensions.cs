@@ -315,6 +315,338 @@ namespace Raid.DataModel
             };
         }
 
+        public static EffectGroup ToModel(this SharedModel.Battle.Effects.EffectGroup type)
+        {
+            return (EffectGroup)type;
+        }
+
+        public static TargetParamsStub ToModel(this SharedModel.Battle.Effects.EffectTargetParams.TargetParams type)
+        {
+            return new TargetParamsStub
+            {
+                TargetType = (EffectTargetType)type.TargetType,
+                Exclusion = (TargetExclusion)type.Exclusion.Value,
+                Exclusive = type.Exclusive,
+                FirstHitInSelected = type.FirstHitInSelected,
+                Condition = type.Condition,
+            };
+        }
+
+        public static EffectRelationStub ToModel(this SharedModel.Battle.Effects.EffectRelation type)
+        {
+            return new EffectRelationStub
+            {
+                EffectTypeId = type.EffectTypeId.Value,
+                EffectKindIds = type.EffectKindIds?.Cast<EffectKindId>(),
+                EffectKindGroups = type.EffectKindGroups?.Cast<EffectKindGroup>(),
+                Phase = type.Phase.ToString(),
+                ActivateOnGlancingHit = type.ActivateOnGlancingHit
+            };
+        }
+
+        public static StatusEffectParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.StatusEffectParams.StatusEffectParams type)
+        {
+            return new StatusEffectParamsStub
+            {
+                StrengthInFamily = type.StrengthInFamily,
+                ForcedTickAllowed = type.ForcedTickAllowed,
+                LifetimeUpdateType = (LifetimeUpdateType)type.LifetimeUpdateType,
+                UnapplyWhenProducerDied = type.UnapplyWhenProducerDied.Value,
+            };
+        }
+
+        public static ApplyStatusEffectParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.ApplyStatusEffectParams type)
+        {
+            var stub = new ApplyStatusEffectParamsStub { StatusEffectInfos = new List<StatusEffectInfoStub>() };
+            foreach (var x in type.StatusEffectInfos)
+            {
+                stub.StatusEffectInfos.Append(new StatusEffectInfoStub
+                {
+                    TypeId = x.TypeId,
+                    Duration = x.Duration,
+                    IgnoreEffectsLimit = x.IgnoreEffectsLimit,
+                    ApplyMode = (ApplyMode)x.ApplyMode.Value,
+                    Protection = (ProtectionMode)x.Protection.Value
+                });
+            }
+            return stub;
+        }
+
+        public static UnapplyStatusEffectParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.UnapplyStatusEffectParams type)
+        {
+            return new UnapplyStatusEffectParamsStub
+            {
+                Count = type.Count,
+                StatusEffectTypeIds = type.StatusEffectTypeIds?.Cast<StatusEffectTypeId>(),
+                UnapplyMode = (UnapplyEffectMode)type.UnapplyMode,
+                RemoveFrom = (UnapplyEffectTarget)type.RemoveFrom.Value,
+                ApplyTo = (UnapplyEffectTarget)type.ApplyTo.Value,
+            };
+        }
+
+        public static TransferDebuffParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.TransferDebuffParams type)
+        {
+            return new TransferDebuffParamsStub
+            {
+                Count = type.Count,
+                StatusEffectTypeIds = type.StatusEffectTypeIds?.Cast<StatusEffectTypeId>(),
+                UnapplyMode = (UnapplyEffectMode)type.UnapplyMode,
+                IncludeProducer = type.IncludeProducer,
+                ApplyMode = (ApplyMode)type.ApplyMode.Value,
+                RemoveFrom = (EffectTargetType)type.RemoveFrom,
+                ApplyTo = (EffectTargetType)type.ApplyTo,
+            };
+        }
+
+        public static DamageParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.DamageParams type)
+        {
+            return new DamageParamsStub
+            {
+                HitType = (HitType)type.HitType.Value,
+                ElementRelation = (ElementRelation)type.ElementRelation.Value,
+                DefenceModifier = type.DefenceModifier.m_rawValue,
+                IsFixed = type.IsFixed,
+                DoesNotCountAsHit = type.DoesNotCountAsHit,
+                IncreaseCriticalHitChance = type.IncreaseCriticalHitChance.Value.m_rawValue,
+                ValueCapExpression = type.ValueCapExpression,
+            };
+        }
+
+        public static HealParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.HealParams type)
+        {
+            return new HealParamsStub
+            {
+                CanBeCritical = type.CanBeCritical,
+            };
+        }
+
+        public static EvenParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.EvenParams type)
+        {
+            return new EvenParamsStub
+            {
+                EvenMode = (EvenMode)type.EvenMode,
+            };
+        }
+
+        public static ChangeStatParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.ChangeStatParams type)
+        {
+            return new ChangeStatParamsStub
+            {
+                Param = (StatKindId)type.Param,
+            };
+        }
+
+        public static ActivateSkillParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.ActivateSkillParams.ActivateSkillParams type)
+        {
+            return new ActivateSkillParamsStub
+            {
+                SkillIndex = type.SkillIndex,
+                SkillOwner = (ActivateSkillOwner)type.SkillOwner,
+                TargetExpression = type.TargetExpression,
+            };
+        }
+
+        public static ShowHiddenSkillParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.ShowHiddenSkillParams type)
+        {
+            return new ShowHiddenSkillParamsStub
+            {
+                SkillTypeId = type.SkillTypeId,
+                ShouldHide = type.ShouldHide,
+            };
+        }
+
+        public static ChangeSkillCooldownParamsStub ToModel(
+            this SharedModel.Battle.Effects.EffectParams.ChangeSkillCooldownParams type)
+        {
+            return new ChangeSkillCooldownParamsStub
+            {
+                Turns = type.Turns,
+                SkillIndex = type.SkillIndex.Value,
+                IsRandomSkill = type.IsRandomSkill.Value,
+                SkillToChange = (SkillToChange)type.SkillToChange,
+            };
+        }
+
+        public static ChangeEffectLifetimeParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.ChangeEffectLifetimeParams type)
+        {
+            return new ChangeEffectLifetimeParamsStub
+            {
+                Type = (AppliedEffectType)type.Type,
+                Turns = type.Turns,
+                Count = type.Count,
+                EffectTypeIds = type.EffectTypeIds?.Cast<StatusEffectTypeId>(),
+            };
+        }
+
+        public static ShareDamageParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.ShareDamageParams type)
+        {
+            return new ShareDamageParamsStub
+            {
+                TargetDamageCutPerc = type.TargetDamageCutPerc.m_rawValue,
+                TransferedDamagePerc = type.TransferedDamagePerc.m_rawValue,
+                DefenceModifier = type.DefenceModifier.Value.m_rawValue,
+            };
+        }
+
+        public static BlockEffectParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.BlockEffectParams type)
+        {
+            return new BlockEffectParamsStub
+            {
+                EffectTypeIds = type.EffectTypeIds?.Cast<int>(),
+                EffectKindIds = type.EffectKindIds?.Cast<int>(),
+                BlockGuaranteed = type.BlockGuaranteed.Value,
+            };
+        }
+
+        public static SummonParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.SummonParams type)
+        {
+            return new SummonParamsStub
+            {
+                BaseTypeId = type.BaseTypeId,
+                AscendLevelFormula = type.AscendLevelFormula,
+                GradeFormula = type.GradeFormula,
+                LevelFormula = type.LevelFormula,
+                RemoveAfterDeath = type.RemoveAfterDeath,
+                SlotsLimit = type.SlotsLimit,
+            };
+        }
+
+        public static TeamAttackParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.TeamAttackParams type)
+        {
+            return new TeamAttackParamsStub
+            {
+                TeammatesCount = type.TeammatesCount,
+                ExcludeProducerFromAttack = type.ExcludeProducerFromAttack,
+                PreferredHeroTypes = type.PreferredHeroTypes,
+                AlwaysUsePreferredWhenPossible = type.AlwaysUsePreferredWhenPossible.Value,
+                AllySelectorExpression = type.AllySelectorExpression,
+            };
+        }
+
+        public static DestroyHpParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.DestroyHpParams type)
+        {
+            return new DestroyHpParamsStub
+            {
+                IgnoreShield = type.IgnoreShield,
+            };
+        }
+
+        public static ReviveParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.ReviveParams type)
+        {
+            return new ReviveParamsStub
+            {
+                HealPercent = type.HealPercent.m_rawValue,
+                IgnoreBlockRevive = type.IgnoreBlockRevive,
+            };
+        }
+
+        public static CounterattackParamsStub ToModel(
+            this SharedModel.Battle.Effects.EffectParams.CounterattackParams type)
+        {
+            return new CounterattackParamsStub
+            {
+                SkillIndex = type.SkillIndex,
+                NoPenalty = type.NoPenalty,
+            };
+        }
+
+        public static ForceStatusEffectTickParamsStub ToModel(
+            this SharedModel.Battle.Effects.EffectParams.ForceStatusEffectTickParams type)
+        {
+            return new ForceStatusEffectTickParamsStub
+            {
+                Ticks = type.Ticks,
+                EffectTypeIds = type.EffectTypeIds?.Cast<StatusEffectTypeId>(),
+                EffectCount = type.EffectCount,
+            };
+        }
+
+        public static CrabShellLayerStub ToModel(
+            this SharedModel.Battle.Effects.EffectParams.CrabShellParams.CrabShellLayer type)
+        {
+            return new CrabShellLayerStub
+            {
+                Type = (CrabShellLayerType)type.Type,
+                MultiplierFormula = type.MultiplierFormula,
+                ConditionFormula = type.ConditionFormula,
+            };
+        }
+
+        public static IEnumerable<CrabShellLayerStub> ToModel(
+            this IEnumerable<SharedModel.Battle.Effects.EffectParams.CrabShellParams.CrabShellLayer> type)
+        {
+            return type.Select(ToModel);
+        }
+
+        public static CrabShellParamsStub ToModel(
+            this SharedModel.Battle.Effects.EffectParams.CrabShellParams.CrabShellParams type)
+        {
+            return new CrabShellParamsStub
+            {
+                Layers = type.Layers.ToModel(),
+            };
+        }
+
+        public static ReturnDebuffsParamsStub ToModel(
+            this SharedModel.Battle.Effects.EffectParams.ReturnDebuffsParams type)
+        {
+            return new ReturnDebuffsParamsStub
+            {
+                ApplyMode = (ApplyMode)type.ApplyMode.Value,
+            };
+        }
+
+        public static HitTypeParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.HitTypeParams type)
+        {
+            return new HitTypeParamsStub
+            {
+                HitTypeToChange = (HitType)type.HitTypeToChange.Value,
+                HitType = (HitType)type.HitType,
+            };
+        }
+
+        public static PassiveBonusParamsStub ToModel(
+            this SharedModel.Battle.Effects.EffectParams.PassiveBonusParams type)
+        {
+            return new PassiveBonusParamsStub
+            {
+                Bonus = (PassiveBonus)type.Bonus,
+            };
+        }
+
+        public static MultiplyStatusEffectParamsStub ToModel(
+            this SharedModel.Battle.Effects.EffectParams.MultiplyStatusEffectParams type)
+        {
+            return new MultiplyStatusEffectParamsStub
+            {
+                Count = type.Count,
+                TurnsModifier = type.TurnsModifier,
+                EffectKindIds = type.EffectKindIds?.Cast<EffectKindId>(),
+                TargetSelectorExpression = type.TargetSelectorExpression,
+            };
+        }
+
+        public static IgnoreProtectionEffectsParamsStub ToModel(
+            this SharedModel.Battle.Effects.EffectParams.IgnoreProtectionEffectsParams type)
+        {
+            return new IgnoreProtectionEffectsParamsStub
+            {
+                IgnoreBlockDamage = type.IgnoreBlockDamage,
+                IgnoreShield = type.IgnoreShield,
+                IgnoreUnkillable = type.IgnoreUnkillable,
+            };
+        }
+
+        public static ChangeEffectTargetParamsStub ToModel(
+            this SharedModel.Battle.Effects.EffectParams.ChangeEffectTargetParams type)
+        {
+            return new ChangeEffectTargetParamsStub
+            {
+                OverrideApplyMode = type.OverrideApplyMode,
+                ApplyMode = (ApplyMode)type.ApplyMode.Value,
+            };
+        }
+
         public static EffectType ToModel(this SharedModel.Battle.Effects.EffectType type)
         {
             return new EffectType()
@@ -324,6 +656,53 @@ namespace Raid.DataModel
                 Count = type.Count,
                 StackCount = type.StackCount,
                 Multiplier = type.MultiplierFormula,
+
+                Group = type.Group.ToModel(),
+                TargetParams = type.TargetParams.ToModel(),
+                IsEffectDescription = type.IsEffectDescription,
+                ConsidersDead = type.ConsidersDead,
+                LeaveThroughDeath = type.LeaveThroughDeath,
+                DoesntSetSkillOnCooldown = type.DoesntSetSkillOnCooldown,
+                IgnoresCooldown = type.IgnoresCooldown,
+                IsUnique = type.IsUnique,
+                IterationChanceRolling = type.IterationChanceRolling,
+                Relation = type.Relation?.ToModel(),
+                Condition = type.Condition,
+                Chance = type.Chance.Value.m_rawValue,
+                RepeatChance = type.RepeatChance.Value.m_rawValue,
+                StatusParams = type.StatusParams?.ToModel(),
+                ValueCap = type.ValueCap,
+                ApplyInstantEffectMode = (ApplyMode)type.ApplyInstantEffectMode.Value,
+                PersistsThroughRounds = type.PersistsThroughRounds,
+                SnapshotRequired = type.SnapshotRequired,
+                IgnoredEffects = type.IgnoredEffects?.Cast<EffectKindId>(),
+                ApplyStatusEffectParams = type.ApplyStatusEffectParams?.ToModel(),
+                UnapplyStatusEffectParams = type.UnapplyStatusEffectParams?.ToModel(),
+                TransferDebuffParams = type.TransferDebuffParams?.ToModel(),
+                DamageParams = type.DamageParams?.ToModel(),
+                HealParams = type.HealParams?.ToModel(),
+                EvenParams = type.EvenParams?.ToModel(),
+                ChangeStatParams = type.ChangeStatParams?.ToModel(),
+                ActivateSkillParams = type.ActivateSkillParams?.ToModel(),
+                ShowHiddenSkillParams = type.ShowHiddenSkillParams?.ToModel(),
+                ChangeSkillCooldownParams = type.ChangeSkillCooldownParams?.ToModel(),
+                ChangeEffectLifetimeParams = type.ChangeEffectLifetimeParams?.ToModel(),
+                ShareDamageParams = type.ShareDamageParams?.ToModel(),
+                BlockEffectParams = type.BlockEffectParams?.ToModel(),
+                SummonParams = type.SummonParams?.ToModel(),
+                TeamAttackParams = type.TeamAttackParams?.ToModel(),
+                DestroyHpParams = type.DestroyHpParams?.ToModel(),
+                ReviveParams = type.ReviveParams?.ToModel(),
+                CounterattackParams = type.CounterattackParams?.ToModel(),
+                ForceTickParams = type.ForceTickParams?.ToModel(),
+                CrabShellParams = type.CrabShellParams?.ToModel(),
+                ReturnDebuffsParams = type.ReturnDebuffsParams?.ToModel(),
+                HitTypeParams = type.HitTypeParams?.ToModel(),
+                PassiveBonusParams = type.PassiveBonusParams?.ToModel(),
+                MultiplyStatusEffectParams = type.MultiplyStatusEffectParams?.ToModel(),
+                IgnoreProtectionEffectsParams = type.IgnoreProtectionEffectsParams?.ToModel(),
+                ChangeEffectTargetParams = type.ChangeEffectTargetParams?.ToModel(),
+                MultiplierDependsOnRelation = type.MultiplierDependsOnRelation,
             };
         }
 
