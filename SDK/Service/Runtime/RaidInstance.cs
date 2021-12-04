@@ -10,19 +10,23 @@ namespace Raid.Service
         public string Id;
         private Il2CsRuntimeContext Runtime;
         private UserAccount UserAccount;
+        private int FailuresInARow;
 
         private readonly UserData UserData;
         private readonly StaticDataCache StaticDataCache;
         private readonly ILogger<RaidInstance> Logger;
+        private readonly ErrorService ErrorService;
 
         public RaidInstance(
             UserData userData,
             StaticDataCache staticDataCache,
+            ErrorService errorService,
             ILogger<RaidInstance> logger)
         {
             UserData = userData;
             StaticDataCache = staticDataCache;
             Logger = logger;
+            ErrorService = errorService;
         }
 
         public RaidInstance Attach(Process process)
@@ -40,7 +44,16 @@ namespace Raid.Service
             if (!StaticDataCache.IsReady)
                 return;
 
-            UserAccount.Update(scope);
+            if (UserAccount.Update(scope))
+                FailuresInARow = 0;
+            else
+                ++FailuresInARow;
+
+            if (FailuresInARow > 10)
+            {
+                string accountName = AccountFacet.ReadValue(UserAccount).Name;
+                ErrorService.EmitError(new ErrorEventArgs(ServiceError.AccountReadError, ServiceErrorCategory.Account, accountName, this));
+            }
         }
 
         private string GetAccountId()
