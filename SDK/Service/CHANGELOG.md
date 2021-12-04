@@ -5,7 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased] - v1.4.xx
+## [Unreleased] - v1.5.xx
+
+- [![Feature Request #64](https://img.shields.io/badge/Feature-%2364-yellowgreen)](https://github.com/raid-toolkit/raid-toolkit-sdk/issues/64) Notification when account can't be updated
+
+## [Current Stable Version] - v1.4.0
 
 ### 🚀 Features
 
