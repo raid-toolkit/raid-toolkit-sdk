@@ -67,8 +67,9 @@ namespace Raid.Service
             }
         }
 
-        public void Update(ModelScope scope)
+        public bool Update(ModelScope scope)
         {
+            bool success = true;
             foreach ((IAccountFacet facet, object currentValue) in FacetToValueMap)
             {
                 string facetName = FacetAttribute.GetName(facet.GetType());
@@ -87,9 +88,11 @@ namespace Raid.Service
                 }
                 catch (Exception ex)
                 {
+                    success = false;
                     Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account facet '{facetName}'");
                 }
             }
+            return success;
         }
 
         public T Read<T>(string key) where T : class

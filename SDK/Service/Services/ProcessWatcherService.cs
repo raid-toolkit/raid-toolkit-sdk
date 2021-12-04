@@ -14,7 +14,7 @@ namespace Raid.Service
         {
             public int Id { get; }
             public Process Process { get; }
-            public bool Retry { get; set; } = false;
+            public bool Retry { get; set; }
             public ProcessWatcherEventArgs(Process process)
             {
                 Process = process;
@@ -32,10 +32,14 @@ namespace Raid.Service
         public event EventHandler<ProcessWatcherEventArgs> ProcessFound;
         public event EventHandler<ProcessWatcherEventArgs> ProcessClosed;
 
-        public ProcessWatcherService(IOptions<AppSettings> settings) => Settings = settings.Value.ProcessWatcher;
+        public ProcessWatcherService(IOptions<AppSettings> settings)
+        {
+            Settings = settings.Value.ProcessWatcher;
+        }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
+            await Task.Delay(1000, stoppingToken);
             RefreshProcesses();
             try
             {
@@ -50,7 +54,7 @@ namespace Raid.Service
             HashSet<int> currentIds = new(ActiveProcesses.Keys);
             foreach (Process process in processes)
             {
-                currentIds.Remove(process.Id);
+                _ = currentIds.Remove(process.Id);
                 if (!ActiveProcesses.ContainsKey(process.Id))
                 {
                     ProcessWatcherEventArgs args = new(process);
@@ -67,7 +71,7 @@ namespace Raid.Service
                     closedProcess.Dispose();
                 }
             }
-            TaskExtensions.RunAfter(Settings.PollIntervalMs, RefreshProcesses);
+            _ = TaskExtensions.RunAfter(Settings.PollIntervalMs, RefreshProcesses);
         }
     }
 }
