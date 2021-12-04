@@ -10,10 +10,12 @@ namespace Raid.Service
         MessageProcessingFailure,
         ApiProxyException,
         AccountUpdateFailed,
-        AccoutNotReady,
+        AccountNotReady,
         ObjectReadError,
         MissingUpdateAsset,
         UnhandledException,
         ThreadException,
+        AccountReadError,
+        ProcessAccessDenied,
     }
 }
