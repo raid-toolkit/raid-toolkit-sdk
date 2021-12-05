@@ -81,10 +81,10 @@ namespace Raid.Service
             try
             {
                 EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName, out string scope);
-                if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{subscriptionMessage.EventName}", out var handler))
+                if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{scope}:{subscriptionMessage.EventName}", out var handler))
                 {
                     handler = async (object sender, SerializableEventArgs args) => await SendEvent(eventInfo, session, args, scope);
-                    EventHandlerDelegates.Add($"{session.Id}:{subscriptionMessage.EventName}", handler);
+                    EventHandlerDelegates.Add($"{session.Id}:{scope}:{subscriptionMessage.EventName}", handler);
                 }
                 eventInfo.AddEventHandler(this, handler);
             }
@@ -96,11 +96,10 @@ namespace Raid.Service
 
         private void Unsubscribe(SubscriptionMessage subscriptionMessage, ISocketSession session)
         {
-            string scope = string.Empty;
             try
             {
-                EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName, out scope);
-                if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
+                EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName, out string scope);
+                if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{scope}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
                     return;
 
                 eventInfo.RemoveEventHandler(this, handler);
@@ -117,7 +116,7 @@ namespace Raid.Service
             {
                 if (!session.Connected)
                 {
-                    if (EventHandlerDelegates.Remove($"{session.Id}:{args.EventName}", out EventHandler<SerializableEventArgs> handler))
+                    if (EventHandlerDelegates.Remove($"{session.Id}:{scope}:{args.EventName}", out EventHandler<SerializableEventArgs> handler))
                     {
                         eventInfo.RemoveEventHandler(this, handler);
                     }
