@@ -53,32 +53,30 @@ namespace Raid.Service
 
         private void OnProcessFound(object sender, ProcessWatcherService.ProcessWatcherEventArgs e)
         {
+            using TrackedOperation createInstanceOp = ErrorService.TrackOperation(ServiceErrorCategory.Process, e.Id.ToString(), e.Id);
             try
             {
                 _ = Factory.Create(e.Process, ServiceProvider.CreateScope());
+                ErrorService.ClearError(ServiceErrorCategory.Process, e.Id.ToString());
             }
             catch (System.ComponentModel.Win32Exception ex)
             {
                 if (ex.NativeErrorCode == 5) // access denied
                 {
-                    ErrorService.EmitError(new ErrorEventArgs(
-                        ServiceError.ProcessAccessDenied,
-                        ServiceErrorCategory.Process,
-                        e.Id.ToString(),
-                        e.Process.Id));
+                    createInstanceOp.Fail(ServiceError.ProcessAccessDenied);
                     Logger.LogError(ServiceError.ProcessAccessDenied.EventId(), ex, "Process cannot be accessed, is it running as administrator?");
                     e.Retry = false;
                 }
                 else
                 {
-                    ErrorService.EmitError(new ErrorEventArgs(ServiceError.AccountNotReady, ServiceErrorCategory.Process, e.Id.ToString(), e.Process.Id));
+                    createInstanceOp.Fail(ServiceError.AccountNotReady, 5);
                     Logger.LogError(ServiceError.AccountNotReady.EventId(), ex, "Account is not ready");
                     e.Retry = true;
                 }
             }
             catch (Exception ex)
             {
-                ErrorService.EmitError(new ErrorEventArgs(ServiceError.AccountNotReady, ServiceErrorCategory.Process, e.Id.ToString(), e.Process.Id));
+                createInstanceOp.Fail(ServiceError.AccountNotReady, 5);
                 Logger.LogError(ServiceError.AccountNotReady.EventId(), ex, "Account is not ready");
                 e.Retry = true;
             }

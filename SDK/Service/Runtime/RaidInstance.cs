@@ -10,7 +10,7 @@ namespace Raid.Service
         public string Id;
         private Il2CsRuntimeContext Runtime;
         private UserAccount UserAccount;
-        private int FailuresInARow;
+        private string AccountName;
 
         private readonly UserData UserData;
         private readonly StaticDataCache StaticDataCache;
@@ -34,26 +34,21 @@ namespace Raid.Service
             Runtime = new Il2CsRuntimeContext(process);
             Id = GetAccountId();
             UserAccount = UserData.GetAccount(Id);
+            AccountName = AccountFacet.ReadValue(UserAccount).Name;
             return this;
         }
 
         public void Update()
         {
+            using TrackedOperation updateAccountOp = ErrorService.TrackOperation(ServiceErrorCategory.Account, AccountName, this);
+
             ModelScope scope = new(Runtime);
             StaticDataCache.Update(scope);
             if (!StaticDataCache.IsReady)
                 return;
 
-            if (UserAccount.Update(scope))
-                FailuresInARow = 0;
-            else
-                ++FailuresInARow;
-
-            if (FailuresInARow > 10)
-            {
-                string accountName = AccountFacet.ReadValue(UserAccount).Name;
-                ErrorService.EmitError(new ErrorEventArgs(ServiceError.AccountReadError, ServiceErrorCategory.Account, accountName, this));
-            }
+            if (!UserAccount.Update(scope))
+                updateAccountOp.Fail(ServiceError.AccountReadError, 10);
         }
 
         private string GetAccountId()

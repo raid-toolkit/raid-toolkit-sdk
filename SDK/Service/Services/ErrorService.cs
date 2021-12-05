@@ -11,7 +11,12 @@ namespace Raid.Service
         public string ErrorMessage { get; set; }
         public string HelpMessage { get; set; }
         public object Target { get; }
-        public string Key => $"{Category}:{ErrorCode}:{TargetDescription}";
+        public ulong Count { get; set; }
+        public ulong Threshold { get; set; }
+        public bool Notified { get; set; }
+
+        public string Key => $"{Category}:{TargetDescription}";
+
         public ErrorEventArgs(ServiceError errorCode, ServiceErrorCategory category, string targetDescription, object target)
         {
             ErrorCode = errorCode;
@@ -20,6 +25,7 @@ namespace Raid.Service
             Target = target;
         }
     }
+
     public class ErrorService : IdleBackgroundService
     {
         public readonly Dictionary<string, ErrorEventArgs> CurrentErrors = new();
@@ -27,18 +33,77 @@ namespace Raid.Service
         public event EventHandler<ErrorEventArgs> OnErrorAdded;
         public event EventHandler<ErrorEventArgs> OnErrorCleared;
 
+        public TrackedOperation TrackOperation(ServiceErrorCategory category, string targetDescription, object target)
+        {
+            return new TrackedOperation(this, category, targetDescription, target);
+        }
+
         public void EmitError(ErrorEventArgs args)
         {
-            if (CurrentErrors.TryAdd(args.Key, args))
-                OnErrorAdded?.Invoke(this, args);
+            _ = CurrentErrors.TryAdd(args.Key, args);
+            var storedArgs = CurrentErrors[args.Key];
+            ++storedArgs.Count;
+            if (storedArgs.Count >= storedArgs.Threshold && !storedArgs.Notified)
+            {
+                storedArgs.Notified = true;
+                OnErrorAdded?.Invoke(this, storedArgs);
+            }
 
             OnError?.Invoke(this, args);
         }
 
-        public void ClearError(ErrorEventArgs args)
+        public void ClearError(ServiceErrorCategory category, string targetDescription)
         {
-            if (CurrentErrors.Remove(args.Key))
-                OnError?.Invoke(this, args);
+            if (CurrentErrors.Remove($"{category}:{targetDescription}", out var args))
+                OnErrorCleared?.Invoke(this, args);
+        }
+    }
+
+    public class TrackedOperation : IDisposable
+    {
+        private bool disposedValue;
+
+        private readonly ErrorService ErrorService;
+        private bool Failed;
+        public ServiceErrorCategory Category { get; }
+        public string TargetDescription { get; }
+        public object Target { get; }
+        public TrackedOperation(ErrorService errorService, ServiceErrorCategory category, string targetDescription, object target)
+        {
+            Category = category;
+            TargetDescription = targetDescription;
+            Target = target;
+            ErrorService = errorService;
+        }
+
+        public void Fail(ServiceError errorCode, ulong threshold = 0)
+        {
+            if (Failed)
+                return;
+            Failed = true;
+            ErrorService.EmitError(new(errorCode, Category, TargetDescription, Target) { Threshold = threshold });
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    if (!Failed)
+                    {
+                        ErrorService.ClearError(Category, TargetDescription);
+                    }
+                }
+                disposedValue = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }
