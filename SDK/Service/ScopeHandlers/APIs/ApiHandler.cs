@@ -10,15 +10,16 @@ using Raid.Service.Messages;
 
 namespace Raid.Service
 {
-    internal abstract class ApiHandler : IMessageScopeHandler
+    internal abstract class ApiHandler<T> : IMessageScopeHandler
     {
         private readonly Dictionary<string, EventHandler<SerializableEventArgs>> EventHandlerDelegates = new();
         private readonly IReadOnlyDictionary<string, ApiMemberDefinition> Methods;
-        protected ILogger<ApiHandler> Logger;
+        protected ILogger<ApiHandler<T>> Logger;
+        private readonly PublicApiInfo<T> Api = new();
 
         private readonly string[] SupportedScopes;
 
-        public ApiHandler(ILogger<ApiHandler> logger)
+        public ApiHandler(ILogger<ApiHandler<T>> logger)
         {
             Logger = logger;
 
@@ -80,7 +81,7 @@ namespace Raid.Service
         {
             try
             {
-                EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName, out string scope);
+                EventInfo eventInfo = Api.GetPublicApi<EventInfo>(subscriptionMessage.EventName, out string scope);
                 if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{scope}:{subscriptionMessage.EventName}", out var handler))
                 {
                     handler = async (object sender, SerializableEventArgs args) => await SendEvent(eventInfo, session, args, scope);
@@ -98,7 +99,7 @@ namespace Raid.Service
         {
             try
             {
-                EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName, out string scope);
+                EventInfo eventInfo = Api.GetPublicApi<EventInfo>(subscriptionMessage.EventName, out string scope);
                 if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{scope}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
                     return;
 
@@ -147,7 +148,7 @@ namespace Raid.Service
             string scope = string.Empty;
             try
             {
-                MethodInfo methodInfo = GetPublicApi<MethodInfo>(message.MethodName, out scope);
+                MethodInfo methodInfo = Api.GetPublicApi<MethodInfo>(message.MethodName, out scope);
 
                 var methodParameters = methodInfo.GetParameters();
                 if (methodParameters.Length < message.Parameters.Count)
@@ -185,7 +186,7 @@ namespace Raid.Service
             string scope = string.Empty;
             try
             {
-                PropertyInfo propertyInfo = GetPublicApi<PropertyInfo>(message.PropertyName, out scope);
+                PropertyInfo propertyInfo = Api.GetPublicApi<PropertyInfo>(message.PropertyName, out scope);
                 object result = propertyInfo.GetValue(this);
                 var returnValue = await message.Resolve(result);
                 var response = new SocketMessage() { Scope = scope, Channel = "set-promise", Message = returnValue };
@@ -196,31 +197,6 @@ namespace Raid.Service
                 Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Api property access failed");
                 var response = new SocketMessage() { Scope = scope, Channel = "set-promise", Message = message.Reject(ex) };
                 await session.Send(response);
-            }
-        }
-
-        private T GetPublicApi<T>(string name, out string scope) where T : MemberInfo
-        {
-            if (Methods.TryGetValue(name, out ApiMemberDefinition member) && member.MemberInfo is T result)
-            {
-                scope = member.Scope;
-                return result;
-            }
-            throw new MissingMethodException(member?.Scope ?? "", name);
-        }
-
-        private class ApiMemberDefinition
-        {
-            public string Scope { get; }
-            public string Name => MemberInfo.Name;
-            public MemberInfo MemberInfo { get; }
-            public PublicApiAttribute Attribute { get; }
-
-            public ApiMemberDefinition(string scope, MemberInfo memberInfo, PublicApiAttribute attribute)
-            {
-                Scope = scope;
-                MemberInfo = memberInfo;
-                Attribute = attribute;
             }
         }
     }

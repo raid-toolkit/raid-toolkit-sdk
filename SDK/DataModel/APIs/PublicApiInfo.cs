@@ -16,7 +16,7 @@ namespace Raid.DataModel
             Members = typeof(T).GetMembers()
                     .Select(member => new ApiMemberDefinition(Name, member, member.GetCustomAttribute<PublicApiAttribute>()))
                     .Where(member => member.Attribute != null)
-                    .ToDictionary(entry => entry.Name);
+                    .ToDictionary(entry => entry.PublicName);
         }
 
         public U GetPublicApi<U>(string name, out string scope) where U : MemberInfo
@@ -28,11 +28,19 @@ namespace Raid.DataModel
             }
             throw new MissingMethodException(member?.Scope ?? "", name);
         }
+
+        public ApiMemberDefinition GetMember<U>(string memberName) where U : MemberInfo
+        {
+            return Members.TryGetValue(memberName, out ApiMemberDefinition member) && member.MemberInfo is U
+                ? member
+                : throw new MissingMethodException(member?.Scope ?? "", memberName);
+        }
     }
     public class ApiMemberDefinition
     {
         public string Scope { get; }
         public string Name => MemberInfo.Name;
+        public string PublicName => Attribute.Name;
         public MemberInfo MemberInfo { get; }
         public PublicApiAttribute Attribute { get; }
 

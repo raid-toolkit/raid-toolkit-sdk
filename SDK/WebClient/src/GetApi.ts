@@ -1,8 +1,8 @@
 import { useApi, useRouter } from '@remote-ioc/runtime';
 import { WebSocketClientRouter } from '@remote-ioc/ws-router';
+import * as APIs from './APIDefinitions';
 import { RaidToolkitClient } from './Client/RTKClient';
 import { RTKClientRouter } from './Client/RTKClientRouter';
-import * as APIs from './APIDefinitions';
 import { ValueOf } from './Types';
 
 let isInitialized = false;
@@ -17,6 +17,8 @@ function ensureInit(proxy: boolean) {
   isInitialized = true;
 }
 
+export function useRaidToolkitApi(definition: typeof APIs.IAccountApi, proxy?: boolean): APIs.IAccountApi;
+export function useRaidToolkitApi(definition: typeof APIs.IStaticDataApi, proxy?: boolean): APIs.IStaticDataApi;
 export function useRaidToolkitApi(definition: ValueOf<typeof APIs>, proxy: boolean = false) {
   ensureInit(proxy);
   return useApi(definition);

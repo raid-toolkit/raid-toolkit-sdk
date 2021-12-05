@@ -5,11 +5,14 @@ using Raid.DataModel;
 namespace Raid.Service
 {
     [PublicApi("static-data")]
-    internal class StaticDataApi : ApiHandler
+    internal class StaticDataApi : ApiHandler<StaticDataApi>
     {
-        private StaticDataCache StaticDataCache;
-        public StaticDataApi(ILogger<ApiHandler> logger, StaticDataCache staticData)
-            : base(logger) => StaticDataCache = staticData;
+        private readonly StaticDataCache StaticDataCache;
+        public StaticDataApi(ILogger<StaticDataApi> logger, StaticDataCache staticData)
+            : base(logger)
+        {
+            StaticDataCache = staticData;
+        }
 
         [PublicApi("getAllData")]
         public StaticData GetAllData()
