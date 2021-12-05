@@ -1,4 +1,3 @@
-using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using Raid.DataModel;
@@ -16,11 +15,14 @@ namespace Raid.Client
 
         protected Task<U> CallMethod<U>(MethodBase method, params object[] args)
         {
-            if (!Api.Methods.TryGetValue(method.Name, out var def))
-            {
-                return Task.FromException<U>(new MissingMethodException(typeof(T).Name, method.Name));
-            }
+            var def = Api.GetMember<MethodInfo>(method.Name);
             return Client.Call<U>(def.Scope, def.Attribute.Name, args);
+        }
+
+        protected void Subscribe(EventInfo eventInfo)
+        {
+            var def = Api.GetMember<EventInfo>(eventInfo.Name);
+            Client.Subscribe(def.Scope, def.Attribute.Name);
         }
     }
 }

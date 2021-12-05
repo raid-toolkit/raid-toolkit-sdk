@@ -7,9 +7,9 @@ using Raid.Model;
 namespace Raid.Service
 {
     [PublicApi("api:metadata")]
-    internal class MetadataApi : ApiHandler
+    internal class MetadataApi : ApiHandler<MetadataApi>
     {
-        private static string s_installPath;
+        private static readonly string s_installPath;
         static MetadataApi()
         {
             PlariumPlayAdapter pp = new();
@@ -20,9 +20,12 @@ namespace Raid.Service
             s_installPath = Path.Join(gameInfo.InstallPath, gameInfo.Version);
         }
 
-        public MetadataApi(ILogger<ApiHandler> logger) : base(logger) { }
+        public MetadataApi(ILogger<MetadataApi> logger) : base(logger) { }
 
         [PublicApi("getInstallPath")]
-        public string getInstallPath() => s_installPath;
+        public static string getInstallPath()
+        {
+            return s_installPath;
+        }
     }
 }

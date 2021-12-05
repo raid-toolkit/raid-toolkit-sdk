@@ -1,14 +1,16 @@
 import { ApiDefinition, methodStub } from '@remote-ioc/runtime';
-import { AccountInfo } from '../Types';
+import { AccountInfo, TypedEventEmitter } from '../Types';
 
 @ApiDefinition('account-api')
-export class IAccountApi {
+export class IAccountApi extends TypedEventEmitter<{ updated: [] }> {
   public async getAccounts(): Promise<AccountInfo[]> {
     methodStub(this);
   }
+
   public async getAccountDump(accountId: string): Promise<{}> {
     methodStub(this, accountId);
   }
+
   public async getArtifacts(accountId: string): Promise<unknown[]> {
     methodStub(this, accountId);
   }

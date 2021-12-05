@@ -16,4 +16,16 @@ async function run() {
   }
 }
 
-run();
+async function run2() {
+  const api = useRaidToolkitApi(IAccountApi);
+  const account = (await api.getAccounts())[0];
+  let lastDump = await api.getAccountDump(account.id);
+  api.on('updated', async () => {
+    let dump = await api.getAccountDump(account.id);
+    const patch = diff(lastDump, dump);
+    lastDump = dump;
+    if (patch) console.log(inspect(patch, false, 5, true));
+  });
+}
+
+run2();

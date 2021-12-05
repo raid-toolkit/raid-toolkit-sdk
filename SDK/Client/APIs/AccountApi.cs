@@ -1,12 +1,16 @@
+using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using Raid.DataModel;
+using Raid.Service;
 
 namespace Raid.Client
 {
     public class AccountApi : ApiBase<IAccountApi>, IAccountApi
     {
         internal AccountApi(RaidToolkitClient client) : base(client) { }
+
+        public event EventHandler<SerializableEventArgs> Updated;
 
         public Task<Account> GetAccount(string accountId)
         {

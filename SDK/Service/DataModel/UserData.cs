@@ -18,6 +18,8 @@ namespace Raid.Service
         private readonly IServiceProvider ServiceProvider;
         public IEnumerable<UserAccount> UserAccounts => m_userAccounts.Values;
 
+        public event EventHandler<EventArgs> Updated;
+
         public UserData(IOptions<AppSettings> settings, IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
@@ -123,6 +125,7 @@ namespace Raid.Service
         {
             string filePath = Path.Join(m_accountsPath, userId, key);
             _ = Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+            Updated?.Invoke(this, new());
             File.WriteAllText(filePath, JsonConvert.SerializeObject(value));
         }
     }

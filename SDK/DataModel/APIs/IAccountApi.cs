@@ -1,10 +1,15 @@
+using System;
 using System.Threading.Tasks;
+using Raid.Service;
 
 namespace Raid.DataModel
 {
     [PublicApi("account-api")]
     public interface IAccountApi
     {
+        [PublicApi("updated")]
+        event EventHandler<SerializableEventArgs> Updated;
+
         [PublicApi("getAccountDump")]
         Task<RaidExtractor.Core.AccountDump> GetAccountDump(string accountId);
 

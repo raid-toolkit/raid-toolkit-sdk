@@ -15,7 +15,7 @@
     "@cspotcode/source-map-consumer" "0.8.0"
 
 "@raid-toolkit/webclient@file:../../SDK/WebClient":
-  version "0.9.14"
+  version "0.9.15"
   dependencies:
     "@remote-ioc/runtime" "^2.0.4"
     "@remote-ioc/ws-router" "^0.1.2"

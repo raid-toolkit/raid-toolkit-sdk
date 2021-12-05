@@ -2,7 +2,7 @@ using System;
 
 namespace Raid.DataModel
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Event | AttributeTargets.Class | AttributeTargets.Interface)]
+    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Method | AttributeTargets.Event | AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Event)]
     public class PublicApiAttribute : Attribute
     {
         public string Name { get; }
