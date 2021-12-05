@@ -48,6 +48,7 @@ namespace RaidExtractor.Core
 
             return new AccountDump()
             {
+                Id = accountFacet.Id,
                 Name = accountFacet.Name,
                 LastUpdated = account.LastUpdated.ToString("o"),
                 ArenaLeague = arena.ClassicArena?.LeagueId.ToString(),
