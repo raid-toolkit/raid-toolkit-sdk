@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using Raid.DataModel;
 using Raid.Service.Messages;
 
@@ -10,14 +12,8 @@ namespace Raid.Service
 {
     internal abstract class ApiHandler : IMessageScopeHandler
     {
-        // class EventHandlerInfo
-        // {
-        //     public EventInfo EventInfo;
-        //     public EventHandler<SerializableEventArgs> Delegate;
-        //     public string Scope;
-        // }
-        // private Dictionary<string, EventHandlerInfo> EventHandlerDelegates = new();
-        private IReadOnlyDictionary<string, ApiMemberDefinition> Methods;
+        private readonly Dictionary<string, EventHandler<SerializableEventArgs>> EventHandlerDelegates = new();
+        private readonly IReadOnlyDictionary<string, ApiMemberDefinition> Methods;
         protected ILogger<ApiHandler> Logger;
 
         private readonly string[] SupportedScopes;
@@ -69,86 +65,83 @@ namespace Raid.Service
                 case "get":
                     GetProperty(message.Message.ToObject<GetPropertyMessage>(), session);
                     break;
-                    // case "sub":
-                    //     Subscribe(message.Message.ToObject<SubscriptionMessage>(), session);
-                    //     break;
-                    // case "unsub":
-                    //     Unsubscribe(message.Message.ToObject<SubscriptionMessage>(), session);
-                    //     break;
+                case "sub":
+                    Subscribe(message.Message.ToObject<SubscriptionMessage>(), session);
+                    break;
+                case "unsub":
+                    Unsubscribe(message.Message.ToObject<SubscriptionMessage>(), session);
+                    break;
+                default:
+                    break;
             }
         }
 
-        // private void Subscribe(SubscriptionMessage subscriptionMessage, ISocketSession session)
-        // {
-        //     try
-        //     {
-        //         EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName, out string scope);
-        //         if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{subscriptionMessage.EventName}", out EventHandlerInfo handler))
-        //         {
-        //             handler = new EventHandlerInfo()
-        //             {
-        //                 Delegate = async (object sender, SerializableEventArgs args) => await SendEvent(eventInfo, session, args),
-        //                 Scope = scope,
-        //                 EventInfo = eventInfo
-        //             };
-        //             EventHandlerDelegates.Add($"{session.Id}:{subscriptionMessage.EventName}", handler);
-        //         }
-        //         eventInfo.AddEventHandler(this, handler.Delegate);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Failed to subscribe");
-        //     }
-        // }
+        private void Subscribe(SubscriptionMessage subscriptionMessage, ISocketSession session)
+        {
+            try
+            {
+                EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName, out string scope);
+                if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{subscriptionMessage.EventName}", out var handler))
+                {
+                    handler = async (object sender, SerializableEventArgs args) => await SendEvent(eventInfo, session, args, scope);
+                    EventHandlerDelegates.Add($"{session.Id}:{subscriptionMessage.EventName}", handler);
+                }
+                eventInfo.AddEventHandler(this, handler);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Failed to subscribe");
+            }
+        }
 
-        // private async Task SendEvent(EventInfo eventInfo, ISocketSession session, SerializableEventArgs args)
-        // {
-        //     try
-        //     {
-        //         if (!session.Connected)
-        //         {
-        //             if (EventHandlerDelegates.Remove($"{session.Id}:{args.EventName}", out var handler))
-        //             {
-        //                 eventInfo.RemoveEventHandler(this, handler.Delegate);
-        //             }
-        //             return;
-        //         }
-        //         var handler = EventHandlerDelegates.Values.FirstOrDefault(entry=>entry.EventInfo == eventInfo);
-        //         SendEventMessage eventMsg = new()
-        //         {
-        //             EventName = args.EventName,
-        //             Payload = JArray.FromObject(args.EventArguments)
-        //         };
-        //         SocketMessage message = new()
-        //         {
-        //             Scope = handler.Name,
-        //             Channel = "send-event",
-        //             Message = JToken.FromObject(eventMsg)
-        //         };
-        //         await session.Send(message);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Failed to send event");
-        //     }
-        // }
+        private void Unsubscribe(SubscriptionMessage subscriptionMessage, ISocketSession session)
+        {
+            string scope = string.Empty;
+            try
+            {
+                EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName, out scope);
+                if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
+                    return;
 
-        // private void Unsubscribe(SubscriptionMessage subscriptionMessage, ISocketSession session)
-        // {
-        //     string scope = string.Empty;
-        //     try
-        //     {
-        //         EventInfo eventInfo = GetPublicApi<EventInfo>(subscriptionMessage.EventName, out scope);
-        //         if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
-        //             return;
+                eventInfo.RemoveEventHandler(this, handler);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Failed to unsubscribe");
+            }
+        }
 
-        //         eventInfo.RemoveEventHandler(this, handler);
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Failed to unsubscribe");
-        //     }
-        // }
+        private async Task SendEvent(EventInfo eventInfo, ISocketSession session, SerializableEventArgs args, string scope)
+        {
+            try
+            {
+                if (!session.Connected)
+                {
+                    if (EventHandlerDelegates.Remove($"{session.Id}:{args.EventName}", out EventHandler<SerializableEventArgs> handler))
+                    {
+                        eventInfo.RemoveEventHandler(this, handler);
+                    }
+                    return;
+                }
+
+                SendEventMessage eventMsg = new()
+                {
+                    EventName = args.EventName,
+                    Payload = JArray.FromObject(args.EventArguments)
+                };
+                SocketMessage message = new()
+                {
+                    Scope = scope,
+                    Channel = "send-event",
+                    Message = JToken.FromObject(eventMsg)
+                };
+                await session.Send(message);
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ServiceError.ApiProxyException.EventId(), ex, "Failed to send event");
+            }
+        }
 
         private async void CallMethod(CallMethodMessage message, ISocketSession session)
         {
