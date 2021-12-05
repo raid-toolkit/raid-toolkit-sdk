@@ -14,18 +14,23 @@ namespace Raid.Service
         private readonly StaticDataCache StaticDataCache;
         private readonly UserData UserData;
         private readonly Extractor Extractor;
-        public AccountApi(ILogger<AccountApi> logger, UserData userData, StaticDataCache staticData, Extractor extractor)
+        public AccountApi(
+            ILogger<AccountApi> logger,
+            UserData userData,
+            StaticDataCache staticData,
+            Extractor extractor,
+            EventService eventService)
             : base(logger)
         {
             UserData = userData;
             StaticDataCache = staticData;
             Extractor = extractor;
-            UserData.Updated += OnUserDataUpdated;
+            eventService.OnAccountUpdated += OnAccountUpdated;
         }
 
-        private void OnUserDataUpdated(object sender, EventArgs e)
+        private void OnAccountUpdated(object sender, AccountUpdatedEventArgs e)
         {
-            Updated?.Invoke(this, new() { EventName = "updated", EventArguments = Array.Empty<string>() });
+            Updated?.Invoke(this, e);
         }
 
         [PublicApi("updated")]

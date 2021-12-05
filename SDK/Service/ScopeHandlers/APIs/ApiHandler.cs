@@ -13,7 +13,6 @@ namespace Raid.Service
     internal abstract class ApiHandler<T> : IMessageScopeHandler
     {
         private readonly Dictionary<string, EventHandler<SerializableEventArgs>> EventHandlerDelegates = new();
-        private readonly IReadOnlyDictionary<string, ApiMemberDefinition> Methods;
         protected ILogger<ApiHandler<T>> Logger;
         private readonly PublicApiInfo<T> Api = new();
 
@@ -27,27 +26,15 @@ namespace Raid.Service
             types.Add(GetType());
             types.AddRange(GetType().GetInterfaces());
 
-            Dictionary<string, ApiMemberDefinition> methods = new();
-            Methods = methods;
 
             List<string> supportedScopes = new();
-
             foreach (Type type in types)
             {
                 PublicApiAttribute attr = type.GetCustomAttribute<PublicApiAttribute>(true);
                 if (attr == null)
                     continue;
-
                 supportedScopes.Add(attr.Name);
-                var members = type.GetMembers()
-                    .Select(member => new ApiMemberDefinition(attr.Name, member, member.GetCustomAttribute<PublicApiAttribute>()))
-                    .Where(member => member.Attribute != null);
-                foreach (var member in members)
-                {
-                    methods.Add(member.Attribute.Name, member);
-                }
             }
-
             SupportedScopes = supportedScopes.ToArray();
         }
 

@@ -40,6 +40,7 @@ namespace Raid.Service
                 .AddHostedServiceSingleton<ChannelService>()
                 .AddHostedServiceSingleton<UpdateService>()
                 .AddHostedServiceSingleton<ErrorService>()
+                .AddHostedServiceSingleton<EventService>()
                 .AddSingleton<ModelService>()
                 .AddSingleton<UserData>()
                 .AddSingleton<StaticDataCache>()

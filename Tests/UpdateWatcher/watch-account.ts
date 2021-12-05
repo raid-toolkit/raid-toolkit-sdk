@@ -20,7 +20,8 @@ async function run2() {
   const api = useRaidToolkitApi(IAccountApi);
   const account = (await api.getAccounts())[0];
   let lastDump = await api.getAccountDump(account.id);
-  api.on('updated', async () => {
+  api.on('updated', async (accountId) => {
+    console.log({ accountId });
     let dump = await api.getAccountDump(account.id);
     const patch = diff(lastDump, dump);
     lastDump = dump;

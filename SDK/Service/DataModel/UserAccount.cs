@@ -17,6 +17,7 @@ namespace Raid.Service
         private Dictionary<IAccountFacet, object> FacetToValueMap;
         private readonly ILogger<UserAccount> Logger;
         private readonly SerializedDataIndex Index;
+        private readonly EventService EventService;
 
         public UserAccount(string userId, UserData userData, IServiceScope serviceScope)
         {
@@ -24,6 +25,7 @@ namespace Raid.Service
             UserId = userId;
             Logger = serviceScope.ServiceProvider.GetService<ILogger<UserAccount>>();
             Facets = serviceScope.ServiceProvider.GetServices<IAccountFacet>().ToList();
+            EventService = serviceScope.ServiceProvider.GetRequiredService<EventService>();
 
             // preload index
             Index = UserData.ReadAccountData<SerializedDataIndex>(userId, "_index") ?? new();
@@ -70,6 +72,7 @@ namespace Raid.Service
         public bool Update(ModelScope scope)
         {
             bool success = true;
+            bool updated = false;
             foreach ((IAccountFacet facet, object currentValue) in FacetToValueMap)
             {
                 string facetName = FacetAttribute.GetName(facet.GetType());
@@ -82,6 +85,7 @@ namespace Raid.Service
                     FacetToValueMap[facet] = newValue;
                     if (newValue != currentValue && JsonConvert.SerializeObject(newValue) != JsonConvert.SerializeObject(currentValue))
                     {
+                        updated = true;
                         Logger.LogInformation(ServiceEvent.DataUpdated.EventId(), $"Facet '{facet}' updated");
                         Set(facetName, newValue, facetVersion);
                     }
@@ -92,6 +96,10 @@ namespace Raid.Service
                     Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account facet '{facetName}'");
                 }
             }
+
+            if (updated)
+                EventService.EmitAccountUpdated(UserId);
+
             return success;
         }
 
