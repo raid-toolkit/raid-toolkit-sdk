@@ -11,6 +11,7 @@ namespace Raid.Service
         private Il2CsRuntimeContext Runtime;
         private UserAccount UserAccount;
         private string AccountName;
+        private bool HasCheckedStaticData;
 
         private readonly UserData UserData;
         private readonly StaticDataCache StaticDataCache;
@@ -43,9 +44,14 @@ namespace Raid.Service
             using TrackedOperation updateAccountOp = ErrorService.TrackOperation(ServiceErrorCategory.Account, AccountName, this);
 
             ModelScope scope = new(Runtime);
-            StaticDataCache.Update(scope);
-            if (!StaticDataCache.IsReady)
-                return;
+            if (!HasCheckedStaticData)
+            {
+                StaticDataCache.Update(scope);
+                if (!StaticDataCache.IsReady)
+                    return;
+
+                HasCheckedStaticData = true;
+            }
 
             if (!UserAccount.Update(Runtime))
                 updateAccountOp.Fail(ServiceError.AccountReadError, 10);
