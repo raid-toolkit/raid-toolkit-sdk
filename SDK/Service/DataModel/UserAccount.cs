@@ -81,7 +81,6 @@ namespace Raid.Service
         public bool Update(Il2CppToolkit.Runtime.Il2CsRuntimeContext runtime)
         {
             Stopwatch sw = Stopwatch.StartNew();
-            Logger.LogDebug("Starting process update");
             var results = FacetToValueMap.AsParallel().Select((kvp, _) =>
             {
                 IAccountFacet facet = kvp.Key;
@@ -111,12 +110,13 @@ namespace Raid.Service
             }).ToList();
 
             long end = sw.ElapsedMilliseconds;
+            Logger.LogInformation($"Account update completed in {end}ms");
+
             if (results.Contains(UpdateResult.Updated))
             {
                 FlushIndex();
                 EventService.EmitAccountUpdated(UserId);
             }
-            Logger.LogDebug("Ending process update");
 
             return !results.Contains(UpdateResult.Failed);
         }

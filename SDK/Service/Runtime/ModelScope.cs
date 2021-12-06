@@ -8,18 +8,47 @@ namespace Raid.Service
     public class ModelScope
     {
         public Il2CsRuntimeContext Context { get; }
-        public AppModel AppModel { get; }
-        public AppViewModel AppViewModel { get; }
-        public ClientStaticDataManager StaticDataManager { get; }
+
+        private AppModel _AppModel;
+        public AppModel AppModel
+        {
+            get
+            {
+                if (_AppModel == null)
+                    _AppModel = Client.App.SingleInstance<AppModel>.method_get_Instance
+                        .GetMethodInfo(Context).DeclaringClass.StaticFields
+                        .As<SingleInstanceStaticFields<AppModel>>().Instance;
+                return _AppModel;
+            }
+        }
+
+        private AppViewModel _AppViewModel;
+        public AppViewModel AppViewModel
+        {
+            get
+            {
+                if (_AppViewModel == null)
+                    _AppViewModel = Client.App.SingleInstance<AppViewModel>.method_get_Instance
+                        .GetMethodInfo(Context).DeclaringClass.StaticFields
+                        .As<SingleInstanceStaticFields<AppViewModel>>().Instance;
+                return _AppViewModel;
+            }
+        }
+
+        private ClientStaticDataManager _StaticDataManager;
+        public ClientStaticDataManager StaticDataManager
+        {
+            get
+            {
+                if (_StaticDataManager == null)
+                    _StaticDataManager = AppModel.StaticDataManager as ClientStaticDataManager;
+                return _StaticDataManager;
+            }
+        }
+
         public ModelScope(Il2CsRuntimeContext context)
         {
             Context = context;
-            AppModel = Client.App.SingleInstance<AppModel>.method_get_Instance.GetMethodInfo(Context).DeclaringClass.StaticFields
-                .As<SingleInstanceStaticFields<AppModel>>().Instance;
-            AppViewModel = Client.App.SingleInstance<AppViewModel>.method_get_Instance.GetMethodInfo(Context).DeclaringClass.StaticFields
-                .As<SingleInstanceStaticFields<AppViewModel>>().Instance;
-
-            StaticDataManager = AppModel.StaticDataManager as ClientStaticDataManager;
         }
 
         [Size(16)]
