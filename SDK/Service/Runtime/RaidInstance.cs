@@ -47,7 +47,7 @@ namespace Raid.Service
             if (!StaticDataCache.IsReady)
                 return;
 
-            if (!UserAccount.Update(scope))
+            if (!UserAccount.Update(Runtime))
                 updateAccountOp.Fail(ServiceError.AccountReadError, 10);
         }
 

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,7 +16,7 @@ namespace Raid.Service
         private readonly string UserId;
         private readonly UserData UserData;
         private readonly IReadOnlyList<IAccountFacet> Facets;
-        private Dictionary<IAccountFacet, object> FacetToValueMap;
+        private ConcurrentDictionary<IAccountFacet, object> FacetToValueMap;
         private readonly ILogger<UserAccount> Logger;
         private readonly SerializedDataIndex Index;
         private readonly EventService EventService;
@@ -35,7 +37,7 @@ namespace Raid.Service
         public void Load()
         {
             Upgrade();
-            FacetToValueMap = Facets.ToDictionary(facet => facet, facet => facet.GetValue(this));
+            FacetToValueMap = new(Facets.ToDictionary(facet => facet, facet => facet.GetValue(this)));
         }
 
         private void Upgrade()
@@ -69,38 +71,54 @@ namespace Raid.Service
             }
         }
 
-        public bool Update(ModelScope scope)
+        private enum UpdateResult
         {
-            bool success = true;
-            bool updated = false;
-            foreach ((IAccountFacet facet, object currentValue) in FacetToValueMap)
+            NotUpdated,
+            Updated,
+            Failed
+        }
+
+        public bool Update(Il2CppToolkit.Runtime.Il2CsRuntimeContext runtime)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+            Logger.LogDebug("Starting process update");
+            var results = FacetToValueMap.AsParallel().Select((kvp, _) =>
             {
+                IAccountFacet facet = kvp.Key;
+                object currentValue = kvp.Value;
                 string facetName = FacetAttribute.GetName(facet.GetType());
                 Version facetVersion = FacetAttribute.GetVersion(facet.GetType());
                 try
                 {
                     using var loggerScope = Logger.BeginScope(facet);
 
+                    ModelScope scope = new(runtime);
                     object newValue = facet.Merge(scope, currentValue);
                     FacetToValueMap[facet] = newValue;
                     if (newValue != currentValue && JsonConvert.SerializeObject(newValue) != JsonConvert.SerializeObject(currentValue))
                     {
-                        updated = true;
                         Logger.LogInformation(ServiceEvent.DataUpdated.EventId(), $"Facet '{facet}' updated");
                         Set(facetName, newValue, facetVersion);
+                        return UpdateResult.Updated;
                     }
+                    return UpdateResult.NotUpdated;
                 }
                 catch (Exception ex)
                 {
-                    success = false;
                     Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account facet '{facetName}'");
+                    return UpdateResult.Failed;
                 }
-            }
+            }).ToList();
 
-            if (updated)
+            long end = sw.ElapsedMilliseconds;
+            if (results.Contains(UpdateResult.Updated))
+            {
+                FlushIndex();
                 EventService.EmitAccountUpdated(UserId);
+            }
+            Logger.LogDebug("Ending process update");
 
-            return success;
+            return !results.Contains(UpdateResult.Failed);
         }
 
         public T Read<T>(string key) where T : class
@@ -131,12 +149,11 @@ namespace Raid.Service
             }
             facetInfo.LastUpdated = DateTime.UtcNow;
             facetInfo.Version = version.ToString();
-            UserData.WriteAccountData(UserId, "_index", Index);
         }
 
-        public bool TryRead<T>(string key, out T value) where T : class
+        public void FlushIndex()
         {
-            throw new NotImplementedException();
+            UserData.WriteAccountData(UserId, "_index", Index);
         }
 
         public DateTime LastUpdated { get; private set; } = DateTime.UtcNow;
