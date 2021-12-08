@@ -33,9 +33,8 @@ namespace Raid.Service
         public RaidInstance Attach(Process process)
         {
             Runtime = new Il2CsRuntimeContext(process);
-            Id = GetAccountId();
+            (Id, AccountName) = GetAccountIdAndName();
             UserAccount = UserData.GetAccount(Id);
-            AccountName = AccountFacet.ReadValue(UserAccount).Name;
             return this;
         }
 
@@ -57,14 +56,14 @@ namespace Raid.Service
                 updateAccountOp.Fail(ServiceError.AccountReadError, 10);
         }
 
-        private string GetAccountId()
+        private (string, string) GetAccountIdAndName()
         {
             ModelScope scope = new(Runtime);
             var userWrapper = scope.AppModel._userWrapper;
             var socialWrapper = userWrapper.Social.SocialData;
             var globalId = socialWrapper.PlariumGlobalId;
             var socialId = socialWrapper.SocialId;
-            return string.Join('_', globalId, socialId).Sha256();
+            return (string.Join('_', globalId, socialId).Sha256(), userWrapper.Social.SocialData.SocialName);
         }
 
         public void Dispose()
