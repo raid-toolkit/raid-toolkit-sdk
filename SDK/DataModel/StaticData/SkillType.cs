@@ -428,7 +428,7 @@ namespace Raid.DataModel
     }
 
     public class EffectGroupStub
-    {}
+    { }
 
     public class TargetParamsStub
     {
@@ -496,7 +496,16 @@ namespace Raid.DataModel
         public ApplyMode ApplyMode;
 
         [JsonProperty("protection")]
-        public ProtectionMode Protection;
+        public Protection Protection;
+    }
+
+    public class Protection
+    {
+        [JsonProperty("mode")]
+        public ProtectionMode Mode;
+
+        [JsonProperty("chance")]
+        public double? Chance;
     }
 
     public class ApplyStatusEffectParamsStub

@@ -360,16 +360,25 @@ namespace Raid.DataModel
             var stub = new ApplyStatusEffectParamsStub { StatusEffectInfos = new List<StatusEffectInfoStub>() };
             foreach (var x in type.StatusEffectInfos)
             {
-                stub.StatusEffectInfos.Append(new StatusEffectInfoStub
+                _ = stub.StatusEffectInfos.Append(new StatusEffectInfoStub
                 {
                     TypeId = x.TypeId,
                     Duration = x.Duration,
                     IgnoreEffectsLimit = x.IgnoreEffectsLimit,
                     ApplyMode = (ApplyMode)x.ApplyMode.Value,
-                    Protection = (ProtectionMode)x.Protection.Value
+                    Protection = x.Protection?.ToModel()
                 });
             }
             return stub;
+        }
+
+        public static Protection ToModel(this SharedModel.Battle.Core.Skill.Protection protection)
+        {
+            return new Protection
+            {
+                Mode = (ProtectionMode)protection.Mode,
+                Chance = protection.Chance.HasValue ? protection.Chance.Value.AsFloat() : null
+            };
         }
 
         public static UnapplyStatusEffectParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.UnapplyStatusEffectParams type)
