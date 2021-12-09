@@ -63,7 +63,7 @@ namespace Raid.Service
             var socialWrapper = userWrapper.Social.SocialData;
             var globalId = socialWrapper.PlariumGlobalId;
             var socialId = socialWrapper.SocialId;
-            return (string.Join('_', globalId, socialId).Sha256(), userWrapper.Social.SocialData.SocialName);
+            return (string.Join('_', globalId, socialId).Sha256(), userWrapper.UserGameSettings.GameSettings.Name);
         }
 
         public void Dispose()
