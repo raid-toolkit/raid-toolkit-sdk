@@ -12,11 +12,11 @@ namespace Raid.Service
     internal class AccountApi : ApiHandler<IAccountApi>, IAccountApi
     {
         private readonly StaticDataCache StaticDataCache;
-        private readonly UserData UserData;
+        private readonly AppData UserData;
         private readonly Extractor Extractor;
         public AccountApi(
             ILogger<AccountApi> logger,
-            UserData userData,
+            AppData userData,
             StaticDataCache staticData,
             Extractor extractor,
             EventService eventService)

@@ -8,10 +8,10 @@ namespace Raid.Service
     {
         private readonly Dictionary<string, object> Data = new();
         private readonly List<IStaticFacet> Facets;
-        private readonly UserData UserData;
+        private readonly AppData UserData;
         public bool IsReady { get; private set; }
 
-        public StaticDataCache(UserData userData)
+        public StaticDataCache(AppData userData)
         {
             UserData = userData;
             Facets = typeof(RaidInstance).Assembly.GetTypesAssignableTo<IStaticFacet>()

@@ -13,13 +13,13 @@ namespace Raid.Service
         private string AccountName;
         private bool HasCheckedStaticData;
 
-        private readonly UserData UserData;
+        private readonly AppData UserData;
         private readonly StaticDataCache StaticDataCache;
         private readonly ILogger<RaidInstance> Logger;
         private readonly ErrorService ErrorService;
 
         public RaidInstance(
-            UserData userData,
+            AppData userData,
             StaticDataCache staticDataCache,
             ErrorService errorService,
             ILogger<RaidInstance> logger)

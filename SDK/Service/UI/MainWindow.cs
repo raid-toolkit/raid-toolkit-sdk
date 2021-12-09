@@ -18,7 +18,7 @@ namespace Raid.Service.UI
         private GitHub.Schema.Release LatestRelease;
         private readonly UpdateService UpdateService;
         private readonly MainService MainService;
-        private readonly UserData UserData;
+        private readonly AppData UserData;
         private readonly ILogger<MainWindow> Logger;
         private readonly RunOptions RunOptions;
         private readonly ProcessWatcherSettings Settings;
@@ -31,7 +31,7 @@ namespace Raid.Service.UI
             ILogger<MainWindow> logger,
             UpdateService updateService,
             MainService mainService,
-            UserData userData,
+            AppData userData,
             RunOptions runOptions,
             ErrorService errorService,
             IServiceProvider serviceProvider)

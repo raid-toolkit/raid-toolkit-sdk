@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace Raid.Service
 {
-    public class UserData
+    public class AppData
     {
         private readonly string m_storagePath;
         private readonly string m_accountsPath;
@@ -18,7 +18,7 @@ namespace Raid.Service
         private readonly IServiceProvider ServiceProvider;
         public IEnumerable<UserAccount> UserAccounts => m_userAccounts.Values;
 
-        public UserData(IOptions<AppSettings> settings, IServiceProvider serviceProvider)
+        public AppData(IOptions<AppSettings> settings, IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
             m_storagePath = settings.Value.StorageLocation ?? "data";

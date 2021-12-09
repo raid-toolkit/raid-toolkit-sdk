@@ -14,14 +14,14 @@ namespace Raid.Service
     {
         private readonly Dictionary<string, object> Data = new();
         private readonly string UserId;
-        private readonly UserData UserData;
+        private readonly AppData UserData;
         private readonly IReadOnlyList<IAccountFacet> Facets;
         private ConcurrentDictionary<IAccountFacet, object> FacetToValueMap;
         private readonly ILogger<UserAccount> Logger;
         private readonly SerializedDataIndex Index;
         private readonly EventService EventService;
 
-        public UserAccount(string userId, UserData userData, IServiceScope serviceScope)
+        public UserAccount(string userId, AppData userData, IServiceScope serviceScope)
         {
             UserData = userData;
             UserId = userId;

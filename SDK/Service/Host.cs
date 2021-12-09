@@ -42,7 +42,7 @@ namespace Raid.Service
                 .AddHostedServiceSingleton<ErrorService>()
                 .AddHostedServiceSingleton<EventService>()
                 .AddSingleton<ModelService>()
-                .AddSingleton<UserData>()
+                .AddSingleton<AppData>()
                 .AddSingleton<StaticDataCache>()
                 .AddSingleton<RaidInstanceFactory>()
                 .AddSingleton<Extractor>()
