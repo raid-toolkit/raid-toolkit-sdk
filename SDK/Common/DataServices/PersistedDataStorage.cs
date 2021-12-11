@@ -21,7 +21,9 @@ namespace Raid.DataServices
             _ = Directory.CreateDirectory(StoragePath);
         }
 
-        public bool TryRead<T>(string key, out T value)
+        public event EventHandler<DataStorageUpdatedEventArgs> Updated;
+
+        public bool TryRead<T>(string key, out T value) where T : class
         {
             string filePath = Path.Join(StoragePath, key);
             if (!File.Exists(filePath))
@@ -41,11 +43,12 @@ namespace Raid.DataServices
             }
         }
 
-        public void Write<T>(string key, T value)
+        public bool Write<T>(string key, T value) where T : class
         {
             string filePath = Path.Join(StoragePath, key);
             string data = JsonConvert.SerializeObject(value);
             File.WriteAllText(filePath, data);
+            return true;
         }
     }
 }

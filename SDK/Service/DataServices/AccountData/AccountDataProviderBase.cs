@@ -1,10 +1,13 @@
+using System;
 using Raid.DataServices;
 
 namespace Raid.Service.DataServices
 {
     public interface IAccountDataProvider
     {
-        object Update(ModelScope scope, AccountDataContext context);
+        DataTypeAttribute DataType { get; }
+        bool Upgrade(AccountDataContext context, Version dataVersion);
+        bool Update(ModelScope scope, AccountDataContext context);
     }
 
     public abstract class AccountDataProviderBase<T> : DataObjectProviderBase<AccountDataContext, T>, IAccountDataProvider where T : class
@@ -14,11 +17,11 @@ namespace Raid.Service.DataServices
         {
         }
 
-        public abstract T Update(ModelScope scope, AccountDataContext context);
-
-        object IAccountDataProvider.Update(ModelScope scope, AccountDataContext context)
+        public virtual bool Upgrade(AccountDataContext context, Version dataVersion)
         {
-            return Update(scope, context);
+            return false;
         }
+
+        public abstract bool Update(ModelScope scope, AccountDataContext context);
     }
 }

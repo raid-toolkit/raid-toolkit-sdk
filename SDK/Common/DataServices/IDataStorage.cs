@@ -15,6 +15,6 @@ namespace Raid.DataServices
     public interface IDataStorage : IDataReader
     {
         event EventHandler<DataStorageUpdatedEventArgs> Updated;
-        void Write<T>(string key, T value);
+        bool Write<T>(string key, T value) where T : class;
     }
 }

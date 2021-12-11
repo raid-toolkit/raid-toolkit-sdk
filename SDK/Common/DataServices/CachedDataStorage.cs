@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 
 namespace Raid.DataServices
 {
@@ -10,6 +11,8 @@ namespace Raid.DataServices
         private readonly IDataStorage UnderlyingStorage;
         private readonly ConcurrentDictionary<string, object> Cache = new();
 
+        public event EventHandler<DataStorageUpdatedEventArgs> Updated;
+
         public CachedDataStorage()
         { }
 
@@ -18,7 +21,7 @@ namespace Raid.DataServices
             UnderlyingStorage = underlyingStorage;
         }
 
-        public bool TryRead<T>(string key, out T value)
+        public bool TryRead<T>(string key, out T value) where T : class
         {
             object cacheEntry = Cache.GetOrAdd(key, ReadFromUnderlyingStorage<T>);
             if (cacheEntry == EmptyObject)
@@ -30,15 +33,27 @@ namespace Raid.DataServices
             return true;
         }
 
-        private object ReadFromUnderlyingStorage<T>(string key)
+        private object ReadFromUnderlyingStorage<T>(string key) where T : class
         {
-            return UnderlyingStorage != null && UnderlyingStorage.TryRead<T>(key, out T value) ? value : EmptyObject;
+            return UnderlyingStorage != null && UnderlyingStorage.TryRead(key, out T value) ? value : EmptyObject;
         }
 
-        public void Write<T>(string key, T value)
+        public bool Write<T>(string key, T value) where T : class
         {
-            _ = Cache.AddOrUpdate(key, _ => value, (_1, _2) => value);
-            UnderlyingStorage?.Write<T>(key, value);
+            T updatedValue = (T)Cache.AddOrUpdate(key, _ => value, (_1, oldValue) => UpdateAndWriteIfChanged(oldValue, value));
+            // only write if the new value was added
+            if (updatedValue == value)
+            {
+                _ = (UnderlyingStorage?.Write(key, value));
+                return true;
+            }
+            return false;
+        }
+
+        private static T UpdateAndWriteIfChanged<T>(T oldValue, T newValue)
+        {
+            // TODO: remove this extra serialization, and persist it directly as a string if possible
+            return JsonConvert.SerializeObject(oldValue) == JsonConvert.SerializeObject(newValue) ? oldValue : newValue;
         }
     }
 

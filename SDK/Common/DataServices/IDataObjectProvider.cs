@@ -2,6 +2,7 @@ namespace Raid.DataServices
 {
     public interface IDataObjectProvider
     {
+        DataTypeAttribute DataType { get; }
         object GetValue(IDataContext context);
     }
 
@@ -16,6 +17,8 @@ namespace Raid.DataServices
         where TContext : class, IDataContext
         where TData : class
     {
+        public DataTypeAttribute DataType => PrimaryProvider.DataType.Attribute;
+
         protected readonly IDataResolver<TContext, TData> PrimaryProvider;
 
         public DataObjectProviderBase(IDataResolver<TContext, TData> primaryProvider)
