@@ -6,8 +6,10 @@ namespace Raid.Service.DataServices
     {
         public AccountDataContext(string accountId)
         {
+            AccountId = accountId;
             Parts = new string[] { "accounts", accountId };
         }
         public string[] Parts { get; }
+        public string AccountId { get; }
     }
 }

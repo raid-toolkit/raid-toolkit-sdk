@@ -2,41 +2,35 @@ namespace Raid.DataServices
 {
     public interface IDataObjectProvider
     {
-        object GetValue();
-        object Update(object previousValue = null);
+        object GetValue(IDataContext context);
     }
 
-    public interface IDataObjectProvider<T> : IDataObjectProvider where T : class
+    public interface IDataObjectProvider<TContext, TData> : IDataObjectProvider
+        where TContext : class, IDataContext
+        where TData : class
     {
-        new T GetValue();
-        T Update(T previousValue = null);
+        TData GetValue(TContext context);
     }
 
-    public class DataObjectProviderBase<T> : IDataObjectProvider<T> where T : class
+    public class DataObjectProviderBase<TContext, TData> : IDataObjectProvider<TContext, TData>
+        where TContext : class, IDataContext
+        where TData : class
     {
-        private readonly IDataResolver<T> PrimaryProvider;
-        public DataObjectProviderBase(IDataResolver<T> primaryProvider)
+        protected readonly IDataResolver<TContext, TData> PrimaryProvider;
+
+        public DataObjectProviderBase(IDataResolver<TContext, TData> primaryProvider)
         {
             PrimaryProvider = primaryProvider;
         }
-        public virtual T Update(T previousValue = null)
+
+        public virtual TData GetValue(TContext context)
         {
-            return previousValue;
+            return PrimaryProvider.TryRead(context, out TData value) ? value : default;
         }
 
-        public virtual T GetValue()
+        object IDataObjectProvider.GetValue(IDataContext context)
         {
-            return PrimaryProvider.TryRead(out T value) ? value : default;
-        }
-
-        object IDataObjectProvider.GetValue()
-        {
-            return GetValue();
-        }
-
-        object IDataObjectProvider.Update(object previousValue)
-        {
-            return Update((T)previousValue);
+            return GetValue((TContext)context);
         }
     }
 }

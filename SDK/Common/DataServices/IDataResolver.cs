@@ -1,14 +1,15 @@
 namespace Raid.DataServices
 {
-    public interface IDataResolver<TData>
+    public interface IDataResolver<TContext, TData>
+        where TContext : class, IDataContext
         where TData : class
     {
-        bool TryRead(out TData value);
-        void Write(TData value);
+        bool TryRead(TContext context, out TData value);
+        void Write(TContext context, TData value);
     }
-    public interface IDataResolver<C, T, TData> : IDataResolver<TData>
-        where C : IDataContext
-        where T : IDataStorage
+    public interface IDataResolver<TContext, TStorage, TData> : IDataResolver<TContext, TData>
+        where TContext : class, IDataContext
+        where TStorage : IDataStorage
         where TData : class
     {
     }
@@ -18,25 +19,23 @@ namespace Raid.DataServices
         where TStorage : IDataStorage
         where TData : class
     {
-        private readonly IDataContext Context;
         private readonly IDataStorageFactory<TStorage> Factory;
         private readonly IDataType<TData> DataType;
 
-        public DataResolverManager(IContext<TContext> context, IDataStorageFactory<TStorage> factory, IDataType<TData> dataType)
+        public DataResolverManager(IDataStorageFactory<TStorage> factory, IDataType<TData> dataType)
         {
-            Context = context.Value;
             Factory = factory;
             DataType = dataType;
         }
 
-        public bool TryRead(out TData value)
+        public bool TryRead(TContext context, out TData value)
         {
-            return Factory.GetStorage(Context).TryRead(DataType.Attribute.Key, out value);
+            return Factory.GetStorage(context).TryRead(DataType.Attribute.Key, out value);
         }
 
-        public void Write(TData value)
+        public void Write(TContext context, TData value)
         {
-            Factory.GetStorage(Context).Write(DataType.Attribute.Key, value);
+            Factory.GetStorage(context).Write(DataType.Attribute.Key, value);
         }
     }
 }

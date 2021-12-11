@@ -8,7 +8,7 @@ namespace Raid.Service
     public sealed class RaidInstance : IDisposable
     {
         public string Id;
-        private Il2CsRuntimeContext Runtime;
+        public Il2CsRuntimeContext Runtime { get; private set; }
         private UserAccount UserAccount;
         private string AccountName;
         private bool HasCheckedStaticData;

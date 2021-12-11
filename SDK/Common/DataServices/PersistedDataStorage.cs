@@ -6,6 +6,7 @@ using Raid.Common;
 
 namespace Raid.DataServices
 {
+
     public class PersistedDataStorage : IDataStorage
     {
         private readonly string StoragePath;

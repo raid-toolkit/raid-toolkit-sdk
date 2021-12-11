@@ -1,3 +1,6 @@
+using Raid.Service;
+using Raid.Service.DataServices;
+
 namespace Microsoft.Extensions.DependencyInjection
 {
     public static partial class AppModelHostExtensions
@@ -5,7 +8,8 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddAppModel(this IServiceCollection serviceCollection)
         {
             return serviceCollection
-                .AddModelHostShared();
+                .AddModelHostShared()
+                .AddTypesAssignableToFactories<IAccountDataProvider>(serviceCollection => serviceCollection.AddSingleton);
         }
     }
 }

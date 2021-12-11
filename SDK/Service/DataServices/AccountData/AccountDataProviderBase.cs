@@ -2,18 +2,23 @@ using Raid.DataServices;
 
 namespace Raid.Service.DataServices
 {
-    public abstract class AccountDataProviderBase<T> : DataObjectProviderBase<T> where T : class
+    public interface IAccountDataProvider
+    {
+        object Update(ModelScope scope, AccountDataContext context);
+    }
+
+    public abstract class AccountDataProviderBase<T> : DataObjectProviderBase<AccountDataContext, T>, IAccountDataProvider where T : class
     {
         public AccountDataProviderBase(IDataResolver<AccountDataContext, CachedDataStorage<PersistedDataStorage>, T> storage)
             : base(storage)
         {
         }
 
-        public override T Update(T previousValue = null)
-        {
-            throw new System.NotImplementedException();
-        }
+        public abstract T Update(ModelScope scope, AccountDataContext context);
 
-        protected abstract T Update(ModelScope scope, T previousValue = null);
+        object IAccountDataProvider.Update(ModelScope scope, AccountDataContext context)
+        {
+            return Update(scope, context);
+        }
     }
 }
