@@ -33,28 +33,26 @@ namespace Raid.Service.DataServices
             foreach (IAccountDataProvider provider in Providers)
             {
                 var dataType = provider.DataType;
-                string facetKey = dataType.Key;
-                Version facetVersion = dataType.StructuredVersion;
                 try
                 {
                     using var loggerScope = Logger.BeginScope(provider);
 
                     // get version
                     Version dataVersion = new(1, 0);
-                    if (index.Facets.TryGetValue(facetKey, out SerializedDataInfo facetInfo))
+                    if (index.Facets.TryGetValue(dataType.Key, out SerializedDataInfo facetInfo))
                     {
                         if (!string.IsNullOrEmpty(facetInfo.Version))
                             dataVersion = Version.Parse(facetInfo.Version);
                     }
 
-                    if (dataVersion != facetVersion && provider.Upgrade(context, dataVersion))
+                    if (dataVersion != dataType.StructuredVersion && provider.Upgrade(context, dataVersion))
                     {
                         Logger.LogInformation("Data upgraded");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account facet '{facetKey}'");
+                    Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account facet '{dataType.Key}'");
                 }
             }
         }
