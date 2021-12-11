@@ -52,6 +52,7 @@ namespace Raid.Service
                 .AddScoped<UI.MainWindow>()
                 .AddScoped<UI.ErrorsWindow>()
                 .AddScoped<RaidInstance>()
+                .AddAppModel()
                 .AddTypesAssignableTo<IMessageScopeHandler>(collection => collection.AddSingleton)
                 .AddTypesAssignableToFactories<IStaticFacet>(collection => collection.AddSingleton)
                 .AddTypesAssignableToFactories<IAccountFacet>(collection => collection.AddScoped)
