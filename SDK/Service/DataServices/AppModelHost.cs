@@ -9,6 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             return serviceCollection
                 .AddModelHostShared()
+                .AddSingleton<AccountDataManager>()
                 .AddTypesAssignableToFactories<IAccountDataProvider>(serviceCollection => serviceCollection.AddSingleton);
         }
     }

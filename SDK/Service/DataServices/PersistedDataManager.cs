@@ -8,29 +8,29 @@ using Raid.DataServices;
 
 namespace Raid.Service.DataServices
 {
-    public class AccountDataManager
+    public class PersistedDataManager<TContext> where TContext : class, IDataContext
     {
-        private readonly List<IAccountDataProvider> Providers;
-        private readonly ILogger<AccountDataManager> Logger;
-        private readonly IDataResolver<AccountDataContext, CachedDataStorage<PersistedDataStorage>, SerializedDataIndex> Index;
+        private readonly List<IContextDataProvider<TContext>> Providers;
+        private readonly ILogger<PersistedDataManager<TContext>> Logger;
+        private readonly IDataResolver<TContext, CachedDataStorage<PersistedDataStorage>, SerializedDataIndex> Index;
 
-        public AccountDataManager(
-            ILogger<AccountDataManager> logger, IEnumerable<IAccountDataProvider> providers,
-            IDataResolver<AccountDataContext, CachedDataStorage<PersistedDataStorage>, SerializedDataIndex> index)
+        public PersistedDataManager(
+            ILogger<PersistedDataManager<TContext>> logger, IEnumerable<IContextDataProvider> providers,
+            IDataResolver<TContext, CachedDataStorage<PersistedDataStorage>, SerializedDataIndex> index)
         {
             Logger = logger;
-            Providers = providers.ToList();
+            Providers = providers.OfType<IContextDataProvider<TContext>>().ToList();
             Index = index;
         }
 
-        public void Upgrade(AccountDataContext context)
+        public void Upgrade(TContext context)
         {
-            Logger.LogInformation($"Checking and upgrading account [{context.AccountId}]");
+            Logger.LogInformation($"Checking and upgrading context [{string.Join(',', context.Parts)}]");
             if (!Index.TryRead(context, out SerializedDataIndex index))
             {
                 index = new();
             }
-            foreach (IAccountDataProvider provider in Providers)
+            foreach (IContextDataProvider<TContext> provider in Providers)
             {
                 var dataType = provider.DataType;
                 try
@@ -52,7 +52,7 @@ namespace Raid.Service.DataServices
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account facet '{dataType.Key}'");
+                    Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update facet '{dataType.Key}'");
                 }
             }
         }
@@ -64,7 +64,7 @@ namespace Raid.Service.DataServices
             Failed
         }
 
-        public bool Update(Il2CsRuntimeContext runtime, AccountDataContext context)
+        public bool Update(Il2CsRuntimeContext runtime, TContext context)
         {
             Stopwatch sw = Stopwatch.StartNew();
 
@@ -91,12 +91,12 @@ namespace Raid.Service.DataServices
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account facet '{provider}'");
+                    Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update facet '{provider}'");
                     return UpdateResult.Failed;
                 }
             }).ToList();
 
-            Logger.LogInformation($"Account update completed in {sw.ElapsedMilliseconds}ms");
+            Logger.LogInformation($"Update completed in {sw.ElapsedMilliseconds}ms");
 
             return !results.Contains(UpdateResult.Failed);
         }

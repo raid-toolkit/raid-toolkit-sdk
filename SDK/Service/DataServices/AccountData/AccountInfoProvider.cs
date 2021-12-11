@@ -9,7 +9,7 @@ namespace Raid.Service.DataServices
     {
     }
 
-    public class AccountInfoProvider : AccountDataProviderBase<AccountDataObject>
+    public class AccountInfoProvider : DataProviderBase<AccountDataContext, AccountDataObject>
     {
         public AccountInfoProvider(IDataResolver<AccountDataContext, CachedDataStorage<PersistedDataStorage>, AccountDataObject> storage)
             : base(storage)
