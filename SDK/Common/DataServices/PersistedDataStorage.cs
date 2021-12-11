@@ -1,6 +1,5 @@
 using System;
 using System.IO;
-using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Raid.Common;
 
@@ -10,22 +9,27 @@ namespace Raid.DataServices
     public class PersistedDataStorage : IDataStorage
     {
         private readonly string StoragePath;
+        private IDataContext DataContext;
 
-        public PersistedDataStorage(IOptions<DataServicesSettings> settings)
+        public PersistedDataStorage()
         {
-            StoragePath = settings.Value.StorageLocation ?? "data";
-            if (!Path.IsPathFullyQualified(StoragePath))
-            {
-                StoragePath = Path.Join(RegistrySettings.InstallationPath, StoragePath);
-            }
-            _ = Directory.CreateDirectory(StoragePath);
+            StoragePath = Path.Join(RegistrySettings.InstallationPath, "data");
+        }
+
+        public void SetContext(IDataContext context)
+        {
+            if (DataContext != null)
+                throw new InvalidOperationException("Already set context");
+
+            DataContext = context;
+            _ = Directory.CreateDirectory(Path.Join(StoragePath, Path.Join(DataContext.Parts)));
         }
 
         public event EventHandler<DataStorageUpdatedEventArgs> Updated;
 
         public bool TryRead<T>(string key, out T value) where T : class
         {
-            string filePath = Path.Join(StoragePath, key);
+            string filePath = Path.Join(StoragePath, Path.Join(DataContext.Parts), key);
             if (!File.Exists(filePath))
             {
                 value = default;
@@ -45,7 +49,7 @@ namespace Raid.DataServices
 
         public bool Write<T>(string key, T value) where T : class
         {
-            string filePath = Path.Join(StoragePath, key);
+            string filePath = Path.Join(StoragePath, Path.Join(DataContext.Parts), key);
             string data = JsonConvert.SerializeObject(value);
             File.WriteAllText(filePath, data);
             return true;

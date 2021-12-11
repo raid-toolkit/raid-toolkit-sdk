@@ -13,7 +13,7 @@ namespace Raid.DataModel
         [JsonProperty("version")]
         public string Version;
     }
-    public class SerializedDataIndex
+    public class SerializedFacetIndex
     {
         [JsonProperty("lastUpdated")]
         public DateTime? LastUpdated

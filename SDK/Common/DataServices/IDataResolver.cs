@@ -12,7 +12,7 @@ namespace Raid.DataServices
     }
     public interface IDataResolver<TContext, TStorage, TData> : IDataResolver<TContext, TData>
         where TContext : class, IDataContext
-        where TStorage : IDataStorage
+        where TStorage : class, IDataStorage, new()
         where TData : class
     {
     }
@@ -21,7 +21,7 @@ namespace Raid.DataServices
     {
         public static bool Update<TContext, TStorage, TData>(this IDataResolver<TContext, TStorage, TData> resolver, TContext context, Func<TData, TData> updateFn)
             where TContext : class, IDataContext
-            where TStorage : IDataStorage
+            where TStorage : class, IDataStorage, new()
             where TData : class
         {
             _ = resolver.TryRead(context, out TData value);
@@ -30,7 +30,7 @@ namespace Raid.DataServices
     }
     public class DataResolverManager<TContext, TStorage, TData> : IDataResolver<TContext, TStorage, TData>
         where TContext : class, IDataContext
-        where TStorage : IDataStorage
+        where TStorage : class, IDataStorage, new()
         where TData : class
     {
         private readonly IDataStorageFactory<TStorage> Factory;

@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Raid.DataModel;
+using Raid.Service.DataServices;
 
 namespace Raid.Service
 {
@@ -18,8 +19,9 @@ namespace Raid.Service
         private readonly IReadOnlyList<IAccountFacet> Facets;
         private ConcurrentDictionary<IAccountFacet, object> FacetToValueMap;
         private readonly ILogger<UserAccount> Logger;
-        private readonly SerializedDataIndex Index;
+        private readonly SerializedFacetIndex Index;
         private readonly EventService EventService;
+        private readonly IPersistedDataManager<AccountDataContext> DataManager;
 
         public UserAccount(string userId, AppData userData, IServiceScope serviceScope)
         {
@@ -28,9 +30,10 @@ namespace Raid.Service
             Logger = serviceScope.ServiceProvider.GetService<ILogger<UserAccount>>();
             Facets = serviceScope.ServiceProvider.GetServices<IAccountFacet>().ToList();
             EventService = serviceScope.ServiceProvider.GetRequiredService<EventService>();
+            DataManager = serviceScope.ServiceProvider.GetRequiredService<IPersistedDataManager<AccountDataContext>>();
 
             // preload index
-            Index = UserData.ReadAccountData<SerializedDataIndex>(userId, "_index") ?? new();
+            Index = UserData.ReadAccountData<SerializedFacetIndex>(userId, "_index") ?? new();
             LastUpdated = Index.Facets.Count == 0 ? DateTime.UtcNow : Index.Facets.Values.Max(value => value.LastUpdated);
         }
 
@@ -42,6 +45,8 @@ namespace Raid.Service
 
         private void Upgrade()
         {
+            DataManager.Upgrade(new AccountDataContext(UserId));
+
             Logger.LogInformation($"Checking and upgrading account [${UserId}]");
             foreach (IAccountFacet facet in Facets)
             {
@@ -80,6 +85,8 @@ namespace Raid.Service
 
         public bool Update(Il2CppToolkit.Runtime.Il2CsRuntimeContext runtime)
         {
+            _ = DataManager.Update(runtime, new AccountDataContext(UserId));
+
             Stopwatch sw = Stopwatch.StartNew();
             var results = FacetToValueMap.AsParallel().Select((kvp, _) =>
             {

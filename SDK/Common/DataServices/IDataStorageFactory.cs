@@ -12,7 +12,12 @@ namespace Raid.DataServices
         private readonly ConcurrentDictionary<string, IDataStorage> StorageMap = new();
         public IDataStorage GetStorage(IDataContext context)
         {
-            return StorageMap.GetOrAdd(string.Join("|", context.Parts), (key) => new TFactory());
+            return StorageMap.GetOrAdd(string.Join("|", context.Parts), (key) =>
+            {
+                var factory = new TFactory();
+                factory.SetContext(context);
+                return factory;
+            });
         }
     }
 }

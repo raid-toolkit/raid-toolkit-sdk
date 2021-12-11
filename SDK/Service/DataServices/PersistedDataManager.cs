@@ -8,7 +8,12 @@ using Raid.DataServices;
 
 namespace Raid.Service.DataServices
 {
-    public class PersistedDataManager<TContext> where TContext : class, IDataContext
+    public interface IPersistedDataManager<TContext> where TContext : class, IDataContext
+    {
+        void Upgrade(TContext context);
+        bool Update(Il2CsRuntimeContext runtime, TContext context);
+    }
+    public class PersistedDataManager<TContext> : IPersistedDataManager<TContext> where TContext : class, IDataContext
     {
         private readonly List<IContextDataProvider<TContext>> Providers;
         private readonly ILogger<PersistedDataManager<TContext>> Logger;

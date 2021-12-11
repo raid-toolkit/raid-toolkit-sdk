@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Concurrent;
-using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
 namespace Raid.DataServices
@@ -19,6 +18,11 @@ namespace Raid.DataServices
         protected CachedDataStorage(IDataStorage underlyingStorage)
         {
             UnderlyingStorage = underlyingStorage;
+        }
+
+        public void SetContext(IDataContext context)
+        {
+            UnderlyingStorage?.SetContext(context);
         }
 
         public bool TryRead<T>(string key, out T value) where T : class
@@ -57,10 +61,10 @@ namespace Raid.DataServices
         }
     }
 
-    public class CachedDataStorage<T> : CachedDataStorage where T : IDataStorage
+    public class CachedDataStorage<T> : CachedDataStorage where T : class, IDataStorage, new()
     {
-        public CachedDataStorage(IServiceProvider serviceProvider)
-        : base(serviceProvider.GetRequiredService<T>())
+        public CachedDataStorage()
+        : base(new T())
         { }
     }
 }
