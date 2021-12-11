@@ -73,8 +73,6 @@ namespace Raid.Service.DataServices
             var results = Providers.AsParallel().Select(provider =>
             {
                 var dataType = provider.DataType;
-                string facetKey = dataType.Key;
-                Version facetVersion = dataType.StructuredVersion;
                 try
                 {
                     using var loggerScope = Logger.BeginScope(provider);
@@ -82,10 +80,10 @@ namespace Raid.Service.DataServices
                     {
                         _ = Index.Update(context, index =>
                         {
-                            index.Facets[facetKey] = new()
+                            index.Facets[dataType.Key] = new()
                             {
                                 LastUpdated = DateTime.UtcNow,
-                                Version = facetVersion.ToString()
+                                Version = dataType.StructuredVersion.ToString()
                             };
                             return index;
                         });
