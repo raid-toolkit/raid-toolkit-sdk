@@ -9,6 +9,8 @@ namespace Microsoft.Extensions.DependencyInjection
             return serviceCollection
                 .AddSingleton(typeof(IDataStorageFactory<>), typeof(DataStorageFactoryManager<>))
                 .AddSingleton(typeof(IDataType<>), typeof(DataTypeManager<>))
+                .AddSingleton(typeof(IContext<>), typeof(ContextManager<>))
+                .AddSingleton(typeof(IContextProvider<>), typeof(ContextProviderManager<>))
                 .AddScoped(typeof(IDataResolver<,,>), typeof(DataResolverManager<,,>))
                 .AddScoped(typeof(IDataType<>), typeof(DataTypeManager<>))
             ;
