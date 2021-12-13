@@ -24,10 +24,9 @@ namespace Raid.Client
             return CallMethod<StaticArtifactData>(MethodBase.GetCurrentMethod());
         }
 
-        [System.Obsolete]
-        public Task<StaticHeroData> GetHeroData()
+        public Task<StaticHeroTypeData> GetHeroData()
         {
-            return CallMethod<StaticHeroData>(MethodBase.GetCurrentMethod());
+            return CallMethod<StaticHeroTypeData>(MethodBase.GetCurrentMethod());
         }
 
         public Task<IReadOnlyDictionary<string, string>> GetLocalizedStrings()

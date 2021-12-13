@@ -8,11 +8,19 @@ using Raid.DataServices;
 
 namespace Raid.Service.DataServices
 {
+    public enum UpdateResult
+    {
+        NotUpdated,
+        Updated,
+        Failed
+    }
+
     public interface IPersistedDataManager<TContext> where TContext : class, IDataContext
     {
         void Upgrade(TContext context);
-        bool Update(Il2CsRuntimeContext runtime, TContext context);
+        UpdateResult Update(Il2CsRuntimeContext runtime, TContext context);
     }
+
     public class PersistedDataManager<TContext> : IPersistedDataManager<TContext> where TContext : class, IDataContext
     {
         private readonly List<IContextDataProvider<TContext>> Providers;
@@ -62,14 +70,7 @@ namespace Raid.Service.DataServices
             }
         }
 
-        private enum UpdateResult
-        {
-            NotUpdated,
-            Updated,
-            Failed
-        }
-
-        public bool Update(Il2CsRuntimeContext runtime, TContext context)
+        public UpdateResult Update(Il2CsRuntimeContext runtime, TContext context)
         {
             Stopwatch sw = Stopwatch.StartNew();
 
@@ -103,7 +104,7 @@ namespace Raid.Service.DataServices
 
             Logger.LogInformation($"Update completed in {sw.ElapsedMilliseconds}ms");
 
-            return !results.Contains(UpdateResult.Failed);
+            return results.Contains(UpdateResult.Failed) ? UpdateResult.Failed : results.Contains(UpdateResult.Updated) ? UpdateResult.Updated : UpdateResult.NotUpdated;
         }
     }
 }

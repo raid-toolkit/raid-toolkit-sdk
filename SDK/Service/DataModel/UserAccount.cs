@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using Raid.DataModel;
 using Raid.Service.DataServices;
 
@@ -46,86 +44,16 @@ namespace Raid.Service
         private void Upgrade()
         {
             DataManager.Upgrade(new AccountDataContext(UserId));
-
-            Logger.LogInformation($"Checking and upgrading account [${UserId}]");
-            foreach (IAccountFacet facet in Facets)
-            {
-                string facetName = FacetAttribute.GetName(facet.GetType());
-                Version facetVersion = FacetAttribute.GetVersion(facet.GetType());
-                try
-                {
-                    using var loggerScope = Logger.BeginScope(facet);
-
-                    // get version
-                    Version dataVersion = new(1, 0);
-                    if (Index.Facets.TryGetValue(facetName, out SerializedFacetInfo facetInfo))
-                    {
-                        if (!string.IsNullOrEmpty(facetInfo.Version))
-                            dataVersion = Version.Parse(facetInfo.Version);
-                    }
-
-                    if (dataVersion != facetVersion && facet.TryUpgrade(this, dataVersion, out object upgradedData))
-                    {
-                        Set(facetName, upgradedData, facetVersion);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account facet '{facetName}'");
-                }
-            }
-        }
-
-        private enum UpdateResult
-        {
-            NotUpdated,
-            Updated,
-            Failed
         }
 
         public bool Update(Il2CppToolkit.Runtime.Il2CsRuntimeContext runtime)
         {
-            _ = DataManager.Update(runtime, new AccountDataContext(UserId));
-
-            Stopwatch sw = Stopwatch.StartNew();
-            var results = FacetToValueMap.AsParallel().Select((kvp, _) =>
+            var updateResult = DataManager.Update(runtime, new AccountDataContext(UserId));
+            if (updateResult == UpdateResult.Updated)
             {
-                IAccountFacet facet = kvp.Key;
-                object currentValue = kvp.Value;
-                string facetName = FacetAttribute.GetName(facet.GetType());
-                Version facetVersion = FacetAttribute.GetVersion(facet.GetType());
-                try
-                {
-                    using var loggerScope = Logger.BeginScope(facet);
-
-                    ModelScope scope = new(runtime);
-                    object newValue = facet.Merge(scope, currentValue);
-                    FacetToValueMap[facet] = newValue;
-                    if (newValue != currentValue && JsonConvert.SerializeObject(newValue) != JsonConvert.SerializeObject(currentValue))
-                    {
-                        Logger.LogInformation(ServiceEvent.DataUpdated.EventId(), $"Facet '{facet}' updated");
-                        Set(facetName, newValue, facetVersion);
-                        return UpdateResult.Updated;
-                    }
-                    return UpdateResult.NotUpdated;
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogError(ServiceError.AccountUpdateFailed.EventId(), ex, $"Failed to update account facet '{facetName}'");
-                    return UpdateResult.Failed;
-                }
-            }).ToList();
-
-            long end = sw.ElapsedMilliseconds;
-            Logger.LogInformation($"Account update completed in {end}ms");
-
-            if (results.Contains(UpdateResult.Updated))
-            {
-                FlushIndex();
                 EventService.EmitAccountUpdated(UserId);
             }
-
-            return !results.Contains(UpdateResult.Failed);
+            return updateResult != UpdateResult.Failed;
         }
 
         public T Read<T>(string key) where T : class
