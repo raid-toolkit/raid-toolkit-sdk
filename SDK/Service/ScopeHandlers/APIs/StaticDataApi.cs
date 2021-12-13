@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Raid.DataModel;
+using Raid.Service.DataServices;
 
 namespace Raid.Service
 {
@@ -8,10 +9,12 @@ namespace Raid.Service
     internal class StaticDataApi : ApiHandler<StaticDataApi>
     {
         private readonly StaticDataCache StaticDataCache;
-        public StaticDataApi(ILogger<StaticDataApi> logger, StaticDataCache staticData)
+        private readonly StaticHeroTypeProvider HeroTypeProvider;
+        public StaticDataApi(ILogger<StaticDataApi> logger, StaticDataCache staticData, StaticHeroTypeProvider heroTypeProvider)
             : base(logger)
         {
             StaticDataCache = staticData;
+            HeroTypeProvider = heroTypeProvider;
         }
 
         [PublicApi("getAllData")]
@@ -39,10 +42,9 @@ namespace Raid.Service
         }
 
         [PublicApi("getHeroData")]
-        [System.Obsolete]
-        public StaticHeroData GetHeroData()
+        public StaticHeroTypeData GetHeroData()
         {
-            return StaticDataFacet.ReadValue(StaticDataCache).HeroData;
+            return HeroTypeProvider.GetValue(StaticDataContext.Default);
         }
 
         [PublicApi("getSkillData")]

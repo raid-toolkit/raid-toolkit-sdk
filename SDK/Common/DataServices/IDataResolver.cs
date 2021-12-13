@@ -7,6 +7,7 @@ namespace Raid.DataServices
         where TData : class
     {
         IDataType<TData> DataType { get; }
+        bool TryReadAs<T>(TContext context, out T value) where T : class;
         bool TryRead(TContext context, out TData value);
         bool Write(TContext context, TData value);
     }
@@ -50,6 +51,11 @@ namespace Raid.DataServices
         public bool Write(TContext context, TData value)
         {
             return Factory.GetStorage(context).Write(DataType.Attribute.Key, value);
+        }
+
+        public bool TryReadAs<T>(TContext context, out T value) where T : class
+        {
+            return Factory.GetStorage(context).TryRead(DataType.Attribute.Key, out value);
         }
     }
 }

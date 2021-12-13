@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Raid.DataModel;
@@ -20,6 +21,23 @@ namespace Raid.Service.DataServices
             : base(storage)
         {
             HeroTypes = heroTypes;
+        }
+
+        public override bool Upgrade(AccountDataContext context, Version dataVersion)
+        {
+            if (dataVersion == new Version(1, 0))
+            {
+                if (PrimaryProvider.TryReadAs<IReadOnlyDictionary<int, Hero>>(context, out var heroes))
+                {
+                    _ = PrimaryProvider.Write(context, new HeroDataObject()
+                    {
+                        Heroes = heroes,
+                        BattlePresets = new Dictionary<int, int[]>()
+                    });
+                    return true;
+                }
+            }
+            return false;
         }
 
         public override bool Update(ModelScope scope, AccountDataContext context)
