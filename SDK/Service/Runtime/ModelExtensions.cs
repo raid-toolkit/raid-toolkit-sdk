@@ -441,7 +441,7 @@ namespace Raid.DataModel
         {
             return new ChangeStatParamsStub
             {
-                Param = (StatKindId)type.Param,
+                Param = (Enums.StatKindId)type.Param,
             };
         }
 

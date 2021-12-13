@@ -16,7 +16,6 @@ namespace Raid.Service.DataServices
 
         public AcademyProvider(
             IDataResolver<AccountDataContext, CachedDataStorage<PersistedDataStorage>, AcademyDataObject> storage,
-            // TODO: will this work??
             StaticAcademyProvider academyProvider)
             : base(storage)
         {
@@ -25,7 +24,7 @@ namespace Raid.Service.DataServices
 
         public override bool Update(ModelScope scope, AccountDataContext context)
         {
-            var academyBonuses = StaticAcademyProvider.GetValue(new StaticDataContext()).GuardianBonusByRarity;
+            var academyBonuses = StaticAcademyProvider.GetValue(StaticDataContext.Default).GuardianBonusByRarity;
             var academy = scope.AppModel._userWrapper.Academy.AcademyData;
             var guardians = academy.Guardians.SlotsByFraction.UnderlyingDictionary
                 .ToDictionary(

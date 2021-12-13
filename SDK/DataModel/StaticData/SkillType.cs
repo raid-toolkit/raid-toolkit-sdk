@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using Raid.DataModel.Enums;
 
 namespace Raid.DataModel
 {
@@ -377,19 +378,6 @@ namespace Raid.DataModel
         Average,
         Highest,
         Lowest,
-    }
-
-    public enum StatKindId
-    {
-        Health = 1,
-        Attack = 2,
-        Defence = 3,
-        Speed = 4,
-        Resistance = 5,
-        Accuracy = 6,
-        CriticalChance = 7,
-        CriticalDamage = 8,
-        CriticalHeal = 9,
     }
 
     public enum ActivateSkillOwner

@@ -49,7 +49,9 @@ namespace Raid.Service
             return new()
             {
                 Hash = hash,
+#pragma warning disable 0618
                 HeroData = new() { HeroTypes = heroTypes, },
+#pragma warning restore 0618
                 ArtifactData = new() { ArtifactSetKinds = artifactTypes.ToModel() },
                 SkillData = new() { SkillTypes = skillTypes },
                 ArenaData = new() { Leagues = arenaLeagues.ToModel() },

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Raid.DataModel.Enums;
@@ -11,6 +12,7 @@ namespace Raid.DataModel
     }
     public class StaticData : StaticDataBase
     {
+        [Obsolete("Use StaticHeroTypeData instead")]
         [JsonProperty("heroData")]
         public StaticHeroData HeroData;
 
@@ -30,8 +32,10 @@ namespace Raid.DataModel
         public IReadOnlyDictionary<string, string> LocalizedStrings;
     }
 
+    [Obsolete("Use StaticHeroTypeData instead")]
     public class StaticHeroData
     {
+        [Obsolete("Use StaticHeroTypeData instead")]
         [JsonProperty("heroTypes")]
         public IReadOnlyDictionary<int, HeroType> HeroTypes;
     }
@@ -70,5 +74,10 @@ namespace Raid.DataModel
     {
         [JsonProperty("guardianBonusByRarity")]
         public IReadOnlyDictionary<HeroRarity, StatBonus[][]> GuardianBonusByRarity;
+    }
+    public class StaticHeroTypeData : StaticDataBase
+    {
+        [JsonProperty("heroTypes")]
+        public IReadOnlyDictionary<int, HeroType> HeroTypes;
     }
 }

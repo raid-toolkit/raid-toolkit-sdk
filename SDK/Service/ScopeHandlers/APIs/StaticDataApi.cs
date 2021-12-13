@@ -39,6 +39,7 @@ namespace Raid.Service
         }
 
         [PublicApi("getHeroData")]
+        [System.Obsolete]
         public StaticHeroData GetHeroData()
         {
             return StaticDataFacet.ReadValue(StaticDataCache).HeroData;

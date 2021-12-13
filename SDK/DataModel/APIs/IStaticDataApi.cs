@@ -19,6 +19,7 @@ namespace Raid.DataModel
         Task<StaticArtifactData> GetArtifactData();
 
         [PublicApi("getHeroData")]
+        [System.Obsolete]
         Task<StaticHeroData> GetHeroData();
 
         [PublicApi("getSkillData")]
