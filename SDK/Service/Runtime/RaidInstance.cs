@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using Il2CppToolkit.Runtime;
 using Microsoft.Extensions.Logging;
+using Raid.Service.DataServices;
 
 namespace Raid.Service
 {
@@ -14,18 +15,18 @@ namespace Raid.Service
         private bool HasCheckedStaticData;
 
         private readonly AppData UserData;
-        private readonly StaticDataCache StaticDataCache;
         private readonly ILogger<RaidInstance> Logger;
         private readonly ErrorService ErrorService;
+        private readonly IPersistedDataManager<StaticDataContext> StaticDataManager;
 
         public RaidInstance(
             AppData userData,
-            StaticDataCache staticDataCache,
+            IPersistedDataManager<StaticDataContext> staticDataManager,
             ErrorService errorService,
             ILogger<RaidInstance> logger)
         {
             UserData = userData;
-            StaticDataCache = staticDataCache;
+            StaticDataManager = staticDataManager;
             Logger = logger;
             ErrorService = errorService;
         }
@@ -42,11 +43,10 @@ namespace Raid.Service
         {
             using TrackedOperation updateAccountOp = ErrorService.TrackOperation(ServiceErrorCategory.Account, AccountName, this);
 
-            ModelScope scope = new(Runtime);
             if (!HasCheckedStaticData)
             {
-                StaticDataCache.Update(scope);
-                if (!StaticDataCache.IsReady)
+                var result = StaticDataManager.Update(Runtime, StaticDataContext.Default);
+                if (result == UpdateResult.Failed)
                     return;
 
                 HasCheckedStaticData = true;

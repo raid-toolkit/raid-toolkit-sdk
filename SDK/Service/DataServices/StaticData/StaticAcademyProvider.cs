@@ -5,7 +5,7 @@ using Raid.DataServices;
 
 namespace Raid.Service.DataServices
 {
-    [DataType("staticAcademyData")]
+    [DataType("academy")]
     public class StaticAcademyDataObject : StaticAcademyData
     {
     }

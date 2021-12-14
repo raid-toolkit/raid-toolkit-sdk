@@ -23,9 +23,9 @@ namespace Raid.DataModel
     public class Account : AccountBase
     {
         [JsonProperty("lastUpdated")]
-        public DateTime LastUpdated;
+        public DateTime? LastUpdated;
 
-        public static Account FromBase(AccountBase accountBase, DateTime lastUpdated)
+        public static Account FromBase(AccountBase accountBase, DateTime? lastUpdated)
         {
             return new Account()
             {

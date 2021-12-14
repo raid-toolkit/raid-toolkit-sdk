@@ -9,6 +9,7 @@ namespace Microsoft.Extensions.DependencyInjection
         {
             return serviceCollection
                 .AddModelHostShared()
+                .AddSingleton<AccountDataBundle>()
                 .AddSingleton(typeof(IPersistedDataManager<>), typeof(PersistedDataManager<>))
                 .AddTypesAssignableTo<IContextDataProvider>(serviceCollection => serviceCollection.AddSingleton)
                 .AddConcreteTypesAssignableTo<IContextDataProvider>(serviceCollection => serviceCollection.AddSingleton);

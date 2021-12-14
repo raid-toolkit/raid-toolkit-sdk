@@ -38,7 +38,11 @@ namespace Raid.Service
         public void Load()
         {
             // enumerate accounts
-            m_userAccounts = Directory.GetDirectories(m_accountsPath).ToDictionary(id => Path.GetFileName(id), id => new UserAccount(Path.GetFileName(id), this, ServiceProvider.CreateScope()));
+            m_userAccounts = Directory.GetDirectories(m_accountsPath)
+                .ToDictionary(
+                    id => Path.GetFileName(id),
+                    id => new UserAccount(Path.GetFileName(id), ServiceProvider.CreateScope())
+                );
             foreach (UserAccount account in m_userAccounts.Values)
             {
                 account.Load();
@@ -49,7 +53,7 @@ namespace Raid.Service
         {
             if (!m_userAccounts.TryGetValue(id, out UserAccount account))
             {
-                account = new UserAccount(id, this, ServiceProvider.CreateScope());
+                account = new UserAccount(id, ServiceProvider.CreateScope());
                 account.Load();
                 m_userAccounts.Add(id, account);
             }

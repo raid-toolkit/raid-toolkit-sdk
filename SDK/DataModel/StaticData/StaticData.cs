@@ -12,9 +12,8 @@ namespace Raid.DataModel
     }
     public class StaticData : StaticDataBase
     {
-        [Obsolete("Use StaticHeroTypeData instead")]
         [JsonProperty("heroData")]
-        public StaticHeroData HeroData;
+        public StaticHeroTypeData HeroData;
 
         [JsonProperty("artifactData")]
         public StaticArtifactData ArtifactData;
@@ -32,33 +31,25 @@ namespace Raid.DataModel
         public IReadOnlyDictionary<string, string> LocalizedStrings;
     }
 
-    [Obsolete("Use StaticHeroTypeData instead")]
-    public class StaticHeroData
-    {
-        [Obsolete("Use StaticHeroTypeData instead")]
-        [JsonProperty("heroTypes")]
-        public IReadOnlyDictionary<int, HeroType> HeroTypes;
-    }
-
-    public class StaticArtifactData
+    public class StaticArtifactData : StaticDataBase
     {
         [JsonProperty("setKinds")]
         public IReadOnlyDictionary<string, ArtifactSetKind> ArtifactSetKinds;
     }
 
-    public class StaticSkillData
+    public class StaticSkillData : StaticDataBase
     {
         [JsonProperty("skillTypes")]
         public IReadOnlyDictionary<int, SkillType> SkillTypes;
     }
 
-    public class StaticArenaData
+    public class StaticArenaData : StaticDataBase
     {
         [JsonProperty("leagues")]
         public IReadOnlyDictionary<string, ArenaLeague> Leagues;
     }
 
-    public class StaticStageData
+    public class StaticStageData : StaticDataBase
     {
         [JsonProperty("areas")]
         public IReadOnlyDictionary<string, AreaData> Areas;
@@ -75,9 +66,16 @@ namespace Raid.DataModel
         [JsonProperty("guardianBonusByRarity")]
         public IReadOnlyDictionary<HeroRarity, StatBonus[][]> GuardianBonusByRarity;
     }
+
     public class StaticHeroTypeData : StaticDataBase
     {
         [JsonProperty("heroTypes")]
         public IReadOnlyDictionary<int, HeroType> HeroTypes;
+    }
+
+    public class StaticLocalizationData : StaticDataBase
+    {
+        [JsonProperty("localizedStrings")]
+        public IReadOnlyDictionary<string, string> LocalizedStrings;
     }
 }

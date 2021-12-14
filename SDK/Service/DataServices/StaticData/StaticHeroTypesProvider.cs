@@ -4,7 +4,7 @@ using Raid.DataServices;
 
 namespace Raid.Service.DataServices
 {
-    [DataType("StaticHeroTypeData")]
+    [DataType("heroTypes")]
     public class StaticHeroTypeDataObject : StaticHeroTypeData
     {
     }

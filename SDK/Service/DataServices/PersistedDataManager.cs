@@ -19,13 +19,14 @@ namespace Raid.Service.DataServices
     {
         void Upgrade(TContext context);
         UpdateResult Update(Il2CsRuntimeContext runtime, TContext context);
+        IDataResolver<TContext, CachedDataStorage<PersistedDataStorage>, SerializedDataIndex> Index { get; }
     }
 
     public class PersistedDataManager<TContext> : IPersistedDataManager<TContext> where TContext : class, IDataContext
     {
         private readonly List<IContextDataProvider<TContext>> Providers;
         private readonly ILogger<PersistedDataManager<TContext>> Logger;
-        private readonly IDataResolver<TContext, CachedDataStorage<PersistedDataStorage>, SerializedDataIndex> Index;
+        public IDataResolver<TContext, CachedDataStorage<PersistedDataStorage>, SerializedDataIndex> Index { get; }
 
         public PersistedDataManager(
             ILogger<PersistedDataManager<TContext>> logger, IEnumerable<IContextDataProvider> providers,
@@ -84,6 +85,9 @@ namespace Raid.Service.DataServices
                     {
                         _ = Index.Update(context, index =>
                         {
+                            if (index == null)
+                                index = new SerializedDataIndex();
+
                             index.Facets[dataType.Key] = new()
                             {
                                 LastUpdated = DateTime.UtcNow,

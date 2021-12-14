@@ -44,7 +44,7 @@ namespace Raid.DataServices
 
         public bool Write<T>(string key, T value) where T : class
         {
-            T updatedValue = (T)Cache.AddOrUpdate(key, _ => value, (_1, oldValue) => UpdateAndWriteIfChanged(oldValue, value));
+            T updatedValue = Cache.AddOrUpdate(key, _ => value, (_1, oldValue) => UpdateAndWriteIfChanged(oldValue, value)) as T;
             // only write if the new value was added
             if (updatedValue == value)
             {

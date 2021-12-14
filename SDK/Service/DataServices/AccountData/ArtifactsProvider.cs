@@ -1,21 +1,26 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 using Raid.DataModel;
 using Raid.DataServices;
 
 namespace Raid.Service.DataServices
 {
-    [DataType("arena")]
+    [DataType("artifacts")]
     public class ArtifactsDataObject : Dictionary<int, Artifact>
     {
     }
 
+    [DataType("artifacts-state")]
     public class ArtifactsProviderState
     {
         private const int kForceRefreshInterval = 60000;
+        [JsonProperty("nextForcedRefresh")]
         private DateTime m_nextForcedRefresh = DateTime.MinValue;
+        [JsonProperty("nextId")]
         private int m_nextId;
+        [JsonProperty("nextRevisionId")]
         private int m_nextRevisionId;
 
         public bool ShouldIncrementalUpdate(SharedModel.Meta.Artifacts.UserArtifactData artifactData)

@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Raid.DataModel;
-using Raid.Service;
+using Raid.Service.DataServices;
 
 namespace RaidExtractor.Core
 {
     public class Extractor
     {
-        private readonly StaticDataCache StaticDataCache;
-        public Extractor(StaticDataCache staticData)
+        private readonly StaticHeroTypeProvider HeroTypes;
+        public Extractor(StaticHeroTypeProvider heroTypes)
         {
-            StaticDataCache = staticData;
+            HeroTypes = heroTypes;
         }
 
         private ArtifactBonus FromStatBonus(ArtifactStatBonus bonus)
@@ -35,22 +35,21 @@ namespace RaidExtractor.Core
                 && data.AssignedHeroes.Any(slot => slot.FirstHero == hero.Id || slot.SecondHero == hero.Id);
         }
 
-        public AccountDump DumpAccount(UserAccount account)
+        public AccountDump DumpAccount(AccountDataBundle accountData, string accountId, DateTime lastUpdated)
         {
-            var accountFacet = AccountFacet.ReadValue(account);
-            var artifacts = ArtifactsFacet.ReadValue(account);
-            var heroes = HeroesFacet.ReadValue(account);
-            var arena = ArenaFacet.ReadValue(account);
-            var resources = ResourcesFacet.ReadValue(account);
-            var academy = AcademyFacet.ReadValue(account);
-            // var shards = ArenaFacet.ReadValue(account);
-            var staticData = StaticDataFacet.ReadValue(StaticDataCache);
+            var accountFacet = accountData.AccountInfo.GetValue(accountId);
+            var artifacts = accountData.Artifacts.GetValue(accountId);
+            var heroes = accountData.Heroes.GetValue(accountId);
+            var arena = accountData.Arena.GetValue(accountId);
+            var resources = accountData.Resources.GetValue(accountId);
+            var academy = accountData.Academy.GetValue(accountId);
+            var heroTypes = HeroTypes.GetValue(StaticDataContext.Default).HeroTypes;
 
             return new AccountDump()
             {
                 Id = accountFacet.Id,
                 Name = accountFacet.Name,
-                LastUpdated = account.LastUpdated.ToString("o"),
+                LastUpdated = lastUpdated.ToString("o"),
                 ArenaLeague = arena.ClassicArena?.LeagueId.ToString(),
                 GreatHall = arena.GreatHallBonuses.ToDictionary(
                     bonus => bonus.Affinity.ToString().ToCamelCase(),
@@ -84,7 +83,7 @@ namespace RaidExtractor.Core
                 StagePresets = heroes.BattlePresets,
                 Heroes = heroes.Heroes.Values.Where(hero => !hero.Deleted).Select(hero =>
                 {
-                    var heroType = staticData.HeroData.HeroTypes[hero.TypeId];
+                    var heroType = heroTypes[hero.TypeId];
                     var multiplier = StaticResources.Multipliers.First(m => m.stars == (int)Enum.Parse<SharedModel.Meta.Heroes.HeroGrade>(hero.Rank) && m.level == hero.Level);
                     Hero newHero = new()
                     {

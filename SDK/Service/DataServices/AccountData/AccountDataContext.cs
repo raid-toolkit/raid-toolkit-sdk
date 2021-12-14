@@ -11,5 +11,10 @@ namespace Raid.Service.DataServices
         }
         public string[] Parts { get; }
         public string AccountId { get; }
+
+        public static implicit operator AccountDataContext(string accountId)
+        {
+            return new(accountId);
+        }
     }
 }
