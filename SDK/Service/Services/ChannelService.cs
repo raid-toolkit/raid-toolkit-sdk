@@ -51,9 +51,12 @@ namespace Raid.Service
 
     public class ChannelSocketAdapter : ISocketSession
     {
-        ClientWebSocket Session;
-        SendMessage ReceivedMessage;
-        public ChannelSocketAdapter(ClientWebSocket session, SendMessage receivedMessage) => (Session, ReceivedMessage) = (session, receivedMessage);
+        private readonly ClientWebSocket Session;
+        private readonly SendMessage ReceivedMessage;
+        public ChannelSocketAdapter(ClientWebSocket session, SendMessage receivedMessage)
+        {
+            (Session, ReceivedMessage) = (session, receivedMessage);
+        }
 
         public string Id => "ClientSocket";
         public bool Connected => Session.State == WebSocketState.Open;
@@ -77,11 +80,11 @@ namespace Raid.Service
         private readonly ClientWebSocket Socket = new();
         private readonly Uri HostUri;
         private Task ConnectTask;
-        private readonly UserData UserData;
+        private readonly AppData UserData;
         private readonly Extractor Extractor;
         private readonly ILogger<ChannelService> Logger;
 
-        public ChannelService(ILogger<ChannelService> logger, IOptions<AppSettings> settings, UserData userData, Extractor extractor)
+        public ChannelService(ILogger<ChannelService> logger, IOptions<AppSettings> settings, AppData userData, Extractor extractor)
         {
             Logger = logger;
             HostUri = new Uri(settings.Value.PublicServer);
@@ -107,7 +110,7 @@ namespace Raid.Service
             if (ConnectTask == null)
             {
                 ConnectTask = Socket.ConnectAsync(HostUri, CancellationToken.None);
-                Task.Run(Run);
+                _ = Task.Run(Run);
             }
             return ConnectTask;
         }
@@ -126,7 +129,7 @@ namespace Raid.Service
                         // TODO: throw away messages until next EndOfMessage is reached (inclusive)
                         continue;
                     }
-                    var sendMessage = JsonConvert.DeserializeObject<SendMessage>(Encoding.UTF8.GetString(buffer.Slice(0, result.Count).Span));
+                    var sendMessage = JsonConvert.DeserializeObject<SendMessage>(Encoding.UTF8.GetString(buffer[..result.Count].Span));
                     HandleMessage(sendMessage);
                 }
                 catch (Exception ex)

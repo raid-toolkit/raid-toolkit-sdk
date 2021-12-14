@@ -19,7 +19,7 @@ namespace Raid.DataModel
         Task<StaticArtifactData> GetArtifactData();
 
         [PublicApi("getHeroData")]
-        Task<StaticHeroData> GetHeroData();
+        Task<StaticHeroTypeData> GetHeroData();
 
         [PublicApi("getSkillData")]
         Task<StaticSkillData> GetSkillData();

@@ -1,59 +1,85 @@
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 using Raid.DataModel;
+using Raid.Service.DataServices;
 
 namespace Raid.Service
 {
     [PublicApi("static-data")]
     internal class StaticDataApi : ApiHandler<StaticDataApi>
     {
-        private readonly StaticDataCache StaticDataCache;
-        public StaticDataApi(ILogger<StaticDataApi> logger, StaticDataCache staticData)
+        private readonly StaticArenaProvider StaticArenaData;
+        private readonly StaticArtifactProvider StaticArtifactData;
+        private readonly StaticSkillProvider StaticSkillData;
+        private readonly StaticHeroTypeProvider StaticHeroTypeData;
+        private readonly StaticLocalizationProvider StaticLocalizationData;
+        private readonly StaticStageProvider StaticStageData;
+        public StaticDataApi(
+            ILogger<StaticDataApi> logger,
+            StaticArenaProvider staticArenaData,
+            StaticArtifactProvider staticArtifactData,
+            StaticSkillProvider staticSkillData,
+            StaticHeroTypeProvider staticHeroTypeProvider,
+            StaticLocalizationProvider staticLocalizationProvider,
+            StaticStageProvider staticStageData)
             : base(logger)
         {
-            StaticDataCache = staticData;
+            StaticArenaData = staticArenaData;
+            StaticArtifactData = staticArtifactData;
+            StaticSkillData = staticSkillData;
+            StaticHeroTypeData = staticHeroTypeProvider;
+            StaticLocalizationData = staticLocalizationProvider;
+            StaticStageData = staticStageData;
         }
 
         [PublicApi("getAllData")]
         public StaticData GetAllData()
         {
-            return StaticDataFacet.ReadValue(StaticDataCache);
+            return new StaticData()
+            {
+                ArenaData = GetArenaData(),
+                ArtifactData = GetArtifactData(),
+                HeroData = GetHeroData(),
+                LocalizedStrings = GetLocalizedStrings(),
+                SkillData = GetSkillData(),
+                StageData = GetStageData()
+            };
         }
 
         [PublicApi("getLocalizedStrings")]
         public IReadOnlyDictionary<string, string> GetLocalizedStrings()
         {
-            return StaticDataFacet.ReadValue(StaticDataCache).LocalizedStrings;
+            return StaticLocalizationData.GetValue(StaticDataContext.Default).LocalizedStrings;
         }
 
         [PublicApi("getArenaData")]
         public StaticArenaData GetArenaData()
         {
-            return StaticDataFacet.ReadValue(StaticDataCache).ArenaData;
+            return StaticArenaData.GetValue(StaticDataContext.Default);
         }
 
         [PublicApi("getArtifactData")]
         public StaticArtifactData GetArtifactData()
         {
-            return StaticDataFacet.ReadValue(StaticDataCache).ArtifactData;
+            return StaticArtifactData.GetValue(StaticDataContext.Default);
         }
 
         [PublicApi("getHeroData")]
-        public StaticHeroData GetHeroData()
+        public StaticHeroTypeData GetHeroData()
         {
-            return StaticDataFacet.ReadValue(StaticDataCache).HeroData;
+            return StaticHeroTypeData.GetValue(StaticDataContext.Default);
         }
 
         [PublicApi("getSkillData")]
         public StaticSkillData GetSkillData()
         {
-            return StaticDataFacet.ReadValue(StaticDataCache).SkillData;
+            return StaticSkillData.GetValue(StaticDataContext.Default);
         }
 
         [PublicApi("getStageData")]
         public StaticStageData GetStageData()
         {
-            return StaticDataFacet.ReadValue(StaticDataCache).StageData;
+            return StaticStageData.GetValue(StaticDataContext.Default);
         }
     }
 }

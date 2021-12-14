@@ -42,8 +42,7 @@ namespace Raid.Service
                 .AddHostedServiceSingleton<ErrorService>()
                 .AddHostedServiceSingleton<EventService>()
                 .AddSingleton<ModelService>()
-                .AddSingleton<UserData>()
-                .AddSingleton<StaticDataCache>()
+                .AddSingleton<AppData>()
                 .AddSingleton<RaidInstanceFactory>()
                 .AddSingleton<Extractor>()
                 .AddSingleton<MemoryLogger>()
@@ -52,9 +51,8 @@ namespace Raid.Service
                 .AddScoped<UI.MainWindow>()
                 .AddScoped<UI.ErrorsWindow>()
                 .AddScoped<RaidInstance>()
+                .AddAppModel()
                 .AddTypesAssignableTo<IMessageScopeHandler>(collection => collection.AddSingleton)
-                .AddTypesAssignableToFactories<IStaticFacet>(collection => collection.AddSingleton)
-                .AddTypesAssignableToFactories<IAccountFacet>(collection => collection.AddScoped)
             );
 
         public static IHost CreateHost(RunOptions options)

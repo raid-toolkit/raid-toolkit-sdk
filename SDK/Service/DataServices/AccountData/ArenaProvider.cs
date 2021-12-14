@@ -2,12 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Raid.DataModel;
+using Raid.DataServices;
 using StatKindId = SharedModel.Battle.Effects.StatKindId;
 
-namespace Raid.Service
+namespace Raid.Service.DataServices
 {
-    [Facet("arena", Version = "1.1")]
-    public class ArenaFacet : UserAccountFacetBase<ArenaData, ArenaFacet>
+    [DataType("arena")]
+    public class ArenaDataObject : ArenaData
+    {
+    }
+
+    public class ArenaProvider : DataProviderBase<AccountDataContext, ArenaDataObject>
     {
         private static readonly LazyInitializer<Dictionary<StatKindId, List<StatBonus>>, ModelScope> StaticBonusData = new(scope =>
         {
@@ -22,7 +27,12 @@ namespace Raid.Service
             return staticBonusData;
         });
 
-        protected override ArenaData Merge(ModelScope scope, ArenaData previous = null)
+        public ArenaProvider(IDataResolver<AccountDataContext, CachedDataStorage<PersistedDataStorage>, ArenaDataObject> storage)
+            : base(storage)
+        {
+        }
+
+        public override bool Update(ModelScope scope, AccountDataContext context)
         {
             var staticBonusData = StaticBonusData.GetValue(scope);
 
@@ -60,14 +70,9 @@ namespace Raid.Service
             TagArenaPlacement placement = TagArenaPlacement.Unknown;
             if (leagueBorders.MaxSection.HasValue && leagueBorders.MinSection.HasValue)
             {
-                if (tagArenaPoints > leagueBorders.MaxSection.Value)
-                {
-                    placement = TagArenaPlacement.Promotion;
-                }
-                else
-                {
-                    placement = tagArenaPoints < leagueBorders.MaxSection.Value ? TagArenaPlacement.Demotion : TagArenaPlacement.Retain;
-                }
+                placement = tagArenaPoints > leagueBorders.MaxSection.Value
+                    ? TagArenaPlacement.Promotion
+                    : tagArenaPoints < leagueBorders.MaxSection.Value ? TagArenaPlacement.Demotion : TagArenaPlacement.Retain;
             }
 
             TagArenaData tagArena = new()
@@ -100,12 +105,12 @@ namespace Raid.Service
                     .ToArray(),
             };
 
-            return new ArenaData
+            return PrimaryProvider.Write(context, new ArenaDataObject
             {
                 GreatHallBonuses = ghBonus,
                 TagArena = tagArena,
                 ClassicArena = classicArena,
-            };
+            });
         }
     }
 }

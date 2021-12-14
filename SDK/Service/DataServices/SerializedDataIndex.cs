@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using Raid.DataServices;
 
-namespace Raid.DataModel
+namespace Raid.Service.DataServices
 {
-    public class SerializedFacetInfo
+    public class SerializedDataInfo
     {
         [JsonProperty("lastUpdated")]
         public DateTime LastUpdated;
@@ -13,7 +14,9 @@ namespace Raid.DataModel
         [JsonProperty("version")]
         public string Version;
     }
-    public class SerializedFacetIndex
+
+    [DataType("_index")]
+    public class SerializedDataIndex
     {
         [JsonProperty("lastUpdated")]
         public DateTime? LastUpdated
@@ -23,6 +26,6 @@ namespace Raid.DataModel
         }
 
         [JsonProperty("facets")]
-        public IDictionary<string, SerializedFacetInfo> Facets = new Dictionary<string, SerializedFacetInfo>();
+        public IDictionary<string, SerializedDataInfo> Facets = new Dictionary<string, SerializedDataInfo>();
     }
 }

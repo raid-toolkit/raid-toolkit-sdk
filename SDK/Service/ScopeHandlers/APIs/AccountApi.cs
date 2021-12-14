@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Raid.DataModel;
+using Raid.Service.DataServices;
 using SharedModel.Meta.Skills;
 using Extractor = RaidExtractor.Core.Extractor;
 
@@ -11,19 +12,28 @@ namespace Raid.Service
 {
     internal class AccountApi : ApiHandler<IAccountApi>, IAccountApi
     {
-        private readonly StaticDataCache StaticDataCache;
-        private readonly UserData UserData;
+        private readonly StaticArenaProvider StaticArenaData;
+        private readonly StaticArtifactProvider StaticArtifactData;
+        private readonly StaticSkillProvider StaticSkillData;
+        private readonly AppData UserData;
         private readonly Extractor Extractor;
+        private readonly AccountDataBundle AccountData;
         public AccountApi(
             ILogger<AccountApi> logger,
-            UserData userData,
-            StaticDataCache staticData,
+            AppData userData,
+            AccountDataBundle accountData,
+            StaticArenaProvider staticArenaData,
+            StaticArtifactProvider staticArtifactData,
+            StaticSkillProvider staticSkillData,
             Extractor extractor,
             EventService eventService)
             : base(logger)
         {
             UserData = userData;
-            StaticDataCache = staticData;
+            AccountData = accountData;
+            StaticArenaData = staticArenaData;
+            StaticArtifactData = staticArtifactData;
+            StaticSkillData = staticSkillData;
             Extractor = extractor;
             eventService.OnAccountUpdated += OnAccountUpdated;
         }
@@ -40,53 +50,54 @@ namespace Raid.Service
 
         public Task<RaidExtractor.Core.AccountDump> GetAccountDump(string accountId)
         {
-            return Task.FromResult(Extractor.DumpAccount(UserData.GetAccount(accountId)));
+            return Task.FromResult(Extractor.DumpAccount(AccountData, accountId, UserData.GetAccount(accountId).LastUpdated ?? DateTime.UtcNow));
         }
 
         public Task<Resources> GetAllResources(string accountId)
         {
-            return Task.FromResult(ResourcesFacet.ReadValue(UserData.GetAccount(accountId)));
+            return Task.FromResult((Resources)AccountData.Resources.GetValue(new(accountId)));
         }
 
         public Task<Account[]> GetAccounts()
         {
-            return Task.FromResult(UserData.UserAccounts.Select(account =>
-            {
-                AccountBase result = AccountFacet.ReadValue(account);
-                return Account.FromBase(result, account.LastUpdated);
-            }).ToArray());
+            return Task.FromResult(UserData.UserAccounts.Select(AccountFromUserAccount).ToArray());
+        }
+
+        private Account AccountFromUserAccount(UserAccount account)
+        {
+            AccountBase result = AccountData.AccountInfo.GetValue(new(account.UserId));
+            return Account.FromBase(result, account.LastUpdated);
         }
 
         public Task<Account> GetAccount(string accountId)
         {
             UserAccount userAccount = UserData.GetAccount(accountId);
-            AccountBase account = AccountFacet.ReadValue(userAccount);
-            return Task.FromResult(Account.FromBase(account, userAccount.LastUpdated));
+            return Task.FromResult(AccountFromUserAccount(userAccount));
         }
 
         public Task<ArenaData> GetArena(string accountId)
         {
-            return Task.FromResult(ArenaFacet.ReadValue(UserData.GetAccount(accountId)));
+            return Task.FromResult((ArenaData)AccountData.Arena.GetValue(new(accountId)));
         }
 
         public Task<AcademyData> GetAcademy(string accountId)
         {
-            return Task.FromResult(AcademyFacet.ReadValue(UserData.GetAccount(accountId)));
+            return Task.FromResult((AcademyData)AccountData.Academy.GetValue(new(accountId)));
         }
 
         public Task<Artifact[]> GetArtifacts(string accountId)
         {
-            return Task.FromResult(ArtifactsFacet.ReadValue(UserData.GetAccount(accountId)).Values.ToArray());
+            return Task.FromResult(AccountData.Artifacts.GetValue(new(accountId)).Values.ToArray());
         }
 
         public Task<Artifact> GetArtifactById(string accountId, int artifactId)
         {
-            return Task.FromResult(ArtifactsFacet.ReadValue(UserData.GetAccount(accountId))[artifactId]);
+            return Task.FromResult(AccountData.Artifacts.GetValue(new(accountId))[artifactId]);
         }
 
         public Task<Hero[]> GetHeroes(string accountId, bool snapshot = false)
         {
-            var heroes = HeroesFacet.ReadValue(UserData.GetAccount(accountId)).Heroes.Values;
+            var heroes = AccountData.Heroes.GetValue(new(accountId)).Heroes.Values;
             return !snapshot
                 ? Task.FromResult(heroes.ToArray())
                 : Task.FromResult<Hero[]>(heroes.Select(hero => GetSnapshot(accountId, hero)).ToArray());
@@ -94,7 +105,7 @@ namespace Raid.Service
 
         public Task<Hero> GetHeroById(string accountId, int heroId, bool snapshot = false)
         {
-            var hero = HeroesFacet.ReadValue(UserData.GetAccount(accountId)).Heroes[heroId];
+            var hero = AccountData.Heroes.GetValue(new(accountId)).Heroes[heroId];
             return !snapshot ? Task.FromResult(hero) : Task.FromResult<Hero>(GetSnapshot(accountId, hero));
         }
 
@@ -118,9 +129,11 @@ namespace Raid.Service
 
         private HeroSnapshot GetSnapshot(string accountId, Hero hero)
         {
-            var staticData = StaticDataFacet.ReadValue(StaticDataCache);
-            var arenaData = ArenaFacet.ReadValue(UserData.GetAccount(accountId));
-            var artifactData = ArtifactsFacet.ReadValue(UserData.GetAccount(accountId));
+            var staticArenaData = StaticArenaData.GetValue(StaticDataContext.Default);
+            var staticArtifactData = StaticArtifactData.GetValue(StaticDataContext.Default);
+            var staticSkillData = StaticSkillData.GetValue(StaticDataContext.Default);
+            var arenaData = AccountData.Arena.GetValue(new(accountId));
+            var artifactData = AccountData.Artifacts.GetValue(new(accountId));
             HeroType type = hero.Type;
             HeroStatsCalculator stats = new(type, (int)Enum.Parse<SharedModel.Meta.Heroes.HeroGrade>(hero.Rank), hero.Level);
 
@@ -129,7 +142,7 @@ namespace Raid.Service
             if (greatHallBonus != null)
                 stats.ApplyBonuses(StatSource.GreatHall, greatHallBonus.Bonus.ToArray());
 
-            if (staticData.ArenaData.Leagues.TryGetValue(arenaData.ClassicArena.LeagueId.ToString(), out var league))
+            if (staticArenaData.Leagues.TryGetValue(arenaData.ClassicArena.LeagueId.ToString(), out var league))
                 stats.applyArenaStats(league.StatBonus);
 
             // masteries
@@ -146,7 +159,7 @@ namespace Raid.Service
                 var setCounts = equippedArtifacts.Select(artifact => artifact.SetKindId).GroupBy(setKindId => setKindId).ToDictionary(group => group.Key, group => group.Count());
                 foreach ((var setKindId, var count) in setCounts)
                 {
-                    if (!staticData.ArtifactData.ArtifactSetKinds.TryGetValue(setKindId, out ArtifactSetKind setKind))
+                    if (!staticArtifactData.ArtifactSetKinds.TryGetValue(setKindId, out ArtifactSetKind setKind))
                         continue;
                     int numSets = count / setKind.ArtifactCount;
 
@@ -158,7 +171,7 @@ namespace Raid.Service
             List<SkillSnapshot> skillSnapshots = new();
             foreach (var skill in hero.SkillsById.Values)
             {
-                if (!staticData.SkillData.SkillTypes.TryGetValue(skill.TypeId, out var skillType))
+                if (!staticSkillData.SkillTypes.TryGetValue(skill.TypeId, out var skillType))
                 {
                     Logger.LogWarning(ServiceEvent.MissingSkill.EventId(), $"Skill '{skill.TypeId}' is missing from static data");
                     continue;

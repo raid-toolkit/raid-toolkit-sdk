@@ -1,24 +1,31 @@
 using System.Linq;
 using Raid.DataModel;
 using Raid.DataModel.Enums;
+using Raid.DataServices;
 
-namespace Raid.Service
+namespace Raid.Service.DataServices
 {
-    [Facet("academy", Version = "1.0")]
-    public class AcademyFacet : UserAccountFacetBase<AcademyData, AcademyFacet>
+    [DataType("academy")]
+    public class AcademyDataObject : AcademyData
     {
-        private readonly StaticDataCache StaticDataCache;
-        public AcademyFacet(StaticDataCache staticDataCache)
+    }
+
+    public class AcademyProvider : DataProviderBase<AccountDataContext, AcademyDataObject>
+    {
+        private readonly StaticAcademyProvider StaticAcademyProvider;
+
+        public AcademyProvider(
+            IDataResolver<AccountDataContext, CachedDataStorage<PersistedDataStorage>, AcademyDataObject> storage,
+            StaticAcademyProvider academyProvider)
+            : base(storage)
         {
-            StaticDataCache = staticDataCache;
+            StaticAcademyProvider = academyProvider;
         }
 
-        protected override AcademyData Merge(ModelScope scope, AcademyData previous = null)
+        public override bool Update(ModelScope scope, AccountDataContext context)
         {
-            var academyBonuses = StaticAcademyDataFacet.ReadValue(StaticDataCache).GuardianBonusByRarity;
-
+            var academyBonuses = StaticAcademyProvider.GetValue(StaticDataContext.Default).GuardianBonusByRarity;
             var academy = scope.AppModel._userWrapper.Academy.AcademyData;
-
             var guardians = academy.Guardians.SlotsByFraction.UnderlyingDictionary
                 .ToDictionary(
                     factionPair => (HeroFraction)factionPair.Key,
@@ -39,10 +46,11 @@ namespace Raid.Service
                         }
                     )
                 );
-            return new AcademyData
+
+            return PrimaryProvider.Write(context, new AcademyDataObject
             {
                 Guardians = guardians
-            };
+            });
         }
     }
 }

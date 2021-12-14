@@ -2,46 +2,55 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Raid.DataModel;
+using Raid.DataServices;
 using SharedModel.Meta.Artifacts;
 
-namespace Raid.Service
+namespace Raid.Service.DataServices
 {
-    [Facet("heroes", Version = "2.1")]
-    public class HeroesFacet : UserAccountFacetBase<HeroData, HeroesFacet>
+    [DataType("heroes")]
+    public class HeroDataObject : HeroData
     {
-        private readonly StaticDataCache StaticDataCache;
-        public HeroesFacet(StaticDataCache staticDataCache)
+    }
+
+    public class HeroesProvider : DataProviderBase<AccountDataContext, HeroDataObject>
+    {
+        private readonly StaticHeroTypeProvider HeroTypes;
+        public HeroesProvider(
+            IDataResolver<AccountDataContext, CachedDataStorage<PersistedDataStorage>, HeroDataObject> storage,
+            StaticHeroTypeProvider heroTypes)
+            : base(storage)
         {
-            StaticDataCache = staticDataCache;
+            HeroTypes = heroTypes;
         }
 
-        public override bool TryUpgrade(IModelDataSource dataSource, Version from, out HeroData upgradedData)
+        public override bool Upgrade(AccountDataContext context, Version dataVersion)
         {
-            if (from == new Version(1, 0))
+            if (dataVersion == new Version(1, 0))
             {
-                var heroes = dataSource.Read<IReadOnlyDictionary<int, Hero>>("heroes");
-                if (heroes != null)
+                if (PrimaryProvider.TryReadAs<IReadOnlyDictionary<int, Hero>>(context, out var heroes))
                 {
-                    upgradedData = new HeroData()
+                    _ = PrimaryProvider.Write(context, new HeroDataObject()
                     {
                         Heroes = heroes,
                         BattlePresets = new Dictionary<int, int[]>()
-                    };
+                    });
                     return true;
                 }
             }
-            upgradedData = null;
             return false;
         }
 
-        protected override HeroData Merge(ModelScope scope, HeroData previous = null)
+        public override bool Update(ModelScope scope, AccountDataContext context)
         {
             var userWrapper = scope.AppModel._userWrapper;
             var userHeroData = userWrapper.Heroes.HeroData;
-            var heroTypes = StaticDataFacet.ReadValue(StaticDataCache).HeroData.HeroTypes;
+            var heroTypes = HeroTypes.GetValue(StaticDataContext.Default).HeroTypes;
 
             var artifactsByHeroId = scope.AppModel._userWrapper.Artifacts.ArtifactData.ArtifactDataByHeroId;
             var heroesById = userHeroData.HeroById;
+
+            // ignore result, and assume null below for missing value
+            _ = PrimaryProvider.TryRead(context, out HeroDataObject previous);
 
             // copy all previous deleted elements to save cost when looking later
             Dictionary<int, Hero> result = previous != null ? new(previous.Heroes.Where(kvp => kvp.Value.Deleted)) : new();
@@ -88,11 +97,11 @@ namespace Raid.Service
                 }
             }
 
-            return new HeroData()
+            return PrimaryProvider.Write(context, new HeroDataObject()
             {
                 Heroes = result,
                 BattlePresets = userHeroData.BattlePresets.UnderlyingDictionary
-            };
+            });
         }
     }
 }

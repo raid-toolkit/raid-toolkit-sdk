@@ -33,6 +33,20 @@ namespace Raid.Service
             return collection;
         }
 
+        public static IServiceCollection AddConcreteTypesAssignableTo<T>(
+            this IServiceCollection collection,
+            Expression<Func<IServiceCollection, Func<Type, Type, IServiceCollection>>> expression,
+            Assembly assembly = null
+        )
+        {
+            Func<Type, Type, IServiceCollection> fn = expression.Compile().Invoke(collection);
+            foreach (var type in (assembly ?? Assembly.GetExecutingAssembly()).GetTypesAssignableTo<T>())
+            {
+                fn(type, type);
+            }
+            return collection;
+        }
+
         public static IServiceCollection AddTypesAssignableToFactories<T>(
             this IServiceCollection collection,
             Expression<Func<IServiceCollection, Func<Type, Type, IServiceCollection>>> expression,
