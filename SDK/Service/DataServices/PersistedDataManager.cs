@@ -39,7 +39,8 @@ namespace Raid.Service.DataServices
 
         public void Upgrade(TContext context)
         {
-            Logger.LogInformation($"Checking and upgrading context [{string.Join(',', context.Parts)}]");
+            using var upgradeScope = Logger.BeginScope(context);
+            Logger.LogInformation($"Checking and upgrading context");
             if (!Index.TryRead(context, out SerializedDataIndex index))
             {
                 index = new();
@@ -73,15 +74,22 @@ namespace Raid.Service.DataServices
 
         public UpdateResult Update(Il2CsRuntimeContext runtime, TContext context)
         {
-            Stopwatch sw = Stopwatch.StartNew();
+            using var updateScope = Logger.BeginScope(context);
+            Logger.LogInformation($"Starting update");
 
+            Stopwatch sw = Stopwatch.StartNew();
             var results = Providers.AsParallel().Select(provider =>
             {
                 var dataType = provider.DataType;
                 try
                 {
                     using var loggerScope = Logger.BeginScope(provider);
-                    if (provider.Update(new(runtime), context))
+
+                    Stopwatch swScoped = Stopwatch.StartNew();
+                    bool didUpdate = provider.Update(new(runtime), context);
+                    Logger.LogInformation($"Provider update completed in {swScoped.ElapsedMilliseconds}ms");
+
+                    if (didUpdate)
                     {
                         _ = Index.Update(context, index =>
                         {

@@ -16,6 +16,8 @@ namespace Raid.Model
     {
         private static readonly Version CurrentInteropVersion;
         private static readonly string[] IncludeTypes = new[] {
+            "Client.RaidApp.RaidApplication",
+            "Contexts",
             "Client.ViewModel.AppViewModel",
             "Client.Model.AppModel",
             "Client.Model.Gameplay.Artifacts.ExternalArtifactsStorage",

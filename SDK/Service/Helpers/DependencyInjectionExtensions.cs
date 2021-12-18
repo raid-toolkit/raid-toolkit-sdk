@@ -72,5 +72,15 @@ namespace Raid.Service
             collection.AddHostedService<T>(provider => provider.GetService<T>());
             return collection;
         }
+
+        public static IServiceCollection AddHostedServiceSingleton<U, T>(
+            this IServiceCollection collection)
+            where U : class
+            where T : class, IHostedService, U
+        {
+            collection.AddSingleton<U, T>();
+            collection.AddHostedService<T>(provider => provider.GetService<U>() as T);
+            return collection;
+        }
     }
 }

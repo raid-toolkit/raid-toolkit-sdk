@@ -20,9 +20,9 @@ namespace Raid.DataServices
             UnderlyingStorage = underlyingStorage;
         }
 
-        public void SetContext(IDataContext context)
+        public void SetContext(IDataContext context, IServiceProvider serviceProvider)
         {
-            UnderlyingStorage?.SetContext(context);
+            UnderlyingStorage?.SetContext(context, serviceProvider);
         }
 
         public bool TryRead<T>(string key, out T value) where T : class
@@ -49,6 +49,7 @@ namespace Raid.DataServices
             if (updatedValue == value)
             {
                 _ = (UnderlyingStorage?.Write(key, value));
+                Updated?.Invoke(this, new DataStorageUpdatedEventArgs(key, value));
                 return true;
             }
             return false;

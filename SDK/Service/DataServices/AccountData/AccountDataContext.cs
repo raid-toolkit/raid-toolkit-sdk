@@ -16,5 +16,10 @@ namespace Raid.Service.DataServices
         {
             return new(accountId);
         }
+
+        public override string ToString()
+        {
+            return $"account:{AccountId[..16]}";
+        }
     }
 }

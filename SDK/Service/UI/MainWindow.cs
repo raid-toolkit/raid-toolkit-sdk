@@ -18,7 +18,7 @@ namespace Raid.Service.UI
         private GitHub.Schema.Release LatestRelease;
         private readonly UpdateService UpdateService;
         private readonly MainService MainService;
-        private readonly AppData UserData;
+        private readonly AppData AppData;
         private readonly ILogger<MainWindow> Logger;
         private readonly RunOptions RunOptions;
         private readonly ProcessWatcherSettings Settings;
@@ -40,14 +40,14 @@ namespace Raid.Service.UI
             RunOptions = runOptions;
             Logger = logger;
             UpdateService = updateService;
-            UserData = userData;
+            AppData = userData;
             MainService = mainService;
             Settings = settings.Value.ProcessWatcher;
             ErrorService = errorService;
             ServiceProvider = serviceProvider;
 
             // must trigger load here
-            UserData.Load();
+            AppData.Load();
             UpdateService.UpdateAvailable += OnUpdateAvailable;
             appTrayIcon.Text = $"Raid Toolkit v{ThisAssembly.AssemblyFileVersion}";
             appTrayIcon.Icon = Icon.ExtractAssociatedIcon(AppConfiguration.ExecutablePath);
@@ -125,7 +125,7 @@ namespace Raid.Service.UI
             }
 
             Logger.LogInformation(ServiceEvent.UserPermissionRequest.EventId(), $"Requesting permission for {origin}");
-            UserSettings settings = UserData.ReadUserSettings();
+            UserSettings settings = AppData.ReadUserSettings();
             if (settings.AllowedOrigins.Contains(origin.ToLowerInvariant()))
             {
                 Logger.LogInformation(ServiceEvent.UserPermissionCached.EventId(), $"Permission already granted for {origin}");
@@ -142,7 +142,7 @@ namespace Raid.Service.UI
             }
 
             _ = settings.AllowedOrigins.Add(origin.ToLowerInvariant());
-            UserData.WriteUserSettings(settings);
+            AppData.WriteUserSettings(settings);
             Logger.LogInformation(ServiceEvent.UserPermissionAccept.EventId(), $"Permission accepted for {origin}");
             return true;
         }
