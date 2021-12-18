@@ -81,53 +81,5 @@ namespace Raid.Service
             _ = Directory.CreateDirectory(Path.GetDirectoryName(m_settingsFilePath));
             File.WriteAllText(m_settingsFilePath, JsonConvert.SerializeObject(settings));
         }
-
-        public T ReadStaticData<T>(string key) where T : class
-        {
-            string filePath = Path.Join(m_staticDataPath, key);
-            if (!File.Exists(filePath))
-            {
-                return null;
-            }
-            try
-            {
-                return JsonConvert.DeserializeObject<T>(File.ReadAllText(filePath));
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public void WriteStaticData<T>(string key, T value) where T : class
-        {
-            string filePath = Path.Join(m_staticDataPath, key);
-            _ = Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-            File.WriteAllText(filePath, JsonConvert.SerializeObject(value));
-        }
-
-        public T ReadAccountData<T>(string userId, string key) where T : class
-        {
-            string filePath = Path.Join(m_accountsPath, userId, key);
-            if (!File.Exists(filePath))
-            {
-                return null;
-            }
-            try
-            {
-                return JsonConvert.DeserializeObject<T>(File.ReadAllText(filePath));
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public void WriteAccountData<T>(string userId, string key, T value) where T : class
-        {
-            string filePath = Path.Join(m_accountsPath, userId, key);
-            _ = Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-            File.WriteAllText(filePath, JsonConvert.SerializeObject(value));
-        }
     }
 }

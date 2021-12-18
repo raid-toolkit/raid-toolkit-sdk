@@ -1,5 +1,7 @@
+using Client.App;
 using Client.Model;
 using Client.Model.Gameplay.StaticData;
+using Client.RaidApp;
 using Client.ViewModel;
 using Il2CppToolkit.Runtime;
 
@@ -43,6 +45,28 @@ namespace Raid.Service
                 if (_StaticDataManager == null)
                     _StaticDataManager = AppModel.StaticDataManager as ClientStaticDataManager;
                 return _StaticDataManager;
+            }
+        }
+
+        private Contexts _Contexts;
+        public Contexts Contexts
+        {
+            get
+            {
+                if (_Contexts == null)
+                    _Contexts = Contexts.GetStaticFields(Context)._sharedInstance;
+                return _Contexts;
+            }
+        }
+
+        private RaidApplication _RaidApplication;
+        public RaidApplication RaidApplication
+        {
+            get
+            {
+                if (_RaidApplication == null)
+                    _RaidApplication = Client.App.Application.GetStaticFields(Context)._instance as RaidApplication;
+                return _RaidApplication;
             }
         }
 

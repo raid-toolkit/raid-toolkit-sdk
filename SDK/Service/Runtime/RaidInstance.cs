@@ -18,15 +18,18 @@ namespace Raid.Service
         private readonly ILogger<RaidInstance> Logger;
         private readonly ErrorService ErrorService;
         private readonly IPersistedDataManager<StaticDataContext> StaticDataManager;
+        private readonly IPersistedDataManager<RuntimeDataContext> RuntimeDataManager;
 
         public RaidInstance(
             AppData userData,
+            IPersistedDataManager<RuntimeDataContext> runtimeDataManager,
             IPersistedDataManager<StaticDataContext> staticDataManager,
             ErrorService errorService,
             ILogger<RaidInstance> logger)
         {
             UserData = userData;
             StaticDataManager = staticDataManager;
+            RuntimeDataManager = runtimeDataManager;
             Logger = logger;
             ErrorService = errorService;
         }
@@ -52,8 +55,9 @@ namespace Raid.Service
                 HasCheckedStaticData = true;
             }
 
+            RuntimeDataManager.Update(Runtime, RuntimeDataContext.Default);
             if (!UserAccount.Update(Runtime))
-                updateAccountOp.Fail(ServiceError.AccountReadError, 10);
+                updateAccountOp.Fail(ServiceError.AccountReadError, 25);
         }
 
         private (string, string) GetAccountIdAndName()

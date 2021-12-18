@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="il2cpptoolkit.common" Version="1.0.25-gd0c67dc026" />
-    <PackageReference Include="il2cpptoolkit.metadata" Version="1.0.25-gd0c67dc026" />
-    <PackageReference Include="il2cpptoolkit.reversecompiler" Version="1.0.25-gd0c67dc026" />
-    <PackageReference Include="il2cpptoolkit.runtime" Version="1.0.25-gd0c67dc026" />
-    <PackageReference Include="il2cpptoolkit.target.netcore" Version="1.0.25-gd0c67dc026" />
+    <PackageReference Include="il2cpptoolkit.common" Version="1.0.28-ga66a0d5923" />
+    <PackageReference Include="il2cpptoolkit.metadata" Version="1.0.28-ga66a0d5923" />
+    <PackageReference Include="il2cpptoolkit.reversecompiler" Version="1.0.28-ga66a0d5923" />
+    <PackageReference Include="il2cpptoolkit.runtime" Version="1.0.28-ga66a0d5923" />
+    <PackageReference Include="il2cpptoolkit.target.netcore" Version="1.0.28-ga66a0d5923" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
