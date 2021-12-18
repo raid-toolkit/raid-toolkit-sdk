@@ -48,7 +48,7 @@ namespace Raid.Service
             }
         }
 
-        public Contexts _Contexts;
+        private Contexts _Contexts;
         public Contexts Contexts
         {
             get
@@ -59,7 +59,7 @@ namespace Raid.Service
             }
         }
 
-        public RaidApplication _RaidApplication;
+        private RaidApplication _RaidApplication;
         public RaidApplication RaidApplication
         {
             get

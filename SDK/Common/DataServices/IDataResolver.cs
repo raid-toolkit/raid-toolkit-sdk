@@ -35,14 +35,12 @@ namespace Raid.DataServices
         where TData : class
     {
         private readonly IDataStorageFactory<TStorage> Factory;
-        private readonly IServiceProvider ServiceProvider;
         public IDataType<TData> DataType { get; }
 
-        public DataResolverManager(IDataStorageFactory<TStorage> factory, IDataType<TData> dataType, IServiceProvider serviceProvider)
+        public DataResolverManager(IDataStorageFactory<TStorage> factory, IDataType<TData> dataType)
         {
             Factory = factory;
             DataType = dataType;
-            ServiceProvider = serviceProvider;
         }
 
         public bool TryRead(TContext context, out TData value)
