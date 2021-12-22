@@ -19,6 +19,7 @@ function ensureInit(proxy: boolean) {
 
 export function useRaidToolkitApi(definition: typeof APIs.IAccountApi, proxy?: boolean): APIs.IAccountApi;
 export function useRaidToolkitApi(definition: typeof APIs.IStaticDataApi, proxy?: boolean): APIs.IStaticDataApi;
+export function useRaidToolkitApi(definition: typeof APIs.IRuntimeApi, proxy?: boolean): APIs.IRuntimeApi;
 export function useRaidToolkitApi(definition: ValueOf<typeof APIs>, proxy: boolean = false) {
   ensureInit(proxy);
   return useApi(definition);

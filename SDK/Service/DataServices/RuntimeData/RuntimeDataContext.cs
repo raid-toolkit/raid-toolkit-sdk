@@ -4,17 +4,23 @@ namespace Raid.Service.DataServices
 {
     public class RuntimeDataContext : IDataContext
     {
-        public static readonly RuntimeDataContext Default = new();
-
-        public RuntimeDataContext()
+        public RuntimeDataContext(string accountId)
         {
-            Parts = new string[] { "runtime" };
+            AccountId = accountId;
+            Parts = new string[] { "runtime", accountId };
         }
+
         public string[] Parts { get; }
+        public string AccountId { get; }
+
+        public static implicit operator RuntimeDataContext(string accountId)
+        {
+            return new(accountId);
+        }
 
         public override string ToString()
         {
-            return "runtime";
+            return $"runtime:{AccountId[..16]}";
         }
     }
 }

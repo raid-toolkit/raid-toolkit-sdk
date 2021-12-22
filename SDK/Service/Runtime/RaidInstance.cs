@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using Il2CppToolkit.Runtime;
-using Microsoft.Extensions.Logging;
 using Raid.Service.DataServices;
 
 namespace Raid.Service
@@ -10,12 +9,11 @@ namespace Raid.Service
     {
         public string Id;
         public Il2CsRuntimeContext Runtime { get; private set; }
-        private UserAccount UserAccount;
+        public UserAccount UserAccount;
         private string AccountName;
         private bool HasCheckedStaticData;
 
         private readonly AppData UserData;
-        private readonly ILogger<RaidInstance> Logger;
         private readonly ErrorService ErrorService;
         private readonly IPersistedDataManager<StaticDataContext> StaticDataManager;
         private readonly IPersistedDataManager<RuntimeDataContext> RuntimeDataManager;
@@ -24,13 +22,11 @@ namespace Raid.Service
             AppData userData,
             IPersistedDataManager<RuntimeDataContext> runtimeDataManager,
             IPersistedDataManager<StaticDataContext> staticDataManager,
-            ErrorService errorService,
-            ILogger<RaidInstance> logger)
+            ErrorService errorService)
         {
             UserData = userData;
             StaticDataManager = staticDataManager;
             RuntimeDataManager = runtimeDataManager;
-            Logger = logger;
             ErrorService = errorService;
         }
 
@@ -55,7 +51,7 @@ namespace Raid.Service
                 HasCheckedStaticData = true;
             }
 
-            RuntimeDataManager.Update(Runtime, RuntimeDataContext.Default);
+            RuntimeDataManager.Update(Runtime, Id);
             if (!UserAccount.Update(Runtime))
                 updateAccountOp.Fail(ServiceError.AccountReadError, 25);
         }
