@@ -1,6 +1,6 @@
 {
   "name": "@raid-toolkit/webclient",
-  "version": "0.9.17",
+  "version": "0.9.18",
   "description": "Webclient for RaidToolkit API access",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
