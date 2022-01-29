@@ -1,7 +1,7 @@
-using SharedModel.Meta.Artifacts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SharedModel.Meta.Artifacts;
 
 namespace Raid.DataModel
 {
@@ -412,10 +412,10 @@ namespace Raid.DataModel
             {
                 HitType = (HitType)type.HitType.Value,
                 ElementRelation = (ElementRelation)type.ElementRelation.Value,
-                DefenceModifier = type.DefenceModifier.m_rawValue,
+                DefenceModifier = type.DefenceModifier.AsFloat(),
                 IsFixed = type.IsFixed,
                 DoesNotCountAsHit = type.DoesNotCountAsHit,
-                IncreaseCriticalHitChance = type.IncreaseCriticalHitChance.Value.m_rawValue,
+                IncreaseCriticalHitChance = type.IncreaseCriticalHitChance.Value.AsFloat(),
                 ValueCapExpression = type.ValueCapExpression,
             };
         }
@@ -490,9 +490,9 @@ namespace Raid.DataModel
         {
             return new ShareDamageParamsStub
             {
-                TargetDamageCutPerc = type.TargetDamageCutPerc.m_rawValue,
-                TransferedDamagePerc = type.TransferedDamagePerc.m_rawValue,
-                DefenceModifier = type.DefenceModifier.Value.m_rawValue,
+                TargetDamageCutPerc = type.TargetDamageCutPerc.AsFloat(),
+                TransferedDamagePerc = type.TransferedDamagePerc.AsFloat(),
+                DefenceModifier = type.DefenceModifier.Value.AsFloat(),
             };
         }
 
@@ -543,7 +543,7 @@ namespace Raid.DataModel
         {
             return new ReviveParamsStub
             {
-                HealPercent = type.HealPercent.m_rawValue,
+                HealPercent = type.HealPercent.AsFloat(),
                 IgnoreBlockRevive = type.IgnoreBlockRevive,
             };
         }
@@ -676,8 +676,8 @@ namespace Raid.DataModel
                 IterationChanceRolling = type.IterationChanceRolling,
                 Relation = type.Relation?.ToModel(),
                 Condition = type.Condition,
-                Chance = type.Chance.Value.m_rawValue,
-                RepeatChance = type.RepeatChance.Value.m_rawValue,
+                Chance = type.Chance.Value.AsFloat(),
+                RepeatChance = type.RepeatChance.Value.AsFloat(),
                 StatusParams = type.StatusParams?.ToModel(),
                 ValueCap = type.ValueCap,
                 ApplyInstantEffectMode = (ApplyMode)type.ApplyInstantEffectMode.Value,
