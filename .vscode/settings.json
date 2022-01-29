@@ -11,6 +11,8 @@
         "**/.vs": true,
         "**/*.egg-info": true
     },
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
     "files.associations": {
         "appsettings*.json": "jsonc"
     },
