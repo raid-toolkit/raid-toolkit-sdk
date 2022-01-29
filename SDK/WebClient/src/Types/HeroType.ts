@@ -40,7 +40,7 @@ export interface HeroType {
   modelName: string;
   avatarKey: string;
   leaderSkill: LeaderStatBonus;
-  skillTypeId: number[];
+  skillTypeIds: number[];
   unscaledStats: Stats;
   brain: string;
 }
