@@ -1,7 +1,7 @@
+using SharedModel.Meta.Artifacts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using SharedModel.Meta.Artifacts;
 
 namespace Raid.DataModel
 {
@@ -337,8 +337,8 @@ namespace Raid.DataModel
             return new EffectRelationStub
             {
                 EffectTypeId = type.EffectTypeId.Value,
-                EffectKindIds = type.EffectKindIds?.Cast<EffectKindId>(),
-                EffectKindGroups = type.EffectKindGroups?.Cast<EffectKindGroup>(),
+                EffectKindIds = type.EffectKindIds?.Cast<EffectKindId>().ToList(),
+                EffectKindGroups = type.EffectKindGroups?.Cast<EffectKindGroup>().ToList(),
                 Phase = type.Phase.ToString(),
                 ActivateOnGlancingHit = type.ActivateOnGlancingHit
             };
@@ -357,18 +357,17 @@ namespace Raid.DataModel
 
         public static ApplyStatusEffectParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.ApplyStatusEffectParams type)
         {
-            var stub = new ApplyStatusEffectParamsStub { StatusEffectInfos = new List<StatusEffectInfoStub>() };
-            foreach (var x in type.StatusEffectInfos)
+            var stub = new ApplyStatusEffectParamsStub
             {
-                _ = stub.StatusEffectInfos.Append(new StatusEffectInfoStub
+                StatusEffectInfos = type.StatusEffectInfos.Select(entry => new StatusEffectInfoStub
                 {
-                    TypeId = x.TypeId,
-                    Duration = x.Duration,
-                    IgnoreEffectsLimit = x.IgnoreEffectsLimit,
-                    ApplyMode = (ApplyMode)x.ApplyMode.Value,
-                    Protection = x.Protection?.ToModel()
-                });
-            }
+                    TypeId = entry.TypeId,
+                    Duration = entry.Duration,
+                    IgnoreEffectsLimit = entry.IgnoreEffectsLimit,
+                    ApplyMode = (ApplyMode)entry.ApplyMode.Value,
+                    Protection = entry.Protection?.ToModel()
+                }).ToList()
+            };
             return stub;
         }
 
@@ -386,7 +385,7 @@ namespace Raid.DataModel
             return new UnapplyStatusEffectParamsStub
             {
                 Count = type.Count,
-                StatusEffectTypeIds = type.StatusEffectTypeIds?.Cast<StatusEffectTypeId>(),
+                StatusEffectTypeIds = type.StatusEffectTypeIds?.Cast<StatusEffectTypeId>().ToList(),
                 UnapplyMode = (UnapplyEffectMode)type.UnapplyMode,
                 RemoveFrom = (UnapplyEffectTarget)type.RemoveFrom.Value,
                 ApplyTo = (UnapplyEffectTarget)type.ApplyTo.Value,
@@ -398,7 +397,7 @@ namespace Raid.DataModel
             return new TransferDebuffParamsStub
             {
                 Count = type.Count,
-                StatusEffectTypeIds = type.StatusEffectTypeIds?.Cast<StatusEffectTypeId>(),
+                StatusEffectTypeIds = type.StatusEffectTypeIds?.Cast<StatusEffectTypeId>().ToList(),
                 UnapplyMode = (UnapplyEffectMode)type.UnapplyMode,
                 IncludeProducer = type.IncludeProducer,
                 ApplyMode = (ApplyMode)type.ApplyMode.Value,
@@ -483,7 +482,7 @@ namespace Raid.DataModel
                 Type = (AppliedEffectType)type.Type,
                 Turns = type.Turns,
                 Count = type.Count,
-                EffectTypeIds = type.EffectTypeIds?.Cast<StatusEffectTypeId>(),
+                EffectTypeIds = type.EffectTypeIds?.Cast<StatusEffectTypeId>().ToList(),
             };
         }
 
@@ -501,8 +500,8 @@ namespace Raid.DataModel
         {
             return new BlockEffectParamsStub
             {
-                EffectTypeIds = type.EffectTypeIds?.Cast<int>(),
-                EffectKindIds = type.EffectKindIds?.Cast<int>(),
+                EffectTypeIds = type.EffectTypeIds?.Cast<int>().ToList(),
+                EffectKindIds = type.EffectKindIds?.Cast<int>().ToList(),
                 BlockGuaranteed = type.BlockGuaranteed.Value,
             };
         }
@@ -565,7 +564,7 @@ namespace Raid.DataModel
             return new ForceStatusEffectTickParamsStub
             {
                 Ticks = type.Ticks,
-                EffectTypeIds = type.EffectTypeIds?.Cast<StatusEffectTypeId>(),
+                EffectTypeIds = type.EffectTypeIds?.Cast<StatusEffectTypeId>().ToList(),
                 EffectCount = type.EffectCount,
             };
         }
@@ -592,7 +591,7 @@ namespace Raid.DataModel
         {
             return new CrabShellParamsStub
             {
-                Layers = type.Layers.ToModel(),
+                Layers = type.Layers.ToModel().ToList(),
             };
         }
 
@@ -630,7 +629,7 @@ namespace Raid.DataModel
             {
                 Count = type.Count,
                 TurnsModifier = type.TurnsModifier,
-                EffectKindIds = type.EffectKindIds?.Cast<EffectKindId>(),
+                EffectKindIds = type.EffectKindIds?.Cast<EffectKindId>().ToList(),
                 TargetSelectorExpression = type.TargetSelectorExpression,
             };
         }
@@ -684,7 +683,7 @@ namespace Raid.DataModel
                 ApplyInstantEffectMode = (ApplyMode)type.ApplyInstantEffectMode.Value,
                 PersistsThroughRounds = type.PersistsThroughRounds,
                 SnapshotRequired = type.SnapshotRequired,
-                IgnoredEffects = type.IgnoredEffects?.Cast<EffectKindId>(),
+                IgnoredEffects = type.IgnoredEffects?.Cast<EffectKindId>().ToList(),
                 ApplyStatusEffectParams = type.ApplyStatusEffectParams?.ToModel(),
                 UnapplyStatusEffectParams = type.UnapplyStatusEffectParams?.ToModel(),
                 TransferDebuffParams = type.TransferDebuffParams?.ToModel(),

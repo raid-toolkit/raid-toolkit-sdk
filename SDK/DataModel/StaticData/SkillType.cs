@@ -442,10 +442,10 @@ namespace Raid.DataModel
         public int EffectTypeId;
 
         [JsonProperty("effectKindIds")]
-        public IEnumerable<EffectKindId> EffectKindIds;
+        public IReadOnlyList<EffectKindId> EffectKindIds;
 
         [JsonProperty("effectKindGroups")]
-        public IEnumerable<EffectKindGroup> EffectKindGroups;
+        public IReadOnlyList<EffectKindGroup> EffectKindGroups;
 
         [JsonProperty("phase")]
         public string Phase;
@@ -499,7 +499,7 @@ namespace Raid.DataModel
     public class ApplyStatusEffectParamsStub
     {
         [JsonProperty("statusEffectInfos")]
-        public IEnumerable<StatusEffectInfoStub> StatusEffectInfos;
+        public IReadOnlyList<StatusEffectInfoStub> StatusEffectInfos;
     }
 
     public class UnapplyStatusEffectParamsStub
@@ -508,7 +508,7 @@ namespace Raid.DataModel
         public int Count;
 
         [JsonProperty("statusEffectTypeIds")]
-        public IEnumerable<StatusEffectTypeId> StatusEffectTypeIds;
+        public IReadOnlyList<StatusEffectTypeId> StatusEffectTypeIds;
 
         [JsonProperty("unapplyMode")]
         public UnapplyEffectMode UnapplyMode;
@@ -526,7 +526,7 @@ namespace Raid.DataModel
         public int Count;
 
         [JsonProperty("statusEffectTypeIds")]
-        public IEnumerable<StatusEffectTypeId> StatusEffectTypeIds;
+        public IReadOnlyList<StatusEffectTypeId> StatusEffectTypeIds;
 
         [JsonProperty("unapplyMode")]
         public UnapplyEffectMode UnapplyMode;
@@ -634,7 +634,7 @@ namespace Raid.DataModel
         public int Count;
 
         [JsonProperty("effectTypeIds")]
-        public IEnumerable<StatusEffectTypeId> EffectTypeIds;
+        public IReadOnlyList<StatusEffectTypeId> EffectTypeIds;
     }
 
     public class ShareDamageParamsStub
@@ -652,10 +652,10 @@ namespace Raid.DataModel
     public class BlockEffectParamsStub
     {
         [JsonProperty("effectTypeIds")]
-        public IEnumerable<int> EffectTypeIds;
+        public IReadOnlyList<int> EffectTypeIds;
 
         [JsonProperty("effectKindIds")]
-        public IEnumerable<int> EffectKindIds;
+        public IReadOnlyList<int> EffectKindIds;
 
         [JsonProperty("blockGuaranteed")]
         public bool BlockGuaranteed;
@@ -667,7 +667,7 @@ namespace Raid.DataModel
 
         public bool ExcludeProducerFromAttack;
 
-        public IEnumerable<int> PreferredHeroTypes;
+        public IReadOnlyList<int> PreferredHeroTypes;
 
         public bool AlwaysUsePreferredWhenPossible;
 
@@ -725,7 +725,7 @@ namespace Raid.DataModel
         public int Ticks;
 
         [JsonProperty("effectTypeIds")]
-        public IEnumerable<StatusEffectTypeId> EffectTypeIds;
+        public IReadOnlyList<StatusEffectTypeId> EffectTypeIds;
 
         [JsonProperty("effectCount")]
         public int EffectCount;
@@ -746,7 +746,7 @@ namespace Raid.DataModel
     public class CrabShellParamsStub
     {
         [JsonProperty("layers")]
-        public IEnumerable<CrabShellLayerStub> Layers;
+        public IReadOnlyList<CrabShellLayerStub> Layers;
     }
 
     public class ReturnDebuffsParamsStub
@@ -779,7 +779,7 @@ namespace Raid.DataModel
         public int TurnsModifier;
 
         [JsonProperty("effectKindIds")]
-        public IEnumerable<EffectKindId> EffectKindIds;
+        public IReadOnlyList<EffectKindId> EffectKindIds;
 
         [JsonProperty("targetSelectorExpression")]
         public string TargetSelectorExpression;
@@ -880,7 +880,7 @@ namespace Raid.DataModel
         public bool SnapshotRequired;
 
         [JsonProperty("ignoredEffects")]
-        public IEnumerable<EffectKindId> IgnoredEffects;
+        public IReadOnlyList<EffectKindId> IgnoredEffects;
 
         [JsonProperty("applyStatusEffectParams")]
         public ApplyStatusEffectParamsStub ApplyStatusEffectParams;
