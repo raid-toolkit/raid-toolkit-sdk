@@ -26,7 +26,7 @@ namespace Raid.DataModel
         public int Cooldown;
 
         [JsonProperty("visibility")]
-        public string Visibility;
+        public Visibility Visibility;
 
         [JsonProperty("unblockable")]
         public bool Unblockable;
@@ -38,7 +38,7 @@ namespace Raid.DataModel
         public SkillUpgrade[] Upgrades;
 
         [JsonProperty("doesDamage")]
-        public bool DoesDamage => Effects?.Any(effect => effect.KindId == "Damage") ?? false;
+        public bool DoesDamage => Effects?.Any(effect => effect.KindId == EffectKindId.Damage) ?? false;
         // TODO: there's a lot more data here we could extract
     }
 
@@ -413,6 +413,15 @@ namespace Raid.DataModel
         ShieldCreation = 2,
         StaminaRecovery = 3,
         ArtifactSetStats = 4,
+    }
+
+    public enum Visibility
+    {
+        Visible = 0,
+        HiddenOnHud = 1,
+        HiddenOnHudWithVisualization = 2,
+        HiddenOnHudVisibleForAl = 3,
+        HiddenOnHudWithVisualisationVisibleForAI = 4
     }
 
     public class EffectGroupStub
@@ -821,7 +830,7 @@ namespace Raid.DataModel
         public int StackCount;
 
         [JsonProperty("kindId")]
-        public string KindId;
+        public EffectKindId KindId;
 
         // TODO: there's a lot more data here we could extract
 

@@ -40,7 +40,7 @@ export enum Visibility {
 export interface BaseSkillData {
   typeId: number;
   cooldown: number;
-  visibility: keyof typeof Visibility;
+  visibility: Visibility;
   unblockable: boolean;
   effects: EffectType[];
   upgrades: SkillUpgrade[];

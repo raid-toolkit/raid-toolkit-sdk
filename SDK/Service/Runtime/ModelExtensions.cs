@@ -306,7 +306,7 @@ namespace Raid.DataModel
                 Name = type.Name.ToModel(),
                 Unblockable = type.Unblockable.ToNullable(),
                 Upgrades = type.SkillLevelBonuses?.Select(bonus => bonus.ToModel()).ToArray(),
-                Visibility = type.Visibility.ToString(),
+                Visibility = type.Visibility.ToModel(),
             };
         }
 
@@ -323,6 +323,16 @@ namespace Raid.DataModel
         public static EffectGroup ToModel(this SharedModel.Battle.Effects.EffectGroup type)
         {
             return (EffectGroup)type;
+        }
+
+        public static Visibility ToModel(this SharedModel.Meta.Skills.Visibility type)
+        {
+            return (Visibility)type;
+        }
+
+        public static EffectKindId ToModel(this SharedModel.Battle.Effects.EffectKindId kindId)
+        {
+            return (EffectKindId)kindId;
         }
 
         public static TargetParamsStub ToModel(this SharedModel.Battle.Effects.EffectTargetParams.TargetParams type)
@@ -665,7 +675,7 @@ namespace Raid.DataModel
             return new EffectType()
             {
                 TypeId = type.Id,
-                KindId = type.KindId.ToString(),
+                KindId = type.KindId.ToModel(),
                 Count = type.Count,
                 StackCount = type.StackCount,
                 Multiplier = type.MultiplierFormula,
