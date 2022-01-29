@@ -290,7 +290,7 @@ namespace Raid.DataModel
         IncreaseDamageTaken25 = 350, // 0x0000015E
         IncreaseDamageTaken15 = 351, // 0x0000015F
         BlockRevive = 360, // 0x00000168
-        ArtifactSet_Shield = 370, // 0x00000172
+        ArtifactSetShield = 370, // 0x00000172
         ReflectDamage15 = 410, // 0x0000019A
         ReflectDamage30 = 411, // 0x0000019B
         MinotaurIncreaseDamage = 420, // 0x000001A4
@@ -438,7 +438,7 @@ namespace Raid.DataModel
 
     public class EffectRelationStub
     {
-        [JsonProperty("eEffectTypeId")]
+        [JsonProperty("effectTypeId")]
         public int EffectTypeId;
 
         [JsonProperty("effectKindIds")]

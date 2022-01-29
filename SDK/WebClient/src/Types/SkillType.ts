@@ -30,17 +30,17 @@ export interface Skill {
 }
 
 export enum Visibility {
-  Visible = 'Visible',
-  HiddenOnHud = 'HiddenOnHud',
-  HiddenOnHudWithVisualization = 'HiddenOnHudWithVisualization',
-  HiddenOnHudVisibleForAl = 'HiddenOnHudVisibleForAl',
-  HiddenOnHudWithVisualisationVisibleForAI = 'HiddenOnHudWithVisualisationVisibleForAI',
+  Visible = 0,
+  HiddenOnHud = 1,
+  HiddenOnHudWithVisualization = 2,
+  HiddenOnHudVisibleForAl = 3,
+  HiddenOnHudWithVisualisationVisibleForAI = 4,
 }
 
 export interface BaseSkillData {
   typeId: number;
   cooldown: number;
-  visibility: Visibility;
+  visibility: keyof typeof Visibility;
   unblockable: boolean;
   effects: EffectType[];
   upgrades: SkillUpgrade[];
@@ -59,17 +59,17 @@ export interface SkillSnapshhot extends BaseSkillData {
 }
 
 export interface TargetParams {
-  targetType: EffectTargetType;
-  exclusion: TargetExclusion;
+  targetType: keyof typeof EffectTargetType;
+  exclusion: keyof typeof TargetExclusion;
   exclusive: boolean;
   firstHitInSelected: boolean;
   condition: string;
 }
 
 export interface EffectRelation {
-  eEffectTypeId: number;
-  effectKindIds: EffectKindId[];
-  EffectKindGroups: EffectKindGroup[];
+  effectTypeId: StatusEffectTypeId;
+  effectKindIds: keyof typeof EffectKindId[];
+  EffectKindGroups: keyof typeof EffectKindGroup[];
   phase: string;
   activateOnGlancingHit: boolean;
 }
@@ -77,20 +77,20 @@ export interface EffectRelation {
 export interface StatusEffectParams {
   strengthInFamily: number;
   forcedTickAllowed: boolean;
-  lifetimeUpdateType: LifetimeUpdateType;
+  lifetimeUpdateType: keyof typeof LifetimeUpdateType;
   unapplyWhenProducerDied: boolean;
 }
 
 export interface StatusEffectInfo {
-  typeId: number;
+  typeId: StatusEffectTypeId;
   duration: number;
   ignoreEffectsLimit: boolean;
-  applyMode: ApplyMode;
+  applyMode: keyof typeof ApplyMode;
   protection: Protection;
 }
 
 export interface Protection {
-  mode: ProtectionMode;
+  mode: keyof typeof ProtectionMode;
   chance?: number;
 }
 
@@ -100,25 +100,25 @@ export interface ApplyStatusEffectParams {
 
 export interface UnapplyStatusEffectParams {
   count: number;
-  statusEffectTypeIds: StatusEffectTypeId[];
-  unapplyMode: UnapplyEffectMode;
-  removeFrom: UnapplyEffectTarget;
-  applyTo: UnapplyEffectTarget;
+  statusEffectTypeIds: keyof typeof StatusEffectTypeId[];
+  unapplyMode: keyof typeof UnapplyEffectMode;
+  removeFrom: keyof typeof UnapplyEffectTarget;
+  applyTo: keyof typeof UnapplyEffectTarget;
 }
 
 export interface TransferDebuffParams {
   count: number;
-  statusEffectTypeIds: StatusEffectTypeId[];
-  unapplyMode: UnapplyEffectMode;
+  statusEffectTypeIds: keyof typeof StatusEffectTypeId[];
+  unapplyMode: keyof typeof UnapplyEffectMode;
   includeProducer: boolean;
-  applyMode: ApplyMode;
-  removeFrom: UnapplyEffectTarget;
-  applyTo: UnapplyEffectTarget;
+  applyMode: keyof typeof ApplyMode;
+  removeFrom: keyof typeof UnapplyEffectTarget;
+  applyTo: keyof typeof UnapplyEffectTarget;
 }
 
 export interface DamageParams {
-  hitType: HitType;
-  elementRelation: ElementRelation;
+  hitType: keyof typeof HitType;
+  elementRelation: keyof typeof ElementRelation;
   defenceModifier: number;
   isFixed: boolean;
   doesNotCountAsHit: boolean;
@@ -131,16 +131,16 @@ export interface HealParams {
 }
 
 export interface EvenParams {
-  evenMode: EvenMode;
+  evenMode: keyof typeof EvenMode;
 }
 
 export interface ChangeStatParams {
-  statKindId: StatKindId;
+  statKindId: keyof typeof StatKindId;
 }
 
 export interface ActivateSkillParams {
   skillIndex: number;
-  skillOwner: ActivateSkillOwner;
+  skillOwner: keyof typeof ActivateSkillOwner;
   targetExpression: string;
 }
 
@@ -153,14 +153,14 @@ export interface ChangeSkillCooldownParams {
   turns: number;
   skillIndex: number;
   isRandomSkill: boolean;
-  skillToChange: SkillToChange;
+  skillToChange: keyof typeof SkillToChange;
 }
 
 export interface ChangeEffectLifetimeParams {
-  type: AppliedEffectType;
+  type: keyof typeof AppliedEffectType;
   turns: number;
   count: number;
-  effectTypeIds: StatusEffectTypeId[];
+  effectTypeIds: keyof typeof StatusEffectTypeId[];
 }
 
 export interface ShareDamageParams {
@@ -170,8 +170,8 @@ export interface ShareDamageParams {
 }
 
 export interface BlockEffectParams {
-  effectTypeIds: number[];
-  effectKindIds: number[];
+  effectTypeIds: StatusEffectTypeId[];
+  effectKindIds: EffectKindId[];
   blockGuaranteed: boolean;
 }
 
@@ -208,12 +208,12 @@ export interface CounterattackParams {
 
 export interface ForceStatusEffectTickParams {
   ticks: number;
-  effectTypeIds: StatusEffectTypeId[];
+  effectTypeIds: keyof typeof StatusEffectTypeId[];
   effectCount: number;
 }
 
 export interface CrabShellLayer {
-  type: CrabShellLayerType;
+  type: keyof typeof CrabShellLayerType;
   multiplierFormula: string;
   conditionFormula: string;
 }
@@ -223,22 +223,22 @@ export interface CrabShellParams {
 }
 
 export interface ReturnDebuffsParams {
-  applyMode: ApplyMode;
+  applyMode: keyof typeof ApplyMode;
 }
 
 export interface HitTypeParams {
-  hitTypeToChange: HitType;
-  hitType: HitType;
+  hitTypeToChange: keyof typeof HitType;
+  hitType: keyof typeof HitType;
 }
 
 export interface PassiveBonusParams {
-  bonus: PassiveBonus;
+  bonus: keyof typeof PassiveBonus;
 }
 
 export interface MultiplyStatusEffectParams {
   count: number;
   turnsModifier: number;
-  effectKindIds: EffectKindId[];
+  effectKindIds: keyof typeof EffectKindId[];
   targetSelectorExpression: string;
 }
 
@@ -250,7 +250,7 @@ export interface IgnoreProtectionEffectsParams {
 
 export interface ChangeEffectTargetParams {
   overrideApplyMode: boolean;
-  applyMode: ApplyMode;
+  applyMode: keyof typeof ApplyMode;
 }
 
 export interface EffectType {
@@ -258,9 +258,9 @@ export interface EffectType {
   count: number;
   multiplier: string;
   stack: number;
-  kindId: EffectKindId;
+  kindId: keyof typeof EffectKindId;
 
-  group?: EffectGroup;
+  group?: keyof typeof EffectGroup;
   targetParams?: TargetParams;
   isEffectDescription: boolean;
   considersDead: boolean;
@@ -275,10 +275,10 @@ export interface EffectType {
   repeatChance: number;
   statusEffectParams?: StatusEffectParams;
   valueCap: string;
-  applyInstantEffectMode?: ApplyMode;
+  applyInstantEffectMode?: keyof typeof ApplyMode;
   persistsThroughRounds: boolean;
   snapshotRequired: boolean;
-  ignoredEffects: EffectKindId[];
+  ignoredEffects: keyof typeof EffectKindId[];
   applyStatusEffectParams?: ApplyStatusEffectParams;
   unapplyStatusEffectParams?: UnapplyStatusEffectParams;
   transferDebuffParams?: TransferDebuffParams;
@@ -309,6 +309,6 @@ export interface EffectType {
 }
 
 export interface SkillUpgrade {
-  type: SkillBonusType;
+  type: keyof typeof SkillBonusType;
   value: number;
 }
