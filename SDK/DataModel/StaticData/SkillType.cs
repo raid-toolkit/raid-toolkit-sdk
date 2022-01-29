@@ -553,7 +553,7 @@ namespace Raid.DataModel
         public ElementRelation ElementRelation;
 
         [JsonProperty("defenceModifier")]
-        public float DefenceModifier;
+        public double DefenceModifier;
 
         [JsonProperty("isFixed")]
         public bool IsFixed;
@@ -562,7 +562,7 @@ namespace Raid.DataModel
         public bool DoesNotCountAsHit;
 
         [JsonProperty("increaseCriticalHitChance")]
-        public float IncreaseCriticalHitChance;
+        public double? IncreaseCriticalHitChance;
 
         [JsonProperty("valueCapExpression")]
         public string ValueCapExpression;
@@ -640,13 +640,13 @@ namespace Raid.DataModel
     public class ShareDamageParamsStub
     {
         [JsonProperty("targetDamageCutPerc")]
-        public float TargetDamageCutPerc;
+        public double TargetDamageCutPerc;
 
         [JsonProperty("transferedDamagePerc")]
-        public float TransferedDamagePerc;
+        public double TransferedDamagePerc;
 
         [JsonProperty("defenceModifier")]
-        public float DefenceModifier;
+        public double? DefenceModifier;
     }
 
     public class BlockEffectParamsStub
@@ -704,7 +704,7 @@ namespace Raid.DataModel
     public class ReviveParamsStub
     {
         [JsonProperty("healPercent")]
-        public float HealPercent;
+        public double HealPercent;
 
         [JsonProperty("ignoreBlockRevive")]
         public bool IgnoreBlockRevive;
@@ -859,10 +859,10 @@ namespace Raid.DataModel
         public string Condition;
 
         [JsonProperty("chance")]
-        public float Chance;
+        public double? Chance;
 
         [JsonProperty("repeatChance")]
-        public float RepeatChance;
+        public double? RepeatChance;
 
         [JsonProperty("statusEffectParams")]
         public StatusEffectParamsStub StatusParams;
@@ -970,6 +970,6 @@ namespace Raid.DataModel
         public string SkillBonusType;
 
         [JsonProperty("value")]
-        public float Value;
+        public double Value;
     }
 }
