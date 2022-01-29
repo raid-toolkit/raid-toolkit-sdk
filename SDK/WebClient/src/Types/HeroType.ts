@@ -19,7 +19,7 @@ export interface Stats {
 }
 
 export interface StatBonus {
-  kindId: string;
+  kind: string;
   absolute: boolean;
   value: number;
 }
