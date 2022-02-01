@@ -8,55 +8,55 @@ namespace Raid.DataModel
         [JsonIgnore]
         public Stats EffectiveStats = new();
 
-        public float Health
+        public double Health
         {
             get => EffectiveStats.Health;
             set => EffectiveStats.Health = value;
         }
 
-        public float Attack
+        public double Attack
         {
             get => EffectiveStats.Attack;
             set => EffectiveStats.Attack = value;
         }
 
-        public float Defense
+        public double Defense
         {
             get => EffectiveStats.Defense;
             set => EffectiveStats.Defense = value;
         }
 
-        public float Speed
+        public double Speed
         {
             get => EffectiveStats.Speed;
             set => EffectiveStats.Speed = value;
         }
 
-        public float Resistance
+        public double Resistance
         {
             get => EffectiveStats.Resistance;
             set => EffectiveStats.Resistance = value;
         }
 
-        public float Accuracy
+        public double Accuracy
         {
             get => EffectiveStats.Accuracy;
             set => EffectiveStats.Accuracy = value;
         }
 
-        public float CriticalChance
+        public double CriticalChance
         {
             get => EffectiveStats.CriticalChance;
             set => EffectiveStats.CriticalChance = value;
         }
 
-        public float CriticalDamage
+        public double CriticalDamage
         {
             get => EffectiveStats.CriticalDamage;
             set => EffectiveStats.CriticalDamage = value;
         }
 
-        public float CriticalHeal
+        public double CriticalHeal
         {
             get => EffectiveStats.CriticalHeal;
             set => EffectiveStats.CriticalHeal = value;

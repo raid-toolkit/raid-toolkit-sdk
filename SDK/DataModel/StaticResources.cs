@@ -11,10 +11,10 @@ namespace Raid.DataModel
         {
             public int stars;
             public int level;
-            public float multiplier;
+            public double multiplier;
         }
         public static readonly Multiplier[] Multipliers;
-        public static readonly Dictionary<int, Dictionary<int, float>> MultiplierLookup;
+        public static readonly Dictionary<int, Dictionary<int, double>> MultiplierLookup;
         private static readonly Dictionary<string, string> LocalizedStrings = new();
 
         static StaticResources()

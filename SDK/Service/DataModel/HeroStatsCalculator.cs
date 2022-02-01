@@ -28,14 +28,14 @@ namespace Raid.Service
         {
             foreach (StatKindId statKind in typeof(StatKindId).GetEnumValues())
             {
-                float baseStat = GetBaseStat(statKind, rank, level, heroType.UnscaledStats.GetStat(statKind));
+                double baseStat = GetBaseStat(statKind, rank, level, heroType.UnscaledStats.GetStat(statKind));
                 Snapshot.EffectiveStats.SetStat(statKind, baseStat);
                 Snapshot.BaseStats.SetStat(statKind, baseStat);
                 Snapshot.StatSources[StatSource.Base].SetStat(statKind, baseStat);
             }
         }
 
-        public void AddStat(StatSource source, StatKindId statKind, float value)
+        public void AddStat(StatSource source, StatKindId statKind, double value)
         {
             Snapshot.EffectiveStats.AddStat(statKind, value);
             Snapshot.StatSources[source].AddStat(statKind, value);
@@ -97,7 +97,7 @@ namespace Raid.Service
             }
         }
 
-        public void ApplyArtifactSetBonuses(float numberOfSets, params StatBonus[] bonuses)
+        public void ApplyArtifactSetBonuses(double numberOfSets, params StatBonus[] bonuses)
         {
             foreach (var bonus in bonuses)
             {
@@ -115,7 +115,7 @@ namespace Raid.Service
         public void ApplyArtifactBonuses(ArtifactStatBonus bonus)
         {
             var statKindId = Enum.Parse<StatKindId>(bonus.KindId);
-            var value = bonus.Value + (float)bonus.GlyphPower;
+            var value = bonus.Value + (double)bonus.GlyphPower;
             AddStat(
                 StatSource.Gear,
                 statKindId,
@@ -145,7 +145,7 @@ namespace Raid.Service
             }
         }
 
-        private static float GetBaseStat(StatKindId statKind, int rank, int level, float rawValue)
+        private static double GetBaseStat(StatKindId statKind, int rank, int level, double rawValue)
         {
             switch (statKind)
             {
@@ -159,7 +159,7 @@ namespace Raid.Service
             }
         }
 
-        private static float GetAbsoluteStatIncrease(StatKindId statKind, float rawValue)
+        private static double GetAbsoluteStatIncrease(StatKindId statKind, double rawValue)
         {
             switch (statKind)
             {
@@ -172,7 +172,7 @@ namespace Raid.Service
             }
         }
 
-        private float GetFactorStatIncrease(StatKindId statKind, float rawValue)
+        private double GetFactorStatIncrease(StatKindId statKind, double rawValue)
         {
             switch (statKind)
             {
@@ -185,7 +185,7 @@ namespace Raid.Service
             }
         }
 
-        private float GetArenaStatIncrease(StatKindId statKind, float rawValue)
+        private double GetArenaStatIncrease(StatKindId statKind, double rawValue)
         {
             switch (statKind)
             {

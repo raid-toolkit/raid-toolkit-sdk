@@ -2,14 +2,14 @@ namespace Raid.DataModel
 {
     public class Stats
     {
-        public float Health;
-        public float Attack;
-        public float Defense;
-        public float Speed;
-        public float Resistance;
-        public float Accuracy;
-        public float CriticalChance;
-        public float CriticalDamage;
-        public float CriticalHeal;
+        public double Health;
+        public double Attack;
+        public double Defense;
+        public double Speed;
+        public double Resistance;
+        public double Accuracy;
+        public double CriticalChance;
+        public double CriticalDamage;
+        public double CriticalHeal;
     }
 }

@@ -4,7 +4,7 @@ using Raid.DataServices;
 
 namespace Raid.Service.DataServices
 {
-    [DataType("skills")]
+    [DataType("skills", Version = "1.1")]
     public class StaticSkillDataObject : StaticSkillData
     {
     }

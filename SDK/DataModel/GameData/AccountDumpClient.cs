@@ -113,10 +113,10 @@ namespace RaidExtractor.Core
         public bool IsAbsolute { get; set; }
 
         [Newtonsoft.Json.JsonProperty("value", Required = Newtonsoft.Json.Required.Always)]
-        public float Value { get; set; }
+        public double Value { get; set; }
 
         [Newtonsoft.Json.JsonProperty("enhancement", Required = Newtonsoft.Json.Required.Always)]
-        public float Enhancement { get; set; }
+        public double Enhancement { get; set; }
 
         [Newtonsoft.Json.JsonProperty("level", Required = Newtonsoft.Json.Required.Always)]
         public int Level { get; set; }
@@ -186,31 +186,31 @@ namespace RaidExtractor.Core
         public string Name { get; set; }
 
         [Newtonsoft.Json.JsonProperty("health", Required = Newtonsoft.Json.Required.Always)]
-        public float Health { get; set; }
+        public double Health { get; set; }
 
         [Newtonsoft.Json.JsonProperty("accuracy", Required = Newtonsoft.Json.Required.Always)]
-        public float Accuracy { get; set; }
+        public double Accuracy { get; set; }
 
         [Newtonsoft.Json.JsonProperty("attack", Required = Newtonsoft.Json.Required.Always)]
-        public float Attack { get; set; }
+        public double Attack { get; set; }
 
         [Newtonsoft.Json.JsonProperty("defense", Required = Newtonsoft.Json.Required.Always)]
-        public float Defense { get; set; }
+        public double Defense { get; set; }
 
         [Newtonsoft.Json.JsonProperty("criticalChance", Required = Newtonsoft.Json.Required.Always)]
-        public float CriticalChance { get; set; }
+        public double CriticalChance { get; set; }
 
         [Newtonsoft.Json.JsonProperty("criticalDamage", Required = Newtonsoft.Json.Required.Always)]
-        public float CriticalDamage { get; set; }
+        public double CriticalDamage { get; set; }
 
         [Newtonsoft.Json.JsonProperty("criticalHeal", Required = Newtonsoft.Json.Required.Always)]
-        public float CriticalHeal { get; set; }
+        public double CriticalHeal { get; set; }
 
         [Newtonsoft.Json.JsonProperty("resistance", Required = Newtonsoft.Json.Required.Always)]
-        public float Resistance { get; set; }
+        public double Resistance { get; set; }
 
         [Newtonsoft.Json.JsonProperty("speed", Required = Newtonsoft.Json.Required.Always)]
-        public float Speed { get; set; }
+        public double Speed { get; set; }
 
         [Newtonsoft.Json.JsonProperty("masteries", Required = Newtonsoft.Json.Required.Always)]
         public List<int> Masteries { get; set; }

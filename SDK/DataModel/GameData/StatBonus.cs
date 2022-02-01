@@ -11,6 +11,6 @@ namespace Raid.DataModel
         public bool Absolute;
 
         [JsonProperty("value")]
-        public float Value;
+        public double Value;
     }
 }

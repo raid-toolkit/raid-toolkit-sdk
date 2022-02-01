@@ -7,9 +7,14 @@ namespace Raid.DataModel
 {
     public static partial class ModelExtensions
     {
-        public static float AsFloat(this Plarium.Common.Numerics.Fixed num)
+        public static double AsDouble(this Plarium.Common.Numerics.Fixed num)
         {
-            return (float)Math.Round(num.m_rawValue / (double)uint.MaxValue, 2);
+            return (double)Math.Round(num.m_rawValue / (double)uint.MaxValue, 2);
+        }
+
+        public static double? AsDouble(this Il2CppToolkit.Runtime.Types.corelib.Native__Nullable<Plarium.Common.Numerics.Fixed> num)
+        {
+            return num.HasValue ? num.Value.AsDouble() : null;
         }
 
         public static IReadOnlyDictionary<string, V> ToModel<K, V>(this IDictionary<K, V> dict) where K : Enum
@@ -22,7 +27,7 @@ namespace Raid.DataModel
             return dict == null ? new Dictionary<K, V>() : dict.ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
-        public static float SetStat(this Stats stats, SharedModel.Battle.Effects.StatKindId statKind, float value)
+        public static double SetStat(this Stats stats, SharedModel.Battle.Effects.StatKindId statKind, double value)
         {
             switch (statKind)
             {
@@ -50,7 +55,7 @@ namespace Raid.DataModel
             return value;
         }
 
-        public static float AddStat(this Stats stats, SharedModel.Battle.Effects.StatKindId statKind, float value)
+        public static double AddStat(this Stats stats, SharedModel.Battle.Effects.StatKindId statKind, double value)
         {
             switch (statKind)
             {
@@ -78,7 +83,7 @@ namespace Raid.DataModel
             return value;
         }
 
-        public static float GetStat(this Stats stats, SharedModel.Battle.Effects.StatKindId statKind)
+        public static double GetStat(this Stats stats, SharedModel.Battle.Effects.StatKindId statKind)
         {
             switch (statKind)
             {
@@ -160,15 +165,15 @@ namespace Raid.DataModel
         {
             return new()
             {
-                Health = stats.Health.AsFloat(),
-                Attack = stats.Attack.AsFloat(),
-                Defense = stats.Defence.AsFloat(),
-                Accuracy = stats.Accuracy.AsFloat(),
-                Resistance = stats.Resistance.AsFloat(),
-                Speed = stats.Speed.AsFloat(),
-                CriticalChance = stats.CriticalChance.AsFloat(),
-                CriticalDamage = stats.CriticalDamage.AsFloat(),
-                CriticalHeal = stats.CriticalHeal.AsFloat(),
+                Health = stats.Health.AsDouble(),
+                Attack = stats.Attack.AsDouble(),
+                Defense = stats.Defence.AsDouble(),
+                Accuracy = stats.Accuracy.AsDouble(),
+                Resistance = stats.Resistance.AsDouble(),
+                Speed = stats.Speed.AsDouble(),
+                CriticalChance = stats.CriticalChance.AsDouble(),
+                CriticalDamage = stats.CriticalDamage.AsDouble(),
+                CriticalHeal = stats.CriticalHeal.AsDouble(),
             };
         }
 
@@ -214,8 +219,8 @@ namespace Raid.DataModel
             {
                 KindId = bonus._kindId.ToModel(),
                 Absolute = bonus._value._isAbsolute,
-                Value = bonus._value._value.AsFloat(),
-                GlyphPower = bonus._powerUpValue.AsFloat(),
+                Value = bonus._value._value.AsDouble(),
+                GlyphPower = bonus._powerUpValue.AsDouble(),
                 Level = bonus._level
             };
         }
@@ -226,7 +231,7 @@ namespace Raid.DataModel
             {
                 Absolute = bonus.IsAbsolute,
                 KindId = bonus.StatKindId.ToModel(),
-                Value = bonus.Value.AsFloat(),
+                Value = bonus.Value.AsDouble(),
             };
         }
 
@@ -236,7 +241,7 @@ namespace Raid.DataModel
             {
                 Absolute = bonus._isAbsolute,
                 KindId = statKindId.ToModel(),
-                Value = bonus._value.AsFloat(),
+                Value = bonus._value.AsDouble(),
             };
         }
 
@@ -286,7 +291,7 @@ namespace Raid.DataModel
                 Affinity = skill.Element.ToString(),
                 AreaTypeId = skill.Area.ToString(),
                 KindId = skill.StatKindId.ToString(),
-                Value = skill.Amount.AsFloat(),
+                Value = skill.Amount.AsDouble(),
             };
         }
 
@@ -301,7 +306,7 @@ namespace Raid.DataModel
                 Name = type.Name.ToModel(),
                 Unblockable = type.Unblockable.ToNullable(),
                 Upgrades = type.SkillLevelBonuses?.Select(bonus => bonus.ToModel()).ToArray(),
-                Visibility = type.Visibility.ToString(),
+                Visibility = type.Visibility.ToModel(),
             };
         }
 
@@ -318,6 +323,16 @@ namespace Raid.DataModel
         public static EffectGroup ToModel(this SharedModel.Battle.Effects.EffectGroup type)
         {
             return (EffectGroup)type;
+        }
+
+        public static Visibility ToModel(this SharedModel.Meta.Skills.Visibility type)
+        {
+            return (Visibility)type;
+        }
+
+        public static EffectKindId ToModel(this SharedModel.Battle.Effects.EffectKindId kindId)
+        {
+            return (EffectKindId)kindId;
         }
 
         public static TargetParamsStub ToModel(this SharedModel.Battle.Effects.EffectTargetParams.TargetParams type)
@@ -337,8 +352,8 @@ namespace Raid.DataModel
             return new EffectRelationStub
             {
                 EffectTypeId = type.EffectTypeId.Value,
-                EffectKindIds = type.EffectKindIds?.Cast<EffectKindId>(),
-                EffectKindGroups = type.EffectKindGroups?.Cast<EffectKindGroup>(),
+                EffectKindIds = type.EffectKindIds?.Cast<EffectKindId>().ToList(),
+                EffectKindGroups = type.EffectKindGroups?.Cast<EffectKindGroup>().ToList(),
                 Phase = type.Phase.ToString(),
                 ActivateOnGlancingHit = type.ActivateOnGlancingHit
             };
@@ -357,18 +372,17 @@ namespace Raid.DataModel
 
         public static ApplyStatusEffectParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.ApplyStatusEffectParams type)
         {
-            var stub = new ApplyStatusEffectParamsStub { StatusEffectInfos = new List<StatusEffectInfoStub>() };
-            foreach (var x in type.StatusEffectInfos)
+            var stub = new ApplyStatusEffectParamsStub
             {
-                _ = stub.StatusEffectInfos.Append(new StatusEffectInfoStub
+                StatusEffectInfos = type.StatusEffectInfos.Select(entry => new StatusEffectInfoStub
                 {
-                    TypeId = x.TypeId,
-                    Duration = x.Duration,
-                    IgnoreEffectsLimit = x.IgnoreEffectsLimit,
-                    ApplyMode = (ApplyMode)x.ApplyMode.Value,
-                    Protection = x.Protection?.ToModel()
-                });
-            }
+                    TypeId = entry.TypeId,
+                    Duration = entry.Duration,
+                    IgnoreEffectsLimit = entry.IgnoreEffectsLimit,
+                    ApplyMode = (ApplyMode)entry.ApplyMode.Value,
+                    Protection = entry.Protection?.ToModel()
+                }).ToList()
+            };
             return stub;
         }
 
@@ -377,7 +391,7 @@ namespace Raid.DataModel
             return new Protection
             {
                 Mode = (ProtectionMode)protection.Mode,
-                Chance = protection.Chance.HasValue ? protection.Chance.Value.AsFloat() : null
+                Chance = protection.Chance.AsDouble()
             };
         }
 
@@ -386,7 +400,7 @@ namespace Raid.DataModel
             return new UnapplyStatusEffectParamsStub
             {
                 Count = type.Count,
-                StatusEffectTypeIds = type.StatusEffectTypeIds?.Cast<StatusEffectTypeId>(),
+                StatusEffectTypeIds = type.StatusEffectTypeIds?.Cast<StatusEffectTypeId>().ToList(),
                 UnapplyMode = (UnapplyEffectMode)type.UnapplyMode,
                 RemoveFrom = (UnapplyEffectTarget)type.RemoveFrom.Value,
                 ApplyTo = (UnapplyEffectTarget)type.ApplyTo.Value,
@@ -398,7 +412,7 @@ namespace Raid.DataModel
             return new TransferDebuffParamsStub
             {
                 Count = type.Count,
-                StatusEffectTypeIds = type.StatusEffectTypeIds?.Cast<StatusEffectTypeId>(),
+                StatusEffectTypeIds = type.StatusEffectTypeIds?.Cast<StatusEffectTypeId>().ToList(),
                 UnapplyMode = (UnapplyEffectMode)type.UnapplyMode,
                 IncludeProducer = type.IncludeProducer,
                 ApplyMode = (ApplyMode)type.ApplyMode.Value,
@@ -413,10 +427,10 @@ namespace Raid.DataModel
             {
                 HitType = (HitType)type.HitType.Value,
                 ElementRelation = (ElementRelation)type.ElementRelation.Value,
-                DefenceModifier = type.DefenceModifier.m_rawValue,
+                DefenceModifier = type.DefenceModifier.AsDouble(),
                 IsFixed = type.IsFixed,
                 DoesNotCountAsHit = type.DoesNotCountAsHit,
-                IncreaseCriticalHitChance = type.IncreaseCriticalHitChance.Value.m_rawValue,
+                IncreaseCriticalHitChance = type.IncreaseCriticalHitChance.AsDouble(),
                 ValueCapExpression = type.ValueCapExpression,
             };
         }
@@ -483,7 +497,7 @@ namespace Raid.DataModel
                 Type = (AppliedEffectType)type.Type,
                 Turns = type.Turns,
                 Count = type.Count,
-                EffectTypeIds = type.EffectTypeIds?.Cast<StatusEffectTypeId>(),
+                EffectTypeIds = type.EffectTypeIds?.Cast<StatusEffectTypeId>().ToList(),
             };
         }
 
@@ -491,9 +505,9 @@ namespace Raid.DataModel
         {
             return new ShareDamageParamsStub
             {
-                TargetDamageCutPerc = type.TargetDamageCutPerc.m_rawValue,
-                TransferedDamagePerc = type.TransferedDamagePerc.m_rawValue,
-                DefenceModifier = type.DefenceModifier.Value.m_rawValue,
+                TargetDamageCutPerc = type.TargetDamageCutPerc.AsDouble(),
+                TransferedDamagePerc = type.TransferedDamagePerc.AsDouble(),
+                DefenceModifier = type.DefenceModifier.AsDouble(),
             };
         }
 
@@ -501,8 +515,8 @@ namespace Raid.DataModel
         {
             return new BlockEffectParamsStub
             {
-                EffectTypeIds = type.EffectTypeIds?.Cast<int>(),
-                EffectKindIds = type.EffectKindIds?.Cast<int>(),
+                EffectTypeIds = type.EffectTypeIds?.Cast<int>().ToList(),
+                EffectKindIds = type.EffectKindIds?.Cast<int>().ToList(),
                 BlockGuaranteed = type.BlockGuaranteed.Value,
             };
         }
@@ -544,7 +558,7 @@ namespace Raid.DataModel
         {
             return new ReviveParamsStub
             {
-                HealPercent = type.HealPercent.m_rawValue,
+                HealPercent = type.HealPercent.AsDouble(),
                 IgnoreBlockRevive = type.IgnoreBlockRevive,
             };
         }
@@ -565,7 +579,7 @@ namespace Raid.DataModel
             return new ForceStatusEffectTickParamsStub
             {
                 Ticks = type.Ticks,
-                EffectTypeIds = type.EffectTypeIds?.Cast<StatusEffectTypeId>(),
+                EffectTypeIds = type.EffectTypeIds?.Cast<StatusEffectTypeId>().ToList(),
                 EffectCount = type.EffectCount,
             };
         }
@@ -592,7 +606,7 @@ namespace Raid.DataModel
         {
             return new CrabShellParamsStub
             {
-                Layers = type.Layers.ToModel(),
+                Layers = type.Layers.ToModel().ToList(),
             };
         }
 
@@ -630,7 +644,7 @@ namespace Raid.DataModel
             {
                 Count = type.Count,
                 TurnsModifier = type.TurnsModifier,
-                EffectKindIds = type.EffectKindIds?.Cast<EffectKindId>(),
+                EffectKindIds = type.EffectKindIds?.Cast<EffectKindId>().ToList(),
                 TargetSelectorExpression = type.TargetSelectorExpression,
             };
         }
@@ -661,7 +675,7 @@ namespace Raid.DataModel
             return new EffectType()
             {
                 TypeId = type.Id,
-                KindId = type.KindId.ToString(),
+                KindId = type.KindId.ToModel(),
                 Count = type.Count,
                 StackCount = type.StackCount,
                 Multiplier = type.MultiplierFormula,
@@ -677,14 +691,14 @@ namespace Raid.DataModel
                 IterationChanceRolling = type.IterationChanceRolling,
                 Relation = type.Relation?.ToModel(),
                 Condition = type.Condition,
-                Chance = type.Chance.Value.m_rawValue,
-                RepeatChance = type.RepeatChance.Value.m_rawValue,
+                Chance = type.Chance.AsDouble(),
+                RepeatChance = type.RepeatChance.AsDouble(),
                 StatusParams = type.StatusParams?.ToModel(),
                 ValueCap = type.ValueCap,
                 ApplyInstantEffectMode = (ApplyMode)type.ApplyInstantEffectMode.Value,
                 PersistsThroughRounds = type.PersistsThroughRounds,
                 SnapshotRequired = type.SnapshotRequired,
-                IgnoredEffects = type.IgnoredEffects?.Cast<EffectKindId>(),
+                IgnoredEffects = type.IgnoredEffects?.Cast<EffectKindId>().ToList(),
                 ApplyStatusEffectParams = type.ApplyStatusEffectParams?.ToModel(),
                 UnapplyStatusEffectParams = type.UnapplyStatusEffectParams?.ToModel(),
                 TransferDebuffParams = type.TransferDebuffParams?.ToModel(),
@@ -720,7 +734,7 @@ namespace Raid.DataModel
             return new SkillUpgrade()
             {
                 SkillBonusType = bonus.SkillBonusType.ToString(),
-                Value = bonus.Value.AsFloat(),
+                Value = bonus.Value.AsDouble(),
             };
         }
 

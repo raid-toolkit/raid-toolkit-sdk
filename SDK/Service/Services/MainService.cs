@@ -115,6 +115,7 @@ namespace Raid.Service
 
         public void Run(RunOptions options)
         {
+            Il2CppToolkit.Runtime.Types.Types.TypeSizes.Add(typeof(Plarium.Common.Numerics.Fixed), 8);
             Console.CancelKeyPress += (sender, e) => Application.Exit();
             _ = TaskExtensions.RunAfter(1, UpdateAccounts);
 
