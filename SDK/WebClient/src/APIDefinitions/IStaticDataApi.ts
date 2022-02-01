@@ -22,7 +22,7 @@ export class IStaticDataApi {
   public async getAllData(): Promise<unknown> {
     methodStub(this);
   }
-  public async getLocalizedStrings(): Promise<Pick<StaticData, 'localizedStrings'>> {
+  public async getLocalizedStrings(): Promise<StaticData['localizedStrings']> {
     methodStub(this);
   }
   public async getArenaData(): Promise<Pick<StaticData, 'arenaData'>> {
