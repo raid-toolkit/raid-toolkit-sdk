@@ -457,7 +457,7 @@ namespace Raid.DataModel
         public IReadOnlyList<EffectKindGroup> EffectKindGroups;
 
         [JsonProperty("phase")]
-        public string Phase;
+        public IReadOnlyList<BattlePhaseId> Phases;
 
         [JsonProperty("activateOnGlancingHit")]
         public bool ActivateOnGlancingHit;
@@ -980,5 +980,65 @@ namespace Raid.DataModel
 
         [JsonProperty("value")]
         public double Value;
+    }
+
+
+    public enum BattlePhaseId
+    {
+        Unknown = 0,
+        BattleStarted = 10,
+        BattleFinished = 11,
+        BeforeTurnStarted = 20,
+        AfterTurnStarted = 21,
+        TurnFinished = 22,
+        RoundStarted = 30,
+        RoundFinished = 31,
+        ImmunitiesProcessing = 32,
+        BeforeEffectProcessed = 40,
+        BeforeEffectProcessedOnTarget = 41,
+        BeforeEffectAppliedOnTarget = 42,
+        AfterEffectAppliedOnTarget = 43,
+        AfterEffectProcessedOnTarget = 44,
+        AfterEffectProcessed = 45,
+        EffectExpired = 46,
+        BeforeEffectChanceRolling = 47,
+        AfterEffectChanceRolling = 48,
+        TargetContextHasJustBeenCreated = 49,
+        BeforeDamageCalculated = 50,
+        AfterDamageCalculated = 51,
+        BeforeDamageDealt = 52,
+        AfterDamageDealt = 53,
+        BlockDamageProcessing = 54,
+        AfterDamageContextCreated = 55,
+        AfterHealthReduced = 56,
+        AfterHitTypeCalculated = 57,
+        UnkillableProcessing = 58,
+        CocoonProcessing = 59,
+        BeforeHealDealt = 60,
+        AfterHealDealt = 61,
+        BeforeHealCalculated = 62,
+        AllHeroesDeathProcessed = 70,
+        HeroDead = 71,
+        AfterSkillEffectsProcessed = 72,
+        AfterHeroSummoned = 80,
+        BeforeAppliedEffectsUpdate = 100,
+        FearProcessing = 111,
+        AfterSkillUsed = 112,
+        AfterAllSkillsUsed = 113,
+        BeforeSkillProcessed = 114,
+        AfterStatusEffectToApplySelected = 120,
+        CancelEffectProcessing = 130,
+        BeforeEffectUnappliedFromHero = 140,
+        AfterEffectUnappliedFromHero = 141,
+        BeforeDestroyHpDealt = 150,
+        CrabShellProcessing = 160,
+        BeforeStaminaChanged = 170,
+        StatusReviveOnDeathProcessing = 180,
+        PassiveReviveOnDeathProcessing = 181,
+        EffectBlocked = 190,
+        StoneSkinAbsorptionProcessing = 200,
+        AfterHeroDevoured = 210,
+        DigestionAbsorptionProcessing = 220,
+        HydraHeadGrown = 230
     }
 }

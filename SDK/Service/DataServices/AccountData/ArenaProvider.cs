@@ -7,7 +7,7 @@ using StatKindId = SharedModel.Battle.Effects.StatKindId;
 
 namespace Raid.Service.DataServices
 {
-    [DataType("arena")]
+    [DataType("arena", Version = "1.1")]
     public class ArenaDataObject : ArenaData
     {
     }

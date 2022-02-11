@@ -1,4 +1,3 @@
-using Client.App;
 using Client.Model;
 using Client.Model.Gameplay.StaticData;
 using Client.RaidApp;

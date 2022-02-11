@@ -354,7 +354,7 @@ namespace Raid.DataModel
                 EffectTypeId = type.EffectTypeId.Value,
                 EffectKindIds = type.EffectKindIds?.Cast<EffectKindId>().ToList(),
                 EffectKindGroups = type.EffectKindGroups?.Cast<EffectKindGroup>().ToList(),
-                Phase = type.Phase.ToString(),
+                Phases = type.Phases?.Cast<BattlePhaseId>().ToList(),
                 ActivateOnGlancingHit = type.ActivateOnGlancingHit
             };
         }

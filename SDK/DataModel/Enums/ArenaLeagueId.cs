@@ -15,6 +15,7 @@ namespace Raid.DataModel.Enums
         GoldII = 22,
         GoldIII = 23,
         GoldIV = 24,
+        GoldV = 25,
         Platinum = 30
     }
 }

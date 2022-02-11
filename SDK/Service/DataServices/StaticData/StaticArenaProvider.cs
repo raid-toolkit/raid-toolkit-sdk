@@ -4,7 +4,7 @@ using Raid.DataServices;
 
 namespace Raid.Service.DataServices
 {
-    [DataType("arena")]
+    [DataType("arena", Version = "1.1")]
     public class StaticArenaDataObject : StaticArenaData
     {
     }
