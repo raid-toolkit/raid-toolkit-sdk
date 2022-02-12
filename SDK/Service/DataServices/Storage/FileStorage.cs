@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Raid.Service;
 
@@ -15,6 +16,8 @@ namespace Raid.DataServices
         private protected override TimeSpan PollInterval => kPollInterval;
 
         private readonly ConcurrentDictionary<string, object> PendingWrites = new();
+
+        public FileStorage(ILogger<FileStorage> logger): base(logger) { }
 
         protected override async Task ExecuteOnceAsync(CancellationToken token)
         {

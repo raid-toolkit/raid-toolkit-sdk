@@ -1,3 +1,5 @@
+using System.Linq;
+using Client.RaidApp;
 using Newtonsoft.Json;
 using Raid.DataServices;
 
@@ -22,12 +24,13 @@ namespace Raid.Service.DataServices
 
         public override bool Update(ModelScope scope, RuntimeDataContext context)
         {
-            //scope.RaidApplication._viewMaster as RaidViewMaster;
-            var currentNote = scope.RaidApplication?._performanceMonitor?._currentNote;
+            if (scope.RaidApplication._viewMaster is not RaidViewMaster viewMaster)
+                return false;
+            ViewMeta topView = viewMaster._views.Last();
             return PrimaryProvider.Write(context, new ViewKeyDataObject
             {
-                ViewId = currentNote?.ViewId,
-                ViewKey = currentNote?.ViewKey,
+                ViewId = (int)topView.Key,
+                ViewKey = topView.Key.ToString(),
             });
         }
     }

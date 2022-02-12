@@ -1,9 +1,12 @@
-using Microsoft.Extensions.DependencyInjection;
+using Client.RaidApp;
+using Client.View.Views;
+using Client.ViewModel.Contextes.ArtifactsUpgrade;
+using Client.ViewModel.Contextes.Base;
+using Client.ViewModel.DTO;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ProcessMemoryUtilities.Managed;
 using ProcessMemoryUtilities.Native;
-using Raid.Service.DataServices;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -15,12 +18,15 @@ namespace Raid.Service.Services
 {
     public class FrameRateService : PollingBackgroundService
     {
-        private readonly Dictionary<Version, ulong> VersionToOffset = new()
+        private static readonly TimeSpan kPollInterval = new(0, 0, 0, 0, 100);
+        private static readonly FrameRateSettings DefaultSettings = new() { MaxFrameRate = 60, AutosetFramerate = true, ArtifactUpgradeFrameRate = 10 };
+        private static readonly Dictionary<Version, ulong> VersionToOffset = new()
         {
             { Version.Parse("2020.3.16.40302"), 0x1942BB0 },
         };
 
-        private FrameRateSettings Settings => AppSettings.Value.FrameRate;
+        private protected override TimeSpan PollInterval => kPollInterval;
+        private FrameRateSettings Settings => AppSettings.Value.FrameRate ?? DefaultSettings;
         private readonly ILogger<MainService> Logger;
         private readonly IOptions<AppSettings> AppSettings;
         private readonly IServiceProvider ServiceProvider;
@@ -31,6 +37,7 @@ namespace Raid.Service.Services
             ILogger<MainService> logger,
             IServiceProvider serviceProvider,
             RaidInstanceFactory factory)
+            : base(logger)
         {
             AppSettings = settings;
             Logger = logger;
@@ -38,18 +45,34 @@ namespace Raid.Service.Services
             Factory = factory;
         }
 
-        protected override async Task ExecuteOnceAsync(CancellationToken token)
+        protected override Task ExecuteOnceAsync(CancellationToken token)
         {
-            var userData = ServiceProvider.GetRequiredService<AppData>();
-            var viewKeyProvider = ServiceProvider.GetRequiredService<ViewKeyInfoProvider>();
-            foreach (var (id, instance) in Factory.Instances)
+            foreach (var instance in Factory.Instances.Values)
             {
                 var process = instance.Runtime.TargetProcess;
-                var accountId = instance.UserAccount.UserId;
+                long currentLimit = GetLimit(process);
 
-                var viewKeyData = viewKeyProvider.GetValue(accountId);
-                // viewKeyData.ViewId
+                ModelScope scope = new(instance.Runtime);
+                if (scope.RaidApplication._viewMaster is not RaidViewMaster viewMaster)
+                    continue;
+                ViewMeta topView = viewMaster._views[^1];
+                if (topView.Key == ViewKey.ArtifactPowerUpOverlay &&
+                    topView.View is OverlayView view &&
+                    view.Context is ArtifactUpgradeOverlay overlay &&
+                    overlay._activeTab._value == 0 && // upgrade tab
+                    overlay._upgradeContext._progress._status._value == ProgressStatus.InProgress // actively upgrading
+                    )
+                {
+                    if (currentLimit != Settings.ArtifactUpgradeFrameRate)
+                        SetLimit(process, Settings.ArtifactUpgradeFrameRate);
+                }
+                else
+                {
+                    if (currentLimit != Settings.MaxFrameRate)
+                        SetLimit(process, Settings.MaxFrameRate);
+                }
             }
+            return Task.CompletedTask;
         }
 
         private long GetLimit(Process proc)

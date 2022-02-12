@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -39,6 +40,15 @@ namespace Raid.Service
                 {
                     Application.Run(new InstallWindow());
                     return 0;
+                }
+            }
+
+            if (Environment.GetEnvironmentVariable("RTK_DEBUG") == "true" && System.Diagnostics.Debugger.IsAttached)
+            {
+                // kill existing processes for debugging
+                foreach(var existingProc in System.Diagnostics.Process.GetProcessesByName("Raid.Service").Where(proc => proc.Id != Environment.ProcessId))
+                {
+                    existingProc.Kill();
                 }
             }
 

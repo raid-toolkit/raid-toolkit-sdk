@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Raid.Service.Services;
 using RaidExtractor.Core;
 using SuperSocket.WebSocket.Server;
 
@@ -41,6 +42,7 @@ namespace Raid.Service
                 .AddHostedServiceSingleton<UpdateService>()
                 .AddHostedServiceSingleton<ErrorService>()
                 .AddHostedServiceSingleton<EventService>()
+                .AddHostedServiceSingleton<FrameRateService>()
                 .AddSingleton<ModelService>()
                 .AddSingleton<AppData>()
                 .AddSingleton<RaidInstanceFactory>()
