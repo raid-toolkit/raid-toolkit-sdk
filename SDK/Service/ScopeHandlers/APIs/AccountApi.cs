@@ -55,7 +55,7 @@ namespace Raid.Service
 
         public Task<Resources> GetAllResources(string accountId)
         {
-            return Task.FromResult((Resources)AccountData.Resources.GetValue(new(accountId)));
+            return Task.FromResult((Resources)AccountData.Resources.GetValue(accountId));
         }
 
         public Task<Account[]> GetAccounts()
@@ -65,7 +65,7 @@ namespace Raid.Service
 
         private Account AccountFromUserAccount(UserAccount account)
         {
-            AccountBase result = AccountData.AccountInfo.GetValue(new(account.UserId));
+            AccountBase result = AccountData.AccountInfo.GetValue(account.UserId);
             return Account.FromBase(result, account.LastUpdated);
         }
 
@@ -77,27 +77,27 @@ namespace Raid.Service
 
         public Task<ArenaData> GetArena(string accountId)
         {
-            return Task.FromResult((ArenaData)AccountData.Arena.GetValue(new(accountId)));
+            return Task.FromResult((ArenaData)AccountData.Arena.GetValue(accountId));
         }
 
         public Task<AcademyData> GetAcademy(string accountId)
         {
-            return Task.FromResult((AcademyData)AccountData.Academy.GetValue(new(accountId)));
+            return Task.FromResult((AcademyData)AccountData.Academy.GetValue(accountId));
         }
 
         public Task<Artifact[]> GetArtifacts(string accountId)
         {
-            return Task.FromResult(AccountData.Artifacts.GetValue(new(accountId)).Values.ToArray());
+            return Task.FromResult(AccountData.Artifacts.GetValue(accountId).Values.ToArray());
         }
 
         public Task<Artifact> GetArtifactById(string accountId, int artifactId)
         {
-            return Task.FromResult(AccountData.Artifacts.GetValue(new(accountId))[artifactId]);
+            return Task.FromResult(AccountData.Artifacts.GetValue(accountId)[artifactId]);
         }
 
         public Task<Hero[]> GetHeroes(string accountId, bool snapshot = false)
         {
-            var heroes = AccountData.Heroes.GetValue(new(accountId)).Heroes.Values;
+            var heroes = AccountData.Heroes.GetValue(accountId).Heroes.Values;
             return !snapshot
                 ? Task.FromResult(heroes.ToArray())
                 : Task.FromResult<Hero[]>(heroes.Select(hero => GetSnapshot(accountId, hero)).ToArray());
@@ -105,7 +105,7 @@ namespace Raid.Service
 
         public Task<Hero> GetHeroById(string accountId, int heroId, bool snapshot = false)
         {
-            var hero = AccountData.Heroes.GetValue(new(accountId)).Heroes[heroId];
+            var hero = AccountData.Heroes.GetValue(accountId).Heroes[heroId];
             return !snapshot ? Task.FromResult(hero) : Task.FromResult<Hero>(GetSnapshot(accountId, hero));
         }
 
@@ -132,8 +132,8 @@ namespace Raid.Service
             var staticArenaData = StaticArenaData.GetValue(StaticDataContext.Default);
             var staticArtifactData = StaticArtifactData.GetValue(StaticDataContext.Default);
             var staticSkillData = StaticSkillData.GetValue(StaticDataContext.Default);
-            var arenaData = AccountData.Arena.GetValue(new(accountId));
-            var artifactData = AccountData.Artifacts.GetValue(new(accountId));
+            var arenaData = AccountData.Arena.GetValue(accountId);
+            var artifactData = AccountData.Artifacts.GetValue(accountId);
             HeroType type = hero.Type;
             HeroStatsCalculator stats = new(type, (int)Enum.Parse<SharedModel.Meta.Heroes.HeroGrade>(hero.Rank), hero.Level);
 

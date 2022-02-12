@@ -22,6 +22,7 @@ namespace Raid.Service.DataServices
 
         public override bool Update(ModelScope scope, RuntimeDataContext context)
         {
+            //scope.RaidApplication._viewMaster as RaidViewMaster;
             var currentNote = scope.RaidApplication?._performanceMonitor?._currentNote;
             return PrimaryProvider.Write(context, new ViewKeyDataObject
             {

@@ -16,4 +16,13 @@ namespace Raid.Service
             EventArguments = new string[] { accountId };
         }
     }
+
+    public class ViewUpdatedEventArgs : SerializableEventArgs
+    {
+        public ViewUpdatedEventArgs(string accountId, string viewKey)
+        {
+            EventName = "updated";
+            EventArguments = new string[] { accountId, viewKey };
+        }
+    }
 }

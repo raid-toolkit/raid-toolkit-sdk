@@ -37,17 +37,9 @@ namespace Raid.Service
                 if (!AppConfiguration.IsInstalled ||
                     (Environment.GetEnvironmentVariable("RTK_DEBUG") != "true" && AppConfiguration.ExecutablePath.ToLowerInvariant() != AppConfiguration.InstalledExecutablePath.ToLowerInvariant()))
                 {
-                    Application.EnableVisualStyles();
-                    Application.SetCompatibleTextRenderingDefault(false);
                     Application.Run(new InstallWindow());
                     return 0;
                 }
-            }
-
-            if (!options.NoUI)
-            {
-                Application.EnableVisualStyles();
-                Application.SetCompatibleTextRenderingDefault(false);
             }
 
             using (var mutex = new Mutex(false, "RaidToolkit Singleton"))
@@ -71,10 +63,12 @@ namespace Raid.Service
             return 0;
         }
 
-        private static Task Run(RunOptions options)
+        private static async Task Run(RunOptions options)
         {
-            using (new ModelAssemblyResolver())
+            using (var resolver = new ModelAssemblyResolver())
             {
+                resolver.OnStateUpdated += Resolver_OnStateUpdated;
+                await resolver.Load(false);
                 var host = RaidHost.CreateHost(options);
                 var task = Task.Run(async () =>
                 {
@@ -85,7 +79,35 @@ namespace Raid.Service
                     catch (OperationCanceledException) { }
                 });
                 RaidHost.Services.GetRequiredService<MainService>().Run(options);
-                return task;
+                await task;
+            }
+        }
+
+        static RebuildDialog rebuildDialog;
+        private static void Resolver_OnStateUpdated(object sender, ModelLoadStateEventArgs e)
+        {
+            switch(e.LoadState)
+            {
+                case ModelLoadState.Rebuild:
+                    Task.Run(() =>
+                    {
+                        rebuildDialog = new RebuildDialog(ModelAssemblyResolver.CurrentVersion);
+                        rebuildDialog.ShowDialog();
+                    });
+                    break;
+                case ModelLoadState.Ready:
+                    if (rebuildDialog != null)
+                    {
+                        rebuildDialog.Invoke((MethodInvoker)delegate
+                        {
+                            rebuildDialog.Hide();
+                            rebuildDialog.Dispose();
+                            rebuildDialog = null;
+                        });
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }

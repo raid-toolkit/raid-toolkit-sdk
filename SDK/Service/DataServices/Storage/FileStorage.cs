@@ -11,6 +11,9 @@ namespace Raid.DataServices
 {
     public class FileStorage : PollingBackgroundService, IDataStorageReaderWriter
     {
+        private readonly static TimeSpan kPollInterval = new(0, 0, 5);
+        private protected override TimeSpan PollInterval => kPollInterval;
+
         private readonly ConcurrentDictionary<string, object> PendingWrites = new();
 
         protected override async Task ExecuteOnceAsync(CancellationToken token)

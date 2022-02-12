@@ -8,6 +8,7 @@ namespace Raid.Service
         public ProcessWatcherSettings ProcessWatcher { get; set; }
         public ApplicationUpdateSettings ApplicationUpdates { get; set; }
         public DataUpdateSettings DataSettings { get; set; }
+        public FrameRateSettings FrameRate { get; set; }
     }
     public class DataUpdateSettings
     {
@@ -23,5 +24,11 @@ namespace Raid.Service
     {
         public string ProcessName { get; set; }
         public int PollIntervalMs { get; set; }
+    }
+    public class FrameRateSettings
+    {
+        public int MaxFrameRate { get; set; }
+        public int ArtifactUpgradeFrameRate { get; set; }
+        public bool AutosetFramerate { get; set; }
     }
 }

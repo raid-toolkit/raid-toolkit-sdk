@@ -1,6 +1,7 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Reflection;
+using System.Threading.Tasks;
 using Raid.Model;
 
 [assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]
@@ -9,13 +10,14 @@ namespace Model.PreBuild
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             if (Environment.GetEnvironmentVariable("IS_CI") == "true")
             {
                 return;
             }
-            using ModelAssemblyResolver resolver = new(force: Environment.GetEnvironmentVariable("FORCE") == "true");
+            using ModelAssemblyResolver resolver = new();
+            await resolver.Load(force: Environment.GetEnvironmentVariable("FORCE") == "true");
 
             Assembly asm = AppDomain.CurrentDomain.Load("Raid.Interop");
             string targetFile = Path.Join(args[0], Path.GetFileName(asm.Location));

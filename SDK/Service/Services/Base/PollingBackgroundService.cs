@@ -7,7 +7,8 @@ namespace Raid.Service
 {
     public abstract class PollingBackgroundService : BackgroundService
     {
-        private protected TimeSpan PollInterval = new(0, 1, 0);
+        private static TimeSpan DefaultPollInterval = new (0, 1, 0);
+        private protected virtual TimeSpan PollInterval => DefaultPollInterval;
 
         protected abstract Task ExecuteOnceAsync(CancellationToken token);
 
