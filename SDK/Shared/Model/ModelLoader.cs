@@ -42,9 +42,6 @@ namespace Raid.Model
         public string GameVersion { get; private set; }
         public Version InteropVersion { get; private set; }
 
-        public event EventHandler<EventArgs> OnRebuildStarted;
-        public event EventHandler<EventArgs> OnRebuildCompleted;
-
         [Obsolete("Use GameVersion instead")]
         public string Version => GameVersion;
 
