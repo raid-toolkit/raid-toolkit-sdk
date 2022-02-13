@@ -8,6 +8,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{1538B1D1-AE21-4DB5-B9C4-B57D54B8D027}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{B81D52F5-233D-46C2-8C86-58E2146065D1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{08373AFF-D91F-4419-980A-78F4F7985B9B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClientSDK", "ClientSDK", "{21341BF8-90BF-48B2-88E4-AB515C3EE908}"
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "SDK\Shared\Model\Model.csproj", "{36CD0B45-CBC1-43E7-A748-87780606BD92}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model.PreBuild", "SDK\Shared\Model.PreBuild\Model.PreBuild.csproj", "{1876116F-70F1-40B1-BEA3-93B193B75853}"
@@ -22,15 +30,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "SDK\Shared\Common
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensibility", "SDK\Shared\Extensibility\Extensibility.csproj", "{F9F7EE6C-654E-4B16-99A0-2B406A143737}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{1538B1D1-AE21-4DB5-B9C4-B57D54B8D027}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensibility.Host", "SDK\Shared\Extensibility.Host\Extensibility.Host.csproj", "{FD2B21ED-F09A-46C7-9F48-024A7F91380C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Extensibility.Host", "SDK\Shared\Extensibility.Host\Extensibility.Host.csproj", "{FD2B21ED-F09A-46C7-9F48-024A7F91380C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Toolkit", "Application\Raid.Toolkit\Raid.Toolkit.csproj", "{6AA30A42-2942-46D1-B576-74100C10B38F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raid.Toolkit", "Application\Raid.Toolkit\Raid.Toolkit.csproj", "{6AA30A42-2942-46D1-B576-74100C10B38F}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", "{B81D52F5-233D-46C2-8C86-58E2146065D1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Account", "Extensions\Raid.Toolkit.Extension.Account\Account.csproj", "{D4C60B18-1282-462F-80EA-A02DA13073E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Account", "Extensions\Raid.Toolkit.Extension.Account\Account.csproj", "{D4C60B18-1282-462F-80EA-A02DA13073E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -164,15 +168,18 @@ Global
 		{D4C60B18-1282-462F-80EA-A02DA13073E7}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
+		HideSolutionNode = TRUE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{36CD0B45-CBC1-43E7-A748-87780606BD92} = {1538B1D1-AE21-4DB5-B9C4-B57D54B8D027}
 		{1876116F-70F1-40B1-BEA3-93B193B75853} = {1538B1D1-AE21-4DB5-B9C4-B57D54B8D027}
+		{4F52C292-6270-4520-8C32-25785249531C} = {08373AFF-D91F-4419-980A-78F4F7985B9B}
 		{E31294CC-F44E-42F0-9E32-77FC28CA5A41} = {1538B1D1-AE21-4DB5-B9C4-B57D54B8D027}
+		{C8F50AC1-41EC-4F1B-8883-F1786C828F30} = {21341BF8-90BF-48B2-88E4-AB515C3EE908}
 		{4CDD09F0-5D87-42AC-BF89-00FCCCDC8CA5} = {1538B1D1-AE21-4DB5-B9C4-B57D54B8D027}
 		{F9F7EE6C-654E-4B16-99A0-2B406A143737} = {1538B1D1-AE21-4DB5-B9C4-B57D54B8D027}
 		{FD2B21ED-F09A-46C7-9F48-024A7F91380C} = {1538B1D1-AE21-4DB5-B9C4-B57D54B8D027}
+		{6AA30A42-2942-46D1-B576-74100C10B38F} = {08373AFF-D91F-4419-980A-78F4F7985B9B}
 		{D4C60B18-1282-462F-80EA-A02DA13073E7} = {B81D52F5-233D-46C2-8C86-58E2146065D1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
