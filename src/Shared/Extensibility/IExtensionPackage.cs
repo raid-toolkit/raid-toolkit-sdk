@@ -1,6 +1,8 @@
+using System;
+
 namespace Raid.Toolkit.Extensibility
 {
-	public interface IExtensionPackage
+	public interface IExtensionPackage : IDisposable
 	{
         public void OnActivate(IExtensionHost host);
         public void OnDeactivate(IExtensionHost host);

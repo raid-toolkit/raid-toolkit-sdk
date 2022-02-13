@@ -1,12 +1,15 @@
 using System;
+
 namespace Raid.Toolkit.Extensibility
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    public class ExtensionPackageAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    public sealed class ExtensionPackageAttribute : Attribute
     {
-        public PackageDescriptor Descriptor { get; }
+        public string Id { get; }
+        public string Name { get; }
+        public string Description { get; }
 
         public ExtensionPackageAttribute(string id, string name, string description)
-            => Descriptor = new(id, name, description);
+            => (Id, Name, Description) = (id, name, description);
     }
 }

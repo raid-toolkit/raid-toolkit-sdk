@@ -1,12 +1,18 @@
 namespace Raid.Toolkit.Extensibility
 {
-    public class PackageDescriptor
+    public sealed class PackageDescriptor
     {
         public string Id { get; }
         public string Name { get; }
         public string Description { get; }
+        public string Location { get; }
 
-        public PackageDescriptor(string id, string name, string description)
-            => (Id, Name, Description) = (id, name, description);
+        public static PackageDescriptor FromAttribute(ExtensionPackageAttribute attribute, string location)
+        {
+            return new(attribute.Id, attribute.Name, attribute.Description, location);
+        }
+
+        public PackageDescriptor(string id, string name, string description, string location)
+            => (Id, Name, Description, Location) = (id, name, description, location);
     }
 }

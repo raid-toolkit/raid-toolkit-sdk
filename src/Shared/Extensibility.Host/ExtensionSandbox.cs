@@ -1,61 +1,79 @@
 using System;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 
 namespace Raid.Toolkit.Extensibility
 {
-    internal class ExtensionSandbox : MarshalByRefObject, IDisposable
+    internal class ExtensionSandbox : IDisposable, IExtensionPackage
     {
-        private string DllPath;
         private bool IsDisposed;
+        private readonly PackageDescriptor Descriptor;
+        private readonly IPackageInstanceFactory InstanceFactory;
         private ExtensionLoadContext LoadContext;
         private Assembly ExtensionAsm;
+        private IExtensionPackage Instance;
 
-        internal ExtensionSandbox(string dllPath)
+        internal ExtensionSandbox(PackageDescriptor descriptor, IPackageInstanceFactory instanceFactory)
         {
-            DllPath = dllPath;
-            LoadContext = new(dllPath);
-            ExtensionAsm = LoadContext.LoadFromAssemblyPath(dllPath);
-        }
-
-        public static ExtensionSandbox Create(string dllPath)
-        {
-            string appDomainName = $"sandbox:{Path.GetFileNameWithoutExtension(dllPath)}";
-            AppDomain appDomain = AppDomain.CreateDomain(appDomainName);
-            var sandbox = (ExtensionSandbox)appDomain.CreateInstanceAndUnwrap(Assembly.GetExecutingAssembly().FullName, typeof(ExtensionSandbox).FullName, new object[] { dllPath });
-            return sandbox;
-        }
-
-        public PackageDescriptor QueryDescriptor()
-        {
-            Type packageType = GetPackageType();
-            return packageType.GetCustomAttribute<ExtensionPackageAttribute>().Descriptor;
+            Descriptor = descriptor;
+            InstanceFactory = instanceFactory;
+            LoadContext = new(descriptor.Location);
+            ExtensionAsm = LoadContext.LoadFromAssemblyPath(descriptor.Location);
         }
 
         private Type GetPackageType()
         {
-            return ExtensionAsm.ExportedTypes.SingleOrDefault(t => t.GetInterfaces().Contains(typeof(IExtensionPackage)));
+            return ExtensionAsm.ExportedTypes.Single(t => t.GetInterfaces().Contains(typeof(IExtensionPackage)));
         }
 
-        public IExtensionPackage Load()
+        public void Load()
         {
             if (ExtensionAsm.ReflectionOnly)
             {
-                ExtensionAsm = Assembly.LoadFrom(DllPath);
+                ExtensionAsm = Assembly.LoadFrom(Descriptor.Location);
             }
-            return (IExtensionPackage)Activator.CreateInstance(GetPackageType());
+            EnsureInstance();
         }
 
+        private IExtensionPackage EnsureInstance()
+        {
+            return Instance = InstanceFactory.CreateInstance(GetPackageType());
+        }
+
+        public void OnActivate(IExtensionHost host)
+        {
+            EnsureInstance();
+            Instance.OnActivate(host);
+        }
+
+        public void OnDeactivate(IExtensionHost host)
+        {
+            Instance?.OnDeactivate(host);
+        }
+
+        public void OnInstall(IExtensionHost host)
+        {
+            EnsureInstance().OnInstall(host);
+        }
+
+        public void OnUninstall(IExtensionHost host)
+        {
+            EnsureInstance().OnUninstall(host);
+        }
+
+        #region IDisposable
         protected virtual void Dispose(bool disposing)
         {
             if (!IsDisposed)
             {
                 if (disposing)
                 {
-                    LoadContext.Unload();
+                    Instance?.Dispose();
+                    LoadContext?.Unload();
                 }
 
+                Instance = null;
+                ExtensionAsm = null;
                 LoadContext = null;
                 IsDisposed = true;
             }
@@ -67,5 +85,6 @@ namespace Raid.Toolkit.Extensibility
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+        #endregion
     }
 }
