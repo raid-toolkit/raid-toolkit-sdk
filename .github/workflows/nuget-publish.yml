@@ -6,9 +6,7 @@ on:
     paths:
       - .github/workflows/nuget-publish.yml
       - SDK/Client/**
-      - SDK/Common/**
-      - SDK/DataModel/**
-      - SDK/Model/**
+      - SDK/Shared/**
 
 jobs:
   build:
@@ -19,10 +17,10 @@ jobs:
     env:
       IS_CI: true
       Solution_Name: SDK.sln
-      Common_csproj: SDK\Common\Common.csproj
-      DataModel_csproj: SDK\DataModel\DataModel.csproj
-      Client_csproj: SDK\Client\Client.csproj
-      Model_csproj: SDK\Model\Model.csproj
+      Common_csproj: SDK\Shared\Common\Common.csproj
+      DataModel_csproj: SDK\Shared\DataModel\DataModel.csproj
+      Client_csproj: SDK\Client\Node\Raid.Client.csproj
+      Model_csproj: SDK\Shared\Model\Model.csproj
 
     steps:
       - name: Checkout

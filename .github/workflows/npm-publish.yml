@@ -5,7 +5,7 @@ on:
     branches: [main]
     paths:
       - .github/workflows/npm-publish.yml
-      - SDK/WebClient/**
+      - SDK/Client/Node/**
 
 jobs:
   build:
@@ -19,16 +19,16 @@ jobs:
         node-version: '14'
         always-auth: true
         cache: 'yarn'
-        cache-dependency-path: SDK/WebClient/yarn.lock
+        cache-dependency-path: SDK/Client/Node/yarn.lock
 
     - name: Yarn install, build
-      working-directory: SDK/WebClient
+      working-directory: SDK/Client/Node
       run: |
         yarn install
         yarn build
 
     - name: Yarn publish
-      working-directory: SDK/WebClient
+      working-directory: SDK/Client/Node
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"

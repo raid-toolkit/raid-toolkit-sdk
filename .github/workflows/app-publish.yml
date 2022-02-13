@@ -10,8 +10,8 @@ on:
       - .github/workflows/app-publish.yml
       - 'SDK/**'
       - '!**/*.md'
-      - '!SDK/Python/**'
-      - '!SDK/WebClient/**'
+      - '!SDK/Client/Python/**'
+      - '!SDK/Client/Node/**'
 
 jobs:
   build:
@@ -22,8 +22,7 @@ jobs:
       IS_CI: true
       Solution_Name: SDK.sln
       Service_csproj: SDK\Service\Service.csproj
-      Extractor_csproj: SDK\Extractor\Extractor.csproj
-      Client_csproj: SDK\Client\Client.csproj
+      Client_csproj: SDK\Client\DotNet\Raid.Client.csproj
 
     steps:
       - name: Checkout

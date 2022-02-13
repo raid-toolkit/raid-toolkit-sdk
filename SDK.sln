@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "SDK\Service\Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModel", "SDK\DataModel\DataModel.csproj", "{E31294CC-F44E-42F0-9E32-77FC28CA5A41}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "SDK\Client\Client.csproj", "{C8F50AC1-41EC-4F1B-8883-F1786C828F30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "SDK\Client\DotNet\Raid.Client.csproj", "{C8F50AC1-41EC-4F1B-8883-F1786C828F30}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "SDK\Common\Common.csproj", "{4CDD09F0-5D87-42AC-BF89-00FCCCDC8CA5}"
 EndProject
