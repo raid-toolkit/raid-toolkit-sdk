@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(RootDirectory)src\Extensions\Raid.Toolkit.Extension.Account\Account.csproj" />
+    <ProjectReference Include="$(RootDirectory)src\Shared\Extensibility.Host\Extensibility.Host.csproj" />
+    <ProjectReference Include="$(RootDirectory)src\Shared\Extensibility\Extensibility.csproj" />
+  </ItemGroup>
+
+</Project>

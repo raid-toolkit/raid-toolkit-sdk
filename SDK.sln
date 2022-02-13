@@ -16,25 +16,25 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ClientSDK", "ClientSDK", "{21341BF8-90BF-48B2-88E4-AB515C3EE908}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "SDK\Shared\Model\Model.csproj", "{36CD0B45-CBC1-43E7-A748-87780606BD92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "src\Shared\Model\Model.csproj", "{36CD0B45-CBC1-43E7-A748-87780606BD92}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model.PreBuild", "SDK\Shared\Model.PreBuild\Model.PreBuild.csproj", "{1876116F-70F1-40B1-BEA3-93B193B75853}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model.PreBuild", "src\Shared\Model.PreBuild\Model.PreBuild.csproj", "{1876116F-70F1-40B1-BEA3-93B193B75853}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "SDK\Service\Application\Service.csproj", "{4F52C292-6270-4520-8C32-25785249531C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "src\Application\Service\Application\Service.csproj", "{4F52C292-6270-4520-8C32-25785249531C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModel", "SDK\Shared\DataModel\DataModel.csproj", "{E31294CC-F44E-42F0-9E32-77FC28CA5A41}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModel", "src\Shared\DataModel\DataModel.csproj", "{E31294CC-F44E-42F0-9E32-77FC28CA5A41}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Client", "SDK\Client\DotNet\Raid.Client.csproj", "{C8F50AC1-41EC-4F1B-8883-F1786C828F30}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Client", "src\ClientSDK\DotNet\Raid.Client.csproj", "{C8F50AC1-41EC-4F1B-8883-F1786C828F30}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "SDK\Shared\Common\Common.csproj", "{4CDD09F0-5D87-42AC-BF89-00FCCCDC8CA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "src\Shared\Common\Common.csproj", "{4CDD09F0-5D87-42AC-BF89-00FCCCDC8CA5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensibility", "SDK\Shared\Extensibility\Extensibility.csproj", "{F9F7EE6C-654E-4B16-99A0-2B406A143737}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensibility", "src\Shared\Extensibility\Extensibility.csproj", "{F9F7EE6C-654E-4B16-99A0-2B406A143737}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensibility.Host", "SDK\Shared\Extensibility.Host\Extensibility.Host.csproj", "{FD2B21ED-F09A-46C7-9F48-024A7F91380C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensibility.Host", "src\Shared\Extensibility.Host\Extensibility.Host.csproj", "{FD2B21ED-F09A-46C7-9F48-024A7F91380C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Toolkit", "Application\Raid.Toolkit\Raid.Toolkit.csproj", "{6AA30A42-2942-46D1-B576-74100C10B38F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Toolkit", "src\Application\Raid.Toolkit\Raid.Toolkit.csproj", "{6AA30A42-2942-46D1-B576-74100C10B38F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Account", "Extensions\Raid.Toolkit.Extension.Account\Account.csproj", "{D4C60B18-1282-462F-80EA-A02DA13073E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Account", "src\Extensions\Raid.Toolkit.Extension.Account\Account.csproj", "{D4C60B18-1282-462F-80EA-A02DA13073E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -13,6 +13,6 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="$(TargetDir)$(TargetName).exe $(ProjectDir)..\..\bin" />
+    <Exec Command="$(TargetDir)$(TargetName).exe $(RootDirectory)src\bin" />
   </Target>
 </Project>
