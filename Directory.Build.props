@@ -9,5 +9,7 @@
 
   <PropertyGroup>
     <RootDirectory>$(MSBuildThisFileDirectory)</RootDirectory>
+    <BinDir>$(RootDirectory)bin\</BinDir>
+    <SourceDir>$(RootDirectory)src\</SourceDir>
   </PropertyGroup>
 </Project>

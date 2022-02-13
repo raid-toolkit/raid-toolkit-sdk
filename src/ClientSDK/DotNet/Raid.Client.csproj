@@ -1,8 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <ProjectReference Include="$(RootDirectory)src\Shared\Common\Common.csproj" />
-    <ProjectReference Include="$(RootDirectory)src\Shared\DataModel\DataModel.csproj" />
+    <ProjectReference Include="$(SourceDir)Shared\Common\Common.csproj" />
+    <ProjectReference Include="$(SourceDir)Shared\DataModel\DataModel.csproj" />
   </ItemGroup>
 
   <ItemGroup>

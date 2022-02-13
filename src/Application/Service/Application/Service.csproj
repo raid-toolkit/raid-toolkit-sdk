@@ -5,10 +5,10 @@
     <PackageReference Include="il2cpptoolkit.metadata" Version="1.0.38-g236ab9a578" />
     <PackageReference Include="il2cpptoolkit.reversecompiler" Version="1.0.38-g236ab9a578" />
     <PackageReference Include="il2cpptoolkit.runtime" Version="1.0.38-g236ab9a578" />
-    <ProjectReference Include="$(RootDirectory)src\Shared\Common\Common.csproj" />
-    <ProjectReference Include="$(RootDirectory)src\Shared\DataModel\DataModel.csproj" />
-    <ProjectReference Include="$(RootDirectory)src\Shared\Model\Model.csproj" />
-    <ProjectReference Include="$(RootDirectory)src\Shared\Model.PreBuild\Model.PreBuild.csproj">
+    <ProjectReference Include="$(SourceDir)Shared\Common\Common.csproj" />
+    <ProjectReference Include="$(SourceDir)Shared\DataModel\DataModel.csproj" />
+    <ProjectReference Include="$(SourceDir)Shared\Model\Model.csproj" />
+    <ProjectReference Include="$(SourceDir)Shared\Model.PreBuild\Model.PreBuild.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <Private>false</Private>
     </ProjectReference>
@@ -24,7 +24,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="SuperSocket.WebSocket.Server" Version="2.0.0-beta.10" />
     <Reference Include="Raid.Interop.dll">
-      <HintPath>$(RootDirectory)bin\Raid.Interop.dll</HintPath>
+      <HintPath>$(BinDir)Raid.Interop.dll</HintPath>
       <Private>false</Private>
     </Reference>
   </ItemGroup>

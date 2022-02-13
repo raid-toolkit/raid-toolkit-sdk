@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(RootDirectory)src\Shared\Extensibility\Extensibility.csproj" />
+    <ProjectReference Include="$(SourceDir)Shared\Extensibility\Extensibility.csproj" />
   </ItemGroup>
 
 </Project>
