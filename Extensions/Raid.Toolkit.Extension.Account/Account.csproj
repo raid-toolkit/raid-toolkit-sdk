@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <AssemblyName>Raid.Toolkit.Extension.Account</AssemblyName>
+    <RootNamespace>Raid.Toolkit.Extension.Account</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SDK\Shared\Extensibility\Extensibility.csproj" />
+  </ItemGroup>
+
+</Project>
