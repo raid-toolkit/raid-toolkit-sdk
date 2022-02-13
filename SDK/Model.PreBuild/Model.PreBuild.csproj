@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="il2cpptoolkit.reversecompiler" Version="1.0.37-gb86ab47eaa" />
-    <PackageReference Include="il2cpptoolkit.target.netcore" Version="1.0.37-gb86ab47eaa" />
+    <PackageReference Include="il2cpptoolkit.reversecompiler" Version="1.0.38-g236ab9a578" />
+    <PackageReference Include="il2cpptoolkit.target.netcore" Version="1.0.38-g236ab9a578" />
     <ProjectReference Include="..\Model\Model.csproj" />
   </ItemGroup>
 

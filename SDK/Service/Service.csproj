@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
-    <PackageReference Include="il2cpptoolkit.common" Version="1.0.37-gb86ab47eaa" />
-    <PackageReference Include="il2cpptoolkit.metadata" Version="1.0.37-gb86ab47eaa" />
-    <PackageReference Include="il2cpptoolkit.reversecompiler" Version="1.0.37-gb86ab47eaa" />
-    <PackageReference Include="il2cpptoolkit.runtime" Version="1.0.37-gb86ab47eaa" />
+    <PackageReference Include="il2cpptoolkit.common" Version="1.0.38-g236ab9a578" />
+    <PackageReference Include="il2cpptoolkit.metadata" Version="1.0.38-g236ab9a578" />
+    <PackageReference Include="il2cpptoolkit.reversecompiler" Version="1.0.38-g236ab9a578" />
+    <PackageReference Include="il2cpptoolkit.runtime" Version="1.0.38-g236ab9a578" />
     <ProjectReference Include="..\Common\Common.csproj" />
     <ProjectReference Include="..\Model.PreBuild\Model.PreBuild.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>

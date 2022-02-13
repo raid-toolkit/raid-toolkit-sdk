@@ -8,8 +8,8 @@ namespace Raid.Service
 {
     public abstract class PollingBackgroundService : BackgroundService
     {
-        private ILogger Logger;
-        private static TimeSpan DefaultPollInterval = new (0, 1, 0);
+        private readonly ILogger Logger;
+        private static readonly TimeSpan DefaultPollInterval = new (0, 1, 0);
         private protected virtual TimeSpan PollInterval => DefaultPollInterval;
 
         public PollingBackgroundService(ILogger logger)
