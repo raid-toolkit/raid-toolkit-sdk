@@ -8,10 +8,10 @@ on:
     paths:
       - version.json
       - .github/workflows/app-publish.yml
-      - 'SDK/**'
+      - 'SDK/Client/DotNet/**'
+      - 'SDK/Shared/**'
+      - 'SDK/Service/**'
       - '!**/*.md'
-      - '!SDK/Client/Python/**'
-      - '!SDK/Client/Node/**'
 
 jobs:
   build:
