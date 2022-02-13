@@ -21,7 +21,7 @@ jobs:
     env:
       IS_CI: true
       Solution_Name: SDK.sln
-      Service_csproj: SDK\Service\Service.csproj
+      Service_csproj: SDK\Service\Application\Service.csproj
       Client_csproj: SDK\Client\DotNet\Raid.Client.csproj
 
     steps:
