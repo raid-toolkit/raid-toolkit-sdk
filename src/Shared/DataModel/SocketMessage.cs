@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
-namespace Raid.DataModel
+namespace Raid.Toolkit.DataModel
 {
     internal class SocketMessageConverter : JsonConverter
     {

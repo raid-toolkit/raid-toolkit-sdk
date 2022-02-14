@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Raid.Service.Messages
+namespace Raid.Toolkit.DataModel
 {
     public class AsyncMessage
     {

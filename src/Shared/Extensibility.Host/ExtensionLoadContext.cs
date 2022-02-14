@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.Loader;
 
-namespace Raid.Toolkit.Extensibility
+namespace Raid.Toolkit.Extensibility.Host
 {
     public class ExtensionLoadContext : AssemblyLoadContext
     {

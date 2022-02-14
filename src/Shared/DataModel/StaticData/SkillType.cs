@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using Raid.DataModel.Enums;
+using Raid.Toolkit.DataModel.Enums;
 
-namespace Raid.DataModel
+namespace Raid.Toolkit.DataModel
 {
     public class Skill
     {

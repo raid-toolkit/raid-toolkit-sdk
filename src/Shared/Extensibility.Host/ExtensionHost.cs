@@ -1,38 +1,40 @@
 using System;
 using System.Collections.Generic;
 
-namespace Raid.Toolkit.Extensibility
+namespace Raid.Toolkit.Extensibility.Host
 {
-    public class ExtensionHost : IExtensionHost, IDisposable
+    public class ExtensionHost : IExtensionHostController, IDisposable
     {
-        private readonly IPackageLocator Locator;
+        private readonly IPackageManager Locator;
         private readonly IPackageLoader Loader;
         private readonly Dictionary<string, IExtensionPackage> ExtensionPackages = new();
         private bool IsDisposed;
 
-        public ExtensionHost(IPackageLocator locator, IPackageLoader loader) => (Locator, Loader) = (locator, loader);
+        public ExtensionHost(IPackageManager locator, IPackageLoader loader) => (Locator, Loader) = (locator, loader);
 
+        #region IExtensionHost
+
+        #endregion
+
+        #region IExtensionHostController
         public void LoadExtensions()
         {
             foreach (var pkg in Locator.GetAllPackages())
-            {
                 ExtensionPackages.Add(pkg.Id, Loader.LoadPackage(pkg));
-            }
         }
 
         public void ActivateExtensions()
         {
-            foreach (var (_, pkg) in ExtensionPackages)
-            {
+            foreach (var pkg in ExtensionPackages.Values)
                 pkg.OnActivate(this);
-            }
         }
 
-        public void InstallPackage(PackageDescriptor descriptor, bool activate)
+        public void InstallPackage(PackageDescriptor pkgToInstall, bool activate)
         {
-            var pkg = Loader.LoadPackage(descriptor);
+            PackageDescriptor installedPkg = Locator.AddPackage(pkgToInstall);
+            var pkg = Loader.LoadPackage(installedPkg);
             pkg.OnInstall(this);
-            ExtensionPackages.Add(descriptor.Id, pkg);
+            ExtensionPackages.Add(installedPkg.Id, pkg);
         }
 
         public void UninstallPackage(PackageDescriptor descriptor)
@@ -43,7 +45,9 @@ namespace Raid.Toolkit.Extensibility
                 pkg.OnUninstall(this);
             }
         }
+        #endregion
 
+        #region IDisposable
         protected virtual void Dispose(bool disposing)
         {
             if (!IsDisposed)
@@ -52,9 +56,8 @@ namespace Raid.Toolkit.Extensibility
                 {
                     // dispose managed state (managed objects)
                     foreach (var pkg in ExtensionPackages.Values)
-                    {
                         pkg.OnDeactivate(this);
-                    }
+                    
                     ExtensionPackages.Clear();
                 }
 
@@ -68,5 +71,6 @@ namespace Raid.Toolkit.Extensibility
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+        #endregion
     }
 }

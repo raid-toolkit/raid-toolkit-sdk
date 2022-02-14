@@ -1,8 +1,7 @@
 using System;
 using System.Threading.Tasks;
-using Raid.Service;
 
-namespace Raid.DataModel
+namespace Raid.Toolkit.DataModel
 {
     [PublicApi("account-api")]
     public interface IAccountApi

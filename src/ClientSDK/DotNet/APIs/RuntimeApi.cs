@@ -2,8 +2,7 @@ using System;
 using System.Reflection;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using Raid.DataModel;
-using Raid.Service;
+using Raid.Toolkit.DataModel;
 
 namespace Raid.Client
 {

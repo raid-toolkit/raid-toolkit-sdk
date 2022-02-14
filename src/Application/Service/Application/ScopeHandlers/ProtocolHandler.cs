@@ -2,7 +2,7 @@ using System;
 using System.Web;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Raid.DataModel;
+using Raid.Toolkit.DataModel;
 
 namespace Raid.Service
 {

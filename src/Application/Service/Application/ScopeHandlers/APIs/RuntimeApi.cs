@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
-using Raid.DataModel;
+using Raid.Toolkit.DataModel;
 using Raid.Service.DataServices;
 
 namespace Raid.Service

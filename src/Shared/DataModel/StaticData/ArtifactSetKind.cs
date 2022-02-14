@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Raid.DataModel
+namespace Raid.Toolkit.DataModel
 {
     public class ArtifactSetKind
     {

@@ -7,7 +7,7 @@ using CommandLine;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Raid.DataModel;
+using Raid.Toolkit.DataModel;
 
 namespace Raid.Service
 {

@@ -1,4 +1,4 @@
-namespace Raid.Toolkit.Extensibility
+namespace Raid.Toolkit.Extensibility.Host
 {
     public interface IPackageLoader
     {

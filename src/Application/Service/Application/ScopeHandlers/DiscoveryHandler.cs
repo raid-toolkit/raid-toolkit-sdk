@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json.Linq;
-using Raid.DataModel;
+using Raid.Toolkit.DataModel;
 namespace Raid.Service
 {
     internal class DiscoveryHandler : IMessageScopeHandler

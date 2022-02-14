@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Raid.DataModel;
+using Raid.Toolkit.DataModel;
 using SuperSocket.WebSocket;
 using SuperSocket.WebSocket.Server;
 

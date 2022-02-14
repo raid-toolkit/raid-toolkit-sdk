@@ -1,9 +1,8 @@
 using System;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using Raid.Service;
 
-namespace Raid.DataModel
+namespace Raid.Toolkit.DataModel
 {
     [PublicApi("runtime-api")]
     public interface IRuntimeApi

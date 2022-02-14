@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Raid.DataModel;
+using Raid.Toolkit.DataModel;
 using Raid.DataServices;
 using SharedModel.Meta.Artifacts;
 

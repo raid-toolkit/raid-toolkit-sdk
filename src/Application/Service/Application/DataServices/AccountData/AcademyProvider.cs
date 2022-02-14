@@ -1,6 +1,6 @@
 using System.Linq;
-using Raid.DataModel;
-using Raid.DataModel.Enums;
+using Raid.Toolkit.DataModel;
+using Raid.Toolkit.DataModel.Enums;
 using Raid.DataServices;
 
 namespace Raid.Service.DataServices

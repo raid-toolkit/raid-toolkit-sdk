@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace Raid.DataModel
+namespace Raid.Toolkit.DataModel
 {
     public static class StaticResources
     {

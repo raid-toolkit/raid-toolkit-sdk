@@ -10,8 +10,8 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <OutputType>Library</OutputType>
-    <AssemblyName>Raid.DataModel</AssemblyName>
-    <RootNamespace>Raid.DataModel</RootNamespace>
+    <AssemblyName>Raid.Toolkit.DataModel</AssemblyName>
+    <RootNamespace>Raid.Toolkit.DataModel</RootNamespace>
   </PropertyGroup>
 
 </Project>

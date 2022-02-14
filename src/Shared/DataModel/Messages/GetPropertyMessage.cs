@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Raid.Service.Messages
+namespace Raid.Toolkit.DataModel
 {
     public class GetPropertyMessage : AsyncMessage
     {

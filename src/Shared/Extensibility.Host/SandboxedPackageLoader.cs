@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Concurrent;
 
-namespace Raid.Toolkit.Extensibility
+namespace Raid.Toolkit.Extensibility.Host
 {
     public class SandboxedPackageLoader : IPackageLoader, IDisposable
     {

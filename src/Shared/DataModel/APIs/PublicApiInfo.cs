@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Raid.DataModel
+namespace Raid.Toolkit.DataModel
 {
     public class PublicApiInfo<T>
     {

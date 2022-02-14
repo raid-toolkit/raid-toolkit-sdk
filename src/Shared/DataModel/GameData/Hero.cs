@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Raid.DataModel
+namespace Raid.Toolkit.DataModel
 {
     public class Hero
     {

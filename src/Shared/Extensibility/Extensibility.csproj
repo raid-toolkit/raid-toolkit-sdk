@@ -6,4 +6,9 @@
     <AssemblyName>Raid.Toolkit.Extensibility</AssemblyName>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\DataModel\DataModel.csproj" />
+  </ItemGroup>
+
 </Project>

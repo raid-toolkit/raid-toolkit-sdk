@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Raid.DataModel;
+using Raid.Toolkit.DataModel;
 using Raid.Service.DataServices;
 
 namespace RaidExtractor.Core
@@ -26,7 +26,7 @@ namespace RaidExtractor.Core
             };
         }
 
-        private static bool IsFactionGuardian(Raid.DataModel.Hero hero, AcademyData academy)
+        private static bool IsFactionGuardian(Raid.Toolkit.DataModel.Hero hero, AcademyData academy)
         {
             var guardiansByFaction = academy?.Guardians;
             return guardiansByFaction != null

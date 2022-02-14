@@ -1,6 +1,6 @@
 using System;
 
-namespace Raid.Service
+namespace Raid.Toolkit.DataModel
 {
     public abstract class SerializableEventArgs : EventArgs
     {

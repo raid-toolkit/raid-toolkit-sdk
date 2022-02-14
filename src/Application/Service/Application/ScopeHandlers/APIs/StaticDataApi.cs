@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
-using Raid.DataModel;
+using Raid.Toolkit.DataModel;
 using Raid.Service.DataServices;
 
 namespace Raid.Service

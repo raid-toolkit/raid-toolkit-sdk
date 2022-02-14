@@ -9,8 +9,7 @@ using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Raid.Common;
-using Raid.DataModel;
-using Raid.Service.Messages;
+using Raid.Toolkit.DataModel;
 
 namespace Raid.Client
 {

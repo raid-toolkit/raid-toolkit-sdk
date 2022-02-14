@@ -2,7 +2,7 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-namespace Raid.Toolkit.Extensibility
+namespace Raid.Toolkit.Extensibility.Host
 {
     internal class ExtensionSandbox : IDisposable, IExtensionPackage
     {

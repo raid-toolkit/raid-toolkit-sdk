@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Raid.DataModel;
+using Raid.Toolkit.DataModel;
 using System;
 using StatKindId = SharedModel.Battle.Effects.StatKindId;
 
@@ -24,7 +24,7 @@ namespace Raid.Service
             }
         };
 
-        public HeroStatsCalculator(Raid.DataModel.HeroType heroType, int rank, int level)
+        public HeroStatsCalculator(Raid.Toolkit.DataModel.HeroType heroType, int rank, int level)
         {
             foreach (StatKindId statKind in typeof(StatKindId).GetEnumValues())
             {

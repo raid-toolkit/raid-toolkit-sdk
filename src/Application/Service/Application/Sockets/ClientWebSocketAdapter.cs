@@ -1,5 +1,5 @@
 using Newtonsoft.Json;
-using Raid.DataModel;
+using Raid.Toolkit.DataModel;
 using System;
 using System.Net.WebSockets;
 using System.Text;

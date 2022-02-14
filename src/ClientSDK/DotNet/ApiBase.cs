@@ -1,6 +1,6 @@
 using System.Reflection;
 using System.Threading.Tasks;
-using Raid.DataModel;
+using Raid.Toolkit.DataModel;
 
 namespace Raid.Client
 {

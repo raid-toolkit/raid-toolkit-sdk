@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.Extensibility;
+using Raid.Toolkit.Extensibility.Host;
 using System;
 using System.Windows.Forms;
 
@@ -80,7 +81,7 @@ namespace Raid.Toolkit
                 .AddSingleton<ExtensionHost>()
                 .AddSingleton<IPackageInstanceFactory, PackageFactory>()
                 .AddSingleton<IPackageLoader, SandboxedPackageLoader>()
-                .AddSingleton<IPackageLocator, PackageLocator>()
+                .AddSingleton<IPackageManager, PackageManager>()
             ).Build();
     }
 }

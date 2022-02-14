@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 
-namespace Raid.DataModel
+namespace Raid.Toolkit.DataModel
 {
     public class GreatHallBonus
     {

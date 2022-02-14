@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SharedModel.Meta.Artifacts;
 
-namespace Raid.DataModel
+namespace Raid.Toolkit.DataModel
 {
     public static partial class ModelExtensions
     {

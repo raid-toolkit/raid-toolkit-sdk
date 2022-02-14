@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Raid.Service.Messages
+namespace Raid.Toolkit.DataModel
 {
     public class SendEventMessage
     {

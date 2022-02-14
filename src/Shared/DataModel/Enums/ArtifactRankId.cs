@@ -1,4 +1,4 @@
-namespace Raid.DataModel.Enums
+namespace Raid.Toolkit.DataModel.Enums
 {
     public enum ArtifactRankId : int
     {

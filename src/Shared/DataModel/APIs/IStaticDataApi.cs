@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Raid.DataModel
+namespace Raid.Toolkit.DataModel
 {
     [PublicApi("static-data")]
     public interface IStaticDataApi
