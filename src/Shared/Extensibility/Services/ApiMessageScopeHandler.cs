@@ -5,19 +5,20 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
+using Raid.Toolkit.Common;
 using Raid.Toolkit.DataModel;
 
-namespace Raid.Toolkit.Extensibility.Services.Host
+namespace Raid.Toolkit.Extensibility.Services
 {
-    internal abstract class ApiHandler<T> : IMessageScopeHandler
+    public abstract class ApiMessageScopeHandler<T> : IMessageScopeHandler
     {
         private readonly Dictionary<string, EventHandler<SerializableEventArgs>> EventHandlerDelegates = new();
-        protected ILogger<ApiHandler<T>> Logger;
+        protected ILogger<ApiMessageScopeHandler<T>> Logger;
         private readonly PublicApiInfo<T> Api = new();
 
         private readonly string[] SupportedScopes;
 
-        public ApiHandler(ILogger<ApiHandler<T>> logger)
+        public ApiMessageScopeHandler(ILogger<ApiMessageScopeHandler<T>> logger)
         {
             Logger = logger;
 

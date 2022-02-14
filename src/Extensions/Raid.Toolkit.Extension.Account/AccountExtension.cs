@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Extensions.Logging;
+using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
 
 namespace Raid.Toolkit.Extension.Account
@@ -8,6 +9,7 @@ namespace Raid.Toolkit.Extension.Account
     [ExtensionPackage("Raid.Toolkit.Extension.Account", "Account", "Extracts account data")]
     public class AccountExtension : IExtensionPackage, IDisposable
     {
+        private DisposableCollection Handles = new();
         private bool IsDisposed;
 
         public AccountExtension(ILogger<AccountExtension> logger)
@@ -17,11 +19,14 @@ namespace Raid.Toolkit.Extension.Account
 
         public void OnActivate(IExtensionHost host)
         {
+            // Handles.Add(host.RegisterMessageScopeHandler())
             //throw new System.NotImplementedException();
         }
 
         public void OnDeactivate(IExtensionHost host)
         {
+            Handles.Dispose();
+            Handles = new();
             //throw new System.NotImplementedException();
         }
 

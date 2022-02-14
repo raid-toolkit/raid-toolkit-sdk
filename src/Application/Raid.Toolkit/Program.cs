@@ -29,18 +29,6 @@ namespace Raid.Toolkit
             //Application.Run(new Form1());
         }
 
-        class PackageFactory : IPackageInstanceFactory
-        {
-            private readonly IServiceProvider ServiceProvider;
-
-            public PackageFactory(IServiceProvider serviceProvider) => ServiceProvider = serviceProvider;
-
-            public IExtensionPackage CreateInstance(Type type)
-            {
-                return (IExtensionPackage)ActivatorUtilities.CreateInstance(ServiceProvider, type);
-            }
-        }
-
         class ProgramHost : IDisposable
         {
             private readonly ExtensionHost Host;
@@ -78,10 +66,7 @@ namespace Raid.Toolkit
             Host.CreateDefaultBuilder(args)
             .ConfigureServices(services => services
                 .AddSingleton<ProgramHost>()
-                .AddSingleton<ExtensionHost>()
-                .AddSingleton<IPackageInstanceFactory, PackageFactory>()
-                .AddSingleton<IPackageLoader, SandboxedPackageLoader>()
-                .AddSingleton<IPackageManager, PackageManager>()
+                .AddExtensibilityServices<PackageManager>()
             ).Build();
     }
 }

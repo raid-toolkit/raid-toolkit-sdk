@@ -1,3 +1,4 @@
+using Raid.Toolkit.Extensibility.Services;
 using System;
 using System.Collections.Generic;
 
@@ -7,12 +8,19 @@ namespace Raid.Toolkit.Extensibility.Host
     {
         private readonly IPackageManager Locator;
         private readonly IPackageLoader Loader;
+        private readonly IScopedServiceManager ScopedServices;
         private readonly Dictionary<string, IExtensionPackage> ExtensionPackages = new();
         private bool IsDisposed;
 
-        public ExtensionHost(IPackageManager locator, IPackageLoader loader) => (Locator, Loader) = (locator, loader);
+        public ExtensionHost(IPackageManager locator, IPackageLoader loader, IScopedServiceManager scopedServices) =>
+            (Locator, Loader, ScopedServices) = (locator, loader, scopedServices);
 
         #region IExtensionHost
+        public IDisposable RegisterMessageScopeHandler(IMessageScopeHandler handler)
+        {
+            ScopedServices.AddMessageScopeHandler(handler);
+            return new HostResourceHandle(() => ScopedServices.RemoveMessageScopeHandler(handler));
+        }
 
         #endregion
 

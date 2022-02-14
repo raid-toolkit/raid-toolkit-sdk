@@ -37,7 +37,7 @@ namespace Raid.Toolkit.Extensibility.Host
 
         private IExtensionPackage EnsureInstance()
         {
-            return Instance = InstanceFactory.CreateInstance(GetPackageType());
+            return Instance = InstanceFactory.CreateInstance(GetPackageType(), Descriptor);
         }
 
         public void OnActivate(IExtensionHost host)
