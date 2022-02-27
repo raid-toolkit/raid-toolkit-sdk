@@ -1,8 +1,10 @@
+using Il2CppToolkit.Runtime;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host;
 using System;
+using System.Diagnostics;
 using System.Windows.Forms;
 
 namespace Raid.Toolkit
@@ -32,14 +34,30 @@ namespace Raid.Toolkit
         class ProgramHost : IDisposable
         {
             private readonly ExtensionHost Host;
+            IContextDataManager DataManager;
             private bool IsDisposed;
 
-            public ProgramHost(ExtensionHost host) => (Host) = (host);
+            public ProgramHost(ExtensionHost host, IContextDataManager dataManager) 
+                => (Host, DataManager) = (host, dataManager);
 
             public void Run()
             {
                 Host.LoadExtensions();
                 Host.ActivateExtensions();
+                var proc = Process.GetProcessesByName("Raid")[0];
+                Il2CsRuntimeContext ctx = new(proc);
+                foreach(var dm in DataManager.Providers)
+				{
+                    bool result;
+                    if (dm.ContextType == typeof(AccountDataContext))
+                    {
+                        result = dm.Update(ctx, new AccountDataContext("foobar"));
+                    } else if(dm.ContextType == typeof(StaticDataContext))
+					{
+                        result = dm.Update(ctx, StaticDataContext.Default);
+					}
+                    Console.WriteLine(dm.ToString());
+				}
             }
 
             protected virtual void Dispose(bool disposing)

@@ -1,7 +1,10 @@
+using System;
+
 namespace Raid.DataServices
 {
     public interface IDataObjectProvider
     {
+		Type ContextType { get; }
         DataTypeAttribute DataType { get; }
         object GetValue(IDataContext context);
     }
@@ -13,11 +16,12 @@ namespace Raid.DataServices
         TData GetValue(TContext context);
     }
 
-    public class DataObjectProviderBase<TContext, TData> : IDataObjectProvider<TContext, TData>
+    public class DataObjectProviderBase<TContext, TData>
         where TContext : class, IDataContext
         where TData : class
     {
         public DataTypeAttribute DataType => PrimaryProvider.DataType.Attribute;
+        public Type ContextType => typeof(TContext);
 
         protected readonly IDataResolver<TContext, TData> PrimaryProvider;
 
@@ -31,7 +35,7 @@ namespace Raid.DataServices
             return PrimaryProvider.TryRead(context, out TData value) ? value : default;
         }
 
-        object IDataObjectProvider.GetValue(IDataContext context)
+        public object GetValue(IDataContext context)
         {
             return GetValue((TContext)context);
         }

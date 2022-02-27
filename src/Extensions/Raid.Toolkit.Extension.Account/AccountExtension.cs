@@ -19,15 +19,15 @@ namespace Raid.Toolkit.Extension.Account
 
         public void OnActivate(IExtensionHost host)
         {
-            // Handles.Add(host.RegisterMessageScopeHandler())
-            //throw new System.NotImplementedException();
+            Handles.Add(host.RegisterContextDataProvider<StaticAcademyProvider>());
+            Handles.Add(host.RegisterContextDataProvider<AcademyProvider>());
+            // Handles.Add(host.RegisterMessageScopeHandler());
         }
 
         public void OnDeactivate(IExtensionHost host)
         {
             Handles.Dispose();
             Handles = new();
-            //throw new System.NotImplementedException();
         }
 
         public void OnInstall(IExtensionHost host)

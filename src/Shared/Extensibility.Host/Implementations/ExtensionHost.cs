@@ -1,3 +1,5 @@
+using Microsoft.Extensions.DependencyInjection;
+using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
 using System;
 using System.Collections.Generic;
@@ -9,11 +11,12 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IPackageManager Locator;
         private readonly IPackageLoader Loader;
         private readonly IScopedServiceManager ScopedServices;
+        private readonly IContextDataManager DataManager;
         private readonly Dictionary<string, IExtensionPackage> ExtensionPackages = new();
         private bool IsDisposed;
 
-        public ExtensionHost(IPackageManager locator, IPackageLoader loader, IScopedServiceManager scopedServices) =>
-            (Locator, Loader, ScopedServices) = (locator, loader, scopedServices);
+        public ExtensionHost(IPackageManager locator, IPackageLoader loader, IScopedServiceManager scopedServices, IContextDataManager dataManager) =>
+            (Locator, Loader, ScopedServices, DataManager) = (locator, loader, scopedServices, dataManager);
 
         #region IExtensionHost
         public IDisposable RegisterMessageScopeHandler(IMessageScopeHandler handler)
@@ -22,6 +25,10 @@ namespace Raid.Toolkit.Extensibility.Host
             return new HostResourceHandle(() => ScopedServices.RemoveMessageScopeHandler(handler));
         }
 
+        public IDisposable RegisterContextDataProvider<T>() where T : IContextDataProvider
+        {
+            return DataManager.AddProvider<T>();
+        }
         #endregion
 
         #region IExtensionHostController
@@ -79,6 +86,6 @@ namespace Raid.Toolkit.Extensibility.Host
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
-        #endregion
-    }
+		#endregion
+	}
 }
