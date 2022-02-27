@@ -45,19 +45,9 @@ namespace Raid.Toolkit
                 Host.LoadExtensions();
                 Host.ActivateExtensions();
                 var proc = Process.GetProcessesByName("Raid")[0];
-                Il2CsRuntimeContext ctx = new(proc);
-                foreach(var dm in DataManager.Providers)
-				{
-                    bool result;
-                    if (dm.ContextType == typeof(AccountDataContext))
-                    {
-                        result = dm.Update(ctx, new AccountDataContext("foobar"));
-                    } else if(dm.ContextType == typeof(StaticDataContext))
-					{
-                        result = dm.Update(ctx, StaticDataContext.Default);
-					}
-                    Console.WriteLine(dm.ToString());
-				}
+                Il2CsRuntimeContext runtime = new(proc);
+                DataManager.Update(runtime, StaticDataContext.Default);
+                DataManager.Update(runtime, new AccountDataContext("foobar"));
             }
 
             protected virtual void Dispose(bool disposing)

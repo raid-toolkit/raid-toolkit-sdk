@@ -29,6 +29,7 @@ namespace Raid.DataServices
             return resolver.Write(context, updateFn(value));
         }
     }
+
     public class DataResolverManager<TContext, TStorage, TData> : IDataResolver<TContext, TStorage, TData>
         where TContext : class, IDataContext
         where TStorage : class, IDataStorage, new()
