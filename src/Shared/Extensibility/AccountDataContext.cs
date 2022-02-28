@@ -2,7 +2,7 @@ using Raid.DataServices;
 
 namespace Raid.Toolkit.Extensibility
 {
-    public class AccountDataContext : IDataContext
+    public class AccountDataContext : IDataContext, IDataContext_deprecated
     {
         public AccountDataContext(string accountId)
         {

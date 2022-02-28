@@ -2,9 +2,11 @@ using Il2CppToolkit.Runtime;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.Extensibility;
+using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host;
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Raid.Toolkit
@@ -15,7 +17,7 @@ namespace Raid.Toolkit
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
@@ -25,7 +27,7 @@ namespace Raid.Toolkit
             using (var scope = host.Services.CreateScope())
             using (var progHost = scope.ServiceProvider.GetRequiredService<ProgramHost>())
             {
-                progHost.Run();
+                await progHost.Run();
             }
 
             //Application.Run(new Form1());
@@ -40,9 +42,9 @@ namespace Raid.Toolkit
             public ProgramHost(ExtensionHost host, IContextDataManager dataManager) 
                 => (Host, DataManager) = (host, dataManager);
 
-            public void Run()
+            public async Task Run()
             {
-                Host.LoadExtensions();
+                await Host.LoadExtensions();
                 Host.ActivateExtensions();
                 var proc = Process.GetProcessesByName("Raid")[0];
                 Il2CsRuntimeContext runtime = new(proc);
@@ -70,10 +72,17 @@ namespace Raid.Toolkit
             }
         }
 
-        private static IHost CreateHost(string[] args) =>
+		class Settings : IDataServiceSettings
+		{
+			public string InstallationPath => ".";
+			public string StoragePath => @".\Data";
+		}
+
+		private static IHost CreateHost(string[] args) =>
             Host.CreateDefaultBuilder(args)
             .ConfigureServices(services => services
                 .AddSingleton<ProgramHost>()
+                .AddSingleton<IDataServiceSettings>(new Settings())
                 .AddExtensibilityServices<PackageManager>()
             ).Build();
     }

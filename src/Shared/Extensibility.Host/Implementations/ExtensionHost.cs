@@ -1,12 +1,15 @@
 using Microsoft.Extensions.DependencyInjection;
+using Raid.Toolkit.Extensibility.HostInterfaces;
 using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public class ExtensionHost : IExtensionHostController, IDisposable
+	public class ExtensionHost : IExtensionHostController, IDisposable
     {
         private readonly IPackageManager Locator;
         private readonly IPackageLoader Loader;
@@ -25,17 +28,21 @@ namespace Raid.Toolkit.Extensibility.Host
             return new HostResourceHandle(() => ScopedServices.RemoveMessageScopeHandler(handler));
         }
 
-        public IDisposable RegisterContextDataProvider<T>() where T : IContextDataProvider
+        public IDisposable RegisterDataProvider<T>() where T : IDataProvider
         {
             return DataManager.AddProvider<T>();
         }
         #endregion
 
         #region IExtensionHostController
-        public void LoadExtensions()
+        public async Task LoadExtensions()
         {
             foreach (var pkg in Locator.GetAllPackages())
                 ExtensionPackages.Add(pkg.Id, Loader.LoadPackage(pkg));
+
+            var typePatterns = ExtensionPackages.Values.OfType<IRequireCodegen>().SelectMany(cg => cg.TypePatterns);
+            ModelLoader loader = new(typePatterns);
+            await Task.Run(() => loader.Load(false));
         }
 
         public void ActivateExtensions()

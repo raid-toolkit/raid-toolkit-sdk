@@ -1,34 +1,25 @@
 using System.Linq;
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.DataModel.Enums;
-using Raid.DataServices;
 using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility;
 using Il2CppToolkit.Runtime;
 using Client.Model;
+using Raid.Toolkit.Extensibility.DataServices;
 
 namespace Raid.Toolkit.Extension.Account
 {
-	[DataType("academy")]
-	public class AcademyDataObject : AcademyData
+	public class AcademyProvider : DataProvider<AccountDataContext, AcademyData>
 	{
-	}
-
-	public class AcademyProvider : DataProviderBase<AccountDataContext, AcademyDataObject>
-	{
-		private readonly IDataResolver<StaticDataContext, CachedDataStorage<PersistedDataStorage>, StaticAcademyDataObject> StaticAcademyProvider;
-
-		public AcademyProvider(
-			IDataResolver<AccountDataContext, CachedDataStorage<PersistedDataStorage>, AcademyDataObject> storage,
-			IDataResolver<StaticDataContext, CachedDataStorage<PersistedDataStorage>, StaticAcademyDataObject> academyProvider) // TODO: Replace with a simple context/type accessor interface
-			: base(storage)
+		private readonly CachedDataStorage<PersistedDataStorage> Storage;
+		public AcademyProvider(CachedDataStorage<PersistedDataStorage> storage)
 		{
-			StaticAcademyProvider = academyProvider;
+			Storage = storage;
 		}
 
 		public override bool Update(Il2CsRuntimeContext runtime, AccountDataContext context)
 		{
-			if (!StaticAcademyProvider.TryRead(StaticDataContext.Default, out StaticAcademyDataObject academyBonuses))
+			if (!Storage.TryRead(StaticDataContext.Default, "academy", out StaticAcademyData academyBonuses))
 				return false;
 
 			var appModel = Client.App.SingleInstance<AppModel>.method_get_Instance
@@ -56,7 +47,7 @@ namespace Raid.Toolkit.Extension.Account
 					)
 				);
 
-			return PrimaryProvider.Write(context, new AcademyDataObject
+			return Storage.Write(context, "academy", new AcademyData
 			{
 				Guardians = guardians
 			});

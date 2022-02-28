@@ -1,25 +1,21 @@
 using System.Linq;
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.DataModel.Enums;
-using Raid.DataServices;
 using Raid.Toolkit.Extensibility.Providers;
 using Il2CppToolkit.Runtime;
 using Raid.Toolkit.Extensibility;
 using Client.Model;
 using Client.Model.Gameplay.StaticData;
+using Raid.Toolkit.Extensibility.DataServices;
 
 namespace Raid.Toolkit.Extension.Account
 {
-    [DataType("academy")]
-    public class StaticAcademyDataObject : StaticAcademyData
+    public class StaticAcademyProvider : DataProvider<StaticDataContext, StaticAcademyData>
     {
-    }
-
-    public class StaticAcademyProvider : DataProviderBase<StaticDataContext, StaticAcademyDataObject>
-    {
-        public StaticAcademyProvider(IDataResolver<StaticDataContext, CachedDataStorage<PersistedDataStorage>, StaticAcademyDataObject> storage)
-            : base(storage)
+        private readonly CachedDataStorage<PersistedDataStorage> Storage;
+        public StaticAcademyProvider(CachedDataStorage<PersistedDataStorage> storage)
         {
+            Storage = storage;
         }
 
         public override bool Update(Il2CsRuntimeContext runtime, StaticDataContext context)
@@ -29,7 +25,7 @@ namespace Raid.Toolkit.Extension.Account
                         .As<SingleInstanceStaticFields<AppModel>>().Instance;
             ClientStaticDataManager staticDataManager = appModel.StaticDataManager as ClientStaticDataManager;
             var hash = staticDataManager._hash;
-            if (PrimaryProvider.TryRead(context, out StaticAcademyDataObject previous))
+            if (Storage.TryRead(context, "academy", out StaticAcademyData previous))
             {
                 if (previous?.Hash == hash)
                     return false;
@@ -39,7 +35,7 @@ namespace Raid.Toolkit.Extension.Account
                 kvp => (HeroRarity)kvp.Key,
                 kvp => kvp.Value.Select(bonuses => bonuses.Bonuses.Select(bonus => bonus.Value.ToModel(bonus.Key)).ToArray()).ToArray()
             );
-            return PrimaryProvider.Write(context, new()
+            return Storage.Write(context, "academy", new StaticAcademyData()
             {
                 Hash = hash,
                 GuardianBonusByRarity = guardiansBonusData,

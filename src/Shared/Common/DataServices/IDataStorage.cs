@@ -15,7 +15,7 @@ namespace Raid.DataServices
     public interface IDataStorage : IDataReader
     {
         event EventHandler<DataStorageUpdatedEventArgs> Updated;
-        void SetContext(IDataContext context, IServiceProvider serviceProvider);
+        void SetContext(IDataContext_deprecated context, IServiceProvider serviceProvider);
         bool Write<T>(string key, T value) where T : class;
     }
 }

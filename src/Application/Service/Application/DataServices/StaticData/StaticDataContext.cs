@@ -2,7 +2,7 @@ using Raid.DataServices;
 
 namespace Raid.Service.DataServices
 {
-    public class StaticDataContext : IDataContext
+    public class StaticDataContext : IDataContext_deprecated
     {
         public static readonly StaticDataContext Default = new();
 

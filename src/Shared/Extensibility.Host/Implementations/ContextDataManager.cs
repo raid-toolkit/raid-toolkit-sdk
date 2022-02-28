@@ -10,7 +10,7 @@ namespace Raid.Toolkit.Extensibility
 {
 	public class ContextDataManager : IContextDataManager
 	{
-		private readonly List<IContextDataProvider> ProvidersList = new();
+		private readonly List<IDataProvider> ProvidersList = new();
 		private readonly IServiceProvider ServiceProvider;
 
 		public ContextDataManager(IServiceProvider serviceProvider)
@@ -18,7 +18,7 @@ namespace Raid.Toolkit.Extensibility
 			ServiceProvider = serviceProvider;
 		}
 
-		public IDisposable AddProvider<T>() where T : IContextDataProvider
+		public IDisposable AddProvider<T>() where T : IDataProvider
 		{
 			IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
 			T instance = ActivatorUtilities.CreateInstance<T>(scope);

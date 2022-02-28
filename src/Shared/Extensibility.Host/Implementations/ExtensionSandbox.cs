@@ -1,10 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    internal class ExtensionSandbox : IDisposable, IExtensionPackage
+    internal class ExtensionSandbox : IDisposable, IRequireCodegen, IExtensionPackage
     {
         private bool IsDisposed;
         private readonly PackageDescriptor Descriptor;
@@ -13,7 +15,19 @@ namespace Raid.Toolkit.Extensibility.Host
         private Assembly ExtensionAsm;
         private IExtensionPackage Instance;
 
-        internal ExtensionSandbox(PackageDescriptor descriptor, IPackageInstanceFactory instanceFactory)
+		public IEnumerable<Regex> TypePatterns
+        {
+            get
+            {
+                if (EnsureInstance() is IRequireCodegen requireCodegen)
+                {
+                    return requireCodegen.TypePatterns;
+                }
+                return Array.Empty<Regex>();
+            }
+        }
+
+		internal ExtensionSandbox(PackageDescriptor descriptor, IPackageInstanceFactory instanceFactory)
         {
             Descriptor = descriptor;
             InstanceFactory = instanceFactory;

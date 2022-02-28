@@ -20,7 +20,7 @@ namespace Raid.DataServices
             UnderlyingStorage = underlyingStorage;
         }
 
-        public void SetContext(IDataContext context, IServiceProvider serviceProvider)
+        public void SetContext(IDataContext_deprecated context, IServiceProvider serviceProvider)
         {
             UnderlyingStorage?.SetContext(context, serviceProvider);
         }
@@ -61,7 +61,7 @@ namespace Raid.DataServices
             return JsonConvert.SerializeObject(oldValue) == JsonConvert.SerializeObject(newValue) ? oldValue : newValue;
         }
 
-        public void SetContext(IDataContext context)
+        public void SetContext(IDataContext_deprecated context)
         {
             throw new NotImplementedException();
         }

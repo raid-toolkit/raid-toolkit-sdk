@@ -5,7 +5,7 @@ namespace Raid.Service.DataServices
 {
     public interface IContextDataProvider { }
     public interface IContextDataProvider<TContext> : IContextDataProvider
-        where TContext : class, IDataContext
+        where TContext : class, IDataContext_deprecated
     {
         DataTypeAttribute DataType { get; }
         bool Upgrade(TContext context, Version dataVersion);
@@ -16,7 +16,7 @@ namespace Raid.Service.DataServices
         DataObjectProviderBase<TContext, TData>,
         IContextDataProvider<TContext>
         where TData : class
-        where TContext : class, IDataContext
+        where TContext : class, IDataContext_deprecated
     {
         public DataProviderBase(IDataResolver<TContext, CachedDataStorage<PersistedDataStorage>, TData> storage)
             : base(storage)

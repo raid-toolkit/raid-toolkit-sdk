@@ -2,7 +2,7 @@ using Raid.DataServices;
 
 namespace Raid.Toolkit.Extensibility
 {
-    public class StaticDataContext : IDataContext
+    public class StaticDataContext : IDataContext, IDataContext_deprecated
     {
         public static readonly StaticDataContext Default = new();
 

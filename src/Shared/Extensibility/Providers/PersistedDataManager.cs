@@ -8,6 +8,7 @@ using Raid.DataServices;
 
 namespace Raid.Toolkit.Extensibility.Providers
 {
+    /*
     public enum UpdateResult
     {
         NotUpdated,
@@ -15,14 +16,14 @@ namespace Raid.Toolkit.Extensibility.Providers
         Failed
     }
 
-    public interface IPersistedDataManager<TContext> where TContext : class, IDataContext
+    public interface IPersistedDataManager<TContext> where TContext : class, IDataContext_deprecated
     {
         void Upgrade(TContext context);
         UpdateResult Update(Il2CsRuntimeContext runtime, TContext context);
         IDataResolver<TContext, CachedDataStorage<PersistedDataStorage>, SerializedDataIndex> Index { get; }
     }
 
-    public class PersistedDataManager<TContext> : IPersistedDataManager<TContext> where TContext : class, IDataContext
+    public class PersistedDataManager<TContext> : IPersistedDataManager<TContext> where TContext : class, IDataContext_deprecated
     {
         private readonly List<IContextDataProvider<TContext>> Providers;
         private readonly ILogger<PersistedDataManager<TContext>> Logger;
@@ -118,5 +119,5 @@ namespace Raid.Toolkit.Extensibility.Providers
 
             return results.Contains(UpdateResult.Failed) ? UpdateResult.Failed : results.Contains(UpdateResult.Updated) ? UpdateResult.Updated : UpdateResult.NotUpdated;
         }
-    }
+    }*/
 }

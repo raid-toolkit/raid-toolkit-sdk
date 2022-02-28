@@ -5,7 +5,7 @@ namespace Raid.DataServices
 {
     public interface IDataStorageFactory<out TFactory> where TFactory : IDataStorage
     {
-        IDataStorage GetStorage(IDataContext context);
+        IDataStorage GetStorage(IDataContext_deprecated context);
     }
 
     public class DataStorageFactoryManager<TFactory> : IDataStorageFactory<TFactory> where TFactory : class, IDataStorage, new()
@@ -17,7 +17,7 @@ namespace Raid.DataServices
             ServiceProvider = serviceProvider;
         }
 
-        public IDataStorage GetStorage(IDataContext context)
+        public IDataStorage GetStorage(IDataContext_deprecated context)
         {
             return StorageMap.GetOrAdd(string.Join("|", context.Parts), (key) =>
             {

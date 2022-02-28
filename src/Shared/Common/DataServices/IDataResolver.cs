@@ -3,7 +3,7 @@ using System;
 namespace Raid.DataServices
 {
     public interface IDataResolver<TContext, TData>
-        where TContext : class, IDataContext
+        where TContext : class, IDataContext_deprecated
         where TData : class
     {
         IDataType<TData> DataType { get; }
@@ -12,7 +12,7 @@ namespace Raid.DataServices
         bool Write(TContext context, TData value);
     }
     public interface IDataResolver<TContext, TStorage, TData> : IDataResolver<TContext, TData>
-        where TContext : class, IDataContext
+        where TContext : class, IDataContext_deprecated
         where TStorage : class, IDataStorage, new()
         where TData : class
     {
@@ -21,7 +21,7 @@ namespace Raid.DataServices
     public static class DataResolverExtensions
     {
         public static bool Update<TContext, TStorage, TData>(this IDataResolver<TContext, TStorage, TData> resolver, TContext context, Func<TData, TData> updateFn)
-            where TContext : class, IDataContext
+            where TContext : class, IDataContext_deprecated
             where TStorage : class, IDataStorage, new()
             where TData : class
         {
@@ -31,7 +31,7 @@ namespace Raid.DataServices
     }
 
     public class DataResolverManager<TContext, TStorage, TData> : IDataResolver<TContext, TStorage, TData>
-        where TContext : class, IDataContext
+        where TContext : class, IDataContext_deprecated
         where TStorage : class, IDataStorage, new()
         where TData : class
     {

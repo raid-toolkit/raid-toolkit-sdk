@@ -9,7 +9,7 @@ namespace Raid.DataServices
     public class PersistedDataStorage : IDataStorage
     {
         private readonly string StoragePath;
-        private IDataContext DataContext;
+        private IDataContext_deprecated DataContext;
         private IDataStorageReaderWriter Storage;
 
         public PersistedDataStorage()
@@ -17,7 +17,7 @@ namespace Raid.DataServices
             StoragePath = Path.Join(RegistrySettings.InstallationPath, "data");
         }
 
-        public void SetContext(IDataContext context, IServiceProvider serviceProvider)
+        public void SetContext(IDataContext_deprecated context, IServiceProvider serviceProvider)
         {
             if (DataContext != null)
                 throw new InvalidOperationException("Already set context");

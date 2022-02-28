@@ -2,7 +2,7 @@ using Raid.DataServices;
 
 namespace Raid.Service.DataServices
 {
-    public class RuntimeDataContext : IDataContext
+    public class RuntimeDataContext : IDataContext_deprecated
     {
         public RuntimeDataContext(string accountId)
         {

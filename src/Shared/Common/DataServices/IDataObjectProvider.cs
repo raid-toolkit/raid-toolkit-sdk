@@ -6,18 +6,18 @@ namespace Raid.DataServices
     {
 		Type ContextType { get; }
         DataTypeAttribute DataType { get; }
-        object GetValue(IDataContext context);
+        object GetValue(IDataContext_deprecated context);
     }
 
     public interface IDataObjectProvider<TContext, TData> : IDataObjectProvider
-        where TContext : class, IDataContext
+        where TContext : class, IDataContext_deprecated
         where TData : class
     {
         TData GetValue(TContext context);
     }
 
     public class DataObjectProviderBase<TContext, TData>
-        where TContext : class, IDataContext
+        where TContext : class, IDataContext_deprecated
         where TData : class
     {
         public DataTypeAttribute DataType => PrimaryProvider.DataType.Attribute;
@@ -35,7 +35,7 @@ namespace Raid.DataServices
             return PrimaryProvider.TryRead(context, out TData value) ? value : default;
         }
 
-        public object GetValue(IDataContext context)
+        public object GetValue(IDataContext_deprecated context)
         {
             return GetValue((TContext)context);
         }
