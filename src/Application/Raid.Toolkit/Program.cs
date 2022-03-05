@@ -1,5 +1,5 @@
-using Il2CppToolkit.Runtime;
 using Microsoft.Extensions.DependencyInjection;
+using Il2CppToolkit.Runtime;
 using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
@@ -39,7 +39,7 @@ namespace Raid.Toolkit
             IContextDataManager DataManager;
             private bool IsDisposed;
 
-            public ProgramHost(ExtensionHost host, IContextDataManager dataManager) 
+            public ProgramHost(ExtensionHost host, IContextDataManager dataManager)
                 => (Host, DataManager) = (host, dataManager);
 
             public async Task Run()
@@ -72,13 +72,13 @@ namespace Raid.Toolkit
             }
         }
 
-		class Settings : IDataServiceSettings
-		{
-			public string InstallationPath => ".";
-			public string StoragePath => @".\Data";
-		}
+        class Settings : IDataServiceSettings
+        {
+            public string InstallationPath => ".";
+            public string StoragePath => @".\Data";
+        }
 
-		private static IHost CreateHost(string[] args) =>
+        private static IHost CreateHost(string[] args) =>
             Host.CreateDefaultBuilder(args)
             .ConfigureServices(services => services
                 .AddSingleton<ProgramHost>()

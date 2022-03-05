@@ -1,0 +1,16 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "**/.vs": true,
+        "**/lib": true,
+        "**/node_modules": true,
+        "**/bin": true,
+        "**/obj": true,
+        "**/*.csproj.user": true
+    }
+}
