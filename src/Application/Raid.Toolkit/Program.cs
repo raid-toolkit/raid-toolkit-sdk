@@ -45,6 +45,7 @@ namespace Raid.Toolkit
                     config.ProcessName = "Raid";
                 })
                 .AddSingleton<IDataServiceSettings>(new Settings())
+                .AddTypesAssignableTo<ICommandTask>(services => services.AddScoped)
                 .AddSingleton<ApplicationStartupTask>()
                 // shared dependencies
                 .AddExtensibilityServices<PackageManager>()

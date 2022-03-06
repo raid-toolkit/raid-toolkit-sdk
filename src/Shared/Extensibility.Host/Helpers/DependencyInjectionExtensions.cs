@@ -25,7 +25,7 @@ namespace Microsoft.Extensions.DependencyInjection
         )
         {
             Func<Type, Type, IServiceCollection> fn = expression.Compile().Invoke(collection);
-            foreach (var type in (assembly ?? Assembly.GetExecutingAssembly()).GetTypesAssignableTo<T>())
+            foreach (var type in (assembly ?? Assembly.GetCallingAssembly()).GetTypesAssignableTo<T>())
             {
                 fn(typeof(T), type);
             }
@@ -39,7 +39,7 @@ namespace Microsoft.Extensions.DependencyInjection
         )
         {
             Func<Type, Type, IServiceCollection> fn = expression.Compile().Invoke(collection);
-            foreach (var type in (assembly ?? Assembly.GetExecutingAssembly()).GetTypesAssignableTo<T>())
+            foreach (var type in (assembly ?? Assembly.GetCallingAssembly()).GetTypesAssignableTo<T>())
             {
                 fn(type, type);
             }
@@ -53,7 +53,7 @@ namespace Microsoft.Extensions.DependencyInjection
         )
         {
             Func<Type, Type, IServiceCollection> fn = expression.Compile().Invoke(collection);
-            foreach (var type in (assembly ?? Assembly.GetExecutingAssembly()).GetTypesAssignableTo<T>())
+            foreach (var type in (assembly ?? Assembly.GetCallingAssembly()).GetTypesAssignableTo<T>())
             {
                 fn(
                     typeof(IDependencyTypeFactory<>).MakeGenericType(typeof(T)),

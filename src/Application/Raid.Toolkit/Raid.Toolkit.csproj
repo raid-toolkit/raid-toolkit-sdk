@@ -13,11 +13,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
+    <PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.2.1" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-	<Reference Include="Raid.Interop.dll">
-		<HintPath>$(BinDir)Raid.Interop.dll</HintPath>
-		<Private>true</Private>
-	</Reference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <Reference Include="Raid.Interop.dll">
+      <HintPath>$(BinDir)Raid.Interop.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
