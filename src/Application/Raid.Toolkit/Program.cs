@@ -1,11 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
-using Il2CppToolkit.Runtime;
 using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host;
 using System;
-using System.Diagnostics;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -25,50 +24,39 @@ namespace Raid.Toolkit
 
             using (IHost host = CreateHost(args))
             using (var scope = host.Services.CreateScope())
-            using (var progHost = scope.ServiceProvider.GetRequiredService<ProgramHost>())
+            using (var progHost = scope.ServiceProvider.GetRequiredService<IApplicationHost>())
             {
-                await progHost.Run();
+                host.Start();
+                await progHost.Run(new RunArguments());
+                await host.StopAsync();
             }
 
             //Application.Run(new Form1());
         }
 
-        class ProgramHost : IDisposable
+        class RunArguments : IRunArguments
         {
-            private readonly ExtensionHost Host;
-            IContextDataManager DataManager;
-            private bool IsDisposed;
+            public bool Standalone { get; set; }
+            public bool NoUI { get; set; }
+            public int? Wait { get; set; }
+            public bool Update { get; set; }
+        }
 
-            public ProgramHost(ExtensionHost host, IContextDataManager dataManager)
-                => (Host, DataManager) = (host, dataManager);
-
-            public async Task Run()
+        class EntryPoint : IEntryPoint
+        {
+            public void Run(IRunArguments arguments)
             {
-                await Host.LoadExtensions();
-                Host.ActivateExtensions();
-                var proc = Process.GetProcessesByName("Raid")[0];
-                Il2CsRuntimeContext runtime = new(proc);
-                DataManager.Update(runtime, StaticDataContext.Default);
-                DataManager.Update(runtime, new AccountDataContext("foobar"));
+                Thread.Sleep(600);
             }
 
-            protected virtual void Dispose(bool disposing)
+            public void Restart(IRunArguments arguments)
             {
-                if (!IsDisposed)
-                {
-                    if (disposing)
-                    {
-                        // dispose managed state (managed objects)
-                    }
-                    IsDisposed = true;
-                }
+                // throw new NotImplementedException();
             }
 
-            public void Dispose()
+            public void Exit()
             {
-                // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-                Dispose(disposing: true);
-                GC.SuppressFinalize(this);
+                // throw new NotImplementedException();
             }
         }
 
@@ -81,9 +69,14 @@ namespace Raid.Toolkit
         private static IHost CreateHost(string[] args) =>
             Host.CreateDefaultBuilder(args)
             .ConfigureServices(services => services
-                .AddSingleton<ProgramHost>()
-                .AddSingleton<IDataServiceSettings>(new Settings())
                 .AddExtensibilityServices<PackageManager>()
+                .AddSingleton<IDataServiceSettings>(new Settings())
+                .AddSingleton<IEntryPoint, EntryPoint>()
+                .Configure<ProcessManagerSettings>(config =>
+                {
+                    config.PollIntervalMs = 100;
+                    config.ProcessName = "Raid";
+                })
             ).Build();
     }
 }

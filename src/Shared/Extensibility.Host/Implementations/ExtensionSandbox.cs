@@ -37,7 +37,8 @@ namespace Raid.Toolkit.Extensibility.Host
 
         private Type GetPackageType()
         {
-            return ExtensionAsm.ExportedTypes.Single(t => t.GetInterfaces().Contains(typeof(IExtensionPackage)));
+            Type packageType = ExtensionAsm.ExportedTypes.SingleOrDefault(t => t.GetInterfaces().Contains(typeof(IExtensionPackage)));
+            return packageType;
         }
 
         public void Load()

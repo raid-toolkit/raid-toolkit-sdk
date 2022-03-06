@@ -2,7 +2,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Extensions.Logging;
 
-namespace Raid.Toolkit.Extensibility.Services.Host
+namespace Raid.Toolkit.Extensibility.Host.Services
 {
     public enum ServiceEvent : int
     {

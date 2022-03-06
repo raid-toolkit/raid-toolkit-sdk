@@ -1,4 +1,4 @@
-namespace Raid.Toolkit.Extensibility.Services.Host
+namespace Raid.Toolkit.Extensibility.Host.Services
 {
     public enum ServiceErrorCategory
     {

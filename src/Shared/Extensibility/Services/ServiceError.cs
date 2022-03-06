@@ -1,4 +1,4 @@
-namespace Raid.Toolkit.Extensibility.Services
+namespace Raid.Toolkit.Extensibility
 {
     public enum ServiceError
     {

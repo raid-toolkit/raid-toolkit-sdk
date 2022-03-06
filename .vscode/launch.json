@@ -33,43 +33,43 @@
             "stopAtEntry": false
         },
         {
-            "name": "Launch Service",
+            "name": "Launch Raid.Toolkit",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/SDK/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
+            "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
             "args": [],
             "env": {
                 "RTK_DEBUG": "true",
                 "app:MemoryLogging": "Error"
             },
             "justMyCode": false,
-            "cwd": "${workspaceFolder}/SDK/Service",
+            "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Debug/net5.0-windows/win-x64",
             "console": "internalConsole",
             "stopAtEntry": false
         },
         {
-            "name": "Launch Service (Release)",
+            "name": "Launch Raid.Toolkit (Release)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build release",
-            "program": "${workspaceFolder}/SDK/Service/bin/Release/net5.0-windows/win-x64/Raid.Service.exe",
+            "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Release/net5.0-windows/win-x64/Raid.Toolkit.exe",
             "args": [],
             "env": {
                 "RTK_DEBUG": "true",
                 "app:MemoryLogging": "Error"
             },
             "justMyCode": false,
-            "cwd": "${workspaceFolder}/SDK/Service",
+            "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit",
             "console": "internalConsole",
             "stopAtEntry": false
         },
         {
-            "name": "Launch Service (Protocol)",
+            "name": "Launch Raid.Toolkit (Protocol)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/SDK/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
+            "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
             "args": [
                 "open",
                 "rtk://open?channel=CNTvMrQnRF3li0hGX2Apj&origin=chrome-extension://omalebghpgejjiaoknljcfmglgbpocdp"
@@ -77,23 +77,23 @@
             "env": {
                 "RTK_DEBUG": "true"
             },
-            "cwd": "${workspaceFolder}/SDK/Service",
+            "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit",
             "console": "internalConsole",
             "stopAtEntry": false
         },
         {
-            "name": "Register Service",
+            "name": "Register Raid.Toolkit",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/SDK/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
+            "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
             "args": [
                 "open"
             ],
             "env": {
                 "RTK_DEBUG": "true"
             },
-            "cwd": "${workspaceFolder}/SDK/Service",
+            "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit",
             "console": "internalConsole",
             "stopAtEntry": false
         },

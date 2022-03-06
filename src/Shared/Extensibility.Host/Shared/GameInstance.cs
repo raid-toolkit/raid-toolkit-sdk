@@ -5,14 +5,18 @@ using System.Diagnostics;
 
 namespace Raid.Toolkit.Extensibility.Shared
 {
-    public class RaidInstance : IRaidInstance
+    public class GameInstance : IGameInstance, IDisposable
     {
+        public int Token { get; }
         public string Id { get; }
         private string AccountName;
+        private bool IsDisposed;
+
         public Il2CsRuntimeContext Runtime { get; }
 
-        public RaidInstance(Process proc)
+        public GameInstance(Process proc)
         {
+            Token = proc.Id;
             Runtime = new(proc);
             (Id, AccountName) = GetAccountIdAndName();
         }
@@ -28,6 +32,25 @@ namespace Raid.Toolkit.Extensibility.Shared
             var globalId = socialWrapper.PlariumGlobalId;
             var socialId = socialWrapper.SocialId;
             return (string.Join('_', globalId, socialId).Sha256(), userWrapper.UserGameSettings.GameSettings.Name);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!IsDisposed)
+            {
+                if (disposing)
+                {
+                    Runtime.Dispose();
+                }
+                IsDisposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

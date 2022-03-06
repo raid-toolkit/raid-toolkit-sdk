@@ -10,14 +10,14 @@ using Raid.Toolkit.Extensibility.DataServices;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public class FileStorage : PollingBackgroundService, IDataStorageReaderWriter
+    public class FileStorageService : PollingBackgroundService, IDataStorageReaderWriter
     {
         private readonly static TimeSpan kPollInterval = new(0, 0, 5);
         private protected override TimeSpan PollInterval => kPollInterval;
 
         private readonly ConcurrentDictionary<string, object> PendingWrites = new();
 
-        public FileStorage(ILogger<FileStorage> logger) : base(logger) { }
+        public FileStorageService(ILogger<FileStorageService> logger) : base(logger) { }
 
         protected override async Task ExecuteOnceAsync(CancellationToken token)
         {

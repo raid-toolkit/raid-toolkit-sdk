@@ -12,5 +12,11 @@
         "**/bin": true,
         "**/obj": true,
         "**/*.csproj.user": true
+    },
+    "[csharp]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": true
+        }
     }
 }

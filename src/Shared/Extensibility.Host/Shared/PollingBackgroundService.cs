@@ -8,7 +8,7 @@ namespace Raid.Toolkit.Extensibility.Host
 {
     public abstract class PollingBackgroundService : BackgroundService
     {
-        private readonly ILogger Logger;
+        protected readonly ILogger Logger;
         private static readonly TimeSpan DefaultPollInterval = new(0, 1, 0);
         private protected virtual TimeSpan PollInterval => DefaultPollInterval;
 
