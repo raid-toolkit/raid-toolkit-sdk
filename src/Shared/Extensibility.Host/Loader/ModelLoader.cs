@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public class ModelLoader
+    public class ModelLoader : IModelLoader
     {
         private static readonly Regex[] DefaultIncludeTypes = new[] {
             //new Regex(@"^Client\.ViewModel\.Contextes\.", RegexOptions.Singleline | RegexOptions.Compiled),
@@ -27,26 +27,30 @@ namespace Raid.Toolkit.Extensibility.Host
             new Regex(@"^Client\.Model\.AppModel$", RegexOptions.Singleline | RegexOptions.Compiled),
         };
 
-        public event EventHandler<ModelLoadStateEventArgs> OnStateUpdated;
-        private readonly Version CurrentInteropVersion;
-        private readonly Regex[] IncludeTypes;
 
-        // initialize CurrentModelVersion in static ctor to ensure initialization ordering
-        public ModelLoader(IEnumerable<Regex> regices)
-        {
-            IncludeTypes = DefaultIncludeTypes.Concat(regices).ToArray();
-            int hashCode = string.Join(";", IncludeTypes.Select(rex => rex.ToString())).GetStableHashCode();
-            CurrentInteropVersion = new(1, 3, 0, Math.Abs(hashCode % 999));
-        }
+        private Version CurrentInteropVersion;
+        private Regex[] IncludeTypes;
+
+        public event EventHandler<IModelLoader.ModelLoaderEventArgs> OnStateUpdated;
 
         public string GameVersion { get; private set; }
         public Version InteropVersion { get; private set; }
 
-        internal async Task<Assembly> Load(bool force = false)
+        public Task<Assembly> Load(IEnumerable<Regex> regices, bool force)
+        {
+            IncludeTypes = DefaultIncludeTypes.Concat(regices).ToArray();
+            int hashCode = string.Join(";", IncludeTypes.Select(rex => rex.ToString())).GetStableHashCode();
+            // force a rebuild for every major.minor version bump
+            Version asmVersion = Version.Parse(ThisAssembly.AssemblyVersion);
+            CurrentInteropVersion = new(asmVersion.Major, asmVersion.Minor, 0, Math.Abs(hashCode % 999));
+            return Load(force);
+        }
+
+        private async Task<Assembly> Load(bool force)
         {
             try
             {
-                OnStateUpdated?.Invoke(this, new(ModelLoadState.Initialize));
+                OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Initialize));
 
                 PlariumPlayAdapter.GameInfo gameInfo = GetGameInfo();
                 GameVersion = gameInfo.Version;
@@ -78,24 +82,23 @@ namespace Raid.Toolkit.Extensibility.Host
 
                 if (shouldGenerate)
                 {
-                    OnStateUpdated?.Invoke(this, new(ModelLoadState.Rebuild));
+                    OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Rebuild));
                     await Task.Run(() =>
                     {
                         GenerateAssembly(gameInfo, dllPath);
                     });
                 }
 
-                OnStateUpdated?.Invoke(this, new(ModelLoadState.Load));
-                return Assembly.LoadFrom(dllPath);
+                OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Load));
+                ModelLoaderContext loaderContext = new(dllPath);
+                Assembly asm = loaderContext.LoadFromAssemblyPath(dllPath);
+                OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Ready));
+                return asm;
             }
             catch (Exception)
             {
-                OnStateUpdated?.Invoke(this, new(ModelLoadState.Error));
+                OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Error));
                 throw;
-            }
-            finally
-            {
-                OnStateUpdated?.Invoke(this, new(ModelLoadState.Ready));
             }
         }
 

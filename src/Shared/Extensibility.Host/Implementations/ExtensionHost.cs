@@ -9,15 +9,29 @@ namespace Raid.Toolkit.Extensibility.Host
 {
     public class ExtensionHost : IExtensionHostController, IDisposable
     {
+        private readonly IModelLoader ModelLoader;
+        private readonly IPackageLoader PackageLoader;
         private readonly IPackageManager Locator;
-        private readonly IPackageLoader Loader;
         private readonly IScopedServiceManager ScopedServices;
         private readonly IContextDataManager DataManager;
         private readonly Dictionary<string, IExtensionPackage> ExtensionPackages = new();
         private bool IsDisposed;
 
-        public ExtensionHost(IPackageManager locator, IPackageLoader loader, IScopedServiceManager scopedServices, IContextDataManager dataManager) =>
-            (Locator, Loader, ScopedServices, DataManager) = (locator, loader, scopedServices, dataManager);
+        public ExtensionHost(
+            IPackageManager locator,
+            IPackageLoader loader,
+            IScopedServiceManager scopedServices,
+            IContextDataManager dataManager,
+            IModelLoader modelLoader
+            )
+        {
+            Locator = locator;
+            PackageLoader = loader;
+            ScopedServices = scopedServices;
+            DataManager = dataManager;
+            ModelLoader = modelLoader;
+        }
+
 
         #region IExtensionHost
         public IDisposable RegisterMessageScopeHandler(IMessageScopeHandler handler)
@@ -36,11 +50,10 @@ namespace Raid.Toolkit.Extensibility.Host
         public async Task LoadExtensions()
         {
             foreach (var pkg in Locator.GetAllPackages())
-                ExtensionPackages.Add(pkg.Id, Loader.LoadPackage(pkg));
+                ExtensionPackages.Add(pkg.Id, PackageLoader.LoadPackage(pkg));
 
             var typePatterns = ExtensionPackages.Values.OfType<IRequireCodegen>().SelectMany(cg => cg.TypePatterns);
-            ModelLoader loader = new(typePatterns);
-            await Task.Run(() => loader.Load(false));
+            await Task.Run(() => ModelLoader.Load(typePatterns, false));
         }
 
         public void ActivateExtensions()
@@ -60,7 +73,7 @@ namespace Raid.Toolkit.Extensibility.Host
         public void InstallPackage(PackageDescriptor pkgToInstall, bool activate)
         {
             PackageDescriptor installedPkg = Locator.AddPackage(pkgToInstall);
-            var pkg = Loader.LoadPackage(installedPkg);
+            var pkg = PackageLoader.LoadPackage(installedPkg);
             pkg.OnInstall(this);
             ExtensionPackages.Add(installedPkg.Id, pkg);
         }
