@@ -1,15 +1,26 @@
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Raid.Toolkit.Extensibility.DataServices;
-using Raid.Toolkit.Extensibility.Host;
 using Raid.Toolkit.Extensibility.Host.Services;
-using Raid.Toolkit.Extensibility.HostInterfaces;
 using Raid.Toolkit.Extensibility.Services;
-using Raid.Toolkit.Extensibility.Shared;
 
-namespace Raid.Toolkit.Extensibility
+namespace Raid.Toolkit.Extensibility.Host
 {
+    [Flags]
+    public enum HostFeatures
+    {
+        ProcessWatcher = (1 << 0),
+    }
+
     public static class HostBuilderExtensions
     {
+        public static IServiceCollection AddFeatures(this IServiceCollection services, HostFeatures features)
+        {
+            if (features.HasFlag(HostFeatures.ProcessWatcher))
+                services.AddHostedService<ProcessWatcherService>();
+
+            return services;
+        }
         public static IServiceCollection AddExtensibilityServices<TPackageManager>(this IServiceCollection services) where TPackageManager : class, IPackageManager
         {
             return (

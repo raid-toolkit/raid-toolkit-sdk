@@ -3,7 +3,7 @@ using Il2CppToolkit.Runtime;
 using System;
 using System.Diagnostics;
 
-namespace Raid.Toolkit.Extensibility.Shared
+namespace Raid.Toolkit.Extensibility.Host
 {
     public class GameInstance : IGameInstance, IDisposable
     {

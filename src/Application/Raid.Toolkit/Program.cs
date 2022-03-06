@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
-using Raid.Toolkit.Extensibility.Host.Services;
+using Raid.Toolkit.Extensibility.Host;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,14 +41,15 @@ namespace Raid.Toolkit
         private static IHost CreateHost(string[] args) =>
             Host.CreateDefaultBuilder(args)
             .ConfigureServices(services => services
-                .AddExtensibilityServices<PackageManager>()
-                .AddSingleton<IDataServiceSettings>(new Settings())
-                .AddHostedService<ProcessWatcherService>()
                 .Configure<ProcessManagerSettings>(config =>
                 {
                     config.PollIntervalMs = 100;
                     config.ProcessName = "Raid";
                 })
+                .AddSingleton<IDataServiceSettings>(new Settings())
+                // use shared implementations:
+                .AddExtensibilityServices<PackageManager>()
+                .AddFeatures(HostFeatures.ProcessWatcher)
             ).Build();
     }
 }

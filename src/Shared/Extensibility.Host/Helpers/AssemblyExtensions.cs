@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
-namespace Raid.Toolkit.Extensibility.Host
+namespace System.Reflection
 {
     public static class AssemblyExtensions
     {

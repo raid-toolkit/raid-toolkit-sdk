@@ -1,10 +1,9 @@
 using System;
 using System.Linq.Expressions;
 using System.Reflection;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Raid.Toolkit.Extensibility.Host
+namespace Microsoft.Extensions.DependencyInjection
 {
     public interface IDependencyTypeFactory<T>
     {

@@ -1,7 +1,6 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Hosting;
-using Raid.Toolkit.Extensibility.HostInterfaces;
 
 namespace Raid.Toolkit.Extensibility.Host
 {

@@ -1,14 +1,11 @@
-using Client.Model;
-using Il2CppToolkit.Runtime;
 using Microsoft.Extensions.DependencyInjection;
-using Raid.Toolkit.Extensibility.Host;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Raid.Toolkit.Extensibility.Shared
+namespace Raid.Toolkit.Extensibility.Host
 {
     public class GameInstanceManager : IGameInstanceManager
     {

@@ -1,4 +1,3 @@
-using Raid.Toolkit.Extensibility.HostInterfaces;
 using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
 using System;
@@ -50,6 +49,14 @@ namespace Raid.Toolkit.Extensibility.Host
                 pkg.OnActivate(this);
         }
 
+        public void DeactivateExtensions()
+        {
+            foreach (var pkg in ExtensionPackages.Values)
+                pkg.OnDeactivate(this);
+
+            ExtensionPackages.Clear();
+        }
+
         public void InstallPackage(PackageDescriptor pkgToInstall, bool activate)
         {
             PackageDescriptor installedPkg = Locator.AddPackage(pkgToInstall);
@@ -76,10 +83,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 if (disposing)
                 {
                     // dispose managed state (managed objects)
-                    foreach (var pkg in ExtensionPackages.Values)
-                        pkg.OnDeactivate(this);
-
-                    ExtensionPackages.Clear();
+                    DeactivateExtensions();
                 }
 
                 IsDisposed = true;

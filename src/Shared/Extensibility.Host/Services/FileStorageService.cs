@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Raid.Toolkit.Extensibility.DataServices;
 
-namespace Raid.Toolkit.Extensibility.Host
+namespace Raid.Toolkit.Extensibility.Host.Services
 {
     public class FileStorageService : PollingBackgroundService, IDataStorageReaderWriter
     {
