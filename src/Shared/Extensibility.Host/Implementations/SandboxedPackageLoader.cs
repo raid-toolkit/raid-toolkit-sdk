@@ -22,7 +22,7 @@ namespace Raid.Toolkit.Extensibility.Host
             {
                 if (disposing)
                 {
-                    foreach(var package in LoadedPackages.Values)
+                    foreach (var package in LoadedPackages.Values)
                         package.Dispose();
 
                     LoadedPackages.Clear();

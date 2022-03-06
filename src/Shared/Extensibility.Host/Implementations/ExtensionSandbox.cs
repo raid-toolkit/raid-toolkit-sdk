@@ -15,7 +15,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private Assembly ExtensionAsm;
         private IExtensionPackage Instance;
 
-		public IEnumerable<Regex> TypePatterns
+        public IEnumerable<Regex> TypePatterns
         {
             get
             {
@@ -27,7 +27,7 @@ namespace Raid.Toolkit.Extensibility.Host
             }
         }
 
-		internal ExtensionSandbox(PackageDescriptor descriptor, IPackageInstanceFactory instanceFactory)
+        internal ExtensionSandbox(PackageDescriptor descriptor, IPackageInstanceFactory instanceFactory)
         {
             Descriptor = descriptor;
             InstanceFactory = instanceFactory;

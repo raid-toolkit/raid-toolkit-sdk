@@ -9,7 +9,7 @@ namespace Raid.Toolkit.Extensibility.Host
     public abstract class PollingBackgroundService : BackgroundService
     {
         private readonly ILogger Logger;
-        private static readonly TimeSpan DefaultPollInterval = new (0, 1, 0);
+        private static readonly TimeSpan DefaultPollInterval = new(0, 1, 0);
         private protected virtual TimeSpan PollInterval => DefaultPollInterval;
 
         public PollingBackgroundService(ILogger logger)
@@ -34,7 +34,7 @@ namespace Raid.Toolkit.Extensibility.Host
                         break;
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Logger.LogError(ex, "Exception thrown from polling service");
                 }

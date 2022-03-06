@@ -4,7 +4,7 @@ namespace Raid.DataServices
 {
     public interface IDataObjectProvider
     {
-		Type ContextType { get; }
+        Type ContextType { get; }
         DataTypeAttribute DataType { get; }
         object GetValue(IDataContext_deprecated context);
     }

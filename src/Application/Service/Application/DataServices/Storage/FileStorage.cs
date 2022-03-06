@@ -17,7 +17,7 @@ namespace Raid.DataServices
 
         private readonly ConcurrentDictionary<string, object> PendingWrites = new();
 
-        public FileStorage(ILogger<FileStorage> logger): base(logger) { }
+        public FileStorage(ILogger<FileStorage> logger) : base(logger) { }
 
         protected override async Task ExecuteOnceAsync(CancellationToken token)
         {

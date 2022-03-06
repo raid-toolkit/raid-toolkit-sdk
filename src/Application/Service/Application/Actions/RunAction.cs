@@ -46,7 +46,7 @@ namespace Raid.Service
             if (Environment.GetEnvironmentVariable("RTK_DEBUG") == "true" && System.Diagnostics.Debugger.IsAttached)
             {
                 // kill existing processes for debugging
-                foreach(var existingProc in System.Diagnostics.Process.GetProcessesByName("Raid.Service").Where(proc => proc.Id != Environment.ProcessId))
+                foreach (var existingProc in System.Diagnostics.Process.GetProcessesByName("Raid.Service").Where(proc => proc.Id != Environment.ProcessId))
                 {
                     existingProc.Kill();
                 }
@@ -96,7 +96,7 @@ namespace Raid.Service
         static RebuildDialog rebuildDialog;
         private static void Resolver_OnStateUpdated(object sender, ModelLoadStateEventArgs e)
         {
-            switch(e.LoadState)
+            switch (e.LoadState)
             {
                 case ModelLoadState.Rebuild:
                     Task.Run(() =>

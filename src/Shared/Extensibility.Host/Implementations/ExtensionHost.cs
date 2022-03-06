@@ -1,4 +1,3 @@
-using Microsoft.Extensions.DependencyInjection;
 using Raid.Toolkit.Extensibility.HostInterfaces;
 using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-	public class ExtensionHost : IExtensionHostController, IDisposable
+    public class ExtensionHost : IExtensionHostController, IDisposable
     {
         private readonly IPackageManager Locator;
         private readonly IPackageLoader Loader;
@@ -79,7 +78,7 @@ namespace Raid.Toolkit.Extensibility.Host
                     // dispose managed state (managed objects)
                     foreach (var pkg in ExtensionPackages.Values)
                         pkg.OnDeactivate(this);
-                    
+
                     ExtensionPackages.Clear();
                 }
 
@@ -93,6 +92,6 @@ namespace Raid.Toolkit.Extensibility.Host
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
-		#endregion
-	}
+        #endregion
+    }
 }

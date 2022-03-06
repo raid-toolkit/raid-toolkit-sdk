@@ -13,7 +13,7 @@ namespace Raid.Toolkit.Common
             {
                 if (disposing)
                 {
-                    foreach(var item in this)
+                    foreach (var item in this)
                     {
                         item.Dispose();
                     }

@@ -1,25 +1,21 @@
-﻿using Client.Model;
+using Client.Model;
 using Il2CppToolkit.Runtime;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Extensibility.Shared
 {
-	public class RaidInstance : IRaidInstance
-	{
+    public class RaidInstance : IRaidInstance
+    {
         public string Id { get; }
         private string AccountName;
-		public Il2CsRuntimeContext Runtime { get; }
+        public Il2CsRuntimeContext Runtime { get; }
 
-		public RaidInstance(Process proc)
-		{
-			Runtime = new(proc);
+        public RaidInstance(Process proc)
+        {
+            Runtime = new(proc);
             (Id, AccountName) = GetAccountIdAndName();
-		}
+        }
 
         private (string, string) GetAccountIdAndName()
         {

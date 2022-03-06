@@ -9,7 +9,7 @@ namespace Raid.Toolkit.Extensibility.Host
     {
         private readonly AssemblyDependencyResolver Resolver;
 
-        public ExtensionLoadContext(string pluginPath): base(isCollectible: true)
+        public ExtensionLoadContext(string pluginPath) : base(isCollectible: true)
         {
             Resolver = new AssemblyDependencyResolver(Path.GetDirectoryName(pluginPath));
         }

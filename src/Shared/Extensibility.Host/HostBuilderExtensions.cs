@@ -1,12 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host;
-using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
 
 namespace Raid.Toolkit.Extensibility
 {
-	public static class HostBuilderExtensions
+    public static class HostBuilderExtensions
     {
         public static IServiceCollection AddExtensibilityServices<TPackageManager>(this IServiceCollection services) where TPackageManager : class, IPackageManager
         {

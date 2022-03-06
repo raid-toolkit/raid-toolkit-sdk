@@ -12,7 +12,7 @@ namespace Raid.Toolkit.Extensibility.Host
     }
     public class ModelLoadStateEventArgs : EventArgs
     {
-        public ModelLoadState LoadState { get; set;}
+        public ModelLoadState LoadState { get; set; }
         public ModelLoadStateEventArgs(ModelLoadState state) => LoadState = state;
     }
 }
