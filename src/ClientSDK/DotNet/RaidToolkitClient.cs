@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using Raid.Common;
+using Raid.Toolkit.Common;
 using Raid.Toolkit.DataModel;
 
 namespace Raid.Client

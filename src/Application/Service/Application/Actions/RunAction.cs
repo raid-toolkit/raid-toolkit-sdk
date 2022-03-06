@@ -25,6 +25,9 @@ namespace Raid.Service
 
         [Option('u', "post-update")]
         public bool Update { get; set; }
+
+        [Option('d', "debug")]
+        public bool Debug { get; set; }
     }
 
     static class RunAction

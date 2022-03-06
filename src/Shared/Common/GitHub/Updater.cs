@@ -5,7 +5,7 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using GitHub.Schema;
-using Raid.Common;
+using Raid.Toolkit.Common;
 
 namespace GitHub
 {

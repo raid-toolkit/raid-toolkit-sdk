@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Win32;
-using Raid.Common;
+using Raid.Toolkit.Common;
 
 namespace Raid.Service
 {
