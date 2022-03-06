@@ -19,7 +19,6 @@ namespace Raid.Toolkit.Extensibility.Providers
     {
         void Upgrade(TContext context);
         UpdateResult Update(Il2CsRuntimeContext runtime, TContext context);
-        CachedDataStorage<PersistedDataStorage> Index { get; }
     }
 
     internal static class DataStorageExtensions
@@ -39,7 +38,6 @@ namespace Raid.Toolkit.Extensibility.Providers
         private readonly IContextDataManager ContextDataManager;
         private IReadOnlyList<IDataProvider<TContext>> Providers => ContextDataManager.OfType<TContext>().ToList();
         private readonly CachedDataStorage<PersistedDataStorage> Storage;
-        public CachedDataStorage<PersistedDataStorage> Index { get; }
 
         public PersistedDataManager(
             ILogger<PersistedDataManager<TContext>> logger, IContextDataManager contextDataManager,
@@ -54,7 +52,7 @@ namespace Raid.Toolkit.Extensibility.Providers
         {
             using var upgradeScope = Logger.BeginScope(context);
             Logger.LogInformation($"Checking and upgrading context");
-            if (!Index.TryRead(context, "_index", out SerializedDataIndex index))
+            if (!Storage.TryRead(context, "_index", out SerializedDataIndex index))
             {
                 index = new();
             }
@@ -104,7 +102,7 @@ namespace Raid.Toolkit.Extensibility.Providers
 
                     if (didUpdate)
                     {
-                        _ = Index.Update(context, "_index", (SerializedDataIndex index) =>
+                        _ = Storage.Update(context, "_index", (SerializedDataIndex index) =>
                         {
                             if (index == null)
                                 index = new SerializedDataIndex();
