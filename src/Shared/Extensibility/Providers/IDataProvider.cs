@@ -5,6 +5,8 @@ namespace Raid.Toolkit.Extensibility.Providers
 {
     public interface IDataProvider
     {
+        public string Key { get; }
+        public Version Version { get; }
         public Type ContextType { get; }
         public Type DataType { get; }
 
@@ -23,8 +25,13 @@ namespace Raid.Toolkit.Extensibility.Providers
         where TContext : class, IDataContext
         where TData : class
     {
+        private static Version DefaultVersion = new(1, 0);
+
+        public abstract string Key { get; }
+        public virtual Version Version => DefaultVersion;
         public Type ContextType => typeof(TContext);
         public Type DataType => typeof(TData);
+
 
         public virtual bool Upgrade(TContext context, Version dataVersion)
         {

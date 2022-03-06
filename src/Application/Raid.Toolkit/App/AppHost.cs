@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +8,8 @@ using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host;
+using Raid.Toolkit.Extensibility.Host.Services;
+using Raid.Toolkit.Extensibility.Services;
 using SuperSocket.WebSocket;
 using SuperSocket.WebSocket.Server;
 
@@ -50,17 +51,11 @@ namespace Raid.Toolkit
         **/
         public static ValueTask HandleMessage(WebSocketSession session, WebSocketPackage message)
         {
-            throw new NotImplementedException();
-            // string? origin = session.HttpHeader.Items.Get("origin");
-            // if (!string.IsNullOrEmpty(origin))
-            // {
-            //     if (!Host!.Services.GetRequiredService<UI.MainWindow>().RequestPermissions(origin))
-            //     {
-            //         session.CloseAsync(CloseReason.ViolatePolicy, "User denied access");
-            //     }
-            // }
-            // return Host.Services.GetRequiredService<ModelService>()
-            //     .ProcessMessage(new SuperSocketAdapter(session), message);
+            if (Host == null)
+                return ValueTask.CompletedTask;
+
+            return Host.Services.GetRequiredService<IScopedServiceManager>()
+                .ProcessMessage(new SuperSocketAdapter(session), message.Message);
         }
 
         private static IHostBuilder CreateHostBuilder() =>
@@ -73,11 +68,9 @@ namespace Raid.Toolkit
             )
             .ConfigureServices((context, services) => services
                 // app dependencies
-                .Configure<ProcessManagerSettings>(config =>
-                {
-                    config.PollIntervalMs = 100;
-                    config.ProcessName = "Raid";
-                })
+                .Configure<AppSettings>(opts => context.Configuration.GetSection("app").Bind(opts))
+                .Configure<ProcessManagerSettings>(opts => context.Configuration.GetSection("app:ProcessManager").Bind(opts))
+                .Configure<DataUpdateSettings>(opts => context.Configuration.GetSection("app:DataSettings").Bind(opts))
                 .AddLogging(builder =>
                 {
                     builder.AddConfiguration(context.Configuration.GetSection("Logging"));
@@ -88,7 +81,7 @@ namespace Raid.Toolkit
                 .AddSingleton<ApplicationStartupTask>()
                 // shared dependencies
                 .AddExtensibilityServices<PackageManager>()
-                .AddFeatures(HostFeatures.ProcessWatcher)
+                .AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)
             );
     }
 }

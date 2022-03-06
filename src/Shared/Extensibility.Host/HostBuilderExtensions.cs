@@ -2,6 +2,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host.Services;
+using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
 
 namespace Raid.Toolkit.Extensibility.Host
@@ -10,6 +11,7 @@ namespace Raid.Toolkit.Extensibility.Host
     public enum HostFeatures
     {
         ProcessWatcher = (1 << 0),
+        RefreshData = (1 << 1),
     }
 
     public static class HostBuilderExtensions
@@ -17,7 +19,9 @@ namespace Raid.Toolkit.Extensibility.Host
         public static IServiceCollection AddFeatures(this IServiceCollection services, HostFeatures features)
         {
             if (features.HasFlag(HostFeatures.ProcessWatcher))
-                services.AddHostedService<ProcessWatcherService>();
+                services = services.AddHostedService<ProcessWatcherService>();
+            if (features.HasFlag(HostFeatures.RefreshData))
+                services = services.AddHostedService<RefreshDataService>();
 
             return services;
         }
@@ -33,11 +37,13 @@ namespace Raid.Toolkit.Extensibility.Host
                 .AddSingleton<IPackageInstanceFactory, PackageFactory>()
                 .AddSingleton<IContextDataManager, ContextDataManager>()
                 .AddSingleton<IScopedServiceManager, ScopedServiceManager>()
+                .AddSingleton<ISessionManager, SessionManager>()
                 .AddSingleton<IProcessManager, ProcessManager>()
                 .AddSingleton<IPackageManager, TPackageManager>()
                 .AddSingleton<IGameInstanceManager, GameInstanceManager>()
                 .AddSingleton<IExtensionHostController, ExtensionHost>()
                 .AddSingleton(typeof(CachedDataStorage<>))
+                .AddSingleton(typeof(PersistedDataManager<>))
                 .AddSingleton<PersistedDataStorage>()
                 .AddHostedService<ApplicationHost>()
                 .AddHostedServiceSingleton<ErrorService>()

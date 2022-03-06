@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Raid.Toolkit.Extensibility.Host;
 using SuperSocket;
 using SuperSocket.Channel;
 using SuperSocket.WebSocket.Server;
@@ -8,12 +9,10 @@ namespace Raid.Toolkit
 {
     public class SessionFactory : ISessionFactory
     {
-        public int SessionCount { get; private set; }
-        public DateTime LastSessionActive => SessionCount > 0 ? DateTime.UtcNow : LastSessionDisconnect;
-        private DateTime LastSessionDisconnect;
-
-        public SessionFactory()
+        private readonly ISessionManager SessionManager;
+        public SessionFactory(ISessionManager sessionManager)
         {
+            SessionManager = sessionManager;
         }
 
         public Type SessionType => typeof(WebSocketSession);
@@ -28,14 +27,13 @@ namespace Raid.Toolkit
 
         private ValueTask OnClosed(object sender, CloseEventArgs e)
         {
-            --SessionCount;
-            LastSessionDisconnect = DateTime.UtcNow;
+            SessionManager.OnClosed();
             return ValueTask.CompletedTask;
         }
 
         private ValueTask OnConnected(object sender, EventArgs e)
         {
-            ++SessionCount;
+            SessionManager.OnConnected();
             return ValueTask.CompletedTask;
         }
     }

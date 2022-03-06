@@ -1,6 +1,13 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using Il2CppToolkit.Runtime;
+using Microsoft.Extensions.Logging;
+using Raid.Toolkit.Extensibility.DataServices;
+
 namespace Raid.Toolkit.Extensibility.Providers
 {
-    /*
     public enum UpdateResult
     {
         NotUpdated,
@@ -8,37 +15,50 @@ namespace Raid.Toolkit.Extensibility.Providers
         Failed
     }
 
-    public interface IPersistedDataManager<TContext> where TContext : class, IDataContext_deprecated
+    public interface IPersistedDataManager<TContext> where TContext : class, IDataContext
     {
         void Upgrade(TContext context);
         UpdateResult Update(Il2CsRuntimeContext runtime, TContext context);
-        IDataResolver<TContext, CachedDataStorage<PersistedDataStorage>, SerializedDataIndex> Index { get; }
+        CachedDataStorage<PersistedDataStorage> Index { get; }
     }
 
-    public class PersistedDataManager<TContext> : IPersistedDataManager<TContext> where TContext : class, IDataContext_deprecated
+    internal static class DataStorageExtensions
     {
-        private readonly List<IContextDataProvider<TContext>> Providers;
+        public static bool Update<TContext, TData>(this IDataStorage storage, TContext context, string key, Func<TData, TData> updateFn)
+            where TContext : class, IDataContext
+            where TData : class
+        {
+            _ = storage.TryRead(context, key, out TData value);
+            return storage.Write(context, key, updateFn(value));
+        }
+    }
+
+    public class PersistedDataManager<TContext> : IPersistedDataManager<TContext> where TContext : class, IDataContext
+    {
         private readonly ILogger<PersistedDataManager<TContext>> Logger;
-        public IDataResolver<TContext, CachedDataStorage<PersistedDataStorage>, SerializedDataIndex> Index { get; }
+        private readonly IContextDataManager ContextDataManager;
+        private IReadOnlyList<IDataProvider<TContext>> Providers => ContextDataManager.OfType<TContext>().ToList();
+        private readonly CachedDataStorage<PersistedDataStorage> Storage;
+        public CachedDataStorage<PersistedDataStorage> Index { get; }
 
         public PersistedDataManager(
-            ILogger<PersistedDataManager<TContext>> logger, IEnumerable<IContextDataProvider> providers,
-            IDataResolver<TContext, CachedDataStorage<PersistedDataStorage>, SerializedDataIndex> index)
+            ILogger<PersistedDataManager<TContext>> logger, IContextDataManager contextDataManager,
+            CachedDataStorage<PersistedDataStorage> storage)
         {
             Logger = logger;
-            Providers = providers.OfType<IContextDataProvider<TContext>>().ToList();
-            Index = index;
+            ContextDataManager = contextDataManager;
+            Storage = storage;
         }
 
         public void Upgrade(TContext context)
         {
             using var upgradeScope = Logger.BeginScope(context);
             Logger.LogInformation($"Checking and upgrading context");
-            if (!Index.TryRead(context, out SerializedDataIndex index))
+            if (!Index.TryRead(context, "_index", out SerializedDataIndex index))
             {
                 index = new();
             }
-            foreach (IContextDataProvider<TContext> provider in Providers)
+            foreach (IDataProvider<TContext> provider in Providers)
             {
                 var dataType = provider.DataType;
                 try
@@ -47,20 +67,20 @@ namespace Raid.Toolkit.Extensibility.Providers
 
                     // get version
                     Version dataVersion = new(1, 0);
-                    if (index.Facets.TryGetValue(dataType.Key, out SerializedDataInfo facetInfo))
+                    if (index.Facets.TryGetValue(provider.Key, out SerializedDataInfo facetInfo))
                     {
                         if (!string.IsNullOrEmpty(facetInfo.Version))
                             dataVersion = Version.Parse(facetInfo.Version);
                     }
 
-                    if (dataVersion != dataType.StructuredVersion && provider.Upgrade(context, dataVersion))
+                    if (dataVersion != provider.Version && provider.Upgrade(context, dataVersion))
                     {
                         Logger.LogInformation("Data upgraded");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex, $"Failed to update facet '{dataType.Key}'");
+                    Logger.LogError(ex, $"Failed to update facet '{provider.Key}'");
                 }
             }
         }
@@ -84,15 +104,15 @@ namespace Raid.Toolkit.Extensibility.Providers
 
                     if (didUpdate)
                     {
-                        _ = Index.Update(context, index =>
+                        _ = Index.Update(context, "_index", (SerializedDataIndex index) =>
                         {
                             if (index == null)
                                 index = new SerializedDataIndex();
 
-                            index.Facets[dataType.Key] = new()
+                            index.Facets[provider.Key] = new()
                             {
                                 LastUpdated = DateTime.UtcNow,
-                                Version = dataType.StructuredVersion.ToString()
+                                Version = provider.Version.ToString()
                             };
                             return index;
                         });
@@ -111,5 +131,5 @@ namespace Raid.Toolkit.Extensibility.Providers
 
             return results.Contains(UpdateResult.Failed) ? UpdateResult.Failed : results.Contains(UpdateResult.Updated) ? UpdateResult.Updated : UpdateResult.NotUpdated;
         }
-    }*/
+    }
 }

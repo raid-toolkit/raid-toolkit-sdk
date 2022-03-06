@@ -1,8 +1,6 @@
-using Raid.DataServices;
-
 namespace Raid.Toolkit.Extensibility
 {
-    public class StaticDataContext : IDataContext, IDataContext_deprecated
+    public class StaticDataContext : IDataContext
     {
         public static readonly StaticDataContext Default = new();
 

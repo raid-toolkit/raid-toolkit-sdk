@@ -1,12 +1,12 @@
-using Il2CppToolkit.Runtime;
 using Raid.Toolkit.Extensibility.Providers;
 using System;
+using System.Collections.Generic;
 
 namespace Raid.Toolkit.Extensibility
 {
     public interface IContextDataManager
     {
+        public IEnumerable<IDataProvider<TContext>> OfType<TContext>() where TContext : class, IDataContext;
         public IDisposable AddProvider<T>() where T : IDataProvider;
-        public bool Update<T>(Il2CsRuntimeContext runtime, T context) where T : IDataContext;
     }
 }

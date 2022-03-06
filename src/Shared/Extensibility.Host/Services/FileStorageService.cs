@@ -28,6 +28,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
                     continue;
 
                 string data = JsonConvert.SerializeObject(value);
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
                 await File.WriteAllTextAsync(filePath, data, token);
             }
         }

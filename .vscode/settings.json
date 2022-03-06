@@ -1,4 +1,13 @@
 {
+    "files.associations": {
+        "appsettings.json": "jsonc"
+    },
+    "[csharp]": {
+        "editor.formatOnSave": true,
+        "editor.codeActionsOnSave": {
+            "source.fixAll": true
+        }
+    },
     "editor.fontFamily": "Operator Mono",
     "editor.fontWeight": "300",
     "terminal.integrated.shellIntegration.decorationsEnabled": true,
@@ -57,11 +66,5 @@
         "**/bin": true,
         "**/obj": true,
         "**/*.csproj.user": true
-    },
-    "[csharp]": {
-        "editor.formatOnSave": true,
-        "editor.codeActionsOnSave": {
-            "source.fixAll": true
-        }
     }
 }

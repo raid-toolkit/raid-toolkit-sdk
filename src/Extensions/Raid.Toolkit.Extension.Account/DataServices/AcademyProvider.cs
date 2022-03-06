@@ -6,11 +6,17 @@ using Raid.Toolkit.Extensibility;
 using Il2CppToolkit.Runtime;
 using Client.Model;
 using Raid.Toolkit.Extensibility.DataServices;
+using System;
 
 namespace Raid.Toolkit.Extension.Account
 {
     public class AcademyProvider : DataProvider<AccountDataContext, AcademyData>
     {
+        private static Version kVersion = new(2, 0);
+
+        public override string Key => "academy";
+        public override Version Version => kVersion;
+
         private readonly CachedDataStorage<PersistedDataStorage> Storage;
         public AcademyProvider(CachedDataStorage<PersistedDataStorage> storage)
         {

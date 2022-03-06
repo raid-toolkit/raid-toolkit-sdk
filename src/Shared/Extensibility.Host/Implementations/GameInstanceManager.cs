@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Raid.Toolkit.Extensibility.Providers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -11,11 +12,39 @@ namespace Raid.Toolkit.Extensibility.Host
     {
         private readonly ConcurrentDictionary<int, IGameInstance> _Instances = new();
         private readonly IServiceProvider ServiceProvider;
+        private readonly IContextDataManager ContextDataManager;
+        private readonly PersistedDataManager<StaticDataContext> StaticDataManager;
+        private readonly PersistedDataManager<AccountDataContext> AccountDataManager;
+        private bool HasCheckedStaticData;
 
         public IReadOnlyList<IGameInstance> Instances => _Instances.Values.ToList();
-        public GameInstanceManager(IServiceProvider serviceProvider)
+        public GameInstanceManager(
+            IServiceProvider serviceProvider,
+            IContextDataManager contextDataManager,
+            PersistedDataManager<StaticDataContext> staticDataManager,
+            PersistedDataManager<AccountDataContext> accountDataManager)
         {
             ServiceProvider = serviceProvider;
+            ContextDataManager = contextDataManager;
+            AccountDataManager = accountDataManager;
+            StaticDataManager = staticDataManager;
+        }
+
+        public void Update()
+        {
+            foreach (var instance in _Instances.Values)
+            {
+                if (!HasCheckedStaticData)
+                {
+                    var result = StaticDataManager.Update(instance.Runtime, StaticDataContext.Default);
+                    if (result == UpdateResult.Failed)
+                        continue;
+
+                    HasCheckedStaticData = true;
+                }
+
+                AccountDataManager.Update(instance.Runtime, instance.Id);
+            }
         }
 
         public void AddInstance(Process process)
