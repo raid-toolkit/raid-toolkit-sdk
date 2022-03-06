@@ -25,11 +25,10 @@ namespace Raid.Toolkit.Extensibility
                 .AddSingleton<IPackageManager, TPackageManager>()
                 .AddSingleton<IGameInstanceManager, GameInstanceManager>()
                 .AddSingleton<IExtensionHostController, ExtensionHost>()
-                .AddSingleton<IApplicationHost, ApplicationHost>()
                 .AddSingleton(typeof(CachedDataStorage<>))
                 .AddSingleton<PersistedDataStorage>()
+                .AddHostedService<ApplicationHost>()
                 .AddHostedServiceSingleton<ErrorService>()
-                .AddHostedService<ProcessWatcherService>()
                 .AddHostedServiceSingleton<IDataStorageReaderWriter, FileStorageService>()
             );
         }

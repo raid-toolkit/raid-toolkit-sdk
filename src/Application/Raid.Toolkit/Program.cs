@@ -2,7 +2,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
-using Raid.Toolkit.Extensibility.Host;
+using Raid.Toolkit.Extensibility.Host.Services;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,41 +23,13 @@ namespace Raid.Toolkit
             Application.SetCompatibleTextRenderingDefault(false);
 
             using (IHost host = CreateHost(args))
-            using (var scope = host.Services.CreateScope())
-            using (var progHost = scope.ServiceProvider.GetRequiredService<IApplicationHost>())
             {
-                host.Start();
-                await progHost.Run(new RunArguments());
+                await host.StartAsync();
+                Thread.Sleep(600);
                 await host.StopAsync();
             }
 
             //Application.Run(new Form1());
-        }
-
-        class RunArguments : IRunArguments
-        {
-            public bool Standalone { get; set; }
-            public bool NoUI { get; set; }
-            public int? Wait { get; set; }
-            public bool Update { get; set; }
-        }
-
-        class EntryPoint : IEntryPoint
-        {
-            public void Run(IRunArguments arguments)
-            {
-                Thread.Sleep(600);
-            }
-
-            public void Restart(IRunArguments arguments)
-            {
-                // throw new NotImplementedException();
-            }
-
-            public void Exit()
-            {
-                // throw new NotImplementedException();
-            }
         }
 
         class Settings : IDataServiceSettings
@@ -71,7 +43,7 @@ namespace Raid.Toolkit
             .ConfigureServices(services => services
                 .AddExtensibilityServices<PackageManager>()
                 .AddSingleton<IDataServiceSettings>(new Settings())
-                .AddSingleton<IEntryPoint, EntryPoint>()
+                .AddHostedService<ProcessWatcherService>()
                 .Configure<ProcessManagerSettings>(config =>
                 {
                     config.PollIntervalMs = 100;

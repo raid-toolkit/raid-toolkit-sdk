@@ -1,56 +1,37 @@
-using System;
+using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.Extensibility.HostInterfaces;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public class ApplicationHost : IApplicationHost, IDisposable
+    public class ApplicationHost : BackgroundService
     {
         private readonly IExtensionHostController ExtensionHost;
-        private readonly IEntryPoint EntryPoint;
-        private bool IsDisposed;
 
-        public ApplicationHost(IExtensionHostController extensionHost, IEntryPoint entryPoint)
+        public ApplicationHost(IExtensionHostController extensionHost)
         {
             ExtensionHost = extensionHost;
-            EntryPoint = entryPoint;
         }
 
-        public async Task<int> Run(IRunArguments args)
+        public override async Task StartAsync(CancellationToken cancellationToken)
         {
             await ExtensionHost.LoadExtensions();
+            cancellationToken.ThrowIfCancellationRequested();
+
             ExtensionHost.ActivateExtensions();
-            EntryPoint.Run(args);
-            return 0;
+            cancellationToken.ThrowIfCancellationRequested();
         }
 
-        protected virtual void Dispose(bool disposing)
+        public override Task StopAsync(CancellationToken cancellationToken)
         {
-            if (!IsDisposed)
-            {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects)
-                }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
-                IsDisposed = true;
-            }
+            // TODO: call deactivate on all extensions
+            return base.StopAsync(cancellationToken);
         }
 
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        // ~ApplicationHost()
-        // {
-        //     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-        //     Dispose(disposing: false);
-        // }
-
-        public void Dispose()
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
+            return Task.CompletedTask;
         }
     }
 }
