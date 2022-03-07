@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Raid.Toolkit.Extensibility.DataServices
@@ -15,6 +16,8 @@ namespace Raid.Toolkit.Extensibility.DataServices
         }
 
         public event EventHandler<DataStorageUpdatedEventArgs> Updated;
+
+        public IEnumerable<string> Keys => throw new NotSupportedException();
 
         public bool TryRead<T>(IDataContext context, string key, out T value) where T : class
         {

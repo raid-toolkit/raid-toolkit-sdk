@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Microsoft.Extensions.DependencyInjection;
 using Raid.Toolkit.Common;
@@ -11,6 +12,7 @@ namespace Raid.DataServices
         private readonly string StoragePath;
         private IDataContext_deprecated DataContext;
         private IDataStorageReaderWriter Storage;
+        public IEnumerable<string> Keys => throw new NotSupportedException();
 
         public PersistedDataStorage()
         {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace Raid.DataServices
@@ -19,6 +20,8 @@ namespace Raid.DataServices
         {
             UnderlyingStorage = underlyingStorage;
         }
+
+        public IEnumerable<string> Keys => throw new NotSupportedException();
 
         public void SetContext(IDataContext_deprecated context, IServiceProvider serviceProvider)
         {

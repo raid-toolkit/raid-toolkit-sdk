@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -13,10 +14,14 @@ namespace Raid.Toolkit.Extensibility.Services
     {
         private readonly List<IMessageScopeHandler> ScopeHandlers = new();
         private readonly ILogger<ScopedServiceManager> Logger;
+        private readonly List<string> SupportedApiList = new();
+
+        public string[] SupportedApis => SupportedApiList.ToArray();
 
         public ScopedServiceManager(ILogger<ScopedServiceManager> logger)
         {
             Logger = logger;
+            ScopeHandlers.Add(new DiscoveryHandler(this));
         }
 
         public ValueTask ProcessMessage(ISocketSession session, string message)
@@ -59,11 +64,21 @@ namespace Raid.Toolkit.Extensibility.Services
         public void AddMessageScopeHandler(IMessageScopeHandler handler)
         {
             ScopeHandlers.Add(handler);
+            foreach (var attr in handler.GetType().GetInterfaces().Select(type => type.GetCustomAttribute<PublicApiAttribute>(true)))
+            {
+                if (attr != null)
+                    SupportedApiList.Add(attr.Name);
+            }
         }
 
         public void RemoveMessageScopeHandler(IMessageScopeHandler handler)
         {
             ScopeHandlers.Remove(handler);
+            foreach (var attr in handler.GetType().GetInterfaces().Select(type => type.GetCustomAttribute<PublicApiAttribute>(true)))
+            {
+                if (attr != null)
+                    SupportedApiList.Remove(attr.Name);
+            }
         }
     }
 }

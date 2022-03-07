@@ -6,7 +6,7 @@ namespace Raid.Toolkit.Extensibility
 {
     public interface IExtensionHost
     {
-        IDisposable RegisterMessageScopeHandler(IMessageScopeHandler handler);
+        IDisposable RegisterMessageScopeHandler<T>() where T : IMessageScopeHandler;
         IDisposable RegisterDataProvider<T>() where T : IDataProvider;
     }
 }

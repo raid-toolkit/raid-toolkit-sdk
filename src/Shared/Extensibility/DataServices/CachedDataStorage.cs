@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Concurrent;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Raid.Toolkit.Extensibility.DataServices
 {
@@ -13,6 +14,19 @@ namespace Raid.Toolkit.Extensibility.DataServices
         private readonly IDataStorage UnderlyingStorage;
 
         public event EventHandler<DataStorageUpdatedEventArgs> Updated;
+
+        public IEnumerable<string> Keys
+        {
+            get
+            {
+                // TOTAL ABSOLUTE HACKERY
+                return Cache.Keys.ToArray()
+                    .Select(key => key.Split(';'))
+                    .Where(parts => parts.Length == 3)
+                    .Select(parts => parts[1])
+                    .Distinct();
+            }
+        }
 
         public CachedDataStorage()
         { }

@@ -44,7 +44,7 @@ namespace Raid.Toolkit.Extension.Account
             Handles.Add(host.RegisterDataProvider<ArtifactsProvider>());
             Handles.Add(host.RegisterDataProvider<HeroesProvider>());
             Handles.Add(host.RegisterDataProvider<ResourcesProvider>());
-            // Handles.Add(host.RegisterMessageScopeHandler());
+            Handles.Add(host.RegisterMessageScopeHandler<AccountApi>());
         }
 
         public void OnDeactivate(IExtensionHost host)

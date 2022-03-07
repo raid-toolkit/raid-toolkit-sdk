@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
 using System;
@@ -12,6 +13,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IModelLoader ModelLoader;
         private readonly IPackageLoader PackageLoader;
         private readonly IPackageManager Locator;
+        private readonly IServiceProvider ServiceProvider;
         private readonly IScopedServiceManager ScopedServices;
         private readonly IContextDataManager DataManager;
         private readonly Dictionary<string, IExtensionPackage> ExtensionPackages = new();
@@ -22,7 +24,8 @@ namespace Raid.Toolkit.Extensibility.Host
             IPackageLoader loader,
             IScopedServiceManager scopedServices,
             IContextDataManager dataManager,
-            IModelLoader modelLoader
+            IModelLoader modelLoader,
+            IServiceProvider serviceProvider
             )
         {
             Locator = locator;
@@ -30,14 +33,17 @@ namespace Raid.Toolkit.Extensibility.Host
             ScopedServices = scopedServices;
             DataManager = dataManager;
             ModelLoader = modelLoader;
+            ServiceProvider = serviceProvider;
         }
 
 
         #region IExtensionHost
-        public IDisposable RegisterMessageScopeHandler(IMessageScopeHandler handler)
+        public IDisposable RegisterMessageScopeHandler<T>() where T : IMessageScopeHandler
         {
-            ScopedServices.AddMessageScopeHandler(handler);
-            return new HostResourceHandle(() => ScopedServices.RemoveMessageScopeHandler(handler));
+            IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
+            T instance = ActivatorUtilities.CreateInstance<T>(scope);
+            ScopedServices.AddMessageScopeHandler(instance);
+            return new HostResourceHandle(() => ScopedServices.RemoveMessageScopeHandler(instance));
         }
 
         public IDisposable RegisterDataProvider<T>() where T : IDataProvider
