@@ -1,13 +1,13 @@
+using System;
 using System.Linq;
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.DataModel.Enums;
+using Raid.Toolkit.Extensibility;
+using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Providers;
 using Il2CppToolkit.Runtime;
-using Raid.Toolkit.Extensibility;
 using Client.Model;
 using Client.Model.Gameplay.StaticData;
-using Raid.Toolkit.Extensibility.DataServices;
-using System;
 
 namespace Raid.Toolkit.Extension.Account
 {
@@ -26,6 +26,7 @@ namespace Raid.Toolkit.Extension.Account
 
         public override bool Update(Il2CsRuntimeContext runtime, StaticDataContext context)
         {
+            ModelScope scope = new(runtime);
             var appModel = Client.App.SingleInstance<AppModel>.method_get_Instance
                         .GetMethodInfo(runtime).DeclaringClass.StaticFields
                         .As<SingleInstanceStaticFields<AppModel>>().Instance;

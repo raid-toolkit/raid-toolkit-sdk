@@ -31,7 +31,19 @@ namespace Raid.Toolkit.Extension.Account
         public void OnActivate(IExtensionHost host)
         {
             Handles.Add(host.RegisterDataProvider<StaticAcademyProvider>());
+            Handles.Add(host.RegisterDataProvider<StaticArenaProvider>());
+            Handles.Add(host.RegisterDataProvider<StaticArtifactProvider>());
+            Handles.Add(host.RegisterDataProvider<StaticHeroTypeProvider>());
+            Handles.Add(host.RegisterDataProvider<StaticLocalizationProvider>());
+            Handles.Add(host.RegisterDataProvider<StaticSkillProvider>());
+            Handles.Add(host.RegisterDataProvider<StaticStageProvider>());
+
             Handles.Add(host.RegisterDataProvider<AcademyProvider>());
+            Handles.Add(host.RegisterDataProvider<AccountInfoProvider>());
+            Handles.Add(host.RegisterDataProvider<ArenaProvider>());
+            Handles.Add(host.RegisterDataProvider<ArtifactsProvider>());
+            Handles.Add(host.RegisterDataProvider<HeroesProvider>());
+            Handles.Add(host.RegisterDataProvider<ResourcesProvider>());
             // Handles.Add(host.RegisterMessageScopeHandler());
         }
 

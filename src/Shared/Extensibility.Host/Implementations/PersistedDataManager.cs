@@ -98,7 +98,7 @@ namespace Raid.Toolkit.Extensibility.Providers
 
                     Stopwatch swScoped = Stopwatch.StartNew();
                     bool didUpdate = provider.Update(runtime, context);
-                    Logger.LogInformation($"Provider update completed in {swScoped.ElapsedMilliseconds}ms");
+                    Logger.LogInformation($"Provider '{provider.Key}' update completed in {swScoped.ElapsedMilliseconds}ms");
 
                     if (didUpdate)
                     {

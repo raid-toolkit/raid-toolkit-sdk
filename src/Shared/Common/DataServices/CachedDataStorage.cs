@@ -60,11 +60,6 @@ namespace Raid.DataServices
             // TODO: remove this extra serialization, and persist it directly as a string if possible
             return JsonConvert.SerializeObject(oldValue) == JsonConvert.SerializeObject(newValue) ? oldValue : newValue;
         }
-
-        public void SetContext(IDataContext_deprecated context)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class CachedDataStorage<T> : CachedDataStorage where T : class, IDataStorage, new()

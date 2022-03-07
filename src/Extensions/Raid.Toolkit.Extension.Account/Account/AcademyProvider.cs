@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.DataModel.Enums;
@@ -6,7 +7,6 @@ using Raid.Toolkit.Extensibility;
 using Il2CppToolkit.Runtime;
 using Client.Model;
 using Raid.Toolkit.Extensibility.DataServices;
-using System;
 
 namespace Raid.Toolkit.Extension.Account
 {
@@ -25,7 +25,7 @@ namespace Raid.Toolkit.Extension.Account
 
         public override bool Update(Il2CsRuntimeContext runtime, AccountDataContext context)
         {
-            if (!Storage.TryRead(StaticDataContext.Default, "academy", out StaticAcademyData academyBonuses))
+            if (!Storage.TryRead(StaticDataContext.Default, Key, out StaticAcademyData academyBonuses))
                 return false;
 
             var appModel = Client.App.SingleInstance<AppModel>.method_get_Instance
@@ -53,7 +53,7 @@ namespace Raid.Toolkit.Extension.Account
                     )
                 );
 
-            return Storage.Write(context, "academy", new AcademyData
+            return Storage.Write(context, Key, new AcademyData
             {
                 Guardians = guardians
             });

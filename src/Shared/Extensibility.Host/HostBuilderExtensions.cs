@@ -42,6 +42,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 .AddSingleton<IPackageManager, TPackageManager>()
                 .AddSingleton<IGameInstanceManager, GameInstanceManager>()
                 .AddSingleton<IExtensionHostController, ExtensionHost>()
+                .AddSingleton(typeof(CachedDataStorage))
                 .AddSingleton(typeof(CachedDataStorage<>))
                 .AddSingleton(typeof(PersistedDataManager<>))
                 .AddSingleton<PersistedDataStorage>()
