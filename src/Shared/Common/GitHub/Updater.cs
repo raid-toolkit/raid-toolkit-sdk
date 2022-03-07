@@ -35,7 +35,7 @@ namespace GitHub
 
         public Task<Stream> DownloadRelease(Release release)
         {
-            Asset asset = release.Assets.FirstOrDefault(asset => asset.Name == "Raid.Service.exe");
+            Asset asset = release.Assets.FirstOrDefault(asset => asset.Name == "Raid.Toolkit.exe");
             return asset == null
                 ? throw new FileNotFoundException("Update is missing required assets")
                 : Client.GetStreamAsync(asset.BrowserDownloadUrl);

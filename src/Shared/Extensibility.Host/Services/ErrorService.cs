@@ -26,7 +26,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
         }
     }
 
-    public class ErrorService : IdleBackgroundService
+    public class ErrorService
     {
         public readonly Dictionary<string, ErrorEventArgs> CurrentErrors = new();
         public event EventHandler<ErrorEventArgs> OnError;

@@ -15,6 +15,11 @@ namespace Raid.Toolkit.Extensibility.Host
 {
     public class ModelLoader : IModelLoader
     {
+        private static void PostfixTypes()
+        {
+            Il2CppToolkit.Runtime.Types.Types.TypeSizes.Add(typeof(Plarium.Common.Numerics.Fixed), 8);
+        }
+
         private static readonly Regex[] DefaultIncludeTypes = new[] {
             //new Regex(@"^Client\.ViewModel\.Contextes\.", RegexOptions.Singleline | RegexOptions.Compiled),
             //new Regex(@"^Client\.View\.Views\.", RegexOptions.Singleline | RegexOptions.Compiled),
@@ -93,6 +98,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 ModelLoaderContext loaderContext = new(dllPath);
                 Assembly asm = loaderContext.LoadFromAssemblyPath(dllPath);
                 OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Ready));
+                PostfixTypes();
                 return asm;
             }
             catch (Exception)

@@ -78,7 +78,7 @@ namespace Raid.Toolkit.Common
         [DllImport("coredll.dll", CharSet = CharSet.Unicode)]
         private static extern int SHCreateShortcut(StringBuilder szShortcut, StringBuilder szTarget);
 
-        internal static void UpdateStartMenuShortcut(bool create)
+        public static void UpdateStartMenuShortcut(bool create)
         {
             string startMenuItem = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "Raid Toolkit.lnk");
             if (File.Exists(startMenuItem))

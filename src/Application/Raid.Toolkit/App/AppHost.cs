@@ -79,6 +79,7 @@ namespace Raid.Toolkit
                 .AddSingleton<IDataServiceSettings, Settings>()
                 .AddTypesAssignableTo<ICommandTask>(services => services.AddScoped)
                 .AddSingleton<ApplicationStartupTask>()
+                .AddSingleton<AppService>()
                 // shared dependencies
                 .AddExtensibilityServices<PackageManager>()
                 .AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)

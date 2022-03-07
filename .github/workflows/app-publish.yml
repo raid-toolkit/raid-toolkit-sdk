@@ -2,21 +2,20 @@ name: App Publish
 
 on:
   push:
-    branches: 
+    branches:
       - main
       - release/**
     paths:
       - version.json
       - .github/workflows/app-publish.yml
-      - 'SDK/Client/DotNet/**'
-      - 'SDK/Shared/**'
-      - 'SDK/Service/**'
-      - '!**/*.md'
+      - "SDK/Client/DotNet/**"
+      - "SDK/Shared/**"
+      - "SDK/Service/**"
+      - "!**/*.md"
 
 jobs:
   build:
-    runs-on:
-      windows-latest
+    runs-on: windows-latest
 
     env:
       IS_CI: true
@@ -39,7 +38,7 @@ jobs:
           PRERELEASE: |
             main:true
             !default:false
-            
+
       # Install the .NET Core workload
       - name: Install .NET Core
         uses: actions/setup-dotnet@v1
@@ -82,15 +81,15 @@ jobs:
           draft: false
           prerelease: ${{ env.PRERELEASE }}
 
-      - name: Upload RaidService Asset
-        id: upload-raidservice-asset
+      - name: Upload Raid.Toolkit Asset
+        id: upload-raidtoolkit-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.rtk_release.outputs.upload_url }}
-          asset_path: ./publish/RTK/Raid.Service.exe
-          asset_name: Raid.Service.exe
+          asset_path: ./publish/RTK/Raid.Toolkit.exe
+          asset_name: Raid.Toolkit.exe
           asset_content_type: application/zip
 
       - name: Upload TPN Asset

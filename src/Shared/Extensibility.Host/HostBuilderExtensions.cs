@@ -45,8 +45,10 @@ namespace Raid.Toolkit.Extensibility.Host
                 .AddSingleton(typeof(CachedDataStorage<>))
                 .AddSingleton(typeof(PersistedDataManager<>))
                 .AddSingleton<PersistedDataStorage>()
+                .AddSingleton<ErrorService>()
+                .AddSingleton<GitHub.Updater>()
+                .AddHostedServiceSingleton<UpdateService>()
                 .AddHostedService<ApplicationHost>()
-                .AddHostedServiceSingleton<ErrorService>()
                 .AddHostedServiceSingleton<IDataStorageReaderWriter, FileStorageService>()
             );
         }

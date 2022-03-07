@@ -8,13 +8,9 @@ namespace Raid.Toolkit
         public string? MemoryLogging { get; set; }
         public string? StorageLocation { get; set; }
         public ProcessManagerSettings? ProcessManager { get; set; }
-        public ApplicationUpdateSettings? ApplicationUpdates { get; set; }
+        public UpdateSettings? ApplicationUpdates { get; set; }
         public DataUpdateSettings? DataSettings { get; set; }
         public FrameRateSettings? FrameRate { get; set; }
-    }
-    public class ApplicationUpdateSettings
-    {
-        public int PollIntervalMs { get; set; }
     }
     public class FrameRateSettings
     {
