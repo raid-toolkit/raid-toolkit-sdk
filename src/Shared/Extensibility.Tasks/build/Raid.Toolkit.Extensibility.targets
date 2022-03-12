@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="RTK_SetDefaults">
     <PropertyGroup>
         <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
@@ -28,8 +27,9 @@
     <ItemGroup Condition=" '$(GenerateInterop)' != 'false' ">
         <Reference Include="$(OutputAssemblyFile)">
             <HintPath>$(IntermediateOutputPath)$(OutputAssemblyFile)</HintPath>
-            <Private>True</Private>
+            <Private>False</Private>
             <SpecificVersion>False</SpecificVersion>
+            <CopyLocal>False</CopyLocal>
         </Reference>
     </ItemGroup>
 

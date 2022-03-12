@@ -20,10 +20,11 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="SuperSocket.WebSocket.Server" Version="2.0.0-beta.10" />
-    <Reference Include="Raid.Interop.dll">
+    <Reference Include="Raid.Interop">
       <HintPath>$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
-      <Private>True</Private>
+      <Private>False</Private>
       <SpecificVersion>False</SpecificVersion>
+      <CopyLocal>False</CopyLocal>
     </Reference>
   </ItemGroup>
 

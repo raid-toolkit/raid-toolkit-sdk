@@ -95,8 +95,9 @@ namespace Raid.Toolkit.Extensibility.Host
                 }
 
                 OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Load));
-                ModelLoaderContext loaderContext = new(dllPath);
-                Assembly asm = loaderContext.LoadFromAssemblyPath(dllPath);
+                //ModelLoaderContext loaderContext = new(dllPath);
+                //Assembly asm = loaderContext.LoadFromAssemblyPath(dllPath);
+                Assembly asm = Assembly.LoadFrom(dllPath);
                 OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Ready));
                 PostfixTypes();
                 return asm;
