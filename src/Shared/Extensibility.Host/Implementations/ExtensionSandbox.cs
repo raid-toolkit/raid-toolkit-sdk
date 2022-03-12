@@ -43,9 +43,16 @@ namespace Raid.Toolkit.Extensibility.Host
 
         private Type GetPackageType()
         {
-            // TODO: Filter to the specific type indicated by descriptor
-            Type packageType = ExtensionAsm.ExportedTypes.SingleOrDefault(t => t.GetInterfaces().Contains(typeof(IExtensionPackage)));
-            return packageType;
+            // TEMP: ID MUST match the DLL filename
+            // TODO: Verify the attribute sets the same ID as the DLL name
+            try
+            {
+                return ExtensionAsm.ExportedTypes.Single(t => t.GetInterfaces().Contains(typeof(IExtensionPackage)));
+            }
+            catch
+            {
+                throw new ApplicationException($"Extension DLLs must contain exactly one class that implements IExtensionPackage.");
+            }
         }
 
         public void Load()

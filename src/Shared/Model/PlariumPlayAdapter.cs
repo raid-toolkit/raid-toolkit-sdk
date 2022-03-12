@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 [assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]
 #endif
 
-namespace Raid.Model
+namespace Raid.Toolkit.Model
 {
     public class PlariumPlayAdapter
     {

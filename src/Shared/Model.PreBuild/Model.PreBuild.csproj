@@ -1,19 +1,19 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFrameworks>net472;net5.0</TargetFrameworks>
-    <LangVersion>9.0</LangVersion>
-    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
-  </PropertyGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFrameworks>net472;net5.0-windows</TargetFrameworks>
+        <LangVersion>10.0</LangVersion>
+        <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="il2cpptoolkit.reversecompiler" Version="1.0.59" />
-    <PackageReference Include="il2cpptoolkit.target.netcore" Version="1.0.59" />
-    <ProjectReference Include="..\Model\Model.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="il2cpptoolkit.reversecompiler" Version="1.0.59" />
+        <PackageReference Include="il2cpptoolkit.target.netcore" Version="1.0.59" />
+        <ProjectReference Include="..\Model\Model.csproj" />
+    </ItemGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="$(TargetDir)$(TargetName).exe $(BinDir)$(TargetFrameworkVersion)\" />
-  </Target>
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Exec Command="$(TargetDir)$(TargetName).exe $(BinDir)$(TargetFrameworkVersion)\" />
+    </Target>
 </Project>

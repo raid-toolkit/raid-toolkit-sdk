@@ -11,55 +11,72 @@ using Il2CppToolkit.ReverseCompiler.Target.NetCore;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Raid.Model
+namespace Raid.Toolkit.Model
 {
-    internal class ModelLoader
+    public class ModelLoader : IModelLoader
     {
-        private static readonly Version CurrentInteropVersion;
-        private static readonly Regex[] IncludeTypes = new[] {
-            new Regex(@"^Client\.ViewModel\.Contextes\.", RegexOptions.Singleline | RegexOptions.Compiled),
-            new Regex(@"^Client\.View\.Views\.", RegexOptions.Singleline | RegexOptions.Compiled),
-            new Regex(@"^Entitas\.", RegexOptions.Singleline | RegexOptions.Compiled),
-            new Regex(@"^ECS\.(Components|ViewModel)\.", RegexOptions.Singleline | RegexOptions.Compiled),
-            new Regex(@"^Client\.RaidApp\.RaidViewMaster$", RegexOptions.Singleline | RegexOptions.Compiled),
-            new Regex(@"^Client\.RaidApp\.RaidApplication$", RegexOptions.Singleline | RegexOptions.Compiled),
-            new Regex(@"^Contexts$", RegexOptions.Singleline | RegexOptions.Compiled),
-            new Regex(@"^Client\.ViewModel\.AppViewModel$", RegexOptions.Singleline | RegexOptions.Compiled),
+        private static void PostfixTypes(Assembly asm)
+        {
+            Il2CppToolkit.Runtime.Types.Types.TypeSizes.Add(asm.GetType("Plarium.Common.Numerics.Fixed"), 8);
+        }
+
+        private static readonly Regex[] DefaultIncludeTypes = new[] {
+            //new Regex(@"^Client\.ViewModel\.Contextes\.", RegexOptions.Singleline | RegexOptions.Compiled),
+            //new Regex(@"^Client\.View\.Views\.", RegexOptions.Singleline | RegexOptions.Compiled),
+            //new Regex(@"^Entitas\.", RegexOptions.Singleline | RegexOptions.Compiled),
+            //new Regex(@"^ECS\.(Components|ViewModel)\.", RegexOptions.Singleline | RegexOptions.Compiled),
+            //new Regex(@"^Client\.RaidApp\.RaidViewMaster$", RegexOptions.Singleline | RegexOptions.Compiled),
+            //new Regex(@"^Client\.RaidApp\.RaidApplication$", RegexOptions.Singleline | RegexOptions.Compiled),
+            //new Regex(@"^Contexts$", RegexOptions.Singleline | RegexOptions.Compiled),
+            //new Regex(@"^Client\.ViewModel\.AppViewModel$", RegexOptions.Singleline | RegexOptions.Compiled),
             new Regex(@"^Client\.Model\.AppModel$", RegexOptions.Singleline | RegexOptions.Compiled),
-            new Regex(@"^Client\.Model\.Gameplay\.Artifacts\.ExternalArtifactsStorage$", RegexOptions.Singleline | RegexOptions.Compiled),
-            new Regex(@"^Client\.Model\.Gameplay\.StaticData\.ClientStaticDataManager$", RegexOptions.Singleline | RegexOptions.Compiled),
-            new Regex(@"^SharedModel\.Meta\.Artifacts\.ArtifactStorage\.ArtifactStorageResolver$", RegexOptions.Singleline | RegexOptions.Compiled)
         };
 
-        // initialize CurrentModelVersion in static ctor to ensure initialization ordering
-        static ModelLoader()
-        {
-            int hashCode = string.Join(";", IncludeTypes.Select(rex => rex.ToString())).GetStableHashCode();
-            CurrentInteropVersion = new(1, 3, 0, Math.Abs(hashCode % 999));
-        }
+        private Version CurrentInteropVersion;
+        private Regex[] IncludeTypes;
+
+        public event EventHandler<IModelLoader.ModelLoaderEventArgs> OnStateUpdated;
 
         public string GameVersion { get; private set; }
         public Version InteropVersion { get; private set; }
+        public string OutputDirectory { get; set; }
 
-        [Obsolete("Use GameVersion instead")]
-        public string Version => GameVersion;
-
-        internal Task<Assembly> Load(bool force = false)
-        {
-            return Load(_ => { }, force);
-        }
-
-        internal async Task<Assembly> Load(Action<ModelLoadState> stateChangeCallback, bool force = false)
+        public async Task<Assembly> BuildAndLoad(IEnumerable<Regex> regices, bool force)
         {
             try
             {
-                stateChangeCallback(ModelLoadState.Initialize);
+                string dllPath = await Build(regices, force);
+                Assembly asm = Assembly.LoadFrom(dllPath);
+                PostfixTypes(asm);
+                OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Loaded));
+                return asm;
+            }
+            catch (Exception)
+            {
+                OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Error));
+                throw;
+            }
+        }
+
+        public async Task<string> Build(IEnumerable<Regex> regices, bool force)
+        {
+            try
+            {
+                IncludeTypes = DefaultIncludeTypes.Concat(regices).ToArray();
+                var durableTypePatternList = IncludeTypes.Select(rex => rex.ToString()).Distinct().OrderBy(str => str);
+                int hashCode = string.Join(";", durableTypePatternList).GetStableHashCode();
+
+                // force a rebuild for every major.minor version bump
+                Version asmVersion = Version.Parse(ThisAssembly.AssemblyVersion);
+                CurrentInteropVersion = new(asmVersion.Major, asmVersion.Minor, 0, Math.Abs(hashCode % 999));
+
+                OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Initialize));
 
                 PlariumPlayAdapter.GameInfo gameInfo = GetGameInfo();
                 GameVersion = gameInfo.Version;
 
-                string executingPath = Process.GetCurrentProcess().MainModule.FileName;
-                string dllPath = Path.Combine(Path.GetDirectoryName(executingPath), gameInfo.Version, "Raid.Interop.dll");
+                string outDir = OutputDirectory ?? Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
+                string dllPath = Path.Combine(outDir, gameInfo.Version, "Raid.Interop.dll");
 
                 bool shouldGenerate = force;
                 try
@@ -85,24 +102,20 @@ namespace Raid.Model
 
                 if (shouldGenerate)
                 {
-                    stateChangeCallback(ModelLoadState.Rebuild);
+                    OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Rebuild));
                     await Task.Run(() =>
                     {
                         GenerateAssembly(gameInfo, dllPath);
                     });
                 }
 
-                stateChangeCallback(ModelLoadState.Load);
-                return Assembly.LoadFrom(dllPath);
+                OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Ready));
+                return dllPath;
             }
             catch (Exception)
             {
-                stateChangeCallback(ModelLoadState.Error);
+                OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Error));
                 throw;
-            }
-            finally
-            {
-                stateChangeCallback(ModelLoadState.Ready);
             }
         }
 
@@ -114,7 +127,7 @@ namespace Raid.Model
                 : gameInfo;
         }
 
-        private static void GenerateAssembly(PlariumPlayAdapter.GameInfo gameInfo, string dllPath)
+        private void GenerateAssembly(PlariumPlayAdapter.GameInfo gameInfo, string dllPath)
         {
             // separated into separate method to ensure we can GC the generated ASM
             BuildAssembly(gameInfo, dllPath);
@@ -123,10 +136,12 @@ namespace Raid.Model
             ErrorHandler.Assert(loadedAsm == null, "Expected generated assembly to be unloaded!");
         }
 
-        private static void BuildAssembly(PlariumPlayAdapter.GameInfo gameInfo, string dllPath)
+        private void BuildAssembly(PlariumPlayAdapter.GameInfo gameInfo, string dllPath)
         {
             string metadataPath = Path.Combine(gameInfo.InstallPath, gameInfo.Version, @"Raid_Data\il2cpp_data\Metadata\global-metadata.dat");
             string gasmPath = Path.Combine(gameInfo.InstallPath, gameInfo.Version, @"GameAssembly.dll");
+
+            Directory.CreateDirectory(Path.GetDirectoryName(dllPath));
 
             //
             // NB: Make sure to update CurrentInteropVersion when changing the codegen arguments!!
@@ -138,7 +153,7 @@ namespace Raid.Model
             compiler.AddTarget(new NetCoreTarget());
             compiler.AddConfiguration(
                 ArtifactSpecs.TypeSelectors.MakeValue(new List<Func<TypeDescriptor, bool>>{
-                    {td => IncludeTypes.Any(rex => rex.IsMatch(td.Name))}
+                    {td => IncludeTypes.Any(rex => rex.IsMatch(td.Name)) }
                 }),
                 ArtifactSpecs.AssemblyName.MakeValue("Raid.Interop"),
                 ArtifactSpecs.AssemblyVersion.MakeValue(CurrentInteropVersion),

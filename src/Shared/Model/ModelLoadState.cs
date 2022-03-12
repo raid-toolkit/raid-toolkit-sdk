@@ -1,6 +1,6 @@
 using System;
 
-namespace Raid.Model
+namespace Raid.Toolkit.Model
 {
     public enum ModelLoadState
     {

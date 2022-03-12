@@ -1,28 +1,32 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <ItemGroup>
-    <PackageReference Include="il2cpptoolkit.common" Version="1.0.59" />
-    <PackageReference Include="il2cpptoolkit.metadata" Version="1.0.59" />
-    <PackageReference Include="il2cpptoolkit.reversecompiler" Version="1.0.59" />
-    <PackageReference Include="il2cpptoolkit.runtime" Version="1.0.59" />
-    <PackageReference Include="il2cpptoolkit.target.netcore" Version="1.0.59" />
-    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="il2cpptoolkit.common" Version="1.0.59" />
+        <PackageReference Include="il2cpptoolkit.metadata" Version="1.0.59" />
+        <PackageReference Include="il2cpptoolkit.reversecompiler" Version="1.0.59" />
+        <PackageReference Include="il2cpptoolkit.runtime" Version="1.0.59" />
+        <PackageReference Include="il2cpptoolkit.target.netcore" Version="1.0.59" />
+        <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <Content Include="$(RootDirectory)\bin\Raid.Interop.dll" copyToOutput="true">
-      <Pack>true</Pack>
-      <PackagePath>lib\net5.0</PackagePath>
-    </Content>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\Common\Common.csproj" />
+    </ItemGroup>
 
-  <PropertyGroup>
-    <TargetFrameworks>net472;net5.0</TargetFrameworks>
-    <LangVersion>9.0</LangVersion>
-    <OutputType>Library</OutputType>
-    <AssemblyName>Raid.Model</AssemblyName>
-    <RootNamespace>Raid.Model</RootNamespace>
-  </PropertyGroup>
+    <ItemGroup>
+        <Content Include="$(RootDirectory)\bin\Raid.Interop.dll" copyToOutput="true">
+            <Pack>true</Pack>
+            <PackagePath>lib\net5.0-windows</PackagePath>
+        </Content>
+    </ItemGroup>
+
+    <PropertyGroup>
+        <TargetFrameworks>net472;net5.0-windows</TargetFrameworks>
+        <LangVersion>10.0</LangVersion>
+        <OutputType>Library</OutputType>
+        <AssemblyName>Raid.Model</AssemblyName>
+        <RootNamespace>Raid.Model</RootNamespace>
+    </PropertyGroup>
 
 </Project>

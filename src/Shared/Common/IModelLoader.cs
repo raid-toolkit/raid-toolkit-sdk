@@ -4,16 +4,16 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Raid.Toolkit.Extensibility.Host
+namespace Raid.Toolkit
 {
     public interface IModelLoader
     {
         public enum LoadState
         {
             Initialize,
-            Load,
             Rebuild,
             Ready,
+            Loaded,
             Error,
         }
 
@@ -25,6 +25,6 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public event EventHandler<ModelLoaderEventArgs> OnStateUpdated;
 
-        public Task<Assembly> Load(IEnumerable<Regex> regices, bool force = false);
+        public Task<Assembly> BuildAndLoad(IEnumerable<Regex> regices, bool force = false);
     }
 }
