@@ -5,13 +5,6 @@
         <OutputAssemblyFile>Raid.Interop.dll</OutputAssemblyFile>
     </PropertyGroup>
 
-    <ItemGroup Condition=" '$(GenerateInterop)' != 'false' ">
-        <Reference Include="$(OutputAssemblyFile)">
-            <HintPath>$(IntermediateOutputPath)$(OutputAssemblyFile)</HintPath>
-            <Private>false</Private>
-        </Reference>
-    </ItemGroup>
-
     <Import Project="Raid.Toolkit.Extensibility.Common.targets" />
 
     <UsingTask AssemblyFile="$(RaidToolkitSdkTasksPath)Raid.Toolkit.Extensibility.Tasks.dll" TaskName="Raid.Toolkit.Extensibility.Tasks.Codegen"/>
@@ -31,4 +24,12 @@
         <MakeDir Directories="$(IntermediateOutputPath)" />
         <Raid.Toolkit.Extensibility.Tasks.Codegen OutputFile="$(IntermediateOutputPath)$(OutputAssemblyFile)" />
     </Target>
+
+    <ItemGroup Condition=" '$(GenerateInterop)' != 'false' ">
+        <Reference Include="$(OutputAssemblyFile)">
+            <HintPath>$(IntermediateOutputPath)$(OutputAssemblyFile)</HintPath>
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
+
 </Project>
