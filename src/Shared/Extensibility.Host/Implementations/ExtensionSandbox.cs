@@ -30,12 +30,20 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             Descriptor = descriptor;
             InstanceFactory = instanceFactory;
-            LoadContext = new(descriptor.Location);
-            ExtensionAsm = LoadContext.LoadFromAssemblyPath(descriptor.Location);
+            if (descriptor.Assembly != null)
+            {
+                ExtensionAsm = descriptor.Assembly;
+            }
+            else
+            {
+                LoadContext = new(descriptor.Location);
+                ExtensionAsm = LoadContext.LoadFromAssemblyPath(descriptor.Location);
+            }
         }
 
         private Type GetPackageType()
         {
+            // TODO: Filter to the specific type indicated by descriptor
             Type packageType = ExtensionAsm.ExportedTypes.SingleOrDefault(t => t.GetInterfaces().Contains(typeof(IExtensionPackage)));
             return packageType;
         }

@@ -5,11 +5,14 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 
 namespace Raid.Toolkit
 {
     public class PackageManager : IPackageManager
     {
+        private static string ExtensionsDirectory => Path.Combine(AppHost.ExecutableDirectory, "extensions");
+
         readonly List<PackageDescriptor> Descriptors = new();
 
         public PackageManager()
@@ -20,17 +23,32 @@ namespace Raid.Toolkit
         private void Load()
         {
             if (Descriptors.Count > 0) return;
-            string[] files = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "Raid.Toolkit.Extension.*.dll");
-            foreach (string file in files)
+
+            // add packaged extensions
+            Descriptors.Add(DescriptorFor<Extension.Account.AccountExtension>());
+
+            if (Directory.Exists(ExtensionsDirectory))
             {
-                FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(file);
-                Descriptors.Add(new(Path.GetFileNameWithoutExtension(file), fvi.ProductName, fvi.FileDescription, file));
+                string[] files = Directory.GetFiles(ExtensionsDirectory, "Raid.Toolkit.Extension.*.dll");
+                foreach (string file in files)
+                {
+                    FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(file);
+                    Descriptors.Add(new(Path.GetFileNameWithoutExtension(file), fvi.ProductName, fvi.FileDescription, file));
+                }
             }
+        }
+
+        private static PackageDescriptor DescriptorFor<T>()
+        {
+            var attr = typeof(T).GetCustomAttribute<ExtensionPackageAttribute>(true);
+            var descriptor = PackageDescriptor.FromAttribute(attr, typeof(T).Assembly);
+            return descriptor;
         }
 
         public PackageDescriptor AddPackage(PackageDescriptor packageToInstall)
         {
-            string newLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.GetFileName(packageToInstall.Location));
+            Directory.CreateDirectory(ExtensionsDirectory);
+            string newLocation = Path.Combine(ExtensionsDirectory, Path.GetFileName(packageToInstall.Location));
             if (File.Exists(newLocation))
             {
                 throw new InvalidOperationException("An extension with that name already exists");

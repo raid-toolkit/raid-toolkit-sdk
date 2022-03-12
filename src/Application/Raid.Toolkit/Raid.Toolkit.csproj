@@ -21,8 +21,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="SuperSocket.WebSocket.Server" Version="2.0.0-beta.10" />
     <Reference Include="Raid.Interop.dll">
-      <HintPath>$(BinDir)Raid.Interop.dll</HintPath>
-      <Private>true</Private>
+      <HintPath>$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
+      <Private>True</Private>
+      <SpecificVersion>False</SpecificVersion>
     </Reference>
   </ItemGroup>
 
@@ -46,9 +47,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="$(SourceDir)Extensions\Raid.Toolkit.Extension.Account\Account.csproj">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-    </ProjectReference>
+    <ProjectReference Include="$(SourceDir)Extensions\Raid.Toolkit.Extension.Account\Account.csproj" />
     <ProjectReference Include="$(SourceDir)Shared\Extensibility.Host\Extensibility.Host.csproj" />
     <ProjectReference Include="$(SourceDir)Shared\Extensibility\Extensibility.csproj" />
   </ItemGroup>

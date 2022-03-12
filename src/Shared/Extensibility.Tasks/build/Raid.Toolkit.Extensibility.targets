@@ -28,7 +28,8 @@
     <ItemGroup Condition=" '$(GenerateInterop)' != 'false' ">
         <Reference Include="$(OutputAssemblyFile)">
             <HintPath>$(IntermediateOutputPath)$(OutputAssemblyFile)</HintPath>
-            <Private>false</Private>
+            <Private>True</Private>
+            <SpecificVersion>False</SpecificVersion>
         </Reference>
     </ItemGroup>
 
