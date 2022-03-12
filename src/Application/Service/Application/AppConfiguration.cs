@@ -43,7 +43,7 @@ namespace Raid.Service
             set => Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.InstallPrereleasesKey, value ? 1 : 0, RegistryValueKind.DWord);
         }
 
-        public static string InstalledExecutablePath => Path.Join(InstallationPath, ExecutableName);
+        public static string InstalledExecutablePath => Path.Combine(InstallationPath, ExecutableName);
 
         public static string InstallationPath
         {
@@ -119,7 +119,7 @@ namespace Raid.Service
             ExecutableName = "Raid.Service.exe";
             ExecutableDirectory = Path.GetDirectoryName(ExecutablePath);
 
-            DefaultInstallationPath = Path.Join(
+            DefaultInstallationPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "RaidToolkit");
         }

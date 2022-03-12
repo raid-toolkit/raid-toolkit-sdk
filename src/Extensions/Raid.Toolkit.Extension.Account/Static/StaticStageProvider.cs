@@ -34,7 +34,7 @@ namespace Raid.Toolkit.Extension.Account
             var staticData = scope.StaticDataManager.StaticData;
             var areas = new Dictionary<SharedModel.Meta.Stages.AreaTypeId, AreaData>();
             var regions = new Dictionary<SharedModel.Meta.Stages.RegionTypeId, RegionData>();
-            var stages = new List<KeyValuePair<int, StageData>>();
+            Dictionary<int, StageData> stages = new();
             foreach (var area in staticData.StageData.Areas)
             {
                 areas.Add(area.Id, area.ToModel());
@@ -43,9 +43,10 @@ namespace Raid.Toolkit.Extension.Account
                     regions.Add(region.Id, region.ToModel(area.Id));
                     foreach (var stagesList in region.StagesByDifficulty.Values)
                     {
-                        stages.AddRange(
-                            stagesList.ToDictionary(stage => stage.Id, stage => stage.ToModel(area.Id, region.Id)).AsEnumerable()
-                            );
+                        foreach (var entry in stagesList.ToDictionary(stage => stage.Id, stage => stage.ToModel(area.Id, region.Id)))
+                        {
+                            stages.Add(entry.Key, entry.Value);
+                        }
                     }
                 }
             }
@@ -54,7 +55,7 @@ namespace Raid.Toolkit.Extension.Account
                 Hash = hash,
                 Areas = areas.ToModel(),
                 Regions = regions.ToModel(),
-                Stages = new Dictionary<int, StageData>(stages)
+                Stages = stages
             });
         }
     }

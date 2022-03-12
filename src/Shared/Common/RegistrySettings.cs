@@ -4,7 +4,9 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Microsoft.Win32;
 
+#if NET5_0_OR_GREATER
 [assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]
+#endif
 
 namespace Raid.Toolkit.Common
 {
@@ -23,7 +25,7 @@ namespace Raid.Toolkit.Common
 
         public static readonly string DefaultInstallationPath;
 
-        public static string InstalledExecutablePath => Path.Join(InstallationPath, ExecutableName);
+        public static string InstalledExecutablePath => Path.Combine(InstallationPath, ExecutableName);
         public static bool RunOnStartup
         {
             get => DoesKeyExist(StartupHive, StartupName);
@@ -121,7 +123,7 @@ namespace Raid.Toolkit.Common
 
         static RegistrySettings()
         {
-            DefaultInstallationPath = Path.Join(
+            DefaultInstallationPath = Path.Combine(
                 Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
                 "RaidToolkit");
         }

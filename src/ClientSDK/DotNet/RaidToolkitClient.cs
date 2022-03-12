@@ -72,7 +72,9 @@ namespace Raid.Client
                 stream.CopyTo(newFile);
             }
             Process proc = Process.Start(tempFile);
-            await proc.WaitForExitAsync();
+            // NET 472 doesn't support WaitForExitAsync
+            proc.WaitForExit();
+            // await proc.WaitForExitAsync();
         }
 
         public void Connect()
@@ -98,13 +100,13 @@ namespace Raid.Client
         {
             while (Socket.State == WebSocketState.Open)
             {
-                var result = await Socket.ReceiveAsync(Buffer, CancellationTokenSource.Token);
+                var result = await Socket.ReceiveAsync(new ArraySegment<byte>(Buffer.ToArray()), CancellationTokenSource.Token);
                 if (!result.EndOfMessage)
                 {
                     // TODO: throw away messages until next EndOfMessage is reached (inclusive)
                     continue;
                 }
-                var socketMessage = JsonConvert.DeserializeObject<SocketMessage>(Encoding.UTF8.GetString(Buffer[..result.Count].Span));
+                var socketMessage = JsonConvert.DeserializeObject<SocketMessage>(Encoding.UTF8.GetString(Buffer.Slice(0, result.Count).Span.ToArray()));
                 HandleMessage(socketMessage);
             }
         }
@@ -182,7 +184,7 @@ namespace Raid.Client
         private async Task Send(SocketMessage message)
         {
             await Socket.SendAsync(
-                Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message)).AsMemory(),
+                new(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(message)).AsMemory().ToArray()),
                 WebSocketMessageType.Text,
                 true,
                 CancellationToken.None);

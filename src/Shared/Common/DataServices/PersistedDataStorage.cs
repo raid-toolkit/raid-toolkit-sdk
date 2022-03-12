@@ -16,7 +16,7 @@ namespace Raid.DataServices
 
         public PersistedDataStorage()
         {
-            StoragePath = Path.Join(RegistrySettings.InstallationPath, "data");
+            StoragePath = Path.Combine(RegistrySettings.InstallationPath, "data");
         }
 
         public void SetContext(IDataContext_deprecated context, IServiceProvider serviceProvider)
@@ -25,7 +25,7 @@ namespace Raid.DataServices
                 throw new InvalidOperationException("Already set context");
 
             DataContext = context;
-            _ = Directory.CreateDirectory(Path.Join(StoragePath, Path.Join(DataContext.Parts)));
+            _ = Directory.CreateDirectory(Path.Combine(StoragePath, Path.Combine(DataContext.Parts)));
 
             Storage = serviceProvider.GetRequiredService<IDataStorageReaderWriter>();
         }
@@ -34,13 +34,13 @@ namespace Raid.DataServices
 
         public bool TryRead<T>(string key, out T value) where T : class
         {
-            string filePath = Path.Join(StoragePath, Path.Join(DataContext.Parts), key);
+            string filePath = Path.Combine(StoragePath, Path.Combine(DataContext.Parts), key);
             return Storage.TryRead(filePath, out value);
         }
 
         public bool Write<T>(string key, T value) where T : class
         {
-            string filePath = Path.Join(StoragePath, Path.Join(DataContext.Parts), key);
+            string filePath = Path.Combine(StoragePath, Path.Combine(DataContext.Parts), key);
             Updated?.Invoke(this, new DataStorageUpdatedEventArgs(key, value));
             return Storage.Write(filePath, value);
         }

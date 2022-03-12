@@ -30,7 +30,7 @@ namespace Raid.Toolkit
 
         public PackageDescriptor AddPackage(PackageDescriptor packageToInstall)
         {
-            string newLocation = Path.Join(AppDomain.CurrentDomain.BaseDirectory, Path.GetFileName(packageToInstall.Location));
+            string newLocation = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Path.GetFileName(packageToInstall.Location));
             if (File.Exists(newLocation))
             {
                 throw new InvalidOperationException("An extension with that name already exists");

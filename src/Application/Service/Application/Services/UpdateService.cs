@@ -40,8 +40,8 @@ namespace Raid.Service
             try
             {
                 Stream newRelease = await Updater.DownloadRelease(release);
-                string tempDownload = Path.Join(AppConfiguration.InstallationPath, $"{AppConfiguration.ExecutableName}.update");
-                string currentBackup = Path.Join(AppConfiguration.InstallationPath, $"{Path.GetFileNameWithoutExtension(AppConfiguration.ExecutableName)}.{ThisAssembly.AssemblyFileVersion}.exe");
+                string tempDownload = Path.Combine(AppConfiguration.InstallationPath, $"{AppConfiguration.ExecutableName}.update");
+                string currentBackup = Path.Combine(AppConfiguration.InstallationPath, $"{Path.GetFileNameWithoutExtension(AppConfiguration.ExecutableName)}.{ThisAssembly.AssemblyFileVersion}.exe");
                 using (Stream newFile = File.Create(tempDownload))
                 {
                     newRelease.CopyTo(newFile);

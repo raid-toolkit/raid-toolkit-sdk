@@ -21,13 +21,13 @@ namespace Raid.Toolkit.Extensibility.DataServices
 
         public bool TryRead<T>(IDataContext context, string key, out T value) where T : class
         {
-            string filePath = Path.Join(StoragePath, Path.Join(context.Parts), key);
+            string filePath = Path.Combine(StoragePath, Path.Combine(context.Parts), key);
             return Storage.TryRead(filePath, out value);
         }
 
         public bool Write<T>(IDataContext context, string key, T value) where T : class
         {
-            string filePath = Path.Join(StoragePath, Path.Join(context.Parts), key);
+            string filePath = Path.Combine(StoragePath, Path.Combine(context.Parts), key);
             Updated?.Invoke(this, new DataStorageUpdatedEventArgs(key, value));
             return Storage.Write(filePath, value);
         }

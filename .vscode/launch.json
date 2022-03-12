@@ -6,6 +6,27 @@
     "compounds": [],
     "configurations": [
         {
+            "name": "Build Task",
+            "type": "coreclr",
+            "request": "launch",
+            "program": "C:/Program Files/dotnet/dotnet.exe",
+            "justMyCode": false,
+            // ${workspaceFolder}/bin/Debug/<target-framework>/<project-name.dll>",
+            "args": [
+                "build",
+                "--nologo",
+                "-v",
+                "normal",
+                "-m:1",
+                "-nodeReuse:false",
+                "-p:RTKTasks=true"
+            ],
+            "targetOutputLogPath": "${workspaceFolder}/output.log",
+            "cwd": "${workspaceFolder}/src/Extensions/Raid.Toolkit.Extension.Account",
+            "stopAtEntry": false,
+            "console": "internalConsole"
+        },
+        {
             "name": "Python: Current File",
             "type": "python",
             "request": "launch",
@@ -39,7 +60,8 @@
             "preLaunchTask": "build",
             "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
             "args": [
-                "--debug"
+                "--debug",
+                "--standalone"
             ],
             "env": {
                 "RTK_DEBUG": "true",

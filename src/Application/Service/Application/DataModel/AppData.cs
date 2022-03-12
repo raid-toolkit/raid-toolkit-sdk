@@ -24,15 +24,15 @@ namespace Raid.Service
             m_storagePath = settings.Value.StorageLocation ?? "data";
             if (!Path.IsPathFullyQualified(m_storagePath))
             {
-                m_storagePath = Path.Join(AppConfiguration.InstallationPath, m_storagePath);
+                m_storagePath = Path.Combine(AppConfiguration.InstallationPath, m_storagePath);
             }
 
             // create basic directories
-            m_accountsPath = Path.Join(m_storagePath, "accounts");
+            m_accountsPath = Path.Combine(m_storagePath, "accounts");
             _ = Directory.CreateDirectory(m_accountsPath);
-            m_staticDataPath = Path.Join(m_storagePath, "staticData");
+            m_staticDataPath = Path.Combine(m_storagePath, "staticData");
             _ = Directory.CreateDirectory(m_staticDataPath);
-            m_settingsFilePath = Path.Join(m_storagePath, ".settings");
+            m_settingsFilePath = Path.Combine(m_storagePath, ".settings");
         }
 
         public void Load()

@@ -121,7 +121,7 @@ namespace Raid.Toolkit.Extension.Account
             StaticData staticData = new(Storage);
             AccountData accountData = new(Storage, accountId);
             HeroType type = hero.Type;
-            HeroStatsCalculator stats = new(type, (int)Enum.Parse<SharedModel.Meta.Heroes.HeroGrade>(hero.Rank), hero.Level);
+            HeroStatsCalculator stats = new(type, (int)Enum.Parse(typeof(SharedModel.Meta.Heroes.HeroGrade), hero.Rank), hero.Level);
 
             // arena
             var greatHallBonus = accountData.Arena.GreatHallBonuses?.FirstOrDefault(ghb => ghb.Affinity == type.Affinity);
@@ -143,8 +143,11 @@ namespace Raid.Toolkit.Extension.Account
 
                 // sets
                 var setCounts = equippedArtifacts.Select(artifact => artifact.SetKindId).GroupBy(setKindId => setKindId).ToDictionary(group => group.Key, group => group.Count());
-                foreach ((var setKindId, var count) in setCounts)
+                foreach (var kvp in setCounts)
                 {
+                    string setKindId = kvp.Key;
+                    int count = kvp.Value;
+
                     if (!staticData.Artifacts.ArtifactSetKinds.TryGetValue(setKindId, out ArtifactSetKind setKind))
                         continue;
                     int numSets = count / setKind.ArtifactCount;

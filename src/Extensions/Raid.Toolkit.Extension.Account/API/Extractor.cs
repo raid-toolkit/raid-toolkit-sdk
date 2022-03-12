@@ -79,7 +79,7 @@ namespace RaidExtractor.Core
                 Heroes = heroes.Heroes.Values.Where(hero => !hero.Deleted).Select(hero =>
                 {
                     var heroType = heroTypes[hero.TypeId];
-                    var multiplier = StaticResources.Multipliers.First(m => m.stars == (int)Enum.Parse<SharedModel.Meta.Heroes.HeroGrade>(hero.Rank) && m.level == hero.Level);
+                    var multiplier = StaticResources.Multipliers.First(m => m.stars == (int)Enum.Parse(typeof(SharedModel.Meta.Heroes.HeroGrade), hero.Rank) && m.level == hero.Level);
                     Hero newHero = new()
                     {
                         // instance fields

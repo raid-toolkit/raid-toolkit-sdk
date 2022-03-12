@@ -32,7 +32,7 @@ namespace Raid.Toolkit.Extension.Account
 
             return Storage.Write(context, Key, new AccountBase
             {
-                Id = string.Join('_', globalId, socialId).Sha256(),
+                Id = string.Join("_", globalId, socialId).Sha256(),
                 Avatar = gameSettings.Avatar.ToString(),
                 Name = gameSettings.Name,
                 Level = accountData.Level,

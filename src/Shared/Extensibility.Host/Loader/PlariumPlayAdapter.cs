@@ -39,7 +39,7 @@ namespace Raid.Toolkit.Extensibility.Host
         public PlariumPlayAdapter()
         {
             m_installDir = (string)Registry.CurrentUser.OpenSubKey(kPlariumPlayHive).GetValue(kInstallFolderKey);
-            m_gameStorage = JsonConvert.DeserializeObject<GameStorage>(File.ReadAllText(Path.Join(m_installDir, kGameStoragePath)));
+            m_gameStorage = JsonConvert.DeserializeObject<GameStorage>(File.ReadAllText(Path.Combine(m_installDir, kGameStoragePath)));
         }
 
         public bool TryGetGameVersion(int gameId, string gameName, out GameInfo gameInfo)
@@ -57,10 +57,10 @@ namespace Raid.Toolkit.Extensibility.Host
 
             gameInfo = new GameInfo
             {
-                InstallPath = Path.Join(m_installDir, kGameSubpath, gameName),
+                InstallPath = Path.Combine(m_installDir, kGameSubpath, gameName),
                 Name = gameName,
                 Version = version,
-                PlariumPlayPath = Path.Join(m_installDir, kPlariumPlayExeSubPath)
+                PlariumPlayPath = Path.Combine(m_installDir, kPlariumPlayExeSubPath)
             };
             return true;
         }

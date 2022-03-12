@@ -64,7 +64,7 @@ namespace Raid.Toolkit
             .UseWebSocketMessageHandler(HandleMessage)
             .ConfigureAppConfiguration(config => config
                 .AddJsonStream(GetEmbeddedSettings())
-                .AddJsonFile(Path.Join(ExecutableDirectory, "appsettings.json"), true)
+                .AddJsonFile(Path.Combine(ExecutableDirectory, "appsettings.json"), true)
             )
             .ConfigureServices((context, services) => services
                 // app dependencies

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="RTK_SetDefaults">
+    <PropertyGroup>
+        <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+        <OutputAssemblyFile>Raid.Interop.dll</OutputAssemblyFile>
+    </PropertyGroup>
+
+    <ItemGroup Condition=" '$(GenerateInterop)' != 'false' ">
+        <Reference Include="$(OutputAssemblyFile)">
+            <HintPath>$(IntermediateOutputPath)$(OutputAssemblyFile)</HintPath>
+            <Private>false</Private>
+        </Reference>
+    </ItemGroup>
+
+    <Import Project="Raid.Toolkit.Extensibility.Common.targets" />
+
+    <UsingTask AssemblyFile="$(RaidToolkitSdkTasksPath)Raid.Toolkit.Extensibility.Tasks.dll" TaskName="Raid.Toolkit.Extensibility.Tasks.Codegen"/>
+
+    <Target Name="RTK_SetDefaults">
+        <PropertyGroup>
+            <GenerateInterop Condition=" '$(GenerateInterop)' == '' and '$(TargetExt)' != '.dll'">false</GenerateInterop>
+
+            <CoreCompileDependsOn>
+                GenerateRTKInteropAssembly;
+                $(CoreCompileDependsOn)
+            </CoreCompileDependsOn>
+        </PropertyGroup>
+    </Target>
+
+    <Target Name="GenerateRTKInteropAssembly" Condition=" '$(GenerateInterop)' != 'false' ">
+        <MakeDir Directories="$(IntermediateOutputPath)" />
+        <Raid.Toolkit.Extensibility.Tasks.Codegen OutputFile="$(IntermediateOutputPath)$(OutputAssemblyFile)" />
+    </Target>
+</Project>

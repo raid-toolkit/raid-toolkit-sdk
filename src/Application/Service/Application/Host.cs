@@ -26,7 +26,7 @@ namespace Raid.Service
             .UseWebSocketMessageHandler(ModelService.HandleMessage)
             .ConfigureAppConfiguration(config => config
                 .AddJsonStream(GetEmbeddedSettings())
-                .AddJsonFile(Path.Join(AppConfiguration.ExecutableDirectory, "appsettings.json"), true)
+                .AddJsonFile(Path.Combine(AppConfiguration.ExecutableDirectory, "appsettings.json"), true)
             )
             .ConfigureServices((ctx, services) => services
                 .Configure<AppSettings>(opts => ctx.Configuration.GetSection("app").Bind(opts))

@@ -8,6 +8,7 @@
             "source.fixAll": true
         }
     },
+    "editor.tabSize": 4,
     "editor.fontFamily": "Operator Mono",
     "editor.fontWeight": "300",
     "terminal.integrated.shellIntegration.decorationsEnabled": true,

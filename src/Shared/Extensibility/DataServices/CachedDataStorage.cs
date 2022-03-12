@@ -38,7 +38,7 @@ namespace Raid.Toolkit.Extensibility.DataServices
 
         public bool TryRead<T>(IDataContext context, string key, out T value) where T : class
         {
-            string cacheKey = string.Join(';', context.Parts.Concat(new[] { key }));
+            string cacheKey = string.Join(";", context.Parts.Concat(new[] { key }).ToArray());
             object cacheEntry = Cache.GetOrAdd(cacheKey, cacheKey => ReadFromUnderlyingStorage<T>(context, key));
             if (cacheEntry == EmptyObject)
             {
@@ -51,7 +51,7 @@ namespace Raid.Toolkit.Extensibility.DataServices
 
         public bool Write<T>(IDataContext context, string key, T value) where T : class
         {
-            string cacheKey = string.Join(';', context.Parts.Concat(new[] { key }));
+            string cacheKey = string.Join(";", context.Parts.Concat(new[] { key }).ToArray());
             T updatedValue = Cache.AddOrUpdate(cacheKey, _ => value, (_1, oldValue) => UpdateAndWriteIfChanged(oldValue, value)) as T;
             // only write if the new value was added
             if (updatedValue == value)

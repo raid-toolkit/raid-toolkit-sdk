@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <_RTK_Common_Targets_Imported>true</_RTK_Common_Targets_Imported>
+        <!-- <_RTK_PlatformSuffix Condition=" '$(_RTK_PlatformSuffix)' == '' and '$(MSBuildRuntimeType)' == 'Core' ">MSBuildCore/</_RTK_PlatformSuffix> -->
+        <_RTK_PlatformSuffix Condition=" '$(_RTK_PlatformSuffix)' == '' ">MSBuild/</_RTK_PlatformSuffix>
+        <RaidToolkitSdkTasksPath Condition=" '$(RaidToolkitSdkTasksPath)' == '' ">$(MSBuildThisFileDirectory)$(_RTK_PlatformSuffix)</RaidToolkitSdkTasksPath>
+    </PropertyGroup>
+</Project>

@@ -61,7 +61,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 GameVersion = gameInfo.Version;
 
                 string executingPath = Process.GetCurrentProcess().MainModule.FileName;
-                string dllPath = Path.Join(Path.GetDirectoryName(executingPath), gameInfo.Version, "Raid.Interop.dll");
+                string dllPath = Path.Combine(Path.GetDirectoryName(executingPath), gameInfo.Version, "Raid.Interop.dll");
 
                 bool shouldGenerate = force;
                 try
@@ -127,8 +127,8 @@ namespace Raid.Toolkit.Extensibility.Host
 
         private void BuildAssembly(PlariumPlayAdapter.GameInfo gameInfo, string dllPath)
         {
-            string metadataPath = Path.Join(gameInfo.InstallPath, gameInfo.Version, @"Raid_Data\il2cpp_data\Metadata\global-metadata.dat");
-            string gasmPath = Path.Join(gameInfo.InstallPath, gameInfo.Version, @"GameAssembly.dll");
+            string metadataPath = Path.Combine(gameInfo.InstallPath, gameInfo.Version, @"Raid_Data\il2cpp_data\Metadata\global-metadata.dat");
+            string gasmPath = Path.Combine(gameInfo.InstallPath, gameInfo.Version, @"GameAssembly.dll");
 
             //
             // NB: Make sure to update CurrentInteropVersion when changing the codegen arguments!!

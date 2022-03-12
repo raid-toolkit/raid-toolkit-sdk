@@ -17,7 +17,7 @@ namespace Raid.Toolkit.Extensibility
 
         public override string ToString()
         {
-            return $"account:{AccountId[..16]}";
+            return $"account:{AccountId.Substring(0, 16)}";
         }
     }
 }

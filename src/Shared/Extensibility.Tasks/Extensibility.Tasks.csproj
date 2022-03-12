@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net472;net5.0</TargetFrameworks>
+		<LangVersion>9.0</LangVersion>
+		<developmentDependency>true</developmentDependency>
+		<NoPackageAnalysis>true</NoPackageAnalysis>
+		<IncludeBuildOutput>false</IncludeBuildOutput>
+		<CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+		<AssemblyName>Raid.Toolkit.Extensibility.Tasks</AssemblyName>
+		<RootNamespace>Raid.Toolkit.Extensibility.Tasks</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Lokad.ILPack" Version="0.1.7" />
+		<PackageReference Include="Microsoft.Build.Tasks.Core" Version="17.1.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="build\**">
+			<Pack>true</Pack>
+			<PackagePath>build\</PackagePath>
+		</None>
+		<None Include="buildCrossTargeting\**">
+			<Pack>true</Pack>
+			<PackagePath>buildCrossTargeting\</PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemDefinitionGroup>
+		<PackageReference>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<ProjectReference>
+			<PrivateAssets>all</PrivateAssets>
+		</ProjectReference>
+	</ItemDefinitionGroup>
+
+</Project>

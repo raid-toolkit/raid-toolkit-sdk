@@ -4,7 +4,9 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Raid.Model;
 
+#if NET5_0_OR_GREATER
 [assembly: System.Runtime.Versioning.SupportedOSPlatform("windows")]
+#endif
 
 namespace Model.PreBuild
 {
@@ -20,7 +22,7 @@ namespace Model.PreBuild
             await resolver.Load(force: Environment.GetEnvironmentVariable("FORCE") == "true");
 
             Assembly asm = AppDomain.CurrentDomain.Load("Raid.Interop");
-            string targetFile = Path.Join(args[0], Path.GetFileName(asm.Location));
+            string targetFile = Path.Combine(args[0], Path.GetFileName(asm.Location));
             Console.WriteLine($"Copying [{asm.Location}] to [{targetFile}]");
             _ = Directory.CreateDirectory(Path.GetDirectoryName(targetFile));
             File.Delete(targetFile);

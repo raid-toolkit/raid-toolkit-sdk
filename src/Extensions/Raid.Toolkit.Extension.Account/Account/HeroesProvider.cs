@@ -57,16 +57,18 @@ namespace Raid.Toolkit.Extension.Account
             _ = Storage.TryRead(context, Key, out HeroData previous);
 
             // copy all previous deleted elements to save cost when looking later
-            Dictionary<int, Hero> result = previous != null ? new(previous.Heroes.Where(kvp => kvp.Value.Deleted)) : new();
-            foreach ((var id, var hero) in heroesById)
+            Dictionary<int, Hero> result = previous != null ? previous.Heroes.Filter(kvp => kvp.Value.Deleted) : new();
+            foreach (var kvp in heroesById)
             {
+                var id = kvp.Key;
+                var hero = kvp.Value;
                 if (hero == null) continue;
 
                 var heroType = heroTypes[hero.TypeId];
                 Dictionary<ArtifactKindId, int> equippedArtifacts = null;
                 if (artifactsByHeroId.TryGetValue(id, out HeroArtifactData artifactData))
                 {
-                    equippedArtifacts = new(artifactData.ArtifactIdByKind.UnderlyingDictionary.Where(kvp => kvp.Value != 0));
+                    equippedArtifacts = artifactData.ArtifactIdByKind.UnderlyingDictionary.Filter(kvp => kvp.Value != 0);
                 }
 
                 IReadOnlyDictionary<int, int> skillLevels = hero.Skills.ToDictionary(skill => skill.TypeId, skill => skill.Level);

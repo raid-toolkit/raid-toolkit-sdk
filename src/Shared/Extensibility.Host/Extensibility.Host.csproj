@@ -2,22 +2,23 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0-windows</TargetFramework>
+    <LangVersion>9.0</LangVersion>
     <AssemblyName>Raid.Toolkit.Extensibility.Host</AssemblyName>
     <RootNamespace>Raid.Toolkit.Extensibility</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="il2cpptoolkit.common" Version="1.0.38-g236ab9a578" />
-	<PackageReference Include="il2cpptoolkit.metadata" Version="1.0.38-g236ab9a578" />
-	<PackageReference Include="il2cpptoolkit.reversecompiler" Version="1.0.38-g236ab9a578" />
-	<PackageReference Include="il2cpptoolkit.runtime" Version="1.0.38-g236ab9a578" />
-	<PackageReference Include="il2cpptoolkit.target.netcore" Version="1.0.38-g236ab9a578" />
+    <PackageReference Include="il2cpptoolkit.common" Version="1.0.55" />
+    <PackageReference Include="il2cpptoolkit.metadata" Version="1.0.55" />
+    <PackageReference Include="il2cpptoolkit.reversecompiler" Version="1.0.55" />
+    <PackageReference Include="il2cpptoolkit.runtime" Version="1.0.55" />
+    <PackageReference Include="il2cpptoolkit.target.netcore" Version="1.0.55" />
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
-	<Reference Include="Raid.Interop.dll">
-		<HintPath>$(BinDir)Raid.Interop.dll</HintPath>
-		<Private>false</Private>
-	</Reference>
+    <Reference Include="Raid.Interop.dll">
+      <HintPath>$(BinDir)Raid.Interop.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>

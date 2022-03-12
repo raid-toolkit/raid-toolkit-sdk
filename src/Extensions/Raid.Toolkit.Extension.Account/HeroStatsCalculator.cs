@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Raid.Toolkit.DataModel;
 using System;
 using StatKindId = SharedModel.Battle.Effects.StatKindId;
+using System.Linq;
 
 namespace Raid.Toolkit.Extension.Account
 {
@@ -86,7 +87,7 @@ namespace Raid.Toolkit.Extension.Account
         {
             foreach (var bonus in bonuses)
             {
-                var statKindId = Enum.Parse<StatKindId>(bonus.KindId);
+                var statKindId = (StatKindId)Enum.Parse(typeof(StatKindId), bonus.KindId);
                 AddStat(
                     source,
                     statKindId,
@@ -101,7 +102,7 @@ namespace Raid.Toolkit.Extension.Account
         {
             foreach (var bonus in bonuses)
             {
-                var statKindId = Enum.Parse<StatKindId>(bonus.KindId);
+                var statKindId = (StatKindId)Enum.Parse(typeof(StatKindId), bonus.KindId);
                 AddStat(
                     StatSource.GearSets,
                     statKindId,
@@ -114,7 +115,7 @@ namespace Raid.Toolkit.Extension.Account
 
         public void ApplyArtifactBonuses(ArtifactStatBonus bonus)
         {
-            var statKindId = Enum.Parse<StatKindId>(bonus.KindId);
+            var statKindId = (StatKindId)Enum.Parse(typeof(StatKindId), bonus.KindId);
             var value = bonus.Value + (double)bonus.GlyphPower;
             AddStat(
                 StatSource.Gear,
@@ -139,7 +140,7 @@ namespace Raid.Toolkit.Extension.Account
         }
         public void applyArenaStats(Stats battleStats)
         {
-            foreach (StatKindId statKindId in Enum.GetValues<StatKindId>())
+            foreach (StatKindId statKindId in Enum.GetValues(typeof(StatKindId)).Cast<StatKindId>())
             {
                 AddStat(StatSource.Arena, statKindId, GetArenaStatIncrease(statKindId, battleStats.GetStat(statKindId)));
             }

@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Loader;
 using Il2CppToolkit.Common.Errors;
 using Il2CppToolkit.Model;
 using Il2CppToolkit.ReverseCompiler;
@@ -45,17 +44,6 @@ namespace Raid.Model
         [Obsolete("Use GameVersion instead")]
         public string Version => GameVersion;
 
-        private class CollectibleAssemblyLoadContext : AssemblyLoadContext
-        {
-            public CollectibleAssemblyLoadContext() : base(isCollectible: true)
-            { }
-
-            protected override Assembly Load(AssemblyName assemblyName)
-            {
-                return null;
-            }
-        }
-
         internal Task<Assembly> Load(bool force = false)
         {
             return Load(_ => { }, force);
@@ -71,7 +59,7 @@ namespace Raid.Model
                 GameVersion = gameInfo.Version;
 
                 string executingPath = Process.GetCurrentProcess().MainModule.FileName;
-                string dllPath = Path.Join(Path.GetDirectoryName(executingPath), gameInfo.Version, "Raid.Interop.dll");
+                string dllPath = Path.Combine(Path.GetDirectoryName(executingPath), gameInfo.Version, "Raid.Interop.dll");
 
                 bool shouldGenerate = force;
                 try
@@ -137,8 +125,8 @@ namespace Raid.Model
 
         private static void BuildAssembly(PlariumPlayAdapter.GameInfo gameInfo, string dllPath)
         {
-            string metadataPath = Path.Join(gameInfo.InstallPath, gameInfo.Version, @"Raid_Data\il2cpp_data\Metadata\global-metadata.dat");
-            string gasmPath = Path.Join(gameInfo.InstallPath, gameInfo.Version, @"GameAssembly.dll");
+            string metadataPath = Path.Combine(gameInfo.InstallPath, gameInfo.Version, @"Raid_Data\il2cpp_data\Metadata\global-metadata.dat");
+            string gasmPath = Path.Combine(gameInfo.InstallPath, gameInfo.Version, @"GameAssembly.dll");
 
             //
             // NB: Make sure to update CurrentInteropVersion when changing the codegen arguments!!
@@ -150,7 +138,7 @@ namespace Raid.Model
             compiler.AddTarget(new NetCoreTarget());
             compiler.AddConfiguration(
                 ArtifactSpecs.TypeSelectors.MakeValue(new List<Func<TypeDescriptor, bool>>{
-                    {td => true/*IncludeTypes.Any(rex => rex.IsMatch(td.Name))*/}
+                    {td => IncludeTypes.Any(rex => rex.IsMatch(td.Name))}
                 }),
                 ArtifactSpecs.AssemblyName.MakeValue("Raid.Interop"),
                 ArtifactSpecs.AssemblyVersion.MakeValue(CurrentInteropVersion),

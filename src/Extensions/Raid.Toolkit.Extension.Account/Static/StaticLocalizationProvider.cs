@@ -32,9 +32,13 @@ namespace Raid.Toolkit.Extension.Account
                     return false;
             }
             var staticData = scope.StaticDataManager.StaticData;
-            var localizedStrings = new Dictionary<string, string>(staticData.ClientLocalization.Concat(staticData.StaticDataLocalization)
+            var localizedStrings = new Dictionary<string, string>();
+            foreach(var entry in staticData.ClientLocalization.Concat(staticData.StaticDataLocalization)
                 .GroupBy(x => x.Key)
-                .Select(g => g.First()));
+                .Select(g => g.First()))
+            {
+                localizedStrings.Add(entry.Key, entry.Value);
+            }
             return Storage.Write(context, Key, new StaticLocalizationData
             {
                 Hash = hash,

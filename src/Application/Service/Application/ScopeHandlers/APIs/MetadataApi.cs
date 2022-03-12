@@ -17,7 +17,7 @@ namespace Raid.Service
             {
                 throw new InvalidOperationException("Game is not installed");
             }
-            s_installPath = Path.Join(gameInfo.InstallPath, gameInfo.Version);
+            s_installPath = Path.Combine(gameInfo.InstallPath, gameInfo.Version);
         }
 
         public MetadataApi(ILogger<MetadataApi> logger) : base(logger) { }

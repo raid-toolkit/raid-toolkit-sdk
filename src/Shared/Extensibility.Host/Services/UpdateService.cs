@@ -56,8 +56,8 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             {
                 string exePath = System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName!;
                 Stream newRelease = await Updater.DownloadRelease(release);
-                string tempDownload = Path.Join(RegistrySettings.InstallationPath, $"{exeName}.update");
-                string currentBackup = Path.Join(RegistrySettings.InstallationPath, $"{Path.GetFileNameWithoutExtension(exeName)}.{ThisAssembly.AssemblyFileVersion}.exe");
+                string tempDownload = Path.Combine(RegistrySettings.InstallationPath, $"{exeName}.update");
+                string currentBackup = Path.Combine(RegistrySettings.InstallationPath, $"{Path.GetFileNameWithoutExtension(exeName)}.{ThisAssembly.AssemblyFileVersion}.exe");
                 using (Stream newFile = File.Create(tempDownload))
                 {
                     newRelease.CopyTo(newFile);

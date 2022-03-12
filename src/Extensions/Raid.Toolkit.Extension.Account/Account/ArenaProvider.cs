@@ -46,15 +46,19 @@ namespace Raid.Toolkit.Extension.Account
             var capitalLevels = userWrapper.Village.VillageData.CapitolBonusLevelByStatByElement;
 
             List<GreatHallBonus> ghBonus = new();
-            foreach ((var element, var bonus) in capitalLevels)
+            foreach (var kvp in capitalLevels)
             {
+                var element = kvp.Key;
+                var bonus = kvp.Value;
                 if (bonus == null)
                 {
                     continue;
                 }
                 List<StatBonus> bonuses = new();
-                foreach ((var statKindId, var level) in bonus)
+                foreach (var kvp2 in bonus)
                 {
+                    var statKindId = kvp2.Key;
+                    var level = kvp2.Value;
                     if (staticBonusData.TryGetValue(statKindId, out var bonusValues))
                     {
                         bonuses.Add(bonusValues[level - 1]);
