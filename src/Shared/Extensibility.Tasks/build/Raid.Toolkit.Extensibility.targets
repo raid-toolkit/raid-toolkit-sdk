@@ -18,10 +18,10 @@
                 $(CoreCompileDependsOn)
             </CoreCompileDependsOn> -->
 
-            <PrepareForBuildDependsOn>
+            <ResolveAssemblyReferencesDependsOn>
                 GenerateRTKInteropAssembly;
-                $(PrepareForBuildDependsOn)
-            </PrepareForBuildDependsOn>
+                $(ResolveAssemblyReferencesDependsOn)
+            </ResolveAssemblyReferencesDependsOn>
         </PropertyGroup>
     </Target>
 
