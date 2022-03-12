@@ -5,7 +5,7 @@
         <LangVersion>10.0</LangVersion>
         <AssemblyName>Raid.Toolkit.Extension.Account</AssemblyName>
         <RootNamespace>Raid.Toolkit.Extension.Account</RootNamespace>
-        <RaidToolkitSdkTasksPath>..\bin\Debug\net5.0\</RaidToolkitSdkTasksPath>
+        <RaidToolkitSdkTasksPath>..\bin\Debug\net5.0-windows\</RaidToolkitSdkTasksPath>
         <RTKTasks Condition=" '$(RTKTasks)' == '' ">false</RTKTasks>
     </PropertyGroup>
 
@@ -13,10 +13,6 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
-        <Reference Include="Raid.Interop.dll" Condition=" '$(RTKTasks)' == 'false' ">
-            <HintPath>$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
-            <Private>false</Private>
-        </Reference>
     </ItemGroup>
 
     <ItemGroup>
