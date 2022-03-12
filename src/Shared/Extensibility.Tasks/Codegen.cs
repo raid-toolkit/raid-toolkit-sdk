@@ -11,6 +11,7 @@ namespace Raid.Toolkit.Extensibility.Tasks
         public string OutputFile { get; set; }
         public override bool Execute()
         {
+
             Log.LogMessage($"Writing to {OutputFile}...");
             AssemblyBuilder ab = AssemblyBuilder.DefineDynamicAssembly(new("Test.Assembly"), AssemblyBuilderAccess.RunAndCollect);
             ModuleBuilder mb = ab.DefineDynamicModule("Test.Assembly");

@@ -58,7 +58,7 @@ namespace Raid.Toolkit.Extensibility.Host
             foreach (var pkg in Locator.GetAllPackages())
                 ExtensionPackages.Add(pkg.Id, PackageLoader.LoadPackage(pkg));
 
-            var typePatterns = ExtensionPackages.Values.OfType<IRequireCodegen>().SelectMany(cg => cg.TypePatterns);
+            var typePatterns = ExtensionPackages.Values.OfType<IRequireCodegen>().SelectMany(cg => cg.TypeFilter.IncludeTypes);
             await Task.Run(() => ModelLoader.Load(typePatterns, false));
         }
 

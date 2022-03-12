@@ -13,7 +13,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
-		<Reference Include="Raid.Interop.dll" Condition=" '$(RTKTasks)' != 'true' ">
+		<Reference Include="Raid.Interop.dll" Condition=" '$(RTKTasks)' == 'false' ">
 			<HintPath>$(BinDir)Raid.Interop.dll</HintPath>
 			<Private>false</Private>
 		</Reference>

@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.Common;
@@ -11,17 +10,17 @@ namespace Raid.Toolkit.Extension.Account
     [ExtensionPackage("Raid.Toolkit.Extension.Account", "Account", "Extracts account data")]
     public class AccountExtension : IExtensionPackage, IRequireCodegen, IDisposable
     {
-        private static readonly Regex[] IncludeTypes = new[] {
+        private static readonly CodegenTypeFilter kTypeFilter = new(new[] {
             new Regex(@"^Client\.Model\.AppModel$", RegexOptions.Singleline | RegexOptions.Compiled),
             new Regex(@"^Client\.Model\.Gameplay\.Artifacts\.ExternalArtifactsStorage$", RegexOptions.Singleline | RegexOptions.Compiled),
             new Regex(@"^Client\.Model\.Gameplay\.StaticData\.ClientStaticDataManager$", RegexOptions.Singleline | RegexOptions.Compiled),
             new Regex(@"^SharedModel\.Meta\.Artifacts\.ArtifactStorage\.ArtifactStorageResolver$", RegexOptions.Singleline | RegexOptions.Compiled)
-        };
+        });
 
         private DisposableCollection Handles = new();
         private bool IsDisposed;
 
-        public IEnumerable<Regex> TypePatterns => IncludeTypes;
+        public CodegenTypeFilter TypeFilter => kTypeFilter;
 
         public AccountExtension(ILogger<AccountExtension> logger)
         {

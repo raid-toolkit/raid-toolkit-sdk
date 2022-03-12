@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
@@ -15,15 +14,15 @@ namespace Raid.Toolkit.Extensibility.Host
         private Assembly ExtensionAsm;
         private IExtensionPackage Instance;
 
-        public IEnumerable<Regex> TypePatterns
+        public CodegenTypeFilter TypeFilter
         {
             get
             {
                 if (EnsureInstance() is IRequireCodegen requireCodegen)
                 {
-                    return requireCodegen.TypePatterns;
+                    return requireCodegen.TypeFilter;
                 }
-                return Array.Empty<Regex>();
+                return new(Array.Empty<Regex>());
             }
         }
 
