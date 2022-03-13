@@ -9,6 +9,7 @@
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
         <AssemblyName>Raid.Toolkit.Extensibility.Tasks</AssemblyName>
         <RootNamespace>Raid.Toolkit.Extensibility.Tasks</RootNamespace>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 
     <ItemGroup>

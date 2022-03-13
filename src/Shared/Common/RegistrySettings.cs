@@ -68,7 +68,7 @@ namespace Raid.Toolkit.Common
             get
             {
                 var hive = Registry.CurrentUser.OpenSubKey(RTKHive);
-                return hive == null ? DefaultInstallationPath : (string)hive.GetValue(InstallFolderKey, DefaultInstallationPath);
+                return hive == null ? DefaultInstallationPath : (string)hive.GetValue(InstallFolderKey, DefaultInstallationPath)!;
             }
             set
             {
@@ -94,12 +94,12 @@ namespace Raid.Toolkit.Common
         {
             try
             {
-                RegistryKey? classesKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Classes", true);
-                classesKey?.DeleteSubKeyTree(RegistrySettings.Protocol, false);
+                RegistryKey classesKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Classes", true);
+                classesKey?.DeleteSubKeyTree(Protocol, false);
 
                 if (registerProtocolHandler && classesKey != null)
                 {
-                    RegistryKey classKey = classesKey.CreateSubKey(RegistrySettings.Protocol);
+                    RegistryKey classKey = classesKey.CreateSubKey(Protocol);
                     classKey.SetValue(null, "URL:Raid Toolkit");
                     classKey.SetValue("URL Protocol", "");
                     var cmdKey = classKey.CreateSubKey("shell").CreateSubKey("open").CreateSubKey("command");

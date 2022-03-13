@@ -10,7 +10,9 @@ namespace Raid.Client
     {
         internal RuntimeApi(RaidToolkitClient client) : base(client) { }
 
+#pragma warning disable 0067
         public event EventHandler<SerializableEventArgs> Updated;
+#pragma warning restore 0067
 
         public Task<Account[]> GetConnectedAccounts()
         {
