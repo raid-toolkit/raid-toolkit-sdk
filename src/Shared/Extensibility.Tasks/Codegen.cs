@@ -50,7 +50,7 @@ namespace Raid.Toolkit.Extensibility.Tasks
             if (File.Exists(OutputFile))
                 File.Delete(OutputFile);
 
-            File.Move(dllPath, OutputFile);
+            File.Copy(dllPath, OutputFile);
 
             return true;
         }

@@ -1,8 +1,7 @@
 {
   "profiles": {
     "Raid.Toolkit": {
-      "commandName": "Project",
-      "commandLineArgs": "--standalone --debug"
+      "commandName": "Project"
     }
   }
 }

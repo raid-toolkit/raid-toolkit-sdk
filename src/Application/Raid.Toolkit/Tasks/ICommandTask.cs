@@ -6,18 +6,21 @@ namespace Raid.Toolkit
     internal interface ICommandTask
     {
         Type OptionsType { get; }
-        Task<int> Invoke(object options);
+        ApplicationStartupCondition Parse(object options);
+        Task<int> Invoke();
     }
 
     internal abstract class CommandTaskBase<T> : ICommandTask
     {
         public Type OptionsType => typeof(T);
 
-        public Task<int> Invoke(object options)
+        public abstract ApplicationStartupCondition Parse(T options);
+        public abstract Task<int> Invoke();
+
+        public ApplicationStartupCondition Parse(object options)
         {
-            return Invoke((T)options);
+            return Parse((T)options);
         }
 
-        protected abstract Task<int> Invoke(T options);
     }
 }

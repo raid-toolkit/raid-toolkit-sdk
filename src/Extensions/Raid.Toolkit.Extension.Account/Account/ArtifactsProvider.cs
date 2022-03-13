@@ -68,10 +68,12 @@ namespace Raid.Toolkit.Extension.Account
             {
                 state = new ArtifactsProviderState();
             }
+            bool hasUpdates = false;
 
             if (previous != null && state.ShouldIncrementalUpdate(artifactData))
             {
                 artifacts = previous.Values.ToList();
+                hasUpdates = true;
             }
             else
             {
@@ -90,11 +92,16 @@ namespace Raid.Toolkit.Extension.Account
             foreach (var artifactEntry in artifacts)
             {
                 if (artifactEntry == null) continue;
-                if (deletedArtifacts.Contains(artifactEntry.Id)) continue;
+                if (deletedArtifacts.Contains(artifactEntry.Id))
+                {
+                    hasUpdates = true;
+                    continue;
+                }
 
                 if (updatedArtifacts.TryGetValue(artifactEntry.Id, out var artifact))
                 {
                     result.Add(artifactEntry.Id, artifact.ToModel());
+                    hasUpdates = true;
                 }
                 else
                 {
@@ -102,7 +109,12 @@ namespace Raid.Toolkit.Extension.Account
                 }
 
             }
-            return Storage.Write(context, Key, result);
+
+            if (hasUpdates)
+            {
+                return Storage.Write(context, Key, result);
+            }
+            return false;
         }
 
         private static IReadOnlyList<Artifact> GetArtifacts(ModelScope scope)

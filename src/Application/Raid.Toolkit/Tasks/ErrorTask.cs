@@ -7,9 +7,17 @@ namespace Raid.Toolkit
 {
     internal class ErrorTask : CommandTaskBase<IEnumerable<Error>>
     {
-        protected override Task<int> Invoke(IEnumerable<Error> errors)
+        private List<Error> Errors = new();
+
+        public override ApplicationStartupCondition Parse(IEnumerable<Error> options)
         {
-            foreach (var error in errors)
+            Errors.AddRange(options);
+            return ApplicationStartupCondition.None;
+        }
+
+        public override Task<int> Invoke()
+        {
+            foreach (var error in Errors)
             {
                 Console.WriteLine(error.ToString());
             }

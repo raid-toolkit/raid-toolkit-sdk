@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -5,15 +6,24 @@ using CommandLine;
 
 namespace Raid.Toolkit
 {
+    [Flags]
+    internal enum ApplicationStartupCondition
+    {
+        None = 0,
+        Usage = (1 << 0),
+        Services = (1 << 1)
+    }
     internal class ApplicationStartupTask
     {
         private readonly List<ICommandTask> Tasks;
+        private ICommandTask? SelectedTask;
+
         public ApplicationStartupTask(IEnumerable<ICommandTask> tasks)
         {
             Tasks = new(tasks);
         }
 
-        public Task<int> Execute(string[] args)
+        public ApplicationStartupCondition Parse(string[] args)
         {
             var parser = new Parser(settings =>
             {
@@ -31,22 +41,26 @@ namespace Raid.Toolkit
             }
 
             if (valueType == null)
-                return UsageError();
+                return ApplicationStartupCondition.Usage;
 
             foreach (var task in Tasks)
             {
                 if (valueType.GetType().IsAssignableTo(task.OptionsType))
                 {
-                    return task.Invoke(valueType);
+                    SelectedTask = task;
+                    return task.Parse(valueType);
                 }
             }
 
-            return UsageError();
+            return ApplicationStartupCondition.Usage;
         }
 
-        private Task<int> UsageError()
+        public Task<int> Execute()
         {
-            return Task.FromResult(255);
+            if (SelectedTask == null)
+                return Task.FromResult(255);
+
+            return SelectedTask.Invoke();
         }
     }
 }
