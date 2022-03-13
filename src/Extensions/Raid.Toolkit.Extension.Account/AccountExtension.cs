@@ -14,7 +14,6 @@ namespace Raid.Toolkit.Extension.Account
 
         public AccountExtension(ILogger<AccountExtension> logger)
         {
-            logger.LogInformation("Test");
         }
 
         public void OnActivate(IExtensionHost host)
