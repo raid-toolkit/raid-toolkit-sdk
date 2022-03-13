@@ -26,6 +26,7 @@ namespace Raid.Toolkit.Extension.Account
             Handles.Add(host.RegisterDataProvider<StaticLocalizationProvider>());
             Handles.Add(host.RegisterDataProvider<StaticSkillProvider>());
             Handles.Add(host.RegisterDataProvider<StaticStageProvider>());
+            Handles.Add(host.RegisterMessageScopeHandler<StaticDataApi>());
 
             Handles.Add(host.RegisterDataProvider<AcademyProvider>());
             Handles.Add(host.RegisterDataProvider<AccountInfoProvider>());
