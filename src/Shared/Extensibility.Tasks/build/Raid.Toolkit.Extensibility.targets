@@ -3,6 +3,7 @@
         <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
         <OutputAssemblyName>Raid.Interop</OutputAssemblyName>
         <OutputAssemblyFile>$(OutputAssemblyName).dll</OutputAssemblyFile>
+        <GenerateInterop Condition=" '$(RTKTasks)' == 'false' ">false</GenerateInterop>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,9 +16,9 @@
 
     <UsingTask AssemblyFile="$(RaidToolkitSdkTasksPath)Raid.Toolkit.Extensibility.Tasks.dll" TaskName="Raid.Toolkit.Extensibility.Tasks.Codegen" Condition=" '$(RTKTasks)' != 'false' "/>
 
-    <Target Name="RTK_SetDefaults" Condition=" '$(RTKTasks)' != 'false' ">
+    <Target Name="RTK_SetDefaults">
         <PropertyGroup>
-            <GenerateInterop Condition=" '$(GenerateInterop)' == '' and '$(TargetExt)' != '.dll'">false</GenerateInterop>
+            <GenerateInterop Condition=" '$(GenerateInterop)' == '' and '$(TargetExt)' != '.dll' ">false</GenerateInterop>
             <!-- 
             <CoreCompileDependsOn>
                 GenerateRTKInteropAssembly;
@@ -31,9 +32,11 @@
         </PropertyGroup>
     </Target>
 
-    <Target Name="GenerateRTKInteropAssembly" Condition=" '$(GenerateInterop)' == 'true' ">
+    <Target Name="GenerateRTKInteropAssembly">
         <MakeDir Directories="$(IntermediateOutputPath)" />
-        <Raid.Toolkit.Extensibility.Tasks.Codegen OutputFile="$(IntermediateOutputPath)$(OutputAssemblyFile)" ManifestFiles="@(RTKExtensionManifest -> '%(FullPath)')" />
+
+        <Raid.Toolkit.Extensibility.Tasks.Codegen Condition=" '$(RTKTasks)' == 'true' and '$(GenerateInterop)' != 'false' " OutputFile="$(IntermediateOutputPath)$(OutputAssemblyFile)" ManifestFiles="@(RTKExtensionManifest -> '%(FullPath)')" />
+
         <ItemGroup>
             <EmbeddedResource Include="@(RTKExtensionManifest)" LogicalName="PackageManifest" />
         </ItemGroup>
@@ -42,8 +45,8 @@
     <ItemGroup>
         <Reference Include="$(OutputAssemblyName)">
             <!-- For internal builds only -->
-            <HintPath Condition=" '$(GenerateInterop)' != 'true' ">$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
-            <HintPath Condition=" '$(GenerateInterop)' == 'true' ">$(IntermediateOutputPath)$(OutputAssemblyFile)</HintPath>
+            <HintPath Condition=" '$(RTKTasks)' == 'false' ">$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
+            <HintPath Condition=" '$(RTKTasks)' == 'true' ">$(IntermediateOutputPath)$(OutputAssemblyFile)</HintPath>
             <Private>False</Private>
             <SpecificVersion>False</SpecificVersion>
             <CopyLocal>False</CopyLocal>

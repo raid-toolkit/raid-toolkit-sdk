@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
@@ -18,11 +21,19 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             get
             {
-                if (EnsureInstance() is IRequireCodegen requireCodegen)
+                List<Regex> typePatterns = new();
+                JsonSerializer serializer = new();
+                using (var stream = ExtensionAsm.GetManifestResourceStream("PackageManifest"))
+                using (StreamReader reader = new(stream))
+                using (JsonTextReader textReader = new(reader))
                 {
-                    return requireCodegen.TypeFilter;
+                    ExtensionManifest manifest = serializer.Deserialize<ExtensionManifest>(textReader);
+                    if (manifest.Codegen?.Types != null)
+                    {
+                        typePatterns.AddRange(manifest.Codegen.Types.Select(pattern => new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled)));
+                    }
                 }
-                return new(Array.Empty<Regex>());
+                return new(typePatterns.ToArray());
             }
         }
 
