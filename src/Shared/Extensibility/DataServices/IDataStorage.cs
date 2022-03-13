@@ -4,10 +4,12 @@ namespace Raid.Toolkit.Extensibility.DataServices
 {
     public class DataStorageUpdatedEventArgs : EventArgs
     {
+        public IDataContext Context { get; }
         public string Key { get; }
         public object Value { get; }
-        public DataStorageUpdatedEventArgs(string key, object value)
+        public DataStorageUpdatedEventArgs(IDataContext context, string key, object value)
         {
+            Context = context;
             Key = key;
             Value = value;
         }

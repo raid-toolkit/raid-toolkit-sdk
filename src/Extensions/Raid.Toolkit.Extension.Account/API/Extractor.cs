@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extension.Account;
-using StaticData = Raid.Toolkit.Extension.Account.StaticData;
+using StaticDataWrapper = Raid.Toolkit.Extension.Account.StaticDataWrapper;
 
 namespace RaidExtractor.Core
 {
@@ -30,7 +30,7 @@ namespace RaidExtractor.Core
                 && data.AssignedHeroes.Any(slot => slot.FirstHero == hero.Id || slot.SecondHero == hero.Id);
         }
 
-        public AccountDump DumpAccount(AccountData accountData, StaticData staticData, string accountId, DateTime lastUpdated)
+        public AccountDump DumpAccount(AccountData accountData, StaticDataWrapper staticData, string accountId, DateTime lastUpdated)
         {
             var accountFacet = accountData.Account;
             var artifacts = accountData.Artifacts;

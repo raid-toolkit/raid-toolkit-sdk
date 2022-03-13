@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.DataModel;
+using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Services;
 using SharedModel.Meta.Skills;
@@ -18,29 +19,29 @@ namespace Raid.Toolkit.Extension.Account
         public AccountApi(
             ILogger<AccountApi> logger,
             CachedDataStorage<PersistedDataStorage> storage
-            // EventService eventService
             )
             : base(logger)
         {
             Storage = storage;
             Extractor = new Extractor();
-            // eventService.OnAccountUpdated += OnAccountUpdated;
+            Storage.Updated += OnStorageUpdated;
         }
 
-        private void OnAccountUpdated(object sender, AccountUpdatedEventArgs e)
+        private void OnStorageUpdated(object sender, DataStorageUpdatedEventArgs e)
         {
-            Updated?.Invoke(this, e);
+            if (e.Context is AccountDataContext context)
+            {
+                Updated?.Invoke(this, new AccountUpdatedEventArgs(context.AccountId));
+            }
         }
 
         [PublicApi("updated")]
-#pragma warning disable 0067
         public event EventHandler<SerializableEventArgs> Updated;
-#pragma warning restore 0067
 
         public Task<RaidExtractor.Core.AccountDump> GetAccountDump(string accountId)
         {
             // TODO: Get LastUpdated
-            return Task.FromResult(Extractor.DumpAccount(new AccountData(Storage, accountId), new StaticData(Storage), accountId, DateTime.UtcNow));
+            return Task.FromResult(Extractor.DumpAccount(new AccountData(Storage, accountId), new StaticDataWrapper(Storage), accountId, DateTime.UtcNow));
         }
 
         public Task<Resources> GetAllResources(string accountId)
@@ -118,7 +119,7 @@ namespace Raid.Toolkit.Extension.Account
 
         private HeroSnapshot GetSnapshot(string accountId, Hero hero)
         {
-            StaticData staticData = new(Storage);
+            StaticDataWrapper staticData = new(Storage);
             AccountData accountData = new(Storage, accountId);
             HeroType type = hero.Type;
             HeroStatsCalculator stats = new(type, (int)Enum.Parse(typeof(SharedModel.Meta.Heroes.HeroGrade), hero.Rank), hero.Level);

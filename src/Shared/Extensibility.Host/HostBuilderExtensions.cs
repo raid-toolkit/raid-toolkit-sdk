@@ -30,7 +30,6 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             return (
                 services
-                .AddModelHostShared()
                 .AddScoped<IPackageContext, PackageContext>()
                 .AddSingleton<ExtensionHost>()
                 .AddSingleton<IModelLoader, ModelLoader>()

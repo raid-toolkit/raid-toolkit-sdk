@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
-using Raid.DataServices;
 
 namespace Raid.Toolkit.Extensibility.Providers
 {
@@ -15,7 +14,6 @@ namespace Raid.Toolkit.Extensibility.Providers
         public string Version;
     }
 
-    [DataType("_index")]
     public class SerializedDataIndex
     {
         [JsonProperty("lastUpdated")]

@@ -57,7 +57,7 @@ namespace Raid.Toolkit.Extensibility.DataServices
             if (updatedValue == value)
             {
                 _ = (UnderlyingStorage?.Write(context, key, value));
-                Updated?.Invoke(this, new DataStorageUpdatedEventArgs(key, value));
+                Updated?.Invoke(this, new DataStorageUpdatedEventArgs(context, key, value));
                 return true;
             }
             return false;

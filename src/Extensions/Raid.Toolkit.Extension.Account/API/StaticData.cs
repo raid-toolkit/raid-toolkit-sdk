@@ -4,10 +4,10 @@ using Raid.Toolkit.Extensibility.DataServices;
 
 namespace Raid.Toolkit.Extension.Account
 {
-    public class StaticData
+    public class StaticDataWrapper
     {
         private readonly CachedDataStorage<PersistedDataStorage> Storage;
-        public StaticData(CachedDataStorage<PersistedDataStorage> storage)
+        public StaticDataWrapper(CachedDataStorage<PersistedDataStorage> storage)
         {
             Storage = storage;
         }
