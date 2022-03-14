@@ -109,7 +109,6 @@ namespace Raid.Toolkit.Extension.Realtime
                 ProcessAccessFlags.Read | ProcessAccessFlags.Write,
                 inheritHandle: true,
                 proc.Id);
-            Console.WriteLine($"OpenProcess: {hProcess}, LastError = {NativeWrapper.LastError}");
             try
             {
                 return fn(hProcess, unityPlayerModule.BaseAddress, offset);
