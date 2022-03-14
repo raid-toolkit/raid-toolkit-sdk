@@ -49,6 +49,7 @@
 
     <ItemGroup>
         <ProjectReference Include="$(SourceDir)Extensions\Account\Account.csproj" />
+        <ProjectReference Include="$(SourceDir)Extensions\Realtime\Realtime.csproj" />
         <ProjectReference Include="$(SourceDir)Shared\Extensibility\Extensibility.csproj" />
         <ProjectReference Include="$(SourceDir)Shared\Extensibility.Host\Extensibility.Host.csproj" />
     </ItemGroup>

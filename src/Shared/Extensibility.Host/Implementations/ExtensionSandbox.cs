@@ -14,9 +14,9 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly PackageDescriptor Descriptor;
         private readonly IPackageInstanceFactory InstanceFactory;
         private ExtensionLoadContext LoadContext;
-        private Assembly ExtensionAsm;
         private IExtensionPackage Instance;
 
+        public Assembly ExtensionAsm { get; private set; }
         public CodegenTypeFilter TypeFilter
         {
             get

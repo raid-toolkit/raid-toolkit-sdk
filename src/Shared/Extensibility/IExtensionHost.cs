@@ -8,5 +8,6 @@ namespace Raid.Toolkit.Extensibility
     {
         IDisposable RegisterMessageScopeHandler<T>() where T : IMessageScopeHandler;
         IDisposable RegisterDataProvider<T>() where T : IDataProvider;
+        IDisposable RegisterBackgroundService<T>() where T : IBackgroundService;
     }
 }

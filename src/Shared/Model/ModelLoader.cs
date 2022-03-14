@@ -40,16 +40,36 @@ namespace Raid.Toolkit.Model
         public string GameVersion { get; private set; }
         public Version InteropVersion { get; private set; }
         public string OutputDirectory { get; set; }
+        private Assembly InteropAsm;
+
+        public ModelLoader()
+        {
+            AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
+        }
+
+        private Assembly OnAssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            try
+            {
+                AssemblyName name = new(args.Name);
+                if (name.Name == "Raid.Interop")
+                {
+                    return InteropAsm;
+                }
+            }
+            catch (Exception) { }
+            return null;
+        }
 
         public async Task<Assembly> BuildAndLoad(IEnumerable<Regex> regices, bool force)
         {
             try
             {
                 string dllPath = await Build(regices, force);
-                Assembly asm = Assembly.LoadFrom(dllPath);
-                PostfixTypes(asm);
+                InteropAsm = Assembly.LoadFrom(dllPath);
+                PostfixTypes(InteropAsm);
                 OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Loaded));
-                return asm;
+                return InteropAsm;
             }
             catch (Exception)
             {

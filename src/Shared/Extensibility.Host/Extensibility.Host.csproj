@@ -15,7 +15,7 @@
         <PackageReference Include="il2cpptoolkit.target.netcore" Version="1.0.59" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
-        <Reference Include="Raid.Interop.dll">
+        <Reference Include="Raid.Interop">
             <HintPath>$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
             <Private>False</Private>
             <SpecificVersion>False</SpecificVersion>

@@ -1,3 +1,5 @@
+using System.IO;
+using System.Reflection;
 using Newtonsoft.Json;
 
 namespace Raid.Toolkit.Extensibility
@@ -18,6 +20,17 @@ namespace Raid.Toolkit.Extensibility
 
         [JsonProperty("codegen")]
         public ExtensionManifestCodegen Codegen { get; set; }
+
+        public static ExtensionManifest FromAssembly(Assembly asm)
+        {
+            JsonSerializer serializer = new();
+            using (var stream = asm.GetManifestResourceStream("PackageManifest"))
+            using (StreamReader reader = new(stream))
+            using (JsonTextReader textReader = new(reader))
+            {
+                return serializer.Deserialize<ExtensionManifest>(textReader);
+            }
+        }
     }
 
     public class ExtensionManifestCodegen

@@ -2,11 +2,11 @@ root = true
 
 [*.cs]
 # expression value is never used
-dotnet_diagnostic.IDE0058.severity = none
+# dotnet_diagnostic.IDE0058.severity = none
 # unreferenced using
-dotnet_diagnostic.IDE0005.severity = error
-dotnet_diagnostic.IDE0051.severity = error
-dotnet_diagnostic.IDE0090.severity = error
+# dotnet_diagnostic.IDE0005.severity = error
+# dotnet_diagnostic.IDE0051.severity = error
+# dotnet_diagnostic.IDE0090.severity = error
 dotnet_diagnostic.IDE0130.severity = none
 # var
 dotnet_diagnostic.IDE0008.severity = none

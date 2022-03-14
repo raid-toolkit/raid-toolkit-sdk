@@ -10,12 +10,5 @@ namespace Raid.Toolkit
         public ProcessManagerSettings? ProcessManager { get; set; }
         public UpdateSettings? ApplicationUpdates { get; set; }
         public DataUpdateSettings? DataSettings { get; set; }
-        public FrameRateSettings? FrameRate { get; set; }
-    }
-    public class FrameRateSettings
-    {
-        public int MaxFrameRate { get; set; }
-        public int ArtifactUpgradeFrameRate { get; set; }
-        public bool AutosetFramerate { get; set; }
     }
 }

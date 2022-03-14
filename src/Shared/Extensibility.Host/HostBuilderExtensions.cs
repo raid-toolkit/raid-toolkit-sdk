@@ -38,6 +38,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 .AddSingleton<IContextDataManager, ContextDataManager>()
                 .AddSingleton<IScopedServiceManager, ScopedServiceManager>()
                 .AddSingleton<ISessionManager, SessionManager>()
+                .AddSingleton<IServiceManager, ServiceManager>()
                 .AddSingleton<IProcessManager, ProcessManager>()
                 .AddSingleton<IPackageManager, TPackageManager>()
                 .AddSingleton<IGameInstanceManager, GameInstanceManager>()
@@ -50,6 +51,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 .AddSingleton<GitHub.Updater>()
                 .AddHostedServiceSingleton<UpdateService>()
                 .AddHostedService<ApplicationHost>()
+                .AddHostedService<ServiceExecutor>()
                 .AddHostedServiceSingleton<IDataStorageReaderWriter, FileStorageService>()
             );
         }

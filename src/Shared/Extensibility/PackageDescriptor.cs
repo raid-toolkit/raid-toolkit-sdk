@@ -10,14 +10,10 @@ namespace Raid.Toolkit.Extensibility
         public string Location { get; }
         public Assembly Assembly { get; }
 
-        public static PackageDescriptor FromAttribute(ExtensionPackageAttribute attribute, string location)
+        public static PackageDescriptor FromAssembly(Assembly assembly)
         {
-            return new(attribute.Id, attribute.Name, attribute.Description, location);
-        }
-
-        public static PackageDescriptor FromAttribute(ExtensionPackageAttribute attribute, Assembly assembly)
-        {
-            return new(attribute.Id, attribute.Name, attribute.Description, assembly);
+            ExtensionManifest manifest = ExtensionManifest.FromAssembly(assembly);
+            return new(manifest.Id, manifest.DisplayName, manifest.Description, assembly);
         }
 
         public PackageDescriptor(string id, string name, string description, string location)

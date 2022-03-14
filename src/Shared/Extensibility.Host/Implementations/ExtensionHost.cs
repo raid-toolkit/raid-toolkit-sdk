@@ -15,6 +15,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IPackageManager Locator;
         private readonly IServiceProvider ServiceProvider;
         private readonly IScopedServiceManager ScopedServices;
+        private readonly IServiceManager ServiceManager;
         private readonly IContextDataManager DataManager;
         private readonly Dictionary<string, IExtensionPackage> ExtensionPackages = new();
         private bool IsDisposed;
@@ -25,6 +26,7 @@ namespace Raid.Toolkit.Extensibility.Host
             IScopedServiceManager scopedServices,
             IContextDataManager dataManager,
             IModelLoader modelLoader,
+            IServiceManager serviceManager,
             IServiceProvider serviceProvider
             )
         {
@@ -33,6 +35,7 @@ namespace Raid.Toolkit.Extensibility.Host
             ScopedServices = scopedServices;
             DataManager = dataManager;
             ModelLoader = modelLoader;
+            ServiceManager = serviceManager;
             ServiceProvider = serviceProvider;
         }
 
@@ -49,6 +52,13 @@ namespace Raid.Toolkit.Extensibility.Host
         public IDisposable RegisterDataProvider<T>() where T : IDataProvider
         {
             return DataManager.AddProvider<T>();
+        }
+
+        public IDisposable RegisterBackgroundService<T>() where T : IBackgroundService
+        {
+            IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
+            T instance = ActivatorUtilities.CreateInstance<T>(scope);
+            return ServiceManager.AddService(instance);
         }
         #endregion
 
@@ -115,6 +125,7 @@ namespace Raid.Toolkit.Extensibility.Host
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+
         #endregion
     }
 }

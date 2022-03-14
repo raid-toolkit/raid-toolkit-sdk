@@ -5,8 +5,6 @@ using Raid.Toolkit.Extensibility;
 
 namespace Raid.Toolkit.Extension.Account
 {
-    // TEMP: ID MUST match the DLL filename
-    [ExtensionPackage("Raid.Toolkit.Extension.Account", "Account", "Extracts account data")]
     public class AccountExtension : IExtensionPackage, IDisposable
     {
         private DisposableCollection Handles = new();

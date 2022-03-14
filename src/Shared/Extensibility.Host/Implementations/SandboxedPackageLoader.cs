@@ -9,7 +9,10 @@ namespace Raid.Toolkit.Extensibility.Host
         private bool IsDisposed;
 
         private IPackageInstanceFactory InstanceFactory;
-        public SandboxedPackageLoader(IPackageInstanceFactory instanceFactory) => InstanceFactory = instanceFactory;
+        public SandboxedPackageLoader(IPackageInstanceFactory instanceFactory)
+        {
+            InstanceFactory = instanceFactory;
+        }
 
         public IExtensionPackage LoadPackage(PackageDescriptor descriptor)
         {

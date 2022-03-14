@@ -26,6 +26,7 @@ namespace Raid.Toolkit
 
             // add packaged extensions
             Descriptors.Add(DescriptorFor<Extension.Account.AccountExtension>());
+            Descriptors.Add(DescriptorFor<Extension.Realtime.RealtimeExtension>());
 
             if (Directory.Exists(ExtensionsDirectory))
             {
@@ -40,9 +41,7 @@ namespace Raid.Toolkit
 
         private static PackageDescriptor DescriptorFor<T>()
         {
-            var attr = typeof(T).GetCustomAttribute<ExtensionPackageAttribute>(true);
-            var descriptor = PackageDescriptor.FromAttribute(attr, typeof(T).Assembly);
-            return descriptor;
+            return PackageDescriptor.FromAssembly(typeof(T).Assembly);
         }
 
         public PackageDescriptor AddPackage(PackageDescriptor packageToInstall)
