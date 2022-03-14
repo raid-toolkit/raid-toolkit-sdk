@@ -22,7 +22,7 @@
         "-p:RTKTasks=true"
       ],
       "targetOutputLogPath": "${workspaceFolder}/output.log",
-      "cwd": "${workspaceFolder}/src/Extensions/Raid.Toolkit.Extension.Account",
+      "cwd": "${workspaceFolder}/src/Extensions/Account",
       "stopAtEntry": false,
       "console": "internalConsole"
     },

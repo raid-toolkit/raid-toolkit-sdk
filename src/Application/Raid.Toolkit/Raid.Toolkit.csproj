@@ -48,9 +48,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="$(SourceDir)Extensions\Raid.Toolkit.Extension.Account\Account.csproj" />
-        <ProjectReference Include="$(SourceDir)Shared\Extensibility.Host\Extensibility.Host.csproj" />
+        <ProjectReference Include="$(SourceDir)Extensions\Account\Account.csproj" />
         <ProjectReference Include="$(SourceDir)Shared\Extensibility\Extensibility.csproj" />
+        <ProjectReference Include="$(SourceDir)Shared\Extensibility.Host\Extensibility.Host.csproj" />
     </ItemGroup>
 
 </Project>
