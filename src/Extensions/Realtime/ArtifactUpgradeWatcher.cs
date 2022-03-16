@@ -4,15 +4,12 @@ using Client.ViewModel.Contextes.ArtifactsUpgrade;
 using Client.ViewModel.Contextes.Base;
 using Client.ViewModel.DTO;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using ProcessMemoryUtilities.Managed;
 using ProcessMemoryUtilities.Native;
-using Raid.Toolkit.Extensibility;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Extension.Realtime
 {
@@ -23,38 +20,31 @@ namespace Raid.Toolkit.Extension.Realtime
         public bool AutosetFramerate { get; set; } = true;
     }
 
-    public class FramerateService : IBackgroundService
+    public class ArtifactUpgradeWatcher : IDisposable
     {
-        private static readonly TimeSpan kPollInterval = new(0, 0, 0, 0, 100);
-        private static readonly FrameRateSettings DefaultSettings = new() { MaxFrameRate = 60, AutosetFramerate = true, ArtifactUpgradeFrameRate = 10 };
         private static readonly Dictionary<Version, ulong> VersionToOffset = new()
         {
             { Version.Parse("2020.3.16.40302"), 0x1942BB0 },
         };
 
-        private readonly IOptions<FrameRateSettings> Settings;
-        private readonly ILogger<FramerateService> Logger;
+        private readonly FrameRateSettings Settings;
+        private readonly ILogger<ArtifactUpgradeWatcher> Logger;
+        private bool IsDisposed;
 
-        public TimeSpan PollInterval => kPollInterval;
-
-        public FramerateService(
-            IOptions<FrameRateSettings> settings,
-            ILogger<FramerateService> logger)
+        public ArtifactUpgradeWatcher(ILogger<ArtifactUpgradeWatcher> logger)
         {
-            Settings = settings;
+            Settings = new();
             Logger = logger;
+
+            RealtimeService.ViewChanged += OnViewChanged;
         }
 
-        public Task Tick(IGameInstance instance)
+        private void OnViewChanged(object sender, ViewChangedEventArgs e)
         {
-            var process = instance.Runtime.TargetProcess;
+            Process process = e.Instance.Runtime.TargetProcess;
             long currentLimit = GetLimit(process);
 
-            ModelScope scope = new(instance.Runtime);
-            if (scope.RaidApplication._viewMaster is not RaidViewMaster viewMaster)
-                return Task.CompletedTask;
-
-            ViewMeta topView = viewMaster._views[^1];
+            ViewMeta topView = e.ViewMeta;
             if (topView.Key == ViewKey.ArtifactPowerUpOverlay &&
                 topView.View is OverlayView view &&
                 view.Context is ArtifactUpgradeOverlay overlay &&
@@ -62,15 +52,14 @@ namespace Raid.Toolkit.Extension.Realtime
                 overlay._upgradeContext._progress._status._value == ProgressStatus.InProgress // actively upgrading
                 )
             {
-                if (currentLimit != Settings.Value.ArtifactUpgradeFrameRate)
-                    SetLimit(process, Settings.Value.ArtifactUpgradeFrameRate);
+                if (currentLimit != Settings.ArtifactUpgradeFrameRate)
+                    SetLimit(process, Settings.ArtifactUpgradeFrameRate);
             }
             else
             {
-                if (currentLimit != Settings.Value.MaxFrameRate)
-                    SetLimit(process, Settings.Value.MaxFrameRate);
+                if (currentLimit != Settings.MaxFrameRate)
+                    SetLimit(process, Settings.MaxFrameRate);
             }
-            return Task.CompletedTask;
         }
 
         private long GetLimit(Process proc)
@@ -117,6 +106,25 @@ namespace Raid.Toolkit.Extension.Realtime
             {
                 NativeWrapper.CloseHandle(hProcess);
             }
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!IsDisposed)
+            {
+                if (disposing)
+                {
+                    RealtimeService.ViewChanged -= OnViewChanged;
+                }
+
+                IsDisposed = true;
+            }
+        }
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

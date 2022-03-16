@@ -13,6 +13,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private bool IsDisposed;
 
         public Il2CsRuntimeContext Runtime { get; }
+        public PropertyBag Properties { get; } = new();
 
         public GameInstance(Process proc)
         {

@@ -8,7 +8,7 @@
   "editor.fontWeight": "300",
   "terminal.integrated.shellIntegration.decorationsEnabled": true,
   "debug.console.fontSize": 9,
-  "debug.console.fontFamily": "Roboto Mono",
+  "debug.console.fontFamily": "Operator Mono",
   "debug.console.wordWrap": false,
   "debug.console.collapseIdenticalLines": false,
   "terminal.integrated.fontSize": 9,

@@ -16,7 +16,9 @@ namespace Raid.Toolkit.Extension.Realtime
 
         public void OnActivate(IExtensionHost host)
         {
-            Handles.Add(host.RegisterBackgroundService<FramerateService>());
+            Handles.Add(host.RegisterBackgroundService<RealtimeService>());
+
+            Handles.Add(host.CreateInstance<ArtifactUpgradeWatcher>());
         }
 
         public void OnDeactivate(IExtensionHost host)

@@ -18,6 +18,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IServiceManager ServiceManager;
         private readonly IContextDataManager DataManager;
         private readonly Dictionary<string, IExtensionPackage> ExtensionPackages = new();
+        private readonly Dictionary<Type, IDisposable> Instances = new();
         private bool IsDisposed;
 
         public ExtensionHost(
@@ -41,6 +42,19 @@ namespace Raid.Toolkit.Extensibility.Host
 
 
         #region IExtensionHost
+        public T CreateInstance<T>() where T : IDisposable
+        {
+            IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
+            T instance = ActivatorUtilities.CreateInstance<T>(scope);
+            Instances.TryAdd(typeof(T), instance);
+            return instance;
+        }
+
+        public T GetInstance<T>() where T : IDisposable
+        {
+            return (T)Instances[typeof(T)];
+        }
+
         public IDisposable RegisterMessageScopeHandler<T>() where T : IMessageScopeHandler
         {
             IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
@@ -84,6 +98,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 pkg.OnDeactivate(this);
 
             ExtensionPackages.Clear();
+            Instances.Clear();
         }
 
         public void InstallPackage(PackageDescriptor pkgToInstall, bool activate)
