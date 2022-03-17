@@ -1,9 +1,9 @@
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 
-namespace Raid.Toolkit.Extension.Account
+namespace Raid.Toolkit.Extension
 {
-    internal class DataSpec<T> where T : class
+    public class DataSpec<T> where T : class
     {
         private T Value;
         private string Key;

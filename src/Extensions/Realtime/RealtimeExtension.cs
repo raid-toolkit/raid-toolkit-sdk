@@ -16,8 +16,8 @@ namespace Raid.Toolkit.Extension.Realtime
 
         public void OnActivate(IExtensionHost host)
         {
+            Handles.Add(host.RegisterMessageScopeHandler<RealtimeApi>());
             Handles.Add(host.RegisterBackgroundService<RealtimeService>());
-
             Handles.Add(host.CreateInstance<ArtifactUpgradeWatcher>());
         }
 

@@ -18,6 +18,9 @@ namespace Raid.Toolkit.Extensibility.Host
         private bool HasCheckedStaticData;
 
         public IReadOnlyList<IGameInstance> Instances => _Instances.Values.ToList();
+        public event EventHandler<IGameInstanceManager.GameInstancesUpdatedEventArgs> OnAdded;
+        public event EventHandler<IGameInstanceManager.GameInstancesUpdatedEventArgs> OnRemoved;
+
         public GameInstanceManager(
             IServiceProvider serviceProvider,
             IContextDataManager contextDataManager,
@@ -47,16 +50,23 @@ namespace Raid.Toolkit.Extensibility.Host
             }
         }
 
+        public IGameInstance GetById(string id)
+        {
+            return Instances.FirstOrDefault(instance => instance.Id == id);
+        }
+
         public void AddInstance(Process process)
         {
             IGameInstance instance = ActivatorUtilities.CreateInstance<GameInstance>(ServiceProvider, process);
             _Instances.TryAdd(instance.Token, instance);
+            OnAdded?.Invoke(this, new(instance));
         }
 
         public void RemoveInstance(int token)
         {
             if (_Instances.TryRemove(token, out IGameInstance instance))
             {
+                OnRemoved?.Invoke(this, new(instance));
                 instance.Dispose();
             }
         }

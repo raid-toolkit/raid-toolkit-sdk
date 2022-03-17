@@ -16,6 +16,7 @@ namespace Raid.Toolkit.Extension.Account
     {
         private readonly Extractor Extractor;
         private readonly CachedDataStorage<PersistedDataStorage> Storage;
+
         public AccountApi(
             ILogger<AccountApi> logger,
             CachedDataStorage<PersistedDataStorage> storage

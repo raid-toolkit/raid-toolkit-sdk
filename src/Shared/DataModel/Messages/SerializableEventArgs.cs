@@ -8,6 +8,15 @@ namespace Raid.Toolkit.DataModel
         public object[] EventArguments { get; set; }
     }
 
+    public class BasicSerializableEventArgs : SerializableEventArgs
+    {
+        public BasicSerializableEventArgs(string eventName, params string[] arguments)
+        {
+            EventName = eventName;
+            EventArguments = arguments;
+        }
+    }
+
     public class AccountUpdatedEventArgs : SerializableEventArgs
     {
         public AccountUpdatedEventArgs(string accountId)
@@ -25,4 +34,5 @@ namespace Raid.Toolkit.DataModel
             EventArguments = new string[] { accountId, viewKey };
         }
     }
+
 }
