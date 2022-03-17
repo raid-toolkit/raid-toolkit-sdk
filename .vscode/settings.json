@@ -26,7 +26,5 @@
     // "omnisharp.useEditorFormattingSettings": true,
     "[csharp]": {
         "editor.defaultFormatter": "ms-dotnettools.csharp",
-    },
-    "terminal.integrated.fontSize": 12,
-    "terminal.integrated.fontFamily": "Roboto Mono",
+    }
 }
