@@ -5,8 +5,9 @@ on:
     branches: [main]
     paths:
       - .github/workflows/nuget-publish.yml
-      - SDK/Client/DotNet/**
-      - SDK/Shared/**
+      - src/ClientSDK/DotNet/**
+      - src/Shared/**
+      - "!**/*.md"
 
 jobs:
   build:
