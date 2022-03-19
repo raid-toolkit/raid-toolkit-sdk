@@ -13,7 +13,7 @@
         <ProjectReference Include="..\Model\Model.csproj" />
     </ItemGroup>
 
-    <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition=" '$(RTKTasks)' == 'false' ">
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <Exec Command="$(TargetDir)$(TargetName).exe $(BinDir)$(TargetFrameworkVersion)\" />
     </Target>
 </Project>

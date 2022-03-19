@@ -80,7 +80,7 @@
     "**/.vs": true,
     "**/lib": true,
     "**/node_modules": true,
-    "**/bin": true,
+    "*/**/bin": true,
     "**/obj": true,
     "**/*.csproj.user": true
   }
