@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Client.ViewModel.DTO;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility;
@@ -41,7 +42,7 @@ namespace Raid.Toolkit.Extension.Realtime
 
         private void OnBattleResultChanged(object sender, BattleResultsChangedEventArgs e)
         {
-            ReceiveBattleResponse?.Invoke(this, new BasicSerializableEventArgs("last-battle-response-updated"));
+            ReceiveBattleResponse?.Invoke(this, new BasicSerializableEventArgs("last-battle-response-updated", e.Instance.Id));
         }
 
         private void HandleInstanceManagerUpdateEvent(object sender, IGameInstanceManager.GameInstancesUpdatedEventArgs e)
@@ -62,8 +63,13 @@ namespace Raid.Toolkit.Extension.Realtime
 
         public Task<ViewInfo> GetCurrentViewInfo(string accountId)
         {
+            var viewKey = InstanceManager.GetById(accountId).Properties.GetValue<ViewKey>();
             return Task.FromResult(
-                InstanceManager.GetById(accountId).Properties.GetValue<ViewInfo>()
+                new ViewInfo()
+                {
+                    ViewId = (int)viewKey,
+                    ViewKey = viewKey.ToString()
+                }
                 );
         }
 

@@ -11,10 +11,10 @@
     nanoid "^3.1.23"
     reflect-metadata "^0.1.13"
 
-"@remote-ioc/ws-router@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@remote-ioc/ws-router/-/ws-router-0.1.1.tgz#244a65c5c24565e4cf055ab8f0a0d0997a35b005"
-  integrity sha512-CUEBFmf4LytKwMBLIqiz5eCMgJsDE0a0kAvwDZ4ih4HC9UyqKEecfZuodmDkZNX8hS+CDNAimGlCabR4qY5+nw==
+"@remote-ioc/ws-router@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@remote-ioc/ws-router/-/ws-router-0.1.2.tgz#c73176b171e352709811016587746ebd1d3d2f2c"
+  integrity sha512-kwWMGZLU3vm0x0u39diZWQW07irBb1lDo22aGJBM/1RacSRICj9+ThM8lCpG3Sg/0exnegezRq3sK1pvTSkIkA==
   dependencies:
     isomorphic-ws "^4.0.1"
   optionalDependencies:

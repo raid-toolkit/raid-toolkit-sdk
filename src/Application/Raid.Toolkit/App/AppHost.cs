@@ -15,12 +15,6 @@ using SuperSocket.WebSocket.Server;
 
 namespace Raid.Toolkit
 {
-    class Settings : IDataServiceSettings
-    {
-        public string InstallationPath => ".";
-        public string StoragePath => @".\Data";
-    }
-
     internal class AppHost
     {
         public static readonly string ExecutablePath;
@@ -71,12 +65,12 @@ namespace Raid.Toolkit
                 .Configure<AppSettings>(opts => context.Configuration.GetSection("app").Bind(opts))
                 .Configure<ProcessManagerSettings>(opts => context.Configuration.GetSection("app:ProcessManager").Bind(opts))
                 .Configure<DataUpdateSettings>(opts => context.Configuration.GetSection("app:DataSettings").Bind(opts))
+                .Configure<StorageSettings>(opts => context.Configuration.GetSection("app:StorageSettings").Bind(opts))
                 .AddLogging(builder =>
                 {
                     builder.AddConfiguration(context.Configuration.GetSection("Logging"));
                     builder.AddFile(o => o.RootPath = RegistrySettings.InstallationPath);
                 })
-                .AddSingleton<IDataServiceSettings, Settings>()
                 .AddTypesAssignableTo<ICommandTask>(services => services.AddScoped)
                 .AddSingleton<ApplicationStartupTask>()
                 .AddSingleton<AppService>()

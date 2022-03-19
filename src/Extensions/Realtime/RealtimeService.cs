@@ -48,15 +48,8 @@ namespace Raid.Toolkit.Extension.Realtime
 
             ModelScope scope = new(instance.Runtime);
 
-            if (scope.RaidApplication._viewMaster is not RaidViewMaster viewMaster)
-                return Task.CompletedTask;
-
-            ViewMeta topView = viewMaster._views[^1];
-            if (instance.Properties.GetValue<ViewInfo>()?.ViewId != (int)topView.Key)
-            {
-                instance.Properties.SetValue<ViewInfo>(new() { ViewId = (int)topView.Key, ViewKey = topView.Key.ToString() });
-                ViewChanged?.Invoke(this, new(instance, topView));
-            }
+            UpdateLastView(instance, scope);
+            UpdateLastBattleState(instance, scope);
             return Task.CompletedTask;
         }
 
