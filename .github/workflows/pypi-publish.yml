@@ -5,36 +5,35 @@ on:
     branches: [main]
     paths:
       - .github/workflows/pypi-publish.yml
-      - SDK/Client/Python/**
+      - src/ClientSDK/Python/**
 
 jobs:
   build:
-    runs-on:
-      ubuntu-latest
-    
+    runs-on: ubuntu-latest
+
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
-      with:
-        submodules: recursive
-        fetch-depth: 0
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
 
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x' # Version range or exact version of a Python version to use, using SemVer's version range syntax
-        architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x" # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: "x64" # optional x64 or x86. Defaults to x64 if not specified
 
-    - name: Build python package
-      working-directory: SDK/Client/Python
-      run: |
-        pip install --upgrade build
-        pip install --upgrade twine
-        python -m build
+      - name: Build python package
+        working-directory: src/ClientSDK/Python
+        run: |
+          pip install --upgrade build
+          pip install --upgrade twine
+          python -m build
 
-    - name: Publish a Python distribution to PyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        user: __token__
-        password: ${{ secrets.PYPI_API_TOKEN }}
-        packages_dir: SDK/Client/Python/dist
+      - name: Publish a Python distribution to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          packages_dir: src/ClientSDK/Python/dist
