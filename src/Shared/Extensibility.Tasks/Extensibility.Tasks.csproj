@@ -37,15 +37,14 @@
             <Pack>true</Pack>
             <PackagePath>buildCrossTargeting\</PackagePath>
         </None>
+        <None Include="$(OutputPath)\net472\Raid.Toolkit.Extensibility.Tasks.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuild\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\net5.0-windows\Raid.Toolkit.Extensibility.Tasks.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
     </ItemGroup>
-
-    <ItemDefinitionGroup>
-        <PackageReference>
-            <PrivateAssets>all</PrivateAssets>
-        </PackageReference>
-        <ProjectReference>
-            <PrivateAssets>all</PrivateAssets>
-        </ProjectReference>
-    </ItemDefinitionGroup>
 
 </Project>
