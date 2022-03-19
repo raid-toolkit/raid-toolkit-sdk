@@ -1,6 +1,7 @@
 from .AccountApi import AccountApi
 from .RemoteApiClient import RemoteApiClient
 from .StaticDataApi import StaticDataApi
+from .RealtimeApi import RealtimeApi
 
 
 class RaidToolkitClient:
@@ -16,6 +17,10 @@ class RaidToolkitClient:
     @property
     def StaticDataApi(self):
         return StaticDataApi(self.client)
+
+    @property
+    def RealtimeApi(self):
+        return RealtimeApi(self.client)
 
     def connect(self):
         self.client.connect()
