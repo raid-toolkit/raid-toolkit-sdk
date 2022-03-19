@@ -15,9 +15,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="$(RootDirectory)\bin\Raid.Interop.dll" copyToOutput="true">
+        <Content Include="$(BinDir)v4.7.2\Raid.Interop.dll" copyToOutput="true">
             <Pack>true</Pack>
-            <PackagePath>lib\net5.0-windows</PackagePath>
+            <PackagePath>lib\net472</PackagePath>
+        </Content>
+        <Content Include="$(BinDir)v5.0\Raid.Interop.dll" copyToOutput="true">
+            <Pack>true</Pack>
+            <PackagePath>lib\net5.0-windows7.0</PackagePath>
         </Content>
     </ItemGroup>
 
