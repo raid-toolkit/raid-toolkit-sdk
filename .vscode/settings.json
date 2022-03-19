@@ -27,6 +27,13 @@
       "source.fixAll": true
     }
   },
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.organizeImportsOnFormat": true,
+  "omnisharp.enableRoslynAnalyzers": true,
+  // "omnisharp.useEditorFormattingSettings": true,
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp",
+  },
   "editor.tokenColorCustomizations": {
     "textMateRules": [
       {
