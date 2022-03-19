@@ -1,106 +1,141 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
-    "version": "0.2.0",
-    "compounds": [],
-    "configurations": [
-        {
-            "name": "Python: Current File",
-            "type": "python",
-            "request": "launch",
-            "program": "${file}",
-            "justMyCode": false,
-            "console": "integratedTerminal"
-        },
-        {
-            "name": "Launch Prebuild",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/SDK/Model.PreBuild/bin/Debug/net5.0/Model.PreBuild.exe",
-            "args": [
-                "${workspaceFolder}\\bin"
-            ],
-            "env": {
-                "FORCE": "true",
-                "RTK_DEBUG": "true",
-                "app:MemoryLogging": "Error"
-            },
-            "justMyCode": false,
-            "cwd": "${workspaceFolder}/SDK/Model.PreBuild",
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
-            "name": "Launch Service",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/SDK/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
-            "args": [],
-            "env": {
-                "RTK_DEBUG": "true",
-                "app:MemoryLogging": "Error"
-            },
-            "justMyCode": false,
-            "cwd": "${workspaceFolder}/SDK/Service",
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
-            "name": "Launch Service (Release)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build release",
-            "program": "${workspaceFolder}/SDK/Service/bin/Release/net5.0-windows/win-x64/Raid.Service.exe",
-            "args": [],
-            "env": {
-                "RTK_DEBUG": "true",
-                "app:MemoryLogging": "Error"
-            },
-            "justMyCode": false,
-            "cwd": "${workspaceFolder}/SDK/Service",
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
-            "name": "Launch Service (Protocol)",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/SDK/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
-            "args": [
-                "open",
-                "rtk://open?channel=CNTvMrQnRF3li0hGX2Apj&origin=chrome-extension://omalebghpgejjiaoknljcfmglgbpocdp"
-            ],
-            "env": {
-                "RTK_DEBUG": "true"
-            },
-            "cwd": "${workspaceFolder}/SDK/Service",
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
-            "name": "Register Service",
-            "type": "coreclr",
-            "request": "launch",
-            "preLaunchTask": "build",
-            "program": "${workspaceFolder}/SDK/Service/bin/Debug/net5.0-windows/win-x64/Raid.Service.exe",
-            "args": [
-                "open"
-            ],
-            "env": {
-                "RTK_DEBUG": "true"
-            },
-            "cwd": "${workspaceFolder}/SDK/Service",
-            "console": "internalConsole",
-            "stopAtEntry": false
-        },
-        {
-            "name": ".NET Core Attach",
-            "type": "coreclr",
-            "request": "attach"
-        }
-    ]
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "compounds": [],
+  "configurations": [
+    {
+      "name": "Build Task",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "C:/Program Files/dotnet/dotnet.exe",
+      "justMyCode": false,
+      // ${workspaceFolder}/bin/Debug/<target-framework>/<project-name.dll>",
+      "args": [
+        "build",
+        "--nologo",
+        "-v",
+        "normal",
+        "-m:1",
+        "-nodeReuse:false",
+        "-p:RTKTasks=true"
+      ],
+      "targetOutputLogPath": "${workspaceFolder}/output.log",
+      "cwd": "${workspaceFolder}/src/Extensions/Account",
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    },
+    {
+      "name": "Python: Current File",
+      "type": "python",
+      "request": "launch",
+      "program": "${file}",
+      "justMyCode": false,
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Launch Prebuild",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/SDK/Model.PreBuild/bin/Debug/net5.0/Model.PreBuild.exe",
+      "args": [
+        "${workspaceFolder}\\bin"
+      ],
+      "env": {
+        "FORCE": "true",
+        "RTK_DEBUG": "true",
+        "app:MemoryLogging": "Error"
+      },
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}/SDK/Model.PreBuild",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Launch Raid.Toolkit",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
+      "args": [
+        "--debug",
+        "--standalone"
+      ],
+      "env": {
+        "RTK_DEBUG": "true",
+        "app:MemoryLogging": "Error"
+      },
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Debug/net5.0-windows/win-x64",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Launch Raid.Toolkit (Release)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build release",
+      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Release/net5.0-windows/win-x64/Raid.Toolkit.exe",
+      "args": [],
+      "env": {
+        "RTK_DEBUG": "true",
+        "app:MemoryLogging": "Error"
+      },
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Launch Installer",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Launch Raid.Toolkit (Protocol)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
+      "args": [
+        "open",
+        "rtk://open?channel=CNTvMrQnRF3li0hGX2Apj&origin=chrome-extension://omalebghpgejjiaoknljcfmglgbpocdp"
+      ],
+      "env": {
+        "RTK_DEBUG": "true"
+      },
+      "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Register Raid.Toolkit",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
+      "args": [
+        "open"
+      ],
+      "env": {
+        "RTK_DEBUG": "true"
+      },
+      "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": ".NET Core Attach",
+      "type": "coreclr",
+      "request": "attach"
+    }
+  ]
 }

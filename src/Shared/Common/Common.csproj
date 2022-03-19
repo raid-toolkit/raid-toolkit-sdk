@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="System.Net.Http" Version="4.3.4" Condition=" '$(TargetFramework)' == 'net472' " />
+    </ItemGroup>
+    <PropertyGroup>
+        <TargetFrameworks>net472;net5.0-windows</TargetFrameworks>
+        <LangVersion>10.0</LangVersion>
+        <OutputType>Library</OutputType>
+        <AssemblyName>Raid.Common</AssemblyName>
+        <RootNamespace>Raid.Toolkit.Common</RootNamespace>
+    </PropertyGroup>
+</Project>

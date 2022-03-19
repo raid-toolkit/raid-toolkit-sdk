@@ -1,0 +1,7 @@
+# TODO
+
+✔ Add codegen dialog @started(22-03-13 13:17) @done(22-03-13 13:32) @lasted(15m9s)
+✔ Don't boot services for installation UI @done(22-03-13 13:17)
+✔ Add missing runtime APIs (new extension?) @done(22-03-19 12:28)
+[ ] Fix IDataServiceSettings impl
+

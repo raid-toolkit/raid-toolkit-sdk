@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Reference Include="Microsoft.CSharp" Condition=" '$(TargetFramework)' == 'net472' " />
+    </ItemGroup>
+
+    <ItemGroup>
+        <EmbeddedResource Include="Multipliers.json" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <TargetFrameworks>net472;net5.0-windows</TargetFrameworks>
+        <LangVersion>10.0</LangVersion>
+        <OutputType>Library</OutputType>
+        <AssemblyName>Raid.Toolkit.DataModel</AssemblyName>
+        <RootNamespace>Raid.Toolkit.DataModel</RootNamespace>
+    </PropertyGroup>
+
+</Project>

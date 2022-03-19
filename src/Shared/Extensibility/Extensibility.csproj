@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0-windows</TargetFramework>
+        <LangVersion>10.0</LangVersion>
+        <RootNamespace>Raid.Toolkit.Extensibility</RootNamespace>
+        <AssemblyName>Raid.Toolkit.Extensibility</AssemblyName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="il2cpptoolkit.common" Version="1.0.59" />
+        <PackageReference Include="il2cpptoolkit.metadata" Version="1.0.59" />
+        <PackageReference Include="il2cpptoolkit.runtime" Version="1.0.59" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Common\Common.csproj" />
+        <ProjectReference Include="..\DataModel\DataModel.csproj" />
+    </ItemGroup>
+
+</Project>
