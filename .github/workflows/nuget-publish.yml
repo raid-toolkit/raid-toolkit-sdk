@@ -55,9 +55,9 @@ jobs:
       - name: Push client package to GitHub registry
         run: |
           dotnet nuget push publish/nuget/Raid.Common.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
-          dotnet nuget push publish/nuget/Raid.DataModel.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Client.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Model.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.DataModel.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.Host.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.Tasks.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
