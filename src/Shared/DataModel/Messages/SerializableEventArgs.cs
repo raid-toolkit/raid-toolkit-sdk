@@ -30,7 +30,7 @@ namespace Raid.Toolkit.DataModel
     {
         public ViewUpdatedEventArgs(string accountId, string viewKey)
         {
-            EventName = "updated";
+            EventName = "view-changed";
             EventArguments = new string[] { accountId, viewKey };
         }
     }
