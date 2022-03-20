@@ -8,7 +8,7 @@
         <RTKTasks Condition=" '$(RTKTasks)' == '' ">false</RTKTasks>
     </PropertyGroup>
 
-    <Import Project="$(SourceDir)Shared\Extensibility.Tasks\build\Raid.Toolkit.Extensibility.targets" />
+    <Import Project="$(SourceDir)Shared\Extensibility.Tasks\build\Raid.Toolkit.Extensibility.Tasks.targets" />
 
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
