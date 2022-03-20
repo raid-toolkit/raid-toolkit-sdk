@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
     paths:
+      - version.json
       - .github/workflows/nuget-publish.yml
       - src/ClientSDK/DotNet/**
       - src/Shared/**
