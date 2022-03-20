@@ -12,7 +12,7 @@
         </AvailableItemName>
     </ItemGroup>
 
-    <Import Project="Raid.Toolkit.Extensibility.Common.targets" />
+    <Import Project="Raid.Toolkit.Extensibility.Tasks.Common.targets" />
 
     <UsingTask AssemblyFile="$(RaidToolkitSdkTasksPath)Raid.Toolkit.Extensibility.Tasks.dll" TaskName="Raid.Toolkit.Extensibility.Tasks.Codegen" Condition=" '$(RTKTasks)' != 'false' "/>
 
