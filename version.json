@@ -14,8 +14,7 @@
     "branchName": "release/v{version}"
   },
   "pathFilters": [
-    "./SDK",
-    "./Il2CppToolkit",
-    ":!SDK/WebClient"
+    "./src",
+    ":!src/ClientSDK/WebClient"
   ]
 }
