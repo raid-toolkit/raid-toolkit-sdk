@@ -37,6 +37,7 @@
             <Pack>true</Pack>
             <PackagePath>buildCrossTargeting\</PackagePath>
         </None>
+        <!-- required for tasks -->
         <None Include="$(OutputPath)\net472\Raid.Toolkit.Extensibility.Tasks.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
