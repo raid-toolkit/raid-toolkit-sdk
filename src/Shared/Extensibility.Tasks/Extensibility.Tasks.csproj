@@ -38,11 +38,11 @@
             <PackagePath>buildCrossTargeting\</PackagePath>
         </None>
         <!-- required for tasks -->
-        <None Include="$(OutputPath)\net472\Raid.Toolkit.Extensibility.Tasks.dll">
+        <None Include="$(OutputPath)\net472\**">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\net5.0-windows\Raid.Toolkit.Extensibility.Tasks.dll">
+        <None Include="$(OutputPath)\net5.0-windows\**">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
