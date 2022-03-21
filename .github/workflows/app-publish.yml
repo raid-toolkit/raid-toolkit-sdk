@@ -8,8 +8,8 @@ on:
     paths:
       - version.json
       - .github/workflows/app-publish.yml
-      - "src/Application/DotNet/**"
-      - "src/Extensions/DotNet/**"
+      - "src/Application/**"
+      - "src/Extensions/**"
       - "src/ClientSDK/DotNet/**"
       - "src/Shared/**"
       - "!**/*.md"
