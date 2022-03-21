@@ -30,6 +30,9 @@ namespace Raid.Toolkit.Extension.Account
 
         private void OnStorageUpdated(object sender, DataStorageUpdatedEventArgs e)
         {
+            if (e.Key == "_index")
+                return;
+
             if (e.Context is AccountDataContext context)
             {
                 Updated?.Invoke(this, new AccountUpdatedEventArgs(context.AccountId));

@@ -1,4 +1,7 @@
 using Client.RaidApp;
+using Client.View.Views;
+using Client.ViewModel.Contextes.ArtifactsUpgrade;
+using Client.ViewModel.Contextes.Base;
 using Client.ViewModel.DTO;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.DataModel;
@@ -59,11 +62,26 @@ namespace Raid.Toolkit.Extension.Realtime
                 return;
 
             ViewMeta topView = viewMaster._views[^1];
-            if (instance.Properties.GetValue<ViewKey>() == topView.Key)
+            if (instance.Properties.GetValue<ViewKey>() != topView.Key)
+            {
+                instance.Properties.SetValue<ViewKey>(topView.Key);
+                ViewChanged?.Invoke(this, new(instance, topView));
                 return;
+            }
 
-            instance.Properties.SetValue<ViewKey>(topView.Key);
-            ViewChanged?.Invoke(this, new(instance, topView));
+            bool isUpgrading = (topView.Key == ViewKey.ArtifactPowerUpOverlay &&
+                topView.View is OverlayView view &&
+                view.Context is ArtifactUpgradeOverlay overlay &&
+                overlay._activeTab._value == 0 && // upgrade tab
+                overlay._upgradeContext._progress._status._value == ProgressStatus.InProgress // actively upgrading
+                );
+            bool wasUpgrading = instance.Properties.GetValue<bool>("IsUpgradingArtifact");
+
+            if (wasUpgrading != isUpgrading)
+            {
+                instance.Properties.SetValue<bool>("IsUpgradingArtifact", isUpgrading);
+                ViewChanged?.Invoke(this, new(instance, topView));
+            }
         }
 
         private void UpdateLastBattleState(IGameInstance instance, ModelScope scope)
