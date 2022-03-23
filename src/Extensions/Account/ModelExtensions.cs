@@ -256,13 +256,14 @@ namespace Raid.Toolkit.DataModel
 
         public static HeroType ToModel(this SharedModel.Meta.Heroes.HeroType type)
         {
+            SharedModel.Meta.Heroes.HeroVisualInfo firstAvatar = type.VisualInfosBySkinId.First().Value;
             return new HeroType()
             {
                 Affinity = (Enums.Element)type.Element,
                 Ascended = type.Id % 10,
-                AvatarKey = type.AvatarName,
+                AvatarKey = firstAvatar.AvatarName,
                 Faction = (Enums.HeroFraction)type.Fraction,
-                ModelName = type.ModelName,
+                ModelName = firstAvatar.ModelName,
                 Name = type.Name.ToModel(),
                 Rarity = (Enums.HeroRarity)type.Rarity,
                 Role = (Enums.HeroRole)type.Role,

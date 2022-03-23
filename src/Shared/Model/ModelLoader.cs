@@ -21,14 +21,6 @@ namespace Raid.Toolkit.Model
         }
 
         private static readonly Regex[] DefaultIncludeTypes = new[] {
-            //new Regex(@"^Client\.ViewModel\.Contextes\.", RegexOptions.Singleline | RegexOptions.Compiled),
-            //new Regex(@"^Client\.View\.Views\.", RegexOptions.Singleline | RegexOptions.Compiled),
-            //new Regex(@"^Entitas\.", RegexOptions.Singleline | RegexOptions.Compiled),
-            //new Regex(@"^ECS\.(Components|ViewModel)\.", RegexOptions.Singleline | RegexOptions.Compiled),
-            //new Regex(@"^Client\.RaidApp\.RaidViewMaster$", RegexOptions.Singleline | RegexOptions.Compiled),
-            //new Regex(@"^Client\.RaidApp\.RaidApplication$", RegexOptions.Singleline | RegexOptions.Compiled),
-            //new Regex(@"^Contexts$", RegexOptions.Singleline | RegexOptions.Compiled),
-            //new Regex(@"^Client\.ViewModel\.AppViewModel$", RegexOptions.Singleline | RegexOptions.Compiled),
             new Regex(@"^Client\.Model\.AppModel$", RegexOptions.Singleline | RegexOptions.Compiled),
         };
 
