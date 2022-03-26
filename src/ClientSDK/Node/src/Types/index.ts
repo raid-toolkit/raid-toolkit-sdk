@@ -8,5 +8,6 @@ export * from './SkillEnums';
 export * from './SkillType';
 export * from './Stages';
 export * from './TypedEventEmitter';
+export * from './UserAvatarId';
 export * from './ValueOf';
 export * from './ViewKey';

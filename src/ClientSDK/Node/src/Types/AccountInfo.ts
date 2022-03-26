@@ -1,6 +1,8 @@
+import { UserAvatarId } from './UserAvatarId';
+
 export interface AccountInfo {
   id: string;
-  avatar: number;
+  avatar: keyof typeof UserAvatarId;
   name: string;
   level: number;
   power: number;

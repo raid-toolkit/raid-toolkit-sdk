@@ -12,7 +12,7 @@ function ensureInit(proxy: boolean) {
     const client = new RaidToolkitClient();
     useRouter(RTKClientRouter, client);
   } else {
-    useRouter(WebSocketClientRouter, new WebSocket('ws://localhost:9090'));
+    useRouter(WebSocketClientRouter, new WebSocket('ws://127.0.0.1:9090'));
   }
   isInitialized = true;
 }
