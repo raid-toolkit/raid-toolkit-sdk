@@ -14,6 +14,10 @@ namespace Raid.Toolkit.Extension.Realtime
         {
         }
 
+        public void ShowUI(IExtensionHost host)
+        {
+        }
+
         public void OnActivate(IExtensionHost host)
         {
             Handles.Add(host.RegisterMessageScopeHandler<RealtimeApi>());

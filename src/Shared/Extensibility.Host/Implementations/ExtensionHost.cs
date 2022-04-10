@@ -92,6 +92,12 @@ namespace Raid.Toolkit.Extensibility.Host
                 pkg.OnActivate(this);
         }
 
+        public void ShowExtensionUI()
+        {
+            foreach (var pkg in ExtensionPackages.Values)
+                pkg.ShowUI(this);
+        }
+
         public void DeactivateExtensions()
         {
             foreach (var pkg in ExtensionPackages.Values)

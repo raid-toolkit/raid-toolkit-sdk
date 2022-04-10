@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
 using Raid.Toolkit.Common;
+using Raid.Toolkit.Extensibility.Host;
 using Raid.Toolkit.Model;
 using Raid.Toolkit.UI;
 
@@ -103,7 +104,9 @@ namespace Raid.Toolkit
                     Application.Run(new InstallWindow());
                     return Task.FromResult(0);
                 case RunAction.Run:
-                    Application.Run(ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider, Options));
+                    MainWindow mainWnd = ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider, Options);
+                    ServiceProvider.GetRequiredService<IExtensionHostController>().ShowExtensionUI();
+                    Application.Run(mainWnd);
                     return Task.FromResult(0);
                 case RunAction.Activate:
                     // TODO: Activate existing window, if desired?

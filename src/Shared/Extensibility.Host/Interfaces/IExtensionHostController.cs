@@ -6,6 +6,7 @@ namespace Raid.Toolkit.Extensibility.Host
     {
         Task LoadExtensions();
         void ActivateExtensions();
+        void ShowExtensionUI();
         void DeactivateExtensions();
         void InstallPackage(PackageDescriptor descriptor, bool activate);
         void UninstallPackage(PackageDescriptor descriptor);

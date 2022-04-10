@@ -101,6 +101,11 @@ namespace Raid.Toolkit.Extensibility.Host
             EnsureInstance().OnUninstall(host);
         }
 
+        public void ShowUI(IExtensionHost host)
+        {
+            EnsureInstance().ShowUI(host);
+        }
+
         #region IDisposable
         protected virtual void Dispose(bool disposing)
         {
