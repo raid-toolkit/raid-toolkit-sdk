@@ -13,15 +13,20 @@ namespace Raid.Toolkit.Common
             {
                 if (disposing)
                 {
-                    foreach (var item in this)
-                    {
-                        item.Dispose();
-                    }
-                    Clear();
+                    Reset();
                 }
 
                 IsDisposed = true;
             }
+        }
+
+        public void Reset()
+        {
+            foreach (var item in this)
+            {
+                item.Dispose();
+            }
+            Clear();
         }
 
         public void Dispose()

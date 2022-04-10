@@ -5,75 +5,30 @@ using Raid.Toolkit.Extensibility;
 
 namespace Raid.Toolkit.Extension.Account
 {
-    public class AccountExtension : IExtensionPackage, IDisposable
+    public class AccountExtension : ExtensionPackage, IDisposable
     {
-        private DisposableCollection Handles = new();
-        private bool IsDisposed;
-
         public AccountExtension(ILogger<AccountExtension> logger)
         {
         }
 
-        public void ShowUI(IExtensionHost host)
+        public override void OnActivate(IExtensionHost host)
         {
+            Disposables.Add(host.RegisterDataProvider<StaticAcademyProvider>());
+            Disposables.Add(host.RegisterDataProvider<StaticArenaProvider>());
+            Disposables.Add(host.RegisterDataProvider<StaticArtifactProvider>());
+            Disposables.Add(host.RegisterDataProvider<StaticHeroTypeProvider>());
+            Disposables.Add(host.RegisterDataProvider<StaticLocalizationProvider>());
+            Disposables.Add(host.RegisterDataProvider<StaticSkillProvider>());
+            Disposables.Add(host.RegisterDataProvider<StaticStageProvider>());
+            Disposables.Add(host.RegisterMessageScopeHandler<StaticDataApi>());
+
+            Disposables.Add(host.RegisterDataProvider<AcademyProvider>());
+            Disposables.Add(host.RegisterDataProvider<AccountInfoProvider>());
+            Disposables.Add(host.RegisterDataProvider<ArenaProvider>());
+            Disposables.Add(host.RegisterDataProvider<ArtifactsProvider>());
+            Disposables.Add(host.RegisterDataProvider<HeroesProvider>());
+            Disposables.Add(host.RegisterDataProvider<ResourcesProvider>());
+            Disposables.Add(host.RegisterMessageScopeHandler<AccountApi>());
         }
-
-        public void OnActivate(IExtensionHost host)
-        {
-            Handles.Add(host.RegisterDataProvider<StaticAcademyProvider>());
-            Handles.Add(host.RegisterDataProvider<StaticArenaProvider>());
-            Handles.Add(host.RegisterDataProvider<StaticArtifactProvider>());
-            Handles.Add(host.RegisterDataProvider<StaticHeroTypeProvider>());
-            Handles.Add(host.RegisterDataProvider<StaticLocalizationProvider>());
-            Handles.Add(host.RegisterDataProvider<StaticSkillProvider>());
-            Handles.Add(host.RegisterDataProvider<StaticStageProvider>());
-            Handles.Add(host.RegisterMessageScopeHandler<StaticDataApi>());
-
-            Handles.Add(host.RegisterDataProvider<AcademyProvider>());
-            Handles.Add(host.RegisterDataProvider<AccountInfoProvider>());
-            Handles.Add(host.RegisterDataProvider<ArenaProvider>());
-            Handles.Add(host.RegisterDataProvider<ArtifactsProvider>());
-            Handles.Add(host.RegisterDataProvider<HeroesProvider>());
-            Handles.Add(host.RegisterDataProvider<ResourcesProvider>());
-            Handles.Add(host.RegisterMessageScopeHandler<AccountApi>());
-        }
-
-        public void OnDeactivate(IExtensionHost host)
-        {
-            Handles.Dispose();
-            Handles = new();
-        }
-
-        public void OnInstall(IExtensionHost host)
-        {
-            //throw new System.NotImplementedException();
-        }
-
-        public void OnUninstall(IExtensionHost host)
-        {
-            //throw new System.NotImplementedException();
-        }
-
-        #region IDisposable
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!IsDisposed)
-            {
-                if (disposing)
-                {
-                    // TODO: dispose managed state (managed objects)
-                }
-
-                IsDisposed = true;
-            }
-        }
-
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }

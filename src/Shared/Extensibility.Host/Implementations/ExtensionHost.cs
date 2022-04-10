@@ -95,7 +95,7 @@ namespace Raid.Toolkit.Extensibility.Host
         public void ShowExtensionUI()
         {
             foreach (var pkg in ExtensionPackages.Values)
-                pkg.ShowUI(this);
+                pkg.ShowUI();
         }
 
         public void DeactivateExtensions()
