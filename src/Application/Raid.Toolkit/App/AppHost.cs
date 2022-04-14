@@ -68,8 +68,11 @@ namespace Raid.Toolkit
                 .Configure<StorageSettings>(opts => context.Configuration.GetSection("app:StorageSettings").Bind(opts))
                 .AddLogging(builder =>
                 {
-                    builder.AddConfiguration(context.Configuration.GetSection("Logging"));
-                    builder.AddFile(o => o.RootPath = RegistrySettings.InstallationPath);
+                    if (Directory.Exists(RegistrySettings.InstallationPath))
+                    {
+                        builder.AddConfiguration(context.Configuration.GetSection("Logging"));
+                        builder.AddFile(o => o.RootPath = RegistrySettings.InstallationPath);
+                    }
                 })
                 .AddTypesAssignableTo<ICommandTask>(services => services.AddScoped)
                 .AddSingleton<ApplicationStartupTask>()

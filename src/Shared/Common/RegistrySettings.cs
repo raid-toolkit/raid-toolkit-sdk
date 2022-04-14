@@ -21,7 +21,7 @@ namespace Raid.Toolkit.Common
         public const string StartupName = "RaidToolkitService";
         public const string Protocol = "rtk";
         public const string StartupHive = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
-        public const string ExecutableName = "Raid.Service.exe";
+        public const string ExecutableName = "Raid.Toolkit.exe";
 
         public static readonly string DefaultInstallationPath;
 
