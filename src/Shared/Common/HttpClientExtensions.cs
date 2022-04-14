@@ -7,7 +7,7 @@ namespace System.Net.Http
     {
         public static async Task<T> GetObjectAsync<T>(this HttpClient client, Uri uri)
         {
-            string response = await client.GetStringAsync(uri);
+            string response = await client.GetStringAsync(uri).ConfigureAwait(false);
             return JsonConvert.DeserializeObject<T>(response);
         }
     }

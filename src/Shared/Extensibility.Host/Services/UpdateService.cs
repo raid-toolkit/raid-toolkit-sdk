@@ -24,11 +24,10 @@ namespace Raid.Toolkit.Extensibility.Host.Services
         }
 
         private readonly Updater Updater;
-        private readonly IOptions<UpdateSettings> Settings;
-        private readonly bool Enabled;
+        private bool Enabled;
         private readonly Version CurrentVersion;
         private Release PendingRelease;
-        private TimeSpan _PollInterval;
+        private readonly TimeSpan _PollInterval;
         private protected override TimeSpan PollInterval => _PollInterval;
 
         public event EventHandler<UpdateAvailbleEventArgs> UpdateAvailable;
@@ -39,7 +38,6 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             CurrentVersion = Assembly.GetEntryAssembly().GetName().Version;
             Updater = updater;
             Enabled = RegistrySettings.AutomaticallyCheckForUpdates;
-            Settings = settings;
             if (settings.Value.PollIntervalMs > 0)
             {
                 _PollInterval = TimeSpan.FromMilliseconds(settings.Value.PollIntervalMs);
@@ -91,7 +89,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             }
         }
 
-        public async Task<bool> CheckForUpdates()
+        public async Task<bool> CheckForUpdates(bool force = false)
         {
             Release release = await Updater.GetLatestRelease();
             if (!Version.TryParse(release.TagName.TrimStart('v').Split('-')[0], out Version releaseVersion))
@@ -99,7 +97,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
 
             if (releaseVersion > CurrentVersion)
             {
-                if (PendingRelease?.TagName != release.TagName)
+                if (force || PendingRelease?.TagName != release.TagName)
                 {
                     PendingRelease = release;
                     UpdateAvailable?.Invoke(this, new(release));

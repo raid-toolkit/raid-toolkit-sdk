@@ -13,7 +13,7 @@ namespace GitHub
     {
         private readonly Uri UpdateUri = new($"https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/latest");
         private readonly Uri ReleasesUri = new($"https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases");
-        private readonly HttpClient Client;
+        private HttpClient Client;
         private bool disposedValue;
 
         public Updater()

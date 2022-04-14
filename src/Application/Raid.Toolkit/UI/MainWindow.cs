@@ -2,15 +2,17 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using System.Windows.Forms;
+using GitHub.Schema;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Raid.Toolkit.Common;
-using Raid.Toolkit.Model;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host.Services;
+using Raid.Toolkit.Model;
 
 namespace Raid.Toolkit.UI
 {
@@ -109,15 +111,34 @@ namespace Raid.Toolkit.UI
             }
         }
 
+        private void InvokeIfNeeded(Action action)
+        {
+            if (InvokeRequired)
+                Invoke(action);
+            else
+                action();
+        }
+
         private void ShowErrors()
         {
-            ErrorsWindow.ShowDialog();
+            InvokeIfNeeded(() =>
+            {
+                ErrorsWindow.ShowDialog();
+            });
         }
 
         private void ShowBalloonTip(int timeout, string tipTitle, string tipText, ToolTipIcon tipIcon, Action? onClickCallback)
         {
             OnClickCallback = onClickCallback;
-            appTrayIcon.ShowBalloonTip(timeout, tipTitle, tipText, tipIcon);
+            Action showTip = () => appTrayIcon.ShowBalloonTip(timeout, tipTitle, tipText, tipIcon);
+            if (InvokeRequired)
+            {
+                Invoke(showTip);
+            }
+            else
+            {
+                showTip();
+            }
         }
 
         public bool RequestPermissions(string origin)
@@ -158,17 +179,20 @@ namespace Raid.Toolkit.UI
 
         private void OnUpdateAvailable(object? sender, UpdateService.UpdateAvailbleEventArgs e)
         {
-            if (LatestRelease?.TagName == e.Release.TagName)
-                return; // already notified for this update
+            InvokeIfNeeded(() =>
+            {
+                if (LatestRelease?.TagName == e.Release.TagName)
+                    return; // already notified for this update
 
-            LatestRelease = e.Release;
-            ShowBalloonTip(
-                kDefaultBalloonTipTimeout,
-                "Update available",
-                $"A new version has been released!\n{e.Release.TagName} is now available for install. Click here to install and update!",
-                ToolTipIcon.Info,
-                InstallUpdate);
-            installUpdateMenuItem.Visible = true;
+                LatestRelease = e.Release;
+                ShowBalloonTip(
+                    kDefaultBalloonTipTimeout,
+                    "Update available",
+                    $"A new version has been released!\n{e.Release.TagName} is now available for install. Click here to install and update!",
+                    ToolTipIcon.Info,
+                    InstallUpdate);
+                installUpdateMenuItem.Visible = true;
+            });
         }
 
         private void InstallUpdate()
@@ -199,18 +223,21 @@ namespace Raid.Toolkit.UI
             InstallUpdate();
         }
 
-        private async void checkUpdatesMenuItem_Click(object sender, EventArgs e)
+        private void checkUpdatesMenuItem_Click(object sender, EventArgs e)
         {
-            bool hasUpdate = await UpdateService.CheckForUpdates();
-            if (!hasUpdate)
+            Task.Run(async () =>
             {
-                ShowBalloonTip(
-                    kDefaultBalloonTipTimeout,
-                    "No updates",
-                    $"You are already running the latest version!",
-                    ToolTipIcon.None,
-                    null);
-            }
+                bool hasUpdate = await UpdateService.CheckForUpdates(force: true);
+                if (!hasUpdate)
+                {
+                    ShowBalloonTip(
+                        kDefaultBalloonTipTimeout,
+                        "No updates",
+                        $"You are already running the latest version!",
+                        ToolTipIcon.None,
+                        null);
+                }
+            });
         }
 
         private void MainWindow_Load(object sender, EventArgs e)

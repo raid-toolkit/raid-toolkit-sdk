@@ -59,7 +59,10 @@
       "request": "launch",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
-      "args": [],
+      "args": [
+        "--debug",
+        "--standalone"
+      ],
       "env": {
         "RTK_DEBUG": "true",
         "app:MemoryLogging": "Error"
