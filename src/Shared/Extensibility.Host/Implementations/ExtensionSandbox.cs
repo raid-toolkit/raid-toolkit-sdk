@@ -58,7 +58,7 @@ namespace Raid.Toolkit.Extensibility.Host
             // TODO: Verify the attribute sets the same ID as the DLL name
             try
             {
-                return ExtensionAsm.ExportedTypes.Single(t => t.GetInterfaces().Contains(typeof(IExtensionPackage)));
+                return ExtensionAsm.ExportedTypes.Single(t => t.IsAssignableTo(typeof(IExtensionPackage)));
             }
             catch
             {
