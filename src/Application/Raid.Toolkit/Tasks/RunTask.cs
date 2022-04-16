@@ -108,9 +108,24 @@ namespace Raid.Toolkit
                     Application.Run(new InstallWindow());
                     return Task.FromResult(0);
                 case RunAction.Run:
-                    MainWindow mainWnd = ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider, Options);
-                    ServiceProvider.GetRequiredService<IExtensionHostController>().ShowExtensionUI();
-                    Application.Run(mainWnd);
+                    using (var mutex = new Mutex(false, "RaidToolkit Singleton"))
+                    {
+                        bool isAnotherInstanceOpen = !mutex.WaitOne(TimeSpan.Zero);
+                        if (isAnotherInstanceOpen)
+                        {
+                            return Task.FromResult(0);
+                        }
+                        try
+                        {
+                            MainWindow mainWnd = ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider, Options);
+                            ServiceProvider.GetRequiredService<IExtensionHostController>().ShowExtensionUI();
+                            Application.Run(mainWnd);
+                        }
+                        finally
+                        {
+                            mutex.ReleaseMutex();
+                        }
+                    }
                     return Task.FromResult(0);
                 case RunAction.Activate:
                     // TODO: Activate existing window, if desired?

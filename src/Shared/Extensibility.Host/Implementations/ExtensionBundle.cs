@@ -36,7 +36,13 @@ namespace Raid.Toolkit.Extensibility
         public void Install(string extensionsDir)
         {
             string installationPath = GetInstallDir(extensionsDir);
+            if (Directory.Exists(installationPath))
+            {
+                DirectoryInfo di = new(installationPath);
+                di.Delete(recursive: true);
+            }
             Directory.CreateDirectory(installationPath);
+
             if (!string.IsNullOrEmpty(DirectoryPath))
             {
                 CopyDirectory(DirectoryPath, installationPath, true);
