@@ -26,6 +26,34 @@
       "problemMatcher": "$msCompile"
     },
     {
+      "label": "publish",
+      "command": "dotnet",
+      "type": "shell",
+      "args": [
+        "publish",
+        "--nologo",
+        "-m:1",
+        "-nodeReuse:false",
+        "--framework",
+        "net5.0-windows",
+        "--output",
+        "publish/RTK",
+        "-p:Configuration=Debug",
+        "-p:RTKTasks=true",
+        "-p:Platform=x64",
+        "-p:DeployOnBuild=true",
+        "-p:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "group": {
+        "kind": "build"
+      },
+      "presentation": {
+        "reveal": "silent"
+      },
+      "problemMatcher": "$msCompile"
+    },
+    {
       "label": "build release",
       "command": "dotnet",
       "type": "shell",

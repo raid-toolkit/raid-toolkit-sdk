@@ -10,6 +10,7 @@ using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host;
 using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Services;
+using Raid.Toolkit.Extensibility.Shared;
 using SuperSocket.WebSocket;
 using SuperSocket.WebSocket.Server;
 
@@ -20,6 +21,20 @@ namespace Raid.Toolkit
         public static readonly string ExecutablePath;
         public static readonly string ExecutableName = "Raid.Toolkit.exe";
         public static readonly string ExecutableDirectory;
+
+        public static void EnsureFileAssociations(string? exePath = null)
+        {
+            if (string.IsNullOrEmpty(exePath))
+                exePath = ExecutablePath;
+            FileAssociations.EnsureAssociationsSet(new FileAssociation()
+            {
+                Extension = ".rtkx",
+                FileTypeDescription = "Raid Toolkit Extension",
+                ExecutableFilePath = exePath,
+                ExecutableArguments = "install",
+                ProgId = "RTK.Extension"
+            });
+        }
 
         internal static Stream? GetEmbeddedSettings()
         {
@@ -45,15 +60,15 @@ namespace Raid.Toolkit
         **/
         public static ValueTask HandleMessage(WebSocketSession session, WebSocketPackage message)
         {
-            if (Host == null)
-                return ValueTask.CompletedTask;
-
-            return Host.Services.GetRequiredService<IScopedServiceManager>()
+            return Host == null
+                ? ValueTask.CompletedTask
+                : Host.Services.GetRequiredService<IScopedServiceManager>()
                 .ProcessMessage(new SuperSocketAdapter(session), message.Message);
         }
 
-        private static IHostBuilder CreateHostBuilder() =>
-            WebSocketHostBuilder.Create()
+        private static IHostBuilder CreateHostBuilder()
+        {
+            return WebSocketHostBuilder.Create()
             .UseSessionFactory<SessionFactory>()
             .UseWebSocketMessageHandler(HandleMessage)
             .ConfigureAppConfiguration(config => config
@@ -70,8 +85,8 @@ namespace Raid.Toolkit
                 {
                     if (Directory.Exists(RegistrySettings.InstallationPath))
                     {
-                        builder.AddConfiguration(context.Configuration.GetSection("Logging"));
-                        builder.AddFile(o => o.RootPath = RegistrySettings.InstallationPath);
+                        _ = builder.AddConfiguration(context.Configuration.GetSection("Logging"));
+                        _ = builder.AddFile(o => o.RootPath = RegistrySettings.InstallationPath);
                     }
                 })
                 .AddTypesAssignableTo<ICommandTask>(services => services.AddScoped)
@@ -81,5 +96,6 @@ namespace Raid.Toolkit
                 .AddExtensibilityServices<PackageManager>()
                 .AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)
             );
+        }
     }
 }

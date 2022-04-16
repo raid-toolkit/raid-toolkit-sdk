@@ -51,15 +51,14 @@
 
         <Raid.Toolkit.Extensibility.Tasks.Codegen Condition=" '$(RTKTasks)' == 'true' and '$(GenerateInterop)' != 'false' "
             OutputFile="$(IntermediateOutputPath)$(OutputAssemblyFile)"
-            ManifestFiles="@(RTKExtensionManifest -> '%(FullPath)')" />
+            ManifestFiles="@(RTKExtensionManifest -> '%(FullPath)')"
+            OutDir="$(OutDir)" />
 
         <ItemGroup>
             <EmbeddedResource Include="@(RTKExtensionManifest)"
-                LogicalName="PackageManifest" />
-            <Content Include="@(RTKExtensionManifest)">
-                <Link>.rtk.extension.json</Link>
-                <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-            </Content>
+                LogicalName="PackageManifest">
+                <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+            </EmbeddedResource>
         </ItemGroup>
     </Target>
 

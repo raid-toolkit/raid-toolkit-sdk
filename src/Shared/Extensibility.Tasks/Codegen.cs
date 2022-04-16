@@ -17,6 +17,9 @@ namespace Raid.Toolkit.Extensibility.Tasks
         [Required]
         public string? OutputFile { get; set; }
 
+        [Required]
+        public string? OutDir { get; set; }
+
         public override bool Execute()
         {
             Log.LogMessage($"Writing to {OutputFile}...");
@@ -24,6 +27,11 @@ namespace Raid.Toolkit.Extensibility.Tasks
             if (string.IsNullOrEmpty(OutputFile))
             {
                 Log.LogError("OutputFile must be specified");
+                return false;
+            }
+            if (string.IsNullOrEmpty(OutDir))
+            {
+                Log.LogError("OutDir must be specified");
                 return false;
             }
             if (ManifestFiles == null || ManifestFiles.Length == 0)
@@ -51,6 +59,12 @@ namespace Raid.Toolkit.Extensibility.Tasks
                 File.Delete(OutputFile);
 
             File.Copy(dllPath, OutputFile);
+
+            _ = Directory.CreateDirectory(OutDir);
+            string outputManifest = Path.Combine(OutDir, ".rtk.extension.json");
+            if (File.Exists(outputManifest))
+                File.Delete(outputManifest);
+            File.Copy(ManifestFiles[0], outputManifest);
 
             return true;
         }

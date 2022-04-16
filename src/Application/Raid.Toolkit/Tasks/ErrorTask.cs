@@ -7,7 +7,7 @@ namespace Raid.Toolkit
 {
     internal class ErrorTask : CommandTaskBase<IEnumerable<Error>>
     {
-        private List<Error> Errors = new();
+        private readonly List<Error> Errors = new();
 
         public override ApplicationStartupCondition Parse(IEnumerable<Error> options)
         {

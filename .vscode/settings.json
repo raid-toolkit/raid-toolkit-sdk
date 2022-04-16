@@ -8,11 +8,9 @@
   "editor.fontFamily": "Operator Mono",
   "editor.fontWeight": "300",
   "terminal.integrated.shellIntegration.decorationsEnabled": true,
-  "debug.console.fontSize": 9,
   "debug.console.fontFamily": "Operator Mono",
   "debug.console.wordWrap": false,
   "debug.console.collapseIdenticalLines": false,
-  "terminal.integrated.fontSize": 9,
   "terminal.integrated.fontWeight": "300",
   "[json]": {
     "editor.detectIndentation": false,
@@ -23,6 +21,7 @@
     "editor.tabSize": 2,
   },
   "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
       "source.fixAll": true
@@ -32,9 +31,6 @@
   "omnisharp.organizeImportsOnFormat": true,
   "omnisharp.enableRoslynAnalyzers": true,
   // "omnisharp.useEditorFormattingSettings": true,
-  "[csharp]": {
-    "editor.defaultFormatter": "ms-dotnettools.csharp",
-  },
   "editor.tokenColorCustomizations": {
     "textMateRules": [
       {

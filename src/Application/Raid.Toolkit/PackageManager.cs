@@ -34,7 +34,7 @@ namespace Raid.Toolkit
             {
                 // load legacy extensions:
                 string[] files = Directory.GetFiles(ExtensionsDirectory, "Raid.Toolkit.Extension.*.dll");
-                var legacyBundles = files.Select(file => ExtensionBundle.FromFile(file));
+                var legacyBundles = files.Select(file => ExtensionBundle.FromAssembly(file));
                 foreach (var legacyBundle in legacyBundles)
                     descriptors[legacyBundle.Id] = legacyBundle;
 

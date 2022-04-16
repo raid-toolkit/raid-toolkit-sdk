@@ -20,6 +20,7 @@ namespace Raid.Toolkit
         Activate,
         Run
     }
+
     [Verb("run", isDefault: true, HelpText = "Runs the service")]
     internal class RunOptions
     {
@@ -79,18 +80,16 @@ namespace Raid.Toolkit
                 return ApplicationStartupCondition.None;
             }
 
-            using (var mutex = new Mutex(false, "RaidToolkit Singleton"))
+            using var mutex = new Mutex(false, "RaidToolkit Singleton");
+            bool isAnotherInstanceOpen = !mutex.WaitOne(Options.Wait.HasValue ? TimeSpan.FromMilliseconds(Options.Wait.Value) : TimeSpan.Zero);
+            if (isAnotherInstanceOpen && !Options.Standalone)
             {
-                bool isAnotherInstanceOpen = !mutex.WaitOne(Options.Wait.HasValue ? TimeSpan.FromMilliseconds(Options.Wait.Value) : TimeSpan.Zero);
-                if (isAnotherInstanceOpen && !Options.Standalone)
-                {
-                    RunAction = RunAction.Activate;
-                    return ApplicationStartupCondition.None;
-                }
-
-                RunAction = RunAction.Run;
-                return ApplicationStartupCondition.Services;
+                RunAction = RunAction.Activate;
+                return ApplicationStartupCondition.None;
             }
+
+            RunAction = RunAction.Run;
+            return ApplicationStartupCondition.Services;
         }
 
         public override Task<int> Invoke()
@@ -117,6 +116,10 @@ namespace Raid.Toolkit
                         }
                         try
                         {
+                            if (!Options.Standalone)
+                            {
+                                AppHost.EnsureFileAssociations();
+                            }
                             MainWindow mainWnd = ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider, Options);
                             ServiceProvider.GetRequiredService<IExtensionHostController>().ShowExtensionUI();
                             Application.Run(mainWnd);
@@ -130,6 +133,10 @@ namespace Raid.Toolkit
                 case RunAction.Activate:
                     // TODO: Activate existing window, if desired?
                     return Task.FromResult(0);
+                case RunAction.Unknown:
+                    break;
+                default:
+                    break;
             }
 
             return Task.FromResult(255);
@@ -147,29 +154,35 @@ namespace Raid.Toolkit
             }
         }
 
-        static RebuildDialog? rebuildDialog;
+        private static RebuildDialog? rebuildDialog;
         private static void Resolver_OnStateUpdated(object? sender, IModelLoader.ModelLoaderEventArgs e)
         {
             switch (e.LoadState)
             {
                 case IModelLoader.LoadState.Rebuild:
-                    Task.Run(() =>
+                    _ = Task.Run(() =>
                     {
                         PlariumPlayAdapter.GameInfo gameInfo = ModelLoader.GetGameInfo();
                         rebuildDialog = new RebuildDialog(gameInfo.Version);
-                        rebuildDialog.ShowDialog();
+                        _ = rebuildDialog.ShowDialog();
                     });
                     break;
                 case IModelLoader.LoadState.Ready:
                     if (rebuildDialog != null)
                     {
-                        rebuildDialog.Invoke((MethodInvoker)delegate
+                        _ = rebuildDialog.Invoke((MethodInvoker)delegate
                         {
                             rebuildDialog.Hide();
                             rebuildDialog.Dispose();
                             rebuildDialog = null;
                         });
                     }
+                    break;
+                case IModelLoader.LoadState.Initialize:
+                    break;
+                case IModelLoader.LoadState.Loaded:
+                    break;
+                case IModelLoader.LoadState.Error:
                     break;
                 default:
                     break;

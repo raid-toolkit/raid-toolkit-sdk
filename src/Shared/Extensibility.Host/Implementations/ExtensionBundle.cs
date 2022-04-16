@@ -3,7 +3,6 @@ using System.IO;
 using System.IO.Compression;
 using System.Reflection;
 using Newtonsoft.Json;
-using Raid.Toolkit.Extensibility.Host;
 
 namespace Raid.Toolkit.Extensibility
 {
@@ -11,9 +10,9 @@ namespace Raid.Toolkit.Extensibility
     {
         public Assembly Assembly { get; private set; }
         public ExtensionManifest Manifest { get; }
-        public string Location => DirectoryPath;
+        public string Location { get; private set; }
         public string Id => Manifest.Id;
-        private string DirectoryPath;
+
         private string ZipPath;
 
         public ExtensionBundle(ExtensionManifest manifest)
@@ -23,9 +22,9 @@ namespace Raid.Toolkit.Extensibility
 
         public string GetExtensionEntrypointDll()
         {
-            if (string.IsNullOrEmpty(DirectoryPath))
-                throw new ApplicationException("Cannot load this extension, as it is not installed");
-            return Path.Combine(DirectoryPath, Manifest.Assembly);
+            return string.IsNullOrEmpty(Location)
+                ? throw new ApplicationException("Cannot load this extension, as it is not installed")
+                : Path.Combine(Location, Manifest.Assembly);
         }
 
         public string GetInstallDir(string rootDir)
@@ -41,11 +40,11 @@ namespace Raid.Toolkit.Extensibility
                 DirectoryInfo di = new(installationPath);
                 di.Delete(recursive: true);
             }
-            Directory.CreateDirectory(installationPath);
+            _ = Directory.CreateDirectory(installationPath);
 
-            if (!string.IsNullOrEmpty(DirectoryPath))
+            if (!string.IsNullOrEmpty(Location))
             {
-                CopyDirectory(DirectoryPath, installationPath, true);
+                CopyDirectory(Location, installationPath, true);
             }
             else if (!string.IsNullOrEmpty(ZipPath))
             {
@@ -56,6 +55,11 @@ namespace Raid.Toolkit.Extensibility
         public static ExtensionBundle FromType<T>()
         {
             return FromAssembly(typeof(T).Assembly);
+        }
+
+        public static ExtensionBundle FromAssembly(string assemblyPath)
+        {
+            return FromAssembly(Assembly.LoadFrom(assemblyPath));
         }
 
         public static ExtensionBundle FromAssembly(Assembly assembly)
@@ -94,7 +98,7 @@ namespace Raid.Toolkit.Extensibility
             ExtensionManifest manifest = ReadManifest(manifestStream);
             return new(manifest)
             {
-                DirectoryPath = dirname
+                Location = dirname
             };
         }
 
@@ -107,7 +111,7 @@ namespace Raid.Toolkit.Extensibility
             return manifest;
         }
 
-        static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
+        private static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
         {
             // Get information about the source directory
             var dir = new DirectoryInfo(sourceDir);
@@ -120,13 +124,13 @@ namespace Raid.Toolkit.Extensibility
             DirectoryInfo[] dirs = dir.GetDirectories();
 
             // Create the destination directory
-            Directory.CreateDirectory(destinationDir);
+            _ = Directory.CreateDirectory(destinationDir);
 
             // Get the files in the source directory and copy to the destination directory
             foreach (FileInfo file in dir.GetFiles())
             {
                 string targetFilePath = Path.Combine(destinationDir, file.Name);
-                file.CopyTo(targetFilePath);
+                _ = file.CopyTo(targetFilePath);
             }
 
             // If recursive and copying subdirectories, recursively call this method

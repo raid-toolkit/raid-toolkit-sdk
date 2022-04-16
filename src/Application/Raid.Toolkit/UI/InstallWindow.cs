@@ -57,7 +57,7 @@ namespace Raid.Toolkit.UI
 
                 string installDir = installationDirectory.Text;
                 if (!Directory.Exists(installDir))
-                    Directory.CreateDirectory(installDir);
+                    _ = Directory.CreateDirectory(installDir);
 
                 string exeName = AppHost.ExecutableName;
                 string newExePath = Path.Combine(installDir, exeName);
@@ -71,15 +71,16 @@ namespace Raid.Toolkit.UI
                 RegistrySettings.UpdateStartMenuShortcut(createShortcutCheckBox.Checked);
                 RegistrySettings.RegisterProtocol(true);
                 RegistrySettings.IsInstalled = true;
+                AppHost.EnsureFileAssociations(newExePath);
                 ProcessStartInfo psi = new(newExePath);
                 psi.ArgumentList.Add("--wait");
                 psi.ArgumentList.Add("30000");
-                Process.Start(psi);
+                _ = Process.Start(psi);
                 Close();
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, $"An error occurred:\n{ex.Message}", "Error", MessageBoxButtons.OK);
+                _ = MessageBox.Show(this, $"An error occurred:\n{ex.Message}", "Error", MessageBoxButtons.OK);
             }
         }
     }
