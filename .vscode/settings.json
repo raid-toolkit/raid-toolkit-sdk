@@ -1,4 +1,5 @@
 {
+  "xmlTools.splitAttributesOnFormat": true,
   "files.associations": {
     "appsettings.json": "jsonc"
   },

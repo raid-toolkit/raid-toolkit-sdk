@@ -15,27 +15,10 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IPackageInstanceFactory InstanceFactory;
         private ExtensionLoadContext LoadContext;
         private IExtensionPackage Instance;
+        public readonly ExtensionManifest Manifest;
 
         public Assembly ExtensionAsm { get; private set; }
-        public CodegenTypeFilter TypeFilter
-        {
-            get
-            {
-                List<Regex> typePatterns = new();
-                JsonSerializer serializer = new();
-                using (var stream = ExtensionAsm.GetManifestResourceStream("PackageManifest"))
-                using (StreamReader reader = new(stream))
-                using (JsonTextReader textReader = new(reader))
-                {
-                    ExtensionManifest manifest = serializer.Deserialize<ExtensionManifest>(textReader);
-                    if (manifest.Codegen?.Types != null)
-                    {
-                        typePatterns.AddRange(manifest.Codegen.Types.Select(pattern => new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled)));
-                    }
-                }
-                return new(typePatterns.ToArray());
-            }
-        }
+        public CodegenTypeFilter TypeFilter { get; }
 
         internal ExtensionSandbox(PackageDescriptor descriptor, IPackageInstanceFactory instanceFactory)
         {
@@ -50,20 +33,29 @@ namespace Raid.Toolkit.Extensibility.Host
                 LoadContext = new(descriptor.Location);
                 ExtensionAsm = LoadContext.LoadFromAssemblyPath(descriptor.Location);
             }
+
+            JsonSerializer serializer = new();
+            using (var stream = ExtensionAsm.GetManifestResourceStream("PackageManifest"))
+            using (StreamReader reader = new(stream))
+            using (JsonTextReader textReader = new(reader))
+            {
+                Manifest = serializer.Deserialize<ExtensionManifest>(textReader);
+            }
+
+            Regex[] typePatterns = Manifest.Codegen.Types
+                .Select(pattern => new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled))
+                .ToArray();
+            TypeFilter = new(typePatterns);
         }
 
         private Type GetPackageType()
         {
-            // TEMP: ID MUST match the DLL filename
-            // TODO: Verify the attribute sets the same ID as the DLL name
-            try
+            Type packageType = ExtensionAsm.GetType(Manifest.Type);
+            if (packageType == null)
             {
-                return ExtensionAsm.ExportedTypes.Single(t => t.IsAssignableTo(typeof(IExtensionPackage)));
+                throw new EntryPointNotFoundException($"Could not load type {Manifest.Type} from the package");
             }
-            catch
-            {
-                throw new ApplicationException($"Extension DLLs must contain exactly one class that implements IExtensionPackage.");
-            }
+            return packageType;
         }
 
         public void Load()

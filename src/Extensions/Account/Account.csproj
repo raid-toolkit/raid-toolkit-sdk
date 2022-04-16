@@ -6,6 +6,7 @@
         <RootNamespace>Raid.Toolkit.Extension.Account</RootNamespace>
         <RaidToolkitSdkTasksPath>..\bin\Debug\net5.0-windows\</RaidToolkitSdkTasksPath>
         <RTKTasks Condition=" '$(RTKTasks)' == '' ">false</RTKTasks>
+        <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
     </PropertyGroup>
 
     <Import Project="$(SourceDir)Shared\Extensibility.Tasks\build\Raid.Toolkit.Extensibility.Tasks.targets" />
@@ -24,6 +25,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <RTKExtensionManifest Include=".rtk.extension.json" />
+        <RTKExtensionManifest Include="manifest.json" />
     </ItemGroup>
 </Project>

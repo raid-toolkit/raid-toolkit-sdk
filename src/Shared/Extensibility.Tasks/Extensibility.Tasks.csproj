@@ -20,6 +20,10 @@
         <PackageReference Include="il2cpptoolkit.runtime" Version="1.0.62" />
         <PackageReference Include="il2cpptoolkit.target.netcore" Version="1.0.62" />
         <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+        <PackageReference Include="MSBuildTasks" Version="1.5.0.235">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
         <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 

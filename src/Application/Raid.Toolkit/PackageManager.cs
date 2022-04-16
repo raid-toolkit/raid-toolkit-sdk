@@ -1,11 +1,11 @@
-using Raid.Toolkit.Extensibility;
-using Raid.Toolkit.Extensibility.Host;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using Newtonsoft.Json;
+using Raid.Toolkit.Extensibility;
+using Raid.Toolkit.Extensibility.Host;
 
 namespace Raid.Toolkit
 {
@@ -30,13 +30,32 @@ namespace Raid.Toolkit
 
             if (Directory.Exists(ExtensionsDirectory))
             {
+                List<PackageDescriptor> legacyDescriptors = new();
+                // load legacy extensions:
                 string[] files = Directory.GetFiles(ExtensionsDirectory, "Raid.Toolkit.Extension.*.dll");
                 foreach (string file in files)
                 {
                     FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(file);
-                    Descriptors.Add(new(Path.GetFileNameWithoutExtension(file), fvi.ProductName, fvi.FileDescription, file));
+                    legacyDescriptors.Add(new(Path.GetFileNameWithoutExtension(file), fvi.ProductName, fvi.FileDescription, file));
                 }
+
+                string[] dirs = Directory.GetDirectories(ExtensionsDirectory);
+                foreach (string dir in dirs)
+                {
+                    string manifestPath = Path.Combine(dir, ".rtk.extension.json");
+                    if (!File.Exists(manifestPath))
+                        continue;
+
+                    string manifestTxt = File.ReadAllText(manifestPath);
+                    ExtensionManifest manifest = JsonConvert.DeserializeObject<ExtensionManifest>(manifestTxt)!;
+                    PackageDescriptor descriptor = new(manifest.Id, manifest.DisplayName, manifest.Description, manifestPath);
+                    legacyDescriptors.RemoveAll(desc => desc.Id == descriptor.Id);
+                    Descriptors.Add(descriptor);
+                }
+
+                Descriptors.AddRange(legacyDescriptors);
             }
+
         }
 
         private static PackageDescriptor DescriptorFor<T>()

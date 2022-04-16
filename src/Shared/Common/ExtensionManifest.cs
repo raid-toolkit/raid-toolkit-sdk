@@ -12,6 +12,9 @@ namespace Raid.Toolkit.Extensibility
         [JsonProperty("type")]
         public string Type { get; set; }
 
+        [JsonProperty("asm")]
+        public string Assembly { get; set; }
+
         [JsonProperty("displayName")]
         public string DisplayName { get; set; }
 
