@@ -49,6 +49,7 @@ namespace Raid.Toolkit
         public override ApplicationStartupCondition Parse(InstallOptions options)
         {
             Options = options;
+            ApplicationHost.Enabled = false;
             return ApplicationStartupCondition.Services;
         }
     }

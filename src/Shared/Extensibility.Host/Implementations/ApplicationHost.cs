@@ -13,8 +13,13 @@ namespace Raid.Toolkit.Extensibility.Host
             ExtensionHost = extensionHost;
         }
 
+        public static bool Enabled { get; set; } = true;
+
         public override async Task StartAsync(CancellationToken cancellationToken)
         {
+            if (!Enabled)
+                return;
+
             await ExtensionHost.LoadExtensions();
             cancellationToken.ThrowIfCancellationRequested();
 
