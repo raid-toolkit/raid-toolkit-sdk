@@ -40,7 +40,8 @@
     </Target>
 
     <Target Name="PackageExtension"
-        AfterTargets="PostBuildEvent">
+        AfterTargets="PostBuildEvent"
+        Condition=" '$(PackageRTKExtension)' == 'true' ">
         <Package OutputFile="$(OutDir)\$(AssemblyName).rtkx"
             OutputDir="$(OutDir)" />
     </Target>

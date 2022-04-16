@@ -1,10 +1,10 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using Raid.Toolkit.Model;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
+using Raid.Toolkit.Model;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
@@ -30,7 +30,6 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             return (
                 services
-                .AddScoped<IPackageContext, PackageContext>()
                 .AddSingleton<ExtensionHost>()
                 .AddSingleton<IModelLoader, ModelLoader>()
                 .AddSingleton<IPackageLoader, SandboxedPackageLoader>()

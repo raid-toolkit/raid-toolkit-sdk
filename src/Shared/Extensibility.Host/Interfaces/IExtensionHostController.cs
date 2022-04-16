@@ -8,7 +8,7 @@ namespace Raid.Toolkit.Extensibility.Host
         void ActivateExtensions();
         void ShowExtensionUI();
         void DeactivateExtensions();
-        void InstallPackage(PackageDescriptor descriptor, bool activate);
-        void UninstallPackage(PackageDescriptor descriptor);
+        void InstallPackage(ExtensionBundle descriptor, bool activate);
+        void UninstallPackage(string packageId);
     }
 }

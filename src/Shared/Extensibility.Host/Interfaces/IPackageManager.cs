@@ -4,8 +4,8 @@ namespace Raid.Toolkit.Extensibility.Host
 {
     public interface IPackageManager
     {
-        public IEnumerable<PackageDescriptor> GetAllPackages();
-        public PackageDescriptor GetPackage(string packageId);
-        public PackageDescriptor AddPackage(PackageDescriptor package);
+        public IEnumerable<ExtensionBundle> GetAllPackages();
+        public ExtensionBundle GetPackage(string packageId);
+        public ExtensionBundle AddPackage(ExtensionBundle package);
     }
 }

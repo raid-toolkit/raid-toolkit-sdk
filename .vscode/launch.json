@@ -73,6 +73,27 @@
       "stopAtEntry": false
     },
     {
+      "name": "Debug Extension",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
+      "args": [
+        "--debug",
+        "--debug-package",
+        "M:\\git\\RaidSpeedHack\\RaidSpeedHack\\bin\\x64\\Debug\\net5.0-windows",
+        "--standalone"
+      ],
+      "env": {
+        "RTK_DEBUG": "true",
+        "app:MemoryLogging": "Error"
+      },
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/Debug/net5.0-windows/win-x64",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
       "name": "Launch Raid.Toolkit (Release)",
       "type": "coreclr",
       "request": "launch",

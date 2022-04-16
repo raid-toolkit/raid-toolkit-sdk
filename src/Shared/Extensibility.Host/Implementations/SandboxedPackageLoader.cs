@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
@@ -8,15 +9,18 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly ConcurrentDictionary<string, IExtensionPackage> LoadedPackages = new();
         private bool IsDisposed;
 
-        private IPackageInstanceFactory InstanceFactory;
-        public SandboxedPackageLoader(IPackageInstanceFactory instanceFactory)
+        private IServiceProvider ServiceProvider;
+        public SandboxedPackageLoader(IServiceProvider serviceProvider)
         {
-            InstanceFactory = instanceFactory;
+            ServiceProvider = serviceProvider;
         }
 
-        public IExtensionPackage LoadPackage(PackageDescriptor descriptor)
+        public IExtensionPackage LoadPackage(ExtensionBundle bundle)
         {
-            return LoadedPackages.GetOrAdd(descriptor.Id, (id) => new ExtensionSandbox(descriptor, InstanceFactory));
+            return LoadedPackages.GetOrAdd(
+                bundle.Manifest.Id,
+                (id) => ActivatorUtilities.CreateInstance<ExtensionSandbox>(ServiceProvider, bundle)
+            );
         }
 
         protected virtual void Dispose(bool disposing)

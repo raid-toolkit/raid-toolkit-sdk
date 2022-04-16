@@ -13,7 +13,8 @@ namespace Raid.Toolkit
     {
         private static string ExtensionsDirectory => Path.Combine(AppHost.ExecutableDirectory, "extensions");
 
-        readonly List<PackageDescriptor> Descriptors = new();
+        readonly List<ExtensionBundle> Descriptors = new();
+        public static string? DebugPackage { get; set; }
 
         public PackageManager()
         {
@@ -25,66 +26,55 @@ namespace Raid.Toolkit
             if (Descriptors.Count > 0) return;
 
             // add packaged extensions
-            Descriptors.Add(DescriptorFor<Extension.Account.AccountExtension>());
-            Descriptors.Add(DescriptorFor<Extension.Realtime.RealtimeExtension>());
+            Descriptors.Add(ExtensionBundle.FromType<Extension.Account.AccountExtension>());
+            Descriptors.Add(ExtensionBundle.FromType<Extension.Realtime.RealtimeExtension>());
 
+            Dictionary<string, ExtensionBundle> descriptors = new();
             if (Directory.Exists(ExtensionsDirectory))
             {
-                List<PackageDescriptor> legacyDescriptors = new();
                 // load legacy extensions:
                 string[] files = Directory.GetFiles(ExtensionsDirectory, "Raid.Toolkit.Extension.*.dll");
-                foreach (string file in files)
-                {
-                    FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(file);
-                    legacyDescriptors.Add(new(Path.GetFileNameWithoutExtension(file), fvi.ProductName, fvi.FileDescription, file));
-                }
+                var legacyBundles = files.Select(file => ExtensionBundle.FromFile(file));
+                foreach (var legacyBundle in legacyBundles)
+                    descriptors[legacyBundle.Id] = legacyBundle;
 
                 string[] dirs = Directory.GetDirectories(ExtensionsDirectory);
                 foreach (string dir in dirs)
                 {
-                    string manifestPath = Path.Combine(dir, ".rtk.extension.json");
-                    if (!File.Exists(manifestPath))
-                        continue;
-
-                    string manifestTxt = File.ReadAllText(manifestPath);
-                    ExtensionManifest manifest = JsonConvert.DeserializeObject<ExtensionManifest>(manifestTxt)!;
-                    PackageDescriptor descriptor = new(manifest.Id, manifest.DisplayName, manifest.Description, manifestPath);
-                    legacyDescriptors.RemoveAll(desc => desc.Id == descriptor.Id);
-                    Descriptors.Add(descriptor);
+                    try
+                    {
+                        ExtensionBundle bundle = ExtensionBundle.FromDirectory(dir);
+                        descriptors[bundle.Id] = bundle; // overwrite any legacy extensions
+                    }
+                    catch (Exception)
+                    { }
                 }
-
-                Descriptors.AddRange(legacyDescriptors);
             }
 
+            if (!string.IsNullOrEmpty(DebugPackage))
+            {
+                var debugPkg = ExtensionBundle.FromDirectory(DebugPackage);
+                descriptors.Add(debugPkg.Id, debugPkg);
+            }
+
+            Descriptors.AddRange(descriptors.Values);
         }
 
-        private static PackageDescriptor DescriptorFor<T>()
-        {
-            return PackageDescriptor.FromAssembly(typeof(T).Assembly);
-        }
-
-        public PackageDescriptor AddPackage(PackageDescriptor packageToInstall)
+        public ExtensionBundle AddPackage(ExtensionBundle packageToInstall)
         {
             Directory.CreateDirectory(ExtensionsDirectory);
-            string newLocation = Path.Combine(ExtensionsDirectory, Path.GetFileName(packageToInstall.Location));
-            if (File.Exists(newLocation))
-            {
-                throw new InvalidOperationException("An extension with that name already exists");
-            }
-            File.Copy(packageToInstall.Location, newLocation);
-            PackageDescriptor descriptor = new(packageToInstall.Id, packageToInstall.Name, packageToInstall.Description, newLocation);
-            Descriptors.Add(descriptor);
-            return descriptor;
+            packageToInstall.Install(ExtensionsDirectory);
+            return ExtensionBundle.FromDirectory(packageToInstall.GetInstallDir(ExtensionsDirectory));
         }
 
-        public IEnumerable<PackageDescriptor> GetAllPackages()
+        public IEnumerable<ExtensionBundle> GetAllPackages()
         {
             return Descriptors;
         }
 
-        public PackageDescriptor GetPackage(string packageId)
+        public ExtensionBundle GetPackage(string packageId)
         {
-            return Descriptors.Single(d => d.Id == packageId);
+            return Descriptors.Single(d => d.Manifest.Id == packageId);
         }
     }
 }

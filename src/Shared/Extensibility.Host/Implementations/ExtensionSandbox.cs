@@ -1,48 +1,45 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using Newtonsoft.Json;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    internal class ExtensionSandbox : IDisposable, IRequireCodegen, IExtensionPackage
+    public class ExtensionSandbox : IDisposable, IRequireCodegen, IExtensionPackage
     {
         private bool IsDisposed;
-        private readonly PackageDescriptor Descriptor;
+        private readonly ExtensionBundle Bundle;
         private readonly IPackageInstanceFactory InstanceFactory;
         private ExtensionLoadContext LoadContext;
         private IExtensionPackage Instance;
-        public readonly ExtensionManifest Manifest;
+        private readonly ILogger<ExtensionSandbox> Logger;
 
+        public ExtensionManifest Manifest => Bundle.Manifest;
         public Assembly ExtensionAsm { get; private set; }
         public CodegenTypeFilter TypeFilter { get; }
 
-        internal ExtensionSandbox(PackageDescriptor descriptor, IPackageInstanceFactory instanceFactory)
+        [ActivatorUtilitiesConstructor]
+        public ExtensionSandbox(
+            IPackageInstanceFactory instanceFactory,
+            ILogger<ExtensionSandbox> logger,
+            ExtensionBundle bundle)
         {
-            Descriptor = descriptor;
+            Logger = logger;
             InstanceFactory = instanceFactory;
-            if (descriptor.Assembly != null)
+            Bundle = bundle;
+            if (bundle.Assembly != null)
             {
-                ExtensionAsm = descriptor.Assembly;
+                ExtensionAsm = bundle.Assembly;
             }
             else
             {
-                LoadContext = new(descriptor.Location);
-                ExtensionAsm = LoadContext.LoadFromAssemblyPath(descriptor.Location);
+                LoadContext = new(bundle.Location);
+                ExtensionAsm = LoadContext.LoadFromAssemblyPath(bundle.GetExtensionEntrypointDll());
             }
 
-            JsonSerializer serializer = new();
-            using (var stream = ExtensionAsm.GetManifestResourceStream("PackageManifest"))
-            using (StreamReader reader = new(stream))
-            using (JsonTextReader textReader = new(reader))
-            {
-                Manifest = serializer.Deserialize<ExtensionManifest>(textReader);
-            }
-
-            Regex[] typePatterns = Manifest.Codegen.Types
+            Regex[] typePatterns = bundle.Manifest.Codegen.Types
                 .Select(pattern => new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled))
                 .ToArray();
             TypeFilter = new(typePatterns);
@@ -60,41 +57,62 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public void Load()
         {
+            Logger.LogInformation($"Loading extension {Manifest.Id}");
             if (ExtensionAsm.ReflectionOnly)
             {
-                ExtensionAsm = Assembly.LoadFrom(Descriptor.Location);
+                ExtensionAsm = Assembly.LoadFrom(Bundle.GetExtensionEntrypointDll());
             }
             EnsureInstance();
         }
 
         private IExtensionPackage EnsureInstance()
         {
-            return Instance ??= InstanceFactory.CreateInstance(GetPackageType(), Descriptor);
+            return Instance ??= InstanceFactory.CreateInstance(GetPackageType());
         }
 
         public void OnActivate(IExtensionHost host)
         {
+            Logger.LogInformation($"Activating extension {Manifest.Id}");
             EnsureInstance();
-            Instance.OnActivate(host);
+            try
+            {
+                Instance.OnActivate(host);
+            }
+            catch (Exception e)
+            {
+                Logger.LogError($"Activation error {Manifest.Id}", e);
+                OnDeactivate(host);
+            }
         }
 
         public void OnDeactivate(IExtensionHost host)
         {
-            Instance?.OnDeactivate(host);
+            Logger.LogInformation($"Deactivating extension {Manifest.Id}");
+            try
+            {
+                Instance?.OnDeactivate(host);
+            }
+            catch (Exception e)
+            {
+                Logger.LogError($"Deactivation error {Manifest.Id}", e);
+            }
         }
 
         public void OnInstall(IExtensionHost host)
         {
+            Logger.LogInformation($"Installing extension {Manifest.Id}");
             EnsureInstance().OnInstall(host);
         }
 
         public void OnUninstall(IExtensionHost host)
         {
+            Logger.LogInformation($"Uninstalling extension {Manifest.Id}");
             EnsureInstance().OnUninstall(host);
         }
 
         public void ShowUI()
         {
+            Logger.LogInformation($"Showing extension UI {Manifest.Id}");
             EnsureInstance().ShowUI();
         }
 
@@ -105,6 +123,7 @@ namespace Raid.Toolkit.Extensibility.Host
             {
                 if (disposing)
                 {
+                    Logger.LogInformation($"Disposing extension {Manifest.Id}");
                     Instance?.Dispose();
                     LoadContext?.Unload();
                 }

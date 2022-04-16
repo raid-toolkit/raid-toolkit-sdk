@@ -37,6 +37,9 @@ namespace Raid.Toolkit
 
         [Option('d', "debug", Hidden = true)]
         public bool Debug { get; set; }
+
+        [Option('p', "debug-package", Hidden = true)]
+        public string? DebugPackage { get; set; }
     }
 
     internal class RunTask : CommandTaskBase<RunOptions>
@@ -57,6 +60,7 @@ namespace Raid.Toolkit
         public override ApplicationStartupCondition Parse(RunOptions options)
         {
             Options = options;
+            PackageManager.DebugPackage = options.DebugPackage;
 
             // Options fixup
             if (!Options.Standalone)

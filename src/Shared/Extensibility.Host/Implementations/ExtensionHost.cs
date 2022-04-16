@@ -1,10 +1,10 @@
-using Microsoft.Extensions.DependencyInjection;
-using Raid.Toolkit.Extensibility.Providers;
-using Raid.Toolkit.Extensibility.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
+using Raid.Toolkit.Extensibility.Providers;
+using Raid.Toolkit.Extensibility.Services;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
@@ -107,17 +107,17 @@ namespace Raid.Toolkit.Extensibility.Host
             Instances.Clear();
         }
 
-        public void InstallPackage(PackageDescriptor pkgToInstall, bool activate)
+        public void InstallPackage(ExtensionBundle pkgToInstall, bool activate)
         {
-            PackageDescriptor installedPkg = Locator.AddPackage(pkgToInstall);
+            ExtensionBundle installedPkg = Locator.AddPackage(pkgToInstall);
             var pkg = PackageLoader.LoadPackage(installedPkg);
             pkg.OnInstall(this);
             ExtensionPackages.Add(installedPkg.Id, pkg);
         }
 
-        public void UninstallPackage(PackageDescriptor descriptor)
+        public void UninstallPackage(string id)
         {
-            if (ExtensionPackages.Remove(descriptor.Id, out var pkg))
+            if (ExtensionPackages.Remove(id, out var pkg))
             {
                 pkg.OnDeactivate(this);
                 pkg.OnUninstall(this);

@@ -5,8 +5,9 @@
         <AssemblyName>Raid.Toolkit.Extension.Realtime</AssemblyName>
         <RootNamespace>Raid.Toolkit.Extension.Realtime</RootNamespace>
         <RaidToolkitSdkTasksPath>..\bin\Debug\net5.0-windows\</RaidToolkitSdkTasksPath>
-        <RTKTasks Condition=" '$(RTKTasks)' == '' ">false</RTKTasks>
         <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
+        <PackageRTKExtension>false</PackageRTKExtension>
+        <RTKTasks Condition=" '$(RTKTasks)' == '' ">false</RTKTasks>
     </PropertyGroup>
 
     <Import Project="$(SourceDir)Shared\Extensibility.Tasks\build\Raid.Toolkit.Extensibility.Tasks.targets" />
