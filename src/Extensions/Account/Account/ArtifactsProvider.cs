@@ -68,12 +68,12 @@ namespace Raid.Toolkit.Extension.Account
             {
                 state = new ArtifactsProviderState();
             }
-            bool hasUpdates = false;
+            bool hasUpdates = true;
 
             if (previous != null && state.ShouldIncrementalUpdate(artifactData))
             {
                 artifacts = previous.Values.ToList();
-                hasUpdates = true;
+                hasUpdates = false;
             }
             else
             {
