@@ -62,8 +62,8 @@ jobs:
       # Publish RTK
       - name: Publish App
         run: |
-          msbuild $env:Solution_Name -m "-t:Restore;Build" -p:SkipNonexistentTargets=true -p:Configuration=Release -p:Platform=x64"
-          msbuild $env:Solution_Name -m "-t:Publish;Pack"  -p:TargetFramework=net5.0-windows -p:SkipNonexistentTargets=true -p:Configuration=Release -p:Platform=x64  -p:PublishDir="$(Get-Location)\publish\RTK" -p:PackageOutputPath="$(Get-Location)\publish\nuget"
+          msbuild $env:Solution_Name -m -t:Build -p:Configuration=Release -p:Platform=x64
+          msbuild $env:Solution_Name -m "-t:Publish;Pack"  -p:TargetFramework=net5.0-windows -p:Configuration=Release -p:Platform=x64  -p:PublishDir="$(Get-Location)\publish\RTK" -p:PackageOutputPath="$(Get-Location)\publish\nuget"
 
       # Upload build artifacts
       - name: Upload RTK artifact
