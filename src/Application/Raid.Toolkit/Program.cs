@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.Common;
+using Raid.Toolkit.Injection;
 
 namespace Raid.Toolkit
 {
@@ -17,6 +18,7 @@ namespace Raid.Toolkit
             SingleThreadedSynchronizationContext.Await(async () =>
             {
                 returnValue = await RunProgram(args);
+                AsyncHookThread.DisposeCurrent();
             });
             return returnValue;
         }

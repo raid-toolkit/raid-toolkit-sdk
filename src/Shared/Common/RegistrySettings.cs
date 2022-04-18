@@ -10,6 +10,10 @@ using Microsoft.Win32;
 
 namespace Raid.Toolkit.Common
 {
+    public enum FeatureFlags
+    {
+        Hooks,
+    }
     public static class RegistrySettings
     {
         public const string RTKHive = @"SOFTWARE\RaidToolkit";
@@ -22,10 +26,18 @@ namespace Raid.Toolkit.Common
         public const string Protocol = "rtk";
         public const string StartupHive = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
         public const string ExecutableName = "Raid.Toolkit.exe";
+        // early access flags
+        public const string FlagsHive = $"{RTKHive}\\Flags";
+        public const string EnableHooks = "Hooks";
 
         public static readonly string DefaultInstallationPath;
-
         public static string InstalledExecutablePath => Path.Combine(InstallationPath, ExecutableName);
+
+        public static bool IsFlagEnabled(FeatureFlags flag)
+        {
+            return Registry.CurrentUser.OpenSubKey(FlagsHive)?.GetValue(flag.ToString().ToLowerInvariant(), 0) is int value && value == 1;
+        }
+
         public static bool RunOnStartup
         {
             get => DoesKeyExist(StartupHive, StartupName);

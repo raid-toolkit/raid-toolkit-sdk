@@ -1,0 +1,109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Types">
+      <UniqueIdentifier>{c81c0c8e-c890-4e4c-a7b0-d84ab297266f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Win32">
+      <UniqueIdentifier>{2d93d811-67b5-43d8-bdca-789b6f30052e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="IL2Cpp">
+      <UniqueIdentifier>{17c54237-2ec7-4449-b5b2-ce0458fb2be1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Messaging">
+      <UniqueIdentifier>{52ee51d9-9c12-4e2c-8c84-7a55a02c8ebb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public">
+      <UniqueIdentifier>{bb8aeea4-cfc3-4011-94e9-fdb05924729e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="il2cpp.h">
+      <Filter>IL2Cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Il2CppClassHolder.h">
+      <Filter>IL2Cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="il2cpp-object-internals.h">
+      <Filter>IL2Cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="SystemString.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Types</Filter>
+    </ClInclude>
+    <ClInclude Include="InjectionHook.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Snapshot.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="UnityTypes.h">
+      <Filter>IL2Cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="GameAssembly.h">
+      <Filter>IL2Cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="Shared.h">
+      <Filter>IL2Cpp</Filter>
+    </ClInclude>
+    <ClInclude Include="framework.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="pch.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageHandler.h">
+      <Filter>Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="WindowHelpers.h">
+      <Filter>Win32</Filter>
+    </ClInclude>
+    <ClInclude Include="Hook.h" />
+    <ClInclude Include="Api.h">
+      <Filter>public</Filter>
+    </ClInclude>
+    <ClInclude Include="MessageTypes.h">
+      <Filter>public</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SystemString.cpp">
+      <Filter>Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Types</Filter>
+    </ClCompile>
+    <ClCompile Include="GameAssembly.cpp">
+      <Filter>IL2Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="Il2CppClassHolder.cpp">
+      <Filter>IL2Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="InjectionHook.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="Snapshot.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="Shared.cpp">
+      <Filter>IL2Cpp</Filter>
+    </ClCompile>
+    <ClCompile Include="pch.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="dllmain.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
+    <ClCompile Include="MessageHandler.cpp">
+      <Filter>Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="Api.cpp">
+      <Filter>Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowHelpers.cpp">
+      <Filter>Win32</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

@@ -60,6 +60,9 @@ namespace Raid.Toolkit.Extensibility.Tasks
         {
             var hive = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\RaidToolkit");
             {
+                if (hive == null)
+                    return;
+
                 if (hive.GetValue("InstallFolder") is not string installFolder)
                     return;
 
@@ -73,7 +76,7 @@ namespace Raid.Toolkit.Extensibility.Tasks
                     return;
 
                 Log.LogMessage(MessageImportance.High, $"Installing extension");
-                Process.Start(new ProcessStartInfo(exePath, $"install \"{OutputFile}\" --accept")).WaitForExit();
+                Process.Start(new ProcessStartInfo(exePath, $"install \"{OutputFile!}\" --accept"))?.WaitForExit();
             }
         }
     }
