@@ -61,7 +61,9 @@ jobs:
 
       # Publish RTK
       - name: Publish App
-        run: dotnet publish $env:App_csproj --output publish/RTK --framework net5.0-windows -p:Configuration=Release -p:Platform=x64 -p:DeployOnBuild=true
+        run: |
+          msbuild $env:Solution_Name -m "-t:Restore;Build" -p:SkipNonexistentTargets=true -p:Configuration=Release -p:Platform=x64"
+          msbuild $env:Solution_Name -m "-t:Publish;Pack"  -p:TargetFramework=net5.0-windows -p:SkipNonexistentTargets=true -p:Configuration=Release -p:Platform=x64  -p:PublishDir="$(Get-Location)\publish\RTK" -p:PackageOutputPath="$(Get-Location)\publish\nuget"
 
       # Upload build artifacts
       - name: Upload RTK artifact
@@ -115,3 +117,16 @@ jobs:
           asset_path: ThirdPartyNotice.txt
           asset_name: ThirdPartyNotice.txt
           asset_content_type: text/plain
+
+      # NuGet Push
+      - name: Push client package to GitHub registry
+        run: |
+          dotnet nuget push publish/nuget/Raid.Common.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Client.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Model.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.DataModel.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.Host.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.Tasks.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+        env:
+          PUBLISH_TOKEN: ${{ secrets.PUBLISH_TOKEN }}
