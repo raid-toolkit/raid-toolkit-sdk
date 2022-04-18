@@ -14,6 +14,10 @@ namespace Raid.Toolkit
     {
         [Value(0, MetaName = "rtkx", HelpText = "Path to RTKX package to install")]
         public string? PackagePath { get; set; }
+
+        [Option('y', "accept")]
+        public bool Accept { get; set; }
+
     }
 
     internal class InstallTask : CommandTaskBase<InstallOptions>
@@ -34,11 +38,16 @@ namespace Raid.Toolkit
                 throw new NullReferenceException();
 
             ExtensionBundle bundleToInstall = ExtensionBundle.FromFile(Options.PackagePath);
-            using InstallExtensionDialog dlg = ActivatorUtilities.CreateInstance<InstallExtensionDialog>(ServiceProvider, bundleToInstall);
-            DialogResult result = dlg.ShowDialog();
-            if (result == DialogResult.Cancel)
+
+            // bypass UI if accept was passed as an argument
+            if (!Options.Accept)
             {
-                return Task.FromResult(10);
+                using InstallExtensionDialog dlg = ActivatorUtilities.CreateInstance<InstallExtensionDialog>(ServiceProvider, bundleToInstall);
+                DialogResult result = dlg.ShowDialog();
+                if (result == DialogResult.Cancel)
+                {
+                    return Task.FromResult(10);
+                }
             }
 
             _ = PackageManager.AddPackage(bundleToInstall);

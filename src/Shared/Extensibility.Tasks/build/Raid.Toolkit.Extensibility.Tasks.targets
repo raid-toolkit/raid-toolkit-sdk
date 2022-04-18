@@ -39,14 +39,14 @@
         </PropertyGroup>
     </Target>
 
-    <Target Name="PackageExtension"
+	<Target Name="PackageExtension"
         AfterTargets="PostBuildEvent"
         Condition=" '$(PackageRTKExtension)' == 'true' ">
-        <Package OutputFile="$(OutDir)\$(AssemblyName).rtkx"
-            OutputDir="$(OutDir)" />
-    </Target>
+		<Package OutputFile="$(OutDir)\$(AssemblyName).rtkx"
+            OutputDir="$(OutDir)" Install="$(InstallRTKExtensionAfterBuild)" />
+	</Target>
 
-    <Target Name="GenerateRTKInteropAssembly">
+	<Target Name="GenerateRTKInteropAssembly">
         <MakeDir Directories="$(IntermediateOutputPath)" />
 
         <Raid.Toolkit.Extensibility.Tasks.Codegen Condition=" '$(RTKTasks)' == 'true' and '$(GenerateInterop)' != 'false' "

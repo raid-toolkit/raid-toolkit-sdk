@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Build.Framework;
+using Microsoft.Win32;
 using Newtonsoft.Json;
 using Raid.Toolkit.Model;
 
@@ -18,6 +20,9 @@ namespace Raid.Toolkit.Extensibility.Tasks
 
         [Required]
         public string? OutputFile { get; set; }
+
+        [Required]
+        public bool Install { get; set; }
 
         public override bool Execute()
         {
@@ -42,7 +47,34 @@ namespace Raid.Toolkit.Extensibility.Tasks
             string tempOutput = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("d"));
             ZipFile.CreateFromDirectory(OutputDir, tempOutput);
             File.Move(tempOutput, OutputFile);
+
+            if (Install)
+            {
+                InstallPackage();
+            }
+
             return true;
+        }
+
+        private void InstallPackage()
+        {
+            var hive = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\RaidToolkit");
+            {
+                if (hive.GetValue("InstallFolder") is not string installFolder)
+                    return;
+
+                if (installFolder == null)
+                    return;
+
+                string exePath = Path.Combine(installFolder, "Raid.Service.exe");
+                if (!File.Exists(exePath))
+                    exePath = Path.Combine(installFolder, "Raid.Toolkit.exe");
+                if (!File.Exists(exePath))
+                    return;
+
+                Log.LogMessage(MessageImportance.High, $"Installing extension");
+                Process.Start(new ProcessStartInfo(exePath, $"install \"{OutputFile}\" --accept")).WaitForExit();
+            }
         }
     }
 }
