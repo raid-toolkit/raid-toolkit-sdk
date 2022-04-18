@@ -39,6 +39,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 .AddSingleton<ISessionManager, SessionManager>()
                 .AddSingleton<IServiceManager, ServiceManager>()
                 .AddSingleton<IProcessManager, ProcessManager>()
+                .AddSingleton<IMenuManager, MenuManager>()
                 .AddSingleton<IPackageManager, TPackageManager>()
                 .AddSingleton<IGameInstanceManager, GameInstanceManager>()
                 .AddSingleton<IExtensionHostController, ExtensionHost>()

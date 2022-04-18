@@ -14,6 +14,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IPackageLoader PackageLoader;
         private readonly IPackageManager Locator;
         private readonly IServiceProvider ServiceProvider;
+        private readonly IMenuManager MenuManager;
         private readonly IScopedServiceManager ScopedServices;
         private readonly IServiceManager ServiceManager;
         private readonly IContextDataManager DataManager;
@@ -28,7 +29,8 @@ namespace Raid.Toolkit.Extensibility.Host
             IContextDataManager dataManager,
             IModelLoader modelLoader,
             IServiceManager serviceManager,
-            IServiceProvider serviceProvider
+            IServiceProvider serviceProvider,
+            IMenuManager menuManager
             )
         {
             Locator = locator;
@@ -38,6 +40,7 @@ namespace Raid.Toolkit.Extensibility.Host
             ModelLoader = modelLoader;
             ServiceManager = serviceManager;
             ServiceProvider = serviceProvider;
+            MenuManager = menuManager;
         }
 
 
@@ -73,6 +76,12 @@ namespace Raid.Toolkit.Extensibility.Host
             IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
             T instance = ActivatorUtilities.CreateInstance<T>(scope);
             return ServiceManager.AddService(instance);
+        }
+
+        public IDisposable RegisterMenuEntry(IMenuEntry entry)
+        {
+            MenuManager.AddEntry(entry);
+            return new HostResourceHandle(() => MenuManager.RemoveEntry(entry));
         }
         #endregion
 
@@ -146,7 +155,6 @@ namespace Raid.Toolkit.Extensibility.Host
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
-
         #endregion
     }
 }

@@ -27,6 +27,7 @@ namespace Raid.Toolkit.UI
         private readonly ErrorService ErrorService;
         private readonly IServiceProvider ServiceProvider;
         private readonly CachedDataStorage<PersistedDataStorage> SettingsStorage;
+        private readonly IMenuManager MenuManager;
         private Action? OnClickCallback;
         private readonly PlariumPlayAdapter PPAdapter = new();
         private readonly ErrorsWindow ErrorsWindow;
@@ -38,6 +39,7 @@ namespace Raid.Toolkit.UI
             AppService mainService,
             RunOptions runOptions,
             ErrorService errorService,
+            IMenuManager menuManager,
             CachedDataStorage<PersistedDataStorage> settingsStorage,
             IServiceProvider serviceProvider)
         {
@@ -50,12 +52,13 @@ namespace Raid.Toolkit.UI
             ErrorService = errorService;
             ServiceProvider = serviceProvider;
             SettingsStorage = settingsStorage;
+            MenuManager = menuManager;
             ErrorsWindow = ActivatorUtilities.CreateInstance<ErrorsWindow>(ServiceProvider);
 
             // must trigger load here
             UpdateService.UpdateAvailable += OnUpdateAvailable;
             appTrayIcon.Text = $"Raid Toolkit v{ThisAssembly.AssemblyFileVersion}";
-            appTrayIcon.Icon = global::Raid.Toolkit.Properties.Resources.AppIcon;
+            appTrayIcon.Icon = Properties.Resources.AppIcon;
             appTrayIcon.Visible = true;
 
             // subscribe to error events
@@ -271,6 +274,15 @@ namespace Raid.Toolkit.UI
         private void viewErrorsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ShowErrors();
+        }
+
+        private void appTrayMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            extensionsToolStripMenuItem.DropDownItems.Clear();
+            extensionsToolStripMenuItem.DropDownItems.AddRange(MenuManager.GetEntries().Select(entry =>
+                new ToolStripMenuItem(entry.DisplayName, entry.Image, (sender, e) => entry.OnActivate())
+            ).ToArray());
+            extensionsToolStripMenuItem.Enabled = extensionsToolStripMenuItem.DropDownItems.Count > 0;
         }
     }
 }
