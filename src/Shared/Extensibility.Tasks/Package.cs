@@ -22,7 +22,7 @@ namespace Raid.Toolkit.Extensibility.Tasks
         public string? OutputFile { get; set; }
 
         [Required]
-        public bool Install { get; set; }
+        public string? Install { get; set; }
 
         public override bool Execute()
         {
@@ -48,7 +48,7 @@ namespace Raid.Toolkit.Extensibility.Tasks
             ZipFile.CreateFromDirectory(OutputDir, tempOutput);
             File.Move(tempOutput, OutputFile);
 
-            if (Install)
+            if (bool.TryParse(Install, out bool value) && value)
             {
                 InstallPackage();
             }
