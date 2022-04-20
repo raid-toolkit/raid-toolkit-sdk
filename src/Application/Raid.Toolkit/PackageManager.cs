@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
+using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host;
 
@@ -11,7 +12,7 @@ namespace Raid.Toolkit
 {
     public class PackageManager : IPackageManager
     {
-        private static string ExtensionsDirectory => Path.Combine(AppHost.ExecutableDirectory, "extensions");
+        private static string ExtensionsDirectory => Path.Combine(RegistrySettings.InstallationPath, "extensions");
 
         readonly List<ExtensionBundle> Descriptors = new();
         public static string? DebugPackage { get; set; }

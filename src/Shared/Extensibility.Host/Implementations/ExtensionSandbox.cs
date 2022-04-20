@@ -48,11 +48,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private Type GetPackageType()
         {
             Type packageType = ExtensionAsm.GetType(Manifest.Type);
-            if (packageType == null)
-            {
-                throw new EntryPointNotFoundException($"Could not load type {Manifest.Type} from the package");
-            }
-            return packageType;
+            return packageType ?? throw new EntryPointNotFoundException($"Could not load type {Manifest.Type} from the package");
         }
 
         public void Load()
@@ -62,7 +58,7 @@ namespace Raid.Toolkit.Extensibility.Host
             {
                 ExtensionAsm = Assembly.LoadFrom(Bundle.GetExtensionEntrypointDll());
             }
-            EnsureInstance();
+            _ = EnsureInstance();
         }
 
         private IExtensionPackage EnsureInstance()
@@ -73,7 +69,7 @@ namespace Raid.Toolkit.Extensibility.Host
         public void OnActivate(IExtensionHost host)
         {
             Logger.LogInformation($"Activating extension {Manifest.Id}");
-            EnsureInstance();
+            _ = EnsureInstance();
             try
             {
                 Instance.OnActivate(host);
@@ -82,11 +78,14 @@ namespace Raid.Toolkit.Extensibility.Host
             {
                 Logger.LogError($"Activation error {Manifest.Id}", e);
                 OnDeactivate(host);
+                Dispose();
             }
         }
 
         public void OnDeactivate(IExtensionHost host)
         {
+            if (IsDisposed)
+                return;
             Logger.LogInformation($"Deactivating extension {Manifest.Id}");
             try
             {
@@ -100,39 +99,44 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public void OnInstall(IExtensionHost host)
         {
+            if (IsDisposed)
+                return;
             Logger.LogInformation($"Installing extension {Manifest.Id}");
             EnsureInstance().OnInstall(host);
         }
 
         public void OnUninstall(IExtensionHost host)
         {
+            if (IsDisposed)
+                return;
             Logger.LogInformation($"Uninstalling extension {Manifest.Id}");
             EnsureInstance().OnUninstall(host);
         }
 
         public void ShowUI()
         {
+            if (IsDisposed)
+                return;
             Logger.LogInformation($"Showing extension UI {Manifest.Id}");
-            EnsureInstance().ShowUI();
+            Instance?.ShowUI();
         }
 
         #region IDisposable
         protected virtual void Dispose(bool disposing)
         {
-            if (!IsDisposed)
+            if (IsDisposed)
+                return;
+            if (disposing)
             {
-                if (disposing)
-                {
-                    Logger.LogInformation($"Disposing extension {Manifest.Id}");
-                    Instance?.Dispose();
-                    LoadContext?.Unload();
-                }
-
-                Instance = null;
-                ExtensionAsm = null;
-                LoadContext = null;
-                IsDisposed = true;
+                Logger.LogInformation($"Disposing extension {Manifest.Id}");
+                Instance?.Dispose();
+                LoadContext?.Unload();
             }
+
+            Instance = null;
+            ExtensionAsm = null;
+            LoadContext = null;
+            IsDisposed = true;
         }
 
         public void Dispose()

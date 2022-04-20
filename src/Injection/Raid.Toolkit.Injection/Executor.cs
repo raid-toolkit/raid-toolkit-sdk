@@ -12,7 +12,7 @@ namespace Raid.Toolkit.Injection
 			IntPtr msgPtr = Interop.IntPtrAlloc(msg);
 			try
 			{
-				SendMessage(hwnd, Marshal.SizeOf(msg), msgPtr);
+				SendMessage(hwnd, Marshal.SizeOf(msg), msgPtr, InjectedMessageType.CallInstanceMethod);
 			}
 			finally
 			{
@@ -27,7 +27,7 @@ namespace Raid.Toolkit.Injection
 			IntPtr msgPtr = Interop.IntPtrAlloc(msg);
 			try
 			{
-				SendMessage(hwnd, Marshal.SizeOf(msg), msgPtr);
+                SendMessage(hwnd, Marshal.SizeOf(msg), msgPtr, InjectedMessageType.CallStaticMethod);
 			}
 			finally
 			{
@@ -35,11 +35,11 @@ namespace Raid.Toolkit.Injection
 			}
 		}
 
-		private static void SendMessage(IntPtr hwnd, int cbMsg, IntPtr pMsg)
+		private static void SendMessage(IntPtr hwnd, int cbMsg, IntPtr pMsg, InjectedMessageType type)
 		{
 			COPYDATASTRUCT cds = new()
 			{
-				dwData = (IntPtr)InjectedMessageType.CallInstanceMethod,
+				dwData = (IntPtr)type,
 				cbData = cbMsg,
 				lpData = pMsg
 			};

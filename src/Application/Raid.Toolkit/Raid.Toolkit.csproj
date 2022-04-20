@@ -58,6 +58,7 @@
         <ProjectReference Include="$(SourceDir)Extensions\Realtime\Realtime.csproj" />
         <ProjectReference Include="$(SourceDir)Shared\Extensibility\Extensibility.csproj" />
         <ProjectReference Include="$(SourceDir)Shared\Extensibility.Host\Extensibility.Host.csproj" />
+        <ProjectReference Include="..\..\Injection\Raid.Toolkit.Injection\Raid.Toolkit.Injection.csproj" />
     </ItemGroup>
 
 </Project>

@@ -20,7 +20,7 @@ namespace Raid.Toolkit
     {
         public static readonly string ExecutablePath;
         public static readonly string ExecutableName = "Raid.Toolkit.exe";
-        public static readonly string ExecutableDirectory;
+        public static string ExecutableDirectory;
 
         public static void EnsureFileAssociations(string? exePath = null)
         {
