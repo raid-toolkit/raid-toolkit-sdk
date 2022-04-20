@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace Raid.Toolkit.Extensibility.Tasks
 
         [Required]
         public string? OutDir { get; set; }
+
+        public string? CacheDir { get; set; }
 
         public override bool Execute()
         {
@@ -47,18 +50,58 @@ namespace Raid.Toolkit.Extensibility.Tasks
 
             ExtensionManifest manifest = JsonConvert.DeserializeObject<ExtensionManifest>(File.ReadAllText(ManifestFiles[0]))!;
 
+            string cacheDir = Path.Combine(Path.GetTempPath(), "_rtkBuildCache", manifest.Id);
+            _ = Directory.CreateDirectory(cacheDir);
+
             ModelLoader loader = new()
             {
-                OutputDirectory = Path.GetDirectoryName(OutputFile)
+                OutputDirectory = cacheDir
             };
-            List<Regex> patternMatchers = manifest.Codegen?.Types?
-                .Select(pattern => new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled)).ToList()
-                ?? new();
-            string dllPath = loader.Build(patternMatchers, false).GetResultSync();
-            if (File.Exists(OutputFile))
-                File.Delete(OutputFile);
+            string tempOutputFileCache = Path.Combine(loader.OutputDirectory, loader.OutputFilename);
 
-            File.Copy(dllPath, OutputFile);
+            try
+            {
+                List<Regex> patternMatchers = manifest.Codegen?.Types?
+                    .Select(pattern => new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled)).ToList()
+                    ?? new();
+                string dllPath = loader.Build(patternMatchers, false).GetResultSync();
+                if (File.Exists(OutputFile))
+                    File.Delete(OutputFile);
+
+                File.Copy(dllPath, OutputFile);
+                if (!string.IsNullOrEmpty(CacheDir))
+                {
+                    try
+                    {
+                        string cachedOutputFile = Path.Combine(CacheDir, loader.OutputFilename);
+                        Log.LogMessage(MessageImportance.High, $"Caching artifact at: {cachedOutputFile}");
+                        _ = Directory.CreateDirectory(CacheDir);
+                        if (File.Exists(cachedOutputFile))
+                            File.Delete(cachedOutputFile);
+                        File.Copy(dllPath, cachedOutputFile);
+                    }
+                    catch { }
+                }
+            }
+            catch (Exception)
+            {
+                if (!string.IsNullOrEmpty(CacheDir))
+                {
+                    string cachedOutputFile = Path.Combine(CacheDir, loader.OutputFilename);
+                    Log.LogMessage(MessageImportance.High, "Failed to generate, attempting to load from cache");
+                    if (!File.Exists(cachedOutputFile))
+                        throw new FileNotFoundException("Could not generate interop dll and none was present in cache", tempOutputFileCache);
+
+                    if (File.Exists(OutputFile))
+                        File.Delete(OutputFile);
+                    Log.LogMessage(MessageImportance.High, $"Using cached artifact: {cachedOutputFile}");
+                    File.Copy(cachedOutputFile, OutputFile);
+                }
+                else
+                {
+                    throw new FileNotFoundException("Could not generate interop dll and none was present in cache", tempOutputFileCache);
+                }
+            }
 
             _ = Directory.CreateDirectory(OutDir);
             string outputManifest = Path.Combine(OutDir, ".rtk.extension.json");

@@ -32,6 +32,8 @@ namespace Raid.Toolkit.Model
         public string GameVersion { get; private set; }
         public Version InteropVersion { get; private set; }
         public string OutputDirectory { get; set; }
+        public string OutputAssemblyName { get; set; } = "Raid.Interop";
+        public string OutputFilename { get; set; } = "Raid.Interop.dll";
         private Assembly InteropAsm;
 
         public ModelLoader()
@@ -88,7 +90,7 @@ namespace Raid.Toolkit.Model
                 GameVersion = gameInfo.Version;
 
                 string outDir = OutputDirectory ?? Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
-                string dllPath = Path.Combine(outDir, gameInfo.Version, "Raid.Interop.dll");
+                string dllPath = Path.Combine(outDir, gameInfo.Version, OutputFilename);
 
                 bool shouldGenerate = force;
                 try
@@ -144,7 +146,7 @@ namespace Raid.Toolkit.Model
             // separated into separate method to ensure we can GC the generated ASM
             BuildAssembly(gameInfo, dllPath);
             GC.Collect();
-            var loadedAsm = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(asm => asm.FullName == "Raid.Interop");
+            var loadedAsm = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(asm => asm.FullName == OutputAssemblyName);
             ErrorHandler.Assert(loadedAsm == null, "Expected generated assembly to be unloaded!");
         }
 
@@ -167,7 +169,7 @@ namespace Raid.Toolkit.Model
                 ArtifactSpecs.TypeSelectors.MakeValue(new List<Func<TypeDescriptor, bool>>{
                     {td => IncludeTypes.Any(rex => rex.IsMatch(td.Name)) }
                 }),
-                ArtifactSpecs.AssemblyName.MakeValue("Raid.Interop"),
+                ArtifactSpecs.AssemblyName.MakeValue(OutputAssemblyName),
                 ArtifactSpecs.AssemblyVersion.MakeValue(CurrentInteropVersion),
                 ArtifactSpecs.OutputPath.MakeValue(dllPath)
             );
