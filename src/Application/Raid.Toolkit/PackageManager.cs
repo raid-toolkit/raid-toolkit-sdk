@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host;
+using Raid.Toolkit.Injection;
 
 namespace Raid.Toolkit
 {
@@ -19,6 +20,8 @@ namespace Raid.Toolkit
 
         public PackageManager()
         {
+            // let's get fucky
+            ClientApi.Preload();
             Load();
         }
 

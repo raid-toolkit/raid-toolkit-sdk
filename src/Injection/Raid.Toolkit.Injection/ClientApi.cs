@@ -16,6 +16,11 @@ namespace Raid.Toolkit.Injection
 			Context = new(proc);
 		}
 
+        public static void Preload()
+        {
+            "have to call something in this DLL to force it to load this asm on behalf of extensions".ToString();
+        }
+
 		public void InvokeOn<T>(T obj, CallMethodMessage call) where T : StructBase
 		{
 			Executor.InvokeInstanceFunction(Process.MainWindowHandle, obj.Address, call);
