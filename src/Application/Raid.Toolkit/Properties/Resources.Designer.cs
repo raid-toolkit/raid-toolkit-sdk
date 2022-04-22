@@ -73,6 +73,16 @@ namespace Raid.Toolkit.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Lock_16x {
+            get {
+                object obj = ResourceManager.GetObject("Lock_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap RaidToolkitLarge {
             get {
                 object obj = ResourceManager.GetObject("RaidToolkitLarge", resourceCulture);

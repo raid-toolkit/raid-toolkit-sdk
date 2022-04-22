@@ -10,13 +10,15 @@ namespace Raid.Toolkit.UI
 {
     public partial class ErrorsWindow : Form
     {
+        private readonly AppService AppService;
         private readonly ErrorService ErrorService;
         private readonly FileLoggerOptions LoggerSettings;
         private readonly string LogDirectory;
 
-        public ErrorsWindow(ErrorService errorService, IOptions<FileLoggerOptions> loggerSettings)
+        public ErrorsWindow(ErrorService errorService, AppService appService, IOptions<FileLoggerOptions> loggerSettings)
         {
             InitializeComponent();
+            AppService = appService;
             ErrorService = errorService;
             LoggerSettings = loggerSettings.Value;
             LogDirectory = Path.Combine(LoggerSettings.RootPath, LoggerSettings.BasePath);
@@ -74,6 +76,11 @@ namespace Raid.Toolkit.UI
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
             ReloadData();
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            AppService.Restart(postUpdate: false, asAdmin: true, owner: this);
         }
     }
 }

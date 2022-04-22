@@ -63,7 +63,7 @@ namespace Raid.Toolkit.UI
 
             // subscribe to error events
             ErrorService.OnErrorAdded += OnErrorAdded;
-            foreach(var e in ErrorService.CurrentErrors.Values)
+            foreach (var e in ErrorService.CurrentErrors.Values)
             {
                 OnErrorAdded(ErrorService, e);
             }
@@ -73,6 +73,7 @@ namespace Raid.Toolkit.UI
         {
             Action onClickCallback = ShowErrors;
             string messageTitle = "Error";
+            string messageText = string.Empty;
             if (e.Category == ServiceErrorCategory.Account)
             {
                 e.ErrorMessage = $"Could not update account '{e.TargetDescription}'";
@@ -82,16 +83,13 @@ namespace Raid.Toolkit.UI
             {
                 if (e.ErrorCode == ServiceError.ProcessAccessDenied)
                 {
-                    messageTitle = "Administrator access";
-                    e.ErrorMessage = $"Restart Raid Toolkit as Administrator?\n(not recommended)";
+                    messageTitle = "Administrator access required";
+                    messageText = $"Restart Raid Toolkit as Administrator?\n(not recommended)";
+                    e.ErrorMessage = $"Cannot access process ({e.TargetDescription}). Is it running as administrator?";
                     e.HelpMessage = "Check to make sure the game is not running as administrator. If it is, Raid Toolkit must also be started as administrator in order to access game data";
                     onClickCallback = () =>
                     {
-                        DialogResult result = MessageBox.Show(this, "It is not recommended to run Raid or related programs as Administrator, as it creates unneccesary risk. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNoCancel);
-                        if (result == DialogResult.Yes)
-                        {
-                            AppService.Restart(postUpdate: false, asAdmin: true);
-                        }
+                        AppService.Restart(postUpdate: false, asAdmin: true, owner: this);
                     };
                 }
                 else
@@ -104,7 +102,7 @@ namespace Raid.Toolkit.UI
             if (string.IsNullOrEmpty(e.ErrorMessage))
                 return;
 
-            ShowBalloonTip(kDefaultBalloonTipTimeout, messageTitle, e.ErrorMessage, ToolTipIcon.Error, onClickCallback);
+            ShowBalloonTip(kDefaultBalloonTipTimeout, messageTitle, string.IsNullOrEmpty(messageText) ? e.ErrorMessage : messageText, ToolTipIcon.Error, onClickCallback);
         }
 
         [DllImport("user32.dll")]

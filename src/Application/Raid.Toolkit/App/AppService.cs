@@ -6,7 +6,7 @@ using Raid.Toolkit.Extensibility.Host.Services;
 
 namespace Raid.Toolkit
 {
-    internal class AppService
+    public class AppService
     {
         private readonly IHostApplicationLifetime Lifetime;
         private readonly UpdateService UpdateService;
@@ -27,8 +27,17 @@ namespace Raid.Toolkit
             catch { }
         }
 
-        public void Restart(bool postUpdate, bool asAdmin = false)
+        public void Restart(bool postUpdate, bool asAdmin = false, IWin32Window? owner = null)
         {
+            if (asAdmin)
+            {
+                DialogResult result = MessageBox.Show(owner, "It is not recommended to run Raid or related programs as Administrator, as it creates unneccesary risk. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNoCancel);
+                if (result != DialogResult.Yes)
+                {
+                    return;
+                }
+            }
+
             List<string> args = new() { "--wait", "30000" };
             if (postUpdate)
                 args.Add("--post-update");
