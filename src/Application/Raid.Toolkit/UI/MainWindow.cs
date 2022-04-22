@@ -63,10 +63,16 @@ namespace Raid.Toolkit.UI
 
             // subscribe to error events
             ErrorService.OnErrorAdded += OnErrorAdded;
+            foreach(var e in ErrorService.CurrentErrors.Values)
+            {
+                OnErrorAdded(ErrorService, e);
+            }
         }
 
         private void OnErrorAdded(object? sender, ErrorEventArgs e)
         {
+            Action onClickCallback = ShowErrors;
+            string messageTitle = "Error";
             if (e.Category == ServiceErrorCategory.Account)
             {
                 e.ErrorMessage = $"Could not update account '{e.TargetDescription}'";
@@ -76,8 +82,17 @@ namespace Raid.Toolkit.UI
             {
                 if (e.ErrorCode == ServiceError.ProcessAccessDenied)
                 {
-                    e.ErrorMessage = $"Cannot access process ({e.TargetDescription}). Is it running as administrator?";
+                    messageTitle = "Administrator access";
+                    e.ErrorMessage = $"Restart Raid Toolkit as Administrator?\n(not recommended)";
                     e.HelpMessage = "Check to make sure the game is not running as administrator. If it is, Raid Toolkit must also be started as administrator in order to access game data";
+                    onClickCallback = () =>
+                    {
+                        DialogResult result = MessageBox.Show(this, "It is not recommended to run Raid or related programs as Administrator, as it creates unneccesary risk. Are you sure you want to continue?", "Warning", MessageBoxButtons.YesNoCancel);
+                        if (result == DialogResult.Yes)
+                        {
+                            AppService.Restart(postUpdate: false, asAdmin: true);
+                        }
+                    };
                 }
                 else
                 {
@@ -89,7 +104,7 @@ namespace Raid.Toolkit.UI
             if (string.IsNullOrEmpty(e.ErrorMessage))
                 return;
 
-            ShowBalloonTip(kDefaultBalloonTipTimeout, "Error", e.ErrorMessage, ToolTipIcon.Error, ShowErrors);
+            ShowBalloonTip(kDefaultBalloonTipTimeout, messageTitle, e.ErrorMessage, ToolTipIcon.Error, onClickCallback);
         }
 
         [DllImport("user32.dll")]

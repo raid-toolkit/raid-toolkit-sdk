@@ -27,13 +27,20 @@ namespace Raid.Toolkit
             catch { }
         }
 
-        public void Restart(bool postUpdate = false)
+        public void Restart(bool postUpdate, bool asAdmin = false)
         {
             List<string> args = new() { "--wait", "30000" };
             if (postUpdate)
                 args.Add("--post-update");
 
-            _ = Process.Start(AppHost.ExecutablePath, args.ToArray());
+            ProcessStartInfo psi = new()
+            {
+                UseShellExecute = true,
+                FileName = AppHost.ExecutableName,
+                Verb = asAdmin ? "runAs" : null,
+                Arguments = string.Join(" ", args)
+            };
+            _ = Process.Start(psi);
             Exit();
         }
 
