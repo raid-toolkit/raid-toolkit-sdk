@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
 
@@ -7,18 +8,22 @@ namespace Raid.Toolkit.Extensibility.Host
 {
     public class ExtensionLoadContext : AssemblyLoadContext
     {
-        private readonly AssemblyDependencyResolver Resolver;
+        private readonly AssemblyDependencyResolver[] Resolvers;
 
         public ExtensionLoadContext(string pluginPath) : base(isCollectible: true)
         {
-            Resolver = new AssemblyDependencyResolver(Path.GetDirectoryName(pluginPath));
+            Resolvers = new AssemblyDependencyResolver[] {
+                new AssemblyDependencyResolver(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)),
+                new AssemblyDependencyResolver(Path.GetDirectoryName(pluginPath))
+            };
         }
 
         protected override Assembly Load(AssemblyName assemblyName)
         {
-            string assemblyPath = Resolver.ResolveAssemblyToPath(assemblyName);
-            if (assemblyPath != null)
+            foreach(var resolver in Resolvers)
             {
+                string assemblyPath = resolver.ResolveAssemblyToPath(assemblyName);
+                if (assemblyPath == null) continue;
                 return LoadFromAssemblyPath(assemblyPath);
             }
 
@@ -27,9 +32,10 @@ namespace Raid.Toolkit.Extensibility.Host
 
         protected override IntPtr LoadUnmanagedDll(string unmanagedDllName)
         {
-            string libraryPath = Resolver.ResolveUnmanagedDllToPath(unmanagedDllName);
-            if (libraryPath != null)
+            foreach (var resolver in Resolvers)
             {
+                string libraryPath = resolver.ResolveUnmanagedDllToPath(unmanagedDllName);
+                if (libraryPath == null) continue;
                 return LoadUnmanagedDllFromPath(libraryPath);
             }
 
