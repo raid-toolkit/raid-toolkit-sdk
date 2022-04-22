@@ -32,7 +32,7 @@ namespace Raid.Toolkit
             PackageManager = packageManager;
         }
 
-        public override Task<int> Invoke()
+        public override int Invoke()
         {
             if (Options == null)
                 throw new NullReferenceException();
@@ -46,13 +46,13 @@ namespace Raid.Toolkit
                 DialogResult result = dlg.ShowDialog();
                 if (result == DialogResult.Cancel)
                 {
-                    return Task.FromResult(10);
+                    return 10;
                 }
             }
 
             _ = PackageManager.AddPackage(bundleToInstall);
 
-            return Task.FromResult(0);
+            return 0;
         }
 
         public override ApplicationStartupCondition Parse(InstallOptions options)

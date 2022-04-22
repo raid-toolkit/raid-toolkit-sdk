@@ -225,21 +225,18 @@ namespace Raid.Toolkit.UI
             InstallUpdate();
         }
 
-        private void checkUpdatesMenuItem_Click(object sender, EventArgs e)
+        private async void checkUpdatesMenuItem_Click(object sender, EventArgs e)
         {
-            Task.Run(async () =>
+            bool hasUpdate = await UpdateService.CheckForUpdates(force: true);
+            if (!hasUpdate)
             {
-                bool hasUpdate = await UpdateService.CheckForUpdates(force: true);
-                if (!hasUpdate)
-                {
-                    ShowBalloonTip(
-                        kDefaultBalloonTipTimeout,
-                        "No updates",
-                        $"You are already running the latest version!",
-                        ToolTipIcon.None,
-                        null);
-                }
-            });
+                ShowBalloonTip(
+                    kDefaultBalloonTipTimeout,
+                    "No updates",
+                    $"You are already running the latest version!",
+                    ToolTipIcon.None,
+                    null);
+            }
         }
 
         private void MainWindow_Load(object sender, EventArgs e)

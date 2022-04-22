@@ -7,7 +7,7 @@ namespace Raid.Toolkit
     {
         Type OptionsType { get; }
         ApplicationStartupCondition Parse(object options);
-        Task<int> Invoke();
+        int Invoke();
     }
 
     internal abstract class CommandTaskBase<T> : ICommandTask
@@ -15,7 +15,7 @@ namespace Raid.Toolkit
         public Type OptionsType => typeof(T);
 
         public abstract ApplicationStartupCondition Parse(T options);
-        public abstract Task<int> Invoke();
+        public abstract int Invoke();
 
         public ApplicationStartupCondition Parse(object options)
         {

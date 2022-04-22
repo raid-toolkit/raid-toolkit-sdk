@@ -92,10 +92,10 @@ namespace Raid.Toolkit
             return ApplicationStartupCondition.Services;
         }
 
-        public override Task<int> Invoke()
+        public override int Invoke()
         {
             if (Options == null)
-                return Task.FromResult(255);
+                return 255;
 
             // kill existing processes for debugging
             if (Options.Debug && Debugger.IsAttached)
@@ -105,14 +105,14 @@ namespace Raid.Toolkit
             {
                 case RunAction.Install:
                     Application.Run(new InstallWindow());
-                    return Task.FromResult(0);
+                    return 0;
                 case RunAction.Run:
                     using (var mutex = new Mutex(false, "RaidToolkit Singleton"))
                     {
                         bool isAnotherInstanceOpen = !mutex.WaitOne(TimeSpan.Zero);
                         if (isAnotherInstanceOpen)
                         {
-                            return Task.FromResult(0);
+                            return 0;
                         }
                         try
                         {
@@ -129,17 +129,17 @@ namespace Raid.Toolkit
                             mutex.ReleaseMutex();
                         }
                     }
-                    return Task.FromResult(0);
+                    return 0;
                 case RunAction.Activate:
                     // TODO: Activate existing window, if desired?
-                    return Task.FromResult(0);
+                    return 0;
                 case RunAction.Unknown:
                     break;
                 default:
                     break;
             }
 
-            return Task.FromResult(255);
+            return 255;
         }
 
         private static void KillExistingProcesses()

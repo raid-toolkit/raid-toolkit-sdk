@@ -55,10 +55,10 @@ namespace Raid.Toolkit
             return ApplicationStartupCondition.Usage;
         }
 
-        public Task<int> Execute()
+        public int Execute()
         {
             if (SelectedTask == null)
-                return Task.FromResult(255);
+                return 255;
 
             return SelectedTask.Invoke();
         }

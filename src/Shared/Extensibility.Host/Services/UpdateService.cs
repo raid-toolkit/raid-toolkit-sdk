@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -35,7 +36,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
         public UpdateService(ILogger<UpdateService> logger, IOptions<UpdateSettings> settings, Updater updater)
             : base(logger)
         {
-            CurrentVersion = Assembly.GetEntryAssembly().GetName().Version;
+            CurrentVersion = Version.Parse(FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).FileVersion);
             Updater = updater;
             Enabled = RegistrySettings.AutomaticallyCheckForUpdates;
             if (settings.Value.PollIntervalMs > 0)

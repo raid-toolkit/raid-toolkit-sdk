@@ -14,19 +14,20 @@ namespace Raid.Toolkit
         [STAThread]
         static int Main(string[] args)
         {
-            int returnValue = 0;
-            SingleThreadedSynchronizationContext.Await(async () =>
+            try
             {
-                returnValue = await RunProgram(args);
+                return RunProgram(args);
+            }
+            finally
+            {
                 AsyncHookThread.DisposeCurrent();
-            });
-            return returnValue;
+            }
         }
 
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
-        static async Task<int> RunProgram(string[] args)
+        static int RunProgram(string[] args)
         {
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
@@ -42,11 +43,11 @@ namespace Raid.Toolkit
 
             if (startCondition.HasFlag(ApplicationStartupCondition.Services))
             {
-                await host.StartAsync();
+                host.StartAsync().Wait();
             }
             try
             {
-                return await host.Services.GetRequiredService<ApplicationStartupTask>().Execute();
+                return host.Services.GetRequiredService<ApplicationStartupTask>().Execute();
             }
             catch (Exception e)
             {
@@ -57,7 +58,7 @@ namespace Raid.Toolkit
             {
                 if (startCondition.HasFlag(ApplicationStartupCondition.Services))
                 {
-                    await host.StopAsync();
+                    host.StopAsync().Wait();
                 }
             }
         }
