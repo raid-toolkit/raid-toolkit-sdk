@@ -8,7 +8,7 @@ namespace Raid.Toolkit.Extensibility
     {
         public class GameInstancesUpdatedEventArgs : EventArgs
         {
-            IGameInstance Instance { get; }
+            public IGameInstance Instance { get; }
             public GameInstancesUpdatedEventArgs(IGameInstance gameInstance)
                 => Instance = gameInstance;
         }
