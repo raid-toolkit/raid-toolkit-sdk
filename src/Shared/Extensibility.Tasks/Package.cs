@@ -1,15 +1,11 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using System.Threading;
 using Microsoft.Build.Framework;
 using Microsoft.Win32;
 using Newtonsoft.Json;
-using Raid.Toolkit.Model;
 
 namespace Raid.Toolkit.Extensibility.Tasks
 {
@@ -26,7 +22,7 @@ namespace Raid.Toolkit.Extensibility.Tasks
 
         public override bool Execute()
         {
-            Log.LogMessage(MessageImportance.High, $"Packaging extension");
+            Log.LogMessage(MessageImportance.High, $"Packaging extension {OutputFile}");
 
             if (string.IsNullOrEmpty(OutputFile))
             {
@@ -60,6 +56,19 @@ namespace Raid.Toolkit.Extensibility.Tasks
         {
             var hive = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\RaidToolkit");
             {
+                using (var mutex = new Mutex(false, "RaidToolkit Singleton"))
+                {
+                    bool isRunning = !mutex.WaitOne(TimeSpan.Zero);
+                    if (!isRunning)
+                    {
+                        mutex.ReleaseMutex();
+                    }
+                    else
+                    {
+                        Log.LogMessage(MessageImportance.High, $"Extension in use, will not deploy");
+                        return;
+                    }
+                }
                 if (hive == null)
                     return;
 
@@ -75,7 +84,7 @@ namespace Raid.Toolkit.Extensibility.Tasks
                 if (!File.Exists(exePath))
                     return;
 
-                Log.LogMessage(MessageImportance.High, $"Installing extension");
+                Log.LogMessage(MessageImportance.High, $"Installing extension {OutputFile}");
                 Process.Start(new ProcessStartInfo(exePath, $"install \"{OutputFile!}\" --accept"))?.WaitForExit();
             }
         }
