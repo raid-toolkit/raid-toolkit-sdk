@@ -34,24 +34,27 @@ namespace Raid.Toolkit
             Descriptors.Add(ExtensionBundle.FromType<Extension.Realtime.RealtimeExtension>());
 
             Dictionary<string, ExtensionBundle> descriptors = new();
-            if (Directory.Exists(ExtensionsDirectory))
+            if (string.IsNullOrEmpty(DebugPackage))
             {
-                // load legacy extensions:
-                string[] files = Directory.GetFiles(ExtensionsDirectory, "Raid.Toolkit.Extension.*.dll");
-                var legacyBundles = files.Select(file => ExtensionBundle.FromAssembly(file));
-                foreach (var legacyBundle in legacyBundles)
-                    descriptors[legacyBundle.Id] = legacyBundle;
-
-                string[] dirs = Directory.GetDirectories(ExtensionsDirectory);
-                foreach (string dir in dirs)
+                if (Directory.Exists(ExtensionsDirectory))
                 {
-                    try
+                    // load legacy extensions:
+                    string[] files = Directory.GetFiles(ExtensionsDirectory, "Raid.Toolkit.Extension.*.dll");
+                    var legacyBundles = files.Select(file => ExtensionBundle.FromAssembly(file));
+                    foreach (var legacyBundle in legacyBundles)
+                        descriptors[legacyBundle.Id] = legacyBundle;
+
+                    string[] dirs = Directory.GetDirectories(ExtensionsDirectory);
+                    foreach (string dir in dirs)
                     {
-                        ExtensionBundle bundle = ExtensionBundle.FromDirectory(dir);
-                        descriptors[bundle.Id] = bundle; // overwrite any legacy extensions
+                        try
+                        {
+                            ExtensionBundle bundle = ExtensionBundle.FromDirectory(dir);
+                            descriptors[bundle.Id] = bundle; // overwrite any legacy extensions
+                        }
+                        catch (Exception)
+                        { }
                     }
-                    catch (Exception)
-                    { }
                 }
             }
 
