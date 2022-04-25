@@ -2,7 +2,7 @@ namespace Raid.Toolkit.Extensibility
 {
     public class ExtensionDataContext : IDataContext
     {
-        internal ExtensionDataContext(string extensionId)
+        public ExtensionDataContext(string extensionId)
         {
             ExtensionId = extensionId;
             Parts = new string[] { "extensions", extensionId };
@@ -12,7 +12,7 @@ namespace Raid.Toolkit.Extensibility
 
         public override string ToString()
         {
-            return $"account:{ExtensionId.Substring(0, 16)}";
+            return $"account:{ExtensionId[..16]}";
         }
     }
 }

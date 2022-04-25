@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public interface IExtensionHostController : IExtensionHost
+    public interface IExtensionHostController
     {
         Task LoadExtensions();
         void ActivateExtensions();

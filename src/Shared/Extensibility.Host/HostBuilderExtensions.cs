@@ -11,8 +11,8 @@ namespace Raid.Toolkit.Extensibility.Host
     [Flags]
     public enum HostFeatures
     {
-        ProcessWatcher = (1 << 0),
-        RefreshData = (1 << 1),
+        ProcessWatcher = 1 << 0,
+        RefreshData = 1 << 1,
     }
 
     public static class HostBuilderExtensions
@@ -28,7 +28,7 @@ namespace Raid.Toolkit.Extensibility.Host
         }
         public static IServiceCollection AddExtensibilityServices<TPackageManager>(this IServiceCollection services) where TPackageManager : class, IPackageManager
         {
-            return (
+            return
                 services
                 .AddSingleton<ExtensionHost>()
                 .AddSingleton<IModelLoader, ModelLoader>()
@@ -43,7 +43,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 .AddSingleton<IWindowManager, WindowManager>()
                 .AddSingleton<IPackageManager, TPackageManager>()
                 .AddSingleton<IGameInstanceManager, GameInstanceManager>()
-                .AddSingleton<IExtensionHostController, ExtensionHost>()
+                .AddSingleton<IExtensionHostController, ExtensionHostController>()
                 .AddSingleton(typeof(CachedDataStorage))
                 .AddSingleton(typeof(CachedDataStorage<>))
                 .AddSingleton(typeof(PersistedDataManager<>))
@@ -54,7 +54,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 .AddHostedService<ApplicationHost>()
                 .AddHostedService<ServiceExecutor>()
                 .AddHostedServiceSingleton<IDataStorageReaderWriter, FileStorageService>()
-            );
+            ;
         }
     }
 }

@@ -1,7 +1,7 @@
 using System;
+using System.Windows.Forms;
 using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
-using System.Windows.Forms;
 
 namespace Raid.Toolkit.Extensibility
 {
@@ -11,6 +11,8 @@ namespace Raid.Toolkit.Extensibility
 
         [Obsolete]
         T GetInstance<T>() where T : IDisposable;
+
+        IExtensionStorage GetStorage(bool enableCache);
 
         IDisposable RegisterMessageScopeHandler<T>(T handler) where T : IMessageScopeHandler;
         IDisposable RegisterDataProvider<T>(T provider) where T : IDataProvider;
