@@ -5,22 +5,18 @@
         <LangVersion>10.0</LangVersion>
         <RootNamespace>Raid.Toolkit.Extensibility</RootNamespace>
         <AssemblyName>Raid.Toolkit.Extensibility</AssemblyName>
+		<UseWindowsForms>true</UseWindowsForms>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="il2cpptoolkit.common"
-            Version="1.0.65" />
-        <PackageReference Include="il2cpptoolkit.metadata"
-            Version="1.0.65" />
-        <PackageReference Include="il2cpptoolkit.runtime"
-            Version="1.0.65" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"
-            Version="6.0.0" />
+        <PackageReference Include="il2cpptoolkit.common" Version="1.0.65" />
+        <PackageReference Include="il2cpptoolkit.metadata" Version="1.0.65" />
+        <PackageReference Include="il2cpptoolkit.runtime" Version="1.0.65" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Common\Common.csproj" />
         <ProjectReference Include="..\DataModel\DataModel.csproj" />
     </ItemGroup>
-
 </Project>

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
@@ -15,6 +16,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IPackageManager Locator;
         private readonly IServiceProvider ServiceProvider;
         private readonly IMenuManager MenuManager;
+        private readonly IWindowManager WindowManager;
         private readonly IScopedServiceManager ScopedServices;
         private readonly IServiceManager ServiceManager;
         private readonly IContextDataManager DataManager;
@@ -30,7 +32,8 @@ namespace Raid.Toolkit.Extensibility.Host
             IModelLoader modelLoader,
             IServiceManager serviceManager,
             IServiceProvider serviceProvider,
-            IMenuManager menuManager
+            IMenuManager menuManager,
+            IWindowManager windowManager
             )
         {
             Locator = locator;
@@ -41,41 +44,78 @@ namespace Raid.Toolkit.Extensibility.Host
             ServiceManager = serviceManager;
             ServiceProvider = serviceProvider;
             MenuManager = menuManager;
+            WindowManager = windowManager;
         }
 
 
         #region IExtensionHost
-        public T CreateInstance<T>() where T : IDisposable
+
+        public T CreateInstance<T>(params object[] args) where T : IDisposable
         {
             IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
-            T instance = ActivatorUtilities.CreateInstance<T>(scope);
+            T instance = ActivatorUtilities.CreateInstance<T>(scope, args);
             Instances.TryAdd(typeof(T), instance);
             return instance;
         }
 
+
+        public IDisposable RegisterWindow<T>(WindowOptions options) where T : Form
+        {
+            WindowManager.RegisterWindow<T>(options);
+            return new HostResourceHandle(() => WindowManager.UnregisterWindow<T>());
+        }
+
+        public T CreateWindow<T>() where T : Form
+        {
+            return WindowManager.CreateWindow<T>();
+        }
+
+
+        [Obsolete]
         public T GetInstance<T>() where T : IDisposable
         {
             return (T)Instances[typeof(T)];
         }
 
+
+        public IDisposable RegisterMessageScopeHandler<T>(T handler) where T : IMessageScopeHandler
+        {
+            ScopedServices.AddMessageScopeHandler(handler);
+            return new HostResourceHandle(() => ScopedServices.RemoveMessageScopeHandler(handler));
+        }
+
+        [Obsolete]
         public IDisposable RegisterMessageScopeHandler<T>() where T : IMessageScopeHandler
         {
             IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
             T instance = ActivatorUtilities.CreateInstance<T>(scope);
-            ScopedServices.AddMessageScopeHandler(instance);
-            return new HostResourceHandle(() => ScopedServices.RemoveMessageScopeHandler(instance));
+            return RegisterMessageScopeHandler(instance);
         }
 
+        public IDisposable RegisterDataProvider<T>(T provider) where T : IDataProvider
+        {
+            IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
+            T instance = ActivatorUtilities.CreateInstance<T>(scope);
+            return DataManager.AddProvider(instance);
+        }
+
+        [Obsolete]
         public IDisposable RegisterDataProvider<T>() where T : IDataProvider
         {
             return DataManager.AddProvider<T>();
         }
 
+        public IDisposable RegisterBackgroundService<T>(T service) where T : IBackgroundService
+        {
+            return ServiceManager.AddService(service);
+        }
+
+        [Obsolete]
         public IDisposable RegisterBackgroundService<T>() where T : IBackgroundService
         {
             IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
             T instance = ActivatorUtilities.CreateInstance<T>(scope);
-            return ServiceManager.AddService(instance);
+            return RegisterBackgroundService(instance);
         }
 
         public IDisposable RegisterMenuEntry(IMenuEntry entry)

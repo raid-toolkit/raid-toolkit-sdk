@@ -23,12 +23,18 @@ namespace Raid.Toolkit.Extensibility
                 .Cast<IDataProvider<TContext>>();
         }
 
+        public IDisposable AddProvider<T>(T provider) where T : IDataProvider
+        {
+            ProvidersList.Add(provider);
+            return new HostResourceHandle(() => ProvidersList.Remove(provider));
+        }
+
+        [Obsolete]
         public IDisposable AddProvider<T>() where T : IDataProvider
         {
             IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
             T instance = ActivatorUtilities.CreateInstance<T>(scope);
-            ProvidersList.Add(instance);
-            return new HostResourceHandle(() => ProvidersList.Remove(instance));
+            return AddProvider(instance);
         }
     }
 }
