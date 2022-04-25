@@ -7,5 +7,6 @@ namespace Raid.Toolkit.Extensibility.Host
         public void RegisterWindow<T>(WindowOptions options) where T : Form;
         public void UnregisterWindow<T>() where T : Form;
         public T CreateWindow<T>() where T : Form;
+        public void RestoreWindows();
     }
 }

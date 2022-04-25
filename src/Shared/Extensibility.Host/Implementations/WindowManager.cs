@@ -87,7 +87,10 @@ namespace Raid.Toolkit.Extensibility.Host
             if (options.RememberPosition)
             {
                 if (States.TryGetValue(form.GetType().FullName, out WindowState state))
+                {
                     form.Location = state.Location;
+                    form.StartPosition = FormStartPosition.Manual;
+                }
 
                 form.ResizeEnd += SetFormVisibleState;
                 form.Move += SetFormVisibleState;
@@ -104,9 +107,13 @@ namespace Raid.Toolkit.Extensibility.Host
 
         private void SetFormClosedState(object sender, FormClosingEventArgs e)
         {
+            bool isUserClose = e.CloseReason == CloseReason.UserClosing
+                || e.CloseReason == CloseReason.FormOwnerClosing;
+
             string senderType = sender.GetType().FullName;
             Logger.LogInformation($"Updating window {senderType} (closed)");
-            States[senderType] = new(sender as Form, false);
+            // if closing for application exit/shutdown, then consider it still open so it will re-open on next launch
+            States[senderType] = new(sender as Form, !isUserClose);
             Storage.Write(AppStateDataContext.Default, "windows", States);
         }
 

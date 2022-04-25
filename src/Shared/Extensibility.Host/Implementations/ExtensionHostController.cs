@@ -11,6 +11,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IPackageLoader PackageLoader;
         private readonly IPackageManager Locator;
         private readonly IServiceProvider ServiceProvider;
+        private readonly IWindowManager WindowManager;
         private readonly Dictionary<string, ExtensionHost> ExtensionPackages = new();
         private readonly Dictionary<Type, IDisposable> Instances = new();
         private bool IsDisposed;
@@ -19,13 +20,15 @@ namespace Raid.Toolkit.Extensibility.Host
             IPackageManager locator,
             IPackageLoader loader,
             IModelLoader modelLoader,
-            IServiceProvider serviceProvider
+            IServiceProvider serviceProvider,
+            IWindowManager windowManager
             )
         {
             Locator = locator;
             PackageLoader = loader;
             ModelLoader = modelLoader;
             ServiceProvider = serviceProvider;
+            WindowManager = windowManager;
         }
 
         #region IExtensionHostController
@@ -48,6 +51,8 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             foreach (var pkg in ExtensionPackages.Values)
                 pkg.ShowUI();
+
+            WindowManager.RestoreWindows();
         }
 
         public void DeactivateExtensions()
