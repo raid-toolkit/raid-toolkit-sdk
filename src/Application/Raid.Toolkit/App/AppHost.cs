@@ -86,6 +86,8 @@ namespace Raid.Toolkit
                     if (Directory.Exists(RegistrySettings.InstallationPath))
                     {
                         _ = builder.AddConfiguration(context.Configuration.GetSection("Logging"));
+
+                        Directory.CreateDirectory(Path.Combine(RegistrySettings.InstallationPath, "Logs"));
                         _ = builder.AddFile(o => o.RootPath = RegistrySettings.InstallationPath);
                     }
                 })
