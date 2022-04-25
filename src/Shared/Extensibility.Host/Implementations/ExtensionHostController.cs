@@ -34,7 +34,7 @@ namespace Raid.Toolkit.Extensibility.Host
             foreach (var pkg in Locator.GetAllPackages())
                 ExtensionPackages.Add(pkg.Id, ExtensionHost.CreateHost(ServiceProvider, PackageLoader.LoadPackage(pkg), pkg));
 
-            var typePatterns = ExtensionPackages.Values.OfType<IRequireCodegen>().SelectMany(cg => cg.TypeFilter.IncludeTypes);
+            var typePatterns = ExtensionPackages.Values.SelectMany(host => host.GetIncludeTypes());
             _ = await Task.Run(() => ModelLoader.BuildAndLoad(typePatterns, false));
         }
 

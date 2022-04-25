@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using Raid.Toolkit.Extensibility.DataServices;
@@ -47,6 +49,17 @@ namespace Raid.Toolkit.Extensibility.Host
         public static ExtensionHost CreateHost(IServiceProvider serviceProvider, IExtensionPackage package, ExtensionBundle bundle)
         {
             return ActivatorUtilities.CreateInstance<ExtensionHost>(serviceProvider, package, bundle);
+        }
+
+        public Regex[] GetIncludeTypes()
+        {
+            if (Bundle.Manifest.Codegen == null)
+                return Array.Empty<Regex>();
+
+            Regex[] typePatterns = Bundle.Manifest.Codegen.Types
+                .Select(pattern => new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled))
+                .ToArray();
+            return typePatterns;
         }
 
         public void Activate()

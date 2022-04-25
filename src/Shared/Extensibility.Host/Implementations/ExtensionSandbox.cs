@@ -1,13 +1,11 @@
 using System;
-using System.Linq;
 using System.Reflection;
-using System.Text.RegularExpressions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public class ExtensionSandbox : IDisposable, IRequireCodegen, IExtensionPackage
+    public class ExtensionSandbox : IDisposable, IExtensionPackage
     {
         private bool IsDisposed;
         private readonly ExtensionBundle Bundle;
@@ -18,7 +16,6 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public ExtensionManifest Manifest => Bundle.Manifest;
         public Assembly ExtensionAsm { get; private set; }
-        public CodegenTypeFilter TypeFilter { get; }
 
         [ActivatorUtilitiesConstructor]
         public ExtensionSandbox(
@@ -38,11 +35,6 @@ namespace Raid.Toolkit.Extensibility.Host
                 LoadContext = new(bundle.Location);
                 ExtensionAsm = LoadContext.LoadFromAssemblyPath(bundle.GetExtensionEntrypointDll());
             }
-
-            Regex[] typePatterns = bundle.Manifest.Codegen.Types
-                .Select(pattern => new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled))
-                .ToArray();
-            TypeFilter = new(typePatterns);
         }
 
         private Type GetPackageType()
