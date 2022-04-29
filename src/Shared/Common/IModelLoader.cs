@@ -23,6 +23,8 @@ namespace Raid.Toolkit
             public ModelLoaderEventArgs(LoadState state) => LoadState = state;
         }
 
+        public string OutputDirectory { get; set; }
+
         public event EventHandler<ModelLoaderEventArgs> OnStateUpdated;
 
         public Task<Assembly> BuildAndLoad(IEnumerable<Regex> regices, bool force = false);

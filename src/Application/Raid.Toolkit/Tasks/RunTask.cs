@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -41,6 +42,12 @@ namespace Raid.Toolkit
 
         [Option('p', "debug-package", Hidden = true)]
         public string? DebugPackage { get; set; }
+
+        [Option('m', "no-default-packages", Hidden = true)]
+        public bool NoDefaultPackages { get; set; }
+
+        [Option('i', "--interop-dir", Hidden = true)]
+        public string? InteropDirectory { get; set; }
     }
 
     internal class RunTask : CommandTaskBase<RunOptions>
@@ -62,6 +69,17 @@ namespace Raid.Toolkit
         {
             Options = options;
             PackageManager.DebugPackage = options.DebugPackage;
+            PackageManager.NoDefaultPackages = options.NoDefaultPackages;
+            if (!string.IsNullOrEmpty(PackageManager.DebugPackage))
+            {
+                Options.Debug = true;
+                string debugInteropDirectory = Path.Combine(PackageManager.DebugPackage, @"temp~interop");
+                Loader.OutputDirectory = debugInteropDirectory;
+            }
+            if (!string.IsNullOrEmpty(options.InteropDirectory))
+            {
+                Loader.OutputDirectory = options.InteropDirectory;
+            }
 
             // Options fixup
             if (!Options.Standalone)

@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using Newtonsoft.Json;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host;
@@ -16,13 +14,22 @@ namespace Raid.Toolkit
         private static string ExtensionsDirectory => Path.Combine(RegistrySettings.InstallationPath, "extensions");
 
         readonly List<ExtensionBundle> Descriptors = new();
+        private bool IsLoaded = false;
         public static string? DebugPackage { get; set; }
+        public static bool NoDefaultPackages = false;
 
         public PackageManager()
         {
+        }
+
+        private void EnsureLoaded()
+        {
+            if (IsLoaded)
+                return;
             // let's get fucky
             ClientApi.Preload();
             Load();
+            IsLoaded = true;
         }
 
         private void Load()
@@ -30,8 +37,11 @@ namespace Raid.Toolkit
             if (Descriptors.Count > 0) return;
 
             // add packaged extensions
-            Descriptors.Add(ExtensionBundle.FromType<Extension.Account.AccountExtension>());
-            Descriptors.Add(ExtensionBundle.FromType<Extension.Realtime.RealtimeExtension>());
+            if (!NoDefaultPackages)
+            {
+                Descriptors.Add(ExtensionBundle.FromType<Extension.Account.AccountExtension>());
+                Descriptors.Add(ExtensionBundle.FromType<Extension.Realtime.RealtimeExtension>());
+            }
 
             Dictionary<string, ExtensionBundle> descriptors = new();
             if (string.IsNullOrEmpty(DebugPackage))
@@ -76,11 +86,13 @@ namespace Raid.Toolkit
 
         public IEnumerable<ExtensionBundle> GetAllPackages()
         {
+            EnsureLoaded();
             return Descriptors;
         }
 
         public ExtensionBundle GetPackage(string packageId)
         {
+            EnsureLoaded();
             return Descriptors.Single(d => d.Manifest.Id == packageId);
         }
     }

@@ -61,6 +61,9 @@ namespace Raid.Toolkit.Extension.Realtime
             if (scope.RaidApplication._viewMaster is not RaidViewMaster viewMaster)
                 return;
 
+            if (viewMaster._views.Count == 0)
+                return;
+
             ViewMeta topView = viewMaster._views[^1];
             if (instance.Properties.GetValue<ViewKey>() != topView.Key)
             {
