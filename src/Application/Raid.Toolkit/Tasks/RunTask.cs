@@ -127,10 +127,15 @@ namespace Raid.Toolkit
                 case RunAction.Run:
                     using (var mutex = new Mutex(false, "RaidToolkit Singleton"))
                     {
-                        bool isAnotherInstanceOpen = !mutex.WaitOne(TimeSpan.Zero);
-                        if (isAnotherInstanceOpen)
+                        bool releaseMutex = false;
+                        if (!Options.Standalone)
                         {
-                            return 0;
+                            bool isAnotherInstanceOpen = !mutex.WaitOne(TimeSpan.Zero);
+                            if (isAnotherInstanceOpen && Options.Standalone)
+                            {
+                                return 0;
+                            }
+                            releaseMutex = true;
                         }
                         try
                         {
@@ -144,7 +149,8 @@ namespace Raid.Toolkit
                         }
                         finally
                         {
-                            mutex.ReleaseMutex();
+                            if (releaseMutex)
+                                mutex.ReleaseMutex();
                         }
                     }
                     return 0;
