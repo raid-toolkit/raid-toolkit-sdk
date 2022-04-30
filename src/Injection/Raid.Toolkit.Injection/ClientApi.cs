@@ -26,18 +26,23 @@ namespace Raid.Toolkit.Injection
 			Executor.InvokeInstanceFunction(Process.MainWindowHandle, obj.Address, call);
 		}
 
-		public void CallMethod<T>(T obj, string methodName, params ArgumentValue[] args) where T : StructBase
-		{
-			CallMethodMessage call = new()
-			{
-				cls = new() { szName = typeof(T).Name, szNamespace = typeof(T).Namespace ?? "" },
-				fn = new() { szName = methodName, cParam = args.Length },
-				args = Interop.TArrayOfLength(16, args),
-			};
-			Executor.InvokeInstanceFunction(Process.MainWindowHandle, obj.Address, call);
-		}
+        public void CallMethod<T>(T obj, string methodName, params ArgumentValue[] args) where T : StructBase
+        {
+            CallMethod(obj, typeof(T), methodName, args);
+        }
 
-		public void CallMethod<T>(string methodName, params ArgumentValue[] args) where T : StructBase
+        public void CallMethod<T>(T obj, Type objType, string methodName, params ArgumentValue[] args) where T : StructBase
+        {
+            CallMethodMessage call = new()
+            {
+                cls = new() { szName = objType.Name, szNamespace = objType.Namespace ?? "" },
+                fn = new() { szName = methodName, cParam = args.Length },
+                args = Interop.TArrayOfLength(16, args),
+            };
+            Executor.InvokeInstanceFunction(Process.MainWindowHandle, obj.Address, call);
+        }
+
+        public void CallMethod<T>(string methodName, params ArgumentValue[] args) where T : StructBase
 		{
 			CallMethodMessage call = new()
 			{
