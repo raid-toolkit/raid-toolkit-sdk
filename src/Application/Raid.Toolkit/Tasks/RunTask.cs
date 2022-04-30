@@ -116,7 +116,7 @@ namespace Raid.Toolkit
                 return 255;
 
             // kill existing processes for debugging
-            if (Options.Debug && Debugger.IsAttached)
+            if (Options.Debug && !Options.Standalone && Debugger.IsAttached)
                 KillExistingProcesses();
 
             switch (RunAction)
