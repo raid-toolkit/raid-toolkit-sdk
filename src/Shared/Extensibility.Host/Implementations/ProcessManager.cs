@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Raid.Toolkit.Extensibility.Host;
 
@@ -15,8 +16,9 @@ namespace Raid.Toolkit.Extensibility
     {
         private readonly Dictionary<int, Process> ActiveProcesses = new();
         private readonly IOptions<ProcessManagerSettings> Settings;
+        private readonly ILogger<ProcessManager> Logger;
 
-        public ProcessManager(IOptions<ProcessManagerSettings> settings)
+        public ProcessManager(IOptions<ProcessManagerSettings> settings, ILogger<ProcessManager> logger)
         {
             Settings = settings;
         }
@@ -34,17 +36,31 @@ namespace Raid.Toolkit.Extensibility
                 if (!ActiveProcesses.ContainsKey(process.Id))
                 {
                     IProcessManager.ProcessEventArgs args = new(process);
-                    ProcessFound?.Invoke(this, args);
-                    if (!args.Retry)
-                        ActiveProcesses.Add(process.Id, process);
+                    try
+                    {
+                        ProcessFound?.Invoke(this, args);
+                        if (!args.Retry)
+                            ActiveProcesses.Add(process.Id, process);
+                    }
+                    catch(Exception ex)
+                    {
+                        Logger.LogWarning("Error thrown in ProcessFound event handler", ex);
+                    }
                 }
             }
             foreach (int closedProcessId in currentIds)
             {
                 if (ActiveProcesses.Remove(closedProcessId, out Process closedProcess))
                 {
-                    ProcessClosed?.Invoke(this, new IProcessManager.ProcessEventArgs(closedProcessId));
-                    closedProcess.Dispose();
+                    try
+                    {
+                        ProcessClosed?.Invoke(this, new IProcessManager.ProcessEventArgs(closedProcessId));
+                        closedProcess.Dispose();
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogWarning("Error thrown in ProcessClosed event handler", ex);
+                    }
                 }
             }
         }

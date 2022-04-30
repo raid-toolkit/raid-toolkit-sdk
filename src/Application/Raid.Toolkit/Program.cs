@@ -1,9 +1,11 @@
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Injection;
 
@@ -24,6 +26,9 @@ namespace Raid.Toolkit
             }
         }
 
+        // for logging
+        private class _Program { }
+
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -34,7 +39,9 @@ namespace Raid.Toolkit
             Application.SetCompatibleTextRenderingDefault(false);
 
             using IHost host = AppHost.CreateHost();
-            ApplicationStartupCondition startCondition = host.Services.GetRequiredService<ApplicationStartupTask>().Parse(args);
+            ILogger logger = host.Services.GetRequiredService<ILogger<_Program>>();
+            ApplicationStartupTask applicationStartupTask = host.Services.GetRequiredService<ApplicationStartupTask>();
+            ApplicationStartupCondition startCondition = applicationStartupTask.Parse(args);
 
             if (startCondition.HasFlag(ApplicationStartupCondition.Usage))
             {
@@ -47,11 +54,17 @@ namespace Raid.Toolkit
             }
             try
             {
-                return host.Services.GetRequiredService<ApplicationStartupTask>().Execute();
+                return applicationStartupTask.Execute();
             }
             catch (Exception e)
             {
-                Trace.TraceError(e.ToString());
+                string errorMessage = "A fatal error occurred";
+                logger.LogError(e, errorMessage);
+                if ((args.Contains("--debug") || args.Contains("-d")) && !args.Contains("--no-ui") && !args.Contains("-n"))
+                {
+                    errorMessage += $":\n\n{e.Message}\n{e.StackTrace}";
+                }
+                MessageBox.Show(new Form(), errorMessage, "Raid Toolkit", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 1;
             }
             finally
