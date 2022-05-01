@@ -1,5 +1,14 @@
 namespace Raid.Toolkit.Extensibility
 {
+    public class AccountDirectoryContext : IDataContext
+    {
+        private readonly string[] kParts = new string[] { "accounts" };
+        public string[] Parts => kParts;
+        public override string ToString()
+        {
+            return $"account";
+        }
+    }
     public class AccountDataContext : IDataContext
     {
         public AccountDataContext(string accountId)

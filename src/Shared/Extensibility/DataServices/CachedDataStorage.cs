@@ -15,17 +15,14 @@ namespace Raid.Toolkit.Extensibility.DataServices
 
         public event EventHandler<DataStorageUpdatedEventArgs> Updated;
 
-        public IEnumerable<string> Keys
+        public IEnumerable<string> GetKeys(IDataContext withinContext)
         {
-            get
-            {
-                // TOTAL ABSOLUTE HACKERY
-                return Cache.Keys.ToArray()
-                    .Select(key => key.Split(';'))
-                    .Where(parts => parts.Length == 3)
-                    .Select(parts => parts[1])
-                    .Distinct();
-            }
+            string prefix = $"{string.Join(";", withinContext.Parts)};";
+            return Cache.Keys.ToArray()
+                .Where(key => key.StartsWith(prefix))
+                .Select(key => key.Split(';'))
+                .Select(parts => parts[withinContext.Parts.Length])
+                .Distinct();
         }
 
         public CachedDataStorage()

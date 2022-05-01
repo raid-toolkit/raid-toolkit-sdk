@@ -55,7 +55,7 @@ namespace Raid.Toolkit.Extension.Account
 
         public Task<DataModel.Account[]> GetAccounts()
         {
-            return Task.FromResult(Storage.Keys.Select(AccountFromUserAccount).ToArray());
+            return Task.FromResult(Storage.GetKeys(new AccountDirectoryContext()).Select(AccountFromUserAccount).ToArray());
         }
 
         private DataModel.Account AccountFromUserAccount(string accountId)
