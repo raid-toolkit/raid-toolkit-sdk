@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 
@@ -10,7 +11,12 @@ namespace Raid.Toolkit.Extensibility.Host
             public IBackgroundService service;
             public DateTime nextTick;
         }
-        private List<ServiceState> BackgroundServices = new();
+        private readonly List<ServiceState> BackgroundServices = new();
+        private readonly ILogger<ServiceManager> Logger;
+        public ServiceManager(ILogger<ServiceManager> logger)
+        {
+            Logger = logger;
+        }
 
         public IDisposable AddService(IBackgroundService service)
         {
@@ -29,7 +35,16 @@ namespace Raid.Toolkit.Extensibility.Host
             {
                 if (service.nextTick < DateTime.UtcNow)
                 {
-                    service.service.Tick(instance);
+                    try
+                    {
+                        // don't run again until current tick finishes
+                        service.nextTick = DateTime.MaxValue;
+                        service.service.Tick(instance);
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogError(ex, $"Failure in background service {service.GetType().FullName}");
+                    }
                     service.nextTick = DateTime.UtcNow.Add(service.service.PollInterval);
                 }
             }
