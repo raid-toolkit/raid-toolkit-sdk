@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
@@ -23,12 +24,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
 
         protected override Task ExecuteOnceAsync(CancellationToken token)
         {
-            foreach (var instance in InstanceManager.Instances)
-            {
-                ServiceManager.ProcessInstance(instance);
-            }
-
-            return Task.CompletedTask;
+            return Task.WhenAll(InstanceManager.Instances.Select(instance => ServiceManager.ProcessInstance(instance)));
         }
     }
 }

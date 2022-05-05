@@ -1,6 +1,7 @@
-using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
@@ -29,7 +30,7 @@ namespace Raid.Toolkit.Extensibility.Host
             return new HostResourceHandle(() => BackgroundServices.Remove(serviceState));
         }
 
-        public void ProcessInstance(IGameInstance instance)
+        public async Task ProcessInstance(IGameInstance instance)
         {
             foreach (var service in BackgroundServices)
             {
@@ -39,7 +40,7 @@ namespace Raid.Toolkit.Extensibility.Host
                     {
                         // don't run again until current tick finishes
                         service.nextTick = DateTime.MaxValue;
-                        service.service.Tick(instance);
+                        await service.service.Tick(instance);
                     }
                     catch (Exception ex)
                     {
