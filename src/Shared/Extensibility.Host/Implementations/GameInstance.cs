@@ -22,7 +22,7 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             Token = proc.Id;
             Runtime = new(proc);
-            if (RegistrySettings.IsFlagEnabled(FeatureFlags.Hooks))
+            if (RegistrySettings.IsFlagEnabled(FeatureFlags.Hooks, true))
             {
                 Hook = new(proc.Id);
             }
