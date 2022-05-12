@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using Client.RaidApp;
 using Client.View.Views;
 using Client.ViewModel.Contextes.ArtifactsUpgrade;
@@ -6,16 +10,12 @@ using Client.ViewModel.DTO;
 using Microsoft.Extensions.Logging;
 using ProcessMemoryUtilities.Managed;
 using ProcessMemoryUtilities.Native;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
 namespace Raid.Toolkit.Extension.Realtime
 {
     public class FrameRateSettings
     {
-        public int MaxFrameRate { get; set; } = 60;
+        public int MaxFrameRate { get; set; } = 144;
         public int ArtifactUpgradeFrameRate { get; set; } = 10;
         public bool AutosetFramerate { get; set; } = true;
     }
@@ -75,7 +75,7 @@ namespace Raid.Toolkit.Extension.Realtime
 
         private void SetLimit(Process proc, long framerate)
         {
-            AccessMemory(proc, (hProcess, baseAddress, offset) =>
+            _ = AccessMemory(proc, (hProcess, baseAddress, offset) =>
             {
                 bool success = NativeWrapper.WriteProcessMemory(hProcess, IntPtr.Add(baseAddress, (int)offset), ref framerate);
                 Logger.LogInformation($"Write Framerate: Success = {success}, Set Framerate = {framerate}, LastError = {NativeWrapper.LastError}");
@@ -83,7 +83,7 @@ namespace Raid.Toolkit.Extension.Realtime
             });
         }
 
-        private T AccessMemory<T>(Process proc, Func<IntPtr, IntPtr, ulong, T> fn)
+        private static T AccessMemory<T>(Process proc, Func<IntPtr, IntPtr, ulong, T> fn)
         {
             ProcessModule unityPlayerModule = proc.Modules.Cast<ProcessModule>().SingleOrDefault(m => m.ModuleName == "UnityPlayer.dll");
             if (unityPlayerModule == null)
@@ -104,7 +104,7 @@ namespace Raid.Toolkit.Extension.Realtime
             }
             finally
             {
-                NativeWrapper.CloseHandle(hProcess);
+                _ = NativeWrapper.CloseHandle(hProcess);
             }
         }
 
