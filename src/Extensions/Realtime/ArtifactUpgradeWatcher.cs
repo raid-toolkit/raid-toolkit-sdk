@@ -15,7 +15,7 @@ namespace Raid.Toolkit.Extension.Realtime
 {
     public class FrameRateSettings
     {
-        public int MaxFrameRate { get; set; } = 144;
+        public int MaxFrameRate { get; set; } = 0xF0;
         public int ArtifactUpgradeFrameRate { get; set; } = 10;
         public bool AutosetFramerate { get; set; } = true;
     }
@@ -25,6 +25,7 @@ namespace Raid.Toolkit.Extension.Realtime
         private static readonly Dictionary<Version, ulong> VersionToOffset = new()
         {
             { Version.Parse("2020.3.16.40302"), 0x1942BB0 },
+            { Version.Parse("2020.3.31.21687"), 0x196BC68 },
         };
 
         private readonly FrameRateSettings Settings;
@@ -62,7 +63,7 @@ namespace Raid.Toolkit.Extension.Realtime
             }
         }
 
-        private long GetLimit(Process proc)
+        private static long GetLimit(Process proc)
         {
             return AccessMemory(proc, (hProcess, baseAddress, offset) =>
             {
