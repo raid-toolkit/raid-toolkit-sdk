@@ -1,17 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net472;net5.0-windows</TargetFrameworks>
+        <TargetFrameworks>net472;net5.0-windows;net6.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
+        <Platforms>x64</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="il2cpptoolkit.reversecompiler"
-            Version="1.0.65" />
+            Version="2.0.13-alpha" />
         <PackageReference Include="il2cpptoolkit.target.netcore"
-            Version="1.0.65" />
+            Version="2.0.13-alpha" />
         <ProjectReference Include="..\Model\Model.csproj" />
     </ItemGroup>
 

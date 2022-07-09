@@ -1,12 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0-windows</TargetFramework>
+        <TargetFrameworks>net5.0-windows;net6.0-windows</TargetFrameworks>
+        <Platforms>x64</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="Il2CppToolkit.Runtime"
-            Version="1.0.65" />
+            Version="2.0.13-alpha" />
     </ItemGroup>
 
 </Project>

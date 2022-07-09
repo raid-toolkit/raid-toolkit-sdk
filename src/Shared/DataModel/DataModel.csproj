@@ -12,11 +12,12 @@
     </ItemGroup>
 
     <PropertyGroup>
-        <TargetFrameworks>net472;net5.0-windows</TargetFrameworks>
+        <TargetFrameworks>net472;net5.0-windows;net6.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <OutputType>Library</OutputType>
         <AssemblyName>Raid.Toolkit.DataModel</AssemblyName>
         <RootNamespace>Raid.Toolkit.DataModel</RootNamespace>
+        <Platforms>x64</Platforms>
     </PropertyGroup>
 
 </Project>

@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net5.0-windows</TargetFramework>
+        <TargetFrameworks>net5.0-windows;net6.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <Nullable>enable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
@@ -12,14 +12,22 @@
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
         <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
+        <Platforms>x64</Platforms>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
-        <PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.2.1" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-        <PackageReference Include="SuperSocket.WebSocket.Server" Version="2.0.0-beta.10" />
+        <PackageReference Include="CommandLineParser"
+            Version="2.9.0-preview1" />
+        <PackageReference Include="Karambolo.Extensions.Logging.File"
+            Version="3.2.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting"
+            Version="6.0.1" />
+        <PackageReference Include="Newtonsoft.Json"
+            Version="13.0.1" />
+        <PackageReference Include="SuperSocket.WebSocket.Server"
+            Version="2.0.0-beta.10" />
+        <PackageReference Include="Il2CppToolkit.Injection.Client"
+            Version="2.0.24-alpha" />
         <Reference Include="Raid.Interop">
             <HintPath>$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
             <Private>False</Private>
@@ -28,13 +36,7 @@
         </Reference>
     </ItemGroup>
 
-	<ItemGroup>
-		<None Include="$(RootDirectory)\x64\$(Configuration)\Inject.dll" Link="Inject.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
-	<ItemGroup>
+    <ItemGroup>
         <EmbeddedResource Include="appsettings.json" />
     </ItemGroup>
 
@@ -58,7 +60,6 @@
         <ProjectReference Include="$(SourceDir)Extensions\Realtime\Realtime.csproj" />
         <ProjectReference Include="$(SourceDir)Shared\Extensibility\Extensibility.csproj" />
         <ProjectReference Include="$(SourceDir)Shared\Extensibility.Host\Extensibility.Host.csproj" />
-        <ProjectReference Include="..\..\Injection\Raid.Toolkit.Injection\Raid.Toolkit.Injection.csproj" />
     </ItemGroup>
 
 </Project>

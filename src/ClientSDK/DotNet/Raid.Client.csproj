@@ -10,13 +10,14 @@
     </ItemGroup>
 
     <PropertyGroup>
-        <TargetFrameworks>net472;net5.0-windows</TargetFrameworks>
+        <TargetFrameworks>net472;net5.0-windows;net6.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <UseWindowsForms>true</UseWindowsForms>
         <OutputType>Library</OutputType>
         <AssemblyName>Raid.Client</AssemblyName>
         <RootNamespace>Raid.Client</RootNamespace>
         <NuspecProperties>version=$(Version)</NuspecProperties>
+        <Platforms>x64</Platforms>
     </PropertyGroup>
 
 </Project>

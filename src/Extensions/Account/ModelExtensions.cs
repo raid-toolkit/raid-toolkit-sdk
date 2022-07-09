@@ -13,7 +13,7 @@ namespace Raid.Toolkit.DataModel
             return (double)Math.Round(num.m_rawValue / (double)uint.MaxValue, 2);
         }
 
-        public static double? AsDouble(this Il2CppToolkit.Runtime.Types.corelib.Native__Nullable<Plarium.Common.Numerics.Fixed> num)
+        public static double? AsDouble(this Nullable<Plarium.Common.Numerics.Fixed> num)
         {
             return num.HasValue ? num.Value.AsDouble() : null;
         }

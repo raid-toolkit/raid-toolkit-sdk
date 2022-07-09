@@ -17,7 +17,7 @@ namespace Raid.Toolkit.Model
     {
         private static void PostfixTypes(Assembly asm)
         {
-            Il2CppToolkit.Runtime.Types.Types.TypeSizes.Add(asm.GetType("Plarium.Common.Numerics.Fixed"), 8);
+            Il2CppToolkit.Runtime.Types.TypeSystem.TypeSizes.Add(asm.GetType("Plarium.Common.Numerics.Fixed"), 8);
         }
 
         private static readonly Regex[] DefaultIncludeTypes = new[] {
