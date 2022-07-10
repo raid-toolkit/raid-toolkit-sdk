@@ -3,8 +3,29 @@
   // Hover to view descriptions of existing attributes.
   // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
   "version": "0.2.0",
-  "compounds": [],
+  "compounds": [
+    {
+      "name": "Test + Raid.exe",
+      "configurations": [
+        "Launch Raid.Toolkit",
+        "Attach to Raid.exe"
+      ]
+    }
+  ],
   "configurations": [
+    {
+      "name": "Attach to Raid.exe",
+      "type": "cppvsdbg",
+      "request": "attach",
+      "processId": "${input:MatchRaidExe}",
+      "symbolOptions": {
+        "searchPaths": [
+          "http://symbolserver.unity3d.com"
+        ],
+        "searchMicrosoftSymbolServer": true,
+        "cachePath": "%TEMP%\\SymbolCache"
+      }
+    },
     {
       "name": "Build Task",
       "type": "coreclr",
@@ -157,6 +178,17 @@
       "name": ".NET Core Attach",
       "type": "coreclr",
       "request": "attach"
+    }
+  ],
+  "inputs": [
+    {
+      "id": "MatchRaidExe",
+      "type": "command",
+      "command": "pick-process-ex.match",
+      "args": {
+        "program": "Raid.exe",
+        "select": "auto"
+      }
     }
   ]
 }
