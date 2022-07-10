@@ -6,6 +6,9 @@
   "author": "Daniel Chattan <dnchattan@gmail.com>",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "bump-nuget-versions": "node scripts/bump-nuget-versions.js"
+  },
   "dependencies": {
     "semver": "^7.3.7"
   }

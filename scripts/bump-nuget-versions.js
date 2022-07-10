@@ -35,7 +35,7 @@ for (const csProjFilePath of getCsProjFiles()) {
         currentVersion.prerelease[0]
       );
       const newVersionStr = `${newVersion.major}.${newVersion.minor}.${
-        newVersion.build
+        newVersion.patch
       }${newVersion.prerelease[0] ? `-${newVersion.prerelease[0]}` : ""}`;
       return [prefix, pkgName, mid, newVersionStr, end].join("");
     }
