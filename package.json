@@ -10,6 +10,7 @@
     "bump-nuget-versions": "node scripts/bump-nuget-versions.js"
   },
   "dependencies": {
+    "rimraf": "^3.0.2",
     "semver": "^7.3.7"
   }
 }

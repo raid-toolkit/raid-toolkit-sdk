@@ -1,6 +1,8 @@
+const { execSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 const semver = require("semver");
+const rimraf = require("rimraf");
 
 function* getCsProjFiles() {
   const slnFilePath = path.join(__dirname, "../SDK.sln");
@@ -42,3 +44,9 @@ for (const csProjFilePath of getCsProjFiles()) {
   );
   fs.writeFileSync(csProjFilePath, csProjContentReplaced, { encoding: "utf8" });
 }
+
+console.log("Installing new dependencies");
+execSync("dotnet restore --no-cache", { stdio: "inherit" });
+
+console.log("Removing built interop dlls");
+rimraf.sync("**/raid.interop.dll");
