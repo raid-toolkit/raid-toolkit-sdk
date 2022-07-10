@@ -1,0 +1,12 @@
+{
+  "name": "raid-toolkit-sdk",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/raid-toolkit/raid-toolkit-sdk.git",
+  "author": "Daniel Chattan <dnchattan@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "semver": "^7.3.7"
+  }
+}
