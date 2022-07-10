@@ -72,10 +72,6 @@
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Lokad.ILPack.dll">
-            <Pack>true</Pack>
-            <PackagePath>build\MSBuild\</PackagePath>
-        </None>
         <None Include="$(OutputPath)\..\net472\Microsoft.Bcl.AsyncInterfaces.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
@@ -217,10 +213,6 @@
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
         <None Include="$(OutputPath)\..\net5.0-windows\Il2CppToolkit.Target.NetCore.dll">
-            <Pack>true</Pack>
-            <PackagePath>build\MSBuildCore\</PackagePath>
-        </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Lokad.ILPack.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
