@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Client.Model.Gameplay.Artifacts;
 using Il2CppToolkit.Runtime;
 using Newtonsoft.Json;
 using Raid.Toolkit.DataModel;
@@ -120,10 +121,9 @@ namespace Raid.Toolkit.Extension.Account
         private static IReadOnlyList<Artifact> GetArtifacts(ModelScope scope)
         {
             Client.Model.Guard.UserWrapper userWrapper = scope.AppModel._userWrapper;
-            var artifactStorageResolver = SharedModel.Meta.Artifacts.ArtifactStorage.ArtifactStorageResolver.GetInstance(scope.Context);
             if (userWrapper.Artifacts.ArtifactData.StorageMigrationState == SharedModel.Meta.Artifacts.ArtifactStorage.ArtifactStorageMigrationState.Migrated)
             {
-                var storage = artifactStorageResolver._implementation as Client.Model.Gameplay.Artifacts.ExternalArtifactsStorage;
+                ExternalArtifactsStorage storage = SharedModel.Meta.Artifacts.ArtifactStorage.ArtifactStorageResolver._implementation.GetValue(scope.Context) as ExternalArtifactsStorage;
                 return storage._state._artifacts.Values.Select(ModelExtensions.ToModel).ToList();
             }
             return userWrapper.Artifacts.ArtifactData.Artifacts.Select(ModelExtensions.ToModel).ToList();

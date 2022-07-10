@@ -296,7 +296,7 @@ namespace Raid.Toolkit.DataModel
                 Description = type.Description.ToModel(),
                 Effects = type.Effects.Select(effect => effect.ToModel()).ToArray(),
                 Name = type.Name.ToModel(),
-                Unblockable = type.Unblockable.ToNullable(),
+                Unblockable = type.Unblockable,
                 Upgrades = type.SkillLevelBonuses?.Select(bonus => bonus.ToModel()).ToArray(),
                 Visibility = type.Visibility.ToModel(),
             };

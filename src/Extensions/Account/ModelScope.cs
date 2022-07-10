@@ -15,9 +15,7 @@ namespace Raid.Toolkit.Extension.Account
             get
             {
                 if (_AppModel == null)
-                    _AppModel = Client.App.SingleInstance<AppModel>.method_get_Instance
-                        .GetMethodInfo(Context).DeclaringClass.StaticFields
-                        .As<SingleInstanceStaticFields<AppModel>>().Instance;
+                    _AppModel = Client.App.SingleInstance<AppModel>._instance.GetValue(Context);
                 return _AppModel;
             }
         }

@@ -1,12 +1,12 @@
 using System;
 using System.Linq;
+using Client.Model;
+using Il2CppToolkit.Runtime;
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.DataModel.Enums;
-using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility;
-using Il2CppToolkit.Runtime;
-using Client.Model;
 using Raid.Toolkit.Extensibility.DataServices;
+using Raid.Toolkit.Extensibility.Providers;
 
 namespace Raid.Toolkit.Extension.Account
 {
@@ -28,9 +28,7 @@ namespace Raid.Toolkit.Extension.Account
             if (!Storage.TryRead(StaticDataContext.Default, Key, out StaticAcademyData academyBonuses))
                 return false;
 
-            var appModel = Client.App.SingleInstance<AppModel>.method_get_Instance
-                        .GetMethodInfo(runtime).DeclaringClass.StaticFields
-                        .As<SingleInstanceStaticFields<AppModel>>().Instance;
+            var appModel = Client.App.SingleInstance<AppModel>._instance.GetValue(runtime);
             var academy = appModel._userWrapper.Academy.AcademyData;
             var guardians = academy.Guardians.SlotsByFraction.UnderlyingDictionary
                 .ToDictionary(

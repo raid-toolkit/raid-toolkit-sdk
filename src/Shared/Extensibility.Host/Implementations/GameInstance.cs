@@ -31,9 +31,7 @@ namespace Raid.Toolkit.Extensibility.Host
 
         private (string, string) GetAccountIdAndName()
         {
-            var appModel = Client.App.SingleInstance<AppModel>.method_get_Instance
-                        .GetMethodInfo(Runtime).DeclaringClass.StaticFields
-                        .As<SingleInstanceStaticFields<AppModel>>().Instance;
+            var appModel = Client.App.SingleInstance<AppModel>._instance.GetValue(Runtime);
 
             var userWrapper = appModel._userWrapper;
             var socialWrapper = userWrapper.Social.SocialData;

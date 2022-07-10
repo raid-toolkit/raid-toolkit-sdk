@@ -29,7 +29,7 @@ namespace Raid.Toolkit.DataModel
         public Visibility Visibility;
 
         [JsonProperty("unblockable")]
-        public bool Unblockable;
+        public bool? Unblockable;
 
         [JsonProperty("effects")]
         public EffectType[] Effects;

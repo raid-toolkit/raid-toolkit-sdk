@@ -90,21 +90,21 @@ namespace Raid.Toolkit.Extension.Realtime
         private void UpdateLastBattleState(IGameInstance instance, ModelScope scope)
         {
             var response = scope.AppModel._userWrapper.Battle.BattleData.LastResponse;
-            if (instance.Properties.GetValue<DateTime>("lastBattleResponse") == response.StartTime.Value)
+            if (instance.Properties.GetValue<DateTime>("lastBattleResponse") == response.StartTime)
                 return;
 
-            instance.Properties.SetValue<DateTime>("lastBattleResponse", response.StartTime.Value);
+            instance.Properties.SetValue<DateTime>("lastBattleResponse", response.StartTime);
             instance.Properties.SetValue<LastBattleDataObject>(new()
             {
                 BattleKindId = response.BattleKindId.ToString(),
                 HeroesExperience = response.HeroesExperience,
                 HeroesExperienceAdded = response.HeroesExperienceAdded,
-                Turns = response.Turns.ToNullable(),
+                Turns = response.Turns,
                 TournamentPointsByStateId = response.TournamentPointsByStateId.UnderlyingDictionary,
                 GivenDamage = new()
                 {
-                    DemonLord = response.GivenDamageToAllianceBoss.ToNullable(),
-                    Hydra = response.GivenDamageToAllianceHydra.ToNullable(),
+                    DemonLord = response.GivenDamageToAllianceBoss,
+                    Hydra = response.GivenDamageToAllianceHydra,
                 },
                 MasteryPointsByHeroId = response.MasteryPointsByHeroId?.ToDictionary(
                     kvp => kvp.Key,

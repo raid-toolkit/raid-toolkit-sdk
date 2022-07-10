@@ -26,8 +26,10 @@ namespace Raid.Toolkit
         {
             if (IsLoaded)
                 return;
-            // let's get fucky
-            ClientApi.Preload();
+
+            // preload injection client type/asm before extensions get loaded
+            typeof(Il2CppToolkit.Injection.Client.InjectionClient).FullName?.ToString();
+            // let's get fucky. 
             Load();
             IsLoaded = true;
         }

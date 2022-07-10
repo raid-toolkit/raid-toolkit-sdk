@@ -15,9 +15,7 @@ namespace Raid.Toolkit.Extension.Realtime
             get
             {
                 if (_AppModel == null)
-                    _AppModel = Client.App.SingleInstance<AppModel>.method_get_Instance
-                        .GetMethodInfo(Context).DeclaringClass.StaticFields
-                        .As<SingleInstanceStaticFields<AppModel>>().Instance;
+                    _AppModel = Client.App.SingleInstance<AppModel>._instance.GetValue(Context);
                 return _AppModel;
             }
         }
@@ -28,7 +26,7 @@ namespace Raid.Toolkit.Extension.Realtime
             get
             {
                 if (_RaidApplication == null)
-                    _RaidApplication = Client.App.Application.GetStaticFields(Context)._instance as RaidApplication;
+                    _RaidApplication = Client.App.Application._instance.GetValue(Context) as RaidApplication;
                 return _RaidApplication;
             }
         }

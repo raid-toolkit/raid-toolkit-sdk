@@ -27,9 +27,7 @@ namespace Raid.Toolkit.Extension.Account
         public override bool Update(Il2CsRuntimeContext runtime, StaticDataContext context)
         {
             ModelScope scope = new(runtime);
-            var appModel = Client.App.SingleInstance<AppModel>.method_get_Instance
-                        .GetMethodInfo(runtime).DeclaringClass.StaticFields
-                        .As<SingleInstanceStaticFields<AppModel>>().Instance;
+            var appModel = Client.App.SingleInstance<AppModel>._instance.GetValue(runtime);
             ClientStaticDataManager staticDataManager = appModel.StaticDataManager as ClientStaticDataManager;
             var hash = staticDataManager._hash;
             if (Storage.TryRead(context, "academy", out StaticAcademyData previous))
