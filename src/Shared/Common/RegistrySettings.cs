@@ -12,7 +12,7 @@ namespace Raid.Toolkit.Common
 {
     public enum FeatureFlags
     {
-        Hooks,
+        _Unused,
     }
     public static class RegistrySettings
     {

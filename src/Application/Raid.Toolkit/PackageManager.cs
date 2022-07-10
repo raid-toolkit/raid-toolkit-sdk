@@ -5,7 +5,6 @@ using System.Linq;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host;
-using Raid.Toolkit.Injection;
 
 namespace Raid.Toolkit
 {
