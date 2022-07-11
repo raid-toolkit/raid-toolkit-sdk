@@ -1,8 +1,15 @@
-const { execSync } = require("child_process");
-const fs = require("fs");
-const path = require("path");
-const semver = require("semver");
-const rimraf = require("rimraf");
+import { execSync } from "child_process";
+import fs from "fs";
+import path from "path";
+import semver from "semver";
+import rimraf from "rimraf";
+import chalk from "chalk";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const whatIf =
+  process.argv.includes("--what-if") || process.argv.includes("-n");
 
 function* getCsProjFiles() {
   const slnFilePath = path.join(__dirname, "../SDK.sln");
@@ -18,7 +25,7 @@ function* getCsProjFiles() {
 }
 
 for (const csProjFilePath of getCsProjFiles()) {
-  console.log(csProjFilePath);
+  console.log("📄 " + chalk.cyanBright(csProjFilePath));
   const replaceVersionRegexp =
     /([<]PackageReference\s+Include=")(Il2CppToolkit\..+?)("\s+Version=")([\d\.\-\w]+)(".*\/[>])/gim;
   const csProjContent = fs.readFileSync(
@@ -28,9 +35,11 @@ for (const csProjFilePath of getCsProjFiles()) {
     }
   );
 
+  let write = false;
   const csProjContentReplaced = csProjContent.replace(
     replaceVersionRegexp,
     (_, ...[prefix, pkgName, mid, version, end]) => {
+      write = true;
       const currentVersion = semver.parse(version);
       const newVersion = currentVersion.inc(
         "prepatch",
@@ -39,14 +48,31 @@ for (const csProjFilePath of getCsProjFiles()) {
       const newVersionStr = `${newVersion.major}.${newVersion.minor}.${
         newVersion.patch
       }${newVersion.prerelease[0] ? `-${newVersion.prerelease[0]}` : ""}`;
+      console.log(
+        `  📦 ${chalk.green(pkgName.padEnd(32, " "))}${chalk.yellow(
+          version.padEnd(13, " ")
+        )} -> ${chalk.greenBright(newVersionStr)}`
+      );
       return [prefix, pkgName, mid, newVersionStr, end].join("");
     }
   );
-  fs.writeFileSync(csProjFilePath, csProjContentReplaced, { encoding: "utf8" });
+
+  if (!write) continue;
+
+  console.log("  📝 " + chalk.greenBright("Writing file..."));
+  if (!whatIf) {
+    fs.writeFileSync(csProjFilePath, csProjContentReplaced, {
+      encoding: "utf8",
+    });
+  }
 }
 
 console.log("Installing new dependencies");
-execSync("dotnet restore --no-cache", { stdio: "inherit" });
+if (!whatIf) {
+  execSync("dotnet restore --no-cache", { stdio: "inherit" });
+}
 
 console.log("Removing built interop dlls");
-rimraf.sync("**/raid.interop.dll");
+if (!whatIf) {
+  rimraf.sync("**/raid.interop.dll");
+}
