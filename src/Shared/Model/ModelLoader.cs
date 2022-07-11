@@ -4,12 +4,12 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Il2CppToolkit.Common.Errors;
 using Il2CppToolkit.Model;
 using Il2CppToolkit.ReverseCompiler;
 using Il2CppToolkit.ReverseCompiler.Target.NetCore;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Model
 {
@@ -17,7 +17,7 @@ namespace Raid.Toolkit.Model
     {
         private static void PostfixTypes(Assembly asm)
         {
-            Il2CppToolkit.Runtime.Types.TypeSystem.TypeSizes.Add(asm.GetType("Plarium.Common.Numerics.Fixed"), 8);
+            // Il2CppToolkit.Runtime.Types.TypeSystem.TypeSizes.Add(asm.GetType("Plarium.Common.Numerics.Fixed"), 8);
         }
 
         private static readonly Regex[] DefaultIncludeTypes = new[] {
@@ -155,7 +155,7 @@ namespace Raid.Toolkit.Model
             string metadataPath = Path.Combine(gameInfo.InstallPath, gameInfo.Version, @"Raid_Data\il2cpp_data\Metadata\global-metadata.dat");
             string gasmPath = Path.Combine(gameInfo.InstallPath, gameInfo.Version, @"GameAssembly.dll");
 
-            Directory.CreateDirectory(Path.GetDirectoryName(dllPath));
+            _ = Directory.CreateDirectory(Path.GetDirectoryName(dllPath));
 
             //
             // NB: Make sure to update CurrentInteropVersion when changing the codegen arguments!!
