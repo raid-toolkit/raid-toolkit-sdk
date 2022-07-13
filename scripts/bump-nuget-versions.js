@@ -107,8 +107,9 @@ function* getCsProjFiles() {
 
 async function run() {
   let doRestore = false;
+  let hasErrors = false;
   for (const csProjFilePath of getCsProjFiles()) {
-    console.log("📄 " + chalk.cyanBright(csProjFilePath));
+    console.log("📄 " + chalk.magentaBright(csProjFilePath));
     const replaceVersionRegexp =
       /([<]PackageReference\s+Include=")(Il2CppToolkit\..+?)("\s+Version=")([\d\.\-\w]+)(".*\/[>])/gim;
     const csProjContent = fs.readFileSync(
@@ -145,7 +146,15 @@ async function run() {
           newVersionStrCandidate,
           { prerelease: includePrerelease }
         );
-        if (!hasVersion) continue;
+        if (!hasVersion) {
+          hasErrors = true;
+          console.error(
+            chalk.redBright(
+              `ERROR: Missing package ${pkgName}@${newVersionStrCandidate}.`
+            )
+          );
+          continue;
+        }
 
         newVersionStr = newVersionStrCandidate;
       }
@@ -181,6 +190,10 @@ async function run() {
         encoding: "utf8",
       });
     }
+  }
+
+  if (hasErrors) {
+    return;
   }
 
   if (!doRestore) {

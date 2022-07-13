@@ -27,7 +27,7 @@
         <PackageReference Include="SuperSocket.WebSocket.Server"
             Version="2.0.0-beta.10" />
         <PackageReference Include="Il2CppToolkit.Injection.Client"
-            Version="2.0.45-alpha" />
+            Version="2.0.46-alpha" />
         <Reference Include="Raid.Interop">
             <HintPath>$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
             <Private>False</Private>
