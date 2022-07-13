@@ -159,7 +159,7 @@ async function run() {
         if (!newVersion) {
           return line;
         }
-        write = doRestore = newVersion !== version;
+        doRestore |= write |= newVersion !== version;
         console.log(
           `  📦 ${chalk.green(pkgName.padEnd(32, " "))}${chalk.yellow(
             version.padEnd(13, " ")
