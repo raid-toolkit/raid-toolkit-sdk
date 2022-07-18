@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "chalk": "^5.0.1",
+    "cli-spinners": "^2.6.1",
     "node-fetch": "^3.2.6",
     "rimraf": "^3.0.2",
     "semver": "^7.3.7"

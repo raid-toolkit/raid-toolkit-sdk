@@ -6,16 +6,11 @@ import rimraf from "rimraf";
 import chalk from "chalk";
 import { fileURLToPath } from "url";
 import fetch from "node-fetch";
+import cliSpinners from "cli-spinners";
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const whatIf =
-  process.argv.includes("--what-if") || process.argv.includes("-n");
-const latest = process.argv.includes("--latest") || process.argv.includes("-l");
-const includePrerelease =
-  process.argv.includes("--prerelease") ||
-  process.argv.includes("--pre-release") ||
-  process.argv.includes("-p");
 
 class Deferred {
   constructor() {
@@ -39,6 +34,10 @@ class NugetVersionLookup {
 
   constructor() {
     this.init();
+  }
+
+  reset() {
+    this.versionMap.clear();
   }
 
   async init() {
@@ -105,11 +104,38 @@ function* getCsProjFiles() {
   }
 }
 
-async function run() {
+const resetPosition = "\x1b[0G";
+
+function writeStatus({ interval, frames }) {
+  let n = 0;
+  const handle = setInterval(() => {
+    process.stdout.write(
+      chalk.yellowBright`  Waiting for packages to be available ` +
+        chalk.greenBright(frames[n++ % frames.length]) +
+        resetPosition
+    );
+  }, interval);
+  return () => {
+    console.log("");
+    clearInterval(handle);
+  };
+}
+
+async function waitAndRun(opts) {
+  const clearStatus = writeStatus(cliSpinners.bouncingBar);
+  while (!(await run({ ...opts, log: false, whatIf: true }))) {
+    nugetVersions.reset();
+    await delay(30000);
+  }
+  clearStatus();
+  return run(opts);
+}
+
+async function run({ log, whatIf, latest, includePrerelease }) {
   let doRestore = false;
   let hasErrors = false;
   for (const csProjFilePath of getCsProjFiles()) {
-    console.log("📄 " + chalk.magentaBright(csProjFilePath));
+    log && console.log("📄 " + chalk.magentaBright(csProjFilePath));
     const replaceVersionRegexp =
       /([<]PackageReference\s+Include=")(Il2CppToolkit\..+?)("\s+Version=")([\d\.\-\w]+)(".*\/[>])/gim;
     const csProjContent = fs.readFileSync(
@@ -148,11 +174,12 @@ async function run() {
         );
         if (!hasVersion) {
           hasErrors = true;
-          console.error(
-            chalk.redBright(
-              `ERROR: Missing package ${pkgName}@${newVersionStrCandidate}.`
-            )
-          );
+          log &&
+            console.error(
+              chalk.redBright(
+                `ERROR: Missing package ${pkgName}@${newVersionStrCandidate}.`
+              )
+            );
           continue;
         }
 
@@ -169,23 +196,24 @@ async function run() {
           return line;
         }
         doRestore |= write |= newVersion !== version;
-        console.log(
-          `  📦 ${chalk.green(pkgName.padEnd(32, " "))}${chalk.yellow(
-            version.padEnd(13, " ")
-          )} -> ${
-            newVersion !== version
-              ? chalk.greenBright(newVersion)
-              : chalk.yellow(newVersion)
-          }`
-        );
+        log &&
+          console.log(
+            `  📦 ${chalk.green(pkgName.padEnd(32, " "))}${chalk.yellow(
+              version.padEnd(13, " ")
+            )} -> ${
+              newVersion !== version
+                ? chalk.greenBright(newVersion)
+                : chalk.yellow(newVersion)
+            }`
+          );
         return [prefix, pkgName, mid, newVersion, end].join("");
       }
     );
 
     if (!write) continue;
 
-    console.log("  📝 " + chalk.greenBright`Writing file...`);
-    if (!whatIf) {
+    log && console.log("  📝 " + chalk.greenBright`Writing file...`);
+    if (!whatIf && !hasErrors) {
       fs.writeFileSync(csProjFilePath, csProjContentReplaced, {
         encoding: "utf8",
       });
@@ -193,23 +221,41 @@ async function run() {
   }
 
   if (hasErrors) {
-    return;
+    return false;
   }
 
   if (!doRestore) {
-    console.log(chalk.greenBright("No changes to apply"));
-    return;
+    log && console.log(chalk.greenBright("No changes to apply"));
+    return false;
   }
 
-  console.log(chalk.yellowBright`Installing new dependencies`);
+  log && console.log(chalk.yellowBright`Installing new dependencies`);
   if (!whatIf) {
     execSync("dotnet restore --no-cache", { stdio: "inherit" });
   }
 
-  console.log(chalk.yellowBright`Removing built interop dlls`);
+  log && console.log(chalk.yellowBright`Removing built interop dlls`);
   if (!whatIf) {
     rimraf.sync("**/raid.interop.dll");
   }
+  return true;
 }
 
-run();
+function main() {
+  const whatIf =
+    process.argv.includes("--what-if") || process.argv.includes("-n");
+  const latest =
+    process.argv.includes("--latest") || process.argv.includes("-l");
+  const wait = process.argv.includes("--wait") || process.argv.includes("-w");
+  const includePrerelease =
+    process.argv.includes("--prerelease") ||
+    process.argv.includes("--pre-release") ||
+    process.argv.includes("-p");
+
+  if (wait) {
+    waitAndRun({ log: true, whatIf, latest, includePrerelease });
+  } else {
+    run({ log: true, whatIf, latest, includePrerelease });
+  }
+}
+main();
