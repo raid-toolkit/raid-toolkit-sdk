@@ -13,7 +13,7 @@ namespace Raid.Toolkit.DataModel
             return (double)Math.Round(num.m_rawValue / (double)uint.MaxValue, 2);
         }
 
-        public static double? AsDouble(this Nullable<Plarium.Common.Numerics.Fixed> num)
+        public static double? AsDouble(this Plarium.Common.Numerics.Fixed? num)
         {
             return num.HasValue ? num.Value.AsDouble() : null;
         }
@@ -332,7 +332,7 @@ namespace Raid.Toolkit.DataModel
             return new TargetParamsStub
             {
                 TargetType = (EffectTargetType)type.TargetType,
-                Exclusion = (TargetExclusion)type.Exclusion.Value,
+                Exclusion = (TargetExclusion?)type.Exclusion,
                 Exclusive = type.Exclusive,
                 FirstHitInSelected = type.FirstHitInSelected,
                 Condition = type.Condition,
@@ -343,7 +343,7 @@ namespace Raid.Toolkit.DataModel
         {
             return new EffectRelationStub
             {
-                EffectTypeId = type.EffectTypeId.Value,
+                EffectTypeId = type.EffectTypeId,
                 EffectKindIds = type.EffectKindIds?.Cast<EffectKindId>().ToList(),
                 EffectKindGroups = type.EffectKindGroups?.Cast<EffectKindGroup>().ToList(),
                 Phases = type.Phases?.Cast<BattlePhaseId>().ToList(),
@@ -358,7 +358,7 @@ namespace Raid.Toolkit.DataModel
                 StrengthInFamily = type.StrengthInFamily,
                 ForcedTickAllowed = type.ForcedTickAllowed,
                 LifetimeUpdateType = (LifetimeUpdateType)type.LifetimeUpdateType,
-                UnapplyWhenProducerDied = type.UnapplyWhenProducerDied.Value,
+                UnapplyWhenProducerDied = type.UnapplyWhenProducerDied,
             };
         }
 
@@ -371,7 +371,7 @@ namespace Raid.Toolkit.DataModel
                     TypeId = entry.TypeId,
                     Duration = entry.Duration,
                     IgnoreEffectsLimit = entry.IgnoreEffectsLimit,
-                    ApplyMode = (ApplyMode)entry.ApplyMode.Value,
+                    ApplyMode = (ApplyMode?)entry.ApplyMode,
                     Protection = entry.Protection?.ToModel()
                 }).ToList()
             };
@@ -394,8 +394,8 @@ namespace Raid.Toolkit.DataModel
                 Count = type.Count,
                 StatusEffectTypeIds = type.StatusEffectTypeIds?.Cast<StatusEffectTypeId>().ToList(),
                 UnapplyMode = (UnapplyEffectMode)type.UnapplyMode,
-                RemoveFrom = (UnapplyEffectTarget)type.RemoveFrom.Value,
-                ApplyTo = (UnapplyEffectTarget)type.ApplyTo.Value,
+                RemoveFrom = (UnapplyEffectTarget?)type.RemoveFrom,
+                ApplyTo = (UnapplyEffectTarget?)type.ApplyTo,
             };
         }
 
@@ -407,7 +407,7 @@ namespace Raid.Toolkit.DataModel
                 StatusEffectTypeIds = type.StatusEffectTypeIds?.Cast<StatusEffectTypeId>().ToList(),
                 UnapplyMode = (UnapplyEffectMode)type.UnapplyMode,
                 IncludeProducer = type.IncludeProducer,
-                ApplyMode = (ApplyMode)type.ApplyMode.Value,
+                ApplyMode = (ApplyMode?)type.ApplyMode,
                 RemoveFrom = (EffectTargetType)type.RemoveFrom,
                 ApplyTo = (EffectTargetType)type.ApplyTo,
             };
@@ -417,8 +417,8 @@ namespace Raid.Toolkit.DataModel
         {
             return new DamageParamsStub
             {
-                HitType = (HitType)type.HitType.Value,
-                ElementRelation = (ElementRelation)type.ElementRelation.Value,
+                HitType = (HitType?)type.HitType,
+                ElementRelation = (ElementRelation?)type.ElementRelation,
                 DefenceModifier = type.DefenceModifier.AsDouble(),
                 IsFixed = type.IsFixed,
                 DoesNotCountAsHit = type.DoesNotCountAsHit,
@@ -476,8 +476,8 @@ namespace Raid.Toolkit.DataModel
             return new ChangeSkillCooldownParamsStub
             {
                 Turns = type.Turns,
-                SkillIndex = type.SkillIndex.Value,
-                IsRandomSkill = type.IsRandomSkill.Value,
+                SkillIndex = type.SkillIndex,
+                IsRandomSkill = type.IsRandomSkill,
                 SkillToChange = (SkillToChange)type.SkillToChange,
             };
         }
@@ -509,7 +509,7 @@ namespace Raid.Toolkit.DataModel
             {
                 EffectTypeIds = type.EffectTypeIds?.Cast<int>().ToList(),
                 EffectKindIds = type.EffectKindIds?.Cast<int>().ToList(),
-                BlockGuaranteed = type.BlockGuaranteed.Value,
+                BlockGuaranteed = type.BlockGuaranteed,
             };
         }
 
@@ -533,7 +533,7 @@ namespace Raid.Toolkit.DataModel
                 TeammatesCount = type.TeammatesCount,
                 ExcludeProducerFromAttack = type.ExcludeProducerFromAttack,
                 PreferredHeroTypes = type.PreferredHeroTypes,
-                AlwaysUsePreferredWhenPossible = type.AlwaysUsePreferredWhenPossible.Value,
+                AlwaysUsePreferredWhenPossible = type.AlwaysUsePreferredWhenPossible,
                 AllySelectorExpression = type.AllySelectorExpression,
             };
         }
@@ -607,7 +607,7 @@ namespace Raid.Toolkit.DataModel
         {
             return new ReturnDebuffsParamsStub
             {
-                ApplyMode = (ApplyMode)type.ApplyMode.Value,
+                ApplyMode = (ApplyMode?)type.ApplyMode,
             };
         }
 
@@ -615,7 +615,7 @@ namespace Raid.Toolkit.DataModel
         {
             return new HitTypeParamsStub
             {
-                HitTypeToChange = (HitType)type.HitTypeToChange.Value,
+                HitTypeToChange = (HitType?)type.HitTypeToChange,
                 HitType = (HitType)type.HitType,
             };
         }
@@ -658,7 +658,7 @@ namespace Raid.Toolkit.DataModel
             return new ChangeEffectTargetParamsStub
             {
                 OverrideApplyMode = type.OverrideApplyMode,
-                ApplyMode = (ApplyMode)type.ApplyMode.Value,
+                ApplyMode = (ApplyMode?)type.ApplyMode,
             };
         }
 
@@ -687,7 +687,7 @@ namespace Raid.Toolkit.DataModel
                 RepeatChance = type.RepeatChance.AsDouble(),
                 StatusParams = type.StatusParams?.ToModel(),
                 ValueCap = type.ValueCap,
-                ApplyInstantEffectMode = (ApplyMode)type.ApplyInstantEffectMode.Value,
+                ApplyInstantEffectMode = (ApplyMode?)type.ApplyInstantEffectMode,
                 PersistsThroughRounds = type.PersistsThroughRounds,
                 SnapshotRequired = type.SnapshotRequired,
                 IgnoredEffects = type.IgnoredEffects?.Cast<EffectKindId>().ToList(),

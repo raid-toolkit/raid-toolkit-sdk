@@ -433,7 +433,7 @@ namespace Raid.Toolkit.DataModel
         public EffectTargetType TargetType;
 
         [JsonProperty("exclusion")]
-        public TargetExclusion Exclusion;
+        public TargetExclusion? Exclusion;
 
         [JsonProperty("exclusive")]
         public bool Exclusive;
@@ -448,7 +448,7 @@ namespace Raid.Toolkit.DataModel
     public class EffectRelationStub
     {
         [JsonProperty("effectTypeId")]
-        public int EffectTypeId;
+        public int? EffectTypeId;
 
         [JsonProperty("effectKindIds")]
         public IReadOnlyList<EffectKindId> EffectKindIds;
@@ -475,7 +475,7 @@ namespace Raid.Toolkit.DataModel
         public LifetimeUpdateType LifetimeUpdateType;
 
         [JsonProperty("unapplyWhenProducerDied")]
-        public bool UnapplyWhenProducerDied;
+        public bool? UnapplyWhenProducerDied;
     }
 
     public class StatusEffectInfoStub
@@ -490,7 +490,7 @@ namespace Raid.Toolkit.DataModel
         public bool IgnoreEffectsLimit;
 
         [JsonProperty("applyMode")]
-        public ApplyMode ApplyMode;
+        public ApplyMode? ApplyMode;
 
         [JsonProperty("protection")]
         public Protection Protection;
@@ -523,10 +523,10 @@ namespace Raid.Toolkit.DataModel
         public UnapplyEffectMode UnapplyMode;
 
         [JsonProperty("removeFrom")]
-        public UnapplyEffectTarget RemoveFrom;
+        public UnapplyEffectTarget? RemoveFrom;
 
         [JsonProperty("applyTo")]
-        public UnapplyEffectTarget ApplyTo;
+        public UnapplyEffectTarget? ApplyTo;
     }
 
     public class TransferDebuffParamsStub
@@ -544,7 +544,7 @@ namespace Raid.Toolkit.DataModel
         public bool IncludeProducer;
 
         [JsonProperty("applyMode")]
-        public ApplyMode ApplyMode;
+        public ApplyMode? ApplyMode;
 
         [JsonProperty("removeFrom")]
         public EffectTargetType RemoveFrom;
@@ -556,10 +556,10 @@ namespace Raid.Toolkit.DataModel
     public class DamageParamsStub
     {
         [JsonProperty("hitType")]
-        public HitType HitType;
+        public HitType? HitType;
 
         [JsonProperty("elementRelation")]
-        public ElementRelation ElementRelation;
+        public ElementRelation? ElementRelation;
 
         [JsonProperty("defenceModifier")]
         public double DefenceModifier;
@@ -622,10 +622,10 @@ namespace Raid.Toolkit.DataModel
         public int Turns;
 
         [JsonProperty("skillIndex")]
-        public int SkillIndex;
+        public int? SkillIndex;
 
         [JsonProperty("isRandomSkill")]
-        public bool IsRandomSkill;
+        public bool? IsRandomSkill;
 
         [JsonProperty("skillToChange")]
         public SkillToChange SkillToChange;
@@ -667,7 +667,7 @@ namespace Raid.Toolkit.DataModel
         public IReadOnlyList<int> EffectKindIds;
 
         [JsonProperty("blockGuaranteed")]
-        public bool BlockGuaranteed;
+        public bool? BlockGuaranteed;
     }
 
     public class TeamAttackParamsStub
@@ -678,7 +678,7 @@ namespace Raid.Toolkit.DataModel
 
         public IReadOnlyList<int> PreferredHeroTypes;
 
-        public bool AlwaysUsePreferredWhenPossible;
+        public bool? AlwaysUsePreferredWhenPossible;
 
         public string AllySelectorExpression;
     }
@@ -761,13 +761,13 @@ namespace Raid.Toolkit.DataModel
     public class ReturnDebuffsParamsStub
     {
         [JsonProperty("applyMode")]
-        public ApplyMode ApplyMode;
+        public ApplyMode? ApplyMode;
     }
 
     public class HitTypeParamsStub
     {
         [JsonProperty("hitTypeToChange")]
-        public HitType HitTypeToChange;
+        public HitType? HitTypeToChange;
 
         [JsonProperty("hitType")]
         public HitType HitType;
@@ -812,7 +812,7 @@ namespace Raid.Toolkit.DataModel
         public bool OverrideApplyMode;
 
         [JsonProperty("applyMode")]
-        public ApplyMode ApplyMode;
+        public ApplyMode? ApplyMode;
     }
 
     public class EffectType
@@ -880,7 +880,7 @@ namespace Raid.Toolkit.DataModel
         public string ValueCap;
 
         [JsonProperty("applyInstantEffectMode")]
-        public ApplyMode ApplyInstantEffectMode;
+        public ApplyMode? ApplyInstantEffectMode;
 
         [JsonProperty("persistsThroughRounds")]
         public bool PersistsThroughRounds;
