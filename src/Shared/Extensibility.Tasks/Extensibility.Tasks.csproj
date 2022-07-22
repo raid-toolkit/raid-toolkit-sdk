@@ -160,10 +160,6 @@
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\System.Reflection.Metadata.dll">
-            <Pack>true</Pack>
-            <PackagePath>build\MSBuild\</PackagePath>
-        </None>
         <None Include="$(OutputPath)\..\net472\System.Resources.Extensions.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
