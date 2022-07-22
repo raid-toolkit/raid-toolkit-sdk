@@ -137,7 +137,7 @@ async function run({ log, whatIf, latest, includePrerelease }) {
   for (const csProjFilePath of getCsProjFiles()) {
     log && console.log("📄 " + chalk.magentaBright(csProjFilePath));
     const replaceVersionRegexp =
-      /([<]PackageReference\s+Include=")(Il2CppToolkit\..+?)("\s+Version=")([\d\.\-\w]+)(".*\/[>])/gim;
+      /([<]PackageReference\s+Include=")(Il2CppToolkit\..+?)("\s+Version=")([\d\.\-\w]+)("\s)/gim;
     const csProjContent = fs.readFileSync(
       path.resolve(__dirname, "..", csProjFilePath),
       {

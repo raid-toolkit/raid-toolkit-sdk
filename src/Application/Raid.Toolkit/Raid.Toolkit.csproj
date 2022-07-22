@@ -13,6 +13,7 @@
         <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
         <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
         <Platforms>x64</Platforms>
+        <RuntimeIdentifiers>win7-x64</RuntimeIdentifiers>
     </PropertyGroup>
 
     <ItemGroup>
@@ -27,7 +28,8 @@
         <PackageReference Include="SuperSocket.WebSocket.Server"
             Version="2.0.0-beta.10" />
         <PackageReference Include="Il2CppToolkit.Injection.Client"
-            Version="2.0.59-alpha" />
+            Version="2.0.61-alpha"
+            GeneratePathProperty="true" />
         <Reference Include="Raid.Interop">
             <HintPath>$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
             <Private>False</Private>
@@ -38,6 +40,12 @@
 
     <ItemGroup>
         <EmbeddedResource Include="appsettings.json" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="$(PkgIl2CppToolkit_Injection_Client)\runtimes\win7-x64\native\Il2CppToolkit.Injection.Host.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
