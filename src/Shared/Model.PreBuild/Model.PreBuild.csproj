@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net472;net5.0-windows;net6.0-windows</TargetFrameworks>
+        <TargetFrameworks>net472;net5.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
         <Platforms>x64</Platforms>

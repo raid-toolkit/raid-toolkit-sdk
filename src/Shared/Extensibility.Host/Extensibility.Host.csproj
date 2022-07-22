@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net5.0-windows;net6.0-windows</TargetFrameworks>
+        <TargetFrameworks>net5.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <AssemblyName>Raid.Toolkit.Extensibility.Host</AssemblyName>
         <RootNamespace>Raid.Toolkit.Extensibility</RootNamespace>

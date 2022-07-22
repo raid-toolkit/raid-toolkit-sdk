@@ -6,11 +6,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="Newtonsoft.Json"
+            Version="13.0.1" />
     </ItemGroup>
 
     <PropertyGroup>
-        <TargetFrameworks>net472;net5.0-windows;net6.0-windows</TargetFrameworks>
+        <TargetFrameworks>net472;net5.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <UseWindowsForms>true</UseWindowsForms>
         <OutputType>Library</OutputType>
