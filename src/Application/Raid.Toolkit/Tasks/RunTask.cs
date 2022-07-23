@@ -68,6 +68,10 @@ namespace Raid.Toolkit
         public override ApplicationStartupCondition Parse(RunOptions options)
         {
             Options = options;
+            if (options.DebugPackage == ".")
+            {
+                options.DebugPackage = Environment.GetEnvironmentVariable("DEBUG_PACKAGE_DIR") ?? ".";
+            }
             PackageManager.DebugPackage = options.DebugPackage;
             PackageManager.NoDefaultPackages = options.NoDefaultPackages;
             if (!string.IsNullOrEmpty(PackageManager.DebugPackage))
