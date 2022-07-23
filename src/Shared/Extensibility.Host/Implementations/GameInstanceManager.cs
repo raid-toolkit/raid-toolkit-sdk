@@ -1,10 +1,11 @@
-using Microsoft.Extensions.DependencyInjection;
-using Raid.Toolkit.Extensibility.Providers;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Raid.Toolkit.Extensibility.Providers;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
@@ -25,12 +26,22 @@ namespace Raid.Toolkit.Extensibility.Host
             IServiceProvider serviceProvider,
             IContextDataManager contextDataManager,
             PersistedDataManager<StaticDataContext> staticDataManager,
-            PersistedDataManager<AccountDataContext> accountDataManager)
+            PersistedDataManager<AccountDataContext> accountDataManager,
+            IHostApplicationLifetime lifetime)
         {
             ServiceProvider = serviceProvider;
             ContextDataManager = contextDataManager;
             AccountDataManager = accountDataManager;
             StaticDataManager = staticDataManager;
+            _ = lifetime.ApplicationStopped.Register(() =>
+            {
+                int[] instanceKeys = _Instances.Keys.ToArray();
+                foreach (int key in instanceKeys)
+                {
+                    _ = _Instances.Remove(key, out IGameInstance instance);
+                    instance.Dispose();
+                }
+            });
         }
 
         public void Update()
@@ -46,7 +57,7 @@ namespace Raid.Toolkit.Extensibility.Host
                     HasCheckedStaticData = true;
                 }
 
-                AccountDataManager.Update(instance.Runtime, instance.Id);
+                _ = AccountDataManager.Update(instance.Runtime, instance.Id);
             }
         }
 
@@ -58,7 +69,7 @@ namespace Raid.Toolkit.Extensibility.Host
         public void AddInstance(Process process)
         {
             IGameInstance instance = ActivatorUtilities.CreateInstance<GameInstance>(ServiceProvider, process);
-            _Instances.TryAdd(instance.Token, instance);
+            _ = _Instances.TryAdd(instance.Token, instance);
             OnAdded?.Invoke(this, new(instance));
         }
 
