@@ -83,14 +83,16 @@ namespace Raid.Toolkit.Extensibility.Tasks
                     catch { }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 if (!string.IsNullOrEmpty(CacheDir))
                 {
                     string cachedOutputFile = Path.Combine(CacheDir, loader.OutputFilename);
                     Log.LogMessage(MessageImportance.High, "Failed to generate, attempting to load from cache");
-                    if (!File.Exists(cachedOutputFile))
+                    if (!File.Exists(cachedOutputFile)) {
+                        Log.LogError(ex);
                         throw new FileNotFoundException("Could not generate interop dll and none was present in cache", tempOutputFileCache);
+                    }
 
                     if (File.Exists(OutputFile))
                         File.Delete(OutputFile);
@@ -99,6 +101,7 @@ namespace Raid.Toolkit.Extensibility.Tasks
                 }
                 else
                 {
+                    Log.LogError(ex);
                     throw new FileNotFoundException("Could not generate interop dll and none was present in cache", tempOutputFileCache);
                 }
             }
