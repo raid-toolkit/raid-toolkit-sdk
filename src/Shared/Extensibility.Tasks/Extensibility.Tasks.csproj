@@ -52,7 +52,27 @@
             <PackagePath>buildCrossTargeting\</PackagePath>
         </None>
         <!-- required for tasks -->
+        <None Include="$(OutputPath)\..\net472\Google.Protobuf.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuild\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net472\Grpc.Core.Api.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuild\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net472\Grpc.Net.Client.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuild\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net472\Grpc.Net.Common.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuild\</PackagePath>
+        </None>
         <None Include="$(OutputPath)\..\net472\Il2CppToolkit.Common.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuild\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net472\Il2CppToolkit.Injection.Client.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
@@ -120,6 +140,22 @@
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
+        <None Include="$(OutputPath)\..\net472\Mono.Cecil.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuild\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net472\Mono.Cecil.Mdb.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuild\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net472\Mono.Cecil.Pdb.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuild\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net472\Mono.Cecil.Rocks.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuild\</PackagePath>
+        </None>
         <None Include="$(OutputPath)\..\net472\Newtonsoft.Json.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
@@ -149,6 +185,10 @@
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
         <None Include="$(OutputPath)\..\net472\System.Configuration.ConfigurationManager.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuild\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net472\System.Diagnostics.DiagnosticSource.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
@@ -192,7 +232,27 @@
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
+        <None Include="$(OutputPath)\..\net5.0-windows\Google.Protobuf.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net5.0-windows\Grpc.Core.Api.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net5.0-windows\Grpc.Net.Client.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net5.0-windows\Grpc.Net.Common.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
         <None Include="$(OutputPath)\..\net5.0-windows\Il2CppToolkit.Common.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net5.0-windows\Il2CppToolkit.Injection.Client.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
@@ -245,6 +305,22 @@
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
         <None Include="$(OutputPath)\..\net5.0-windows\Microsoft.Win32.SystemEvents.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net5.0-windows\Mono.Cecil.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net5.0-windows\Mono.Cecil.Mdb.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net5.0-windows\Mono.Cecil.Pdb.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Include="$(OutputPath)\..\net5.0-windows\Mono.Cecil.Rocks.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
