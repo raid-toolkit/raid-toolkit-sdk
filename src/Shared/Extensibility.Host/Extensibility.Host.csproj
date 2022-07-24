@@ -10,15 +10,15 @@
 
     <ItemGroup>
         <PackageReference Include="il2cpptoolkit.common"
-            Version="2.0.50-alpha" />
+            Version="2.0.61-alpha" />
         <PackageReference Include="il2cpptoolkit.metadata"
-            Version="2.0.50-alpha" />
+            Version="2.0.61-alpha" />
         <PackageReference Include="il2cpptoolkit.reversecompiler"
-            Version="2.0.50-alpha" />
+            Version="2.0.61-alpha" />
         <PackageReference Include="il2cpptoolkit.runtime"
-            Version="2.0.50-alpha" />
+            Version="2.0.61-alpha" />
         <PackageReference Include="il2cpptoolkit.target.netcore"
-            Version="2.0.50-alpha" />
+            Version="2.0.61-alpha" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions"
             Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"
