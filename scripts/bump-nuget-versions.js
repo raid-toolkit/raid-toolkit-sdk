@@ -234,10 +234,10 @@ async function run({ log, whatIf, latest, includePrerelease }) {
     execSync("dotnet restore --no-cache", { stdio: "inherit" });
   }
 
-  log && console.log(chalk.yellowBright`Removing built interop dlls`);
-  if (!whatIf) {
-    rimraf.sync("**/raid.interop.dll");
-  }
+  //   log && console.log(chalk.yellowBright`Removing built interop dlls`);
+  //   if (!whatIf) {
+  //     rimraf.sync("**/raid.interop.dll");
+  //   }
   return true;
 }
 
