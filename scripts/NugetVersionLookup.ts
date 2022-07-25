@@ -18,16 +18,16 @@ export class NugetVersionLookup {
   versionMap = new Map<string, Deferred<string[]>>();
   autoCompleteServiceUrl = new Deferred();
 
-  constructor() {
-    this.init();
+  constructor(source?: string) {
+    this.init(source);
   }
 
   reset() {
     this.versionMap.clear();
   }
 
-  async init() {
-    const discoveryResponse = await fetch('https://api.nuget.org/v3/index.json', {
+  async init(source?: string) {
+    const discoveryResponse = await fetch(source || 'https://api.nuget.org/v3/index.json', {
       headers: { accept: 'application/json' },
     });
     const { resources } = (await discoveryResponse.json()) as DiscoveryResponse;

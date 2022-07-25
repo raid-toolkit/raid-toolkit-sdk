@@ -12,16 +12,10 @@ export interface BumpVerionsOptions {
   wait?: boolean;
   includePrerelease?: boolean;
   log?: boolean;
+  source?: string;
 }
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
-
-const nugetSources = {
-  nuget: 'https://api.nuget.org/v3/index.json',
-  local: 'http://localhost:8090/v3/index.json',
-};
-
-const nugetVersions = new NugetVersionLookup();
 
 function* getCsProjFiles() {
   const slnFilePath = path.join(__dirname, '../SDK.sln');
@@ -55,6 +49,8 @@ function writeStatus({ interval, frames }: Spinner) {
 
 async function waitAndRun(opts: BumpVerionsOptions) {
   const clearStatus = writeStatus(cliSpinners.bouncingBar);
+
+  const nugetVersions = new NugetVersionLookup(opts.source);
   while (!(await run({ ...opts, log: false, whatIf: true }))) {
     nugetVersions.reset();
     await delay(30000);
@@ -63,9 +59,10 @@ async function waitAndRun(opts: BumpVerionsOptions) {
   return run(opts);
 }
 
-async function run({ log, whatIf, latest, includePrerelease }: BumpVerionsOptions) {
+async function run({ log, whatIf, latest, includePrerelease, source }: BumpVerionsOptions) {
   let doRestore = false;
   let hasErrors = false;
+  const nugetVersions = new NugetVersionLookup(source);
   for (const csProjFilePath of getCsProjFiles()) {
     log && console.log('📄 ' + chalk.magentaBright(csProjFilePath));
     const replaceVersionRegexp =
@@ -156,10 +153,10 @@ async function run({ log, whatIf, latest, includePrerelease }: BumpVerionsOption
   return true;
 }
 
-export function bumpNugetVersions({ whatIf, latest, wait, includePrerelease }: BumpVerionsOptions) {
-  if (wait) {
-    waitAndRun({ log: true, whatIf, latest, includePrerelease });
+export function bumpNugetVersions(opts: BumpVerionsOptions) {
+  if (opts.wait) {
+    waitAndRun({ log: true, ...opts });
   } else {
-    run({ log: true, whatIf, latest, includePrerelease });
+    run({ log: true, ...opts });
   }
 }
