@@ -84,6 +84,10 @@
     "editor.detectIndentation": false,
     "editor.tabSize": 2,
   },
+  "[typescript]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+  },
   "[csharp]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp",
     "editor.formatOnSave": true,
