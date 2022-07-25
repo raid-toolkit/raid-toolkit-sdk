@@ -9,7 +9,7 @@ namespace Raid.Toolkit.Extensibility.Host
     {
         public int Token { get; }
         public string Id { get; }
-        private readonly string AccountName;
+        public string AccountName { get; }
         private bool IsDisposed;
 
         public Il2CsRuntimeContext Runtime { get; }
