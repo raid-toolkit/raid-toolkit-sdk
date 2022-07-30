@@ -1,5 +1,7 @@
 import caporal from 'caporal';
 import { bumpNugetVersions, BumpVerionsOptions } from './bump-nuget-versions';
+import { build } from './build';
+import { buildOptions, BuildOptions } from './options';
 
 const nugetSources = {
   nuget: 'https://api.nuget.org/v3/index.json',
@@ -17,9 +19,29 @@ cli
   .option('-s, --source <source>', 'Nuget source', Object.keys(nugetSources))
   .action(bumpVersions);
 
+cli
+  .command('publish', 'Build deployable packages')
+  .option('-f, --flavor', 'Build flavor', ['Debug', 'Release'])
+  .option('-p, --platform', 'Platform', ['x64'])
+  .action(publishBuild);
+
 cli.parse(process.argv);
 
 function bumpVersions(_args: any, opts: BumpVerionsOptions, _logger: any) {
   opts.source = nugetSources[(opts.source || 'nuget') as keyof typeof nugetSources] ?? nugetSources.nuget;
   return bumpNugetVersions(opts);
+}
+
+async function publishBuild(_args: any, opts: Partial<BuildOptions>, _logger: any) {
+  await build(
+    buildOptions({
+      targets: ['Restore', 'Build'],
+    })
+  );
+  await build(
+    buildOptions({
+      targetFramework: 'net5.0-windows',
+      targets: ['Pack', 'Publish'],
+    })
+  );
 }

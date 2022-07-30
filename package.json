@@ -8,6 +8,7 @@
   "private": true,
   "scripts": {
     "bump": "ts-node scripts/cli.ts bump-nuget --include-prerelease",
+    "build": "ts-node scripts/cli.ts",
     "//bump-nuget-versions": "ts-node scripts/bump-nuget-versions.ts"
   },
   "dependencies": {
