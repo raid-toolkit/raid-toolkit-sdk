@@ -5,6 +5,7 @@ import semver from 'semver';
 import chalk from 'chalk';
 import cliSpinners, { Spinner } from 'cli-spinners';
 import { NugetVersionLookup } from './NugetVersionLookup';
+import { showToast } from './Toast';
 
 export interface BumpVerionsOptions {
   whatIf?: boolean;
@@ -56,6 +57,7 @@ async function waitAndRun(opts: BumpVerionsOptions) {
     await delay(30000);
   }
   clearStatus();
+  showToast('Updating packages', `New packages were found on ${opts.source}`);
   return run(opts);
 }
 
