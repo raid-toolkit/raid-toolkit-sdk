@@ -8,6 +8,8 @@ on:
     paths:
       - version.json
       - .github/workflows/app-publish.yml
+      - .github/workflows/app-publish.yml
+      - Directory.Build.props
       - 'src/Application/**'
       - 'src/Extensions/**'
       - 'src/ClientSDK/DotNet/**'
