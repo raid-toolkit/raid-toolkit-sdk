@@ -21,8 +21,8 @@ cli
 
 cli
   .command('publish', 'Build deployable packages')
-  .option('-f, --flavor', 'Build flavor', ['Debug', 'Release'])
-  .option('-p, --platform', 'Platform', ['x64'])
+  .option('-f, --flavor <flavor>', 'Build flavor', ['Debug', 'Release'], 'Debug')
+  .option('-p, --platform <platform>', 'Platform', ['x64'], 'x64')
   .action(publishBuild);
 
 cli.parse(process.argv);
