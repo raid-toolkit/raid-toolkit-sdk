@@ -21,11 +21,14 @@ namespace Raid.Toolkit.Extensibility.Host.Services
         public class UpdateAvailbleEventArgs : EventArgs
         {
             public Release Release { get; private set; }
-            public UpdateAvailbleEventArgs(Release release) => Release = release;
+            public UpdateAvailbleEventArgs(Release release)
+            {
+                Release = release;
+            }
         }
 
         private readonly Updater Updater;
-        private bool Enabled;
+        private readonly bool Enabled;
         private readonly Version CurrentVersion;
         private Release PendingRelease;
         private readonly TimeSpan _PollInterval;
@@ -39,21 +42,14 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             CurrentVersion = Version.Parse(FileVersionInfo.GetVersionInfo(Assembly.GetEntryAssembly().Location).FileVersion);
             Updater = updater;
             Enabled = RegistrySettings.AutomaticallyCheckForUpdates;
-            if (settings.Value.PollIntervalMs > 0)
-            {
-                _PollInterval = TimeSpan.FromMilliseconds(settings.Value.PollIntervalMs);
-            }
-            else
-            {
-                _PollInterval = new TimeSpan(0, 15, 0);
-            }
+            _PollInterval = settings.Value.PollIntervalMs > 0 ? TimeSpan.FromMilliseconds(settings.Value.PollIntervalMs) : new TimeSpan(0, 15, 0);
         }
 
         public async Task InstallRelease(Release release, string exeName)
         {
+            string exePath = Process.GetCurrentProcess().MainModule!.FileName!;
             try
             {
-                string exePath = System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName!;
                 Stream newRelease = await Updater.DownloadRelease(release);
                 string tempDownload = Path.Combine(RegistrySettings.InstallationPath, $"{exeName}.update");
                 string currentBackup = Path.Combine(RegistrySettings.InstallationPath, $"{Path.GetFileNameWithoutExtension(exeName)}.{ThisAssembly.AssemblyFileVersion}.exe");
@@ -65,12 +61,12 @@ namespace Raid.Toolkit.Extensibility.Host.Services
                 if (File.Exists(currentBackup))
                     File.Delete(currentBackup);
 
-                File.Move(exePath, currentBackup);
+                File.Move(exePath, currentBackup, true);
                 File.Move(tempDownload, exePath);
             }
             catch (Exception ex)
             {
-                Logger.LogError(ServiceError.MissingUpdateAsset.EventId(), ex, $"Failed to update to {release.TagName}");
+                Logger.LogError(ServiceError.MissingUpdateAsset.EventId(), ex, $"Failed to update to {release.TagName} for '{exePath}'");
                 throw;
             }
         }
@@ -81,7 +77,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             {
                 if (Enabled)
                 {
-                    await CheckForUpdates();
+                    _ = await CheckForUpdates();
                 }
             }
             catch (Exception ex)

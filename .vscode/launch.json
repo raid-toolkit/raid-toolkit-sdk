@@ -108,6 +108,16 @@
       "stopAtEntry": false
     },
     {
+      "name": "Debug Installed Version",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "${env:UserProfile}/AppData/Local/RaidToolkit/Raid.Toolkit.exe",
+      "justMyCode": false,
+      "cwd": "${env:UserProfile}/AppData/Local/RaidToolkit/",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
       "name": "Debug Extension",
       "type": "coreclr",
       "request": "launch",
