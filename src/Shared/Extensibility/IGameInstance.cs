@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using Il2CppToolkit.Runtime;
 
 namespace Raid.Toolkit.Extensibility
@@ -9,5 +10,6 @@ namespace Raid.Toolkit.Extensibility
         string Id { get; }
         Il2CsRuntimeContext Runtime { get; }
         PropertyBag Properties { get; }
+        void InitializeOrThrow(Process proc);
     }
 }

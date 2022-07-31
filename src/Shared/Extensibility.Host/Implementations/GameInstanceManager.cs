@@ -12,6 +12,7 @@ namespace Raid.Toolkit.Extensibility.Host
     public class GameInstanceManager : IGameInstanceManager
     {
         private readonly ConcurrentDictionary<int, IGameInstance> _Instances = new();
+        private readonly ConcurrentDictionary<int, IGameInstance> _RawInstances = new();
         private readonly IServiceProvider ServiceProvider;
         private readonly IContextDataManager ContextDataManager;
         private readonly PersistedDataManager<StaticDataContext> StaticDataManager;
@@ -68,15 +69,18 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public void AddInstance(Process process)
         {
-            IGameInstance instance = ActivatorUtilities.CreateInstance<GameInstance>(ServiceProvider, process);
+            IGameInstance instance = _RawInstances.GetOrAdd(process.Id, (token) => ActivatorUtilities.CreateInstance<GameInstance>(ServiceProvider, process));
+            instance.InitializeOrThrow(process);
+
             _ = _Instances.TryAdd(instance.Token, instance);
             OnAdded?.Invoke(this, new(instance));
         }
 
         public void RemoveInstance(int token)
         {
-            if (_Instances.TryRemove(token, out IGameInstance instance))
+            if (_RawInstances.TryRemove(token, out IGameInstance instance))
             {
+                _Instances.TryRemove(token, out _);
                 OnRemoved?.Invoke(this, new(instance));
                 instance.Dispose();
             }

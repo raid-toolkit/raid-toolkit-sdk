@@ -1,29 +1,35 @@
 using System;
 using System.Diagnostics;
 using Client.Model;
+using Il2CppToolkit.Common.Errors;
 using Il2CppToolkit.Runtime;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
     public class GameInstance : IGameInstance, IDisposable
     {
-        public int Token { get; }
-        public string Id { get; }
-        public string AccountName { get; }
+        public int Token { get; private set; }
+        public string Id { get; private set; }
+        public string AccountName { get; private set; }
         private bool IsDisposed;
 
-        public Il2CsRuntimeContext Runtime { get; }
+        public Il2CsRuntimeContext Runtime { get; private set; }
         public PropertyBag Properties { get; } = new();
 
         public GameInstance(Process proc)
         {
             Token = proc.Id;
-            Runtime = new(proc);
+        }
+
+        public void InitializeOrThrow(Process proc)
+        {
+            Runtime ??= new(proc);
             (Id, AccountName) = GetAccountIdAndName();
         }
 
         private (string, string) GetAccountIdAndName()
         {
+            ErrorHandler.VerifyElseThrow(Runtime != null, ServiceError.MethodCalledBeforeInitialization, "Method cannot be called before intialization");
             var appModel = Client.App.SingleInstance<AppModel>._instance.GetValue(Runtime);
 
             var userWrapper = appModel._userWrapper;

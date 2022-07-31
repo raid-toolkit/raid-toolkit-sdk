@@ -14,5 +14,6 @@ namespace Raid.Toolkit.Extensibility
         ThreadException,
         AccountReadError,
         ProcessAccessDenied,
+        MethodCalledBeforeInitialization,
     }
 }
