@@ -8,11 +8,11 @@ on:
     paths:
       - version.json
       - .github/workflows/app-publish.yml
-      - "src/Application/**"
-      - "src/Extensions/**"
-      - "src/ClientSDK/DotNet/**"
-      - "src/Shared/**"
-      - "!**/*.md"
+      - 'src/Application/**'
+      - 'src/Extensions/**'
+      - 'src/ClientSDK/DotNet/**'
+      - 'src/Shared/**'
+      - '!**/*.md'
 
 jobs:
   build:
@@ -24,6 +24,9 @@ jobs:
       App_csproj: src\Application\Raid.Toolkit\Raid.Toolkit.csproj
 
     steps:
+      - name: Clean repo
+        uses: AutoModality/action-clean@v1
+
       - name: Checkout
         uses: actions/checkout@v2
         with:
@@ -61,8 +64,8 @@ jobs:
       # Publish RTK
       - name: Publish App
         run: |
-          msbuild $env:Solution_Name -m -t:Build -p:Configuration=Release -p:Platform=x64
-          msbuild $env:Solution_Name -m "-t:Publish;Pack" -p:TargetFramework=net5.0-windows -p:Configuration=Release -p:Platform=x64  -p:PublishDir="$(Get-Location)\publish\RTK" -p:PackageOutputPath="$(Get-Location)\publish\nuget"
+          msbuild $env:Solution_Name -m -t:Build -p:Configuration=Release -p:Platform=x64 -p:PublicRelease=true
+          msbuild $env:Solution_Name -m "-t:Publish;Pack" -p:TargetFramework=net5.0-windows -p:Configuration=Release -p:Platform=x64 -p:PublicRelease=true -p:PublishDir="$(Get-Location)\publish\RTK" -p:PackageOutputPath="$(Get-Location)\publish\nuget"
 
       # Upload build artifacts
       - name: Upload RTK artifact

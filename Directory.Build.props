@@ -10,6 +10,7 @@
     </ItemGroup>
 
     <PropertyGroup>
+        <GitVersionBaseDirectory>$(MSBuildThisFileDirectory)</GitVersionBaseDirectory>
         <RootDirectory>$(MSBuildThisFileDirectory)</RootDirectory>
         <BinDir>$(RootDirectory)bin\</BinDir>
         <SourceDir>$(RootDirectory)src\</SourceDir>
