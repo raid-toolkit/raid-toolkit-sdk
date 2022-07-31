@@ -97,17 +97,6 @@ jobs:
           asset_name: Raid.Toolkit.exe
           asset_content_type: application/zip
 
-      - name: Upload Raid.Service (legacy) Asset
-        id: upload-raidtoolkit-asset-legacy
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
-          asset_path: ./publish/RTK/Raid.Toolkit.exe
-          asset_name: Raid.Service.exe
-          asset_content_type: application/zip
-
       - name: Upload TPN Asset
         id: upload-tpn-asset
         uses: actions/upload-release-asset@v1
