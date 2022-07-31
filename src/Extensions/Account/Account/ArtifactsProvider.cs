@@ -28,7 +28,7 @@ namespace Raid.Toolkit.Extension.Account
         public bool ShouldIncrementalUpdate(SharedModel.Meta.Artifacts.UserArtifactData artifactData)
         {
             // Only refresh if m_nextRevisionId changed since last read, or after we've exceeded the forced read interval
-            return DateTime.UtcNow >= m_nextForcedRefresh
+            return DateTime.UtcNow <= m_nextForcedRefresh
                 || artifactData.NextArtifactId != m_nextId
                 || artifactData.NextArtifactRevisionId != m_nextRevisionId;
         }
