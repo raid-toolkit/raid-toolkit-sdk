@@ -10,9 +10,9 @@
 
     <ItemGroup>
         <PackageReference Include="il2cpptoolkit.reversecompiler"
-            Version="2.0.76-alpha" />
+            Version="2.0.79-alpha" />
         <PackageReference Include="il2cpptoolkit.target.netcore"
-            Version="2.0.76-alpha" />
+            Version="2.0.79-alpha" />
         <ProjectReference Include="..\Model\Model.csproj" />
     </ItemGroup>
 
