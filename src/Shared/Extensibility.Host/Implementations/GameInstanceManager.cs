@@ -36,10 +36,11 @@ namespace Raid.Toolkit.Extensibility.Host
             StaticDataManager = staticDataManager;
             _ = lifetime.ApplicationStopped.Register(() =>
             {
-                int[] instanceKeys = _Instances.Keys.ToArray();
+                int[] instanceKeys = _RawInstances.Keys.ToArray();
                 foreach (int key in instanceKeys)
                 {
-                    _ = _Instances.Remove(key, out IGameInstance instance);
+                    _ = _RawInstances.Remove(key, out IGameInstance instance);
+                    _ = _Instances.Remove(key, out _);
                     instance.Dispose();
                 }
             });
@@ -80,7 +81,7 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             if (_RawInstances.TryRemove(token, out IGameInstance instance))
             {
-                _Instances.TryRemove(token, out _);
+                _ = _Instances.TryRemove(token, out _);
                 OnRemoved?.Invoke(this, new(instance));
                 instance.Dispose();
             }

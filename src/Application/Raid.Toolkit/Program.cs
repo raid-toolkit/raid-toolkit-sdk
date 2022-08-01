@@ -60,6 +60,11 @@ namespace Raid.Toolkit
             {
                 if (startCondition.HasFlag(ApplicationStartupCondition.Services))
                 {
+                    try
+                    {
+                        host.Services.GetService<IHostApplicationLifetime>()?.StopApplication();
+                    }
+                    catch { }
                     host.StopAsync().Wait();
                 }
             }
