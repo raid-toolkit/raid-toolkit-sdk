@@ -44,7 +44,7 @@ namespace Raid.Toolkit
 
             ProcessStartInfo psi = new()
             {
-                UseShellExecute = true,
+                UseShellExecute = asAdmin,
                 FileName = AppHost.ExecutableName,
                 Verb = asAdmin ? "runAs" : string.Empty,
                 Arguments = string.Join(" ", args)
