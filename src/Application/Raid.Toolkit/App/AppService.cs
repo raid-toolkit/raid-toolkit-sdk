@@ -46,7 +46,7 @@ namespace Raid.Toolkit
             {
                 UseShellExecute = true,
                 FileName = AppHost.ExecutableName,
-                Verb = asAdmin ? "runAs" : null,
+                Verb = asAdmin ? "runAs" : string.Empty,
                 Arguments = string.Join(" ", args)
             };
             _ = Process.Start(psi);
