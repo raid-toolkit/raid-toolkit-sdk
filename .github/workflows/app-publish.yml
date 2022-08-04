@@ -8,6 +8,7 @@ on:
     paths:
       - version.json
       - .github/workflows/app-publish.yml
+      - Directory.Build.props
       - "src/Application/**"
       - "src/Extensions/**"
       - "src/ClientSDK/DotNet/**"
@@ -33,8 +34,6 @@ jobs:
       - name: Set branch-based environment variables
         uses: iamtheyammer/branch-env-vars@v1.0.4
         with:
-          # optional, just an example of setting a setting
-          bevOverwrite: true
           PRERELEASE: |
             main:true
             !default:false
@@ -55,10 +54,6 @@ jobs:
       - name: Restore the application
         run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Release
 
-      # Versions
-      - uses: dotnet/nbgv@master
-        id: rtk_version
-
       # Publish RTK
       - name: Publish App
         run: |
@@ -71,6 +66,12 @@ jobs:
         with:
           name: RaidToolkit
           path: publish/RTK
+
+      # Versions
+      - uses: dotnet/nbgv@master
+        id: rtk_version
+        with:
+          setAllVars: true
 
       # Create releases
       - name: Create RaidToolkit Release
