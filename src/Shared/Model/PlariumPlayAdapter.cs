@@ -32,17 +32,17 @@ namespace Raid.Toolkit.Model
             public IDictionary<string, GameStorageEntry> InstalledGames { get; set; }
         }
 
-        private const string kPlariumPlayHive = @"SOFTWARE\PlariumPlayInstaller";
+        private const string kPlariumPlayHive = @".DEFAULT\SOFTWARE\PlariumPlayInstaller";
         private const string kInstallFolderKey = @"InstallFolder";
-        private const string kGameStoragePath = @"PlariumPlay\gamestorage.gsfn";
-        private const string kGameSubpath = @"PlariumPlay\StandaloneApps";
-        private const string kPlariumPlayExeSubPath = @"PlariumPlay\PlariumPlay.exe";
+        private const string kGameStoragePath = @"gamestorage.gsfn";
+        private const string kGameSubpath = @"StandaloneApps";
+        private const string kPlariumPlayExeSubPath = @"PlariumPlay.exe";
 
         private readonly GameStorage m_gameStorage;
         private readonly string m_installDir;
         public PlariumPlayAdapter()
         {
-            m_installDir = (string)Registry.CurrentUser.OpenSubKey(kPlariumPlayHive).GetValue(kInstallFolderKey);
+            m_installDir = (string)Registry.Users.OpenSubKey(kPlariumPlayHive).GetValue(kInstallFolderKey);
             m_gameStorage = JsonConvert.DeserializeObject<GameStorage>(File.ReadAllText(Path.Combine(m_installDir, kGameStoragePath)));
         }
 
