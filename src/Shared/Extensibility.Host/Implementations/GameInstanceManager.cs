@@ -74,7 +74,7 @@ namespace Raid.Toolkit.Extensibility.Host
             instance.InitializeOrThrow(process);
 
             _ = _Instances.TryAdd(instance.Token, instance);
-            OnAdded?.Invoke(this, new(instance));
+            OnAdded?.Raise(this, new(instance));
         }
 
         public void RemoveInstance(int token)
@@ -82,7 +82,7 @@ namespace Raid.Toolkit.Extensibility.Host
             if (_RawInstances.TryRemove(token, out IGameInstance instance))
             {
                 _ = _Instances.TryRemove(token, out _);
-                OnRemoved?.Invoke(this, new(instance));
+                OnRemoved?.Raise(this, new(instance));
                 instance.Dispose();
             }
         }

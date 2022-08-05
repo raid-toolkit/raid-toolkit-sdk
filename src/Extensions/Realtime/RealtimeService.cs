@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Client.RaidApp;
 using Client.View.Views;
 using Client.ViewModel.Contextes.ArtifactsUpgrade;
@@ -6,10 +10,6 @@ using Client.ViewModel.DTO;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Extension.Realtime
 {
@@ -68,7 +68,7 @@ namespace Raid.Toolkit.Extension.Realtime
             if (instance.Properties.GetValue<ViewKey>() != topView.Key)
             {
                 instance.Properties.SetValue<ViewKey>(topView.Key);
-                ViewChanged?.Invoke(this, new(instance, topView));
+                ViewChanged?.Raise(this, new(instance, topView));
                 return;
             }
 
@@ -83,7 +83,7 @@ namespace Raid.Toolkit.Extension.Realtime
             if (wasUpgrading != isUpgrading)
             {
                 instance.Properties.SetValue<bool>("IsUpgradingArtifact", isUpgrading);
-                ViewChanged?.Invoke(this, new(instance, topView));
+                ViewChanged?.Raise(this, new(instance, topView));
             }
         }
 
@@ -110,7 +110,7 @@ namespace Raid.Toolkit.Extension.Realtime
                     kvp => kvp.Key,
                     kvp => (Dictionary<string, int>)kvp.Value.UnderlyingDictionary.ToModel())
             });
-            BattleResultChanged?.Invoke(this, new(instance));
+            BattleResultChanged?.Raise(this, new(instance));
         }
     }
 }

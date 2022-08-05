@@ -97,7 +97,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
                 if (force || PendingRelease?.TagName != release.TagName)
                 {
                     PendingRelease = release;
-                    UpdateAvailable?.Invoke(this, new(release));
+                    UpdateAvailable?.Raise(this, new(release));
                     return true;
                 }
             }

@@ -62,12 +62,12 @@ namespace Raid.Toolkit.Model
                 string dllPath = await Build(regices, force);
                 InteropAsm = Assembly.LoadFrom(dllPath);
                 PostfixTypes(InteropAsm);
-                OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Loaded));
+                OnStateUpdated?.Raise(this, new(IModelLoader.LoadState.Loaded));
                 return InteropAsm;
             }
             catch (Exception)
             {
-                OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Error));
+                OnStateUpdated?.Raise(this, new(IModelLoader.LoadState.Error));
                 throw;
             }
         }
@@ -84,7 +84,7 @@ namespace Raid.Toolkit.Model
                 Version asmVersion = Version.Parse(ThisAssembly.AssemblyVersion);
                 CurrentInteropVersion = new(asmVersion.Major, asmVersion.Minor, 0, Math.Abs(hashCode % 999));
 
-                OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Initialize));
+                OnStateUpdated?.Raise(this, new(IModelLoader.LoadState.Initialize));
 
                 PlariumPlayAdapter.GameInfo gameInfo = GetGameInfo();
                 GameVersion = gameInfo.Version;
@@ -116,19 +116,19 @@ namespace Raid.Toolkit.Model
 
                 if (shouldGenerate)
                 {
-                    OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Rebuild));
+                    OnStateUpdated?.Raise(this, new(IModelLoader.LoadState.Rebuild));
                     await Task.Run(() =>
                     {
                         GenerateAssembly(gameInfo, dllPath);
                     });
                 }
 
-                OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Ready));
+                OnStateUpdated?.Raise(this, new(IModelLoader.LoadState.Ready));
                 return dllPath;
             }
             catch (Exception)
             {
-                OnStateUpdated?.Invoke(this, new(IModelLoader.LoadState.Error));
+                OnStateUpdated?.Raise(this, new(IModelLoader.LoadState.Error));
                 throw;
             }
         }

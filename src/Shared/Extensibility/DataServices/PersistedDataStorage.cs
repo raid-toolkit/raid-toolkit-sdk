@@ -21,7 +21,7 @@ namespace Raid.Toolkit.Extensibility.DataServices
     public class PersistedDataStorage : IDataStorage
     {
         private readonly string StoragePath;
-        private IDataStorageReaderWriter Storage;
+        private readonly IDataStorageReaderWriter Storage;
 
         public PersistedDataStorage(IDataStorageReaderWriter storage, IOptions<StorageSettings> settings)
         {
@@ -42,7 +42,7 @@ namespace Raid.Toolkit.Extensibility.DataServices
         public bool Write<T>(IDataContext context, string key, T value) where T : class
         {
             string filePath = Path.Combine(StoragePath, Path.Combine(context.Parts), key);
-            Updated?.Invoke(this, new DataStorageUpdatedEventArgs(context, key, value));
+            Updated?.Raise(this, new DataStorageUpdatedEventArgs(context, key, value));
             return Storage.Write(filePath, value);
         }
     }
