@@ -1,14 +1,13 @@
 using System.Reflection;
 using System.Threading.Tasks;
-using Raid.Toolkit.DataModel;
 
-namespace Raid.Client
+namespace Raid.Toolkit.DataModel
 {
     public class ApiBase<T>
     {
-        private readonly RaidToolkitClient Client;
+        private readonly RaidToolkitClientBase Client;
         private readonly PublicApiInfo<T> Api = new();
-        internal ApiBase(RaidToolkitClient client)
+        protected ApiBase(RaidToolkitClientBase client)
         {
             Client = client;
         }

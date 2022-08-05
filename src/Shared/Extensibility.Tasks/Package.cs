@@ -2,10 +2,10 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
-using System.Threading;
 using Microsoft.Build.Framework;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using Raid.Toolkit.Common;
 
 namespace Raid.Toolkit.Extensibility.Tasks
 {
@@ -56,18 +56,10 @@ namespace Raid.Toolkit.Extensibility.Tasks
         {
             var hive = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\RaidToolkit");
             {
-                using (var mutex = new Mutex(false, "RaidToolkit Singleton"))
+                if (ActivationHelper.IsRaidToolkitRunning())
                 {
-                    bool isRunning = !mutex.WaitOne(TimeSpan.Zero);
-                    if (!isRunning)
-                    {
-                        mutex.ReleaseMutex();
-                    }
-                    else
-                    {
-                        Log.LogMessage(MessageImportance.High, $"Extension in use, will not deploy");
-                        return;
-                    }
+                    Log.LogMessage(MessageImportance.High, $"Extension in use, will not deploy");
+                    return;
                 }
                 if (hive == null)
                     return;

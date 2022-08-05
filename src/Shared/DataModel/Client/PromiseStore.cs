@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using Raid.Toolkit.DataModel;
 
-namespace Raid.Client
+namespace Raid.Toolkit.DataModel
 {
-    class PromiseStore
+    internal class PromiseStore
     {
         private readonly Dictionary<string, TaskCompletionSource<object>> Promises = new();
 
