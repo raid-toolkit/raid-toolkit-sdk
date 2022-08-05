@@ -4,6 +4,11 @@
       "commandName": "Project",
       "commandLineArgs": "--debug --standalone",
       "nativeDebugging": true
+    },
+    "rtk://Activate": {
+      "commandName": "Project",
+      "commandLineArgs": "activate rtk://extension/Raid.ModelExplorer/foo/bar?test=1",
+      "nativeDebugging": true
     }
   }
 }

@@ -113,6 +113,14 @@ namespace Raid.Toolkit.Extensibility.Host
             Instance?.ShowUI();
         }
 
+        public bool HandleRequest(Uri requestUri)
+        {
+            if (IsDisposed)
+                return false;
+            Logger.LogInformation($"Forwarding activation request {Manifest.Id} ({requestUri})");
+            return Instance?.HandleRequest(requestUri) ?? false;
+        }
+
         #region IDisposable
         protected virtual void Dispose(bool disposing)
         {

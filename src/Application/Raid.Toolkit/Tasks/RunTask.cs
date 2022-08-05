@@ -145,6 +145,7 @@ namespace Raid.Toolkit
                         {
                             if (!Options.Standalone)
                             {
+                                RegistrySettings.RegisterProtocol(true);
                                 AppHost.EnsureFileAssociations();
                             }
                             MainWindow mainWnd = ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider, Options);

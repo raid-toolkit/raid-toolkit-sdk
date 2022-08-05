@@ -8,12 +8,22 @@ namespace Raid.Toolkit.Extensibility.Host.Services
 {
     public class ActivationServiceApi : ApiHandler<IActivationApi>, IActivationApi
     {
-        public ActivationServiceApi(ILogger<ApiHandler<IActivationApi>> logger) : base(logger)
+        private readonly IExtensionHostController ExtensionHostController;
+        public ActivationServiceApi(IExtensionHostController extensionHostController, ILogger<ApiHandler<IActivationApi>> logger) : base(logger)
         {
+            ExtensionHostController = extensionHostController;
         }
 
         public Task<bool> Activate(Uri activationRequestUri)
         {
+            switch (activationRequestUri.Host)
+            {
+                case "extension":
+                    ExtensionHost extensionHost = ExtensionHostController.GetExtensionPackageHost(activationRequestUri.LocalPath.TrimStart('/').Split('/')[0]);
+                    return Task.FromResult(extensionHost.HandleRequest(activationRequestUri));
+                default:
+                    break;
+            }
             return Task.FromResult(false);
         }
     }
