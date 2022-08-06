@@ -19,7 +19,11 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             switch (activationRequestUri.Host)
             {
                 case "extension":
-                    ExtensionHost extensionHost = ExtensionHostController.GetExtensionPackageHost(activationRequestUri.LocalPath.TrimStart('/').Split('/')[0]);
+                    string extensionId = activationRequestUri.LocalPath.TrimStart('/').Split('/')[0];
+                    ExtensionHost extensionHost = ExtensionHostController.GetExtensionPackageHost(extensionId);
+                    if (extensionHost == null)
+                        return Task.FromException<bool>(new ApplicationException($"Extension '{extensionId}' not found."));
+
                     return Task.FromResult(extensionHost.HandleRequest(activationRequestUri));
                 default:
                     break;
