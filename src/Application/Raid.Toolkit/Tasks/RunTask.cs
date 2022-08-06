@@ -2,7 +2,6 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CommandLine;
@@ -102,9 +101,7 @@ namespace Raid.Toolkit
                 return ApplicationStartupCondition.None;
             }
 
-            using var mutex = new Mutex(false, "RaidToolkit Singleton");
-            bool isAnotherInstanceOpen = !mutex.WaitOne(Options.Wait.HasValue ? TimeSpan.FromMilliseconds(Options.Wait.Value) : TimeSpan.Zero);
-            if (isAnotherInstanceOpen && !Options.Standalone)
+            if (!Options.Standalone && !SingletonProcess.TryAquireSingleton())
             {
                 RunAction = RunAction.Activate;
                 return ApplicationStartupCondition.None;
@@ -129,35 +126,14 @@ namespace Raid.Toolkit
                     Application.Run(new InstallWindow());
                     return 0;
                 case RunAction.Run:
-                    using (var mutex = new Mutex(false, "RaidToolkit Singleton"))
+                    if (!Options.Standalone)
                     {
-                        bool releaseMutex = false;
-                        if (!Options.Standalone)
-                        {
-                            bool isAnotherInstanceOpen = !mutex.WaitOne(TimeSpan.Zero);
-                            if (isAnotherInstanceOpen && Options.Standalone)
-                            {
-                                return 0;
-                            }
-                            releaseMutex = true;
-                        }
-                        try
-                        {
-                            if (!Options.Standalone)
-                            {
-                                RegistrySettings.RegisterProtocol(true);
-                                AppHost.EnsureFileAssociations();
-                            }
-                            MainWindow mainWnd = ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider, Options);
-                            ServiceProvider.GetRequiredService<IExtensionHostController>().ShowExtensionUI();
-                            Application.Run(mainWnd);
-                        }
-                        finally
-                        {
-                            if (releaseMutex)
-                                mutex.ReleaseMutex();
-                        }
+                        RegistrySettings.RegisterProtocol(true);
+                        AppHost.EnsureFileAssociations();
                     }
+                    MainWindow mainWnd = ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider, Options);
+                    ServiceProvider.GetRequiredService<IExtensionHostController>().ShowExtensionUI();
+                    Application.Run(mainWnd);
                     return 0;
                 case RunAction.Activate:
                     // TODO: Activate existing window, if desired?

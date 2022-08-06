@@ -28,7 +28,7 @@ namespace Raid.Toolkit
             if (Options == null)
                 throw new NullReferenceException();
 
-            if (!ActivationHelper.IsRaidToolkitRunning())
+            if (!SingletonProcess.IsRunning)
             {
                 ProcessStartInfo psi = new()
                 {

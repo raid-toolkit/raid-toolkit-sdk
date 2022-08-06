@@ -56,7 +56,7 @@ namespace Raid.Toolkit.Extensibility.Tasks
         {
             var hive = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\RaidToolkit");
             {
-                if (ActivationHelper.IsRaidToolkitRunning())
+                if (SingletonProcess.IsRunning)
                 {
                     Log.LogMessage(MessageImportance.High, $"Extension in use, will not deploy");
                     return;

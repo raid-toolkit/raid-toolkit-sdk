@@ -13,7 +13,7 @@ namespace Raid.Toolkit.DataModel
 
     public class ActivationApi : ApiBase<IActivationApi>, IActivationApi
     {
-        protected ActivationApi(RaidToolkitClientBase client) : base(client)
+        public ActivationApi(RaidToolkitClientBase client) : base(client)
         {
         }
 
