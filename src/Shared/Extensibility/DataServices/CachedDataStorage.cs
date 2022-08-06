@@ -1,8 +1,8 @@
 using System;
-using System.Linq;
 using System.Collections.Concurrent;
-using Newtonsoft.Json;
 using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace Raid.Toolkit.Extensibility.DataServices
 {
@@ -15,7 +15,7 @@ namespace Raid.Toolkit.Extensibility.DataServices
 
         public event EventHandler<DataStorageUpdatedEventArgs> Updated;
 
-        public IEnumerable<string> GetKeys(IDataContext withinContext)
+        public static IEnumerable<string> GetKeys(IDataContext withinContext)
         {
             string prefix = $"{string.Join(";", withinContext.Parts)};";
             return Cache.Keys.ToArray()
@@ -54,7 +54,7 @@ namespace Raid.Toolkit.Extensibility.DataServices
             if (updatedValue == value)
             {
                 _ = (UnderlyingStorage?.Write(context, key, value));
-                Updated?.Invoke(this, new DataStorageUpdatedEventArgs(context, key, value));
+                Updated?.Raise(this, new DataStorageUpdatedEventArgs(context, key, value));
                 return true;
             }
             return false;

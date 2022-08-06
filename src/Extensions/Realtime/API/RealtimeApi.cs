@@ -37,17 +37,17 @@ namespace Raid.Toolkit.Extension.Realtime
 
         private void OnViewChanged(object sender, ViewChangedEventArgs e)
         {
-            ViewChanged?.Invoke(this, new ViewUpdatedEventArgs(e.Instance.Id, e.ViewMeta.Key.ToString()));
+            ViewChanged?.Raise(this, new ViewUpdatedEventArgs(e.Instance.Id, e.ViewMeta.Key.ToString()));
         }
 
         private void OnBattleResultChanged(object sender, BattleResultsChangedEventArgs e)
         {
-            ReceiveBattleResponse?.Invoke(this, new BasicSerializableEventArgs("last-battle-response-updated", e.Instance.Id));
+            ReceiveBattleResponse?.Raise(this, new BasicSerializableEventArgs("last-battle-response-updated", e.Instance.Id));
         }
 
         private void HandleInstanceManagerUpdateEvent(object sender, IGameInstanceManager.GameInstancesUpdatedEventArgs e)
         {
-            AccountListUpdated?.Invoke(this, new BasicSerializableEventArgs("account-list-updated"));
+            AccountListUpdated?.Raise(this, new BasicSerializableEventArgs("account-list-updated"));
         }
 
         public Task<Account[]> GetConnectedAccounts()

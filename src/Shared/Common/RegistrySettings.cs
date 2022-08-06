@@ -18,6 +18,7 @@ namespace Raid.Toolkit.Common
     {
         public const string RTKHive = @"SOFTWARE\RaidToolkit";
         public const string InstallFolderKey = @"InstallFolder";
+        public const string ActivationPortKey = @"ActivationPort";
         public const string AutoUpdateKey = @"AutoUpdate";
         public const string IsInstalledKey = "IsInstalled";
         public const string ClickToStartKey = "ClickToStart";
@@ -30,11 +31,25 @@ namespace Raid.Toolkit.Common
         public const string FlagsHive = $"{RTKHive}\\Flags";
 
         public static readonly string DefaultInstallationPath;
+        public static readonly uint DefaultActivationPort = 9998;
         public static string InstalledExecutablePath => Path.Combine(InstallationPath, ExecutableName);
 
         public static bool IsFlagEnabled(FeatureFlags flag, bool defaultValue = false)
         {
             return Registry.CurrentUser.OpenSubKey(FlagsHive)?.GetValue(flag.ToString().ToLowerInvariant(), defaultValue ? 1 : 0) is int value && value == 1;
+        }
+
+        public static uint ActivationPort
+        {
+            get
+            {
+                var hive = Registry.CurrentUser.OpenSubKey(RTKHive);
+                return hive == null ? DefaultActivationPort : (uint)hive.GetValue(ActivationPortKey, DefaultActivationPort);
+            }
+            set
+            {
+                Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.ActivationPortKey, value, RegistryValueKind.DWord);
+            }
         }
 
         public static bool RunOnStartup
@@ -114,7 +129,7 @@ namespace Raid.Toolkit.Common
                     classKey.SetValue(null, "URL:Raid Toolkit");
                     classKey.SetValue("URL Protocol", "");
                     var cmdKey = classKey.CreateSubKey("shell").CreateSubKey("open").CreateSubKey("command");
-                    cmdKey.SetValue(null, $"\"{InstalledExecutablePath}\" open \"%1\"");
+                    cmdKey.SetValue(null, $"\"{InstalledExecutablePath}\" activate \"%1\"");
                 }
             }
             catch (Exception)

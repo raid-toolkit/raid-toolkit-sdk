@@ -35,7 +35,7 @@ namespace Raid.Toolkit.Extension.Account
 
             if (e.Context is AccountDataContext context)
             {
-                Updated?.Invoke(this, new AccountUpdatedEventArgs(context.AccountId));
+                Updated?.Raise(this, new AccountUpdatedEventArgs(context.AccountId));
             }
         }
 
@@ -55,7 +55,7 @@ namespace Raid.Toolkit.Extension.Account
 
         public Task<DataModel.Account[]> GetAccounts()
         {
-            return Task.FromResult(Storage.GetKeys(new AccountDirectoryContext()).Select(AccountFromUserAccount).ToArray());
+            return Task.FromResult(CachedDataStorage.GetKeys(new AccountDirectoryContext()).Select(AccountFromUserAccount).ToArray());
         }
 
         private DataModel.Account AccountFromUserAccount(string accountId)

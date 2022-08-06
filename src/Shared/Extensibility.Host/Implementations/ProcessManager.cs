@@ -38,11 +38,11 @@ namespace Raid.Toolkit.Extensibility
                     IProcessManager.ProcessEventArgs args = new(process);
                     try
                     {
-                        ProcessFound?.Invoke(this, args);
+                        ProcessFound?.Raise(this, args);
                         if (!args.Retry)
                             ActiveProcesses.Add(process.Id, process);
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         Logger.LogWarning("Error thrown in ProcessFound event handler", ex);
                     }
@@ -54,7 +54,7 @@ namespace Raid.Toolkit.Extensibility
                 {
                     try
                     {
-                        ProcessClosed?.Invoke(this, new IProcessManager.ProcessEventArgs(closedProcessId));
+                        ProcessClosed?.Raise(this, new IProcessManager.ProcessEventArgs(closedProcessId));
                         closedProcess.Dispose();
                     }
                     catch (Exception ex)

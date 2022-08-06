@@ -2,7 +2,12 @@
   "profiles": {
     "Raid.Toolkit": {
       "commandName": "Project",
-      "commandLineArgs": "--debug --standalone",
+      "commandLineArgs": "--debug",
+      "nativeDebugging": true
+    },
+    "rtk://Activate": {
+      "commandName": "Project",
+      "commandLineArgs": "activate rtkdev://extension/Raid.ModelExplorer/foo/bar?test=1",
       "nativeDebugging": true
     }
   }

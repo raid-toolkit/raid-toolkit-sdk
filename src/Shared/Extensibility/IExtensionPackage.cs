@@ -1,15 +1,16 @@
-using Raid.Toolkit.Common;
 using System;
+using Raid.Toolkit.Common;
 
 namespace Raid.Toolkit.Extensibility
 {
     public interface IExtensionPackage : IDisposable
     {
-        public void OnActivate(IExtensionHost host);
-        public void OnDeactivate(IExtensionHost host);
-        public void OnInstall(IExtensionHost host);
-        public void OnUninstall(IExtensionHost host);
-        public void ShowUI();
+        void OnActivate(IExtensionHost host);
+        void OnDeactivate(IExtensionHost host);
+        void OnInstall(IExtensionHost host);
+        void OnUninstall(IExtensionHost host);
+        void ShowUI();
+        bool HandleRequest(Uri requestUri);
     }
 
     public abstract class ExtensionPackage : IExtensionPackage
@@ -25,6 +26,7 @@ namespace Raid.Toolkit.Extensibility
         public virtual void OnInstall(IExtensionHost host) { }
         public virtual void OnUninstall(IExtensionHost host) { }
         public virtual void ShowUI() { }
+        public virtual bool HandleRequest(Uri requestUri) { return false; }
 
         protected virtual void Dispose(bool disposing)
         {

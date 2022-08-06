@@ -46,16 +46,16 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             if (storedArgs.Count >= storedArgs.Threshold && !storedArgs.Notified)
             {
                 storedArgs.Notified = true;
-                OnErrorAdded?.Invoke(this, storedArgs);
+                OnErrorAdded?.Raise(this, storedArgs);
             }
 
-            OnError?.Invoke(this, args);
+            OnError?.Raise(this, args);
         }
 
         public void ClearError(ServiceErrorCategory category, string targetDescription)
         {
             if (CurrentErrors.Remove($"{category}:{targetDescription}", out var args))
-                OnErrorCleared?.Invoke(this, args);
+                OnErrorCleared?.Raise(this, args);
         }
     }
 

@@ -87,6 +87,11 @@ namespace Raid.Toolkit.Extensibility.Host
             ExtensionPackage.ShowUI();
         }
 
+        public bool HandleRequest(Uri requestUri)
+        {
+            return ExtensionPackage.HandleRequest(requestUri);
+        }
+
         #region IExtensionHost
         public IExtensionStorage GetStorage(bool enableCache)
         {
