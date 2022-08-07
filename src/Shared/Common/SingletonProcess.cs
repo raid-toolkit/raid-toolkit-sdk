@@ -16,7 +16,7 @@ namespace Raid.Toolkit.Common
                 try
                 {
                     tempHandle = new(false, EventResetMode.ManualReset, Identifier, out bool created);
-                    return created;
+                    return !created;
                 }
                 finally
                 {
