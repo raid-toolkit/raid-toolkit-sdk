@@ -81,6 +81,12 @@ namespace Raid.Toolkit.Extensibility.Host
                 pkg.Uninstall();
             }
         }
+
+        public ExtensionHost GetExtensionPackageHost(string packageId)
+        {
+            return ExtensionPackages[packageId];
+        }
+
         #endregion
 
         #region IDisposable

@@ -10,5 +10,6 @@ namespace Raid.Toolkit.Extensibility.Host
         void DeactivateExtensions();
         void InstallPackage(ExtensionBundle descriptor, bool activate);
         void UninstallPackage(string packageId);
+        ExtensionHost GetExtensionPackageHost(string packageId);
     }
 }

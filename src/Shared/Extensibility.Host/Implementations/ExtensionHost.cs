@@ -92,6 +92,11 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public bool CanShowUI => WindowManager.CanShowUI;
 
+        public bool HandleRequest(Uri requestUri)
+        {
+            return ExtensionPackage.HandleRequest(requestUri);
+        }
+
         #region IExtensionHost
         public IExtensionStorage GetStorage(bool enableCache)
         {

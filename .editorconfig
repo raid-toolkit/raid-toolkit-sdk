@@ -15,7 +15,7 @@ trim_trailing_whitespace = false
 # expression value is never used
 # dotnet_diagnostic.IDE0058.severity = none
 # unreferenced using
-# dotnet_diagnostic.IDE0005.severity = error
+# dotnet_diagnostic.IDE0005.severity = warn
 # dotnet_diagnostic.IDE0051.severity = error
 # dotnet_diagnostic.IDE0090.severity = error
 dotnet_diagnostic.IDE0130.severity = none
