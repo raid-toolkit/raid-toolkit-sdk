@@ -31,7 +31,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly PersistedDataStorage Storage;
         private readonly ILogger Logger;
 
-        public bool CanShowUI { get; set; }
+        public bool CanShowUI { get; set; } = true;
 
         public WindowManager(
             IServiceProvider serviceProvider,
