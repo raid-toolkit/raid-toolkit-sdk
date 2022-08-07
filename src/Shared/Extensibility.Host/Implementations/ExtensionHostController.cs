@@ -9,7 +9,7 @@ namespace Raid.Toolkit.Extensibility.Host
     {
         private readonly IModelLoader ModelLoader;
         private readonly IPackageLoader PackageLoader;
-        private readonly IPackageManager Locator;
+        private readonly IPackageManager PackageManager;
         private readonly IServiceProvider ServiceProvider;
         private readonly IWindowManager WindowManager;
         private readonly Dictionary<string, ExtensionHost> ExtensionPackages = new();
@@ -24,7 +24,7 @@ namespace Raid.Toolkit.Extensibility.Host
             IWindowManager windowManager
             )
         {
-            Locator = locator;
+            PackageManager = locator;
             PackageLoader = loader;
             ModelLoader = modelLoader;
             ServiceProvider = serviceProvider;
@@ -34,7 +34,7 @@ namespace Raid.Toolkit.Extensibility.Host
         #region IExtensionHostController
         public async Task LoadExtensions()
         {
-            foreach (var pkg in Locator.GetAllPackages())
+            foreach (var pkg in PackageManager.GetAllPackages())
                 ExtensionPackages.Add(pkg.Id, ExtensionHost.CreateHost(ServiceProvider, PackageLoader.LoadPackage(pkg), pkg));
 
             var typePatterns = ExtensionPackages.Values.SelectMany(host => host.GetIncludeTypes());
@@ -66,7 +66,7 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public void InstallPackage(ExtensionBundle descriptor, bool activate)
         {
-            ExtensionBundle installedPkg = Locator.AddPackage(descriptor);
+            ExtensionBundle installedPkg = PackageManager.AddPackage(descriptor);
             var pkg = PackageLoader.LoadPackage(installedPkg);
             ExtensionHost host = ExtensionHost.CreateHost(ServiceProvider, pkg, installedPkg);
             host.Install();

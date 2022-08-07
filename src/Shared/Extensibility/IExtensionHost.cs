@@ -22,6 +22,8 @@ namespace Raid.Toolkit.Extensibility
         IDisposable RegisterWindow<T>(WindowOptions options) where T : Form;
         T CreateWindow<T>() where T : Form;
 
+        bool CanShowUI { get; }
+
         [Obsolete] IDisposable RegisterMessageScopeHandler<T>() where T : IMessageScopeHandler;
         [Obsolete] IDisposable RegisterDataProvider<T>() where T : IDataProvider;
         [Obsolete] IDisposable RegisterBackgroundService<T>() where T : IBackgroundService;

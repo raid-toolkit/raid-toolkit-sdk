@@ -57,7 +57,11 @@ namespace Raid.Toolkit.UI
 
             // must trigger load here
             UpdateService.UpdateAvailable += OnUpdateAvailable;
+#pragma warning disable 0436
+            // conflicts with Raid.Toolkit.Extension.Host because of InternalsVisibleTo, 
+            // since it correctly chooses the locally defined asm version, just suppressing this.
             appTrayIcon.Text = $"Raid Toolkit v{ThisAssembly.AssemblyFileVersion}";
+#pragma warning restore 0436
             appTrayIcon.Icon = Properties.Resources.AppIcon;
             appTrayIcon.Visible = true;
 
@@ -261,7 +265,11 @@ namespace Raid.Toolkit.UI
                 ShowBalloonTip(
                     kDefaultBalloonTipTimeout,
                     "Updated successfully!",
+#pragma warning disable 0436
+                    // conflicts with Raid.Toolkit.Extension.Host because of InternalsVisibleTo, 
+                    // since it correctly chooses the locally defined asm version, just suppressing this.
                     $"Raid Toolkit has been updated to v{ThisAssembly.AssemblyFileVersion}!",
+#pragma warning restore 0436
                     ToolTipIcon.Info,
                     null);
             }

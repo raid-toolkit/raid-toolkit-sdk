@@ -84,8 +84,13 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public void ShowUI()
         {
+            if (!CanShowUI)
+                throw new ApplicationException("Cannot show user interface");
+
             ExtensionPackage.ShowUI();
         }
+
+        public bool CanShowUI => WindowManager.CanShowUI;
 
         #region IExtensionHost
         public IExtensionStorage GetStorage(bool enableCache)

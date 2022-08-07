@@ -1,10 +1,10 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Raid.Toolkit.Extensibility.DataServices;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Raid.Toolkit.Extensibility.DataServices;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
@@ -30,6 +30,8 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IServiceProvider ServiceProvider;
         private readonly PersistedDataStorage Storage;
         private readonly ILogger Logger;
+
+        public bool CanShowUI { get; set; }
 
         public WindowManager(
             IServiceProvider serviceProvider,
@@ -102,19 +104,19 @@ namespace Raid.Toolkit.Extensibility.Host
             string senderType = sender.GetType().FullName;
             Logger.LogInformation($"Updating window {senderType} (open)");
             States[senderType] = new(sender as Form, true);
-            Storage.Write(AppStateDataContext.Default, "windows", States);
+            _ = Storage.Write(AppStateDataContext.Default, "windows", States);
         }
 
         private void SetFormClosedState(object sender, FormClosingEventArgs e)
         {
-            bool isUserClose = e.CloseReason == CloseReason.UserClosing
-                || e.CloseReason == CloseReason.FormOwnerClosing;
+            bool isUserClose = e.CloseReason is CloseReason.UserClosing
+                or CloseReason.FormOwnerClosing;
 
             string senderType = sender.GetType().FullName;
             Logger.LogInformation($"Updating window {senderType} (closed)");
             // if closing for application exit/shutdown, then consider it still open so it will re-open on next launch
             States[senderType] = new(sender as Form, !isUserClose);
-            Storage.Write(AppStateDataContext.Default, "windows", States);
+            _ = Storage.Write(AppStateDataContext.Default, "windows", States);
         }
 
         public void RegisterWindow<T>(WindowOptions options) where T : Form
@@ -126,7 +128,7 @@ namespace Raid.Toolkit.Extensibility.Host
         public void UnregisterWindow<T>() where T : Form
         {
             Logger.LogInformation($"Unregistered window {typeof(T).FullName}");
-            Options.Remove(typeof(T));
+            _ = Options.Remove(typeof(T));
         }
     }
 }

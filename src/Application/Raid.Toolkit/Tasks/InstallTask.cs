@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,19 +22,24 @@ namespace Raid.Toolkit
     internal class InstallTask : CommandTaskBase<InstallOptions>
     {
         private InstallOptions? Options;
-        private readonly IPackageManager PackageManager;
         private readonly IServiceProvider ServiceProvider;
+        private readonly IExtensionHostController ExtensionHostController;
+        private readonly IWindowManager WindowManager;
 
-        public InstallTask(IServiceProvider serviceProvider, IPackageManager packageManager)
+        public InstallTask(IServiceProvider serviceProvider, IExtensionHostController extensionHost, IWindowManager windowManager)
         {
             ServiceProvider = serviceProvider;
-            PackageManager = packageManager;
+            ExtensionHostController = extensionHost;
+            WindowManager = windowManager;
         }
 
         public override int Invoke()
         {
             if (Options == null)
                 throw new NullReferenceException();
+
+            if (Options.Accept)
+                WindowManager.CanShowUI = false;
 
             ExtensionBundle bundleToInstall = ExtensionBundle.FromFile(Options.PackagePath);
 
@@ -50,7 +54,7 @@ namespace Raid.Toolkit
                 }
             }
 
-            _ = PackageManager.AddPackage(bundleToInstall);
+            ExtensionHostController.InstallPackage(bundleToInstall, activate: false);
 
             return 0;
         }

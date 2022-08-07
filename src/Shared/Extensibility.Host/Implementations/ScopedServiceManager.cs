@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Raid.Toolkit.Common;
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility.Host.Services;
 
@@ -73,11 +74,11 @@ namespace Raid.Toolkit.Extensibility.Services
 
         public void RemoveMessageScopeHandler(IMessageScopeHandler handler)
         {
-            ScopeHandlers.Remove(handler);
+            _ = ScopeHandlers.Remove(handler);
             foreach (var attr in handler.GetType().GetInterfaces().Select(type => type.GetCustomAttribute<PublicApiAttribute>(true)))
             {
                 if (attr != null)
-                    SupportedApiList.Remove(attr.Name);
+                    _ = SupportedApiList.Remove(attr.Name);
             }
         }
     }

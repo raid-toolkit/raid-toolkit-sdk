@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Raid.Toolkit.Common;
 
 namespace Raid.Toolkit.Extensibility.Host.Services
 {
