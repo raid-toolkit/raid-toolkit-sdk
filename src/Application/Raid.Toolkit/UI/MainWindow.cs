@@ -142,7 +142,7 @@ namespace Raid.Toolkit.UI
         {
             InvokeIfNeeded(() =>
             {
-                ErrorsWindow.ShowDialog();
+                ErrorsWindow.Show();
             });
         }
 

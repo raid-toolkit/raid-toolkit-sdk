@@ -9,7 +9,7 @@ namespace System
             if (eh == null)
                 return;
 
-            foreach (EventHandler handler in eh.GetInvocationList().Cast<EventHandler>())
+            foreach (EventHandler<T> handler in eh.GetInvocationList().Cast<EventHandler<T>>())
             {
                 try
                 {
