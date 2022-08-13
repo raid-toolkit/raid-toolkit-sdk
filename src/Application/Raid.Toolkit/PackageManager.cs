@@ -10,6 +10,7 @@ namespace Raid.Toolkit
 {
     public class PackageManager : IPackageManager
     {
+        private const string DeleteMeFile = ".delete-me";
         private static string ExtensionsDirectory => Path.Combine(RegistrySettings.InstallationPath, "extensions");
 
         readonly List<ExtensionBundle> Descriptors = new();
@@ -49,19 +50,29 @@ namespace Raid.Toolkit
             {
                 if (Directory.Exists(ExtensionsDirectory))
                 {
-                    // load legacy extensions:
-                    string[] files = Directory.GetFiles(ExtensionsDirectory, "Raid.Toolkit.Extension.*.dll");
-                    var legacyBundles = files.Select(file => ExtensionBundle.FromAssembly(file));
-                    foreach (var legacyBundle in legacyBundles)
-                        descriptors[legacyBundle.Id] = legacyBundle;
-
                     string[] dirs = Directory.GetDirectories(ExtensionsDirectory);
                     foreach (string dir in dirs)
                     {
                         try
                         {
+                            if (File.Exists(Path.Combine(dir, DeleteMeFile)))
+                            {
+                                try
+                                {
+                                    Directory.Delete(dir, true);
+                                }
+                                catch(Exception)
+                                {
+                                    try
+                                    {
+                                        File.WriteAllText(Path.Combine(dir, DeleteMeFile), "");
+                                    }
+                                    catch (Exception) { }
+                                }
+                                continue;
+                            }
                             ExtensionBundle bundle = ExtensionBundle.FromDirectory(dir);
-                            descriptors[bundle.Id] = bundle; // overwrite any legacy extensions
+                            descriptors[bundle.Id] = bundle;
                         }
                         catch (Exception)
                         { }
@@ -95,6 +106,22 @@ namespace Raid.Toolkit
         {
             EnsureLoaded();
             return Descriptors.Single(d => d.Manifest.Id == packageId);
+        }
+
+        public void RemovePackage(string packageId)
+        {
+            string packageDir = Path.Combine(ExtensionsDirectory, packageId);
+            if  (Directory.Exists(packageDir))
+            {
+                try
+                {
+                    Directory.Delete(packageDir, true);
+                }
+                catch (Exception)
+                {
+                    File.WriteAllText(Path.Combine(packageDir, DeleteMeFile), "");
+                }
+            }
         }
     }
 }

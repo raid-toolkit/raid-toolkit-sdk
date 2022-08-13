@@ -1,3 +1,5 @@
+using Microsoft.Extensions.Logging;
+using Raid.Toolkit.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IPackageManager PackageManager;
         private readonly IServiceProvider ServiceProvider;
         private readonly IWindowManager WindowManager;
+        private readonly ILogger<ExtensionHostController> Logger;
         private readonly Dictionary<string, ExtensionHost> ExtensionPackages = new();
         private readonly Dictionary<Type, IDisposable> Instances = new();
         private bool IsDisposed;
@@ -21,7 +24,8 @@ namespace Raid.Toolkit.Extensibility.Host
             IPackageLoader loader,
             IModelLoader modelLoader,
             IServiceProvider serviceProvider,
-            IWindowManager windowManager
+            IWindowManager windowManager,
+            ILogger<ExtensionHostController> logger
             )
         {
             PackageManager = locator;
@@ -29,13 +33,33 @@ namespace Raid.Toolkit.Extensibility.Host
             ModelLoader = modelLoader;
             ServiceProvider = serviceProvider;
             WindowManager = windowManager;
+            Logger = logger;
         }
 
         #region IExtensionHostController
+        public IReadOnlyList<IExtensionManagement> GetExtensions()
+        {
+            return ExtensionPackages.Values.ToList();
+        }
+
         public async Task LoadExtensions()
         {
             foreach (var pkg in PackageManager.GetAllPackages())
-                ExtensionPackages.Add(pkg.Id, ExtensionHost.CreateHost(ServiceProvider, PackageLoader.LoadPackage(pkg), pkg));
+            {
+                try
+                {
+                    ExtensionHost extensionHost = ExtensionHost.CreateHost(ServiceProvider, pkg);
+                    ExtensionPackages.Add(pkg.Id, extensionHost);
+                }
+                catch (TypeLoadException ex)
+                {
+                    Logger.LogError(ExtensionError.TypeLoadFailure.EventId(), ex, "Failed to load extension");
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ExtensionError.FailedToLoad.EventId(), ex, "Failed to load extension");
+                }
+            }
 
             var typePatterns = ExtensionPackages.Values.SelectMany(host => host.GetIncludeTypes());
             _ = await Task.Run(() => ModelLoader.BuildAndLoad(typePatterns, false));
@@ -67,10 +91,27 @@ namespace Raid.Toolkit.Extensibility.Host
         public void InstallPackage(ExtensionBundle descriptor, bool activate)
         {
             ExtensionBundle installedPkg = PackageManager.AddPackage(descriptor);
-            var pkg = PackageLoader.LoadPackage(installedPkg);
-            ExtensionHost host = ExtensionHost.CreateHost(ServiceProvider, pkg, installedPkg);
+            ExtensionHost host = ExtensionHost.CreateHost(ServiceProvider, installedPkg);
             host.Install();
             ExtensionPackages.Add(installedPkg.Id, host);
+        }
+
+        public void EnablePackage(string packageId)
+        {
+            if (ExtensionPackages.Remove(packageId, out var pkg))
+            {
+                pkg.Activate();
+                // TODO: Persist that it should be enabled
+            }
+        }
+
+        public void DisablePackage(string packageId)
+        {
+            if (ExtensionPackages.Remove(packageId, out var pkg))
+            {
+                pkg.Deactivate();
+                // TODO: Persist that it should be disabled
+            }
         }
 
         public void UninstallPackage(string packageId)
@@ -79,6 +120,7 @@ namespace Raid.Toolkit.Extensibility.Host
             {
                 pkg.Deactivate();
                 pkg.Uninstall();
+                PackageManager.RemovePackage(packageId);
             }
         }
 

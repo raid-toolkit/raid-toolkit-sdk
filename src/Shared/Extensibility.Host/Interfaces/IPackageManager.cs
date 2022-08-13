@@ -7,5 +7,6 @@ namespace Raid.Toolkit.Extensibility.Host
         public IEnumerable<ExtensionBundle> GetAllPackages();
         public ExtensionBundle GetPackage(string packageId);
         public ExtensionBundle AddPackage(ExtensionBundle package);
+        public void RemovePackage(string packageId);
     }
 }

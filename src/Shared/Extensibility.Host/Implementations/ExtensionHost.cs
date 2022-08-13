@@ -4,27 +4,31 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public class ExtensionHost : IExtensionHost
+    public class ExtensionHost : IExtensionManagement
     {
-        private readonly IExtensionPackage ExtensionPackage;
-        private readonly ExtensionBundle Bundle;
+        private IExtensionPackage _ExtensionPackage;
+        public ExtensionBundle Bundle { get; }
         private readonly IServiceProvider ServiceProvider;
         private readonly IMenuManager MenuManager;
         private readonly IWindowManager WindowManager;
         private readonly IScopedServiceManager ScopedServices;
         private readonly IServiceManager ServiceManager;
         private readonly IContextDataManager DataManager;
+        private readonly IPackageLoader Loader;
+        private readonly ILogger<ExtensionHost> Logger;
         private readonly Dictionary<Type, IDisposable> Instances = new();
+        public ExtensionState State { get; private set; }
 
         public ExtensionHost(
             // args
-            IExtensionPackage package,
             ExtensionBundle bundle,
             // injected
             IScopedServiceManager scopedServices,
@@ -32,10 +36,13 @@ namespace Raid.Toolkit.Extensibility.Host
             IServiceManager serviceManager,
             IServiceProvider serviceProvider,
             IMenuManager menuManager,
-            IWindowManager windowManager
+            IWindowManager windowManager,
+            IPackageLoader loader,
+            ILogger<ExtensionHost> logger
             )
         {
-            ExtensionPackage = package;
+            State = ExtensionState.None;
+            Loader = loader;
             Bundle = bundle;
 
             ScopedServices = scopedServices;
@@ -44,11 +51,40 @@ namespace Raid.Toolkit.Extensibility.Host
             ServiceProvider = serviceProvider;
             MenuManager = menuManager;
             WindowManager = windowManager;
+            Logger = logger;
         }
 
-        public static ExtensionHost CreateHost(IServiceProvider serviceProvider, IExtensionPackage package, ExtensionBundle bundle)
+        private IExtensionPackage ExtensionPackage
         {
-            return ActivatorUtilities.CreateInstance<ExtensionHost>(serviceProvider, package, bundle);
+            get
+            {
+                if (State == ExtensionState.Error)
+                    return null;
+
+                if (_ExtensionPackage == null)
+                {
+                    try
+                    {
+                        _ExtensionPackage = Loader.LoadPackage(Bundle);
+                        State = ExtensionState.Loaded;
+                    }
+                    catch (TypeLoadException ex)
+                    {
+                        State = ExtensionState.Error;
+                        Logger.LogError(ExtensionError.TypeLoadFailure.EventId(), ex, "Failed to load extension");
+                    }
+                    catch (Exception ex)
+                    {
+                        Logger.LogError(ExtensionError.FailedToLoad.EventId(), ex, "Failed to load extension");
+                    }
+                }
+                return _ExtensionPackage;
+            }
+        }
+
+        public static ExtensionHost CreateHost(IServiceProvider serviceProvider, ExtensionBundle bundle)
+        {
+            return ActivatorUtilities.CreateInstance<ExtensionHost>(serviceProvider, bundle);
         }
 
         public Regex[] GetIncludeTypes()
@@ -64,12 +100,28 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public void Activate()
         {
-            ExtensionPackage.OnActivate(this);
+            try
+            {
+                if (State == ExtensionState.Activated)
+                    return;
+
+                ExtensionPackage.OnActivate(this);
+                State = ExtensionState.Activated;
+            }
+            catch(Exception ex)
+            {
+                Logger.LogError(ExtensionError.FailedToActivate.EventId(), ex, "Failed to load extension");
+                State = ExtensionState.Error;
+            }
         }
 
         public void Deactivate()
         {
+            if (State != ExtensionState.Activated && State != ExtensionState.Error)
+                return;
+
             ExtensionPackage.OnDeactivate(this);
+            State = ExtensionState.Disabled;
         }
 
         public void Install()
@@ -79,7 +131,16 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public void Uninstall()
         {
-            ExtensionPackage.OnUninstall(this);
+            try
+            {
+                ExtensionPackage.OnUninstall(this);
+                State = ExtensionState.PendingUninstall;
+            }
+            catch(Exception ex)
+            {
+                Logger.LogError(ExtensionError.FailedToActivate.EventId(), ex, "Failed to uninstall extension");
+                State = ExtensionState.Error;
+            }
         }
 
         public void ShowUI()
@@ -94,7 +155,15 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public bool HandleRequest(Uri requestUri)
         {
-            return ExtensionPackage.HandleRequest(requestUri);
+            try
+            {
+                return ExtensionPackage.HandleRequest(requestUri);
+            }
+            catch(Exception ex)
+            {
+                Logger.LogError(ExtensionError.HandleRequestFailed.EventId(), ex, "Failed to uninstall extension");
+                return false;
+            }
         }
 
         #region IExtensionHost

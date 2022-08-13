@@ -278,7 +278,7 @@ namespace Raid.Toolkit.UI
         private void settingsMenuItem_Click(object sender, EventArgs e)
         {
             using SettingsWindow settingsWindow = new();
-            _ = settingsWindow.ShowDialog();
+            settingsWindow.ShowDialog();
         }
 
         private void appTrayIcon_MouseClick(object sender, MouseEventArgs e)
@@ -300,7 +300,17 @@ namespace Raid.Toolkit.UI
             extensionsToolStripMenuItem.DropDownItems.AddRange(MenuManager.GetEntries().Select(entry =>
                 new ToolStripMenuItem(entry.DisplayName, entry.Image, (sender, e) => entry.OnActivate())
             ).ToArray());
+            extensionsToolStripMenuItem.DropDownItems.Add(
+                "&Manage Extensions...",
+                Properties.Resources.Settings_16x,
+                manageExtensionsToolStripMenuItem_Click);
             extensionsToolStripMenuItem.Enabled = extensionsToolStripMenuItem.DropDownItems.Count > 0;
+        }
+
+        private void manageExtensionsToolStripMenuItem_Click(object? sender, EventArgs e)
+        {
+            using ExtensionsWindow form = ActivatorUtilities.CreateInstance<ExtensionsWindow>(ServiceProvider);
+            form.ShowDialog();
         }
     }
 }

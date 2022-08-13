@@ -73,6 +73,26 @@ namespace Raid.Toolkit.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BlockActiveSkills {
+            get {
+                object obj = ResourceManager.GetObject("BlockActiveSkills", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap IncreaseDamageTaken {
+            get {
+                object obj = ResourceManager.GetObject("IncreaseDamageTaken", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Lock_16x {
             get {
                 object obj = ResourceManager.GetObject("Lock_16x", resourceCulture);
@@ -96,6 +116,26 @@ namespace Raid.Toolkit.Properties {
         internal static System.Drawing.Bitmap Refresh_16x {
             get {
                 object obj = ResourceManager.GetObject("Refresh_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Settings_16x {
+            get {
+                object obj = ResourceManager.GetObject("Settings_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ShareDamage {
+            get {
+                object obj = ResourceManager.GetObject("ShareDamage", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
