@@ -10,7 +10,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private class ServiceState
         {
             public IBackgroundService service;
-            public DateTime nextTick;
+            public Dictionary<int, DateTime> nextTickByInstanceToken;
         }
         private readonly List<ServiceState> BackgroundServices = new();
         private readonly ILogger<ServiceManager> Logger;
@@ -24,7 +24,7 @@ namespace Raid.Toolkit.Extensibility.Host
             ServiceState serviceState = new()
             {
                 service = service,
-                nextTick = DateTime.MinValue
+                nextTickByInstanceToken = new()
             };
             BackgroundServices.Add(serviceState);
             return new HostResourceHandle(() => BackgroundServices.Remove(serviceState));
@@ -34,19 +34,19 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             foreach (var service in BackgroundServices)
             {
-                if (service.nextTick < DateTime.UtcNow)
+                if (!service.nextTickByInstanceToken.TryGetValue(instance.Token, out DateTime nextTick) || nextTick < DateTime.UtcNow)
                 {
                     try
                     {
                         // don't run again until current tick finishes
-                        service.nextTick = DateTime.MaxValue;
+                        service.nextTickByInstanceToken[instance.Token] = DateTime.MaxValue;
                         await service.service.Tick(instance);
                     }
                     catch (Exception ex)
                     {
                         Logger.LogError(ex, $"Failure in background service {service.GetType().FullName}");
                     }
-                    service.nextTick = DateTime.UtcNow.Add(service.service.PollInterval);
+                    service.nextTickByInstanceToken[instance.Token] = DateTime.UtcNow.Add(service.service.PollInterval);
                 }
             }
         }

@@ -22,9 +22,19 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             InstanceManager = instanceManager;
         }
 
-        protected override Task ExecuteOnceAsync(CancellationToken token)
+        protected override async Task ExecuteOnceAsync(CancellationToken token)
         {
-            return Task.WhenAll(InstanceManager.Instances.Select(instance => ServiceManager.ProcessInstance(instance)));
+            foreach(var instance in InstanceManager.Instances)
+            { 
+                try
+                {
+                    await ServiceManager.ProcessInstance(instance);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ex, "Exception thrown in service");
+                }
+            }
         }
     }
 }
