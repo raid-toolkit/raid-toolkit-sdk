@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Client.Model.Gameplay.Artifacts;
 using Il2CppToolkit.Runtime;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility;
@@ -25,11 +26,14 @@ namespace Raid.Toolkit.Extension.Account
         [JsonProperty("nextRevisionId")]
         private int m_nextRevisionId;
 
+        public bool ShouldForceUpdate()
+        {
+            return DateTime.UtcNow > m_nextForcedRefresh;
+        }
         public bool ShouldIncrementalUpdate(SharedModel.Meta.Artifacts.UserArtifactData artifactData)
         {
             // Only refresh if m_nextRevisionId changed since last read, or after we've exceeded the forced read interval
-            return DateTime.UtcNow <= m_nextForcedRefresh
-                || artifactData.NextArtifactId != m_nextId
+            return artifactData.NextArtifactId != m_nextId
                 || artifactData.NextArtifactRevisionId != m_nextRevisionId;
         }
         public void MarkRefresh(SharedModel.Meta.Artifacts.UserArtifactData artifactData)
@@ -50,11 +54,13 @@ namespace Raid.Toolkit.Extension.Account
         private const string StateKey = "artifacts-state";
         private readonly CachedDataStorage<PersistedDataStorage> Storage;
         private readonly CachedDataStorage StateResolver;
+        private readonly ILogger<ArtifactsProvider> Logger;
 
-        public ArtifactsProvider(CachedDataStorage<PersistedDataStorage> storage, CachedDataStorage stateResolver)
+        public ArtifactsProvider(CachedDataStorage<PersistedDataStorage> storage, CachedDataStorage stateResolver, ILogger<ArtifactsProvider> logger)
         {
             Storage = storage;
             StateResolver = stateResolver;
+            Logger = logger;
         }
 
         public override bool Update(Il2CsRuntimeContext runtime, AccountDataContext context)
@@ -71,18 +77,26 @@ namespace Raid.Toolkit.Extension.Account
             }
             bool hasUpdates = true;
 
-            if (previous != null && state.ShouldIncrementalUpdate(artifactData))
+            if (state.ShouldForceUpdate() || previous == null)
             {
-                artifacts = previous.Values.ToList();
-                hasUpdates = false;
-            }
-            else
-            {
+                Logger.LogInformation("Performing full artifact update");
                 artifacts = GetArtifacts(scope);
 
                 // TODO: Defer this until the end of update, so we will retry a full reload if the current read throws.
                 state.MarkRefresh(artifactData);
                 _ = StateResolver.Write(context, StateKey, state); // kinda unnecessary, but semantically we should still commit the new value
+            }
+            else if (previous != null && state.ShouldIncrementalUpdate(artifactData))
+            {
+                Logger.LogInformation("Performing incremental artifact update");
+                artifacts = previous.Values.ToList();
+                hasUpdates = false;
+            }
+            else
+            {
+                Logger.LogInformation("Skipping artifact update");
+                // no updates
+                return false;
             }
 
             ArtifactsDataObject result = new();
