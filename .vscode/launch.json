@@ -96,7 +96,8 @@
       "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
       "args": [
         "--debug",
-        "--standalone"
+        "--standalone",
+        "--quiet"
       ],
       "env": {
         "RTK_DEBUG": "true",

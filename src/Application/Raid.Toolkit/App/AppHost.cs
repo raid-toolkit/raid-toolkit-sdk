@@ -22,6 +22,8 @@ namespace Raid.Toolkit
         public static readonly string ExecutableName = "Raid.Toolkit.exe";
         public static string ExecutableDirectory;
 
+        public static bool EnableLogging = true;
+
         public static void EnsureFileAssociations(string? exePath = null)
         {
             if (string.IsNullOrEmpty(exePath))
@@ -83,11 +85,11 @@ namespace Raid.Toolkit
                 .Configure<StorageSettings>(opts => context.Configuration.GetSection("app:StorageSettings").Bind(opts))
                 .AddLogging(builder =>
                 {
-                    if (Directory.Exists(RegistrySettings.InstallationPath))
+                    if (Directory.Exists(RegistrySettings.InstallationPath) && EnableLogging)
                     {
                         _ = builder.AddConfiguration(context.Configuration.GetSection("Logging"));
 
-                        Directory.CreateDirectory(Path.Combine(RegistrySettings.InstallationPath, "Logs"));
+                        _ = Directory.CreateDirectory(Path.Combine(RegistrySettings.InstallationPath, "Logs"));
                         _ = builder.AddFile(o => o.RootPath = RegistrySettings.InstallationPath);
                     }
                 })

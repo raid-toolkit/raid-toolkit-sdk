@@ -16,7 +16,7 @@ namespace Raid.Toolkit
         }
 
         // for logging
-        private class _Program { }
+        private class Bootstrap { }
 
         /// <summary>
         ///  The main entry point for the application.
@@ -27,8 +27,14 @@ namespace Raid.Toolkit
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            if (args.Contains("--quiet") || args.Contains("-q"))
+            {
+                args = args.Where(arg => arg is "--quiet" or "-q").ToArray();
+                AppHost.EnableLogging = false;
+            }
+
             using IHost host = AppHost.CreateHost();
-            ILogger logger = host.Services.GetRequiredService<ILogger<_Program>>();
+            ILogger logger = host.Services.GetRequiredService<ILogger<Bootstrap>>();
             ApplicationStartupTask applicationStartupTask = host.Services.GetRequiredService<ApplicationStartupTask>();
             ApplicationStartupCondition startCondition = applicationStartupTask.Parse(args);
 
