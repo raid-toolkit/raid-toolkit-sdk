@@ -29,7 +29,7 @@ namespace Raid.Toolkit
 
             if (args.Contains("--quiet") || args.Contains("-q"))
             {
-                args = args.Where(arg => arg is "--quiet" or "-q").ToArray();
+                args = args.Where(arg => arg is not ("--quiet" or "-q")).ToArray();
                 AppHost.EnableLogging = false;
             }
 

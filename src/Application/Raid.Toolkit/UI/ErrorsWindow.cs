@@ -12,16 +12,19 @@ namespace Raid.Toolkit.UI
     {
         private readonly AppService AppService;
         private readonly ErrorService ErrorService;
-        private readonly FileLoggerOptions LoggerSettings;
-        private readonly string LogDirectory;
+        private readonly FileLoggerOptions? LoggerSettings;
+        private readonly string? LogDirectory;
 
         public ErrorsWindow(ErrorService errorService, AppService appService, IOptions<FileLoggerOptions> loggerSettings)
         {
             InitializeComponent();
             AppService = appService;
             ErrorService = errorService;
-            LoggerSettings = loggerSettings.Value;
-            LogDirectory = Path.Combine(LoggerSettings.RootPath, LoggerSettings.BasePath);
+            if (AppHost.EnableLogging)
+            {
+                LoggerSettings = loggerSettings.Value;
+                LogDirectory = Path.Combine(LoggerSettings.RootPath, LoggerSettings.BasePath);
+            }
         }
 
         private void ReloadData()
@@ -47,6 +50,9 @@ namespace Raid.Toolkit.UI
 
         private void LoadCurrentLog()
         {
+            if (LogDirectory == null)
+                return;
+
             string[] allFiles = Directory.GetFiles(LogDirectory);
             if (allFiles.Length == 0)
                 return;
