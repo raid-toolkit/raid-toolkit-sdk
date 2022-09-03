@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net5.0-windows</TargetFrameworks>
+        <TargetFrameworks>net6.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <AssemblyName>Raid.Toolkit.Extensibility.Host</AssemblyName>
         <RootNamespace>Raid.Toolkit.Extensibility</RootNamespace>
@@ -10,15 +10,15 @@
 
     <ItemGroup>
         <PackageReference Include="il2cpptoolkit.common"
-            Version="2.0.96-alpha" />
+            Version="2.0.97-alpha" />
         <PackageReference Include="il2cpptoolkit.metadata"
-            Version="2.0.96-alpha" />
+            Version="2.0.97-alpha" />
         <PackageReference Include="il2cpptoolkit.reversecompiler"
-            Version="2.0.96-alpha" />
+            Version="2.0.97-alpha" />
         <PackageReference Include="il2cpptoolkit.runtime"
-            Version="2.0.96-alpha" />
+            Version="2.0.97-alpha" />
         <PackageReference Include="il2cpptoolkit.target.netcore"
-            Version="2.0.95-alpha" />
+            Version="2.0.97-alpha" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions"
             Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"
