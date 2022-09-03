@@ -17,15 +17,15 @@
         <PackageReference Include="Microsoft.Build.Tasks.Core"
             Version="17.1.0" />
         <PackageReference Include="il2cpptoolkit.common"
-            Version="2.0.97-alpha" />
+            Version="2.0.98-alpha" />
         <PackageReference Include="il2cpptoolkit.metadata"
-            Version="2.0.97-alpha" />
+            Version="2.0.98-alpha" />
         <PackageReference Include="il2cpptoolkit.reversecompiler"
-            Version="2.0.97-alpha" />
+            Version="2.0.98-alpha" />
         <PackageReference Include="il2cpptoolkit.runtime"
-            Version="2.0.97-alpha" />
+            Version="2.0.98-alpha" />
         <PackageReference Include="il2cpptoolkit.target.netcore"
-            Version="2.0.97-alpha" />
+            Version="2.0.98-alpha" />
         <PackageReference Include="Microsoft.Win32.Registry"
             Version="5.0.0" />
         <PackageReference Include="MSBuildTasks"
@@ -52,343 +52,335 @@
             <PackagePath>buildCrossTargeting\</PackagePath>
         </None>
         <!-- required for tasks -->
-        <None Include="$(OutputPath)\..\net472\Google.Protobuf.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Google.Protobuf.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Grpc.Core.Api.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Grpc.Core.Api.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Grpc.Net.Client.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Grpc.Net.Client.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Grpc.Net.Common.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Grpc.Net.Common.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Il2CppToolkit.Common.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Il2CppToolkit.Common.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Il2CppToolkit.Injection.Client.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Il2CppToolkit.Injection.Client.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Il2CppToolkit.Metadata.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Il2CppToolkit.Metadata.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Il2CppToolkit.ReverseCompiler.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Il2CppToolkit.ReverseCompiler.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Il2CppToolkit.Runtime.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Il2CppToolkit.Runtime.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Il2CppToolkit.Target.NetCore.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Il2CppToolkit.Target.NetCore.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Microsoft.Bcl.AsyncInterfaces.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Microsoft.Bcl.AsyncInterfaces.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Microsoft.Build.Framework.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Microsoft.Build.Framework.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Microsoft.Build.Tasks.Core.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Microsoft.Build.Tasks.Core.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Microsoft.Build.Utilities.Core.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Microsoft.Build.Utilities.Core.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Microsoft.Extensions.DependencyInjection.Abstractions.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Microsoft.Extensions.DependencyInjection.Abstractions.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Microsoft.Extensions.Logging.Abstractions.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Microsoft.Extensions.Logging.Abstractions.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Microsoft.Extensions.Options.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Microsoft.Extensions.Options.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Microsoft.Extensions.Primitives.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Microsoft.Extensions.Primitives.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Microsoft.IO.Redist.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Microsoft.IO.Redist.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Microsoft.NET.StringTools.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Microsoft.NET.StringTools.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Microsoft.VisualStudio.Setup.Configuration.Interop.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Microsoft.VisualStudio.Setup.Configuration.Interop.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Microsoft.Win32.Registry.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Microsoft.Win32.Registry.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Mono.Cecil.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Mono.Cecil.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Mono.Cecil.Mdb.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Mono.Cecil.Mdb.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Mono.Cecil.Pdb.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Mono.Cecil.Pdb.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Mono.Cecil.Rocks.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Mono.Cecil.Rocks.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Newtonsoft.Json.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Newtonsoft.Json.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\ProcessMemoryUtilities.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\ProcessMemoryUtilities.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Raid.Common.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Raid.Common.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Raid.Model.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Raid.Model.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Raid.Toolkit.Extensibility.Tasks.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Raid.Toolkit.Extensibility.Tasks.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\System.Buffers.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\System.Buffers.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\System.Collections.Immutable.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\System.Collections.Immutable.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\System.Configuration.ConfigurationManager.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\System.Configuration.ConfigurationManager.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\System.Diagnostics.DiagnosticSource.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\System.Diagnostics.DiagnosticSource.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\System.Memory.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\System.Memory.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\System.Numerics.Vectors.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\System.Numerics.Vectors.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\System.Resources.Extensions.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\System.Resources.Extensions.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\System.Runtime.CompilerServices.Unsafe.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\System.Runtime.CompilerServices.Unsafe.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\System.Security.AccessControl.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\System.Security.AccessControl.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\System.Security.Permissions.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\System.Security.Permissions.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\System.Security.Principal.Windows.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\System.Security.Principal.Windows.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\System.Threading.Tasks.Dataflow.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\System.Threading.Tasks.Dataflow.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\System.Threading.Tasks.Extensions.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\System.Threading.Tasks.Extensions.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net472\Vestris.ResourceLib.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Vestris.ResourceLib.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Google.Protobuf.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Google.Protobuf.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Grpc.Core.Api.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Grpc.Core.Api.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Grpc.Net.Client.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Grpc.Net.Client.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Grpc.Net.Common.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Grpc.Net.Common.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Il2CppToolkit.Common.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Il2CppToolkit.Common.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Il2CppToolkit.Injection.Client.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Il2CppToolkit.Injection.Client.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Il2CppToolkit.Metadata.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Il2CppToolkit.Metadata.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Il2CppToolkit.ReverseCompiler.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Il2CppToolkit.ReverseCompiler.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Il2CppToolkit.Runtime.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Il2CppToolkit.Runtime.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Il2CppToolkit.Target.NetCore.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Il2CppToolkit.Target.NetCore.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Microsoft.Build.Framework.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Build.Framework.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Microsoft.Build.Tasks.Core.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Build.Tasks.Core.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Microsoft.Build.Utilities.Core.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Build.Utilities.Core.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Microsoft.Extensions.Logging.Abstractions.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Extensions.Logging.Abstractions.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Microsoft.Extensions.Options.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Extensions.Options.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Microsoft.Extensions.Primitives.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Extensions.Primitives.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Microsoft.NET.StringTools.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.NET.StringTools.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Microsoft.Win32.SystemEvents.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Win32.SystemEvents.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Mono.Cecil.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Mono.Cecil.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Mono.Cecil.Mdb.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Mono.Cecil.Mdb.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Mono.Cecil.Pdb.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Mono.Cecil.Pdb.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Mono.Cecil.Rocks.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Mono.Cecil.Rocks.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Newtonsoft.Json.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Newtonsoft.Json.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\ProcessMemoryUtilities.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\ProcessMemoryUtilities.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Raid.Common.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Raid.Common.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Raid.Model.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Raid.Model.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Raid.Toolkit.Extensibility.Tasks.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Raid.Toolkit.Extensibility.Tasks.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\System.CodeDom.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.CodeDom.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\System.Configuration.ConfigurationManager.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Configuration.ConfigurationManager.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\System.Drawing.Common.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Drawing.Common.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\System.Resources.Extensions.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Resources.Extensions.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\System.Runtime.CompilerServices.Unsafe.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Security.Cryptography.Pkcs.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\System.Security.Cryptography.Pkcs.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Security.Cryptography.ProtectedData.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\System.Security.Cryptography.ProtectedData.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Security.Cryptography.Xml.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\System.Security.Cryptography.Xml.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Security.Permissions.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\System.Security.Permissions.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Windows.Extensions.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\System.Threading.Tasks.Dataflow.dll">
-            <Pack>true</Pack>
-            <PackagePath>build\MSBuildCore\</PackagePath>
-        </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\System.Windows.Extensions.dll">
-            <Pack>true</Pack>
-            <PackagePath>build\MSBuildCore\</PackagePath>
-        </None>
-        <None Include="$(OutputPath)\..\net5.0-windows\Vestris.ResourceLib.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Vestris.ResourceLib.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
