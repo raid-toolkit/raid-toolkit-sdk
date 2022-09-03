@@ -63,7 +63,7 @@ jobs:
         run: |
           msbuild $env:Solution_Name -m -t:Build -p:Configuration=Release -p:Platform=x64
           msbuild $env:App_csproj -m -t:Publish -p:TargetFramework=net6.0-windows10.0.19041.0 -p:Configuration=Release -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
-          msbuild $env:Client_csproj -m -t:Publish;Pack -p:TargetFramework=net6.0-windows -p:Configuration=Release -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
+          msbuild $env:Client_csproj -m -t:Pack -p:TargetFramework=net6.0-windows -p:Configuration=Release -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
 
       # Versions
       - uses: dotnet/nbgv@master
