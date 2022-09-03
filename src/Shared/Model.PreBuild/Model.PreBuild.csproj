@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net472;net5.0-windows</TargetFrameworks>
+        <TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
         <Platforms>x64</Platforms>
@@ -10,9 +10,9 @@
 
     <ItemGroup>
         <PackageReference Include="il2cpptoolkit.reversecompiler"
-            Version="2.0.96-alpha" />
+            Version="2.0.98-alpha" />
         <PackageReference Include="il2cpptoolkit.target.netcore"
-            Version="2.0.95-alpha" />
+            Version="2.0.98-alpha" />
         <ProjectReference Include="..\Model\Model.csproj" />
     </ItemGroup>
 

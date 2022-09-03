@@ -2,15 +2,15 @@
 
     <ItemGroup>
         <PackageReference Include="il2cpptoolkit.common"
-            Version="2.0.96-alpha" />
+            Version="2.0.98-alpha" />
         <PackageReference Include="il2cpptoolkit.metadata"
-            Version="2.0.96-alpha" />
+            Version="2.0.98-alpha" />
         <PackageReference Include="il2cpptoolkit.reversecompiler"
-            Version="2.0.96-alpha" />
+            Version="2.0.98-alpha" />
         <PackageReference Include="il2cpptoolkit.runtime"
-            Version="2.0.96-alpha" />
+            Version="2.0.98-alpha" />
         <PackageReference Include="il2cpptoolkit.target.netcore"
-            Version="2.0.95-alpha" />
+            Version="2.0.98-alpha" />
         <PackageReference Include="Microsoft.Win32.Registry"
             Version="5.0.0" />
         <PackageReference Include="Newtonsoft.Json"
@@ -35,7 +35,7 @@
     </ItemGroup>
 
     <PropertyGroup>
-        <TargetFrameworks>net472;net5.0-windows</TargetFrameworks>
+        <TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <OutputType>Library</OutputType>
         <AssemblyName>Raid.Model</AssemblyName>

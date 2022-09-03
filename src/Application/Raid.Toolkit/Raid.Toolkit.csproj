@@ -2,29 +2,37 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-		<TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
-		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+        <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+        <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
         <LangVersion>10.0</LangVersion>
         <Nullable>enable</Nullable>
-		<UseWindowsForms>true</UseWindowsForms>
-		<UseWPF>true</UseWPF>
+        <UseWindowsForms>true</UseWindowsForms>
+        <UseWPF>true</UseWPF>
         <PublishSingleFile>true</PublishSingleFile>
         <SelfContained>false</SelfContained>
         <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-        <RuntimeIdentifier>win-x64</RuntimeIdentifier>
         <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
         <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
         <Platforms>x64</Platforms>
-        <RuntimeIdentifiers>win7-x64</RuntimeIdentifiers>
+        <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+        <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
-        <PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.2.1" />
-        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-        <PackageReference Include="SuperSocket.WebSocket.Server" Version="2.0.0-beta.10" />
-        <PackageReference Include="Il2CppToolkit.Injection.Client" Version="2.0.107-alpha" GeneratePathProperty="true" />
+        <PackageReference Include="CommandLineParser"
+            Version="2.9.0-preview1" />
+        <PackageReference Include="Karambolo.Extensions.Logging.File"
+            Version="3.2.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting"
+            Version="6.0.1" />
+        <PackageReference Include="Newtonsoft.Json"
+            Version="13.0.1" />
+        <PackageReference Include="SuperSocket.WebSocket.Server"
+            Version="2.0.0-beta.10" />
+        <PackageReference Include="Il2CppToolkit.Injection.Client"
+            Version="2.0.107-alpha"
+            GeneratePathProperty="true" />
         <Reference Include="Raid.Interop">
             <HintPath>$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
             <Private>False</Private>
@@ -44,9 +52,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Page Include="App.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
+        <Page Include="App.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
 
     <ItemGroup>
@@ -72,101 +80,101 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Resource Include="Resources\AoEContinuousDamage.png" />
-      <Resource Include="Resources\AppIcon.ico" />
-      <Resource Include="Resources\BlockActiveSkills.png" />
-      <Resource Include="Resources\BlockBuffs.png" />
-      <Resource Include="Resources\BlockDamage.png" />
-      <Resource Include="Resources\BlockDebuff.png" />
-      <Resource Include="Resources\BlockHeal.png" />
-      <Resource Include="Resources\BlockHeal2.png" />
-      <Resource Include="Resources\BlockPassiveSkills.png" />
-      <Resource Include="Resources\BlockRevive.png" />
-      <Resource Include="Resources\BloodRage.png" />
-      <Resource Include="Resources\Cocoon.png" />
-      <Resource Include="Resources\ContinuousDamage.png" />
-      <Resource Include="Resources\ContinuousDamage2.png" />
-      <Resource Include="Resources\ContinuousHeal.png" />
-      <Resource Include="Resources\ContinuousHeal2.png" />
-      <Resource Include="Resources\Digestion.png" />
-      <Resource Include="Resources\ElectricMark.png" />
-      <Resource Include="Resources\Enrage.png" />
-      <Resource Include="Resources\Fear.png" />
-      <Resource Include="Resources\Fear2.png" />
-      <Resource Include="Resources\Freeze.png" />
-      <Resource Include="Resources\HungerCounter.png" />
-      <Resource Include="Resources\HydraHitCounter.png" />
-      <Resource Include="Resources\HydraNeckIncreaseDamageTaken.png" />
-      <Resource Include="Resources\IncreaseCritResistance.png" />
-      <Resource Include="Resources\IncreaseCritResistance2.png" />
-      <Resource Include="Resources\IncreaseDamageTaken.png" />
-      <Resource Include="Resources\IncreaseDamageTaken2.png" />
-      <Resource Include="Resources\IncreaseMaxHp.png" />
-      <Resource Include="Resources\IncreasePoisoning.png" />
-      <Resource Include="Resources\IncreasePoisoning2.png" />
-      <Resource Include="Resources\IncreaseStamina.png" />
-      <Resource Include="Resources\Invisible.png" />
-      <Resource Include="Resources\Invisible2.png" />
-      <Resource Include="Resources\LifeDrainOnDamage.png" />
-      <Resource Include="Resources\Lock_16x.png" />
-      <Resource Include="Resources\Mark.png" />
-      <Resource Include="Resources\MinotaurIncreaseDamage.png" />
-      <Resource Include="Resources\MinotaurIncreaseDamageTaken.png" />
-      <Resource Include="Resources\MirrorDamage.png" />
-      <Resource Include="Resources\NewbieDefence.png" />
-      <Resource Include="Resources\Petrification.png" />
-      <Resource Include="Resources\PoisonCloud.png" />
-      <Resource Include="Resources\Provoke.png" />
-      <Resource Include="Resources\RaidToolkitLarge.png" />
-      <Resource Include="Resources\ReduceDamageTaken.png" />
-      <Resource Include="Resources\ReduceDamageTaken2.png" />
-      <Resource Include="Resources\ReduceStamina.png" />
-      <Resource Include="Resources\ReflectDamage.png" />
-      <Resource Include="Resources\ReflectDamage2.png" />
-      <Resource Include="Resources\Refresh_16x.png" />
-      <Resource Include="Resources\ReviveOnDeath.png" />
-      <Resource Include="Resources\sactx-0-1024x512-DXT5-StatusEffectIconsAtlas-f743cf81.png" />
-      <Resource Include="Resources\Selection.png" />
-      <Resource Include="Resources\Settings_16x.png" />
-      <Resource Include="Resources\ShareDamage.png" />
-      <Resource Include="Resources\ShareDamage2.png" />
-      <Resource Include="Resources\Shield.png" />
-      <Resource Include="Resources\Shield2.png" />
-      <Resource Include="Resources\Sleep.png" />
-      <Resource Include="Resources\StatusCounterAttack.png" />
-      <Resource Include="Resources\StatusIncreaseAccuracy.png" />
-      <Resource Include="Resources\StatusIncreaseAccuracy2.png" />
-      <Resource Include="Resources\StatusIncreaseAttack.png" />
-      <Resource Include="Resources\StatusIncreaseAttack2.png" />
-      <Resource Include="Resources\StatusIncreaseCriticalChance.png" />
-      <Resource Include="Resources\StatusIncreaseCriticalChance2.png" />
-      <Resource Include="Resources\StatusIncreaseCriticalDamage.png" />
-      <Resource Include="Resources\StatusIncreaseCriticalDamage2.png" />
-      <Resource Include="Resources\StatusIncreaseDefence.png" />
-      <Resource Include="Resources\StatusIncreaseDefence2.png" />
-      <Resource Include="Resources\StatusIncreaseResistance.png" />
-      <Resource Include="Resources\StatusIncreaseResistance2.png" />
-      <Resource Include="Resources\StatusIncreaseSpeed.png" />
-      <Resource Include="Resources\StatusIncreaseSpeed2.png" />
-      <Resource Include="Resources\StatusReduceAccuracy.png" />
-      <Resource Include="Resources\StatusReduceAccuracy2.png" />
-      <Resource Include="Resources\StatusReduceAttack.png" />
-      <Resource Include="Resources\StatusReduceAttack2.png" />
-      <Resource Include="Resources\StatusReduceCriticalChance.png" />
-      <Resource Include="Resources\StatusReduceCriticalChance2.png" />
-      <Resource Include="Resources\StatusReduceCriticalDamage.png" />
-      <Resource Include="Resources\StatusReduceCriticalDamage2.png" />
-      <Resource Include="Resources\StatusReduceDefence.png" />
-      <Resource Include="Resources\StatusReduceDefence2.png" />
-      <Resource Include="Resources\StatusReduceResistance.png" />
-      <Resource Include="Resources\StatusReduceResistance2.png" />
-      <Resource Include="Resources\StatusReduceSpeed.png" />
-      <Resource Include="Resources\StatusReduceSpeed2.png" />
-      <Resource Include="Resources\Status_Effect_Temp.png" />
-      <Resource Include="Resources\StoneSkin.png" />
-      <Resource Include="Resources\Stun.png" />
-      <Resource Include="Resources\SwapHealth.png" />
-      <Resource Include="Resources\TimeBomb.png" />
-      <Resource Include="Resources\Unkillable.png" />
+        <Resource Include="Resources\AoEContinuousDamage.png" />
+        <Resource Include="Resources\AppIcon.ico" />
+        <Resource Include="Resources\BlockActiveSkills.png" />
+        <Resource Include="Resources\BlockBuffs.png" />
+        <Resource Include="Resources\BlockDamage.png" />
+        <Resource Include="Resources\BlockDebuff.png" />
+        <Resource Include="Resources\BlockHeal.png" />
+        <Resource Include="Resources\BlockHeal2.png" />
+        <Resource Include="Resources\BlockPassiveSkills.png" />
+        <Resource Include="Resources\BlockRevive.png" />
+        <Resource Include="Resources\BloodRage.png" />
+        <Resource Include="Resources\Cocoon.png" />
+        <Resource Include="Resources\ContinuousDamage.png" />
+        <Resource Include="Resources\ContinuousDamage2.png" />
+        <Resource Include="Resources\ContinuousHeal.png" />
+        <Resource Include="Resources\ContinuousHeal2.png" />
+        <Resource Include="Resources\Digestion.png" />
+        <Resource Include="Resources\ElectricMark.png" />
+        <Resource Include="Resources\Enrage.png" />
+        <Resource Include="Resources\Fear.png" />
+        <Resource Include="Resources\Fear2.png" />
+        <Resource Include="Resources\Freeze.png" />
+        <Resource Include="Resources\HungerCounter.png" />
+        <Resource Include="Resources\HydraHitCounter.png" />
+        <Resource Include="Resources\HydraNeckIncreaseDamageTaken.png" />
+        <Resource Include="Resources\IncreaseCritResistance.png" />
+        <Resource Include="Resources\IncreaseCritResistance2.png" />
+        <Resource Include="Resources\IncreaseDamageTaken.png" />
+        <Resource Include="Resources\IncreaseDamageTaken2.png" />
+        <Resource Include="Resources\IncreaseMaxHp.png" />
+        <Resource Include="Resources\IncreasePoisoning.png" />
+        <Resource Include="Resources\IncreasePoisoning2.png" />
+        <Resource Include="Resources\IncreaseStamina.png" />
+        <Resource Include="Resources\Invisible.png" />
+        <Resource Include="Resources\Invisible2.png" />
+        <Resource Include="Resources\LifeDrainOnDamage.png" />
+        <Resource Include="Resources\Lock_16x.png" />
+        <Resource Include="Resources\Mark.png" />
+        <Resource Include="Resources\MinotaurIncreaseDamage.png" />
+        <Resource Include="Resources\MinotaurIncreaseDamageTaken.png" />
+        <Resource Include="Resources\MirrorDamage.png" />
+        <Resource Include="Resources\NewbieDefence.png" />
+        <Resource Include="Resources\Petrification.png" />
+        <Resource Include="Resources\PoisonCloud.png" />
+        <Resource Include="Resources\Provoke.png" />
+        <Resource Include="Resources\RaidToolkitLarge.png" />
+        <Resource Include="Resources\ReduceDamageTaken.png" />
+        <Resource Include="Resources\ReduceDamageTaken2.png" />
+        <Resource Include="Resources\ReduceStamina.png" />
+        <Resource Include="Resources\ReflectDamage.png" />
+        <Resource Include="Resources\ReflectDamage2.png" />
+        <Resource Include="Resources\Refresh_16x.png" />
+        <Resource Include="Resources\ReviveOnDeath.png" />
+        <Resource Include="Resources\sactx-0-1024x512-DXT5-StatusEffectIconsAtlas-f743cf81.png" />
+        <Resource Include="Resources\Selection.png" />
+        <Resource Include="Resources\Settings_16x.png" />
+        <Resource Include="Resources\ShareDamage.png" />
+        <Resource Include="Resources\ShareDamage2.png" />
+        <Resource Include="Resources\Shield.png" />
+        <Resource Include="Resources\Shield2.png" />
+        <Resource Include="Resources\Sleep.png" />
+        <Resource Include="Resources\StatusCounterAttack.png" />
+        <Resource Include="Resources\StatusIncreaseAccuracy.png" />
+        <Resource Include="Resources\StatusIncreaseAccuracy2.png" />
+        <Resource Include="Resources\StatusIncreaseAttack.png" />
+        <Resource Include="Resources\StatusIncreaseAttack2.png" />
+        <Resource Include="Resources\StatusIncreaseCriticalChance.png" />
+        <Resource Include="Resources\StatusIncreaseCriticalChance2.png" />
+        <Resource Include="Resources\StatusIncreaseCriticalDamage.png" />
+        <Resource Include="Resources\StatusIncreaseCriticalDamage2.png" />
+        <Resource Include="Resources\StatusIncreaseDefence.png" />
+        <Resource Include="Resources\StatusIncreaseDefence2.png" />
+        <Resource Include="Resources\StatusIncreaseResistance.png" />
+        <Resource Include="Resources\StatusIncreaseResistance2.png" />
+        <Resource Include="Resources\StatusIncreaseSpeed.png" />
+        <Resource Include="Resources\StatusIncreaseSpeed2.png" />
+        <Resource Include="Resources\StatusReduceAccuracy.png" />
+        <Resource Include="Resources\StatusReduceAccuracy2.png" />
+        <Resource Include="Resources\StatusReduceAttack.png" />
+        <Resource Include="Resources\StatusReduceAttack2.png" />
+        <Resource Include="Resources\StatusReduceCriticalChance.png" />
+        <Resource Include="Resources\StatusReduceCriticalChance2.png" />
+        <Resource Include="Resources\StatusReduceCriticalDamage.png" />
+        <Resource Include="Resources\StatusReduceCriticalDamage2.png" />
+        <Resource Include="Resources\StatusReduceDefence.png" />
+        <Resource Include="Resources\StatusReduceDefence2.png" />
+        <Resource Include="Resources\StatusReduceResistance.png" />
+        <Resource Include="Resources\StatusReduceResistance2.png" />
+        <Resource Include="Resources\StatusReduceSpeed.png" />
+        <Resource Include="Resources\StatusReduceSpeed2.png" />
+        <Resource Include="Resources\Status_Effect_Temp.png" />
+        <Resource Include="Resources\StoneSkin.png" />
+        <Resource Include="Resources\Stun.png" />
+        <Resource Include="Resources\SwapHealth.png" />
+        <Resource Include="Resources\TimeBomb.png" />
+        <Resource Include="Resources\Unkillable.png" />
     </ItemGroup>
 </Project>
