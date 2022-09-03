@@ -24,6 +24,7 @@ jobs:
       IS_CI: true
       Solution_Name: SDK.sln
       App_csproj: src\Application\Raid.Toolkit\Raid.Toolkit.csproj
+      Client_csproj: src\ClientSDK\DotNet\Raid.Client.csproj
 
     steps:
       - uses: mickem/clean-after-action@v1
@@ -61,14 +62,8 @@ jobs:
       - name: Publish App
         run: |
           msbuild $env:Solution_Name -m -t:Build -p:Configuration=Release -p:Platform=x64
-          msbuild $env:Solution_Name -m "-t:Publish;Pack" -p:TargetFramework=net5.0-windows -p:Configuration=Release -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK" -p:PackageOutputPath="$(Get-Location)\publish\nuget"
-
-      # Upload build artifacts
-      - name: Upload RTK artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: RaidToolkit
-          path: publish/RTK
+          msbuild $env:App_csproj -m -t:Publish -p:TargetFramework=net6.0-windows10.0.19041.0 -p:Configuration=Release -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
+          msbuild $env:Client_csproj -m -t:Publish;Pack -p:TargetFramework=net6.0-windows -p:Configuration=Release -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
 
       # Versions
       - uses: dotnet/nbgv@master
