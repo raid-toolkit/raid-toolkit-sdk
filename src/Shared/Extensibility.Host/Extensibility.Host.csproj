@@ -6,6 +6,8 @@
         <AssemblyName>Raid.Toolkit.Extensibility.Host</AssemblyName>
         <RootNamespace>Raid.Toolkit.Extensibility</RootNamespace>
         <Platforms>x64</Platforms>
+		<UseWindowsForms>true</UseWindowsForms>
+		<UseWPF>true</UseWPF>
     </PropertyGroup>
 
     <ItemGroup>

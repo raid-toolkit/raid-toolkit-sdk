@@ -131,6 +131,8 @@ namespace Raid.Toolkit
                         RegistrySettings.RegisterProtocol(true);
                         AppHost.EnsureFileAssociations();
                     }
+                    App app = new();
+                    app.InitializeComponent();
                     MainWindow mainWnd = ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider, Options);
                     ServiceProvider.GetRequiredService<IExtensionHostController>().ShowExtensionUI();
                     Application.Run(mainWnd);

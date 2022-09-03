@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -30,7 +31,6 @@ namespace Raid.Toolkit.UI
         private readonly IMenuManager MenuManager;
         private Action? OnClickCallback;
         private readonly PlariumPlayAdapter PPAdapter = new();
-        private readonly ErrorsWindow ErrorsWindow;
 
         public MainWindow(
             IOptions<ProcessManagerSettings> settings,
@@ -53,7 +53,6 @@ namespace Raid.Toolkit.UI
             ServiceProvider = serviceProvider;
             SettingsStorage = settingsStorage;
             MenuManager = menuManager;
-            ErrorsWindow = ActivatorUtilities.CreateInstance<ErrorsWindow>(ServiceProvider);
 
             // must trigger load here
             UpdateService.UpdateAvailable += OnUpdateAvailable;
@@ -142,7 +141,9 @@ namespace Raid.Toolkit.UI
         {
             InvokeIfNeeded(() =>
             {
-                ErrorsWindow.Show();
+                Windows.ErrorsWindow window = ActivatorUtilities.CreateInstance<Windows.ErrorsWindow>(ServiceProvider);
+                ElementHost.EnableModelessKeyboardInterop(window);
+                window.Show();
             });
         }
 

@@ -1,0 +1,53 @@
+﻿<Window x:Class="Raid.Toolkit.UI.Windows.InstallExtensionDialog"
+		x:Name="window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Raid.Toolkit.UI.Windows"
+        mc:Ignorable="d"
+		Icon="/Resources/AppIcon.ico"
+        Title="Install Extension" Height="255" Width="475"
+		ResizeMode="NoResize" 
+		WindowStartupLocation="CenterScreen">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="90" />
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="0" Margin="10,10,10,10">
+			<TextBlock TextWrapping="Wrap">Would you like to install the following extension?</TextBlock>
+			<TextBlock TextWrapping="Wrap" Margin="0,10,0,0" FontWeight="Bold" Text="{Binding Path=Bundle.Manifest.DisplayName, ElementName=window, FallbackValue=DisplayName}" />
+			<TextBlock TextWrapping="Wrap" Margin="10,5,0,0" Text="{Binding Path=Bundle.Manifest.Description, ElementName=window, FallbackValue=Description}" />
+		</StackPanel>
+		<Grid Grid.Row="1"
+			  Background="{DynamicResource ResourceKey={x:Static SystemColors.ControlLightBrushKey}}">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="64" />
+				<ColumnDefinition Width="220*"/>
+				<ColumnDefinition Width="180" />
+			</Grid.ColumnDefinitions>
+			<Image Grid.Column="0" Margin="5,5,0,5" Source="{x:Static local:InstallExtensionDialog.WarningIcon}" Stretch="None" />
+			<StackPanel Grid.Column="1" Margin="0,5,0,5" VerticalAlignment="Center">
+				<TextBlock TextWrapping="Wrap" FontWeight="Bold">By clicking "Install," you grant consent for this extension to execute and access your account data.</TextBlock>
+				<TextBlock TextWrapping="Wrap">You should only install extensions from authors you trust.</TextBlock>
+			</StackPanel>
+			<StackPanel Grid.Column="2" Margin="0,5,5,5" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<Button x:Name="InstallButton"
+						VerticalAlignment="Center"
+						HorizontalAlignment="Left"
+						Content="Install"
+						Width="75"
+						Margin="5,5,5,5"
+						Click="InstallButton_Click"/>
+				<Button x:Name="CancelButton" 
+						VerticalAlignment="Center" 
+						HorizontalAlignment="Center" 
+						Content="Close" 
+						Width="75" 
+						Margin="5,5,5,5"
+						Click="CancelButton_Click"/>
+			</StackPanel>
+		</Grid>
+	</Grid>
+</Window>

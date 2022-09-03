@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using System.Windows.Forms.Integration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.Extensibility.DataServices;
+using Window = System.Windows.Window;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
@@ -19,6 +21,12 @@ namespace Raid.Toolkit.Extensibility.Host
                 Visible = isVisible;
                 Location = form.Location;
                 Size = form.Size;
+            }
+            public WindowState(Window window, bool isVisible)
+            {
+                Visible = isVisible;
+                Location = new((int)window.Left, (int)window.Top);
+                Size = new((int)window.Width, (int)window.Height);
             }
             public bool Visible { get; set; }
             public Point Location;
@@ -54,29 +62,69 @@ namespace Raid.Toolkit.Extensibility.Host
                     && States.TryGetValue(type.FullName, out WindowState state)
                     && state.Visible)
                 {
-                    Form window = CreateWindow(type);
-                    window.Show();
+                    object visual = CreateWindow(type);
+                    if (visual is Form form)
+                        form.Show();
+                    else if(visual is Window window)
+                        window.Show();
                 }
             }
         }
 
-        public T CreateWindow<T>() where T : Form
+        public T CreateWindow<T>() where T : class, IDisposable
         {
             return CreateWindow(typeof(T)) as T;
         }
 
-        public Form CreateWindow(Type type)
+        public object CreateWindow(Type type)
         {
             Logger.LogInformation($"Creating window {type.FullName}");
             if (!Options.TryGetValue(type, out WindowOptions options))
                 throw new InvalidOperationException($"Type '{type.FullName}' is not registered.");
 
-            Form form = options.CreateInstance != null
+            object visual = options.CreateInstance != null
                 ? options.CreateInstance()
-                : ActivatorUtilities.CreateInstance(ServiceProvider, type) as Form;
+                : ActivatorUtilities.CreateInstance(ServiceProvider, type);
+            if (visual is Form form)
+                AttachEvents(options, form);
+            else if (visual is Window window)
+                AttachEvents(options, window);
 
-            AttachEvents(options, form);
-            return form;
+
+            return visual;
+        }
+
+        private void AttachEvents(WindowOptions options, Window window)
+        {
+            ElementHost.EnableModelessKeyboardInterop(window);
+            if (options.RememberVisibility)
+            { 
+                window.Closing += Window_Closing;
+                window.IsVisibleChanged += (_, _) => Window_PropertyChanged(options, window);
+            }
+            if (options.RememberPosition)
+            {
+                window.LocationChanged += (_, _) => Window_PropertyChanged(options, window);
+                window.SizeChanged += (_, _) => Window_PropertyChanged(options, window);
+            }
+        }
+
+        private void Window_PropertyChanged(WindowOptions options, Window sender)
+        {
+            string senderType = sender.GetType().FullName;
+            Logger.LogInformation($"Updating window {senderType} (visibility={sender.Visibility})");
+            States[senderType] = new(sender, sender.Visibility == System.Windows.Visibility.Visible);
+            _ = Storage.Write(AppStateDataContext.Default, "windows", States);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            bool isUserClose = true; // TODO: determine this for wpf, consider https://stackoverflow.com/a/13855608/8199359
+            string senderType = sender.GetType().FullName;
+            Logger.LogInformation($"Updating window {senderType} (closed)");
+            // if closing for application exit/shutdown, then consider it still open so it will re-open on next launch
+            States[senderType] = new(sender as Window, !isUserClose);
+            _ = Storage.Write(AppStateDataContext.Default, "windows", States);
         }
 
         private void AttachEvents(WindowOptions options, Form form)
@@ -119,13 +167,13 @@ namespace Raid.Toolkit.Extensibility.Host
             _ = Storage.Write(AppStateDataContext.Default, "windows", States);
         }
 
-        public void RegisterWindow<T>(WindowOptions options) where T : Form
+        public void RegisterWindow<T>(WindowOptions options) where T : class, IDisposable
         {
             Logger.LogInformation($"Registered window {typeof(T).FullName}");
             Options.Add(typeof(T), options);
         }
 
-        public void UnregisterWindow<T>() where T : Form
+        public void UnregisterWindow<T>() where T : class, IDisposable
         {
             Logger.LogInformation($"Unregistered window {typeof(T).FullName}");
             _ = Options.Remove(typeof(T));

@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host;
 using Raid.Toolkit.UI;
+using InstallExtensionDialog = Raid.Toolkit.UI.Windows.InstallExtensionDialog;
 
 namespace Raid.Toolkit
 {
@@ -46,9 +47,9 @@ namespace Raid.Toolkit
             // bypass UI if accept was passed as an argument
             if (!Options.Accept)
             {
-                using InstallExtensionDialog dlg = ActivatorUtilities.CreateInstance<InstallExtensionDialog>(ServiceProvider, bundleToInstall);
-                DialogResult result = dlg.ShowDialog();
-                if (result == DialogResult.Cancel)
+                InstallExtensionDialog dlg = ActivatorUtilities.CreateInstance<InstallExtensionDialog>(ServiceProvider, bundleToInstall);
+                bool? result = dlg.ShowDialog();
+                if (result != true)
                 {
                     return 10;
                 }

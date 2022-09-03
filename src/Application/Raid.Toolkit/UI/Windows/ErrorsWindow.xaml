@@ -1,0 +1,54 @@
+﻿<Window x:Class="Raid.Toolkit.UI.Windows.ErrorsWindow"
+		x:Name="window"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Raid.Toolkit.UI.Windows"
+        mc:Ignorable="d"
+		Icon="/Resources/AppIcon.ico"
+        Title="Error Log" Height="450" Width="800" 
+		WindowStartupLocation="CenterScreen">
+	<DockPanel>
+		<ToolBarTray DockPanel.Dock="Top" >
+			<ToolBar ToolBarTray.IsLocked="True">
+				<Button x:Name="RefreshButton" Click="RefreshButton_Click">
+					<StackPanel Orientation="Horizontal">
+						<Image Source="/Resources/Refresh_16x.png" />
+						<TextBlock Margin="3,0,0,0">Refresh</TextBlock>
+					</StackPanel>
+				</Button>
+				<Button x:Name="RestartAsAdmin" Click="RestartAsAdmin_Click">
+					<StackPanel Orientation="Horizontal">
+						<Image Source="/Resources/Lock_16x.png" />
+						<TextBlock Margin="3,0,0,0">Restart as admin</TextBlock>
+					</StackPanel>
+				</Button>
+			</ToolBar>
+		</ToolBarTray>
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="150" />
+				<RowDefinition Height="4" />
+				<RowDefinition Height="150*" />
+			</Grid.RowDefinitions>
+			<DataGrid Grid.Row="0" AutoGenerateColumns="False" ItemsSource="{Binding ElementName=window, Path=ErrorList}">
+				<DataGrid.Columns>
+					<DataGridTextColumn Width="100" Header="Category" Binding="{Binding Category}"/>
+					<DataGridTextColumn Width="150" Header="Error Code" Binding="{Binding ErrorCode}"/>
+					<DataGridTextColumn Width="150" Header="Target" Binding="{Binding Target}"/>
+					<DataGridTextColumn Width="200" Header="Message" Binding="{Binding Message}"/>
+					<DataGridTextColumn Width="300*" Header="Description" Binding="{Binding Description}"/>
+				</DataGrid.Columns>
+			</DataGrid>
+			<GridSplitter Grid.Row="1" ShowsPreview="True" />
+			<TextBox Grid.Row="2" 
+					 IsReadOnly="True" 
+					 IsReadOnlyCaretVisible="True" 
+					 VerticalScrollBarVisibility="Visible" 
+					 HorizontalScrollBarVisibility="Auto"
+					 FontFamily="Consolas"
+					 Text="{Binding ElementName=window, Path=LogText}" />
+		</Grid>
+	</DockPanel>
+</Window>
