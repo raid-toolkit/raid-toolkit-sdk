@@ -42,6 +42,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{6E0F3172-D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetClientTest", "src\Tests\DotNetClientTest\DotNetClientTest.csproj", "{F28408B2-CFA1-4B67-897B-27D00DBA5D17}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Raid.Toolkit.WinUI", "src\Application\Raid.Toolkit.WinUI\Raid.Toolkit.WinUI.csproj", "{23C851EC-D893-4CF2-8440-ABA6D48E633C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -96,6 +98,12 @@ Global
 		{F28408B2-CFA1-4B67-897B-27D00DBA5D17}.Debug|x64.Build.0 = Debug|x64
 		{F28408B2-CFA1-4B67-897B-27D00DBA5D17}.Release|x64.ActiveCfg = Release|x64
 		{F28408B2-CFA1-4B67-897B-27D00DBA5D17}.Release|x64.Build.0 = Release|x64
+		{23C851EC-D893-4CF2-8440-ABA6D48E633C}.Debug|x64.ActiveCfg = Debug|x64
+		{23C851EC-D893-4CF2-8440-ABA6D48E633C}.Debug|x64.Build.0 = Debug|x64
+		{23C851EC-D893-4CF2-8440-ABA6D48E633C}.Debug|x64.Deploy.0 = Debug|x64
+		{23C851EC-D893-4CF2-8440-ABA6D48E633C}.Release|x64.ActiveCfg = Release|x64
+		{23C851EC-D893-4CF2-8440-ABA6D48E633C}.Release|x64.Build.0 = Release|x64
+		{23C851EC-D893-4CF2-8440-ABA6D48E633C}.Release|x64.Deploy.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -113,6 +121,7 @@ Global
 		{D8CE057A-F9D4-43B5-90A0-063F39489C38} = {1538B1D1-AE21-4DB5-B9C4-B57D54B8D027}
 		{C2958575-D713-4D66-A3D8-A938368685C6} = {B81D52F5-233D-46C2-8C86-58E2146065D1}
 		{F28408B2-CFA1-4B67-897B-27D00DBA5D17} = {6E0F3172-D820-416C-A227-04E1F8A48276}
+		{23C851EC-D893-4CF2-8440-ABA6D48E633C} = {08373AFF-D91F-4419-980A-78F4F7985B9B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6c06054a-68d8-49d4-bd28-383cc9836d20}
