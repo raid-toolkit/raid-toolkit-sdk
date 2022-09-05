@@ -5,12 +5,14 @@ using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
+using Raid.Toolkit.WinUI.Base;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Windows.Forms;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using WinUIEx;
@@ -23,21 +25,42 @@ namespace Raid.Toolkit.WinUI
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainWindow : WindowEx, IDisposable
+    public sealed partial class MainWindow : RTKWindow, IDisposable
     {
+        public string VersionString => ThisAssembly.AssemblyFileVersion;
+
         private bool IsDisposed;
         private EmbeddedIconId AppIcon = new(0);
-
-        public MainWindow()
+        private NotifyIcon notifyIcon;
+        public MainWindow() : base()
         {
             this.InitializeComponent();
-            this.CenterOnScreen(250, 400);
-            this.SetIcon(AppIcon.Value);
+            notifyIcon = new()
+            {
+                Text = "Raid Toolkit",
+                Icon = FormsResources.AppIcon,
+                Visible = true
+            };
+            notifyIcon.Click += NotifyIcon_Click;
+            //this.CenterOnScreen(250, 400);
+            //this.SetIcon(AppIcon.Value);
+            AppWindow.Closing += AppWindow_Closing;
         }
 
-        private void myButton_Click(object sender, RoutedEventArgs e)
+        private void NotifyIcon_Click(object sender, EventArgs e)
         {
-            myButton.Content = "Clicked";
+            this.Show();
+        }
+
+        private void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
+        {
+            this.Hide();
+            args.Cancel = true;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
         }
 
         private void Dispose(bool disposing)
@@ -46,6 +69,9 @@ namespace Raid.Toolkit.WinUI
             {
                 AppIcon?.Dispose();
                 AppIcon = null;
+
+                notifyIcon?.Dispose();
+                notifyIcon = null;
 
                 // TODO: set large fields to null
                 IsDisposed = true;
