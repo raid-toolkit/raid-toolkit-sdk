@@ -4,7 +4,8 @@
       "commandName": "MsixPackage"
     },
     "Raid.Toolkit.WinUI (Unpackaged)": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "--debug --standalone --quiet"
     }
   }
 }
