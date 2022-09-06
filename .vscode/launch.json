@@ -74,7 +74,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/SDK/Model.PreBuild/bin/Debug/net5.0/Model.PreBuild.exe",
+      "program": "${workspaceFolder}/SDK/Model.PreBuild/bin/Debug/net6.0/Model.PreBuild.exe",
       "args": [
         "${workspaceFolder}\\bin"
       ],
@@ -93,7 +93,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
+      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net6.0-windows10.0.19041.0/win10-x64/Raid.Toolkit.exe",
       "args": [
         "--debug",
         "--standalone",
@@ -104,7 +104,27 @@
         "app:MemoryLogging": "Error"
       },
       "justMyCode": false,
-      "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net5.0-windows/win-x64",
+      "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net6.0-windows10.0.19041.0/win10-x64",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Launch Raid.Toolkit (WinUI)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/Application/Raid.Toolkit.WinUI/bin/x64/Debug/net6.0-windows10.0.19041.0/win10-x64/Raid.Toolkit.WinUI.exe",
+      "args": [
+        "--debug",
+        "--standalone",
+        "--quiet"
+      ],
+      "env": {
+        "RTK_DEBUG": "true",
+        "app:MemoryLogging": "Error"
+      },
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net6.0-windows10.0.19041.0/win10-x64",
       "console": "internalConsole",
       "stopAtEntry": false
     },
@@ -113,10 +133,10 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
+      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net6.0-windows10.0.19041.0/win10-x64/Raid.Toolkit.exe",
       "args": [
         "install",
-        "D:/git/github/raid-toolkit/private-tools/ModelExplorer/bin/x64/Debug/net5.0-windows/ModelExplorer.rtkx",
+        "D:/git/github/raid-toolkit/private-tools/ModelExplorer/bin/x64/Debug/net6.0-windows/ModelExplorer.rtkx",
         "--accept"
       ],
       "env": {
@@ -124,7 +144,7 @@
         "app:MemoryLogging": "Error"
       },
       "justMyCode": false,
-      "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net5.0-windows/win-x64",
+      "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net6.0-windows10.0.19041.0/win10-x64",
       "console": "internalConsole",
       "stopAtEntry": false
     },
@@ -143,11 +163,11 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
+      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net6.0-windows10.0.19041.0/win10-x64/Raid.Toolkit.exe",
       "args": [
         "--debug",
         // "--debug-package",
-        // "M:\\git\\RaidSpeedHack\\RaidSpeedHack\\x64\\bin\\x64\\Debug\\net5.0-windows",
+        // "M:\\git\\RaidSpeedHack\\RaidSpeedHack\\x64\\bin\\x64\\Debug\\net6.0-windows",
         // "--standalone"
       ],
       "env": {
@@ -155,7 +175,7 @@
         "app:MemoryLogging": "Error"
       },
       "justMyCode": false,
-      "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net5.0-windows/win-x64",
+      "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net6.0-windows10.0.19041.0/win10-x64",
       "console": "internalConsole",
       "stopAtEntry": false
     },
@@ -164,7 +184,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build release",
-      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Release/net5.0-windows/win-x64/Raid.Toolkit.exe",
+      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Release/net6.0-windows10.0.19041.0/win10-x64/Raid.Toolkit.exe",
       "args": [],
       "env": {
         "RTK_DEBUG": "true",
@@ -180,7 +200,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
+      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net6.0-windows10.0.19041.0/win10-x64/Raid.Toolkit.exe",
       "args": [],
       "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit",
       "console": "internalConsole",
@@ -191,7 +211,7 @@
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net5.0-windows/win-x64/Raid.Toolkit.exe",
+      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net6.0-windows10.0.19041.0/win10-x64/Raid.Toolkit.exe",
       "args": [
         "open"
       ],

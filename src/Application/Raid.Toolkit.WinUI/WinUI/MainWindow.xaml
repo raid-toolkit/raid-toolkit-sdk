@@ -1,0 +1,32 @@
+﻿<rtkuibase:RTKWindow
+    x:Class="Raid.Toolkit.WinUI.MainWindow"
+	x:Name="window"
+	xmlns:rtkuibase="using:Raid.Toolkit.WinUI.Base"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Raid.Toolkit.WinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+	Title="Raid Toolkit"
+	StartPosition="CenterScreen"
+	Width="250" Height="200"
+	IsResizable="false">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="50" />
+			<RowDefinition Height="300*" />
+			<RowDefinition Height="50" />
+		</Grid.RowDefinitions>
+		<StackPanel Grid.Row="1" Orientation="Vertical" Margin="0,0,0,20">
+			<TextBlock TextAlignment="Center">
+				<Run FontSize="18" FontWeight="Bold">Raid Toolkit</Run>
+				<LineBreak />
+				
+				Version <Run Text="{x:Bind VersionString, FallbackValue='v2.0.0'}" />
+			</TextBlock>
+			<TextBlock Text="end" />
+		</StackPanel>
+		<Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Click="Button_Click">OK</Button>
+	</Grid>
+</rtkuibase:RTKWindow>
