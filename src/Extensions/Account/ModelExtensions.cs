@@ -216,7 +216,7 @@ namespace Raid.Toolkit.DataModel
             };
         }
 
-        public static StatBonus ToModel(this SharedModel.Meta.Artifacts.Sets.ArtifactSetStatBonus bonus)
+        public static StatBonus ToModel(this SharedModel.Meta.General.StatBonus bonus)
         {
             return new()
             {
@@ -238,7 +238,7 @@ namespace Raid.Toolkit.DataModel
 
         public static ArtifactSetKind ToModel(this SharedModel.Meta.Artifacts.Sets.ArtifactSetInfo artifactSetInfo)
         {
-            List<SharedModel.Meta.Artifacts.Sets.ArtifactSetStatBonus> statBonuses = new();
+            List<SharedModel.Meta.General.StatBonus> statBonuses = new();
             if (artifactSetInfo.StatBonus != null) statBonuses.Add(artifactSetInfo.StatBonus);
             if (artifactSetInfo.StatBonuses != null) statBonuses.AddRange(artifactSetInfo.StatBonuses);
 
@@ -413,7 +413,7 @@ namespace Raid.Toolkit.DataModel
             };
         }
 
-        public static DamageParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.DamageParams type)
+        public static DamageParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.DamageParams.DamageParams type)
         {
             return new DamageParamsStub
             {
@@ -461,7 +461,7 @@ namespace Raid.Toolkit.DataModel
             };
         }
 
-        public static ShowHiddenSkillParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.ShowHiddenSkillParams type)
+        public static ShowHiddenSkillParamsStub ToModel(this SharedModel.Battle.Effects.EffectParams.ShowSecretSkillParams type)
         {
             return new ShowHiddenSkillParamsStub
             {
@@ -699,7 +699,7 @@ namespace Raid.Toolkit.DataModel
                 EvenParams = type.EvenParams?.ToModel(),
                 ChangeStatParams = type.ChangeStatParams?.ToModel(),
                 ActivateSkillParams = type.ActivateSkillParams?.ToModel(),
-                ShowHiddenSkillParams = type.ShowHiddenSkillParams?.ToModel(),
+                ShowHiddenSkillParams = type.ShowSecretSkillParams?.ToModel(),
                 ChangeSkillCooldownParams = type.ChangeSkillCooldownParams?.ToModel(),
                 ChangeEffectLifetimeParams = type.ChangeEffectLifetimeParams?.ToModel(),
                 ShareDamageParams = type.ShareDamageParams?.ToModel(),
