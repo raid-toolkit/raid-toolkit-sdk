@@ -238,7 +238,7 @@ namespace Raid.Toolkit.DataModel
 
         public static ArtifactSetKind ToModel(this SharedModel.Meta.Artifacts.Sets.ArtifactSetInfo artifactSetInfo)
         {
-            List<SharedModel.Meta.Artifacts.Sets.ArtifactSetStatBonus> statBonuses = new();
+            List<SharedModel.Meta.General.StatBonus> statBonuses = new();
             if (artifactSetInfo.StatBonus != null) statBonuses.Add(artifactSetInfo.StatBonus);
             if (artifactSetInfo.StatBonuses != null) statBonuses.AddRange(artifactSetInfo.StatBonuses);
 
