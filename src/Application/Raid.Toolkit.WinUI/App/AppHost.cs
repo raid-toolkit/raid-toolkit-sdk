@@ -14,6 +14,7 @@ using Raid.Toolkit.Extensibility.Host;
 using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Services;
 using Raid.Toolkit.Extensibility.Shared;
+using Raid.Toolkit.Forms;
 using SuperSocket.WebSocket;
 using SuperSocket.WebSocket.Server;
 
@@ -73,37 +74,39 @@ namespace Raid.Toolkit.App
 
         private static IHostBuilder CreateHostBuilder()
         {
-            return WebSocketHostBuilder.Create()
-            .UseSessionFactory<SessionFactory>()
-            .UseWebSocketMessageHandler(HandleMessage)
-            .ConfigureAppConfiguration(config => config
-                .AddJsonStream(GetEmbeddedSettings())
-                .AddJsonFile(Path.Combine(ExecutableDirectory, "appsettings.json"), true)
-            )
-            .ConfigureServices((context, services) => services
-                // app dependencies
-                .Configure<AppSettings>(opts => context.Configuration.GetSection("app").Bind(opts))
-                .Configure<ProcessManagerSettings>(opts => context.Configuration.GetSection("app:ProcessManager").Bind(opts))
-                .Configure<DataUpdateSettings>(opts => context.Configuration.GetSection("app:DataSettings").Bind(opts))
-                .Configure<StorageSettings>(opts => context.Configuration.GetSection("app:StorageSettings").Bind(opts))
-                .AddLogging(builder =>
-                {
-                    if (Directory.Exists(RegistrySettings.InstallationPath) && EnableLogging)
+            return new HostBuilder()
+                //WebSocketHostBuilder.Create()
+                //.UseSessionFactory<SessionFactory>()
+                //.UseWebSocketMessageHandler(HandleMessage)
+                //.ConfigureAppConfiguration(config => config
+                //    .AddJsonStream(GetEmbeddedSettings())
+                //    .AddJsonFile(Path.Combine(ExecutableDirectory, "appsettings.json"), true)
+                //)
+                .ConfigureServices((context, services) => services
+                    // app dependencies
+                    .Configure<AppSettings>(opts => context.Configuration.GetSection("app").Bind(opts))
+                    .Configure<ProcessManagerSettings>(opts => context.Configuration.GetSection("app:ProcessManager").Bind(opts))
+                    .Configure<DataUpdateSettings>(opts => context.Configuration.GetSection("app:DataSettings").Bind(opts))
+                    .Configure<StorageSettings>(opts => context.Configuration.GetSection("app:StorageSettings").Bind(opts))
+                    .AddLogging(builder =>
                     {
-                        _ = builder.AddConfiguration(context.Configuration.GetSection("Logging"));
+                        if (Directory.Exists(RegistrySettings.InstallationPath) && EnableLogging)
+                        {
+                            _ = builder.AddConfiguration(context.Configuration.GetSection("Logging"));
 
-                        _ = Directory.CreateDirectory(Path.Combine(RegistrySettings.InstallationPath, "Logs"));
-                        _ = builder.AddFile(o => o.RootPath = RegistrySettings.InstallationPath);
-                    }
-                })
-                .AddSingleton<IAppUI, AppWinUI>()
-                .AddTypesAssignableTo<ICommandTask>(services => services.AddScoped)
-                .AddSingleton<ApplicationStartupTask>()
-                .AddSingleton<AppService>()
-                // shared dependencies
-                .AddExtensibilityServices<PackageManager>()
-                .AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)
-            );
+                            _ = Directory.CreateDirectory(Path.Combine(RegistrySettings.InstallationPath, "Logs"));
+                            _ = builder.AddFile(o => o.RootPath = RegistrySettings.InstallationPath);
+                        }
+                    })
+                    .AddSingleton<IAppUI, AppWinUI>()
+                    .AddTypesAssignableTo<ICommandTask>(services => services.AddScoped)
+                    .AddSingleton<ApplicationStartupTask>()
+                    .AddSingleton<AppService>()
+                    .AddHostedServiceSingleton<AppTray>()
+                    // shared dependencies
+                    .AddExtensibilityServices<PackageManager>()
+                    .AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)
+                );
         }
     }
 }

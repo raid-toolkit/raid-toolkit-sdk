@@ -16,13 +16,13 @@ namespace Raid.Toolkit.App.Tasks
             return ApplicationStartupCondition.None;
         }
 
-        public override int Invoke()
+        public override Task<int> Invoke()
         {
             foreach (var error in Errors)
             {
                 Console.WriteLine(error.ToString());
             }
-            return 1;
+            return Task.FromResult(1);
         }
     }
 }

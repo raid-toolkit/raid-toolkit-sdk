@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.App.Tasks.Base;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Model;
@@ -6,54 +7,91 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Raid.Toolkit.DependencyInjection
 {
-    public class AppWinUI : IAppUI
+    public class AppWinUI : IAppUI, IDisposable
     {
-        private MainWindow? m_mainWindow;
-        private RebuildWindow? m_rebuildWindow;
+        private MainWindow? MainWindow;
+        private RebuildWindow? RebuildWindow;
+        private readonly IHostApplicationLifetime ApplicationLifetime;
+        private bool IsDisposed;
+
+        public AppWinUI(IHostApplicationLifetime applicationLifetime)
+        {
+            ApplicationLifetime = applicationLifetime;
+        }
 
         public void ShowMainWindow()
         {
-            RTKApplication.UIContext?.Post(_ =>
+            RTKApplication.Current.UIContext?.Post(_ =>
             {
-                m_mainWindow = new();
-                m_mainWindow.Activate();
+                MainWindow = new();
+                MainWindow.Activate();
             }, null);
         }
 
         public void ShowInstallUI()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
 
         public bool? ShowExtensionInstaller(ExtensionBundle bundleToInstall)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+            return false;
         }
 
         public void ShowRebuildUI(PlariumPlayAdapter.GameInfo gameInfo)
         {
-            RTKApplication.UIContext?.Post(_ =>
+            RTKApplication.Current.UIContext?.Post(_ =>
             {
-                m_rebuildWindow = new(gameInfo);
-                m_rebuildWindow.Activate();
+                RebuildWindow = new(gameInfo);
+                RebuildWindow.Activate();
             }, null);
         }
 
         public void HideRebuildUI()
         {
-            RTKApplication.UIContext?.Post(_ =>
+            RTKApplication.Current.UIContext?.Post(_ =>
             {
-                m_rebuildWindow?.Close();
+                RebuildWindow?.Close();
+                RebuildWindow = null;
             }, null);
         }
 
         public void ShowUpdateNotification()
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!IsDisposed)
+            {
+                if (disposing)
+                {
+                    MainWindow?.Close();
+                    RebuildWindow?.Close();
+                }
+
+                MainWindow = null;
+                RebuildWindow = null;
+
+                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
+                // TODO: set large fields to null
+                IsDisposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
         }
     }
 }

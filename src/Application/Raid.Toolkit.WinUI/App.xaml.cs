@@ -11,6 +11,7 @@ using System;
 using Microsoft.UI.Dispatching;
 using Windows.UI;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -22,10 +23,19 @@ namespace Raid.Toolkit.WinUI
     /// </summary>
     public partial class RTKApplication : Microsoft.UI.Xaml.Application
     {
+        private readonly IHost host;
+        private readonly ApplicationStartupTask ApplicationStartupTask;
+        private readonly ApplicationStartupCondition StartCondition;
         public int ExitCode { get; private set; }
         private readonly string[] Arguments;
 
-        public static DispatcherQueueSynchronizationContext? UIContext;
+        public DispatcherQueueSynchronizationContext UIContext { get; }
+
+        public static new RTKApplication Current
+        {
+            get => (RTKApplication)Microsoft.UI.Xaml.Application.Current;
+        }
+        
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
@@ -33,9 +43,38 @@ namespace Raid.Toolkit.WinUI
         /// </summary>
         public RTKApplication(string[] arguments, DispatcherQueueSynchronizationContext context)
         {
-            Arguments = arguments;
             UIContext = context;
+
+            Arguments = arguments;
+            if (Arguments.Contains("--quiet") || Arguments.Contains("-q"))
+            {
+                Arguments = Arguments.Where(arg => arg is not ("--quiet" or "-q")).ToArray();
+                AppHost.EnableLogging = false;
+            }
+
+            host = AppHost.CreateHost();
+
+            ApplicationStartupTask = host.Services.GetRequiredService<ApplicationStartupTask>();
+            StartCondition = ApplicationStartupTask.Parse(Arguments);
+
             InitializeComponent();
+        }
+
+        public async Task<int> WaitForExit()
+        {
+            await host.Services.GetRequiredService<AppService>().WaitForStop().ConfigureAwait(false);
+            System.Windows.Forms.Application.Exit();
+            IHostApplicationLifetime lifetimeService = host.Services.GetRequiredService<IHostApplicationLifetime>();
+            if (StartCondition.HasFlag(ApplicationStartupCondition.Services))
+            {
+                try
+                {
+                    lifetimeService.StopApplication();
+                }
+                catch { }
+                await host.StopAsync();
+            }
+            return ExitCode;
         }
 
         private void Exit(int exitCode)
@@ -51,48 +90,27 @@ namespace Raid.Toolkit.WinUI
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs launchArgs)
         {
-            string[] args = Arguments;
-            if (args.Contains("--quiet") || args.Contains("-q"))
-            {
-                args = args.Where(arg => arg is not ("--quiet" or "-q")).ToArray();
-                AppHost.EnableLogging = false;
-            }
-
-            using IHost host = AppHost.CreateHost();
             ILogger logger = host.Services.GetRequiredService<ILogger<Bootstrap>>();
-            ApplicationStartupTask applicationStartupTask = host.Services.GetRequiredService<ApplicationStartupTask>();
-            ApplicationStartupCondition startCondition = applicationStartupTask.Parse(args);
 
-            if (startCondition.HasFlag(ApplicationStartupCondition.Usage))
+            if (StartCondition.HasFlag(ApplicationStartupCondition.Usage))
             {
                 Exit(255);
                 return;
             }
 
-            IntPtr asyncEventHandle = CreateEvent(IntPtr.Zero, true, false, null);
-            if (startCondition.HasFlag(ApplicationStartupCondition.Services))
+            if (StartCondition.HasFlag(ApplicationStartupCondition.Services))
             {
-                host.StartAsync();
-                //host.StartAsync().ContinueWith((_) =>
-                //{
-                //    SetEvent(asyncEventHandle);
-                //});
-                //uint CWMO_DEFAULT = 0;
-                //uint INFINITE = 0xFFFFFFFF;
-                //_ = CoWaitForMultipleObjects(
-                //   CWMO_DEFAULT, INFINITE, 1,
-                //   new IntPtr[] { asyncEventHandle }, out uint handleIndex);
+                Task.Run(() => host.StartAsync());
             }
             try
             {
-                int exitCode = applicationStartupTask.Execute();
-                Exit(exitCode);
+                ApplicationStartupTask.Execute();
             }
             catch (Exception e)
             {
                 string errorMessage = "A fatal error occurred";
                 logger.LogError(e, errorMessage);
-                if ((args.Contains("--debug") || args.Contains("-d")) && !args.Contains("--no-ui") && !args.Contains("-n"))
+                if ((Arguments.Contains("--debug") || Arguments.Contains("-d")) && !Arguments.Contains("--no-ui") && !Arguments.Contains("-n"))
                 {
                     errorMessage += $":\n\n{e.Message}\n{e.StackTrace}";
                 }
@@ -102,15 +120,6 @@ namespace Raid.Toolkit.WinUI
             }
             finally
             {
-                if (startCondition.HasFlag(ApplicationStartupCondition.Services))
-                {
-                    try
-                    {
-                        host.Services.GetService<IHostApplicationLifetime>()?.StopApplication();
-                    }
-                    catch { }
-                    host.StopAsync().Wait();
-                }
             }
         }
 

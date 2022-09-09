@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.Extensibility.Host.Services;
@@ -10,11 +12,18 @@ namespace Raid.Toolkit.App
     {
         private readonly IHostApplicationLifetime Lifetime;
         private readonly UpdateService UpdateService;
+        private readonly TaskCompletionSource StopSignal;
 
         public AppService(IHostApplicationLifetime lifetime, UpdateService updateService)
         {
             Lifetime = lifetime;
             UpdateService = updateService;
+            StopSignal = new();
+        }
+
+        public Task WaitForStop()
+        {
+            return StopSignal.Task;
         }
 
         public async void InstallUpdate(GitHub.Schema.Release release)
@@ -55,8 +64,7 @@ namespace Raid.Toolkit.App
 
         public void Exit()
         {
-            Application.Exit();
-            Lifetime.StopApplication();
+            StopSignal.SetResult();
         }
     }
 }

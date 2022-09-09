@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using CommandLine;
 using Microsoft.Extensions.DependencyInjection;
@@ -35,7 +36,7 @@ namespace Raid.Toolkit.App.Tasks
             AppUI = appUI;
         }
 
-        public override int Invoke()
+        public override Task<int> Invoke()
         {
             if (Options == null)
                 throw new NullReferenceException();
@@ -51,13 +52,13 @@ namespace Raid.Toolkit.App.Tasks
                 bool? result = AppUI.ShowExtensionInstaller(bundleToInstall);
                 if (result != true)
                 {
-                    return 10;
+                    return Task.FromResult(10);
                 }
             }
 
             ExtensionHostController.InstallPackage(bundleToInstall, activate: false);
 
-            return 0;
+            return Task.FromResult(0);
         }
 
         public override ApplicationStartupCondition Parse(InstallOptions options)
