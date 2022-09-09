@@ -55,16 +55,17 @@ namespace Raid.Toolkit.App.Tasks
         private readonly IServiceProvider ServiceProvider;
         private readonly IModelLoader Loader;
         private readonly IAppUI AppUI;
+        private readonly AppService AppService;
 
         private RunAction RunAction = RunAction.Unknown;
         private RunOptions? Options;
-
-        public RunTask(IServiceProvider serviceProvider, IModelLoader modelLoader, IAppUI appUI)
+        public RunTask(IServiceProvider serviceProvider, IModelLoader modelLoader, IAppUI appUI, AppService appService)
         {
             ServiceProvider = serviceProvider;
             Loader = modelLoader;
             Loader.OnStateUpdated += Resolver_OnStateUpdated;
             AppUI = appUI;
+            AppService = appService;
         }
 
         public override ApplicationStartupCondition Parse(RunOptions options)
@@ -114,7 +115,7 @@ namespace Raid.Toolkit.App.Tasks
             return ApplicationStartupCondition.Services;
         }
 
-        public override int Invoke()
+        public override async Task<int> Invoke()
         {
             if (Options == null)
                 return 255;
@@ -138,6 +139,7 @@ namespace Raid.Toolkit.App.Tasks
                     AppUI.ShowMainWindow();
                     if (Options.Update)
                         AppUI.ShowUpdateNotification();
+                    //await AppService.WaitForStop();
                     return 0;
                 case RunAction.Activate:
                     // TODO: Activate existing window, if desired?

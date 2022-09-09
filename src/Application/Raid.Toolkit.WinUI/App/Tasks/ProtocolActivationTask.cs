@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using CommandLine;
 using Raid.Toolkit.App.Tasks.Base;
 using Raid.Toolkit.Common;
@@ -24,7 +25,7 @@ namespace Raid.Toolkit.App.Tasks
         {
         }
 
-        public override int Invoke()
+        public override Task<int> Invoke()
         {
             if (Options == null)
                 throw new NullReferenceException();
@@ -45,12 +46,12 @@ namespace Raid.Toolkit.App.Tasks
                     RaidToolkitClientBase client = new();
                     client.Connect();
                     _ = client.MakeApi<ActivationApi>().Activate(new Uri(Options.Uri!));
-                    return 0;
+                    return Task.FromResult(0);
                 }
                 catch { }
             }
 
-            return 218;
+            return Task.FromResult(218);
         }
 
         public override ApplicationStartupCondition Parse(ProtocolActivationOptions options)

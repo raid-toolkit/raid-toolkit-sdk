@@ -42,7 +42,7 @@ namespace Raid.Toolkit.Extensibility.Host
             return ExtensionPackages.Values.ToList();
         }
 
-        public async Task LoadExtensions()
+        public Task LoadExtensions()
         {
             foreach (var pkg in PackageManager.GetAllPackages())
             {
@@ -62,7 +62,7 @@ namespace Raid.Toolkit.Extensibility.Host
             }
 
             var typePatterns = ExtensionPackages.Values.SelectMany(host => host.GetIncludeTypes());
-            _ = await Task.Run(() => ModelLoader.BuildAndLoad(typePatterns, false));
+            return Task.Run(() => ModelLoader.BuildAndLoad(typePatterns, false));
         }
 
         public void ActivateExtensions()

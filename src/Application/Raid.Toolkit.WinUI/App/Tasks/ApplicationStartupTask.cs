@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using CommandLine;
 using Raid.Toolkit.App.Tasks.Base;
 
@@ -55,10 +56,10 @@ namespace Raid.Toolkit.App.Tasks
             return ApplicationStartupCondition.Usage;
         }
 
-        public int Execute()
+        public Task<int> Execute()
         {
             if (SelectedTask == null)
-                return 255;
+                return Task.FromResult(255);
 
             return SelectedTask.Invoke();
         }
