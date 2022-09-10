@@ -12,6 +12,7 @@ using Microsoft.UI.Dispatching;
 using Windows.UI;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -23,8 +24,9 @@ namespace Raid.Toolkit.WinUI
     /// </summary>
     public partial class RTKApplication : Microsoft.UI.Xaml.Application
     {
+        private static RTKApplication? _Current = null;
         private readonly IHost host;
-        private readonly ApplicationStartupTask ApplicationStartupTask;
+        private readonly CommandTaskManager ApplicationStartupTask;
         private readonly ApplicationStartupCondition StartCondition;
         public int ExitCode { get; private set; }
         private readonly string[] Arguments;
@@ -33,7 +35,7 @@ namespace Raid.Toolkit.WinUI
 
         public static new RTKApplication Current
         {
-            get => (RTKApplication)Microsoft.UI.Xaml.Application.Current;
+            get => _Current ?? throw new Exception("");
         }
         
 
@@ -43,6 +45,7 @@ namespace Raid.Toolkit.WinUI
         /// </summary>
         public RTKApplication(string[] arguments, DispatcherQueueSynchronizationContext context)
         {
+            _Current = this;
             UIContext = context;
 
             Arguments = arguments;
@@ -54,13 +57,18 @@ namespace Raid.Toolkit.WinUI
 
             host = AppHost.CreateHost();
 
-            ApplicationStartupTask = host.Services.GetRequiredService<ApplicationStartupTask>();
+            ApplicationStartupTask = host.Services.GetRequiredService<CommandTaskManager>();
             StartCondition = ApplicationStartupTask.Parse(Arguments);
 
             InitializeComponent();
         }
 
-        public async Task<int> WaitForExit()
+        public async Task WaitForExit()
+        {
+            await host.Services.GetRequiredService<AppService>().WaitForStop().ConfigureAwait(false);
+        }
+
+        public async Task<int> UserShutdown()
         {
             await host.Services.GetRequiredService<AppService>().WaitForStop().ConfigureAwait(false);
             System.Windows.Forms.Application.Exit();
@@ -100,7 +108,16 @@ namespace Raid.Toolkit.WinUI
 
             if (StartCondition.HasFlag(ApplicationStartupCondition.Services))
             {
-                Task.Run(() => host.StartAsync());
+                SplashScreen splash = new();
+                splash.Show();
+                Task.Run(async () =>
+                {
+                    await host.StartAsync();
+                    //UIContext.Post(_ =>
+                    //{
+                    //    splash.Close();
+                    //}, null);
+                });
             }
             try
             {
@@ -122,18 +139,5 @@ namespace Raid.Toolkit.WinUI
             {
             }
         }
-
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
-        private static extern IntPtr CreateEvent(
-            IntPtr lpEventAttributes, bool bManualReset,
-            bool bInitialState, string lpName);
-
-        [DllImport("kernel32.dll")]
-        private static extern bool SetEvent(IntPtr hEvent);
-
-        [DllImport("ole32.dll")]
-        private static extern uint CoWaitForMultipleObjects(
-            uint dwFlags, uint dwMilliseconds, ulong nHandles,
-            IntPtr[] pHandles, out uint dwIndex);
     }
 }

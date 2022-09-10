@@ -23,8 +23,11 @@ namespace Raid.Toolkit.Forms
             AppUI = appUI;
         }
 
-        private void NotifyIcon_Click(object? sender, EventArgs e)
+        private void NotifyIcon_MouseClick(object? sender, MouseEventArgs e)
         {
+            if (e.Button != MouseButtons.Left)
+                return;
+
             AppUI.ShowMainWindow();
         }
 
@@ -39,12 +42,20 @@ namespace Raid.Toolkit.Forms
             {
                 if (disposing)
                 {
-                    NotifyIcon?.Dispose();
-                    ContextMenu?.Dispose();
+                    RTKApplication.Current.UIContext.Post(signal =>
+                    {
+                        if (NotifyIcon != null)
+                        {
+                            NotifyIcon?.Dispose();
+                            NotifyIcon = null;
+                        }
+                        if (ContextMenu!= null)
+                        {
+                            ContextMenu?.Dispose();
+                            ContextMenu = null;
+                        }
+                    }, null);
                 }
-
-                NotifyIcon = null;
-                ContextMenu = null;
 
                 IsDisposed = true;
             }
@@ -73,6 +84,7 @@ namespace Raid.Toolkit.Forms
                     Visible = false,
                     ContextMenuStrip = ContextMenu
                 };
+                NotifyIcon.MouseClick += NotifyIcon_MouseClick;
                 NotifyIcon.Visible = true;
                 tcs.SetResult();
             }, startedSignal);
@@ -81,7 +93,6 @@ namespace Raid.Toolkit.Forms
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            NotifyIcon.Visible = false;
             return Task.CompletedTask;
         }
     }

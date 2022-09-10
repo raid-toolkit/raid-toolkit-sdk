@@ -136,7 +136,6 @@ namespace Raid.Toolkit.App.Tasks
                         AppHost.EnsureFileAssociations();
                     }
                     ServiceProvider.GetRequiredService<IExtensionHostController>().ShowExtensionUI();
-                    AppUI.ShowMainWindow();
                     if (Options.Update)
                         AppUI.ShowUpdateNotification();
                     //await AppService.WaitForStop();
