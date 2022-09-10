@@ -24,18 +24,11 @@ namespace Raid.Toolkit.WinUI
         public MainWindow() : base()
         {
             InitializeComponent();
-            AppWindow.Closing += AppWindow_Closing;
-        }
-
-        private void AppWindow_Closing(Microsoft.UI.Windowing.AppWindow sender, Microsoft.UI.Windowing.AppWindowClosingEventArgs args)
-        {
-            _ = this.Hide();
-            args.Cancel = true;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _ = this.Hide();
+            Close();
         }
     }
 }

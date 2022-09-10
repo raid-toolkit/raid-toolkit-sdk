@@ -4,15 +4,16 @@ using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public abstract class IdleBackgroundService : BackgroundService
+    public abstract class IdleBackgroundService : IHostedService
     {
-        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+        public Task StartAsync(CancellationToken cancellationToken)
         {
-            try
-            {
-                await Task.Delay(-1, stoppingToken);
-            }
-            catch { }
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
         }
     }
 }

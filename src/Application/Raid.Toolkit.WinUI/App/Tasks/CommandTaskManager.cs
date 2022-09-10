@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 using CommandLine;
 using Raid.Toolkit.App.Tasks.Base;
 
@@ -14,12 +15,27 @@ namespace Raid.Toolkit.App.Tasks
         Usage = (1 << 0),
         Services = (1 << 1)
     }
-    internal class ApplicationStartupTask
+    internal static class ParserResultExtensions
+    {
+        public static object? GetValue<T>(this ParserResult<T> result)
+        {
+            if (result is NotParsed<object> notParsed)
+            {
+                return notParsed.Errors;
+            }
+            if (result is Parsed<object> parsed)
+            {
+                return parsed.Value;
+            }
+            return null;
+        }
+    }
+    internal class CommandTaskManager
     {
         private readonly List<ICommandTask> Tasks;
         private ICommandTask? SelectedTask;
 
-        public ApplicationStartupTask(IEnumerable<ICommandTask> tasks)
+        public CommandTaskManager(IEnumerable<ICommandTask> tasks)
         {
             Tasks = new(tasks);
         }
@@ -31,26 +47,16 @@ namespace Raid.Toolkit.App.Tasks
                 settings.IgnoreUnknownArguments = false;
             });
             ParserResult<object> result = parser.ParseArguments(args, Tasks.Select(task => task.OptionsType).ToArray());
-            object? valueType = null;
-            if (result is NotParsed<object> notParsed)
-            {
-                valueType = notParsed.Errors;
-            }
-            if (result is Parsed<object> parsed)
-            {
-                valueType = parsed.Value;
-            }
+
+            object? valueType = result.GetValue();
 
             if (valueType == null)
                 return ApplicationStartupCondition.Usage;
 
-            foreach (var task in Tasks)
+            SelectedTask = Tasks.FirstOrDefault(task => valueType.GetType().IsAssignableTo(task.OptionsType));
+            if (SelectedTask != null)
             {
-                if (valueType.GetType().IsAssignableTo(task.OptionsType))
-                {
-                    SelectedTask = task;
-                    return task.Parse(valueType);
-                }
+                return SelectedTask.Parse(valueType);
             }
 
             return ApplicationStartupCondition.Usage;

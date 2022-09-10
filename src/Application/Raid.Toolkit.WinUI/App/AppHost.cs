@@ -100,7 +100,7 @@ namespace Raid.Toolkit.App
                     })
                     .AddSingleton<IAppUI, AppWinUI>()
                     .AddTypesAssignableTo<ICommandTask>(services => services.AddScoped)
-                    .AddSingleton<ApplicationStartupTask>()
+                    .AddSingleton<CommandTaskManager>()
                     .AddSingleton<AppService>()
                     .AddHostedServiceSingleton<AppTray>()
                     // shared dependencies

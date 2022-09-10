@@ -21,6 +21,5 @@ namespace Raid.Toolkit.App.Tasks.Base
         {
             return Parse((T)options);
         }
-
     }
 }

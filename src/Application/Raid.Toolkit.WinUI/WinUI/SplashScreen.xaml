@@ -1,0 +1,49 @@
+﻿<rtkuibase:RTKWindow
+    x:Class="Raid.Toolkit.WinUI.SplashScreen"
+	xmlns:winex="using:WinUIEx"
+	xmlns:rtkuibase="using:Raid.Toolkit.WinUI.Base"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Raid.Toolkit.WinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+	<winex:WindowEx.Backdrop>
+		<winex:MicaSystemBackdrop  />
+	</winex:WindowEx.Backdrop>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="300" />
+			<RowDefinition Height="100" />
+			<RowDefinition Height="150*" />
+		</Grid.RowDefinitions>
+		<Image Grid.Row="0" Source="/Assets/Square150x150Logo.scale-200.png" VerticalAlignment="Center" HorizontalAlignment="Center" />
+		<Image Grid.Row="1" Source="/Assets/RaidToolkitLarge.png" VerticalAlignment="Center" HorizontalAlignment="Center" />
+		<Grid Grid.Row="2" Margin="15,10,15,0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="40*" />
+				<RowDefinition Height="20" />
+				<RowDefinition Height="20" />
+			</Grid.RowDefinitions>
+			<TextBlock Grid.Row="0" Foreground="Gray" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+				Raid Toolkit detected a new game version and needs to rebuild the game model before it can run.
+			</TextBlock>
+			<TextBlock TextAlignment="Center" Grid.Row="1">
+				Processing
+			</TextBlock>
+			<ProgressBar Grid.Row="2" x:Name="Progress" Minimum="0" Maximum="100" Value="20" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+		</Grid>
+		<Grid Margin="10,0,10,0">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="150*" />
+				<ColumnDefinition Width="150*" />
+			</Grid.ColumnDefinitions>
+			<TextBlock Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Purple" FontFamily="Consolas" IsTextSelectionEnabled="True">
+				RSL: <Run x:Name="VersionRaid" />
+			</TextBlock>
+			<TextBlock Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Foreground="Purple" FontFamily="Consolas" IsTextSelectionEnabled="True">
+				RTK: <Run x:Name="VersionRTK" />
+			</TextBlock>
+		</Grid> 
+	</Grid>
+</rtkuibase:RTKWindow>

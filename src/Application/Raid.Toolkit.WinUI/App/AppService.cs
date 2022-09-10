@@ -64,7 +64,7 @@ namespace Raid.Toolkit.App
 
         public void Exit()
         {
-            StopSignal.SetResult();
+            StopSignal.TrySetResult();
         }
     }
 }
