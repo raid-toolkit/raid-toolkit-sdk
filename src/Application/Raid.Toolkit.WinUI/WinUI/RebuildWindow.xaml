@@ -1,0 +1,27 @@
+﻿<rtkuibase:RTKWindow
+    x:Class="Raid.Toolkit.WinUI.RebuildWindow"
+	xmlns:rtkuibase="using:Raid.Toolkit.WinUI.Base"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Raid.Toolkit.WinUI"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+	Title="Raid Toolkit"
+	StartPosition="CenterScreen"
+	Width="400"
+	Height="150">
+
+    <Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="64" />
+			<RowDefinition Height="64*" />
+		</Grid.RowDefinitions>
+		<TextBlock Grid.Row="0">
+			Raid Toolkit detected a new game version 
+			<Run x:Name="GameVersion" /> 
+			and needs to rebuild the game model before it can run.
+		</TextBlock>
+		<ProgressBar Grid.Row="1" x:Name="Progress" Minimum="0" Maximum="100" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+	</Grid>
+</rtkuibase:RTKWindow>
