@@ -81,11 +81,10 @@ namespace Raid.Toolkit.Forms
                 {
                     Text = "Raid Toolkit",
                     Icon = FormsResources.AppIcon,
-                    Visible = false,
+                    Visible = true,
                     ContextMenuStrip = ContextMenu
                 };
                 NotifyIcon.MouseClick += NotifyIcon_MouseClick;
-                NotifyIcon.Visible = true;
                 tcs.SetResult();
             }, startedSignal);
             return startedSignal.Task;

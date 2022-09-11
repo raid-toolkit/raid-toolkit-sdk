@@ -32,42 +32,33 @@ namespace Raid.Toolkit.App.Tasks
     }
     internal class CommandTaskManager
     {
-        private readonly List<ICommandTask> Tasks;
+        private readonly List<ICommandTaskMatcher> TaskMatchers;
+        private ICommandTaskMatcher? SelectedTaskMatcher;
         private ICommandTask? SelectedTask;
 
-        public CommandTaskManager(IEnumerable<ICommandTask> tasks)
+        public CommandTaskManager(IEnumerable<ICommandTaskMatcher> tasks)
         {
-            Tasks = new(tasks);
+            TaskMatchers = new(tasks);
         }
 
-        public ApplicationStartupCondition Parse(string[] args)
+        public ICommandTask? Parse(string[] args)
         {
-            var parser = new Parser(settings =>
+            Parser parser = new(settings =>
             {
-                settings.IgnoreUnknownArguments = false;
+                settings.IgnoreUnknownArguments = true;
             });
-            ParserResult<object> result = parser.ParseArguments(args, Tasks.Select(task => task.OptionsType).ToArray());
+            ParserResult<object> result = parser.ParseArguments(args, TaskMatchers.Select(task => task.OptionsType).ToArray());
 
             object? valueType = result.GetValue();
 
             if (valueType == null)
-                return ApplicationStartupCondition.Usage;
+                return null;
 
-            SelectedTask = Tasks.FirstOrDefault(task => valueType.GetType().IsAssignableTo(task.OptionsType));
-            if (SelectedTask != null)
-            {
-                return SelectedTask.Parse(valueType);
-            }
+            SelectedTaskMatcher = TaskMatchers.FirstOrDefault(task => valueType.GetType().IsAssignableTo(task.OptionsType));
+            if (SelectedTaskMatcher == null)
+                return null;
 
-            return ApplicationStartupCondition.Usage;
-        }
-
-        public Task<int> Execute()
-        {
-            if (SelectedTask == null)
-                return Task.FromResult(255);
-
-            return SelectedTask.Invoke();
+            return SelectedTaskMatcher.Parse(valueType);
         }
     }
 }
