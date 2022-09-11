@@ -25,11 +25,7 @@ namespace Raid.Toolkit.WinUI
     public partial class RTKApplication : Microsoft.UI.Xaml.Application
     {
         private static RTKApplication? _Current = null;
-        private readonly IHost host;
-        private readonly CommandTaskManager ApplicationStartupTask;
-        private readonly ApplicationStartupCondition StartCondition;
-        public int ExitCode { get; private set; }
-        private readonly string[] Arguments;
+        private readonly IHost Host;
 
         public DispatcherQueueSynchronizationContext UIContext { get; }
 
@@ -37,58 +33,37 @@ namespace Raid.Toolkit.WinUI
         {
             get => _Current ?? throw new Exception("");
         }
-        
+
 
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
         /// </summary>
-        public RTKApplication(string[] arguments, DispatcherQueueSynchronizationContext context)
+        public RTKApplication(DispatcherQueueSynchronizationContext context, IHost host)
         {
             _Current = this;
             UIContext = context;
-
-            Arguments = arguments;
-            if (Arguments.Contains("--quiet") || Arguments.Contains("-q"))
-            {
-                Arguments = Arguments.Where(arg => arg is not ("--quiet" or "-q")).ToArray();
-                AppHost.EnableLogging = false;
-            }
-
-            host = AppHost.CreateHost();
-
-            ApplicationStartupTask = host.Services.GetRequiredService<CommandTaskManager>();
-            StartCondition = ApplicationStartupTask.Parse(Arguments);
-
+            Host = host;
             InitializeComponent();
         }
 
         public async Task WaitForExit()
         {
-            await host.Services.GetRequiredService<AppService>().WaitForStop().ConfigureAwait(false);
+            await Host.Services.GetRequiredService<AppService>().WaitForStop().ConfigureAwait(false);
         }
 
         public async Task<int> UserShutdown()
         {
-            await host.Services.GetRequiredService<AppService>().WaitForStop().ConfigureAwait(false);
+            await Host.Services.GetRequiredService<AppService>().WaitForStop().ConfigureAwait(false);
             System.Windows.Forms.Application.Exit();
-            IHostApplicationLifetime lifetimeService = host.Services.GetRequiredService<IHostApplicationLifetime>();
-            if (StartCondition.HasFlag(ApplicationStartupCondition.Services))
+            IHostApplicationLifetime lifetimeService = Host.Services.GetRequiredService<IHostApplicationLifetime>();
+            try
             {
-                try
-                {
-                    lifetimeService.StopApplication();
-                }
-                catch { }
-                await host.StopAsync();
+                lifetimeService.StopApplication();
             }
-            return ExitCode;
-        }
-
-        private void Exit(int exitCode)
-        {
-            ExitCode = exitCode;
-            Exit();
+            catch { }
+            await Host.StopAsync();
+            return 0;
         }
 
         /// <summary>
@@ -98,46 +73,8 @@ namespace Raid.Toolkit.WinUI
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs launchArgs)
         {
-            ILogger logger = host.Services.GetRequiredService<ILogger<Bootstrap>>();
+            ILogger logger = Host.Services.GetRequiredService<ILogger<Bootstrap>>();
 
-            if (StartCondition.HasFlag(ApplicationStartupCondition.Usage))
-            {
-                Exit(255);
-                return;
-            }
-
-            if (StartCondition.HasFlag(ApplicationStartupCondition.Services))
-            {
-                SplashScreen splash = new();
-                splash.Show();
-                Task.Run(async () =>
-                {
-                    await host.StartAsync();
-                    //UIContext.Post(_ =>
-                    //{
-                    //    splash.Close();
-                    //}, null);
-                });
-            }
-            try
-            {
-                ApplicationStartupTask.Execute();
-            }
-            catch (Exception e)
-            {
-                string errorMessage = "A fatal error occurred";
-                logger.LogError(e, errorMessage);
-                if ((Arguments.Contains("--debug") || Arguments.Contains("-d")) && !Arguments.Contains("--no-ui") && !Arguments.Contains("-n"))
-                {
-                    errorMessage += $":\n\n{e.Message}\n{e.StackTrace}";
-                }
-                _ = MessageBox.Show(new Form(), errorMessage, "Raid Toolkit", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                Exit(1);
-                return;
-            }
-            finally
-            {
-            }
         }
     }
 }
