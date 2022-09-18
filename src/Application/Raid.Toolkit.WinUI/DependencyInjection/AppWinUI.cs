@@ -72,7 +72,12 @@ namespace Raid.Toolkit.DependencyInjection
 
         public void ShowSettings()
         {
-            throw new NotImplementedException();
+            RTKApplication.Post(() =>
+            {
+                SettingsWindow settingsWindow = ActivatorUtilities.CreateInstance<SettingsWindow>(ServiceProvider);
+                settingsWindow.Activate();
+                _ = settingsWindow.BringToFront();
+            });
         }
 
         public void ShowErrors()
