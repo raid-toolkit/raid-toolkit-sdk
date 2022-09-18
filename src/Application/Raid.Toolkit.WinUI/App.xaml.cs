@@ -1,19 +1,14 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.UI.Xaml;
-using Microsoft.Windows.ApplicationModel.DynamicDependency;
-using Raid.Toolkit.App.Tasks;
-using Raid.Toolkit.App;
-using System.Windows.Forms;
-using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using Microsoft.UI.Dispatching;
-using Windows.UI;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
-using WinUIEx;
+using Microsoft.Windows.ApplicationModel.DynamicDependency;
+
+using Raid.Toolkit.App;
+
+using System;
 using System.Threading;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -67,7 +62,6 @@ namespace Raid.Toolkit.WinUI
 
         public async Task<int> UserShutdown()
         {
-            await Host.Services.GetRequiredService<AppService>().WaitForStop().ConfigureAwait(false);
             System.Windows.Forms.Application.Exit();
             IHostApplicationLifetime lifetimeService = Host.Services.GetRequiredService<IHostApplicationLifetime>();
             try
@@ -86,8 +80,7 @@ namespace Raid.Toolkit.WinUI
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs launchArgs)
         {
-            ILogger logger = Host.Services.GetRequiredService<ILogger<Bootstrap>>();
-
+            //ILogger logger = Host.Services.GetRequiredService<ILogger<Bootstrap>>();
         }
     }
 }

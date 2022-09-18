@@ -30,7 +30,7 @@
         <Content Include="$(BinDir)v5.0\Raid.Interop.dll"
             copyToOutput="true">
             <Pack>true</Pack>
-            <PackagePath>lib\net5.0-windows7.0</PackagePath>
+            <PackagePath>lib\net6.0-windows</PackagePath>
         </Content>
     </ItemGroup>
 
