@@ -1,13 +1,11 @@
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media.Animation;
-
-using Raid.Toolkit.WinUI.Base;
-
 using System;
 using System.Diagnostics;
-
+using System.Windows.Forms;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media.Animation;
+using Raid.Toolkit.Extensibility;
+using Raid.Toolkit.WinUI.Base;
 using WinUIEx;
-
 using static UnityEngine.UI.Slider;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -21,9 +19,15 @@ namespace Raid.Toolkit.WinUI
     public sealed partial class SplashScreen : RTKWindow
     {
         private readonly IModelLoader Loader;
-        public SplashScreen(IModelLoader modelLoader)
+        private readonly IMenuManager MenuManager;
+
+        public SplashScreen(
+            IModelLoader loader,
+            IMenuManager menuManager
+            )
         {
-            Loader = modelLoader;
+            Loader = loader;
+            MenuManager = menuManager;
             Loader.OnStateUpdated += Loader_OnStateUpdated;
             InitializeComponent();
 
