@@ -13,6 +13,7 @@ using Windows.UI;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using WinUIEx;
+using System.Threading;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -32,6 +33,18 @@ namespace Raid.Toolkit.WinUI
         public static new RTKApplication Current
         {
             get => _Current ?? throw new Exception("");
+        }
+
+        public static void Post(Action action)
+        {
+            if (SynchronizationContext.Current == Current.UIContext)
+            {
+                action();
+            }
+            else
+            {
+                Current.UIContext?.Post(_ => action(), null);
+            }
         }
 
 

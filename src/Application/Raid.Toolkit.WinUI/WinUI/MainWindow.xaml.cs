@@ -21,7 +21,7 @@ namespace Raid.Toolkit.WinUI
         public string VersionString => ThisAssembly.AssemblyFileVersion;
 #pragma warning restore CS0436 // Type conflicts with imported type
 
-        public MainWindow() : base()
+        public MainWindow(IModelLoader modelLoader) : base()
         {
             InitializeComponent();
         }

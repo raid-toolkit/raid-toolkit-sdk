@@ -10,11 +10,9 @@ namespace Raid.Toolkit.App.Tasks.Base
 {
     public interface IAppUI
     {
-        void HideRebuildUI();
         bool? ShowExtensionInstaller(ExtensionBundle bundleToInstall);
         void ShowInstallUI();
-        void ShowMainWindow();
-        void ShowRebuildUI(PlariumPlayAdapter.GameInfo gameInfo);
+        void ShowMain();
         void ShowUpdateNotification();
     }
 }
