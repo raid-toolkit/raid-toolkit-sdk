@@ -18,7 +18,6 @@
 	<ItemGroup>
 	  <None Remove="appsettings.json" />
 	  <None Remove="WinUI\InstallExtensionWindow.xaml" />
-	  <None Remove="WinUI\RebuildWindow.xaml" />
 	  <None Remove="WinUI\SplashScreen.xaml" />
 	</ItemGroup>
 
@@ -81,14 +80,14 @@
 		<ProjectCapability Include="Msix" />
 	</ItemGroup>
 	<ItemGroup>
-		<Compile Update="WinUI\FormsResources.Designer.cs">
+		<Compile Update="Forms\FormsResources.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>FormsResources.resx</DependentUpon>
 		</Compile>
 	</ItemGroup>
 	<ItemGroup>
-		<EmbeddedResource Update="WinUI\FormsResources.resx">
+		<EmbeddedResource Update="Forms\FormsResources.resx">
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>FormsResources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
@@ -100,11 +99,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="WinUI\SplashScreen.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
-	</ItemGroup>
-	<ItemGroup>
-	  <Page Update="WinUI\RebuildWindow.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	</ItemGroup>
