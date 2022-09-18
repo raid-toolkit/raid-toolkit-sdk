@@ -1,8 +1,8 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.App.Tasks.Base;
 using Raid.Toolkit.Extensibility;
+using Raid.Toolkit.Forms;
 using Raid.Toolkit.WinUI;
 
 namespace Raid.Toolkit.DependencyInjection
@@ -10,13 +10,11 @@ namespace Raid.Toolkit.DependencyInjection
     public class AppWinUI : IAppUI, IDisposable
     {
         private SplashScreen? SplashScreen;
-        private readonly IHostApplicationLifetime ApplicationLifetime;
         private readonly IServiceProvider ServiceProvider;
         private bool IsDisposed;
 
-        public AppWinUI(IHostApplicationLifetime applicationLifetime, IServiceProvider serviceProvider)
+        public AppWinUI(IServiceProvider serviceProvider)
         {
-            ApplicationLifetime = applicationLifetime;
             ServiceProvider = serviceProvider;
         }
 
@@ -41,9 +39,13 @@ namespace Raid.Toolkit.DependencyInjection
             return false;
         }
 
-        public void ShowUpdateNotification()
+        public void ShowNotification(string title, string description, System.Windows.Forms.ToolTipIcon icon, int timeoutMs, Action? onActivate = null)
         {
-            //throw new NotImplementedException();
+            RTKApplication.Post(() =>
+            {
+                AppTray tray = ServiceProvider.GetRequiredService<AppTray>();
+                tray.ShowNotification(title, description, icon, timeoutMs, onActivate);
+            });
         }
 
         protected virtual void Dispose(bool disposing)
@@ -66,6 +68,21 @@ namespace Raid.Toolkit.DependencyInjection
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
+        }
+
+        public void ShowSettings()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowErrors()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void ShowExtensionManager()
+        {
+            throw new NotImplementedException();
         }
     }
 }
