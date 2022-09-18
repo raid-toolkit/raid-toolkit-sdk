@@ -28,7 +28,7 @@ namespace Raid.Toolkit.Forms
             if (e.Button != MouseButtons.Left)
                 return;
 
-            AppUI.ShowMainWindow();
+            AppUI.ShowMain();
         }
 
         private void Exit()

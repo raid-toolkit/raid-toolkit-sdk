@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.App.Tasks.Base;
 using Raid.Toolkit.Extensibility;
@@ -15,23 +16,26 @@ namespace Raid.Toolkit.DependencyInjection
 {
     public class AppWinUI : IAppUI, IDisposable
     {
-        private MainWindow? MainWindow;
+        private SplashScreen? SplashScreen;
         private RebuildWindow? RebuildWindow;
         private readonly IHostApplicationLifetime ApplicationLifetime;
+        private readonly IServiceProvider ServiceProvider;
         private bool IsDisposed;
 
-        public AppWinUI(IHostApplicationLifetime applicationLifetime)
+        public AppWinUI(IHostApplicationLifetime applicationLifetime, IServiceProvider serviceProvider)
         {
             ApplicationLifetime = applicationLifetime;
+            ServiceProvider = serviceProvider;
         }
 
-        public void ShowMainWindow()
+        public void ShowMain()
         {
-            RTKApplication.Current.UIContext?.Post(_ =>
+            RTKApplication.Post(() =>
             {
-                MainWindow = new();
-                MainWindow.Activate();
-            }, null);
+                SplashScreen ??= ActivatorUtilities.CreateInstance<SplashScreen>(ServiceProvider);
+                SplashScreen.Activate();
+                SplashScreen.BringToFront();
+            });
         }
 
         public void ShowInstallUI()
@@ -45,24 +49,6 @@ namespace Raid.Toolkit.DependencyInjection
             return false;
         }
 
-        public void ShowRebuildUI(PlariumPlayAdapter.GameInfo gameInfo)
-        {
-            RTKApplication.Current.UIContext?.Post(_ =>
-            {
-                RebuildWindow = new(gameInfo);
-                RebuildWindow.Activate();
-            }, null);
-        }
-
-        public void HideRebuildUI()
-        {
-            RTKApplication.Current.UIContext?.Post(_ =>
-            {
-                RebuildWindow?.Close();
-                RebuildWindow = null;
-            }, null);
-        }
-
         public void ShowUpdateNotification()
         {
             //throw new NotImplementedException();
@@ -74,15 +60,13 @@ namespace Raid.Toolkit.DependencyInjection
             {
                 if (disposing)
                 {
-                    MainWindow?.Close();
+                    SplashScreen?.Close();
                     RebuildWindow?.Close();
                 }
 
-                MainWindow = null;
+                SplashScreen = null;
                 RebuildWindow = null;
 
-                // TODO: free unmanaged resources (unmanaged objects) and override finalizer
-                // TODO: set large fields to null
                 IsDisposed = true;
             }
         }

@@ -84,10 +84,10 @@ namespace Raid.Toolkit.Model
                 Version asmVersion = Version.Parse(ThisAssembly.AssemblyVersion);
                 CurrentInteropVersion = new(asmVersion.Major, asmVersion.Minor, 0, Math.Abs(hashCode % 999));
 
-                OnStateUpdated?.Raise(this, new(IModelLoader.LoadState.Initialize));
-
                 PlariumPlayAdapter.GameInfo gameInfo = GetGameInfo();
                 GameVersion = gameInfo.Version;
+
+                OnStateUpdated?.Raise(this, new(IModelLoader.LoadState.Initialize));
 
                 string outDir = OutputDirectory ?? Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
                 string dllPath = Path.Combine(outDir, gameInfo.Version, OutputFilename);
@@ -173,8 +173,19 @@ namespace Raid.Toolkit.Model
                 ArtifactSpecs.AssemblyVersion.MakeValue(CurrentInteropVersion),
                 ArtifactSpecs.OutputPath.MakeValue(dllPath)
             );
+            compiler.ProgressUpdated += Compiler_ProgressUpdated;
 
             compiler.Compile().Wait();
+        }
+
+        private void Compiler_ProgressUpdated(object sender, ProgressUpdatedEventArgs e)
+        {
+            OnStateUpdated.Raise(this, new IModelLoader.ModelLoaderEventArgs(IModelLoader.LoadState.Rebuild, new IModelLoader.TaskProgress()
+            {
+                DisplayName = e.DisplayName,
+                Completed = e.Completed,
+                Total = e.Total
+            }));
         }
     }
 }

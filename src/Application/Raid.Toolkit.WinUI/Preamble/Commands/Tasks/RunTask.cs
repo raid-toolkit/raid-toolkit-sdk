@@ -4,10 +4,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 
-using Google.Protobuf.WellKnownTypes;
-
-using Il2CppToolkit.Model;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Dispatching;
@@ -19,11 +15,6 @@ using Raid.Toolkit.App.Tasks.Base;
 using Raid.Toolkit.DependencyInjection;
 using Raid.Toolkit.Preamble.Tasks.Matchers;
 using Raid.Toolkit.WinUI;
-
-using Windows.UI;
-using WinUIEx;
-
-using SplashScreen = Raid.Toolkit.WinUI.SplashScreen;
 
 namespace Raid.Toolkit.Preamble.Commands.Tasks
 {
@@ -38,13 +29,14 @@ namespace Raid.Toolkit.Preamble.Commands.Tasks
             Options = options;
         }
 
-        public async Task<int> Invoke()
+        public Task<int> Invoke()
         {
             WinRT.ComWrappersSupport.InitializeComWrappers();
             if (DecideRedirection())
-                return 0;
+                return Task.FromResult(0);
 
             RTKApplication? app = null;
+            int exitCode = 255;
 
             try
             {
@@ -60,30 +52,26 @@ namespace Raid.Toolkit.Preamble.Commands.Tasks
 
                 AppHost.Start(Host);
 
-                Application.Start((p) =>
+                Application.Start(async (p) =>
                 {
-                    DispatcherQueueSynchronizationContext context = new(DispatcherQueue.GetForCurrentThread());
-                    SynchronizationContext.SetSynchronizationContext(context);
-                    app = new(context, Host);
-
-                    // show splash screen to trigger app boot flow. it's dismissal
-                    // will cause Start() to return flow to its calling method
-                    SplashScreen splash = new();
-                    splash.Show();
-                    Task.Run(async () =>
+                    try
                     {
-                        await Host.StartAsync();
-                        context.Post(_ =>
-                        {
-                            splash.Close();
-                        }, null);
-                    });
+                        DispatcherQueueSynchronizationContext context = new(DispatcherQueue.GetForCurrentThread());
+                        SynchronizationContext.SetSynchronizationContext(context);
+                        app = new(context, Host);
+
+                        IAppUI appUI = Host.Services.GetRequiredService<IAppUI>();
+                        appUI.ShowMain();
+                        await Task.Run(() => Host.StartAsync());
+
+                        await app.WaitForExit();
+                        exitCode = await app.UserShutdown();
+                    }
+                    finally
+                    {
+                        Application.Current.Exit();
+                    }
                 });
-
-                if (app == null)
-                    throw new ApplicationException("Expected app to be set");
-
-                await app.WaitForExit();
             }
             finally
             {
@@ -91,10 +79,7 @@ namespace Raid.Toolkit.Preamble.Commands.Tasks
                     Instance.UnregisterKey();
             }
 
-            // TODO: Move UserShutdown out of RTKApplication
-            int exitCode = await app.UserShutdown();
-            Application.Current.Exit();
-            return exitCode;
+            return Task.FromResult(exitCode);
         }
 
         private void ConfigureHost(IHost host)

@@ -17,14 +17,23 @@ namespace Raid.Toolkit
             Error,
         }
 
+        public class TaskProgress
+        {
+            public string DisplayName { get; set; }
+            public int Completed { get; set; }
+            public int Total { get; set; }
+        }
+
         public class ModelLoaderEventArgs : EventArgs
         {
+            public TaskProgress Progress { get; set; }
             public LoadState LoadState { get; set; }
-            public ModelLoaderEventArgs(LoadState state) => LoadState = state;
+            public ModelLoaderEventArgs(LoadState state, TaskProgress progress = null) => (LoadState, Progress) = (state, progress);
         }
 
         public string OutputDirectory { get; set; }
 
+        public string GameVersion { get; }
         public event EventHandler<ModelLoaderEventArgs> OnStateUpdated;
 
         public Task<Assembly> BuildAndLoad(IEnumerable<Regex> regices, bool force = false);

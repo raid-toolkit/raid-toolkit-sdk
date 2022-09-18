@@ -62,7 +62,7 @@ namespace Raid.Toolkit.Extensibility.Host
             }
 
             var typePatterns = ExtensionPackages.Values.SelectMany(host => host.GetIncludeTypes());
-            return Task.Run(() => ModelLoader.BuildAndLoad(typePatterns, false));
+            return Task.Run(() => ModelLoader.BuildAndLoad(typePatterns, true));
         }
 
         public void ActivateExtensions()
