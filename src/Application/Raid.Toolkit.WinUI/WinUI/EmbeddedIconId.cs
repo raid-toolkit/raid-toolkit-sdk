@@ -1,10 +1,9 @@
-using Microsoft.UI;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
+
+using Microsoft.UI;
+
+using Raid.Toolkit.App;
 
 namespace Raid.Toolkit.WinUI
 {
@@ -19,7 +18,7 @@ namespace Raid.Toolkit.WinUI
         public EmbeddedIconId(long iconIndex)
         {
             var index = (IntPtr)iconIndex; // 0 = first icon in resources
-            _iconHandle = ExtractAssociatedIcon(IntPtr.Zero, Environment.ProcessPath, ref index);
+            _iconHandle = ExtractAssociatedIcon(IntPtr.Zero, AppHost.ExecutablePath, ref index);
             if (_iconHandle != IntPtr.Zero)
             {
                 _iconId = Win32Interop.GetIconIdFromIcon(_iconHandle);
