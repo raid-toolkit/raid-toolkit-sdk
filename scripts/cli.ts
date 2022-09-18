@@ -40,7 +40,7 @@ async function publishBuild(_args: any, opts: Partial<BuildOptions>, _logger: an
   );
   await build(
     buildOptions({
-      targetFramework: 'net5.0-windows',
+      targetFramework: 'net6.0-windows',
       targets: ['Pack', 'Publish'],
     })
   );

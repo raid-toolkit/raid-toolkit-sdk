@@ -4,7 +4,7 @@
         <LangVersion>10.0</LangVersion>
         <AssemblyName>Raid.Toolkit.Extension.Realtime</AssemblyName>
         <RootNamespace>Raid.Toolkit.Extension.Realtime</RootNamespace>
-        <RaidToolkitSdkTasksPath>..\bin\$(Platform)\$(Configuration)\net5.0-windows\</RaidToolkitSdkTasksPath>
+        <RaidToolkitSdkTasksPath>..\bin\$(Platform)\$(Configuration)\net6.0-windows\</RaidToolkitSdkTasksPath>
         <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
         <PackageRTKExtension>false</PackageRTKExtension>
         <RTKInteropCache>false</RTKInteropCache>

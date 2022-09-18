@@ -10,7 +10,7 @@ export enum Platform {
 }
 
 export interface BuildOptions {
-  targetFramework?: 'net5.0' | 'net5.0-windows';
+  targetFramework?: 'net6.0' | 'net6.0-windows';
   project: string;
   flavor: Flavor;
   platform: Platform;

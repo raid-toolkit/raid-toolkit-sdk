@@ -1,23 +1,15 @@
+using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.App.Tasks.Base;
 using Raid.Toolkit.Extensibility;
-using Raid.Toolkit.Model;
 using Raid.Toolkit.WinUI;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Raid.Toolkit.DependencyInjection
 {
     public class AppWinUI : IAppUI, IDisposable
     {
         private SplashScreen? SplashScreen;
-        private RebuildWindow? RebuildWindow;
         private readonly IHostApplicationLifetime ApplicationLifetime;
         private readonly IServiceProvider ServiceProvider;
         private bool IsDisposed;
@@ -34,7 +26,7 @@ namespace Raid.Toolkit.DependencyInjection
             {
                 SplashScreen ??= ActivatorUtilities.CreateInstance<SplashScreen>(ServiceProvider);
                 SplashScreen.Activate();
-                SplashScreen.BringToFront();
+                _ = SplashScreen.BringToFront();
             });
         }
 
@@ -61,11 +53,9 @@ namespace Raid.Toolkit.DependencyInjection
                 if (disposing)
                 {
                     SplashScreen?.Close();
-                    RebuildWindow?.Close();
                 }
 
                 SplashScreen = null;
-                RebuildWindow = null;
 
                 IsDisposed = true;
             }
