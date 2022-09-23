@@ -6,7 +6,10 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.Application.Core.DependencyInjection;
 using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.Extensibility.DataServices;
+using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host;
+using Raid.Toolkit.Extensibility.Host.Services;
 
 using SuperSocket.WebSocket;
 using SuperSocket.WebSocket.Server;
@@ -59,6 +62,10 @@ namespace Raid.Toolkit.Application.Core.Host
             return (IAppHostBuilder)ConfigureServices((context, services) => services
                 .AddSingleton<AppService>()
                 .AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)
+                .Configure<AppSettings>(opts => context.Configuration.GetSection("app").Bind(opts))
+                .Configure<ProcessManagerSettings>(opts => context.Configuration.GetSection("app:ProcessManager").Bind(opts))
+                .Configure<DataUpdateSettings>(opts => context.Configuration.GetSection("app:DataSettings").Bind(opts))
+                .Configure<StorageSettings>(opts => context.Configuration.GetSection("app:StorageSettings").Bind(opts))
                 );
         }
 

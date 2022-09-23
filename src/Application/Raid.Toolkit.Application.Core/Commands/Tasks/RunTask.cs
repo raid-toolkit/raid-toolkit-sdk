@@ -23,7 +23,8 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
 
         public async Task<int> Invoke()
         {
-            AppHostBuilder.AddWebSockets(AppHost.HandleMessage)
+            AppHostBuilder
+                .AddWebSockets(AppHost.HandleMessage)
                 .AddExtensibility()
                 .AddLogging()
                 .AddUI()
@@ -34,11 +35,12 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
 
             AppHost.Start(host);
 
-            await ProgramHost.Start(host, async (synchronizationContext) =>
+            // must allow AppUI to initialize any process hooks before
+            // the synchronization context is requested
+
+            await ProgramHost.Start(host, () =>
             {
-                IAppUI appUI = host.Services.GetRequiredService<IAppUI>();
-                appUI.ShowMain();
-                await Task.Run(() => host.StartAsync());
+                _ = Task.Run(() => host.StartAsync());
             });
 
             return 0;

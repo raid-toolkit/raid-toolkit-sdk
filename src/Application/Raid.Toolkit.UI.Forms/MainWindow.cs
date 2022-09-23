@@ -59,13 +59,6 @@ namespace Raid.Toolkit.UI.Forms
 
             // must trigger load here
             UpdateService.UpdateAvailable += OnUpdateAvailable;
-#pragma warning disable 0436
-            // conflicts with Raid.Toolkit.Extension.Host because of InternalsVisibleTo, 
-            // since it correctly chooses the locally defined asm version, just suppressing this.
-            appTrayIcon.Text = $"Raid Toolkit v{ThisAssembly.AssemblyFileVersion}";
-#pragma warning restore 0436
-            appTrayIcon.Icon = Properties.Resources.AppIcon;
-            appTrayIcon.Visible = true;
 
             // subscribe to error events
             ErrorService.OnErrorAdded += OnErrorAdded;
@@ -108,7 +101,7 @@ namespace Raid.Toolkit.UI.Forms
             if (string.IsNullOrEmpty(e.ErrorMessage))
                 return;
 
-            ShowBalloonTip(kDefaultBalloonTipTimeout, messageTitle, string.IsNullOrEmpty(messageText) ? e.ErrorMessage : messageText, ToolTipIcon.Error, onClickCallback);
+            //ShowBalloonTip(kDefaultBalloonTipTimeout, messageTitle, string.IsNullOrEmpty(messageText) ? e.ErrorMessage : messageText, ToolTipIcon.Error, onClickCallback);
         }
 
         [DllImport("user32.dll")]
@@ -148,19 +141,19 @@ namespace Raid.Toolkit.UI.Forms
             });
         }
 
-        private void ShowBalloonTip(int timeout, string tipTitle, string tipText, ToolTipIcon tipIcon, Action? onClickCallback)
-        {
-            OnClickCallback = onClickCallback;
-            Action showTip = () => appTrayIcon.ShowBalloonTip(timeout, tipTitle, tipText, tipIcon);
-            if (InvokeRequired)
-            {
-                Invoke(showTip);
-            }
-            else
-            {
-                showTip();
-            }
-        }
+        //private void ShowBalloonTip(int timeout, string tipTitle, string tipText, ToolTipIcon tipIcon, Action? onClickCallback)
+        //{
+        //    OnClickCallback = onClickCallback;
+        //    Action showTip = () => appTrayIcon.ShowBalloonTip(timeout, tipTitle, tipText, tipIcon);
+        //    if (InvokeRequired)
+        //    {
+        //        Invoke(showTip);
+        //    }
+        //    else
+        //    {
+        //        showTip();
+        //    }
+        //}
 
         public bool RequestPermissions(string origin)
         {
@@ -206,13 +199,13 @@ namespace Raid.Toolkit.UI.Forms
                     return; // already notified for this update
 
                 LatestRelease = e.Release;
-                ShowBalloonTip(
-                    kDefaultBalloonTipTimeout,
-                    "Update available",
-                    $"A new version has been released!\n{e.Release.TagName} is now available for install. Click here to install and update!",
-                    ToolTipIcon.Info,
-                    InstallUpdate);
-                installUpdateMenuItem.Visible = true;
+                //ShowBalloonTip(
+                //    kDefaultBalloonTipTimeout,
+                //    "Update available",
+                //    $"A new version has been released!\n{e.Release.TagName} is now available for install. Click here to install and update!",
+                //    ToolTipIcon.Info,
+                //    InstallUpdate);
+                //installUpdateMenuItem.Visible = true;
             });
         }
 
@@ -249,12 +242,12 @@ namespace Raid.Toolkit.UI.Forms
             bool hasUpdate = await UpdateService.CheckForUpdates(force: true);
             if (!hasUpdate)
             {
-                ShowBalloonTip(
-                    kDefaultBalloonTipTimeout,
-                    "No updates",
-                    $"You are already running the latest version!",
-                    ToolTipIcon.None,
-                    null);
+                //ShowBalloonTip(
+                //    kDefaultBalloonTipTimeout,
+                //    "No updates",
+                //    $"You are already running the latest version!",
+                //    ToolTipIcon.None,
+                //    null);
             }
         }
 
@@ -264,16 +257,16 @@ namespace Raid.Toolkit.UI.Forms
             ShowInTaskbar = false;
             if (RunOptions.Update)
             {
-                ShowBalloonTip(
-                    kDefaultBalloonTipTimeout,
-                    "Updated successfully!",
-#pragma warning disable 0436
-                    // conflicts with Raid.Toolkit.Extension.Host because of InternalsVisibleTo, 
-                    // since it correctly chooses the locally defined asm version, just suppressing this.
-                    $"Raid Toolkit has been updated to v{ThisAssembly.AssemblyFileVersion}!",
-#pragma warning restore 0436
-                    ToolTipIcon.Info,
-                    null);
+//                ShowBalloonTip(
+//                    kDefaultBalloonTipTimeout,
+//                    "Updated successfully!",
+//#pragma warning disable 0436
+//                    // conflicts with Raid.Toolkit.Extension.Host because of InternalsVisibleTo, 
+//                    // since it correctly chooses the locally defined asm version, just suppressing this.
+//                    $"Raid Toolkit has been updated to v{ThisAssembly.AssemblyFileVersion}!",
+//#pragma warning restore 0436
+//                    ToolTipIcon.Info,
+//                    null);
             }
         }
 
@@ -298,15 +291,15 @@ namespace Raid.Toolkit.UI.Forms
 
         private void appTrayMenu_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            extensionsToolStripMenuItem.DropDownItems.Clear();
-            extensionsToolStripMenuItem.DropDownItems.AddRange(MenuManager.GetEntries().Select(entry =>
-                new ToolStripMenuItem(entry.DisplayName, entry.Image, (sender, e) => entry.OnActivate())
-            ).ToArray());
-            extensionsToolStripMenuItem.DropDownItems.Add(
-                "&Manage Extensions...",
-                Properties.Resources.Settings_16x,
-                manageExtensionsToolStripMenuItem_Click);
-            extensionsToolStripMenuItem.Enabled = extensionsToolStripMenuItem.DropDownItems.Count > 0;
+            //extensionsToolStripMenuItem.DropDownItems.Clear();
+            //extensionsToolStripMenuItem.DropDownItems.AddRange(MenuManager.GetEntries().Select(entry =>
+            //    new ToolStripMenuItem(entry.DisplayName, entry.Image, (sender, e) => entry.OnActivate())
+            //).ToArray());
+            //extensionsToolStripMenuItem.DropDownItems.Add(
+            //    "&Manage Extensions...",
+            //    Properties.Resources.Settings_16x,
+            //    manageExtensionsToolStripMenuItem_Click);
+            //extensionsToolStripMenuItem.Enabled = extensionsToolStripMenuItem.DropDownItems.Count > 0;
         }
 
         private void manageExtensionsToolStripMenuItem_Click(object? sender, EventArgs e)

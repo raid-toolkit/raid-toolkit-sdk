@@ -13,39 +13,67 @@ namespace Raid.Toolkit.UI.Forms
         //private SplashScreen? SplashScreen;
         private readonly IServiceProvider ServiceProvider;
         private bool IsDisposed;
-        private SynchronizationContext? UIContext;
 
         private AppTray? AppTray;
-        private MainWindow? MainWindow;
+
+        private readonly List<Form> DisposableForms = new();
+        private void TrackForm(Form form)
+        {
+            form.Disposed += (_, _) => DisposableForms.Remove(form);
+            form.FormClosed += (_, _) => form.Dispose();
+        }
+        private void DisposeForms()
+        {
+            Form[] forms = DisposableForms.ToArray();
+            foreach (Form form in forms)
+                form.Dispose();
+        }
+        private void ShowAndTrack<T>(params object[] args) where T : Form
+        {
+            Dispatch(() =>
+            {
+                T form = ActivatorUtilities.CreateInstance<T>(ServiceProvider, args);
+                TrackForm(form);
+                form.Show();
+            });
+        }
+
+        private static readonly SynchronizationContext FormsSynchronizationContext;
+        public SynchronizationContext? SynchronizationContext => FormsSynchronizationContext;
+
+        static AppForms()
+        {
+            FormsApplication.SetHighDpiMode(HighDpiMode.SystemAware);
+            FormsApplication.EnableVisualStyles();
+            FormsApplication.SetCompatibleTextRenderingDefault(false);
+            FormsSynchronizationContext = new WindowsFormsSynchronizationContext();
+        }
 
         public AppForms(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
-            FormsApplication.SetHighDpiMode(HighDpiMode.SystemAware);
-            FormsApplication.EnableVisualStyles();
-            FormsApplication.SetCompatibleTextRenderingDefault(false);
         }
 
-        public void SetSynchronizationContext(SynchronizationContext context)
+        public void Run()
         {
-            UIContext = context;
+            FormsApplication.Run();
         }
 
         #region Dispatch
         public void Dispatch(Action action)
         {
-            if (SynchronizationContext.Current == UIContext)
+            if (SynchronizationContext.Current == SynchronizationContext)
                 action();
             else
-                UIContext?.Post(_ => action(), null);
+                SynchronizationContext?.Post(_ => action(), null);
         }
 
         public void Dispatch<TState>(Action<TState> action, TState state)
         {
-            if (SynchronizationContext.Current == UIContext)
+            if (SynchronizationContext.Current == SynchronizationContext)
                 action(state);
             else
-                UIContext?.Post(state => action((TState)state!), state);
+                SynchronizationContext?.Post(state => action((TState)state!), state);
         }
 
         public Task Post(Action action)
@@ -105,48 +133,54 @@ namespace Raid.Toolkit.UI.Forms
 
         public void ShowMain()
         {
-            Post(() =>
-            {
-                MainWindow = ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider);
-                MainWindow.Show();
-            });
+            //Post(() =>
+            //{
+            //    MainWindow = ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider);
+            //    MainWindow.Show();
+            //});
         }
 
         public void ShowInstallUI()
         {
-            //throw new NotImplementedException();
+            ShowAndTrack<InstallWindow>();
         }
 
         public bool? ShowExtensionInstaller(ExtensionBundle bundleToInstall)
         {
-            throw new NotImplementedException();
+            InstallExtensionDialog form = ActivatorUtilities.CreateInstance<InstallExtensionDialog>(ServiceProvider, bundleToInstall);
+            TrackForm(form);
+            DialogResult result = form.ShowDialog();
+            return result == DialogResult.Yes;
         }
 
         public void ShowNotification(string title, string description, System.Windows.Forms.ToolTipIcon icon, int timeoutMs, Action? onActivate = null)
         {
-            throw new NotImplementedException();
+            Dispatch(() =>
+            {
+                AppTray?.ShowNotification(title, description, icon, timeoutMs, onActivate);
+            });
         }
 
         public void ShowSettings()
         {
-            throw new NotImplementedException();
+            ShowAndTrack<SettingsWindow>();
         }
 
         public void ShowErrors()
         {
-            throw new NotImplementedException();
+            ShowAndTrack<ErrorsWindow>();
         }
 
         public void ShowExtensionManager()
         {
-            throw new NotImplementedException();
+            ShowAndTrack<ExtensionsWindow>();
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
             return Post(() =>
             {
-                AppTray = new(ServiceProvider);
+                AppTray = ActivatorUtilities.CreateInstance<AppTray>(ServiceProvider);
             });
         }
 
@@ -161,7 +195,11 @@ namespace Raid.Toolkit.UI.Forms
             {
                 if (disposing)
                 {
-                    AppTray?.Dispose();
+                    Post(() =>
+                    {
+                        AppTray?.Dispose();
+                        DisposeForms();
+                    });
                 }
 
                 AppTray = null;
@@ -176,6 +214,5 @@ namespace Raid.Toolkit.UI.Forms
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
-
     }
 }
