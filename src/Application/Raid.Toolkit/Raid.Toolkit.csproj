@@ -11,7 +11,7 @@
         <SelfContained>false</SelfContained>
         <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
         <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
-        <ApplicationIcon>Resources\AppIcon.ico</ApplicationIcon>
+        <ApplicationIcon>..\Assets\AppIcon.ico</ApplicationIcon>
         <Platforms>x64</Platforms>
         <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
         <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
@@ -19,19 +19,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="CommandLineParser"
-            Version="2.9.0-preview1" />
-        <PackageReference Include="Karambolo.Extensions.Logging.File"
-            Version="3.2.1" />
-        <PackageReference Include="Microsoft.Extensions.Hosting"
-            Version="6.0.1" />
-        <PackageReference Include="Newtonsoft.Json"
-            Version="13.0.1" />
-        <PackageReference Include="SuperSocket.WebSocket.Server"
-            Version="2.0.0-beta.10" />
-        <PackageReference Include="Il2CppToolkit.Injection.Client"
-            Version="2.0.112-alpha"
-            GeneratePathProperty="true" />
+        <PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
+        <PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.2.1" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="SuperSocket.WebSocket.Server" Version="2.0.0-beta.10" />
+        <PackageReference Include="Il2CppToolkit.Injection.Client" Version="2.0.112-alpha" GeneratePathProperty="true" />
         <Reference Include="Raid.Interop">
             <HintPath>$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
             <Private>False</Private>
@@ -51,24 +44,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Update="Properties\Resources.Designer.cs">
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Resources.resx</DependentUpon>
-        </Compile>
-    </ItemGroup>
-
-    <ItemGroup>
-        <EmbeddedResource Update="Properties\Resources.resx">
-            <Generator>ResXFileCodeGenerator</Generator>
-            <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-        </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="$(SourceDir)Extensions\Account\Account.csproj" />
         <ProjectReference Include="$(SourceDir)Extensions\Realtime\Realtime.csproj" />
         <ProjectReference Include="$(SourceDir)Shared\Extensibility\Extensibility.csproj" />
         <ProjectReference Include="$(SourceDir)Shared\Extensibility.Host\Extensibility.Host.csproj" />
+        <ProjectReference Include="..\Raid.Toolkit.Application.Core\Raid.Toolkit.Application.Core.csproj" />
+        <ProjectReference Include="..\Raid.Toolkit.UI.Forms\Raid.Toolkit.UI.Forms.csproj" />
     </ItemGroup>
 </Project>

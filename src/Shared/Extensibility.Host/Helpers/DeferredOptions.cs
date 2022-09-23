@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Microsoft.Extensions.Options
 {
 #nullable enable
-    class DeferredOptions<TOptions> : IOptionsMonitor<TOptions>
+    public class DeferredOptions<TOptions> : IOptionsMonitor<TOptions>
     {
         protected static object _Lock = new();
         private readonly Dictionary<string, TOptions> Values = new();

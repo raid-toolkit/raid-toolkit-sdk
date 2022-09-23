@@ -135,13 +135,15 @@ namespace Raid.Toolkit.Forms
                 if (signal is not TaskCompletionSource tcs) throw new InvalidOperationException();
 
                 appTrayMenu = ActivatorUtilities.CreateInstance<AppTrayMenu>(ServiceProvider);
+#pragma warning disable CS0436 // Type conflicts with imported type
                 NotifyIcon = new()
                 {
-                    Text = "Raid Toolkit",
+                    Text = $"Raid Toolkit {ThisAssembly.AssemblyFileVersion}",
                     Icon = FormsResources.AppIcon,
                     Visible = true,
                     ContextMenuStrip = appTrayMenu
                 };
+#pragma warning restore CS0436 // Type conflicts with imported type
                 NotifyIcon.MouseClick += NotifyIcon_MouseClick;
                 NotifyIcon.BalloonTipClosed += OnBaloonTipClosed;
                 NotifyIcon.BalloonTipClicked += OnBaloonTipClicked;

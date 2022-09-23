@@ -1,17 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using CommandLine.Text;
 using CommandLine;
 
-using Raid.Toolkit.App.Tasks.Base;
-using Raid.Toolkit.Preamble.Commands.Tasks;
-using Raid.Toolkit.App.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Raid.Toolkit.Preamble.Tasks.Matchers
+using Raid.Toolkit.Application.Core.Commands.Tasks;
+using Raid.Toolkit.Application.Core.Tasks.Base;
+
+namespace Raid.Toolkit.Application.Core.Tasks.Matchers
 {
     [Verb("run", isDefault: true, HelpText = "Runs the service")]
     public class RunOptions : CommonOptions
@@ -43,9 +37,11 @@ namespace Raid.Toolkit.Preamble.Tasks.Matchers
 
     internal class DefaultMatcher : CommandTaskMatcher<RunOptions>
     {
+        public DefaultMatcher(IServiceProvider serviceProvider) : base(serviceProvider)
+        { }
         public override ICommandTask? Parse(RunOptions options)
         {
-            return new RunTask(options);
+            return ActivatorUtilities.CreateInstance<RunTask>(ServiceProvider, options);
         }
     }
 }

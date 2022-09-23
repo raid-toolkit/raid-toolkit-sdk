@@ -10,13 +10,14 @@
 		<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
 		<PublishProfile>win10-$(Platform).pubxml</PublishProfile>
 		<UseWinUI>true</UseWinUI>
-		<EnableMsixTooling>true</EnableMsixTooling>
 		<ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
-		<WindowsPackageType>None</WindowsPackageType>
 		<Nullable>enable</Nullable>
+		<PackageType>None</PackageType>
+		<WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
 	</PropertyGroup>
 	<ItemGroup>
 	  <None Remove="appsettings.json" />
+	  <None Remove="Resources\Square150x150Logo.scale-200.png" />
 	  <None Remove="WinUI\InstallExtensionWindow.xaml" />
 	  <None Remove="WinUI\SplashScreen.xaml" />
 	</ItemGroup>
@@ -24,11 +25,16 @@
 	<ItemGroup>
 		<Content Include="Assets\SplashScreen.scale-200.png" />
 		<Content Include="Assets\LockScreenLogo.scale-200.png" />
-		<Content Include="Assets\Square150x150Logo.scale-200.png" />
+		<Content Include="Assets\Square150x150Logo.scale-200.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 		<Content Include="Assets\Square44x44Logo.scale-200.png" />
 		<Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
 		<Content Include="Assets\StoreLogo.png" />
 		<Content Include="Assets\Wide310x150Logo.scale-200.png" />
+		<Content Include="Resources\Square150x150Logo.scale-200.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -37,7 +43,7 @@
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.4" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.4" GeneratePathProperty="true" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
 		<PackageReference Include="WinUIEx" Version="1.8.0" />
 		<Manifest Include="$(ApplicationManifest)" />
@@ -59,9 +65,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Content Include="$(PkgIl2CppToolkit_Injection_Client)\runtimes\win7-x64\native\Il2CppToolkit.Injection.Host.dll">
+		<Content Include="$(PkgIl2CppToolkit_Injection_Client)\runtimes\win10-x64\native\Il2CppToolkit.Injection.Host.dll">
 			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
+		<!--<Content Include="$(PkgMicrosoft_WindowsAppSdk)\runtimes\win10-x64\native\Microsoft.WindowsAppRuntime.Bootstrap.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>-->
 	</ItemGroup>
 
 	<ItemGroup>
@@ -85,6 +94,11 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>FormsResources.resx</DependentUpon>
 		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Update="Assets\RaidToolkitLarge.png">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 	<ItemGroup>
 		<EmbeddedResource Update="Forms\FormsResources.resx">

@@ -5,7 +5,7 @@
     },
     "Raid.Toolkit.WinUI (Unpackaged)": {
       "commandName": "Project",
-      "commandLineArgs": "--debug --standalone --quiet",
+      "commandLineArgs": "--debug --quiet",
       "nativeDebugging": true
     }
   }
