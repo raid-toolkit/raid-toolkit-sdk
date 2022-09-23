@@ -25,10 +25,14 @@ namespace Raid.Toolkit.UI.Forms
             RegistrySettings.RunOnStartup = runOnStartCheckBox.Checked;
             RegistrySettings.ClickToStart = clickToStartCheckBox.Checked;
             RegistrySettings.InstallPrereleases = prereleaseBuildsCheckBox.Checked;
+            DialogResult = saveButton.DialogResult;
+            Close();
         }
 
         private void cancelButton_Click(object sender, EventArgs e)
         {
+            DialogResult = cancelButton.DialogResult;
+            Close();
         }
     }
 }

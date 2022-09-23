@@ -25,7 +25,7 @@ namespace Raid.Toolkit
             CommonOptions.Parse(args);
             AppHost.EnableLogging = CommonOptions.Value?.DisableLogging ?? true;
 
-            Entrypoint<AppForms, ProgramHost> entry = new();
+            Entrypoint<AppForms, FormsProgramHost> entry = new();
             CommandTaskManager commandManager = entry.CreateInstance<CommandTaskManager>();
             ICommandTask? task = commandManager.Parse(args);
             if (task == null)

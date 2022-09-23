@@ -35,12 +35,11 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
             
             AppHost.Start(host);
 
-            ProgramHost.Start(host, (synchronizationContext) =>
+            ProgramHost.Start(host, () =>
             {
                 IAppUI appUI = host.Services.GetRequiredService<IAppUI>();
                 // TODO: Provide options
                 appUI.ShowInstallUI();
-                return Task.CompletedTask;
             });
 
             return Task.FromResult(0);
