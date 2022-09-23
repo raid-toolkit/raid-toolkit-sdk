@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using CommandLine.Text;
 using CommandLine;
 
-namespace Raid.Toolkit.App.Tasks
+namespace Raid.Toolkit.Application.Core.Tasks
 {
     public class CommonOptions
     {

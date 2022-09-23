@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 using CommandLine.Text;
 using CommandLine;
-using Raid.Toolkit.App.Tasks.Base;
-using Raid.Toolkit.Preamble.Commands.Tasks;
-using Raid.Toolkit.App.Tasks;
+using Raid.Toolkit.Application.Core.Tasks;
+using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.Application.Core.Commands.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Raid.Toolkit.Preamble.Commands.Matchers
+namespace Raid.Toolkit.Application.Core.Commands.Matchers
 {
     [Verb("install", HelpText = "Installs an extension")]
     public class InstallOptions : CommonOptions
@@ -22,11 +23,14 @@ namespace Raid.Toolkit.Preamble.Commands.Matchers
         public bool Accept { get; set; }
 
     }
+
     internal class InstallMatcher : CommandTaskMatcher<InstallOptions>
     {
+        public InstallMatcher(IServiceProvider serviceProvider) : base(serviceProvider)
+        { }
         public override ICommandTask? Parse(InstallOptions options)
         {
-            return new InstallTask(options);
+            return ActivatorUtilities.CreateInstance<InstallTask>(ServiceProvider, options);
         }
     }
 }

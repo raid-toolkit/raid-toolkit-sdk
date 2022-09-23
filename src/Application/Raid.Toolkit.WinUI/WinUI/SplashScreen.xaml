@@ -12,8 +12,8 @@
             <RowDefinition Height="100" />
             <RowDefinition Height="150*" />
         </Grid.RowDefinitions>
-        <Image Grid.Row="0" Source="/Assets/Square150x150Logo.scale-200.png" VerticalAlignment="Center" HorizontalAlignment="Center" />
-        <Image Grid.Row="1" Source="/Assets/RaidToolkitLarge.png" VerticalAlignment="Center" HorizontalAlignment="Center" />
+		<Image Grid.Row="0" Source="/Resources/Square150x150Logo.scale-200.png" VerticalAlignment="Center" HorizontalAlignment="Center" />
+		<Image Grid.Row="1" Source="/Resources/RaidToolkitLarge.png" VerticalAlignment="Center" HorizontalAlignment="Center" />
         <StackPanel x:Name="LinksGrid" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="22" Visibility="Collapsed" Grid.Row="2">
             <Button Content="Website" HorizontalAlignment="Center" Click="Website_Click" />
             <Button Content="Discord" HorizontalAlignment="Center" Click="Discord_Click" />
@@ -40,7 +40,7 @@
             </Grid.ColumnDefinitions>
             <Viewbox Grid.Column="0" Height="18" HorizontalAlignment="Left">
                 <Grid>
-                    <Rectangle Fill="{ThemeResource ButtonBackgroundThemeBrush}" Translation="0,0,10">
+                    <Rectangle Fill="Black" Opacity="0.5"  Translation="0,0,10">
                         <Rectangle.Shadow>
                             <ThemeShadow />
                         </Rectangle.Shadow>
@@ -55,7 +55,7 @@
             </Viewbox>
             <Viewbox Grid.Column="1" Height="18" HorizontalAlignment="Right">
                 <Grid>
-                    <Rectangle Fill="{ThemeResource ButtonBackgroundThemeBrush}" Translation="0,0,10">
+					<Rectangle Fill="Black" Opacity="0.5" Translation="0,0,10">
                         <Rectangle.Shadow>
                             <ThemeShadow />
                         </Rectangle.Shadow>
