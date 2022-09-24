@@ -1,15 +1,14 @@
+using Microsoft.Extensions.DependencyInjection;
+using Raid.Toolkit.Application.Core.Commands.Tasks;
+using Raid.Toolkit.Application.Core.Commands.Base;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 using CommandLine.Text;
 using CommandLine;
-using Raid.Toolkit.Application.Core.Tasks;
-using Raid.Toolkit.Application.Core.Tasks.Base;
-using Raid.Toolkit.Application.Core.Commands.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Raid.Toolkit.Application.Core.Commands.Matchers
 {
@@ -28,9 +27,9 @@ namespace Raid.Toolkit.Application.Core.Commands.Matchers
     {
         public InstallMatcher(IServiceProvider serviceProvider) : base(serviceProvider)
         { }
-        public override ICommandTask? Parse(InstallOptions options)
+        public override ICommandTask? Match(InstallOptions options)
         {
-            return ActivatorUtilities.CreateInstance<InstallTask>(ServiceProvider, options);
+            return ActivatorUtilities.CreateInstance<InstallExtensionTask>(ServiceProvider, options);
         }
     }
 }

@@ -2,18 +2,19 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.Application.Core.Commands.Matchers;
 using Raid.Toolkit.Application.Core.Host;
-using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.Application.Core.Commands.Base;
+using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host;
 
 namespace Raid.Toolkit.Application.Core.Commands.Tasks
 {
-    internal class InstallTask : ICommandTask
+    internal class InstallExtensionTask : ICommandTask
     {
         private readonly IProgramHost ProgramHost;
         private readonly IAppHostBuilder AppHostBuilder;
         private readonly InstallOptions Options;
 
-        public InstallTask(IProgramHost program, IAppHostBuilder appHostBuilder, InstallOptions options)
+        public InstallExtensionTask(IProgramHost program, IAppHostBuilder appHostBuilder, InstallOptions options)
         {
             ProgramHost = program;
             AppHostBuilder = appHostBuilder;
@@ -38,8 +39,12 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
             ProgramHost.Start(host, () =>
             {
                 IAppUI appUI = host.Services.GetRequiredService<IAppUI>();
-                // TODO: Provide options
-                appUI.ShowInstallUI();
+                ExtensionBundle bundle = ExtensionBundle.FromDirectory(Options.PackagePath);
+                bool? result = appUI.ShowExtensionInstaller(bundle);
+                if (result == true)
+                {
+                    host.Services.GetRequiredService<IPackageManager>().AddPackage(bundle);
+                }
             });
 
             return Task.FromResult(0);

@@ -1,7 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
-using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.Application.Core.Commands.Base;
+using Raid.Toolkit.Application.Core.Commands.Matchers;
 using Raid.Toolkit.Extensibility;
 
 using FormsApplication = System.Windows.Forms.Application;
@@ -49,7 +51,7 @@ namespace Raid.Toolkit.UI.Forms
             FormsSynchronizationContext = new WindowsFormsSynchronizationContext();
         }
 
-        public AppForms(IServiceProvider serviceProvider)
+        public AppForms(IServiceProvider serviceProvider, IOptions<RunOptions> options)
         {
             ServiceProvider = serviceProvider;
         }

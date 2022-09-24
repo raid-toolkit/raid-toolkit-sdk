@@ -1,4 +1,4 @@
-namespace Raid.Toolkit.Application.Core.Tasks.Base
+namespace Raid.Toolkit.Application.Core.Commands.Base
 {
     public interface ICommandTask
     {
@@ -8,7 +8,7 @@ namespace Raid.Toolkit.Application.Core.Tasks.Base
     public interface ICommandTaskMatcher
     {
         Type OptionsType { get; }
-        ICommandTask? Parse(object options);
+        ICommandTask? Match(object options);
     }
 
     public abstract class CommandTaskMatcher<T> : ICommandTaskMatcher
@@ -22,11 +22,11 @@ namespace Raid.Toolkit.Application.Core.Tasks.Base
 
         public Type OptionsType => typeof(T);
 
-        public abstract ICommandTask? Parse(T options);
+        public abstract ICommandTask? Match(T options);
 
-        public ICommandTask? Parse(object options)
+        public ICommandTask? Match(object options)
         {
-            return Parse((T)options);
+            return Match((T)options);
         }
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using Raid.Toolkit.Application.Core.Host;
-using Raid.Toolkit.Application.Core.Tasks.Matchers;
+using Raid.Toolkit.Application.Core.Commands.Matchers;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;

@@ -8,8 +8,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using Raid.Toolkit.Application.Core.DependencyInjection;
-using Raid.Toolkit.Application.Core.Tasks;
-using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.Application.Core.Commands;
+using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Utility;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;

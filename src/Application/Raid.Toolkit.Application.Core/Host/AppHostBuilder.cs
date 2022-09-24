@@ -5,7 +5,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Raid.Toolkit.Application.Core.DependencyInjection;
-using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.Application.Core.Commands.Base;
+using Raid.Toolkit.Application.Core.Commands.Matchers;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host;
@@ -28,6 +29,7 @@ namespace Raid.Toolkit.Application.Core.Host
     }
     internal class AppHostBuilderSettings
     {
+        public static DeferredOptions<RunOptions> RunOptions = new(new());
         public static DeferredOptions<FileLoggerOptions> FileLoggerOptions = new(new());
     }
     internal class AppHostBuilder<TAppUI> : HostBuilder, IAppHostBuilder

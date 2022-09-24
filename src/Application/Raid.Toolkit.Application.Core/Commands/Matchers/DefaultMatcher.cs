@@ -2,10 +2,10 @@ using CommandLine;
 
 using Microsoft.Extensions.DependencyInjection;
 
+using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Commands.Tasks;
-using Raid.Toolkit.Application.Core.Tasks.Base;
 
-namespace Raid.Toolkit.Application.Core.Tasks.Matchers
+namespace Raid.Toolkit.Application.Core.Commands.Matchers
 {
     [Verb("run", isDefault: true, HelpText = "Runs the service")]
     public class RunOptions : CommonOptions
@@ -39,7 +39,7 @@ namespace Raid.Toolkit.Application.Core.Tasks.Matchers
     {
         public DefaultMatcher(IServiceProvider serviceProvider) : base(serviceProvider)
         { }
-        public override ICommandTask? Parse(RunOptions options)
+        public override ICommandTask? Match(RunOptions options)
         {
             return ActivatorUtilities.CreateInstance<RunTask>(ServiceProvider, options);
         }

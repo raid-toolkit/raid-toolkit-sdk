@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 
 using Raid.Toolkit.Application.Core;
 using Raid.Toolkit.Application.Core.Host;
-using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.Application.Core.Commands.Base;
 
 namespace Raid.Toolkit.UI.Forms
 {

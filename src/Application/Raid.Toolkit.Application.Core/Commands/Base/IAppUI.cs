@@ -2,7 +2,7 @@ using System;
 
 using Raid.Toolkit.Extensibility;
 
-namespace Raid.Toolkit.Application.Core.Tasks.Base
+namespace Raid.Toolkit.Application.Core.Commands.Base
 {
     public interface IAppUI : IDisposable
     {

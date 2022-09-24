@@ -1,7 +1,7 @@
 using CommandLine;
-using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.Application.Core.Commands.Base;
 
-namespace Raid.Toolkit.Application.Core.Tasks
+namespace Raid.Toolkit.Application.Core.Commands
 {
     [Flags]
     internal enum ApplicationStartupCondition
@@ -28,8 +28,6 @@ namespace Raid.Toolkit.Application.Core.Tasks
     public class CommandTaskManager
     {
         private readonly List<ICommandTaskMatcher> TaskMatchers;
-        private ICommandTaskMatcher? SelectedTaskMatcher;
-        private ICommandTask? SelectedTask;
 
         public CommandTaskManager(IEnumerable<ICommandTaskMatcher> tasks)
         {
@@ -49,11 +47,16 @@ namespace Raid.Toolkit.Application.Core.Tasks
             if (valueType == null)
                 return null;
 
-            SelectedTaskMatcher = TaskMatchers.FirstOrDefault(task => valueType.GetType().IsAssignableTo(task.OptionsType));
-            if (SelectedTaskMatcher == null)
-                return null;
-
-            return SelectedTaskMatcher.Parse(valueType);
+            foreach(ICommandTaskMatcher matcher in TaskMatchers)
+            {
+                if (!valueType.GetType().IsAssignableTo(matcher.OptionsType))
+                    continue;
+                ICommandTask? task = matcher.Match(valueType);
+                if (task == null)
+                    continue;
+                return task;
+            }
+            return null;
         }
     }
 }
