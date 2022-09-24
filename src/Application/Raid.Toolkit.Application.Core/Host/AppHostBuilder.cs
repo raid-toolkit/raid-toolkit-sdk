@@ -1,16 +1,15 @@
-using System.Runtime.InteropServices;
-
+using Karambolo.Extensions.Logging.File;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Raid.Toolkit.Application.Core.DependencyInjection;
 using Raid.Toolkit.Application.Core.Tasks.Base;
-using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility;
+using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host;
 using Raid.Toolkit.Extensibility.Host.Services;
-
 using SuperSocket.WebSocket;
 using SuperSocket.WebSocket.Server;
 
@@ -24,9 +23,17 @@ namespace Raid.Toolkit.Application.Core.Host
         IAppHostBuilder AddUI();
         IAppHostBuilder AddWebSockets(Func<WebSocketSession, WebSocketPackage, ValueTask> messageHandler);
     }
+    internal class UIOptions
+    {
+    }
+    internal class AppHostBuilderSettings
+    {
+        public static DeferredOptions<FileLoggerOptions> FileLoggerOptions = new(new());
+    }
     internal class AppHostBuilder<TAppUI> : HostBuilder, IAppHostBuilder
         where TAppUI : class, IAppUI, IHostedService, IDisposable
     {
+
         [Flags]
         private enum Feature
         {
@@ -51,15 +58,14 @@ namespace Raid.Toolkit.Application.Core.Host
             : base()
         {
             // default to always include logging, since it is only enabled once configured
-            AddLogging();
+            _ = AddLogging();
         }
 
         public IAppHostBuilder AddAppServices()
         {
-            if (!TryAddFeature(Feature.AppServices))
-                return this;
-
-            return (IAppHostBuilder)ConfigureServices((context, services) => services
+            return !TryAddFeature(Feature.AppServices)
+                ? this
+                : (IAppHostBuilder)ConfigureServices((context, services) => services
                 .AddSingleton<AppService>()
                 .AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)
                 .Configure<AppSettings>(opts => context.Configuration.GetSection("app").Bind(opts))
@@ -71,30 +77,28 @@ namespace Raid.Toolkit.Application.Core.Host
 
         public IAppHostBuilder AddExtensibility()
         {
-            if (!TryAddFeature(Feature.Extensibility))
-                return this;
-
-            return (IAppHostBuilder)ConfigureServices((context, services) => services
+            return !TryAddFeature(Feature.Extensibility)
+                ? this
+                : (IAppHostBuilder)ConfigureServices((context, services) => services
                 .AddExtensibilityServices<PackageManager>()
                 );
         }
 
         public IAppHostBuilder AddLogging()
         {
-            if (!TryAddFeature(Feature.Logging))
-                return this;
-
-            return (IAppHostBuilder)ConfigureServices((context, services) => services
+            return !TryAddFeature(Feature.Logging)
+                ? this
+                : (IAppHostBuilder)ConfigureServices((context, services) => services
+                .AddSingleton<IOptionsMonitor<FileLoggerOptions>>(AppHostBuilderSettings.FileLoggerOptions)
                 .AddLogging(builder => builder.AddFile())
                 );
         }
 
         public IAppHostBuilder AddUI()
         {
-            if (!TryAddFeature(Feature.UI))
-                return this;
-
-            return (IAppHostBuilder)
+            return !TryAddFeature(Feature.UI)
+                ? this
+                : (IAppHostBuilder)
                 AddAppServices()
                 .ConfigureServices((context, services) => services
                     .AddHostedServiceSingleton<IAppUI, TAppUI>()
@@ -106,7 +110,7 @@ namespace Raid.Toolkit.Application.Core.Host
             if (!TryAddFeature(Feature.WebSocket))
                 return this;
 
-            this.AsWebSocketHostBuilder()
+            _ = this.AsWebSocketHostBuilder()
                 .UseSessionFactory<SessionFactory>()
                 .UseWebSocketMessageHandler(messageHandler)
                 .ConfigureAppConfiguration(config => config

@@ -31,7 +31,7 @@ namespace Raid.Toolkit.Application.Core.Host
         public static readonly string ExecutablePath;
         public static readonly string ExecutableName = "Raid.Toolkit.exe";
         public static readonly string ExecutableDirectory;
-        public static DeferredOptions<FileLoggerOptions> FileLoggerOptions;
+        public static DeferredOptions<FileLoggerOptions> FileLoggerOptions => AppHostBuilderSettings.FileLoggerOptions;
 
         public static void EnsureFileAssociations(string? exePath = null)
         {
@@ -100,7 +100,6 @@ namespace Raid.Toolkit.Application.Core.Host
         {
             ExecutablePath = System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName!;
             ExecutableDirectory = Path.GetDirectoryName(ExecutablePath)!;
-            FileLoggerOptions = new(new());
         }
 
         private static IHost? Host;
