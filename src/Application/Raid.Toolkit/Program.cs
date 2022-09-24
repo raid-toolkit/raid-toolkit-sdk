@@ -5,75 +5,33 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
+using Raid.Toolkit.Application.Core.Host;
+using Raid.Toolkit.Application.Core;
+using SuperSocket.Command;
+
+using FormsApplication = System.Windows.Forms.Application;
+using System.Threading.Tasks;
+using Raid.Toolkit.Application.Core.Tasks;
+using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.UI.Forms;
+
 namespace Raid.Toolkit
 {
     internal static class Program
     {
         [STAThread]
-        private static int Main(string[] args)
+        private static async Task<int> Main(string[] args)
         {
-            return RunProgram(args);
-        }
+            CommonOptions.Parse(args);
+            AppHost.EnableLogging = CommonOptions.Value?.DisableLogging ?? true;
 
-        // for logging
-        private class Bootstrap { }
-
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
-        private static int RunProgram(string[] args)
-        {
-            _ = Application.SetHighDpiMode(HighDpiMode.SystemAware);
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-
-            if (args.Contains("--quiet") || args.Contains("-q"))
-            {
-                args = args.Where(arg => arg is not ("--quiet" or "-q")).ToArray();
-                AppHost.EnableLogging = false;
-            }
-
-            using IHost host = AppHost.CreateHost();
-            ILogger logger = host.Services.GetRequiredService<ILogger<Bootstrap>>();
-            ApplicationStartupTask applicationStartupTask = host.Services.GetRequiredService<ApplicationStartupTask>();
-            ApplicationStartupCondition startCondition = applicationStartupTask.Parse(args);
-
-            if (startCondition.HasFlag(ApplicationStartupCondition.Usage))
-            {
+            Entrypoint<AppForms, FormsProgramHost> entry = new();
+            CommandTaskManager commandManager = entry.CreateInstance<CommandTaskManager>();
+            ICommandTask? task = commandManager.Parse(args);
+            if (task == null)
                 return 255;
-            }
 
-            if (startCondition.HasFlag(ApplicationStartupCondition.Services))
-            {
-                host.StartAsync().Wait();
-            }
-            try
-            {
-                return applicationStartupTask.Execute();
-            }
-            catch (Exception e)
-            {
-                string errorMessage = "A fatal error occurred";
-                logger.LogError(e, errorMessage);
-                if ((args.Contains("--debug") || args.Contains("-d")) && !args.Contains("--no-ui") && !args.Contains("-n"))
-                {
-                    errorMessage += $":\n\n{e.Message}\n{e.StackTrace}";
-                }
-                _ = MessageBox.Show(new Form(), errorMessage, "Raid Toolkit", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return 1;
-            }
-            finally
-            {
-                if (startCondition.HasFlag(ApplicationStartupCondition.Services))
-                {
-                    try
-                    {
-                        host.Services.GetService<IHostApplicationLifetime>()?.StopApplication();
-                    }
-                    catch { }
-                    host.StopAsync().Wait();
-                }
-            }
+            return await task.Invoke();
         }
     }
 }

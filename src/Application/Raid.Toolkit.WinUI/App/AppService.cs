@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
@@ -13,17 +12,32 @@ namespace Raid.Toolkit.App
         private readonly IHostApplicationLifetime Lifetime;
         private readonly UpdateService UpdateService;
         private readonly TaskCompletionSource StopSignal;
+        public GitHub.Schema.Release? LatestRelease { get; private set; }
 
         public AppService(IHostApplicationLifetime lifetime, UpdateService updateService)
         {
             Lifetime = lifetime;
             UpdateService = updateService;
+            UpdateService.UpdateAvailable += OnUpdateAvailable;
             StopSignal = new();
+        }
+
+        private void OnUpdateAvailable(object? sender, UpdateService.UpdateAvailbleEventArgs e)
+        {
+            LatestRelease = e.Release;
         }
 
         public Task WaitForStop()
         {
             return StopSignal.Task;
+        }
+
+        public void InstallUpdate()
+        {
+            if (LatestRelease == null)
+                return; // TODO: Show error message?
+
+            InstallUpdate(LatestRelease);
         }
 
         public async void InstallUpdate(GitHub.Schema.Release release)
@@ -64,7 +78,7 @@ namespace Raid.Toolkit.App
 
         public void Exit()
         {
-            StopSignal.TrySetResult();
+            _ = StopSignal.TrySetResult();
         }
     }
 }

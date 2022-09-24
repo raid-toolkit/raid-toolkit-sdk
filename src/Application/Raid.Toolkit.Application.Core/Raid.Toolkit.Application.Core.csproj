@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net6.0-windows</TargetFrameworks>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<Platforms>x64</Platforms>
+	</PropertyGroup>
+
+	<ItemGroup>
+	  <None Remove="appsettings.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="appsettings.json" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\Extensions\Account\Account.csproj" />
+		<ProjectReference Include="..\..\Extensions\Realtime\Realtime.csproj" />
+		<ProjectReference Include="..\..\Shared\Extensibility.Host\Extensibility.Host.csproj" />
+		<ProjectReference Include="..\..\Shared\Extensibility\Extensibility.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
+		<PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.2.1" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="SuperSocket.WebSocket.Server" Version="2.0.0-beta.10" />
+		<PackageReference Include="Il2CppToolkit.Injection.Client" Version="2.0.112-alpha" GeneratePathProperty="true" />
+		<Reference Include="Raid.Interop">
+			<HintPath>$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
+			<Private>False</Private>
+			<SpecificVersion>False</SpecificVersion>
+			<CopyLocal>False</CopyLocal>
+		</Reference>
+	</ItemGroup>
+
+</Project>

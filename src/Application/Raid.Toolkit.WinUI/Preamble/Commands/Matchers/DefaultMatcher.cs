@@ -14,7 +14,7 @@ using Raid.Toolkit.App.Tasks;
 namespace Raid.Toolkit.Preamble.Tasks.Matchers
 {
     [Verb("run", isDefault: true, HelpText = "Runs the service")]
-    internal class RunOptions : CommonOptions
+    public class RunOptions : CommonOptions
     {
         [Option('s', "standalone", HelpText = "Runs in standalone mode")]
         public bool Standalone { get; set; }

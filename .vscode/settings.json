@@ -1,5 +1,5 @@
 {
-  "xmlTools.splitAttributesOnFormat": true,
+  "xmlTools.splitAttributesOnFormat": false,
   "files.associations": {
     "appsettings.json": "jsonc",
     "algorithm": "cpp",

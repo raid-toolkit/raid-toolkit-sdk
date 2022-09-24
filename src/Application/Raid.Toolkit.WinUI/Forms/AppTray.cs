@@ -1,26 +1,90 @@
-using Microsoft.Extensions.Hosting;
-using Raid.Toolkit.App;
-using Raid.Toolkit.App.Tasks.Base;
-using Raid.Toolkit.WinUI;
 using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+using Raid.Toolkit.App.Tasks.Base;
+using Raid.Toolkit.Common;
+using Raid.Toolkit.Extensibility;
+using Raid.Toolkit.Model;
+using Raid.Toolkit.WinUI;
 
 namespace Raid.Toolkit.Forms
 {
-    public class AppTray : IDisposable, IHostedService
+    public partial class AppTray : IDisposable, IHostedService
     {
-        private ContextMenuStrip? ContextMenu;
-        private NotifyIcon? NotifyIcon;
         private readonly IAppUI AppUI;
-        private readonly AppService AppService;
+        private readonly IServiceProvider ServiceProvider;
+        private readonly IOptions<ProcessManagerSettings> Settings;
+        private readonly PlariumPlayAdapter PPAdapter = new();
+
+        private AppTrayMenu? appTrayMenu;
+        private NotifyIcon? NotifyIcon;
+        private Action? OnClickCallback;
+
         private bool IsDisposed;
 
-        public AppTray(AppService appService, IAppUI appUI)
+        public AppTray(
+            IServiceProvider serviceProvider,
+            IAppUI appUI,
+            IOptions<ProcessManagerSettings> settings)
         {
-            AppService = appService;
+            ServiceProvider = serviceProvider;
             AppUI = appUI;
+            Settings = settings;
+        }
+
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+        private void OnAppTrayIconClicked()
+        {
+            if (!RegistrySettings.ClickToStart)
+            {
+                AppUI.ShowMain();
+                return;
+            }
+
+            var raidProcess = Process.GetProcessesByName(Settings.Value.ProcessName).FirstOrDefault();
+            if (raidProcess != null)
+            {
+                _ = SetForegroundWindow(raidProcess.MainWindowHandle);
+            }
+            else
+            {
+                if (PPAdapter.TryGetGameVersion(101, "raid", out PlariumPlayAdapter.GameInfo gameInfo))
+                {
+                    _ = Process.Start(gameInfo.PlariumPlayPath, new string[] { "--args", $"-gameid=101", "-tray-start" });
+                }
+            }
+        }
+
+        internal void ShowNotification(string title, string description, ToolTipIcon icon, int timeoutMs, Action? onActivate)
+        {
+            OnClickCallback = onActivate;
+            var notifyIcon = NotifyIcon;
+            if (notifyIcon == null)
+                return;
+
+            RTKApplication.Post(() =>
+            {
+                notifyIcon.ShowBalloonTip(timeoutMs, title, description, icon);
+            });
+        }
+
+        private void OnBaloonTipClosed(object? sender, EventArgs e)
+        {
+            OnClickCallback = null;
+        }
+
+        private void OnBaloonTipClicked(object? sender, EventArgs e)
+        {
+            OnClickCallback?.Invoke();
+            OnClickCallback = null;
         }
 
         private void NotifyIcon_MouseClick(object? sender, MouseEventArgs e)
@@ -28,12 +92,7 @@ namespace Raid.Toolkit.Forms
             if (e.Button != MouseButtons.Left)
                 return;
 
-            AppUI.ShowMainWindow();
-        }
-
-        private void Exit()
-        {
-            AppService.Exit();
+            OnAppTrayIconClicked();
         }
 
         protected virtual void Dispose(bool disposing)
@@ -42,19 +101,19 @@ namespace Raid.Toolkit.Forms
             {
                 if (disposing)
                 {
-                    RTKApplication.Current.UIContext.Post(signal =>
+                    RTKApplication.Post(() =>
                     {
                         if (NotifyIcon != null)
                         {
                             NotifyIcon?.Dispose();
                             NotifyIcon = null;
                         }
-                        if (ContextMenu!= null)
+                        if (appTrayMenu != null)
                         {
-                            ContextMenu?.Dispose();
-                            ContextMenu = null;
+                            appTrayMenu?.Dispose();
+                            appTrayMenu = null;
                         }
-                    }, null);
+                    });
                 }
 
                 IsDisposed = true;
@@ -74,17 +133,20 @@ namespace Raid.Toolkit.Forms
             RTKApplication.Current.UIContext.Post(signal =>
             {
                 if (signal is not TaskCompletionSource tcs) throw new InvalidOperationException();
-                ContextMenu = new();
-                ContextMenu.Items.Add(new ToolStripMenuItem("Exit", null, (_, _) => Exit()));
 
+                appTrayMenu = ActivatorUtilities.CreateInstance<AppTrayMenu>(ServiceProvider);
+#pragma warning disable CS0436 // Type conflicts with imported type
                 NotifyIcon = new()
                 {
-                    Text = "Raid Toolkit",
+                    Text = $"Raid Toolkit {ThisAssembly.AssemblyFileVersion}",
                     Icon = FormsResources.AppIcon,
                     Visible = true,
-                    ContextMenuStrip = ContextMenu
+                    ContextMenuStrip = appTrayMenu
                 };
+#pragma warning restore CS0436 // Type conflicts with imported type
                 NotifyIcon.MouseClick += NotifyIcon_MouseClick;
+                NotifyIcon.BalloonTipClosed += OnBaloonTipClosed;
+                NotifyIcon.BalloonTipClicked += OnBaloonTipClicked;
                 tcs.SetResult();
             }, startedSignal);
             return startedSignal.Task;

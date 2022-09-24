@@ -1,20 +1,16 @@
-using Raid.Toolkit.Extensibility;
-using Raid.Toolkit.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Raid.Toolkit.Extensibility;
 
 namespace Raid.Toolkit.App.Tasks.Base
 {
     public interface IAppUI
     {
-        void HideRebuildUI();
         bool? ShowExtensionInstaller(ExtensionBundle bundleToInstall);
         void ShowInstallUI();
-        void ShowMainWindow();
-        void ShowRebuildUI(PlariumPlayAdapter.GameInfo gameInfo);
-        void ShowUpdateNotification();
+        void ShowMain();
+        void ShowSettings();
+        void ShowErrors();
+        void ShowExtensionManager();
+        void ShowNotification(string title, string description, System.Windows.Forms.ToolTipIcon icon, int timeoutMs, Action? onActivate = null);
     }
 }

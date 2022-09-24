@@ -13,7 +13,7 @@ using Raid.Toolkit.App.Tasks;
 namespace Raid.Toolkit.Preamble.Commands.Matchers
 {
     [Verb("install", HelpText = "Installs an extension")]
-    internal class InstallOptions : CommonOptions
+    public class InstallOptions : CommonOptions
     {
         [Value(0, MetaName = "rtkx", HelpText = "Path to RTKX package to install")]
         public string? PackagePath { get; set; }

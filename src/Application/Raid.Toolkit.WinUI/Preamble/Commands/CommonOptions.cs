@@ -9,7 +9,7 @@ using CommandLine;
 
 namespace Raid.Toolkit.App.Tasks
 {
-    internal class CommonOptions
+    public class CommonOptions
     {
         public static CommonOptions? Value { get; private set; }
 
