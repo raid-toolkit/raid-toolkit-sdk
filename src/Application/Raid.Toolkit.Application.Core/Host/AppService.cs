@@ -10,7 +10,7 @@ namespace Raid.Toolkit.Application.Core.Host
     public class AppService
     {
         private readonly IHostApplicationLifetime Lifetime;
-        private readonly UpdateService UpdateService;
+        private readonly UpdateService? UpdateService;
         private readonly TaskCompletionSource StopSignal;
         public GitHub.Schema.Release? LatestRelease { get; private set; }
 
@@ -19,6 +19,12 @@ namespace Raid.Toolkit.Application.Core.Host
             Lifetime = lifetime;
             UpdateService = updateService;
             UpdateService.UpdateAvailable += OnUpdateAvailable;
+            StopSignal = new();
+        }
+
+        public AppService(IHostApplicationLifetime lifetime)
+        {
+            Lifetime = lifetime;
             StopSignal = new();
         }
 
@@ -42,6 +48,8 @@ namespace Raid.Toolkit.Application.Core.Host
 
         public async void InstallUpdate(GitHub.Schema.Release release)
         {
+            if (UpdateService == null)
+                return;
             try
             {
                 await UpdateService.InstallRelease(release, AppHost.ExecutableName);
