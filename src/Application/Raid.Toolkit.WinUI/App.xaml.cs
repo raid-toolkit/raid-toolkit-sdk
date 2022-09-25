@@ -1,10 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
-using Microsoft.Windows.ApplicationModel.DynamicDependency;
 
-using Raid.Toolkit.App;
+using Raid.Toolkit.Application.Core.Host;
 
 using System;
 using System.Threading;
@@ -58,19 +56,6 @@ namespace Raid.Toolkit.WinUI
         public async Task WaitForExit()
         {
             await Host.Services.GetRequiredService<AppService>().WaitForStop().ConfigureAwait(false);
-        }
-
-        public async Task<int> UserShutdown()
-        {
-            System.Windows.Forms.Application.Exit();
-            IHostApplicationLifetime lifetimeService = Host.Services.GetRequiredService<IHostApplicationLifetime>();
-            try
-            {
-                lifetimeService.StopApplication();
-            }
-            catch { }
-            await Host.StopAsync();
-            return 0;
         }
 
         /// <summary>

@@ -1,21 +1,34 @@
 using System;
+using System.Runtime.InteropServices;
+using System.Threading;
+
 using Microsoft.Extensions.DependencyInjection;
-using Raid.Toolkit.App.Tasks.Base;
+using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Forms;
 using Raid.Toolkit.WinUI;
 
-namespace Raid.Toolkit.DependencyInjection
+namespace Raid.Toolkit
 {
     public class AppWinUI : IAppUI, IDisposable
     {
+        [DllImport("Microsoft.ui.xaml.dll")]
+        private static extern void XamlCheckProcessRequirements();
+        static AppWinUI()
+        {
+            XamlCheckProcessRequirements();
+        }
+
         private SplashScreen? SplashScreen;
         private readonly IServiceProvider ServiceProvider;
         private bool IsDisposed;
 
+        public SynchronizationContext? SynchronizationContext { get; }
+
         public AppWinUI(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;
+            SynchronizationContext = SynchronizationContext.Current;
         }
 
         public void ShowMain()
@@ -52,12 +65,16 @@ namespace Raid.Toolkit.DependencyInjection
         {
             if (!IsDisposed)
             {
-                if (disposing)
+                RTKApplication.Post(() =>
                 {
-                    SplashScreen?.Close();
-                }
+                    if (disposing)
+                    {
+                        SplashScreen?.Close();
+                        System.Windows.Forms.Application.Exit();
+                    }
 
-                SplashScreen = null;
+                    SplashScreen = null;
+                });
 
                 IsDisposed = true;
             }
@@ -88,6 +105,10 @@ namespace Raid.Toolkit.DependencyInjection
         public void ShowExtensionManager()
         {
             throw new NotImplementedException();
+        }
+
+        public void Run()
+        {
         }
     }
 }

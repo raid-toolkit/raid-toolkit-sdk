@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
+		<OutputType>Library</OutputType>
 		<TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
 		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
 		<RootNamespace>Raid.Toolkit</RootNamespace>
@@ -10,7 +10,6 @@
 		<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
 		<PublishProfile>win10-$(Platform).pubxml</PublishProfile>
 		<UseWinUI>true</UseWinUI>
-		<ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
 		<Nullable>enable</Nullable>
 		<PackageType>None</PackageType>
 		<WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
@@ -78,6 +77,7 @@
 		<ProjectReference Include="$(SourceDir)Extensions\Realtime\Realtime.csproj" />
 		<ProjectReference Include="$(SourceDir)Shared\Extensibility\Extensibility.csproj" />
 		<ProjectReference Include="$(SourceDir)Shared\Extensibility.Host\Extensibility.Host.csproj" />
+		<ProjectReference Include="..\Raid.Toolkit.Application.Core\Raid.Toolkit.Application.Core.csproj" />
 	</ItemGroup>
 	
 	<!-- 
