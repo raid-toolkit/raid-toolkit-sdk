@@ -40,7 +40,7 @@ namespace Raid.Toolkit.Application.Core.Commands
             {
                 settings.IgnoreUnknownArguments = true;
             });
-            ParserResult<object> result = parser.ParseArguments(args, TaskMatchers.Select(task => task.OptionsType).ToArray());
+            ParserResult<object> result = parser.ParseArguments(args, TaskMatchers.Select(task => task.OptionsType).Distinct().ToArray());
 
             object? valueType = result.GetValue();
 

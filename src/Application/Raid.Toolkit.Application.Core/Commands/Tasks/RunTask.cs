@@ -5,6 +5,7 @@ using Raid.Toolkit.Application.Core.DependencyInjection;
 using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Commands.Matchers;
+using Raid.Toolkit.Common;
 
 namespace Raid.Toolkit.Application.Core.Commands.Tasks
 {
@@ -23,6 +24,8 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
 
         public async Task<int> Invoke()
         {
+            await SingletonProcess.TryAcquireSingletonWithTimeout(Options.Wait ?? 0);
+
             AppHostBuilder
                 .AddWebSockets(AppHost.HandleMessage)
                 .AddExtensibility()

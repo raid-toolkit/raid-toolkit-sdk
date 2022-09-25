@@ -144,7 +144,10 @@ namespace Raid.Toolkit.UI.Forms
 
         public void ShowInstallUI()
         {
-            ShowAndTrack<InstallWindow>();
+            InstallWindow form = ActivatorUtilities.CreateInstance<InstallWindow>(ServiceProvider);
+            TrackForm(form);
+            form.Show();
+            form.FormClosed += (_, _) => FormsApplication.Exit();
         }
 
         public bool? ShowExtensionInstaller(ExtensionBundle bundleToInstall)
@@ -201,11 +204,12 @@ namespace Raid.Toolkit.UI.Forms
                     {
                         AppTray?.Dispose();
                         DisposeForms();
+                        AppTray = null;
                     });
                 }
 
-                AppTray = null;
-
+                // force one last dequeue in case we are disposed on a non-ui thread and require posting cleanup operations to main thread
+                FormsApplication.DoEvents();
                 IsDisposed = true;
             }
         }

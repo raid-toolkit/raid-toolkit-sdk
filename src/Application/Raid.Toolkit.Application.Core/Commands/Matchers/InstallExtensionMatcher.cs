@@ -13,11 +13,21 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Raid.Toolkit.Application.Core.Commands.Matchers
 {
-    internal class InstallExtensionMatcher : CommandTaskMatcher<RunOptions>
+    [Verb("install", HelpText = "Installs an extension")]
+    public class InstallExtensionOptions : CommonOptions
+    {
+        [Value(0, MetaName = "rtkx", HelpText = "Path to RTKX package to install")]
+        public string? PackagePath { get; set; }
+
+        [Option('y', "accept")]
+        public bool Accept { get; set; }
+
+    }
+    internal class InstallExtensionMatcher : CommandTaskMatcher<InstallExtensionOptions>
     {
         public InstallExtensionMatcher(IServiceProvider serviceProvider) : base(serviceProvider)
         { }
-        public override ICommandTask? Match(RunOptions options)
+        public override ICommandTask? Match(InstallExtensionOptions options)
         {
             return ActivatorUtilities.CreateInstance<InstallExtensionTask>(ServiceProvider, options);
         }

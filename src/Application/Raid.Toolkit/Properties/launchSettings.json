@@ -1,13 +1,17 @@
 {
   "profiles": {
-    "Raid.Toolkit": {
-      "commandName": "Project",
-      "commandLineArgs": "--debug",
-      "nativeDebugging": true
-    },
     "rtk://Activate": {
       "commandName": "Project",
       "commandLineArgs": "activate rtk://extension/OMG.RTK",
+      "nativeDebugging": true
+    },
+    "Setup": {
+      "commandName": "Project",
+      "nativeDebugging": true
+    },
+    "Standalone": {
+      "commandName": "Project",
+      "commandLineArgs": "--standalone",
       "nativeDebugging": true
     }
   }
