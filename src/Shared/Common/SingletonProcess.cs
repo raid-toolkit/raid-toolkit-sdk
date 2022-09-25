@@ -1,5 +1,7 @@
 using System;
+using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Common
 {
@@ -25,7 +27,7 @@ namespace Raid.Toolkit.Common
             }
         }
 
-        public static bool TryAquireSingleton()
+        public static bool TryAcquireSingleton()
         {
             // already aquired
             if (GlobalHandle != null)
@@ -42,6 +44,22 @@ namespace Raid.Toolkit.Common
             GlobalHandle.Dispose();
             GlobalHandle = null;
             return false;
+
+        }
+
+        public static async Task TryAcquireSingletonWithTimeout(int timeoutMs)
+        {
+            Stopwatch sw = new();
+            sw.Start();
+            do
+            {
+                if (TryAcquireSingleton())
+                    return;
+                await Task.Delay(1000);
+            }
+            while (sw.ElapsedMilliseconds < timeoutMs);
+
+            throw new TimeoutException();
         }
     }
 }

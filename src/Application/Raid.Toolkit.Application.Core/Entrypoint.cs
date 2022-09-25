@@ -2,8 +2,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using Raid.Toolkit.Application.Core.Host;
-using Raid.Toolkit.Application.Core.Tasks;
-using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.Application.Core.Commands;
+using Raid.Toolkit.Application.Core.Commands.Base;
 
 namespace Raid.Toolkit.Application.Core
 {

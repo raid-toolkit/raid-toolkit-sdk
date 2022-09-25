@@ -1,7 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
-using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.Application.Core.Commands.Base;
+using Raid.Toolkit.Application.Core.Commands.Matchers;
 using Raid.Toolkit.Extensibility;
 
 using FormsApplication = System.Windows.Forms.Application;
@@ -49,7 +51,7 @@ namespace Raid.Toolkit.UI.Forms
             FormsSynchronizationContext = new WindowsFormsSynchronizationContext();
         }
 
-        public AppForms(IServiceProvider serviceProvider)
+        public AppForms(IServiceProvider serviceProvider, IOptions<RunOptions> options)
         {
             ServiceProvider = serviceProvider;
         }
@@ -142,7 +144,10 @@ namespace Raid.Toolkit.UI.Forms
 
         public void ShowInstallUI()
         {
-            ShowAndTrack<InstallWindow>();
+            InstallWindow form = ActivatorUtilities.CreateInstance<InstallWindow>(ServiceProvider);
+            TrackForm(form);
+            form.Show();
+            form.FormClosed += (_, _) => FormsApplication.Exit();
         }
 
         public bool? ShowExtensionInstaller(ExtensionBundle bundleToInstall)
@@ -199,11 +204,12 @@ namespace Raid.Toolkit.UI.Forms
                     {
                         AppTray?.Dispose();
                         DisposeForms();
+                        AppTray = null;
                     });
                 }
 
-                AppTray = null;
-
+                // force one last dequeue in case we are disposed on a non-ui thread and require posting cleanup operations to main thread
+                FormsApplication.DoEvents();
                 IsDisposed = true;
             }
         }

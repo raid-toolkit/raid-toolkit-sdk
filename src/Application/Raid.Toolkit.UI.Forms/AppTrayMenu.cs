@@ -1,5 +1,5 @@
 using Raid.Toolkit.Application.Core.Host;
-using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host.Services;
 

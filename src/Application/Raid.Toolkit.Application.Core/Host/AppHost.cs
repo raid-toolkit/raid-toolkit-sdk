@@ -8,8 +8,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using Raid.Toolkit.Application.Core.DependencyInjection;
-using Raid.Toolkit.Application.Core.Tasks;
-using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.Application.Core.Commands;
+using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Utility;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
@@ -31,7 +31,7 @@ namespace Raid.Toolkit.Application.Core.Host
         public static readonly string ExecutablePath;
         public static readonly string ExecutableName = "Raid.Toolkit.exe";
         public static readonly string ExecutableDirectory;
-        public static DeferredOptions<FileLoggerOptions> FileLoggerOptions;
+        public static DeferredOptions<FileLoggerOptions> FileLoggerOptions => AppHostBuilderSettings.FileLoggerOptions;
 
         public static void EnsureFileAssociations(string? exePath = null)
         {
@@ -100,7 +100,6 @@ namespace Raid.Toolkit.Application.Core.Host
         {
             ExecutablePath = System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName!;
             ExecutableDirectory = Path.GetDirectoryName(ExecutablePath)!;
-            FileLoggerOptions = new(new());
         }
 
         private static IHost? Host;

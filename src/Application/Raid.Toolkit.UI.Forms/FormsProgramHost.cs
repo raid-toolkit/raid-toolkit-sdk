@@ -3,7 +3,9 @@ using Microsoft.Extensions.Hosting;
 
 using Raid.Toolkit.Application.Core;
 using Raid.Toolkit.Application.Core.Host;
-using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.Application.Core.Commands.Base;
+
+using FormsApplication = System.Windows.Forms.Application;
 
 namespace Raid.Toolkit.UI.Forms
 {
@@ -15,6 +17,9 @@ namespace Raid.Toolkit.UI.Forms
 
             using (IAppUI? appUI = host.Services.GetService<IAppUI>())
             {
+                AppService? appService = host.Services.GetService<AppService>();
+                _ = appService?.WaitForStop().ContinueWith(_ => FormsApplication.Exit());
+
                 startupFunction();
 
                 appUI?.Run();

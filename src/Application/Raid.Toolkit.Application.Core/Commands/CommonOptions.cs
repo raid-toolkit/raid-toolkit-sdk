@@ -1,6 +1,6 @@
 using CommandLine;
 
-namespace Raid.Toolkit.Application.Core.Tasks
+namespace Raid.Toolkit.Application.Core.Commands
 {
     public class CommonOptions
     {

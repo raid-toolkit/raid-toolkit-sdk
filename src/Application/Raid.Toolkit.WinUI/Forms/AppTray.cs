@@ -1,3 +1,13 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
+
+using Raid.Toolkit.Application.Core.Commands.Base;
+using Raid.Toolkit.Common;
+using Raid.Toolkit.Extensibility;
+using Raid.Toolkit.Model;
+using Raid.Toolkit.WinUI;
+
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -5,14 +15,6 @@ using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using Raid.Toolkit.App.Tasks.Base;
-using Raid.Toolkit.Common;
-using Raid.Toolkit.Extensibility;
-using Raid.Toolkit.Model;
-using Raid.Toolkit.WinUI;
 
 namespace Raid.Toolkit.Forms
 {

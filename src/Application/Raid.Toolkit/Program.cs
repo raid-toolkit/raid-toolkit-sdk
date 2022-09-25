@@ -11,8 +11,8 @@ using SuperSocket.Command;
 
 using FormsApplication = System.Windows.Forms.Application;
 using System.Threading.Tasks;
-using Raid.Toolkit.Application.Core.Tasks;
-using Raid.Toolkit.Application.Core.Tasks.Base;
+using Raid.Toolkit.Application.Core.Commands;
+using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.UI.Forms;
 
 namespace Raid.Toolkit

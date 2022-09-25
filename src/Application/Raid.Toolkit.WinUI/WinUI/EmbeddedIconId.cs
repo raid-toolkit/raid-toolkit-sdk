@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 
 using Microsoft.UI;
 
-using Raid.Toolkit.App;
+using Raid.Toolkit.Application.Core.Host;
 
 namespace Raid.Toolkit.WinUI
 {
