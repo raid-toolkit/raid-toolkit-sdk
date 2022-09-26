@@ -39,7 +39,7 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
             ProgramHost.Start(host, () =>
             {
                 IAppUI appUI = host.Services.GetRequiredService<IAppUI>();
-                ExtensionBundle bundle = ExtensionBundle.FromDirectory(Options.PackagePath);
+                ExtensionBundle bundle = ExtensionBundle.FromFile(Options.PackagePath);
                 bool? result = appUI.ShowExtensionInstaller(bundle);
                 if (result == true)
                 {

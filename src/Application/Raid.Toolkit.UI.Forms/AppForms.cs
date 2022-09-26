@@ -4,6 +4,7 @@ using Microsoft.Extensions.Options;
 
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Commands.Matchers;
+using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Extensibility;
 
 using FormsApplication = System.Windows.Forms.Application;
@@ -13,6 +14,7 @@ namespace Raid.Toolkit.UI.Forms
     public class AppForms : IAppUI, IHostedService, IDisposable
     {
         //private SplashScreen? SplashScreen;
+        private readonly AppService AppService;
         private readonly IServiceProvider ServiceProvider;
         private bool IsDisposed;
 
@@ -51,13 +53,20 @@ namespace Raid.Toolkit.UI.Forms
             FormsSynchronizationContext = new WindowsFormsSynchronizationContext();
         }
 
-        public AppForms(IServiceProvider serviceProvider, IOptions<RunOptions> options)
+        public AppForms(IServiceProvider serviceProvider, AppService appService)
         {
             ServiceProvider = serviceProvider;
+            AppService = appService;
+            // prevent spinning up the message pump if we have already stopped
+            appService.WaitForStop().ContinueWith(_ => ShouldRun = false);
         }
+
+        private bool ShouldRun = true;
 
         public void Run()
         {
+            if (!ShouldRun)
+                return;
             FormsApplication.Run();
         }
 
@@ -147,7 +156,7 @@ namespace Raid.Toolkit.UI.Forms
             InstallWindow form = ActivatorUtilities.CreateInstance<InstallWindow>(ServiceProvider);
             TrackForm(form);
             form.Show();
-            form.FormClosed += (_, _) => FormsApplication.Exit();
+            form.FormClosed += (_, _) => AppService.Exit();
         }
 
         public bool? ShowExtensionInstaller(ExtensionBundle bundleToInstall)
@@ -155,7 +164,8 @@ namespace Raid.Toolkit.UI.Forms
             InstallExtensionDialog form = ActivatorUtilities.CreateInstance<InstallExtensionDialog>(ServiceProvider, bundleToInstall);
             TrackForm(form);
             DialogResult result = form.ShowDialog();
-            return result == DialogResult.Yes;
+            AppService.Exit();
+            return result == DialogResult.OK;
         }
 
         public void ShowNotification(string title, string description, System.Windows.Forms.ToolTipIcon icon, int timeoutMs, Action? onActivate = null)
