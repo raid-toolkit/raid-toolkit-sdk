@@ -1,20 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-        <PackageReference Include="il2cpptoolkit.common"
-            Version="2.0.101-alpha" />
-        <PackageReference Include="il2cpptoolkit.metadata"
-            Version="2.0.101-alpha" />
-        <PackageReference Include="il2cpptoolkit.reversecompiler"
-            Version="2.0.101-alpha" />
-        <PackageReference Include="il2cpptoolkit.runtime"
-            Version="2.0.101-alpha" />
-        <PackageReference Include="il2cpptoolkit.target.netcore"
-            Version="2.0.101-alpha" />
-        <PackageReference Include="Microsoft.Win32.Registry"
-            Version="5.0.0" />
-        <PackageReference Include="Newtonsoft.Json"
-            Version="13.0.1" />
+        <PackageReference Include="il2cpptoolkit.common" Version="2.0.101-alpha" />
+        <PackageReference Include="il2cpptoolkit.metadata" Version="2.0.101-alpha" />
+        <PackageReference Include="il2cpptoolkit.reversecompiler" Version="2.0.101-alpha" />
+        <PackageReference Include="il2cpptoolkit.runtime" Version="2.0.101-alpha" />
+        <PackageReference Include="il2cpptoolkit.target.netcore" Version="2.0.101-alpha" />
+        <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     </ItemGroup>
 
     <ItemGroup>
@@ -22,15 +15,13 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="$(BinDir)v4.7.2\Raid.Interop.dll"
-            copyToOutput="true">
+        <Content Include="$(BinDir)v4.7.2\Raid.Interop.dll" copyToOutput="true">
             <Pack>true</Pack>
             <PackagePath>lib\net472</PackagePath>
         </Content>
-        <Content Include="$(BinDir)v5.0\Raid.Interop.dll"
-            copyToOutput="true">
+        <Content Include="$(BinDir)v6.0\Raid.Interop.dll" copyToOutput="true">
             <Pack>true</Pack>
-            <PackagePath>lib\net6.0-windows</PackagePath>
+            <PackagePath>lib\net6.0-windows7.0</PackagePath>
         </Content>
     </ItemGroup>
 
