@@ -13,6 +13,11 @@
       "commandName": "Project",
       "commandLineArgs": "--standalone",
       "nativeDebugging": true
+    },
+    "Install Extension": {
+      "commandName": "Project",
+      "commandLineArgs": "install D:\\git\\github\\raid-toolkit\\private-tools\\ArenaBot\\bin\\x64\\Debug\\net6.0-windows\\ArenaBot.rtkx",
+      "nativeDebugging": true
     }
   }
 }
