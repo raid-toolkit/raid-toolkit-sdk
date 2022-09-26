@@ -24,7 +24,6 @@ jobs:
       IS_CI: true
       Solution_Name: SDK.sln
       App_csproj: src\Application\Raid.Toolkit\Raid.Toolkit.csproj
-      Client_csproj: src\ClientSDK\DotNet\Raid.Client.csproj
 
     steps:
       - uses: mickem/clean-after-action@v1
@@ -38,6 +37,7 @@ jobs:
       - name: Set branch-based environment variables
         uses: iamtheyammer/branch-env-vars@v1.0.4
         with:
+          bevOverwrite: true
           PRERELEASE: |
             main:true
             !default:false
