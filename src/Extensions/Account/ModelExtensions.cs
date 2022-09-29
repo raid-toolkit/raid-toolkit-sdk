@@ -717,7 +717,8 @@ namespace Raid.Toolkit.DataModel
                 MultiplyStatusEffectParams = type.MultiplyStatusEffectParams?.ToModel(),
                 IgnoreProtectionEffectsParams = type.IgnoreProtectionEffectsParams?.ToModel(),
                 ChangeEffectTargetParams = type.ChangeEffectTargetParams?.ToModel(),
-                MultiplierDependsOnRelation = type.MultiplierDependsOnRelation,
+                MultiplierFormula = type.MultiplierFormula,
+                MultiplierNotEvaluatedByAI = type.MultiplierNotEvaluatedByAI,
             };
         }
 

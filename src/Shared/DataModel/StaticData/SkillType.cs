@@ -969,8 +969,11 @@ namespace Raid.Toolkit.DataModel
         [JsonProperty("changeEffectTargetParams")]
         public ChangeEffectTargetParamsStub ChangeEffectTargetParams;
 
-        [JsonProperty("multiplierDependsOnRelation")]
-        public bool MultiplierDependsOnRelation;
+        [JsonProperty("multiplierFormula")]
+        public string MultiplierFormula;
+
+        [JsonProperty("multiplierNotEvaluatedByAI")]
+        public bool MultiplierNotEvaluatedByAI;
     }
 
     public class SkillUpgrade
