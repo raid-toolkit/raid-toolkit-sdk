@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Raid.Toolkit.Application.Core.Commands;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.UI.Forms;
+using Raid.Toolkit.UI.WinUI;
 
 namespace Raid.Toolkit
 {
@@ -17,7 +18,8 @@ namespace Raid.Toolkit
             CommonOptions.Parse(args);
             AppHost.EnableLogging = CommonOptions.Value?.DisableLogging ?? true;
 
-            Entrypoint<AppForms, FormsProgramHost> entry = new();
+            //Entrypoint<AppForms, FormsProgramHost> entry = new();
+            Entrypoint<AppWinUI, WinUIProgramHost> entry = new();
             CommandTaskManager commandManager = entry.CreateInstance<CommandTaskManager>();
             ICommandTask? task = commandManager.Parse(args);
             if (task == null)

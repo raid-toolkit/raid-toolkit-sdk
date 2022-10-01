@@ -3,7 +3,7 @@
 		<OutputType>Library</OutputType>
 		<TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
 		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-		<RootNamespace>Raid.Toolkit</RootNamespace>
+		<RootNamespace>Raid.Toolkit.UI.WinUI</RootNamespace>
 		<ApplicationManifest>app.manifest</ApplicationManifest>
 		<Platform>x64</Platform>
 		<Platforms>x64</Platforms>
@@ -15,10 +15,7 @@
 		<WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
 	</PropertyGroup>
 	<ItemGroup>
-	  <None Remove="appsettings.json" />
 	  <None Remove="Resources\Square150x150Logo.scale-200.png" />
-	  <None Remove="WinUI\InstallExtensionWindow.xaml" />
-	  <None Remove="WinUI\SplashScreen.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -34,10 +31,6 @@
 		<Content Include="Resources\Square150x150Logo.scale-200.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Content>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Include="appsettings.json" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -61,15 +54,6 @@
 			<SpecificVersion>False</SpecificVersion>
 			<CopyLocal>False</CopyLocal>
 		</Reference>
-	</ItemGroup>
-
-	<ItemGroup>
-		<Content Include="$(PkgIl2CppToolkit_Injection_Client)\runtimes\win10-x64\native\Il2CppToolkit.Injection.Host.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-		<!--<Content Include="$(PkgMicrosoft_WindowsAppSdk)\runtimes\win10-x64\native\Microsoft.WindowsAppRuntime.Bootstrap.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>-->
 	</ItemGroup>
 
 	<ItemGroup>
@@ -107,12 +91,12 @@
 		</EmbeddedResource>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="WinUI\InstallExtensionWindow.xaml">
+	  <Page Update="InstallExtensionWindow.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="WinUI\SplashScreen.xaml">
+	  <Page Update="SplashScreen.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	</ItemGroup>

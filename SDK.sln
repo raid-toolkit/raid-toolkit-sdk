@@ -42,7 +42,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{6E0F3172-D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetClientTest", "src\Tests\DotNetClientTest\DotNetClientTest.csproj", "{F28408B2-CFA1-4B67-897B-27D00DBA5D17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Toolkit.WinUI", "src\Application\Raid.Toolkit.WinUI\Raid.Toolkit.WinUI.csproj", "{23C851EC-D893-4CF2-8440-ABA6D48E633C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Toolkit.UI.WinUI", "src\Application\Raid.Toolkit.WinUI\Raid.Toolkit.UI.WinUI.csproj", "{23C851EC-D893-4CF2-8440-ABA6D48E633C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Toolkit.UI.Forms", "src\Application\Raid.Toolkit.UI.Forms\Raid.Toolkit.UI.Forms.csproj", "{12050661-B883-4CE9-BC80-A3619F0E7782}"
 EndProject

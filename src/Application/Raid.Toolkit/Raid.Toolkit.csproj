@@ -6,16 +6,29 @@
         <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
         <LangVersion>10.0</LangVersion>
         <Nullable>enable</Nullable>
-        <UseWindowsForms>true</UseWindowsForms>
-        <PublishSingleFile>false</PublishSingleFile>
-        <SelfContained>false</SelfContained>
-        <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
-        <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
-        <ApplicationIcon>..\Assets\AppIcon.ico</ApplicationIcon>
-        <Platforms>x64</Platforms>
-        <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
-        <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
-        <IsPackable>false</IsPackable>
+		<UseWindowsForms>true</UseWindowsForms>
+		<PublishSingleFile>false</PublishSingleFile>
+		<SelfContained>false</SelfContained>
+		<ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
+		<ApplicationIcon>..\Assets\AppIcon.ico</ApplicationIcon>
+		<Platforms>x64</Platforms>
+		<RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+		<IsPackable>false</IsPackable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<UseWinUI>true</UseWinUI>
+		<WindowsPackageType>None</WindowsPackageType>
+		<WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.4" GeneratePathProperty="true" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
+	</ItemGroup>
+
+    <PropertyGroup>
+      <DefineConstants>$(DefineConstants)DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
@@ -50,5 +63,6 @@
         <ProjectReference Include="$(SourceDir)Shared\Extensibility.Host\Extensibility.Host.csproj" />
         <ProjectReference Include="..\Raid.Toolkit.Application.Core\Raid.Toolkit.Application.Core.csproj" />
         <ProjectReference Include="..\Raid.Toolkit.UI.Forms\Raid.Toolkit.UI.Forms.csproj" />
+        <ProjectReference Include="..\Raid.Toolkit.WinUI\Raid.Toolkit.UI.WinUI.csproj" />
     </ItemGroup>
 </Project>

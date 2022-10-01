@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Raid.Toolkit.Forms {
+namespace Raid.Toolkit.UI.WinUI.Forms {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Raid.Toolkit.Forms {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Raid.Toolkit.Forms.FormsResources", typeof(FormsResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Raid.Toolkit.UI.WinUI.Forms.FormsResources", typeof(FormsResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

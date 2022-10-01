@@ -1,12 +1,12 @@
 using Raid.Toolkit.Common;
-using Raid.Toolkit.WinUI.Base;
+using Raid.Toolkit.UI.WinUI.Base;
 
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Raid.Toolkit.WinUI
+namespace Raid.Toolkit.UI.WinUI
 {
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.

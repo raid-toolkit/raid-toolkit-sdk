@@ -5,7 +5,7 @@ using Microsoft.UI;
 
 using Raid.Toolkit.Application.Core.Host;
 
-namespace Raid.Toolkit.WinUI
+namespace Raid.Toolkit.UI.WinUI
 {
     public class EmbeddedIconId : IDisposable
     {

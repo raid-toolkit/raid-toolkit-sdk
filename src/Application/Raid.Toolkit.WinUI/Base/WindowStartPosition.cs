@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Raid.Toolkit.WinUI.Base
+namespace Raid.Toolkit.UI.WinUI.Base
 {
     /// <summary>
     ///  Specifies the initial position of a window.

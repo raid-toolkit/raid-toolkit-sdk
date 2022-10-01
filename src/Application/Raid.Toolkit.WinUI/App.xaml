@@ -1,8 +1,8 @@
 ﻿<Application
-    x:Class="Raid.Toolkit.WinUI.RTKApplication"
+    x:Class="Raid.Toolkit.UI.WinUI.RTKApplication"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Raid.Toolkit.WinUI">
+    xmlns:local="using:Raid.Toolkit.UI.WinUI">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

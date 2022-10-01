@@ -1,24 +1,21 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Model;
-using Raid.Toolkit.WinUI;
+using Raid.Toolkit.UI.WinUI.Forms;
 
 using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Raid.Toolkit.Forms
+namespace Raid.Toolkit.UI.WinUI
 {
-    public partial class AppTray : IDisposable, IHostedService
+    public partial class AppTray : IDisposable
     {
         private readonly IAppUI AppUI;
         private readonly IServiceProvider ServiceProvider;
@@ -39,6 +36,20 @@ namespace Raid.Toolkit.Forms
             ServiceProvider = serviceProvider;
             AppUI = appUI;
             Settings = settings;
+
+            appTrayMenu = ActivatorUtilities.CreateInstance<AppTrayMenu>(ServiceProvider);
+#pragma warning disable CS0436 // Type conflicts with imported type
+            NotifyIcon = new()
+            {
+                Text = $"Raid Toolkit {ThisAssembly.AssemblyFileVersion}",
+                Icon = FormsResources.AppIcon,
+                Visible = true,
+                ContextMenuStrip = appTrayMenu
+            };
+#pragma warning restore CS0436 // Type conflicts with imported type
+            NotifyIcon.MouseClick += NotifyIcon_MouseClick;
+            NotifyIcon.BalloonTipClosed += OnBaloonTipClosed;
+            NotifyIcon.BalloonTipClicked += OnBaloonTipClicked;
         }
 
         [DllImport("user32.dll")]
@@ -127,36 +138,6 @@ namespace Raid.Toolkit.Forms
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
-        }
-
-        public Task StartAsync(CancellationToken cancellationToken)
-        {
-            TaskCompletionSource startedSignal = new();
-            RTKApplication.Current.UIContext.Post(signal =>
-            {
-                if (signal is not TaskCompletionSource tcs) throw new InvalidOperationException();
-
-                appTrayMenu = ActivatorUtilities.CreateInstance<AppTrayMenu>(ServiceProvider);
-#pragma warning disable CS0436 // Type conflicts with imported type
-                NotifyIcon = new()
-                {
-                    Text = $"Raid Toolkit {ThisAssembly.AssemblyFileVersion}",
-                    Icon = FormsResources.AppIcon,
-                    Visible = true,
-                    ContextMenuStrip = appTrayMenu
-                };
-#pragma warning restore CS0436 // Type conflicts with imported type
-                NotifyIcon.MouseClick += NotifyIcon_MouseClick;
-                NotifyIcon.BalloonTipClosed += OnBaloonTipClosed;
-                NotifyIcon.BalloonTipClicked += OnBaloonTipClicked;
-                tcs.SetResult();
-            }, startedSignal);
-            return startedSignal.Task;
-        }
-
-        public Task StopAsync(CancellationToken cancellationToken)
-        {
-            return Task.CompletedTask;
         }
     }
 }

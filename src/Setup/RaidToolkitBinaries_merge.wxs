@@ -2,7 +2,7 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <!--heat.exe dir ..\..\publish\RTK -cg RaidToolkitBinaries -out RaidToolkitBinaries_merge.wxs -srd -sreg -gg -g1-->
     <Fragment>
-        <DirectoryRef Id="INSTALLDIR">
+        <DirectoryRef Id="TARGETDIR">
             <Directory Id="dir2E8F99F00520E27A206B5DDFCF4444A4" Name="af-ZA" />
             <Directory Id="dir8A58EED63047C2902998D459D3EFA3C7" Name="ar-SA" />
             <Directory Id="dirF096CD595013FE4DC729DAD1BE618571" Name="Assets" />
@@ -66,385 +66,385 @@
     </Fragment>
     <Fragment>
         <ComponentGroup Id="RaidToolkitBinaries">
-            <Component Id="cmpE29D92AF2566E235150A4E6ABC606D4E" Directory="INSTALLDIR" Guid="5B58DC81-5222-421F-B9F2-C871223D4C0D">
+            <Component Id="cmpE29D92AF2566E235150A4E6ABC606D4E" Directory="TARGETDIR" Guid="5B58DC81-5222-421F-B9F2-C871223D4C0D">
                 <File Id="fil135D08A85091C7752FA092D8FBA00566" KeyPath="yes" Source="..\..\Publish\RTK\CommandLine.dll" />
             </Component>
-            <Component Id="cmp186E8AA98C97835E1EA9776E1DDC0045" Directory="INSTALLDIR" Guid="A99C406C-F072-44D4-A870-28A2FEA99271">
+            <Component Id="cmp186E8AA98C97835E1EA9776E1DDC0045" Directory="TARGETDIR" Guid="A99C406C-F072-44D4-A870-28A2FEA99271">
                 <File Id="filB16D6ED9A8C1FDFABB3FC960680A1FC9" KeyPath="yes" Source="..\..\Publish\RTK\CoreMessagingXP.dll" />
             </Component>
-            <Component Id="cmp51E832211ACE8F4FE04AE91B9AB822F7" Directory="INSTALLDIR" Guid="0D8AF5D0-CFB5-4578-8E9B-7EF70D4453C8">
+            <Component Id="cmp51E832211ACE8F4FE04AE91B9AB822F7" Directory="TARGETDIR" Guid="0D8AF5D0-CFB5-4578-8E9B-7EF70D4453C8">
                 <File Id="filB637E1868E4704176386720D6AA378C4" KeyPath="yes" Source="..\..\Publish\RTK\dcompi.dll" />
             </Component>
-            <Component Id="cmp268DCBD65FF5F7C9E7437FD4570940F9" Directory="INSTALLDIR" Guid="CF7E9DB9-9813-4DDF-A754-5A89E073AC55">
+            <Component Id="cmp268DCBD65FF5F7C9E7437FD4570940F9" Directory="TARGETDIR" Guid="CF7E9DB9-9813-4DDF-A754-5A89E073AC55">
                 <File Id="filF3D274B2E6C499788B1F8D50C04BB52C" KeyPath="yes" Source="..\..\Publish\RTK\dwmcorei.dll" />
             </Component>
-            <Component Id="cmp3FE0F57906AD197618FDC2A807BF4799" Directory="INSTALLDIR" Guid="AECF9629-9EBC-48B0-A92B-6EB3A99D28BE">
+            <Component Id="cmp3FE0F57906AD197618FDC2A807BF4799" Directory="TARGETDIR" Guid="AECF9629-9EBC-48B0-A92B-6EB3A99D28BE">
                 <File Id="fil6A6DA38258F1A0A416BCD5F9AF233897" KeyPath="yes" Source="..\..\Publish\RTK\DwmSceneI.dll" />
             </Component>
-            <Component Id="cmp8144F901DEB9403CCB6C1FD377DDC91E" Directory="INSTALLDIR" Guid="0D8F5BCA-8D48-4CBE-A546-0F971BD4D457">
+            <Component Id="cmp8144F901DEB9403CCB6C1FD377DDC91E" Directory="TARGETDIR" Guid="0D8F5BCA-8D48-4CBE-A546-0F971BD4D457">
                 <File Id="filA6709ABA4165BCE28F5CEC15AE85CD5B" KeyPath="yes" Source="..\..\Publish\RTK\DWriteCore.dll" />
             </Component>
-            <Component Id="cmp7A82EC5A1DED2394BF08BB54FB8318E7" Directory="INSTALLDIR" Guid="D09D2DA7-AA2B-4B57-931B-FFA9C4DDFF19">
+            <Component Id="cmp7A82EC5A1DED2394BF08BB54FB8318E7" Directory="TARGETDIR" Guid="D09D2DA7-AA2B-4B57-931B-FFA9C4DDFF19">
                 <File Id="filDE0A87A8AEAD0CBD81B788F2996033B1" KeyPath="yes" Source="..\..\Publish\RTK\Google.Protobuf.dll" />
             </Component>
-            <Component Id="cmp73EC0A9BEC6C126DAD233C5037EA3E6D" Directory="INSTALLDIR" Guid="79D40676-2B2C-4E4F-9739-126E6EBA1E64">
+            <Component Id="cmp73EC0A9BEC6C126DAD233C5037EA3E6D" Directory="TARGETDIR" Guid="79D40676-2B2C-4E4F-9739-126E6EBA1E64">
                 <File Id="fil6F3553CF54A6477CB160E8BDAF9C5A5E" KeyPath="yes" Source="..\..\Publish\RTK\Grpc.Core.Api.dll" />
             </Component>
-            <Component Id="cmpE9C7783C9CC07647F14E3AFA6186B14D" Directory="INSTALLDIR" Guid="DA8AAF38-C538-4A33-962A-B9E18D195790">
+            <Component Id="cmpE9C7783C9CC07647F14E3AFA6186B14D" Directory="TARGETDIR" Guid="DA8AAF38-C538-4A33-962A-B9E18D195790">
                 <File Id="fil133C23C4D2EB85F4F2228AE030C55767" KeyPath="yes" Source="..\..\Publish\RTK\Grpc.Net.Client.dll" />
             </Component>
-            <Component Id="cmp8955FAF4C66E319833F6E088239AC99A" Directory="INSTALLDIR" Guid="7D024E65-4D90-4280-AE20-BE9434A44E97">
+            <Component Id="cmp8955FAF4C66E319833F6E088239AC99A" Directory="TARGETDIR" Guid="7D024E65-4D90-4280-AE20-BE9434A44E97">
                 <File Id="filAFF6BBF93888F2488A540300391E17E7" KeyPath="yes" Source="..\..\Publish\RTK\Grpc.Net.Common.dll" />
             </Component>
-            <Component Id="cmp8ED9F313D0684B2D1D045D1CC25DFFB8" Directory="INSTALLDIR" Guid="41599376-9671-48FA-B36E-C1D106B98FCE">
+            <Component Id="cmp8ED9F313D0684B2D1D045D1CC25DFFB8" Directory="TARGETDIR" Guid="41599376-9671-48FA-B36E-C1D106B98FCE">
                 <File Id="fil364F6C1FB9D13F6D34FC64B58429427A" KeyPath="yes" Source="..\..\Publish\RTK\Il2CppToolkit.Common.dll" />
             </Component>
-            <Component Id="cmp7EFA0EA91C84FF94DD8FF4FAC22E8B5B" Directory="INSTALLDIR" Guid="90EE38CD-E64C-4492-AB89-199C7D52D607">
+            <Component Id="cmp7EFA0EA91C84FF94DD8FF4FAC22E8B5B" Directory="TARGETDIR" Guid="90EE38CD-E64C-4492-AB89-199C7D52D607">
                 <File Id="filC66C6458611964FB187AD9CCC41B8017" KeyPath="yes" Source="..\..\Publish\RTK\Il2CppToolkit.Injection.Client.dll" />
             </Component>
-            <Component Id="cmp2C6880E1EA83B022EB11B3CA66745C30" Directory="INSTALLDIR" Guid="0386BD71-06A3-4920-A3A6-72159F453764">
+            <Component Id="cmp2C6880E1EA83B022EB11B3CA66745C30" Directory="TARGETDIR" Guid="0386BD71-06A3-4920-A3A6-72159F453764">
                 <File Id="fil0030CD2AE9D6EA6FF1D388E2688912F8" KeyPath="yes" Source="..\..\Publish\RTK\Il2CppToolkit.Injection.Host.dll" />
             </Component>
-            <Component Id="cmpD3C5ED454AADD4546992FF1968843664" Directory="INSTALLDIR" Guid="4318FB5A-3C9E-4EC8-ACB9-5383A6399D34">
+            <Component Id="cmpD3C5ED454AADD4546992FF1968843664" Directory="TARGETDIR" Guid="4318FB5A-3C9E-4EC8-ACB9-5383A6399D34">
                 <File Id="fil2F75984D686ED82FBDD1132CA37890A0" KeyPath="yes" Source="..\..\Publish\RTK\Il2CppToolkit.Metadata.dll" />
             </Component>
-            <Component Id="cmp3E8681821D19E612AAC0E6B0EF5F89FE" Directory="INSTALLDIR" Guid="EAF23EA1-2909-418D-9632-759340C47BDB">
+            <Component Id="cmp3E8681821D19E612AAC0E6B0EF5F89FE" Directory="TARGETDIR" Guid="EAF23EA1-2909-418D-9632-759340C47BDB">
                 <File Id="filBA291538C45D5EAF4AC1F23AEEC0D539" KeyPath="yes" Source="..\..\Publish\RTK\Il2CppToolkit.ReverseCompiler.dll" />
             </Component>
-            <Component Id="cmpB767D17DBF1CA6040BEAA1D4EF89CAD5" Directory="INSTALLDIR" Guid="58560916-3D2C-4E3C-B809-869E64DE0DE6">
+            <Component Id="cmpB767D17DBF1CA6040BEAA1D4EF89CAD5" Directory="TARGETDIR" Guid="58560916-3D2C-4E3C-B809-869E64DE0DE6">
                 <File Id="filE24387EFFFF4961BAE202D4A7073155D" KeyPath="yes" Source="..\..\Publish\RTK\Il2CppToolkit.Runtime.dll" />
             </Component>
-            <Component Id="cmp4F5647B7AAFDAA58A0F99061C876F2A6" Directory="INSTALLDIR" Guid="CAE8E82C-7E17-4D85-97FC-EABD304969B7">
+            <Component Id="cmp4F5647B7AAFDAA58A0F99061C876F2A6" Directory="TARGETDIR" Guid="CAE8E82C-7E17-4D85-97FC-EABD304969B7">
                 <File Id="fil6D7D7D3E45D3DE8345BF7CDCF25B662F" KeyPath="yes" Source="..\..\Publish\RTK\Il2CppToolkit.Target.NetCore.dll" />
             </Component>
-            <Component Id="cmpFED727D010869121AD9E27FE6CB0CDB9" Directory="INSTALLDIR" Guid="BE588A11-7F08-40F9-AC39-1BD38C09130C">
+            <Component Id="cmpFED727D010869121AD9E27FE6CB0CDB9" Directory="TARGETDIR" Guid="BE588A11-7F08-40F9-AC39-1BD38C09130C">
                 <File Id="fil08C4E8CB11CC857274F5DD944F0532C1" KeyPath="yes" Source="..\..\Publish\RTK\Karambolo.Extensions.Logging.File.dll" />
             </Component>
-            <Component Id="cmpB8821BF6C029B047A9EECEC0CA24E262" Directory="INSTALLDIR" Guid="F5AFEAFD-0FCD-4CE1-B3A8-F4A8D0D9D29E">
+            <Component Id="cmpB8821BF6C029B047A9EECEC0CA24E262" Directory="TARGETDIR" Guid="F5AFEAFD-0FCD-4CE1-B3A8-F4A8D0D9D29E">
                 <File Id="filA36A937F77E9B620409ECD5C0C8CE047" KeyPath="yes" Source="..\..\Publish\RTK\marshal.dll" />
             </Component>
-            <Component Id="cmp091B257EB57479CD3EC2C909393B3183" Directory="INSTALLDIR" Guid="1A1F981C-6BEC-4DCB-AC01-247CED7DA884">
+            <Component Id="cmp091B257EB57479CD3EC2C909393B3183" Directory="TARGETDIR" Guid="1A1F981C-6BEC-4DCB-AC01-247CED7DA884">
                 <File Id="fil5A311B8010615B852BF8B14865ED74C9" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.DirectManipulation.dll" />
             </Component>
-            <Component Id="cmp8FF20BB6E9E1039BAAF705C6E421B34E" Directory="INSTALLDIR" Guid="B4CE0702-7ACF-42FB-8116-CD1AE929BE46">
+            <Component Id="cmp8FF20BB6E9E1039BAAF705C6E421B34E" Directory="TARGETDIR" Guid="B4CE0702-7ACF-42FB-8116-CD1AE929BE46">
                 <File Id="filF640FB5F13E97BAD50106FFC74CA0515" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.Abstractions.dll" />
             </Component>
-            <Component Id="cmp9600FEB1902D7DA917FD445DDA9F3CBA" Directory="INSTALLDIR" Guid="8A5C5A60-F396-4467-BE51-0456EE70708E">
+            <Component Id="cmp9600FEB1902D7DA917FD445DDA9F3CBA" Directory="TARGETDIR" Guid="8A5C5A60-F396-4467-BE51-0456EE70708E">
                 <File Id="fil773A346D214AC0962FABFD5068676C36" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.Binder.dll" />
             </Component>
-            <Component Id="cmpC24EEDAC14BC8A3132D06C7ECB2ED932" Directory="INSTALLDIR" Guid="C329E2B0-51AF-4B4A-91F1-2BF177919C58">
+            <Component Id="cmpC24EEDAC14BC8A3132D06C7ECB2ED932" Directory="TARGETDIR" Guid="C329E2B0-51AF-4B4A-91F1-2BF177919C58">
                 <File Id="fil793D73F9E103B46F2186AAB4A806D8BC" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.CommandLine.dll" />
             </Component>
-            <Component Id="cmp9F2C63E021EEC1097662A0016E3A9437" Directory="INSTALLDIR" Guid="930A3613-BB4F-42AE-B8C0-FDFD5FD33C16">
+            <Component Id="cmp9F2C63E021EEC1097662A0016E3A9437" Directory="TARGETDIR" Guid="930A3613-BB4F-42AE-B8C0-FDFD5FD33C16">
                 <File Id="fil2A9A0281FD23F23037DB0F8E3D6A5CBD" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.dll" />
             </Component>
-            <Component Id="cmp1BE21D90724DF0B75F0DD1D3D33CC81E" Directory="INSTALLDIR" Guid="3A3DEC6A-3FB1-4B64-A2CA-BF5933EE8138">
+            <Component Id="cmp1BE21D90724DF0B75F0DD1D3D33CC81E" Directory="TARGETDIR" Guid="3A3DEC6A-3FB1-4B64-A2CA-BF5933EE8138">
                 <File Id="fil04C09EE802816D0E1D4E2CF5EFDF75C7" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.EnvironmentVariables.dll" />
             </Component>
-            <Component Id="cmp9A2CE43A4C68F068A7DCE986EE90E208" Directory="INSTALLDIR" Guid="917FAC8E-8DA2-4683-8F66-0D4F9EE4C18D">
+            <Component Id="cmp9A2CE43A4C68F068A7DCE986EE90E208" Directory="TARGETDIR" Guid="917FAC8E-8DA2-4683-8F66-0D4F9EE4C18D">
                 <File Id="fil099B8E4B5B574358F0790F30628060C0" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.FileExtensions.dll" />
             </Component>
-            <Component Id="cmpCB3A5D76A5E05336DC3B3CA1B4F454AC" Directory="INSTALLDIR" Guid="D22C7E6A-0309-48AD-B1B8-3DABDFE5EB9B">
+            <Component Id="cmpCB3A5D76A5E05336DC3B3CA1B4F454AC" Directory="TARGETDIR" Guid="D22C7E6A-0309-48AD-B1B8-3DABDFE5EB9B">
                 <File Id="fil28A85E1F38ABF61F6B4B8B485B436D8E" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.Json.dll" />
             </Component>
-            <Component Id="cmp594F24AEF95ABB04BE4D3708FE996DB3" Directory="INSTALLDIR" Guid="51E81827-FC48-476C-A063-EDFB0DBF7E94">
+            <Component Id="cmp594F24AEF95ABB04BE4D3708FE996DB3" Directory="TARGETDIR" Guid="51E81827-FC48-476C-A063-EDFB0DBF7E94">
                 <File Id="fil212A10A47256A218E73D2EFD08223575" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.UserSecrets.dll" />
             </Component>
-            <Component Id="cmpBCA2D2639D9EACD23CDC73FE80070E9B" Directory="INSTALLDIR" Guid="5257EFCC-4E13-4087-98C2-6C9259D3E4FF">
+            <Component Id="cmpBCA2D2639D9EACD23CDC73FE80070E9B" Directory="TARGETDIR" Guid="5257EFCC-4E13-4087-98C2-6C9259D3E4FF">
                 <File Id="fil80254EA06ED1970F3724C7F2D98F487C" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
             </Component>
-            <Component Id="cmpA81A02C8B473EDEBF6F26F9844427DBC" Directory="INSTALLDIR" Guid="23C6F4C2-6ED1-465B-9309-26054367805C">
+            <Component Id="cmpA81A02C8B473EDEBF6F26F9844427DBC" Directory="TARGETDIR" Guid="23C6F4C2-6ED1-465B-9309-26054367805C">
                 <File Id="fil0279174A8B678BBAEA3CB15C09A05058" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.DependencyInjection.dll" />
             </Component>
-            <Component Id="cmpCB4D6C6861A296D02F18EF5F7F637249" Directory="INSTALLDIR" Guid="60A02F81-08F9-4903-8ED4-ACF8A377EE3F">
+            <Component Id="cmpCB4D6C6861A296D02F18EF5F7F637249" Directory="TARGETDIR" Guid="60A02F81-08F9-4903-8ED4-ACF8A377EE3F">
                 <File Id="filC41FA828CE13679EA1B25A5EC4AB82D7" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.FileProviders.Abstractions.dll" />
             </Component>
-            <Component Id="cmp75CE102DEC9E6B31BBFEE1083624A0FE" Directory="INSTALLDIR" Guid="9B7C5F68-15FA-4031-AD96-009D2E06105F">
+            <Component Id="cmp75CE102DEC9E6B31BBFEE1083624A0FE" Directory="TARGETDIR" Guid="9B7C5F68-15FA-4031-AD96-009D2E06105F">
                 <File Id="filC91AF9F5BCC87EA46713DA19BEE6964B" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.FileProviders.Physical.dll" />
             </Component>
-            <Component Id="cmp8F52B0D9603B8CDF0CE9B808F29E8C04" Directory="INSTALLDIR" Guid="C29A1BC7-0ADD-4D10-A895-516BB6A46F03">
+            <Component Id="cmp8F52B0D9603B8CDF0CE9B808F29E8C04" Directory="TARGETDIR" Guid="C29A1BC7-0ADD-4D10-A895-516BB6A46F03">
                 <File Id="fil38E59ABE4B27B3E3F3BD4C4F6C36E7E7" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.FileSystemGlobbing.dll" />
             </Component>
-            <Component Id="cmpEF9B2FF9DB48B0972089B34D67A5D060" Directory="INSTALLDIR" Guid="185B1B50-197A-4AB0-AB55-0A2B1DDA3299">
+            <Component Id="cmpEF9B2FF9DB48B0972089B34D67A5D060" Directory="TARGETDIR" Guid="185B1B50-197A-4AB0-AB55-0A2B1DDA3299">
                 <File Id="fil5E8949978DA2E6E402855CC198D2802B" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Hosting.Abstractions.dll" />
             </Component>
-            <Component Id="cmp751F9B6DD4D2A91D5A70FD8891531D41" Directory="INSTALLDIR" Guid="5635DBD3-3BFF-44CD-865A-8D8FA8D78622">
+            <Component Id="cmp751F9B6DD4D2A91D5A70FD8891531D41" Directory="TARGETDIR" Guid="5635DBD3-3BFF-44CD-865A-8D8FA8D78622">
                 <File Id="fil2A2FBE54B049D9F20BEFDE4AFAAD995B" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Hosting.dll" />
             </Component>
-            <Component Id="cmp51357B8BE38BDBEC4650E16F679193C1" Directory="INSTALLDIR" Guid="B24AB9EE-427A-4F75-B40E-D654CDAD70E5">
+            <Component Id="cmp51357B8BE38BDBEC4650E16F679193C1" Directory="TARGETDIR" Guid="B24AB9EE-427A-4F75-B40E-D654CDAD70E5">
                 <File Id="filCEE87DAF42DD244A77D3FF1358934C20" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Logging.Abstractions.dll" />
             </Component>
-            <Component Id="cmp6459EAE4F3186977729DAB35188B8BD6" Directory="INSTALLDIR" Guid="4A574F35-F0CD-4A1A-BEFF-D47238BB3C72">
+            <Component Id="cmp6459EAE4F3186977729DAB35188B8BD6" Directory="TARGETDIR" Guid="4A574F35-F0CD-4A1A-BEFF-D47238BB3C72">
                 <File Id="fil7703CA988C3720C915B2DC21D3E0A7BF" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Logging.Configuration.dll" />
             </Component>
-            <Component Id="cmp71EE718E97453772376AE2A1C2A4E5E5" Directory="INSTALLDIR" Guid="88BDAA54-9545-48C0-AC87-50DF837C97DC">
+            <Component Id="cmp71EE718E97453772376AE2A1C2A4E5E5" Directory="TARGETDIR" Guid="88BDAA54-9545-48C0-AC87-50DF837C97DC">
                 <File Id="filE2BEE5A099D714B38FEF04E0D3985DE5" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Logging.Console.dll" />
             </Component>
-            <Component Id="cmp2CE2ED6E0BA3E8340E3F18A44ADF0779" Directory="INSTALLDIR" Guid="A8C291EC-4A38-4BB2-912D-291F2DEA3467">
+            <Component Id="cmp2CE2ED6E0BA3E8340E3F18A44ADF0779" Directory="TARGETDIR" Guid="A8C291EC-4A38-4BB2-912D-291F2DEA3467">
                 <File Id="fil0AC76E28495B36C1A7B50DE53A8BA1EB" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Logging.Debug.dll" />
             </Component>
-            <Component Id="cmp23B7C44B649DFD4F12BF865A29A494C2" Directory="INSTALLDIR" Guid="F09471F0-5056-4C91-A474-21C5662B8AC1">
+            <Component Id="cmp23B7C44B649DFD4F12BF865A29A494C2" Directory="TARGETDIR" Guid="F09471F0-5056-4C91-A474-21C5662B8AC1">
                 <File Id="filC6B97A68142D712CE291E1D18CCE23B8" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Logging.dll" />
             </Component>
-            <Component Id="cmpF7A7B31C33B25D213EA640F25AA5D206" Directory="INSTALLDIR" Guid="332BFEF7-CD23-47D5-AC61-F3372ACF1BCE">
+            <Component Id="cmpF7A7B31C33B25D213EA640F25AA5D206" Directory="TARGETDIR" Guid="332BFEF7-CD23-47D5-AC61-F3372ACF1BCE">
                 <File Id="filEFAC4E49FEF648B625B395AA2974A6E8" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Logging.EventLog.dll" />
             </Component>
-            <Component Id="cmpEC7EC6D39CB3E1037D32F33BFC159139" Directory="INSTALLDIR" Guid="8174D6AB-1322-4E5E-A8D2-68DF8E2594DB">
+            <Component Id="cmpEC7EC6D39CB3E1037D32F33BFC159139" Directory="TARGETDIR" Guid="8174D6AB-1322-4E5E-A8D2-68DF8E2594DB">
                 <File Id="fil2310630D5EE28D69859680E1B0A65DD6" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Logging.EventSource.dll" />
             </Component>
-            <Component Id="cmpFEED22B46045D2ED37D8AC77897D31B6" Directory="INSTALLDIR" Guid="7CC78F04-D50C-4EC5-9F02-AEEEDA43452A">
+            <Component Id="cmpFEED22B46045D2ED37D8AC77897D31B6" Directory="TARGETDIR" Guid="7CC78F04-D50C-4EC5-9F02-AEEEDA43452A">
                 <File Id="fil226D03808184A9B5A8A7AD72CBB4B8EC" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Options.ConfigurationExtensions.dll" />
             </Component>
-            <Component Id="cmpF2C47B5B4FF40FF256F58C4C998FA865" Directory="INSTALLDIR" Guid="33AE9DB1-E4E7-413E-8140-068704AA99E0">
+            <Component Id="cmpF2C47B5B4FF40FF256F58C4C998FA865" Directory="TARGETDIR" Guid="33AE9DB1-E4E7-413E-8140-068704AA99E0">
                 <File Id="fil6C5BAA927055E2EA4DDC0C2759255D9F" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Options.dll" />
             </Component>
-            <Component Id="cmp067948BD791077DB950FC74F23D9632C" Directory="INSTALLDIR" Guid="86B09504-2CD4-46A7-8B4C-741A219F3E76">
+            <Component Id="cmp067948BD791077DB950FC74F23D9632C" Directory="TARGETDIR" Guid="86B09504-2CD4-46A7-8B4C-741A219F3E76">
                 <File Id="filE8C60BD18DF0BCBB77CEC821646DA670" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Primitives.dll" />
             </Component>
-            <Component Id="cmp400A07EEFDA0EFAA67CB4918430AE5BD" Directory="INSTALLDIR" Guid="8C19E894-001A-42E3-BEEE-A136C14E7117">
+            <Component Id="cmp400A07EEFDA0EFAA67CB4918430AE5BD" Directory="TARGETDIR" Guid="8C19E894-001A-42E3-BEEE-A136C14E7117">
                 <File Id="filC0D7DD4C98EEF989E6C2EDABCD8E9D11" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Foundation.winmd" />
             </Component>
-            <Component Id="cmpD36FA0846FD35218379CD7797E19C7A0" Directory="INSTALLDIR" Guid="C0D7852D-3BA3-4D1F-ACEF-204C234AC88F">
+            <Component Id="cmpD36FA0846FD35218379CD7797E19C7A0" Directory="TARGETDIR" Guid="C0D7852D-3BA3-4D1F-ACEF-204C234AC88F">
                 <File Id="filAD2672BDA3408C60AE21818C6361F6D5" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Graphics.winmd" />
             </Component>
-            <Component Id="cmp8331BEEAD1A819D9AB076FE7F3F142C0" Directory="INSTALLDIR" Guid="CF32E6FD-AC46-4C84-96F1-85399FE66D7F">
+            <Component Id="cmp8331BEEAD1A819D9AB076FE7F3F142C0" Directory="TARGETDIR" Guid="CF32E6FD-AC46-4C84-96F1-85399FE66D7F">
                 <File Id="fil1441BA752FA671438536D05924DACB21" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.InputStateManager.dll" />
             </Component>
-            <Component Id="cmp473D7FB256BF619909516476006F3FCC" Directory="INSTALLDIR" Guid="80AC6A64-18ED-4717-9C37-BD210E532475">
+            <Component Id="cmp473D7FB256BF619909516476006F3FCC" Directory="TARGETDIR" Guid="80AC6A64-18ED-4717-9C37-BD210E532475">
                 <File Id="fil11E4EECFDA52E39A4BB4FA841DBE9F59" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.InteractiveExperiences.Projection.dll" />
             </Component>
-            <Component Id="cmpF4CC37C7611CAA9214C1BA16C60E8C4D" Directory="INSTALLDIR" Guid="E4E398C4-557D-44BA-BA7E-C32CD93530B1">
+            <Component Id="cmpF4CC37C7611CAA9214C1BA16C60E8C4D" Directory="TARGETDIR" Guid="E4E398C4-557D-44BA-BA7E-C32CD93530B1">
                 <File Id="fil81DFEBD91F7F67C374C777E86BADF9E6" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Internal.FrameworkUdk.dll" />
             </Component>
-            <Component Id="cmpF5806A826E2D4E45AF80C832E1936ED8" Directory="INSTALLDIR" Guid="2356FB3B-047F-4745-B6DC-ABE3734D6307">
+            <Component Id="cmpF5806A826E2D4E45AF80C832E1936ED8" Directory="TARGETDIR" Guid="2356FB3B-047F-4745-B6DC-ABE3734D6307">
                 <File Id="filD9D97B5FCB9EEF4F87A4FB26E71C95BD" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Composition.OSSupport.dll" />
             </Component>
-            <Component Id="cmpA0C203A20F4C9E3AC0523B082CD8AFB5" Directory="INSTALLDIR" Guid="4D39CD0F-A2EF-48C7-99B6-C9BB576AF781">
+            <Component Id="cmpA0C203A20F4C9E3AC0523B082CD8AFB5" Directory="TARGETDIR" Guid="4D39CD0F-A2EF-48C7-99B6-C9BB576AF781">
                 <File Id="fil0B031E4F641AF1677EFD41B743707C50" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Input.dll" />
             </Component>
-            <Component Id="cmpD992199C182D3317B0EBB64A2FF9A2F5" Directory="INSTALLDIR" Guid="5035A915-F9DA-4095-818D-3DED5C725999">
+            <Component Id="cmpD992199C182D3317B0EBB64A2FF9A2F5" Directory="TARGETDIR" Guid="5035A915-F9DA-4095-818D-3DED5C725999">
                 <File Id="filBD82ED59E7CE6B93355E8683BD69F8BC" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Text.winmd" />
             </Component>
-            <Component Id="cmp17C99CC323F6B22A738B698F0692FF9A" Directory="INSTALLDIR" Guid="488B8D46-C40A-4007-8CF8-E93CA7D57321">
+            <Component Id="cmp17C99CC323F6B22A738B698F0692FF9A" Directory="TARGETDIR" Guid="488B8D46-C40A-4007-8CF8-E93CA7D57321">
                 <File Id="filF81C5861F4F82C884E31176F3EA0DECB" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Windowing.Core.dll" />
             </Component>
-            <Component Id="cmpAE449A0AD49A527F52475B83C1177D9A" Directory="INSTALLDIR" Guid="28DAC315-216E-4EE1-B33F-2A298D6DFCAB">
+            <Component Id="cmpAE449A0AD49A527F52475B83C1177D9A" Directory="TARGETDIR" Guid="28DAC315-216E-4EE1-B33F-2A298D6DFCAB">
                 <File Id="filE5B30BD053A777F085721261B6B773B9" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.winmd" />
             </Component>
-            <Component Id="cmp6FF18344A9F7AF5D3D1373191D286DD0" Directory="INSTALLDIR" Guid="8165FB2E-53CD-43D8-9D15-C412EDF4BABE">
+            <Component Id="cmp6FF18344A9F7AF5D3D1373191D286DD0" Directory="TARGETDIR" Guid="8165FB2E-53CD-43D8-9D15-C412EDF4BABE">
                 <File Id="fil8028F57E1FC53C9A3B3C43427979EABE" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Xaml.Controls.dll" />
             </Component>
-            <Component Id="cmpF84272906A6EF8C7254E58A9B8F70F22" Directory="INSTALLDIR" Guid="7E667CE9-EF4E-4D5A-AE67-9B0E6527E2A9">
+            <Component Id="cmpF84272906A6EF8C7254E58A9B8F70F22" Directory="TARGETDIR" Guid="7E667CE9-EF4E-4D5A-AE67-9B0E6527E2A9">
                 <File Id="filA8188CC2BE3B9DAFEF2BCB7FD7217AE5" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Xaml.Controls.pri" />
             </Component>
-            <Component Id="cmpD0566B3D988C2142B39F1389C46596A5" Directory="INSTALLDIR" Guid="F8889ADC-86AB-49A8-A6B8-4EECD2F8E5B0">
+            <Component Id="cmpD0566B3D988C2142B39F1389C46596A5" Directory="TARGETDIR" Guid="F8889ADC-86AB-49A8-A6B8-4EECD2F8E5B0">
                 <File Id="fil0DF1568D3E0760E011724B006AFC6E95" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.ui.xaml.dll" />
             </Component>
-            <Component Id="cmp7D2348A9CD30BE8F307A314D2AF36EF4" Directory="INSTALLDIR" Guid="5F5D04E0-34E4-4DF6-8B4F-9F48A5F574AD">
+            <Component Id="cmp7D2348A9CD30BE8F307A314D2AF36EF4" Directory="TARGETDIR" Guid="5F5D04E0-34E4-4DF6-8B4F-9F48A5F574AD">
                 <File Id="filFE04BF45D180E7DE43745C8471D36130" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Xaml.Internal.dll" />
             </Component>
-            <Component Id="cmp42CE8E1891E0D034A21458A572ED3234" Directory="INSTALLDIR" Guid="42A3886C-B7BE-4CB4-9931-F9986F9E7C35">
+            <Component Id="cmp42CE8E1891E0D034A21458A572ED3234" Directory="TARGETDIR" Guid="42A3886C-B7BE-4CB4-9931-F9986F9E7C35">
                 <File Id="fil879E7683FD8B55E0394B549E27594B94" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Xaml.Phone.dll" />
             </Component>
-            <Component Id="cmp8F8F9945F1270F2F95EC05E69916D5EB" Directory="INSTALLDIR" Guid="665F7740-4112-4975-8D18-0066790FA360">
+            <Component Id="cmp8F8F9945F1270F2F95EC05E69916D5EB" Directory="TARGETDIR" Guid="665F7740-4112-4975-8D18-0066790FA360">
                 <File Id="filD535D1979BED91772F27485B31572F90" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.ui.xaml.resources.19h1.dll" />
             </Component>
-            <Component Id="cmp5486F8360D01990C087F816900502C53" Directory="INSTALLDIR" Guid="75FB86BB-40CF-4128-B625-9DE6316F758C">
+            <Component Id="cmp5486F8360D01990C087F816900502C53" Directory="TARGETDIR" Guid="75FB86BB-40CF-4128-B625-9DE6316F758C">
                 <File Id="fil8FF32234498BAF700294B0D358410198" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.ui.xaml.resources.common.dll" />
             </Component>
-            <Component Id="cmp7D5C4A31D364F8753C41B196E40E25CD" Directory="INSTALLDIR" Guid="0E570F85-5D7D-4F6A-B57D-5FF8A40E2104">
+            <Component Id="cmp7D5C4A31D364F8753C41B196E40E25CD" Directory="TARGETDIR" Guid="0E570F85-5D7D-4F6A-B57D-5FF8A40E2104">
                 <File Id="fil86E75056942BCFC262CB3336B8DDA961" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Xaml.winmd" />
             </Component>
-            <Component Id="cmpBBFD9C907537567B330655067FD07B93" Directory="INSTALLDIR" Guid="0C4BFECB-A228-4C7C-9D90-D5192BB7B6FE">
+            <Component Id="cmpBBFD9C907537567B330655067FD07B93" Directory="TARGETDIR" Guid="0C4BFECB-A228-4C7C-9D90-D5192BB7B6FE">
                 <File Id="fil5A7A205E08062760189E8069AE3D73F3" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Web.WebView2.Core.dll" />
             </Component>
-            <Component Id="cmpF78B3E362F59D385CD1791F159A3F51F" Directory="INSTALLDIR" Guid="F4AA5687-4F68-4FAE-A87C-473D4253FDAA">
+            <Component Id="cmpF78B3E362F59D385CD1791F159A3F51F" Directory="TARGETDIR" Guid="F4AA5687-4F68-4FAE-A87C-473D4253FDAA">
                 <File Id="fil6865701E5007F5E22F68E69C0840356F" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Web.WebView2.Core.winmd" />
             </Component>
-            <Component Id="cmpAE0B55963B2A18D4A7F022C74B292015" Directory="INSTALLDIR" Guid="DDA61AC5-3CE8-4F07-9517-1A7DC4B535AD">
+            <Component Id="cmpAE0B55963B2A18D4A7F022C74B292015" Directory="TARGETDIR" Guid="DDA61AC5-3CE8-4F07-9517-1A7DC4B535AD">
                 <File Id="fil3FC36D19D3D4F5BA3FD6410CD82F6A7A" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll" />
             </Component>
-            <Component Id="cmp8794D85F0611743458E91E6FD6B0E762" Directory="INSTALLDIR" Guid="3EB4B633-A5E4-4BA1-8B11-E90626F7ED66">
+            <Component Id="cmp8794D85F0611743458E91E6FD6B0E762" Directory="TARGETDIR" Guid="3EB4B633-A5E4-4BA1-8B11-E90626F7ED66">
                 <File Id="filACA141F9F1F5C9459909E0A3A207C2C0" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.ApplicationModel.DynamicDependency.winmd" />
             </Component>
-            <Component Id="cmp6F0C8E19B11BB3A0FE3EFB1FCC968AEC" Directory="INSTALLDIR" Guid="23AF18E8-5F49-4946-9737-012393DA632C">
+            <Component Id="cmp6F0C8E19B11BB3A0FE3EFB1FCC968AEC" Directory="TARGETDIR" Guid="23AF18E8-5F49-4946-9737-012393DA632C">
                 <File Id="filDDF150D2CA8447072143ADF38331C7BC" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.ApplicationModel.Resources.dll" />
             </Component>
-            <Component Id="cmp01C73C5F2D02B55F092385A0DC0F443D" Directory="INSTALLDIR" Guid="0EACF119-DD40-4FE3-94E8-A0D56986D226">
+            <Component Id="cmp01C73C5F2D02B55F092385A0DC0F443D" Directory="TARGETDIR" Guid="0EACF119-DD40-4FE3-94E8-A0D56986D226">
                 <File Id="fil47D14C1B1295530DC85158D723524D8A" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.ApplicationModel.Resources.Projection.dll" />
             </Component>
-            <Component Id="cmp27F3F43F939B837C5F4E83F1C188C9A3" Directory="INSTALLDIR" Guid="D047FE0C-0CE5-403F-AB29-BBE623E34254">
+            <Component Id="cmp27F3F43F939B837C5F4E83F1C188C9A3" Directory="TARGETDIR" Guid="D047FE0C-0CE5-403F-AB29-BBE623E34254">
                 <File Id="fil246988D9CE988CE675F5C5AF60FCD423" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.ApplicationModel.Resources.winmd" />
             </Component>
-            <Component Id="cmp64618856385EB19B17A5150E816D7210" Directory="INSTALLDIR" Guid="FB12859E-C73F-4496-A6A7-9AD3C380EF52">
+            <Component Id="cmp64618856385EB19B17A5150E816D7210" Directory="TARGETDIR" Guid="FB12859E-C73F-4496-A6A7-9AD3C380EF52">
                 <File Id="fil1F9F357D12CA12BD7416AE779F08435E" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll" />
             </Component>
-            <Component Id="cmp65EEA5D3C7C5A311B9FCAF511EDE9CF7" Directory="INSTALLDIR" Guid="8BEE48EA-DDC2-4963-BEB4-8F7FD21F6FBD">
+            <Component Id="cmp65EEA5D3C7C5A311B9FCAF511EDE9CF7" Directory="TARGETDIR" Guid="8BEE48EA-DDC2-4963-BEB4-8F7FD21F6FBD">
                 <File Id="fil5BDFD3165F5B08139FE655079C9A3525" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.ApplicationModel.WindowsAppRuntime.winmd" />
             </Component>
-            <Component Id="cmp467EB5BAA6CC7E93C8FC997D4ECD4CEB" Directory="INSTALLDIR" Guid="BEC7AB7D-1791-4B03-9229-477FD8DC8E6B">
+            <Component Id="cmp467EB5BAA6CC7E93C8FC997D4ECD4CEB" Directory="TARGETDIR" Guid="BEC7AB7D-1791-4B03-9229-477FD8DC8E6B">
                 <File Id="fil9858AA9BEEE95F1BE16198FBC00EA54C" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.AppLifecycle.Projection.dll" />
             </Component>
-            <Component Id="cmp64653A4A894257D30CDF481153484489" Directory="INSTALLDIR" Guid="9D64AE75-E2C1-4B56-8859-2DC683A5B720">
+            <Component Id="cmp64653A4A894257D30CDF481153484489" Directory="TARGETDIR" Guid="9D64AE75-E2C1-4B56-8859-2DC683A5B720">
                 <File Id="filD745CB85F1EAFF170C3B9188CAC39948" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.AppLifecycle.winmd" />
             </Component>
-            <Component Id="cmpECD792D839569FA0369D136DB23A07A5" Directory="INSTALLDIR" Guid="CB1DCA0C-4A47-4CE8-B331-89B179BBAD5C">
+            <Component Id="cmpECD792D839569FA0369D136DB23A07A5" Directory="TARGETDIR" Guid="CB1DCA0C-4A47-4CE8-B331-89B179BBAD5C">
                 <File Id="fil85502433E1821C1A6010F19FDCCBB667" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.AppNotifications.Projection.dll" />
             </Component>
-            <Component Id="cmpB2E167D16ABEF1D64198AD0E7197B672" Directory="INSTALLDIR" Guid="A147B354-4BE8-4954-95AF-C58E7797C41B">
+            <Component Id="cmpB2E167D16ABEF1D64198AD0E7197B672" Directory="TARGETDIR" Guid="A147B354-4BE8-4954-95AF-C58E7797C41B">
                 <File Id="fil1E8164899AF8D561A656EB4E348B44ED" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.AppNotifications.winmd" />
             </Component>
-            <Component Id="cmpF787E45E8FC6731296CA56E7E6962E6F" Directory="INSTALLDIR" Guid="8A22EE50-545A-4531-AE7D-27470FD694F1">
+            <Component Id="cmpF787E45E8FC6731296CA56E7E6962E6F" Directory="TARGETDIR" Guid="8A22EE50-545A-4531-AE7D-27470FD694F1">
                 <File Id="fil9A3F5A76BE6C3CFE7673F95F4C92FE19" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.PushNotifications.Projection.dll" />
             </Component>
-            <Component Id="cmp1D0CA8751164878E7BA53270CF490B31" Directory="INSTALLDIR" Guid="E2F44A60-FE46-4199-8BA2-6C04949109A6">
+            <Component Id="cmp1D0CA8751164878E7BA53270CF490B31" Directory="TARGETDIR" Guid="E2F44A60-FE46-4199-8BA2-6C04949109A6">
                 <File Id="filBAE3F32209FD9FFD362FD0DB7B938784" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.PushNotifications.winmd" />
             </Component>
-            <Component Id="cmp0E3F41C80D438847AE8CB2DE5560ABDD" Directory="INSTALLDIR" Guid="C19D5CA0-7E9A-4CDE-B63F-E6CFDC115BE6">
+            <Component Id="cmp0E3F41C80D438847AE8CB2DE5560ABDD" Directory="TARGETDIR" Guid="C19D5CA0-7E9A-4CDE-B63F-E6CFDC115BE6">
                 <File Id="filC7A98F410539FBC3194534DE8E4F091F" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.SDK.NET.dll" />
             </Component>
-            <Component Id="cmpFA4E43BAA26C21C2C4599C3C368ADBDD" Directory="INSTALLDIR" Guid="440C0F80-0256-435F-845A-72264AA018B9">
+            <Component Id="cmpFA4E43BAA26C21C2C4599C3C368ADBDD" Directory="TARGETDIR" Guid="440C0F80-0256-435F-845A-72264AA018B9">
                 <File Id="fil150094EC388C1B2C147A8130A0D0F8DF" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.System.Power.Projection.dll" />
             </Component>
-            <Component Id="cmpBA0F1D8E59B45038BEF78E23CC0AFC8C" Directory="INSTALLDIR" Guid="0813AD15-C64F-4C63-9C3A-0A44CB279B93">
+            <Component Id="cmpBA0F1D8E59B45038BEF78E23CC0AFC8C" Directory="TARGETDIR" Guid="0813AD15-C64F-4C63-9C3A-0A44CB279B93">
                 <File Id="fil69A882FA6AF0B0BF89B3918438A802B3" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.System.Power.winmd" />
             </Component>
-            <Component Id="cmp02D2A34D38AA98B9239439415F83CC9C" Directory="INSTALLDIR" Guid="F0DECE2A-2A7C-44DD-AD20-3189C51A6730">
+            <Component Id="cmp02D2A34D38AA98B9239439415F83CC9C" Directory="TARGETDIR" Guid="F0DECE2A-2A7C-44DD-AD20-3189C51A6730">
                 <File Id="fil64A7F5B48C556628A2583B2FDFEBEFAB" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.System.Projection.dll" />
             </Component>
-            <Component Id="cmp4DC3D2E391EFF49EFF95DD8AAFDF4A2C" Directory="INSTALLDIR" Guid="2B67A950-88A0-4B0E-8947-C45F2550F613">
+            <Component Id="cmp4DC3D2E391EFF49EFF95DD8AAFDF4A2C" Directory="TARGETDIR" Guid="2B67A950-88A0-4B0E-8947-C45F2550F613">
                 <File Id="filAB2ED7CDE8823DAE8E176B76D590FF2C" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.System.winmd" />
             </Component>
-            <Component Id="cmp7FABFC5797A2946F2807D44FBAFCECC8" Directory="INSTALLDIR" Guid="0E9E8C06-4E94-48F0-B120-A76344783252">
+            <Component Id="cmp7FABFC5797A2946F2807D44FBAFCECC8" Directory="TARGETDIR" Guid="0E9E8C06-4E94-48F0-B120-A76344783252">
                 <File Id="fil6C05EC20D0F7E8074FA3814D3282DCC1" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.WindowsAppRuntime.Bootstrap.dll" />
             </Component>
-            <Component Id="cmp55435D418007F5D11EBD6A74DEF394C7" Directory="INSTALLDIR" Guid="80BCAF79-DD31-478B-B5F8-8F08CB91806F">
+            <Component Id="cmp55435D418007F5D11EBD6A74DEF394C7" Directory="TARGETDIR" Guid="80BCAF79-DD31-478B-B5F8-8F08CB91806F">
                 <File Id="filFB01F304635AE477A46565873D4EA113" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" />
             </Component>
-            <Component Id="cmp5F75C4D30B189E3275E4422D9E2D78B8" Directory="INSTALLDIR" Guid="09D64F24-CCAF-45EA-8FBE-1FC03DB60326">
+            <Component Id="cmp5F75C4D30B189E3275E4422D9E2D78B8" Directory="TARGETDIR" Guid="09D64F24-CCAF-45EA-8FBE-1FC03DB60326">
                 <File Id="fil4567A2E1C52C2CC2C0F7C19ABEAAC751" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.WindowsAppRuntime.dll" />
             </Component>
-            <Component Id="cmpCF440B43152E237F48DECBB1285B1729" Directory="INSTALLDIR" Guid="5959131C-A18C-473F-AE2E-2AA62AE967C2">
+            <Component Id="cmpCF440B43152E237F48DECBB1285B1729" Directory="TARGETDIR" Guid="5959131C-A18C-473F-AE2E-2AA62AE967C2">
                 <File Id="fil674605D9DEC211A9CBE6FCDAB27509BB" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.WindowsAppRuntime.Insights.Resource.dll" />
             </Component>
-            <Component Id="cmp0AF9424E0E8939B39F2DC8AB5CE5C736" Directory="INSTALLDIR" Guid="31A73F52-CD30-4D59-A39F-A9F74A2297D4">
+            <Component Id="cmp0AF9424E0E8939B39F2DC8AB5CE5C736" Directory="TARGETDIR" Guid="31A73F52-CD30-4D59-A39F-A9F74A2297D4">
                 <File Id="fil9B1DF81B2BECBB36637F70382995AADB" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.WindowsAppRuntime.Release.Net.dll" />
             </Component>
-            <Component Id="cmp2B5363FEA9834A70BECFEB36BB97ADF1" Directory="INSTALLDIR" Guid="33E28411-4E9E-42B4-8169-1A650F9B4202">
+            <Component Id="cmp2B5363FEA9834A70BECFEB36BB97ADF1" Directory="TARGETDIR" Guid="33E28411-4E9E-42B4-8169-1A650F9B4202">
                 <File Id="filD27C0CEC4F7DAC8AE89F14B5958F3270" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.WinUI.dll" />
             </Component>
-            <Component Id="cmpB551351956235E6912E0E0D9322DA5AE" Directory="INSTALLDIR" Guid="6B21E3FD-6EE6-4D99-A2F6-D7BE0383A8FF">
+            <Component Id="cmpB551351956235E6912E0E0D9322DA5AE" Directory="TARGETDIR" Guid="6B21E3FD-6EE6-4D99-A2F6-D7BE0383A8FF">
                 <File Id="fil6C5ABCCC50C380DBB37F65B754E9AD19" KeyPath="yes" Source="..\..\Publish\RTK\Mono.Cecil.dll" />
             </Component>
-            <Component Id="cmp34ECDAE8D1DB7B667839E915ED61EA31" Directory="INSTALLDIR" Guid="6D971E7A-A118-4277-831F-013B6839F7A6">
+            <Component Id="cmp34ECDAE8D1DB7B667839E915ED61EA31" Directory="TARGETDIR" Guid="6D971E7A-A118-4277-831F-013B6839F7A6">
                 <File Id="fil9EE833AC4B824E38A977704C46B60725" KeyPath="yes" Source="..\..\Publish\RTK\Mono.Cecil.Mdb.dll" />
             </Component>
-            <Component Id="cmp10E5175EBDE77C34ED93DD9972DA60EE" Directory="INSTALLDIR" Guid="11705AA6-70EE-425D-898F-AA21EE4609EA">
+            <Component Id="cmp10E5175EBDE77C34ED93DD9972DA60EE" Directory="TARGETDIR" Guid="11705AA6-70EE-425D-898F-AA21EE4609EA">
                 <File Id="fil2E93740AE8B4CF17FDF1F65915A95702" KeyPath="yes" Source="..\..\Publish\RTK\Mono.Cecil.Rocks.dll" />
             </Component>
-            <Component Id="cmpB018B0DCFF738FA4A39FAAF77E87DE98" Directory="INSTALLDIR" Guid="A7B953F8-529A-4189-ADE9-CD43413F3E65">
+            <Component Id="cmpB018B0DCFF738FA4A39FAAF77E87DE98" Directory="TARGETDIR" Guid="A7B953F8-529A-4189-ADE9-CD43413F3E65">
                 <File Id="fil24B1E01C6A313BEFFE5616506D22C774" KeyPath="yes" Source="..\..\Publish\RTK\MRM.dll" />
             </Component>
-            <Component Id="cmp72974F93C3F42DAFDBFB2867D92E41D9" Directory="INSTALLDIR" Guid="ED2492AB-D3B4-4DA0-AE35-5B9E6EF831C7">
+            <Component Id="cmp72974F93C3F42DAFDBFB2867D92E41D9" Directory="TARGETDIR" Guid="ED2492AB-D3B4-4DA0-AE35-5B9E6EF831C7">
                 <File Id="fil7F15BA8094994ADAD04DA907E934B5BD" KeyPath="yes" Source="..\..\Publish\RTK\Newtonsoft.Json.dll" />
             </Component>
-            <Component Id="cmp2A82FA5B80A25F147648C4BAD79309FB" Directory="INSTALLDIR" Guid="5FA86A6A-2AAB-4554-820C-8B384772D1BA">
+            <Component Id="cmp2A82FA5B80A25F147648C4BAD79309FB" Directory="TARGETDIR" Guid="5FA86A6A-2AAB-4554-820C-8B384772D1BA">
                 <File Id="fil5EC7DEE8D5F2944CA7D8218A00B527AE" KeyPath="yes" Source="..\..\Publish\RTK\ProcessMemoryUtilities.dll" />
             </Component>
-            <Component Id="cmp83C4DF7B61AAEB640B91013C6D924031" Directory="INSTALLDIR" Guid="F556A51F-B23D-4592-9FC8-F46A28F827BF">
+            <Component Id="cmp83C4DF7B61AAEB640B91013C6D924031" Directory="TARGETDIR" Guid="F556A51F-B23D-4592-9FC8-F46A28F827BF">
                 <File Id="fil5BF8310187D1B75C3D61C9AD3AEE5A59" KeyPath="yes" Source="..\..\Publish\RTK\PushNotificationsLongRunningTask.ProxyStub.dll" />
             </Component>
-            <Component Id="cmpC44EE4157F58901307D096A1B38677EA" Directory="INSTALLDIR" Guid="8B08CEB2-0C20-49CA-A87E-A3B716728CE4">
+            <Component Id="cmpC44EE4157F58901307D096A1B38677EA" Directory="TARGETDIR" Guid="8B08CEB2-0C20-49CA-A87E-A3B716728CE4">
                 <File Id="filC5190B455E0F2173237B566CAD9F44A6" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Common.dll" />
             </Component>
-            <Component Id="cmpEEBBD32E734DC4DE77A84DE1301901AD" Directory="INSTALLDIR" Guid="61AADF31-3FE3-4CEA-A0B1-BE4B5D6A62AD">
+            <Component Id="cmpEEBBD32E734DC4DE77A84DE1301901AD" Directory="TARGETDIR" Guid="61AADF31-3FE3-4CEA-A0B1-BE4B5D6A62AD">
                 <File Id="fil7EF24786EA30E4740E5AC70F7D7448D0" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Model.dll" />
             </Component>
-            <Component Id="cmp57C40D3C3813A6CAE8A87A2730DD4751" Directory="INSTALLDIR" Guid="A2BD3CA1-7A81-4B87-B767-241E2B7685CA">
+            <Component Id="cmp57C40D3C3813A6CAE8A87A2730DD4751" Directory="TARGETDIR" Guid="A2BD3CA1-7A81-4B87-B767-241E2B7685CA">
                 <File Id="filA0B941EBB633DC962B0DCBE2F91009E6" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.Application.Core.dll" />
             </Component>
-            <Component Id="cmp37B6DC19C692165D6FE764BC18B339F7" Directory="INSTALLDIR" Guid="CC9180DC-EA33-487C-A307-A9C352A54215">
+            <Component Id="cmp37B6DC19C692165D6FE764BC18B339F7" Directory="TARGETDIR" Guid="CC9180DC-EA33-487C-A307-A9C352A54215">
                 <File Id="fil34C0E73EDD4AB4DD45C03DE0940A2F8C" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.DataModel.dll" />
             </Component>
-            <Component Id="cmp663F9167C350EFE9FCD28FDD64EAC174" Directory="INSTALLDIR" Guid="534D7738-C423-41BB-94FB-F34169ECC0BF">
+            <Component Id="cmp663F9167C350EFE9FCD28FDD64EAC174" Directory="TARGETDIR" Guid="534D7738-C423-41BB-94FB-F34169ECC0BF">
                 <File Id="fil5D14442429DC8EBA586A94E0B7B00918" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.deps.json" />
             </Component>
-            <Component Id="cmp3E112438AF76D9EE4D474C483C618C80" Directory="INSTALLDIR" Guid="2354ABDE-4231-4575-B351-510464D06BF5">
+            <Component Id="cmp3E112438AF76D9EE4D474C483C618C80" Directory="TARGETDIR" Guid="2354ABDE-4231-4575-B351-510464D06BF5">
                 <File Id="filDD089ED7B4B489F370BEB700690ABF4B" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.dll" />
             </Component>
-            <Component Id="cmp555C3A3F1EC8273361A1202FDF87F962" Directory="INSTALLDIR" Guid="E51E6A7C-57AB-43C8-8BD4-40AE5A4194B4">
+            <Component Id="cmp555C3A3F1EC8273361A1202FDF87F962" Directory="TARGETDIR" Guid="E51E6A7C-57AB-43C8-8BD4-40AE5A4194B4">
                 <File Id="fil8C22E1519A2A47FFDBEEDE52069DFF32" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.exe" />
             </Component>
-            <Component Id="cmp44C4C4260B2C2C39A08CE2E8475A7328" Directory="INSTALLDIR" Guid="8F0C2E05-FD60-4BA1-BE98-24101FBE66B2">
+            <Component Id="cmp44C4C4260B2C2C39A08CE2E8475A7328" Directory="TARGETDIR" Guid="8F0C2E05-FD60-4BA1-BE98-24101FBE66B2">
                 <File Id="filC417A87FF2423CF5C790C571FFE50C95" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.Extensibility.dll" />
             </Component>
-            <Component Id="cmp5F31A3BD676970CB629D9AB00542E3BF" Directory="INSTALLDIR" Guid="494B4089-2063-423D-B687-479C2C6733A5">
+            <Component Id="cmp5F31A3BD676970CB629D9AB00542E3BF" Directory="TARGETDIR" Guid="494B4089-2063-423D-B687-479C2C6733A5">
                 <File Id="fil51ACF001B179DDDBC6AA298AD6C45DB8" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.Extensibility.Host.dll" />
             </Component>
-            <Component Id="cmp5DFFF7D3E58E3D752F1991C01B106C6C" Directory="INSTALLDIR" Guid="9E65C04B-45A6-4C7C-A11E-56A8FB608E1C">
+            <Component Id="cmp5DFFF7D3E58E3D752F1991C01B106C6C" Directory="TARGETDIR" Guid="9E65C04B-45A6-4C7C-A11E-56A8FB608E1C">
                 <File Id="fil16FBFCF35675BB91CDFFB5E49AE3532B" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.Extension.Account.dll" />
             </Component>
-            <Component Id="cmp9E1E42CA3A2216987C89EB785FE9B3A9" Directory="INSTALLDIR" Guid="490A6180-CAE1-4B16-8D25-720BF5A55DB1">
+            <Component Id="cmp9E1E42CA3A2216987C89EB785FE9B3A9" Directory="TARGETDIR" Guid="490A6180-CAE1-4B16-8D25-720BF5A55DB1">
                 <File Id="fil308F7F9E57415D6CEA433D6575EF33F7" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.Extension.Realtime.dll" />
             </Component>
-            <Component Id="cmpA8A9650931E7FE41E352E62403E00749" Directory="INSTALLDIR" Guid="57F826DD-E2ED-460B-8959-DCB8D11EF33A">
+            <Component Id="cmpA8A9650931E7FE41E352E62403E00749" Directory="TARGETDIR" Guid="57F826DD-E2ED-460B-8959-DCB8D11EF33A">
                 <File Id="filF0923678210884C81C9FD17263D02577" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.runtimeconfig.json" />
             </Component>
-            <Component Id="cmpB7E809EF5D19F36A7A1ACE1ECF12A392" Directory="INSTALLDIR" Guid="676193E0-F832-455C-88E9-34C385E8823D">
+            <Component Id="cmpB7E809EF5D19F36A7A1ACE1ECF12A392" Directory="TARGETDIR" Guid="676193E0-F832-455C-88E9-34C385E8823D">
                 <File Id="fil8282221883C9475310EAF3FD6B95C9A8" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.UI.Forms.dll" />
             </Component>
-            <Component Id="cmpBF7D7C7B2D7EABF0DB78A24E504C001A" Directory="INSTALLDIR" Guid="19B3B3B4-CC6E-4D76-AE00-9A3C9FCE1534">
+            <Component Id="cmpBF7D7C7B2D7EABF0DB78A24E504C001A" Directory="TARGETDIR" Guid="19B3B3B4-CC6E-4D76-AE00-9A3C9FCE1534">
                 <File Id="fil9F5F5DC8C18F7A39639A8CD8D0D8EB05" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.UI.WinUI.dll" />
             </Component>
-            <Component Id="cmpD1668DDE8484CA37BB8DFA87F7EB314C" Directory="INSTALLDIR" Guid="E9666CED-742B-4E9D-A784-F80474DFF5E7">
+            <Component Id="cmpD1668DDE8484CA37BB8DFA87F7EB314C" Directory="TARGETDIR" Guid="E9666CED-742B-4E9D-A784-F80474DFF5E7">
                 <File Id="filD4E7918562D6EE38125B5C426D01C18F" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.UI.WinUI.pri" />
             </Component>
-            <Component Id="cmpF15018C592F948F609C5C9DB3CAD4ED8" Directory="INSTALLDIR" Guid="9815B43B-4270-464F-AC25-FA027AD74F3F">
+            <Component Id="cmpF15018C592F948F609C5C9DB3CAD4ED8" Directory="TARGETDIR" Guid="9815B43B-4270-464F-AC25-FA027AD74F3F">
                 <File Id="filA3A17630DB090C643E65C965FA3CEA1D" KeyPath="yes" Source="..\..\Publish\RTK\SuperSocket.Channel.dll" />
             </Component>
-            <Component Id="cmpA6EE8E4AEDE97A796104CFB8CBD5B614" Directory="INSTALLDIR" Guid="DEF05CFA-E6E9-4F2A-B2F5-6A92AE02CB15">
+            <Component Id="cmpA6EE8E4AEDE97A796104CFB8CBD5B614" Directory="TARGETDIR" Guid="DEF05CFA-E6E9-4F2A-B2F5-6A92AE02CB15">
                 <File Id="filCE6E6F555AED0D2ED02235727D0DB6F1" KeyPath="yes" Source="..\..\Publish\RTK\SuperSocket.Command.dll" />
             </Component>
-            <Component Id="cmp8E0AB1E83242E89DDC321E2A93A6625A" Directory="INSTALLDIR" Guid="F8E277BA-7E17-4129-A970-C50CD11747B4">
+            <Component Id="cmp8E0AB1E83242E89DDC321E2A93A6625A" Directory="TARGETDIR" Guid="F8E277BA-7E17-4129-A970-C50CD11747B4">
                 <File Id="fil6870858972A655AD033A680FC83A42D1" KeyPath="yes" Source="..\..\Publish\RTK\SuperSocket.Primitives.dll" />
             </Component>
-            <Component Id="cmp662F9C971A6411301E91FD80D6E365C8" Directory="INSTALLDIR" Guid="D5760FD2-5563-4E00-A0F4-30AF97532909">
+            <Component Id="cmp662F9C971A6411301E91FD80D6E365C8" Directory="TARGETDIR" Guid="D5760FD2-5563-4E00-A0F4-30AF97532909">
                 <File Id="fil62CE9AA05FB479D68C9CFE781C680552" KeyPath="yes" Source="..\..\Publish\RTK\SuperSocket.ProtoBase.dll" />
             </Component>
-            <Component Id="cmp1BEC218B159FA21B3DBA680C4C1B8826" Directory="INSTALLDIR" Guid="F4BB07BA-CD83-453C-BB47-92862D295E62">
+            <Component Id="cmp1BEC218B159FA21B3DBA680C4C1B8826" Directory="TARGETDIR" Guid="F4BB07BA-CD83-453C-BB47-92862D295E62">
                 <File Id="fil220593F817805CAA960DB370434F2B2D" KeyPath="yes" Source="..\..\Publish\RTK\SuperSocket.Server.dll" />
             </Component>
-            <Component Id="cmp94298A3293516B82CD294E8ABBF79A83" Directory="INSTALLDIR" Guid="03E24AE1-556C-4C3C-B6D6-A029DC495B03">
+            <Component Id="cmp94298A3293516B82CD294E8ABBF79A83" Directory="TARGETDIR" Guid="03E24AE1-556C-4C3C-B6D6-A029DC495B03">
                 <File Id="fil31DBF4E04205EAD906DA2B3E20AC7847" KeyPath="yes" Source="..\..\Publish\RTK\SuperSocket.WebSocket.dll" />
             </Component>
-            <Component Id="cmpF96322BB55EADDC2E1ACC0443BBDF480" Directory="INSTALLDIR" Guid="7F4FB99D-7D0E-496F-AFB7-F2C8F8B11B2F">
+            <Component Id="cmpF96322BB55EADDC2E1ACC0443BBDF480" Directory="TARGETDIR" Guid="7F4FB99D-7D0E-496F-AFB7-F2C8F8B11B2F">
                 <File Id="fil1D28256CB4E6CC56BBCA733A53F1C64A" KeyPath="yes" Source="..\..\Publish\RTK\SuperSocket.WebSocket.Server.dll" />
             </Component>
-            <Component Id="cmpF0A2D458A47C143F793724A9D8724352" Directory="INSTALLDIR" Guid="6E7B908F-7E2C-45B2-AF43-B17FFD00D32B">
+            <Component Id="cmpF0A2D458A47C143F793724A9D8724352" Directory="TARGETDIR" Guid="6E7B908F-7E2C-45B2-AF43-B17FFD00D32B">
                 <File Id="fil719BC4C0E7E8B3335A1625CC7E2DB262" KeyPath="yes" Source="..\..\Publish\RTK\System.Diagnostics.EventLog.Messages.dll" />
             </Component>
-            <Component Id="cmp9E320D39439267EBF2B6E8299B7919F0" Directory="INSTALLDIR" Guid="65340FD9-1FC3-4F82-A624-07B84485662F">
+            <Component Id="cmp9E320D39439267EBF2B6E8299B7919F0" Directory="TARGETDIR" Guid="65340FD9-1FC3-4F82-A624-07B84485662F">
                 <File Id="fil9A64C9849C18D5F341EFA5E05FA59182" KeyPath="yes" Source="..\..\Publish\RTK\System.IO.Pipelines.dll" />
             </Component>
-            <Component Id="cmp630BE8638A0EEB2331EC10F70487F4D3" Directory="INSTALLDIR" Guid="9F622B0A-1E3F-4AA9-A79E-CCD95A0A0B92">
+            <Component Id="cmp630BE8638A0EEB2331EC10F70487F4D3" Directory="TARGETDIR" Guid="9F622B0A-1E3F-4AA9-A79E-CCD95A0A0B92">
                 <File Id="fil047BA000C5B11D127488EBAB9999FA25" KeyPath="yes" Source="..\..\Publish\RTK\Vestris.ResourceLib.dll" />
             </Component>
-            <Component Id="cmpBA6C2B30B1F7AE0F5135E9BE31549655" Directory="INSTALLDIR" Guid="1B4921FB-C099-487E-8F07-3FD9A12FA044">
+            <Component Id="cmpBA6C2B30B1F7AE0F5135E9BE31549655" Directory="TARGETDIR" Guid="1B4921FB-C099-487E-8F07-3FD9A12FA044">
                 <File Id="fil2BB6CBEDB5ECEA19AF740F788BD8C30F" KeyPath="yes" Source="..\..\Publish\RTK\WindowsAppRuntime.png" />
             </Component>
-            <Component Id="cmp9726B40569A9517800BBB9309CCC8D95" Directory="INSTALLDIR" Guid="55FF86A9-72B1-43A7-943C-22029A5D7687">
+            <Component Id="cmp9726B40569A9517800BBB9309CCC8D95" Directory="TARGETDIR" Guid="55FF86A9-72B1-43A7-943C-22029A5D7687">
                 <File Id="fil71270CA722F64E5E382103651C7D9637" KeyPath="yes" Source="..\..\Publish\RTK\WindowsAppSdk.AppxDeploymentExtensions.Desktop.dll" />
             </Component>
-            <Component Id="cmp39F7D5D5D1176E349595BDF19D7D1849" Directory="INSTALLDIR" Guid="303D6400-5FB0-4C02-9DEF-20E1B4F352C6">
+            <Component Id="cmp39F7D5D5D1176E349595BDF19D7D1849" Directory="TARGETDIR" Guid="303D6400-5FB0-4C02-9DEF-20E1B4F352C6">
                 <File Id="fil4E2BE9434FAA18BECA70DCDF76BEAF77" KeyPath="yes" Source="..\..\Publish\RTK\WinRT.Runtime.dll" />
             </Component>
-            <Component Id="cmp17935BD6FD300CD6A443DD3179A9C238" Directory="INSTALLDIR" Guid="A52B340B-E3CF-47E9-B04C-F2095CCF352A">
+            <Component Id="cmp17935BD6FD300CD6A443DD3179A9C238" Directory="TARGETDIR" Guid="A52B340B-E3CF-47E9-B04C-F2095CCF352A">
                 <File Id="fil7D3DF230769FF4D057D974EB5B9F7037" KeyPath="yes" Source="..\..\Publish\RTK\WinUIEdit.dll" />
             </Component>
-            <Component Id="cmp7C1B583CA6FDF853C512DA03D209223A" Directory="INSTALLDIR" Guid="779D0670-2E67-4E4F-9776-8CEEA77F920A">
+            <Component Id="cmp7C1B583CA6FDF853C512DA03D209223A" Directory="TARGETDIR" Guid="779D0670-2E67-4E4F-9776-8CEEA77F920A">
                 <File Id="fil989374167403141F20A51FA9DF9B53CA" KeyPath="yes" Source="..\..\Publish\RTK\WinUIEx.dll" />
             </Component>
-            <Component Id="cmp5A32856B16B537A370508A7D040A9278" Directory="INSTALLDIR" Guid="13D62954-97A4-4A43-AD06-19F124EEF608">
+            <Component Id="cmp5A32856B16B537A370508A7D040A9278" Directory="TARGETDIR" Guid="13D62954-97A4-4A43-AD06-19F124EEF608">
                 <File Id="fil2F8D171C7DC1DF0FBCF962870DA50AA0" KeyPath="yes" Source="..\..\Publish\RTK\wuceffectsi.dll" />
             </Component>
             <Component Id="cmp4A253CEEB1B841DA334A20487EBC136F" Directory="dir2E8F99F00520E27A206B5DDFCF4444A4" Guid="D79A59BA-FED9-4D1A-881C-A381B81B1C2D">

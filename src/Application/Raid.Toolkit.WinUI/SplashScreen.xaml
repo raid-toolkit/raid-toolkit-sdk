@@ -1,9 +1,9 @@
-﻿<rtkuibase:RTKWindow x:Name="window" x:Class="Raid.Toolkit.WinUI.SplashScreen"
+﻿<rtkuibase:RTKWindow x:Name="window" x:Class="Raid.Toolkit.UI.WinUI.SplashScreen"
     xmlns:winex="using:WinUIEx"
-    xmlns:rtkuibase="using:Raid.Toolkit.WinUI.Base"
+    xmlns:rtkuibase="using:Raid.Toolkit.UI.WinUI.Base"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:Raid.Toolkit.WinUI"
+    xmlns:local="using:Raid.Toolkit.UI.WinUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="Raid Toolkit">
     <Grid>

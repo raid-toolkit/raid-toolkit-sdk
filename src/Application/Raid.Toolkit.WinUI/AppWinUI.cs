@@ -1,16 +1,18 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Threading;
+using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Extensibility;
-using Raid.Toolkit.Forms;
-using Raid.Toolkit.WinUI;
+using Raid.Toolkit.UI.WinUI;
 
-namespace Raid.Toolkit
+namespace Raid.Toolkit.UI.WinUI
 {
-    public class AppWinUI : IAppUI, IDisposable
+    public class AppWinUI : IAppUI, IHostedService, IDisposable
     {
         [DllImport("Microsoft.ui.xaml.dll")]
         private static extern void XamlCheckProcessRequirements();
@@ -22,6 +24,8 @@ namespace Raid.Toolkit
         private SplashScreen? SplashScreen;
         private readonly IServiceProvider ServiceProvider;
         private bool IsDisposed;
+
+        private AppTray? AppTray;
 
         public SynchronizationContext? SynchronizationContext { get; }
 
@@ -95,6 +99,20 @@ namespace Raid.Toolkit
                 settingsWindow.Activate();
                 _ = settingsWindow.BringToFront();
             });
+        }
+
+        public Task StartAsync(CancellationToken cancellationToken)
+        {
+            RTKApplication.Post(() =>
+            {
+                AppTray = ActivatorUtilities.CreateInstance<AppTray>(ServiceProvider);
+            });
+            return Task.CompletedTask;
+        }
+
+        public Task StopAsync(CancellationToken cancellationToken)
+        {
+            return Task.CompletedTask;
         }
 
         public void ShowErrors()

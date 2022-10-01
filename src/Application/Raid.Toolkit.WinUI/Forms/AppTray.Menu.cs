@@ -6,8 +6,9 @@ using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host.Services;
+using Raid.Toolkit.UI.WinUI.Forms;
 
-namespace Raid.Toolkit.Forms
+namespace Raid.Toolkit.UI.WinUI
 {
     public partial class AppTray
     {
