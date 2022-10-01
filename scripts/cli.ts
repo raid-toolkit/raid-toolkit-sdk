@@ -1,4 +1,5 @@
 import caporal from 'caporal';
+import path from 'path';
 import { bumpNugetVersions, BumpVerionsOptions } from './bump-nuget-versions';
 import { build } from './build';
 import { buildOptions, BuildOptions } from './options';
@@ -40,6 +41,7 @@ async function publishBuild(_args: any, opts: Partial<BuildOptions>, _logger: an
   );
   await build(
     buildOptions({
+      project: path.resolve(__dirname, '../src/Application/Raid.Toolkit/Raid.Toolkit.csproj'),
       targetFramework: 'net6.0-windows10.0.19041.0',
       targets: ['Pack', 'Publish'],
     })

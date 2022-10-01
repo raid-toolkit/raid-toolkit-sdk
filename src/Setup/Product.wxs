@@ -2,25 +2,37 @@
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
     <Product Id="*" Name="Raid Toolkit" Manufacturer="Raid Toolkit" UpgradeCode="CFCBC4D3-CF5A-4DAC-BA0C-67867A4E1EDF" Language="1033" Codepage="932" Version="1.0.0">
         <Package Id="*" Keywords="Installer" Description="Raid Toolkit Installer" Manufacturer="Raid Toolkit" InstallerVersion="100" Languages="1033" Compressed="yes" SummaryCodepage="932" />
-        <MediaTemplate EmbedCab="yes"/>
 
+        <Property Id="INSTALLDIR">
+            <RegistrySearch Id="DetermineInstallLocation" Type="raw" Root="HKLM" Key="Software\RaidToolkit" Name="InstallLocation" />
+        </Property>
+
+        <Icon Id="AppIcon" SourceFile="..\..\assets\AppIcon.ico" />
+
+        <MediaTemplate EmbedCab="yes"/>
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="LocalAppDataFolder" Name="AppData">
                 <Directory Id="INSTALLDIR" Name="RaidToolkit">
-                    <Component Id="Raid.Toolkit.exe" Guid="61C46BC9-3C11-494B-9A46-63932DF551A7">
-                        <File Id="Raid.Toolkit.exe" Source="..\..\Publish\RTK\Raid.Toolkit.exe" />
+                    <Component Id="RaidToolkitDir" Guid="61C46BC9-3C11-494B-9A46-63932DF551A7">
                         <RemoveFolder Id="RaidToolkit" On="uninstall" />
-                        <RegistryKey Root="HKCU" Key="Software\RaidToolkit">
-                            <RegistryValue Name="InstallFolder" Value="[INSTALLDIR]" KeyPath="yes" Type="integer" />
-                        </RegistryKey>
                     </Component>
                 </Directory>
             </Directory>
+
+            <Component Id="RegInstallLocation" Guid="A0C9B19E-F3AE-406E-9641-7CCD82D4CEBE">
+                <!-- Do NOT use the application's default registry key here, because THIS key will be removed on uninstall
+                    (important when installing a newer version, because that is uninstall followed by install) -->
+                <RegistryKey Root="HKCU" Key="Software\RaidToolkit">
+                    <RegistryValue Name="InstallFolder" Value="[INSTALLDIR]" KeyPath="yes" Type="string" />
+                </RegistryKey>
+            </Component>
         </Directory>
 
-        <Feature Id="Complete" Title="RaidToolkit" Display="expand" Level="1" ConfigurableDirectory="INSTALLDIR">
-            <Feature Id="MainProgram" Title="Raid Toolkit" Description="Raid Toolkit Application" Level="1">
-                <ComponentRef Id="Raid.Toolkit.exe" />
+        <Feature Id="Complete" Title="Raid Toolkit" Display="expand" Level="1" ConfigurableDirectory="INSTALLDIR">
+            <Feature Id="MainProgram" Title="Program" Description="Raid Toolkit Application" Level="1">
+                <ComponentGroupRef Id="RaidToolkitBinaries" />
+                <ComponentRef Id="RaidToolkitDir" />
+                <ComponentRef Id="RegInstallLocation" />
             </Feature>
         </Feature>
     </Product>
