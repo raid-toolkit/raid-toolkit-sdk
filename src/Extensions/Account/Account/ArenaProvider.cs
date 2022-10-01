@@ -78,11 +78,14 @@ namespace Raid.Toolkit.Extension.Account
             long tagArenaPoints = tagArenaData.ArenaPoints;
             var leagueBorders = userWrapper.Arena3x3.League._leagueBorders;
             TagArenaPlacement placement = TagArenaPlacement.Unknown;
-            if (leagueBorders.MaxSection.HasValue && leagueBorders.MinSection.HasValue)
+            if (leagueBorders != null)
             {
-                placement = tagArenaPoints > leagueBorders.MaxSection.Value
-                    ? TagArenaPlacement.Promotion
-                    : tagArenaPoints < leagueBorders.MaxSection.Value ? TagArenaPlacement.Demotion : TagArenaPlacement.Retain;
+                if (leagueBorders.MaxSection.HasValue && leagueBorders.MinSection.HasValue)
+                {
+                    placement = tagArenaPoints > leagueBorders.MaxSection.Value
+                        ? TagArenaPlacement.Promotion
+                        : tagArenaPoints < leagueBorders.MaxSection.Value ? TagArenaPlacement.Demotion : TagArenaPlacement.Retain;
+                }
             }
 
             TagArenaData tagArena = new()
