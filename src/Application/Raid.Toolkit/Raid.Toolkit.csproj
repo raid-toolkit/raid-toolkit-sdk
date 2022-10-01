@@ -7,7 +7,7 @@
         <LangVersion>10.0</LangVersion>
         <Nullable>enable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
-        <PublishSingleFile>true</PublishSingleFile>
+        <PublishSingleFile>false</PublishSingleFile>
         <SelfContained>false</SelfContained>
         <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
         <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>

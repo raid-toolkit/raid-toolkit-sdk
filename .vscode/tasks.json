@@ -35,7 +35,7 @@
         "-m:1",
         "-nodeReuse:false",
         "--framework",
-        "net6.0-windows",
+        "net6.0-windows10.0.19041.0",
         "--output",
         "publish/RTK",
         "-p:Configuration=Debug",
