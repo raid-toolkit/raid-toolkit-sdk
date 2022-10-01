@@ -8,7 +8,6 @@ on:
     paths:
       - version.json
       - .github/workflows/app-publish.yml
-      - .github/workflows/app-publish.yml
       - Directory.Build.props
       - 'src/Application/**'
       - 'src/Extensions/**'
@@ -63,6 +62,12 @@ jobs:
         run: |
           msbuild $env:Solution_Name -m -t:"Build;Pack" -p:Configuration=Release -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
           msbuild $env:App_csproj -m -t:Publish -p:TargetFramework=net6.0-windows10.0.19041.0 -p:Configuration=Release -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
+
+      # Versions
+      - uses: dotnet/nbgv@master
+        id: rtk_version
+        with:
+          setAllVars: true
 
       # Versions
       - uses: dotnet/nbgv@master
