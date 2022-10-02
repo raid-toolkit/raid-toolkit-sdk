@@ -15,6 +15,8 @@
 					<Storyboard x:Key="splashReady">
 						<DoubleAnimation Storyboard.TargetName="window" Storyboard.TargetProperty="Height" Duration="0:0:.5" To="400" BeginTime="0:0:1"/>
 					</Storyboard>
+					<SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">Transparent</SolidColorBrush>
+					<SolidColorBrush x:Key="WindowCaptionBackground">Transparent</SolidColorBrush>
 				</ResourceDictionary>
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>

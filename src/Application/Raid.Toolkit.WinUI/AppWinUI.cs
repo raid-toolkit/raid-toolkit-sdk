@@ -8,19 +8,11 @@ using Microsoft.Extensions.Hosting;
 
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Extensibility;
-using Raid.Toolkit.UI.WinUI;
 
 namespace Raid.Toolkit.UI.WinUI
 {
     public class AppWinUI : IAppUI, IHostedService, IDisposable
     {
-        [DllImport("Microsoft.ui.xaml.dll")]
-        private static extern void XamlCheckProcessRequirements();
-        static AppWinUI()
-        {
-            XamlCheckProcessRequirements();
-        }
-
         private SplashScreen? SplashScreen;
         private readonly IServiceProvider ServiceProvider;
         private bool IsDisposed;
@@ -35,9 +27,81 @@ namespace Raid.Toolkit.UI.WinUI
             SynchronizationContext = SynchronizationContext.Current;
         }
 
+        #region Dispatch
+        public void Dispatch(Action action)
+        {
+            if (SynchronizationContext.Current == SynchronizationContext)
+                action();
+            else
+                SynchronizationContext?.Post(_ => action(), null);
+        }
+
+        public void Dispatch<TState>(Action<TState> action, TState state)
+        {
+            if (SynchronizationContext.Current == SynchronizationContext)
+                action(state);
+            else
+                SynchronizationContext?.Post(state => action((TState)state!), state);
+        }
+
+        public Task Post(Action action)
+        {
+            TaskCompletionSource signal = new();
+            Dispatch(() =>
+            {
+                try
+                {
+                    action();
+                    signal.SetResult();
+                }
+                catch (Exception ex)
+                {
+                    signal.SetException(ex);
+                }
+            });
+            return signal.Task;
+        }
+
+        public Task<T> Post<T>(Func<T> action)
+        {
+            TaskCompletionSource<T> signal = new();
+            Dispatch(() =>
+            {
+                try
+                {
+                    T result = action();
+                    signal.SetResult(result);
+                }
+                catch (Exception ex)
+                {
+                    signal.SetException(ex);
+                }
+            });
+            return signal.Task;
+        }
+
+        public Task<T> Post<T, U>(Func<U, T> action, U state)
+        {
+            TaskCompletionSource<T> signal = new();
+            Dispatch(() =>
+            {
+                try
+                {
+                    T result = action(state);
+                    signal.SetResult(result);
+                }
+                catch (Exception ex)
+                {
+                    signal.SetException(ex);
+                }
+            });
+            return signal.Task;
+        }
+        #endregion Dispatch
+
         public void ShowMain()
         {
-            RTKApplication.Post(() =>
+            Post(() =>
             {
                 SplashScreen ??= ActivatorUtilities.CreateInstance<SplashScreen>(ServiceProvider);
                 SplashScreen.Activate();
@@ -58,7 +122,7 @@ namespace Raid.Toolkit.UI.WinUI
 
         public void ShowNotification(string title, string description, System.Windows.Forms.ToolTipIcon icon, int timeoutMs, Action? onActivate = null)
         {
-            RTKApplication.Post(() =>
+            Post(() =>
             {
                 AppTray tray = ServiceProvider.GetRequiredService<AppTray>();
                 tray.ShowNotification(title, description, icon, timeoutMs, onActivate);
@@ -69,7 +133,7 @@ namespace Raid.Toolkit.UI.WinUI
         {
             if (!IsDisposed)
             {
-                RTKApplication.Post(() =>
+                Post(() =>
                 {
                     if (disposing)
                     {
@@ -93,7 +157,7 @@ namespace Raid.Toolkit.UI.WinUI
 
         public void ShowSettings()
         {
-            RTKApplication.Post(() =>
+            Post(() =>
             {
                 SettingsWindow settingsWindow = ActivatorUtilities.CreateInstance<SettingsWindow>(ServiceProvider);
                 settingsWindow.Activate();
@@ -103,7 +167,7 @@ namespace Raid.Toolkit.UI.WinUI
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            RTKApplication.Post(() =>
+            Post(() =>
             {
                 AppTray = ActivatorUtilities.CreateInstance<AppTray>(ServiceProvider);
             });
@@ -127,6 +191,17 @@ namespace Raid.Toolkit.UI.WinUI
 
         public void Run()
         {
+            SplashScreen ??= ActivatorUtilities.CreateInstance<SplashScreen>(ServiceProvider);
+            SplashScreen.Activate();
+            _ = SplashScreen.BringToFront();
+            //SplashScreen ??= ActivatorUtilities.CreateInstance<SplashScreen>(ServiceProvider);
+            //SplashScreen.Activate();
+            //_ = SplashScreen.BringToFront();
+            //AppTray = ActivatorUtilities.CreateInstance<AppTray>(ServiceProvider);
+            //Post(() =>
+            //{
+            //    AppTray = ActivatorUtilities.CreateInstance<AppTray>(ServiceProvider);
+            //});
         }
     }
 }

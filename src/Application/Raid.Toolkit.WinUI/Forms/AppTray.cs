@@ -1,3 +1,5 @@
+using Google.Protobuf.WellKnownTypes;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
@@ -83,7 +85,7 @@ namespace Raid.Toolkit.UI.WinUI
             if (notifyIcon == null)
                 return;
 
-            RTKApplication.Post(() =>
+            AppUI.Dispatch(() =>
             {
                 notifyIcon.ShowBalloonTip(timeoutMs, title, description, icon);
             });
@@ -114,7 +116,7 @@ namespace Raid.Toolkit.UI.WinUI
             {
                 if (disposing)
                 {
-                    RTKApplication.Post(() =>
+                    AppUI.Dispatch(() =>
                     {
                         if (NotifyIcon != null)
                         {

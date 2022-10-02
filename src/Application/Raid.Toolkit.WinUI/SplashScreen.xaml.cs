@@ -2,6 +2,7 @@ using System.Diagnostics;
 
 using Microsoft.UI.Xaml;
 
+using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.UI.WinUI.Base;
 
@@ -17,27 +18,33 @@ namespace Raid.Toolkit.UI.WinUI
     /// </summary>
     public sealed partial class SplashScreen : RTKWindow
     {
+        private readonly IAppUI AppUI;
         private readonly IModelLoader Loader;
         private readonly IMenuManager MenuManager;
 
         public SplashScreen(
             IModelLoader loader,
+            IAppUI appUI,
             IMenuManager menuManager
             )
         {
             Loader = loader;
+            AppUI = appUI;
             MenuManager = menuManager;
             Loader.OnStateUpdated += Loader_OnStateUpdated;
             InitializeComponent();
 
-            this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.Purple);
+            // this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.Purple);
             AppWindow.Closing += AppWindow_Closing;
 
-            IsShownInSwitchers = true;
+            this.SetWindowPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped);
             IsMinimizable = false;
             IsMaximizable = false;
             IsResizable = false;
-            this.SetWindowPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped);
+            ExtendsContentIntoTitleBar = true;
+            SetTitleBar(TitleBar);
+            IsShownInSwitchers = true;
+
             this.CenterOnScreen(400, 450);
 #pragma warning disable CS0436 // Type conflicts with imported type
             VersionRTK.Text = ThisAssembly.AssemblyFileVersion;
@@ -47,7 +54,7 @@ namespace Raid.Toolkit.UI.WinUI
 
         private void Loader_OnStateUpdated(object? sender, IModelLoader.ModelLoaderEventArgs e)
         {
-            RTKApplication.Post(() =>
+            AppUI.Dispatch(() =>
             {
                 switch (e.LoadState)
                 {

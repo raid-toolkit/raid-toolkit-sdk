@@ -4,6 +4,7 @@ mkdir %~dp0out 2>nul
 
 msiexec /x out\RaidToolkit.msi
 
+call yarn build publish
 candle.exe -nologo -o %~dp0out\ %~dp0RaidToolkitBinaries.wxs %~dp0Product.wxs
 light.exe -nologo -o %~dp0out\RaidToolkit.msi %~dp0out\Product.wixlib %~dp0out\RaidToolkitBinaries.wixobj
 

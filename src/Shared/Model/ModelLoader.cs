@@ -6,6 +6,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+
 using Il2CppToolkit.Common.Errors;
 using Il2CppToolkit.Model;
 using Il2CppToolkit.ReverseCompiler;
@@ -27,7 +28,29 @@ namespace Raid.Toolkit.Model
         private Version CurrentInteropVersion;
         private Regex[] IncludeTypes;
 
-        public event EventHandler<IModelLoader.ModelLoaderEventArgs> OnStateUpdated;
+        private EventHandler<IModelLoader.ModelLoaderEventArgs> OnStateUpdatedInternal;
+        public event EventHandler<IModelLoader.ModelLoaderEventArgs> OnStateUpdated
+        {
+            add
+            {
+                OnStateUpdatedInternal += value;
+                //if (LastEvent != null)
+                //    value(this, LastEvent);
+            }
+            remove
+            {
+                OnStateUpdatedInternal -= value;
+            }
+        }
+
+#nullable enable
+        private IModelLoader.ModelLoaderEventArgs? LastEvent;
+        private void Raise(IModelLoader.ModelLoaderEventArgs eventArgs)
+        {
+            LastEvent = eventArgs;
+            OnStateUpdatedInternal.Raise(this, eventArgs);
+        }
+#nullable restore
 
         public string GameVersion { get; private set; }
         public Version InteropVersion { get; private set; }
@@ -62,12 +85,12 @@ namespace Raid.Toolkit.Model
                 string dllPath = await Build(regices, force);
                 InteropAsm = Assembly.LoadFrom(dllPath);
                 PostfixTypes(InteropAsm);
-                OnStateUpdated?.Raise(this, new(IModelLoader.LoadState.Loaded));
+                Raise(new(IModelLoader.LoadState.Loaded));
                 return InteropAsm;
             }
             catch (Exception)
             {
-                OnStateUpdated?.Raise(this, new(IModelLoader.LoadState.Error));
+                Raise(new(IModelLoader.LoadState.Error));
                 throw;
             }
         }
@@ -87,7 +110,7 @@ namespace Raid.Toolkit.Model
                 PlariumPlayAdapter.GameInfo gameInfo = GetGameInfo();
                 GameVersion = gameInfo.Version;
 
-                OnStateUpdated?.Raise(this, new(IModelLoader.LoadState.Initialize));
+                Raise(new(IModelLoader.LoadState.Initialize));
 
                 string outDir = OutputDirectory ?? Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
                 string dllPath = Path.Combine(outDir, gameInfo.Version, OutputFilename);
@@ -116,19 +139,19 @@ namespace Raid.Toolkit.Model
 
                 if (shouldGenerate)
                 {
-                    OnStateUpdated?.Raise(this, new(IModelLoader.LoadState.Rebuild));
+                    Raise(new(IModelLoader.LoadState.Rebuild));
                     await Task.Run(() =>
                     {
                         GenerateAssembly(gameInfo, dllPath);
                     });
                 }
 
-                OnStateUpdated?.Raise(this, new(IModelLoader.LoadState.Ready));
+                Raise(new(IModelLoader.LoadState.Ready));
                 return dllPath;
             }
             catch (Exception)
             {
-                OnStateUpdated?.Raise(this, new(IModelLoader.LoadState.Error));
+                Raise(new(IModelLoader.LoadState.Error));
                 throw;
             }
         }
@@ -180,7 +203,7 @@ namespace Raid.Toolkit.Model
 
         private void Compiler_ProgressUpdated(object sender, ProgressUpdatedEventArgs e)
         {
-            OnStateUpdated.Raise(this, new IModelLoader.ModelLoaderEventArgs(IModelLoader.LoadState.Rebuild, new IModelLoader.TaskProgress()
+            Raise(new IModelLoader.ModelLoaderEventArgs(IModelLoader.LoadState.Rebuild, new IModelLoader.TaskProgress()
             {
                 DisplayName = e.DisplayName,
                 Completed = e.Completed,

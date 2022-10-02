@@ -8,6 +8,7 @@ namespace Raid.Toolkit.Application.Core.Commands.Base
     {
         SynchronizationContext? SynchronizationContext { get; }
         void Run();
+        void Dispatch(Action task);
 
         bool? ShowExtensionInstaller(ExtensionBundle bundleToInstall);
         void ShowInstallUI();

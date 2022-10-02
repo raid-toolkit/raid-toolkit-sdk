@@ -11,8 +11,7 @@
     },
     "Standalone": {
       "commandName": "Project",
-      "commandLineArgs": "--standalone",
-      "nativeDebugging": true
+      "commandLineArgs": "--standalone"
     },
     "Install Extension": {
       "commandName": "Project",

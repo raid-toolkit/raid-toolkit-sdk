@@ -20,14 +20,11 @@ namespace Raid.Toolkit.UI.WinUI
         [DllImport("Microsoft.ui.xaml.dll")]
         private static extern void XamlCheckProcessRequirements();
 
-        static WinUIProgramHost()
-        {
-            WinRT.ComWrappersSupport.InitializeComWrappers();
-            XamlCheckProcessRequirements();
-        }
-
         public Task Start(IHost host, Action startupFunction)
         {
+            XamlCheckProcessRequirements();
+            WinRT.ComWrappersSupport.InitializeComWrappers();
+
             AppHost.Start(host);
 
             XamlApplication.Start(async (p) =>
@@ -40,8 +37,8 @@ namespace Raid.Toolkit.UI.WinUI
 
                     using IAppUI? appUI = host.Services.GetService<IAppUI>();
 
-                    startupFunction();
                     appUI?.Run();
+                    startupFunction();
                     await app.WaitForExit();
                 }
                 finally
