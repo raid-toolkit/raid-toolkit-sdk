@@ -2,9 +2,12 @@ import { spawn } from 'child-process-promise';
 import path from 'path';
 import { BuildOptions } from './options';
 
+let nLog = 0;
 export function build(opts: BuildOptions) {
   const cmdArgs = [
     opts.project,
+    // '-verbosity:d',
+    // `-fileLogger${1 + (nLog++ % 9)}`,
     '-m:1',
     `-p:Configuration=${opts.flavor}`,
     `-p:Platform=${opts.platform}`,

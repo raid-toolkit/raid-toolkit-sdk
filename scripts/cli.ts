@@ -22,6 +22,7 @@ cli
 
 cli
   .command('publish', 'Build deployable packages')
+  .option('-o, --only', 'Publish only')
   .option('-f, --flavor <flavor>', 'Build flavor', ['Debug', 'Release'], 'Debug')
   .option('-p, --platform <platform>', 'Platform', ['x64'], 'x64')
   .action(publishBuild);
@@ -34,16 +35,20 @@ function bumpVersions(_args: any, opts: BumpVerionsOptions, _logger: any) {
 }
 
 async function publishBuild(_args: any, opts: Partial<BuildOptions>, _logger: any) {
-  await build(
-    buildOptions({
-      targets: ['Restore', 'Build'],
-    })
-  );
+  if (!opts.only) {
+    await build(
+      buildOptions({
+        targets: ['Restore', 'Build'],
+        ...opts,
+      })
+    );
+  }
   await build(
     buildOptions({
       project: path.resolve(__dirname, '../src/Application/Raid.Toolkit/Raid.Toolkit.csproj'),
       targetFramework: 'net6.0-windows10.0.19041.0',
-      targets: ['Pack', 'Publish'],
+      targets: ['Publish'],
+      ...opts,
     })
   );
 }

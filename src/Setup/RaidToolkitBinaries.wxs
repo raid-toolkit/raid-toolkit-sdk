@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <!--heat.exe dir ..\..\publish\RTK -cg RaidToolkitBinaries -out RaidToolkitBinaries_merge.wxs -srd -sreg -gg -g1-->
+    <!--heat.exe dir ..\..\publish\RTK -cg RaidToolkitBinaries -out RaidToolkitBinaries_merge.wxs -dr INSTALLDIR -srd -suid -sreg -g1 -var var.SrcDir-->
     <Fragment>
         <DirectoryRef Id="INSTALLDIR">
             <Directory Id="dir2E8F99F00520E27A206B5DDFCF4444A4" Name="af-ZA" />
@@ -386,6 +386,9 @@
             </Component>
             <Component Id="cmp9E1E42CA3A2216987C89EB785FE9B3A9" Directory="INSTALLDIR" Guid="490A6180-CAE1-4B16-8D25-720BF5A55DB1">
                 <File Id="fil308F7F9E57415D6CEA433D6575EF33F7" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.Extension.Realtime.dll" />
+            </Component>
+            <Component Id="cmp31281494FE75393A13F1266C00C51B7F" Directory="INSTALLDIR" Guid="25AB34C2-E1CA-4B27-BBDC-EA48E05DE8EB">
+                <File Id="fil8B1441D45448DACA9A25FA0D9B6D2039" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.pri" />
             </Component>
             <Component Id="cmpA8A9650931E7FE41E352E62403E00749" Directory="INSTALLDIR" Guid="57F826DD-E2ED-460B-8959-DCB8D11EF33A">
                 <File Id="filF0923678210884C81C9FD17263D02577" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.runtimeconfig.json" />

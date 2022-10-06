@@ -1,805 +1,840 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <!--heat.exe dir ..\..\publish\RTK -cg RaidToolkitBinaries -out RaidToolkitBinaries_merge.wxs -srd -sreg -gg -g1-->
     <Fragment>
-        <DirectoryRef Id="TARGETDIR">
-            <Directory Id="dir2E8F99F00520E27A206B5DDFCF4444A4" Name="af-ZA" />
-            <Directory Id="dir8A58EED63047C2902998D459D3EFA3C7" Name="ar-SA" />
-            <Directory Id="dirF096CD595013FE4DC729DAD1BE618571" Name="Assets" />
-            <Directory Id="dir768415566258B043DE5160880EEDE36B" Name="az-Latn-AZ" />
-            <Directory Id="dir8C52A3E1EFC7D79F52DE6E19F3CC5C02" Name="bg-BG" />
-            <Directory Id="dir06E009179211E9380962BBE68525A5A7" Name="bs-Latn-BA" />
-            <Directory Id="dirE78930CAC36FDBFB42C923AF1820A43D" Name="ca-ES" />
-            <Directory Id="dirF506CA25441B61318A8ABA99AB414AB9" Name="cs-CZ" />
-            <Directory Id="dirA0E87E8F30FA771B95D30BEBF06CEDCD" Name="cy-GB" />
-            <Directory Id="dir7553377991D5B2F525F621F52D9BF43A" Name="da-DK" />
-            <Directory Id="dir7D245FA568FAB0A68786CFAC459CC70D" Name="de-DE" />
-            <Directory Id="dir2CCF193D75AC80CC688180C35BDE2E43" Name="el-GR" />
-            <Directory Id="dir051F4039C4890BCC893859DA9F5C8358" Name="en-GB" />
-            <Directory Id="dir90F3427C5DF8F9DA7DF0CCA58379BE3D" Name="en-us" />
-            <Directory Id="dir4E7C9E18F48EF6EE24F0F0B8EC4069B6" Name="es-ES" />
-            <Directory Id="dirB8CE1DA303A1FD1DB9F6A6374326B465" Name="es-MX" />
-            <Directory Id="dir61A7CC29AC4721315D1096F1F715F092" Name="et-EE" />
-            <Directory Id="dirA8AC8E4202EB8410FF9E02D7684FBD41" Name="eu-ES" />
-            <Directory Id="dir8322864BEA38E9E36883678718795DDC" Name="fa-IR" />
-            <Directory Id="dir365A6D3BBBDF34CAB43D78FD379DE3D0" Name="fi-FI" />
-            <Directory Id="dirAEDEDA702A9F054202FF3CCF19992133" Name="fr-CA" />
-            <Directory Id="dirCAED0528078BFC1954A646717711F191" Name="fr-FR" />
-            <Directory Id="dirED22A6E01730FF73397085E794A2F773" Name="gl-ES" />
-            <Directory Id="dir22A08AAAEE7BEABA9D005C1BC83C60E1" Name="he-IL" />
-            <Directory Id="dir0DEFCE688C00797B6FBBEA44C6DEBBC3" Name="hi-IN" />
-            <Directory Id="dir1B1C3CDA7101A72381C2D7E984D67BC4" Name="hr-HR" />
-            <Directory Id="dirB8568BD15D796382E47F09FC23A95754" Name="hu-HU" />
-            <Directory Id="dir46DD9F8E8E5334F6020D90AA055953A0" Name="id-ID" />
-            <Directory Id="dirD9BB893C068C4C79EB1FBF5CD3186876" Name="is-IS" />
-            <Directory Id="dir127E11C42B270711CF9A0B651BF5705A" Name="it-IT" />
-            <Directory Id="dirDE266F127412FC21C419CE07C986B7BB" Name="ja-JP" />
-            <Directory Id="dir83CB9FFEFDEF5A635CF673F299FAEEE2" Name="ka-GE" />
-            <Directory Id="dir85095EFF900363E075A43AE226D3CFF2" Name="kk-KZ" />
-            <Directory Id="dir3A576A4FD8C8A1573859EA7B46742BA8" Name="ko-KR" />
-            <Directory Id="dir6C979DDE667D895FE4FCA7A040778799" Name="lt-LT" />
-            <Directory Id="dir820FDF5C8058B478A3C567979FE59987" Name="lv-LV" />
-            <Directory Id="dir7C2568510784D27CF4ACC59CA9D52769" Name="Microsoft.UI.Xaml" />
-            <Directory Id="dirF84F362E28F23F96E0CECD1ABAFFB072" Name="ms-MY" />
-            <Directory Id="dir31610DA07C5E630A7EAD9A6463EEED9C" Name="nb-NO" />
-            <Directory Id="dirC3D9E80BDA9E7D475DFFCADD4989FD8F" Name="nl-NL" />
-            <Directory Id="dir790D81D373AC114F8C648FB338FDF9A6" Name="nn-NO" />
-            <Directory Id="dir7A384EAB79C935C2EF8FE3F2F9B3143C" Name="pl-PL" />
-            <Directory Id="dir06451880B7983577060F11D069200563" Name="pt-BR" />
-            <Directory Id="dir64EF89DDD3F9879EDFD8B06EA18FEE22" Name="pt-PT" />
-            <Directory Id="dir5A6163BDEE95B3E2028E25F6E281CDF2" Name="Resources" />
-            <Directory Id="dirBD417CDE45A71C718B98F065F9258F44" Name="ro-RO" />
-            <Directory Id="dir88566B38A2D7D3972AF67B9401A6879E" Name="ru-RU" />
-            <Directory Id="dirFE3DA183E9A2F62433018E56DB82ACE9" Name="sk-SK" />
-            <Directory Id="dir2B18810BB98C72963FF869A5D0FF2127" Name="sl-SI" />
-            <Directory Id="dir4D26E729882A39FA7D66C0CEB36B5B7C" Name="sq-AL" />
-            <Directory Id="dirC9BD5008D20CEEEF0CE0009814B9B8E2" Name="sr-Cyrl-RS" />
-            <Directory Id="dir3F1C2D4A36E696BE70929A2817E388E1" Name="sr-Latn-RS" />
-            <Directory Id="dir639732FFD67462C233ABBB2070ACA19E" Name="sv-SE" />
-            <Directory Id="dir176421E4DA6C6090E37882030350EC17" Name="th-TH" />
-            <Directory Id="dir7C89C61B47CA39513CE4EEB384F1A11F" Name="tr-TR" />
-            <Directory Id="dir129B2053638809FF01CC44381F3A7929" Name="uk-UA" />
-            <Directory Id="dir7BEADDA5B92C8FC2400FFF618E5ECE1B" Name="vi-VN" />
-            <Directory Id="dir50B6246B3834061C2B20218486FEF43C" Name="zh-CN" />
-            <Directory Id="dir7B82CCBA71D11659EBA31313CE3FF476" Name="zh-TW" />
+        <DirectoryRef Id="INSTALLDIR">
+            <Directory Id="af_ZA" Name="af-ZA" />
+            <Directory Id="ar_SA" Name="ar-SA" />
+            <Directory Id="Assets" Name="Assets" />
+            <Directory Id="az_Latn_AZ" Name="az-Latn-AZ" />
+            <Directory Id="bg_BG" Name="bg-BG" />
+            <Directory Id="bs_Latn_BA" Name="bs-Latn-BA" />
+            <Directory Id="ca_ES" Name="ca-ES" />
+            <Directory Id="cs_CZ" Name="cs-CZ" />
+            <Directory Id="cy_GB" Name="cy-GB" />
+            <Directory Id="da_DK" Name="da-DK" />
+            <Directory Id="de_DE" Name="de-DE" />
+            <Directory Id="el_GR" Name="el-GR" />
+            <Directory Id="en_GB" Name="en-GB" />
+            <Directory Id="en_us" Name="en-us" />
+            <Directory Id="es_ES" Name="es-ES" />
+            <Directory Id="es_MX" Name="es-MX" />
+            <Directory Id="et_EE" Name="et-EE" />
+            <Directory Id="eu_ES" Name="eu-ES" />
+            <Directory Id="fa_IR" Name="fa-IR" />
+            <Directory Id="fi_FI" Name="fi-FI" />
+            <Directory Id="fr_CA" Name="fr-CA" />
+            <Directory Id="fr_FR" Name="fr-FR" />
+            <Directory Id="gl_ES" Name="gl-ES" />
+            <Directory Id="he_IL" Name="he-IL" />
+            <Directory Id="hi_IN" Name="hi-IN" />
+            <Directory Id="hr_HR" Name="hr-HR" />
+            <Directory Id="hu_HU" Name="hu-HU" />
+            <Directory Id="id_ID" Name="id-ID" />
+            <Directory Id="is_IS" Name="is-IS" />
+            <Directory Id="it_IT" Name="it-IT" />
+            <Directory Id="ja_JP" Name="ja-JP" />
+            <Directory Id="ka_GE" Name="ka-GE" />
+            <Directory Id="kk_KZ" Name="kk-KZ" />
+            <Directory Id="ko_KR" Name="ko-KR" />
+            <Directory Id="lt_LT" Name="lt-LT" />
+            <Directory Id="lv_LV" Name="lv-LV" />
+            <Directory Id="Microsoft.UI.Xaml" Name="Microsoft.UI.Xaml" />
+            <Directory Id="ms_MY" Name="ms-MY" />
+            <Directory Id="nb_NO" Name="nb-NO" />
+            <Directory Id="nl_NL" Name="nl-NL" />
+            <Directory Id="nn_NO" Name="nn-NO" />
+            <Directory Id="pl_PL" Name="pl-PL" />
+            <Directory Id="pt_BR" Name="pt-BR" />
+            <Directory Id="pt_PT" Name="pt-PT" />
+            <Directory Id="Resources" Name="Resources" />
+            <Directory Id="ro_RO" Name="ro-RO" />
+            <Directory Id="ru_RU" Name="ru-RU" />
+            <Directory Id="sk_SK" Name="sk-SK" />
+            <Directory Id="sl_SI" Name="sl-SI" />
+            <Directory Id="sq_AL" Name="sq-AL" />
+            <Directory Id="sr_Cyrl_RS" Name="sr-Cyrl-RS" />
+            <Directory Id="sr_Latn_RS" Name="sr-Latn-RS" />
+            <Directory Id="sv_SE" Name="sv-SE" />
+            <Directory Id="th_TH" Name="th-TH" />
+            <Directory Id="tr_TR" Name="tr-TR" />
+            <Directory Id="uk_UA" Name="uk-UA" />
+            <Directory Id="vi_VN" Name="vi-VN" />
+            <Directory Id="zh_CN" Name="zh-CN" />
+            <Directory Id="zh_TW" Name="zh-TW" />
         </DirectoryRef>
     </Fragment>
     <Fragment>
         <ComponentGroup Id="RaidToolkitBinaries">
-            <Component Id="cmpE29D92AF2566E235150A4E6ABC606D4E" Directory="TARGETDIR" Guid="5B58DC81-5222-421F-B9F2-C871223D4C0D">
-                <File Id="fil135D08A85091C7752FA092D8FBA00566" KeyPath="yes" Source="..\..\Publish\RTK\CommandLine.dll" />
+            <Component Id="CommandLine.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="CommandLine.dll" KeyPath="yes" Source="SourceDir\CommandLine.dll" />
             </Component>
-            <Component Id="cmp186E8AA98C97835E1EA9776E1DDC0045" Directory="TARGETDIR" Guid="A99C406C-F072-44D4-A870-28A2FEA99271">
-                <File Id="filB16D6ED9A8C1FDFABB3FC960680A1FC9" KeyPath="yes" Source="..\..\Publish\RTK\CoreMessagingXP.dll" />
+            <Component Id="CoreMessagingXP.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="CoreMessagingXP.dll" KeyPath="yes" Source="SourceDir\CoreMessagingXP.dll" />
             </Component>
-            <Component Id="cmp51E832211ACE8F4FE04AE91B9AB822F7" Directory="TARGETDIR" Guid="0D8AF5D0-CFB5-4578-8E9B-7EF70D4453C8">
-                <File Id="filB637E1868E4704176386720D6AA378C4" KeyPath="yes" Source="..\..\Publish\RTK\dcompi.dll" />
+            <Component Id="dcompi.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="dcompi.dll" KeyPath="yes" Source="SourceDir\dcompi.dll" />
             </Component>
-            <Component Id="cmp268DCBD65FF5F7C9E7437FD4570940F9" Directory="TARGETDIR" Guid="CF7E9DB9-9813-4DDF-A754-5A89E073AC55">
-                <File Id="filF3D274B2E6C499788B1F8D50C04BB52C" KeyPath="yes" Source="..\..\Publish\RTK\dwmcorei.dll" />
+            <Component Id="dwmcorei.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="dwmcorei.dll" KeyPath="yes" Source="SourceDir\dwmcorei.dll" />
             </Component>
-            <Component Id="cmp3FE0F57906AD197618FDC2A807BF4799" Directory="TARGETDIR" Guid="AECF9629-9EBC-48B0-A92B-6EB3A99D28BE">
-                <File Id="fil6A6DA38258F1A0A416BCD5F9AF233897" KeyPath="yes" Source="..\..\Publish\RTK\DwmSceneI.dll" />
+            <Component Id="DwmSceneI.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="DwmSceneI.dll" KeyPath="yes" Source="SourceDir\DwmSceneI.dll" />
             </Component>
-            <Component Id="cmp8144F901DEB9403CCB6C1FD377DDC91E" Directory="TARGETDIR" Guid="0D8F5BCA-8D48-4CBE-A546-0F971BD4D457">
-                <File Id="filA6709ABA4165BCE28F5CEC15AE85CD5B" KeyPath="yes" Source="..\..\Publish\RTK\DWriteCore.dll" />
+            <Component Id="DWriteCore.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="DWriteCore.dll" KeyPath="yes" Source="SourceDir\DWriteCore.dll" />
             </Component>
-            <Component Id="cmp7A82EC5A1DED2394BF08BB54FB8318E7" Directory="TARGETDIR" Guid="D09D2DA7-AA2B-4B57-931B-FFA9C4DDFF19">
-                <File Id="filDE0A87A8AEAD0CBD81B788F2996033B1" KeyPath="yes" Source="..\..\Publish\RTK\Google.Protobuf.dll" />
+            <Component Id="Google.Protobuf.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Google.Protobuf.dll" KeyPath="yes" Source="SourceDir\Google.Protobuf.dll" />
             </Component>
-            <Component Id="cmp73EC0A9BEC6C126DAD233C5037EA3E6D" Directory="TARGETDIR" Guid="79D40676-2B2C-4E4F-9739-126E6EBA1E64">
-                <File Id="fil6F3553CF54A6477CB160E8BDAF9C5A5E" KeyPath="yes" Source="..\..\Publish\RTK\Grpc.Core.Api.dll" />
+            <Component Id="Grpc.Core.Api.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Grpc.Core.Api.dll" KeyPath="yes" Source="SourceDir\Grpc.Core.Api.dll" />
             </Component>
-            <Component Id="cmpE9C7783C9CC07647F14E3AFA6186B14D" Directory="TARGETDIR" Guid="DA8AAF38-C538-4A33-962A-B9E18D195790">
-                <File Id="fil133C23C4D2EB85F4F2228AE030C55767" KeyPath="yes" Source="..\..\Publish\RTK\Grpc.Net.Client.dll" />
+            <Component Id="Grpc.Net.Client.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Grpc.Net.Client.dll" KeyPath="yes" Source="SourceDir\Grpc.Net.Client.dll" />
             </Component>
-            <Component Id="cmp8955FAF4C66E319833F6E088239AC99A" Directory="TARGETDIR" Guid="7D024E65-4D90-4280-AE20-BE9434A44E97">
-                <File Id="filAFF6BBF93888F2488A540300391E17E7" KeyPath="yes" Source="..\..\Publish\RTK\Grpc.Net.Common.dll" />
+            <Component Id="Grpc.Net.Common.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Grpc.Net.Common.dll" KeyPath="yes" Source="SourceDir\Grpc.Net.Common.dll" />
             </Component>
-            <Component Id="cmp8ED9F313D0684B2D1D045D1CC25DFFB8" Directory="TARGETDIR" Guid="41599376-9671-48FA-B36E-C1D106B98FCE">
-                <File Id="fil364F6C1FB9D13F6D34FC64B58429427A" KeyPath="yes" Source="..\..\Publish\RTK\Il2CppToolkit.Common.dll" />
+            <Component Id="Il2CppToolkit.Common.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Il2CppToolkit.Common.dll" KeyPath="yes" Source="SourceDir\Il2CppToolkit.Common.dll" />
             </Component>
-            <Component Id="cmp7EFA0EA91C84FF94DD8FF4FAC22E8B5B" Directory="TARGETDIR" Guid="90EE38CD-E64C-4492-AB89-199C7D52D607">
-                <File Id="filC66C6458611964FB187AD9CCC41B8017" KeyPath="yes" Source="..\..\Publish\RTK\Il2CppToolkit.Injection.Client.dll" />
+            <Component Id="Il2CppToolkit.Injection.Client.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Il2CppToolkit.Injection.Client.dll" KeyPath="yes" Source="SourceDir\Il2CppToolkit.Injection.Client.dll" />
             </Component>
-            <Component Id="cmp2C6880E1EA83B022EB11B3CA66745C30" Directory="TARGETDIR" Guid="0386BD71-06A3-4920-A3A6-72159F453764">
-                <File Id="fil0030CD2AE9D6EA6FF1D388E2688912F8" KeyPath="yes" Source="..\..\Publish\RTK\Il2CppToolkit.Injection.Host.dll" />
+            <Component Id="Il2CppToolkit.Injection.Host.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Il2CppToolkit.Injection.Host.dll" KeyPath="yes" Source="SourceDir\Il2CppToolkit.Injection.Host.dll" />
             </Component>
-            <Component Id="cmpD3C5ED454AADD4546992FF1968843664" Directory="TARGETDIR" Guid="4318FB5A-3C9E-4EC8-ACB9-5383A6399D34">
-                <File Id="fil2F75984D686ED82FBDD1132CA37890A0" KeyPath="yes" Source="..\..\Publish\RTK\Il2CppToolkit.Metadata.dll" />
+            <Component Id="Il2CppToolkit.Metadata.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Il2CppToolkit.Metadata.dll" KeyPath="yes" Source="SourceDir\Il2CppToolkit.Metadata.dll" />
             </Component>
-            <Component Id="cmp3E8681821D19E612AAC0E6B0EF5F89FE" Directory="TARGETDIR" Guid="EAF23EA1-2909-418D-9632-759340C47BDB">
-                <File Id="filBA291538C45D5EAF4AC1F23AEEC0D539" KeyPath="yes" Source="..\..\Publish\RTK\Il2CppToolkit.ReverseCompiler.dll" />
+            <Component Id="Il2CppToolkit.ReverseCompiler.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Il2CppToolkit.ReverseCompiler.dll" KeyPath="yes" Source="SourceDir\Il2CppToolkit.ReverseCompiler.dll" />
             </Component>
-            <Component Id="cmpB767D17DBF1CA6040BEAA1D4EF89CAD5" Directory="TARGETDIR" Guid="58560916-3D2C-4E3C-B809-869E64DE0DE6">
-                <File Id="filE24387EFFFF4961BAE202D4A7073155D" KeyPath="yes" Source="..\..\Publish\RTK\Il2CppToolkit.Runtime.dll" />
+            <Component Id="Il2CppToolkit.Runtime.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Il2CppToolkit.Runtime.dll" KeyPath="yes" Source="SourceDir\Il2CppToolkit.Runtime.dll" />
             </Component>
-            <Component Id="cmp4F5647B7AAFDAA58A0F99061C876F2A6" Directory="TARGETDIR" Guid="CAE8E82C-7E17-4D85-97FC-EABD304969B7">
-                <File Id="fil6D7D7D3E45D3DE8345BF7CDCF25B662F" KeyPath="yes" Source="..\..\Publish\RTK\Il2CppToolkit.Target.NetCore.dll" />
+            <Component Id="Il2CppToolkit.Target.NetCore.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Il2CppToolkit.Target.NetCore.dll" KeyPath="yes" Source="SourceDir\Il2CppToolkit.Target.NetCore.dll" />
             </Component>
-            <Component Id="cmpFED727D010869121AD9E27FE6CB0CDB9" Directory="TARGETDIR" Guid="BE588A11-7F08-40F9-AC39-1BD38C09130C">
-                <File Id="fil08C4E8CB11CC857274F5DD944F0532C1" KeyPath="yes" Source="..\..\Publish\RTK\Karambolo.Extensions.Logging.File.dll" />
+            <Component Id="Karambolo.Extensions.Logging.File.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Karambolo.Extensions.Logging.File.dll" KeyPath="yes" Source="SourceDir\Karambolo.Extensions.Logging.File.dll" />
             </Component>
-            <Component Id="cmpB8821BF6C029B047A9EECEC0CA24E262" Directory="TARGETDIR" Guid="F5AFEAFD-0FCD-4CE1-B3A8-F4A8D0D9D29E">
-                <File Id="filA36A937F77E9B620409ECD5C0C8CE047" KeyPath="yes" Source="..\..\Publish\RTK\marshal.dll" />
+            <Component Id="marshal.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="marshal.dll" KeyPath="yes" Source="SourceDir\marshal.dll" />
             </Component>
-            <Component Id="cmp091B257EB57479CD3EC2C909393B3183" Directory="TARGETDIR" Guid="1A1F981C-6BEC-4DCB-AC01-247CED7DA884">
-                <File Id="fil5A311B8010615B852BF8B14865ED74C9" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.DirectManipulation.dll" />
+            <Component Id="Microsoft.DirectManipulation.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.DirectManipulation.dll" KeyPath="yes" Source="SourceDir\Microsoft.DirectManipulation.dll" />
             </Component>
-            <Component Id="cmp8FF20BB6E9E1039BAAF705C6E421B34E" Directory="TARGETDIR" Guid="B4CE0702-7ACF-42FB-8116-CD1AE929BE46">
-                <File Id="filF640FB5F13E97BAD50106FFC74CA0515" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.Abstractions.dll" />
+            <Component Id="Microsoft.Extensions.Configuration.Abstractions.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.Abstractions.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.Abstractions.dll" />
             </Component>
-            <Component Id="cmp9600FEB1902D7DA917FD445DDA9F3CBA" Directory="TARGETDIR" Guid="8A5C5A60-F396-4467-BE51-0456EE70708E">
-                <File Id="fil773A346D214AC0962FABFD5068676C36" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.Binder.dll" />
+            <Component Id="Microsoft.Extensions.Configuration.Binder.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.Binder.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.Binder.dll" />
             </Component>
-            <Component Id="cmpC24EEDAC14BC8A3132D06C7ECB2ED932" Directory="TARGETDIR" Guid="C329E2B0-51AF-4B4A-91F1-2BF177919C58">
-                <File Id="fil793D73F9E103B46F2186AAB4A806D8BC" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.CommandLine.dll" />
+            <Component Id="Microsoft.Extensions.Configuration.CommandLine.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.CommandLine.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.CommandLine.dll" />
             </Component>
-            <Component Id="cmp9F2C63E021EEC1097662A0016E3A9437" Directory="TARGETDIR" Guid="930A3613-BB4F-42AE-B8C0-FDFD5FD33C16">
-                <File Id="fil2A9A0281FD23F23037DB0F8E3D6A5CBD" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.dll" />
+            <Component Id="Microsoft.Extensions.Configuration.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.dll" />
             </Component>
-            <Component Id="cmp1BE21D90724DF0B75F0DD1D3D33CC81E" Directory="TARGETDIR" Guid="3A3DEC6A-3FB1-4B64-A2CA-BF5933EE8138">
-                <File Id="fil04C09EE802816D0E1D4E2CF5EFDF75C7" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.EnvironmentVariables.dll" />
+            <Component Id="Microsoft.Extensions.Configuration.EnvironmentVariables.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.EnvironmentVariables.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.EnvironmentVariables.dll" />
             </Component>
-            <Component Id="cmp9A2CE43A4C68F068A7DCE986EE90E208" Directory="TARGETDIR" Guid="917FAC8E-8DA2-4683-8F66-0D4F9EE4C18D">
-                <File Id="fil099B8E4B5B574358F0790F30628060C0" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.FileExtensions.dll" />
+            <Component Id="Microsoft.Extensions.Configuration.FileExtensions.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.FileExtensions.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.FileExtensions.dll" />
             </Component>
-            <Component Id="cmpCB3A5D76A5E05336DC3B3CA1B4F454AC" Directory="TARGETDIR" Guid="D22C7E6A-0309-48AD-B1B8-3DABDFE5EB9B">
-                <File Id="fil28A85E1F38ABF61F6B4B8B485B436D8E" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.Json.dll" />
+            <Component Id="Microsoft.Extensions.Configuration.Json.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.Json.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.Json.dll" />
             </Component>
-            <Component Id="cmp594F24AEF95ABB04BE4D3708FE996DB3" Directory="TARGETDIR" Guid="51E81827-FC48-476C-A063-EDFB0DBF7E94">
-                <File Id="fil212A10A47256A218E73D2EFD08223575" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Configuration.UserSecrets.dll" />
+            <Component Id="Microsoft.Extensions.Configuration.UserSecrets.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.UserSecrets.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.UserSecrets.dll" />
             </Component>
-            <Component Id="cmpBCA2D2639D9EACD23CDC73FE80070E9B" Directory="TARGETDIR" Guid="5257EFCC-4E13-4087-98C2-6C9259D3E4FF">
-                <File Id="fil80254EA06ED1970F3724C7F2D98F487C" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+            <Component Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
             </Component>
-            <Component Id="cmpA81A02C8B473EDEBF6F26F9844427DBC" Directory="TARGETDIR" Guid="23C6F4C2-6ED1-465B-9309-26054367805C">
-                <File Id="fil0279174A8B678BBAEA3CB15C09A05058" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.DependencyInjection.dll" />
+            <Component Id="Microsoft.Extensions.DependencyInjection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.DependencyInjection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.DependencyInjection.dll" />
             </Component>
-            <Component Id="cmpCB4D6C6861A296D02F18EF5F7F637249" Directory="TARGETDIR" Guid="60A02F81-08F9-4903-8ED4-ACF8A377EE3F">
-                <File Id="filC41FA828CE13679EA1B25A5EC4AB82D7" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.FileProviders.Abstractions.dll" />
+            <Component Id="Microsoft.Extensions.FileProviders.Abstractions.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.FileProviders.Abstractions.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.FileProviders.Abstractions.dll" />
             </Component>
-            <Component Id="cmp75CE102DEC9E6B31BBFEE1083624A0FE" Directory="TARGETDIR" Guid="9B7C5F68-15FA-4031-AD96-009D2E06105F">
-                <File Id="filC91AF9F5BCC87EA46713DA19BEE6964B" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.FileProviders.Physical.dll" />
+            <Component Id="Microsoft.Extensions.FileProviders.Physical.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.FileProviders.Physical.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.FileProviders.Physical.dll" />
             </Component>
-            <Component Id="cmp8F52B0D9603B8CDF0CE9B808F29E8C04" Directory="TARGETDIR" Guid="C29A1BC7-0ADD-4D10-A895-516BB6A46F03">
-                <File Id="fil38E59ABE4B27B3E3F3BD4C4F6C36E7E7" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.FileSystemGlobbing.dll" />
+            <Component Id="Microsoft.Extensions.FileSystemGlobbing.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.FileSystemGlobbing.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.FileSystemGlobbing.dll" />
             </Component>
-            <Component Id="cmpEF9B2FF9DB48B0972089B34D67A5D060" Directory="TARGETDIR" Guid="185B1B50-197A-4AB0-AB55-0A2B1DDA3299">
-                <File Id="fil5E8949978DA2E6E402855CC198D2802B" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Hosting.Abstractions.dll" />
+            <Component Id="Microsoft.Extensions.Hosting.Abstractions.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Hosting.Abstractions.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Hosting.Abstractions.dll" />
             </Component>
-            <Component Id="cmp751F9B6DD4D2A91D5A70FD8891531D41" Directory="TARGETDIR" Guid="5635DBD3-3BFF-44CD-865A-8D8FA8D78622">
-                <File Id="fil2A2FBE54B049D9F20BEFDE4AFAAD995B" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Hosting.dll" />
+            <Component Id="Microsoft.Extensions.Hosting.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Hosting.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Hosting.dll" />
             </Component>
-            <Component Id="cmp51357B8BE38BDBEC4650E16F679193C1" Directory="TARGETDIR" Guid="B24AB9EE-427A-4F75-B40E-D654CDAD70E5">
-                <File Id="filCEE87DAF42DD244A77D3FF1358934C20" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Logging.Abstractions.dll" />
+            <Component Id="Microsoft.Extensions.Logging.Abstractions.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Logging.Abstractions.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Logging.Abstractions.dll" />
             </Component>
-            <Component Id="cmp6459EAE4F3186977729DAB35188B8BD6" Directory="TARGETDIR" Guid="4A574F35-F0CD-4A1A-BEFF-D47238BB3C72">
-                <File Id="fil7703CA988C3720C915B2DC21D3E0A7BF" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Logging.Configuration.dll" />
+            <Component Id="Microsoft.Extensions.Logging.Configuration.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Logging.Configuration.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Logging.Configuration.dll" />
             </Component>
-            <Component Id="cmp71EE718E97453772376AE2A1C2A4E5E5" Directory="TARGETDIR" Guid="88BDAA54-9545-48C0-AC87-50DF837C97DC">
-                <File Id="filE2BEE5A099D714B38FEF04E0D3985DE5" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Logging.Console.dll" />
+            <Component Id="Microsoft.Extensions.Logging.Console.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Logging.Console.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Logging.Console.dll" />
             </Component>
-            <Component Id="cmp2CE2ED6E0BA3E8340E3F18A44ADF0779" Directory="TARGETDIR" Guid="A8C291EC-4A38-4BB2-912D-291F2DEA3467">
-                <File Id="fil0AC76E28495B36C1A7B50DE53A8BA1EB" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Logging.Debug.dll" />
+            <Component Id="Microsoft.Extensions.Logging.Debug.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Logging.Debug.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Logging.Debug.dll" />
             </Component>
-            <Component Id="cmp23B7C44B649DFD4F12BF865A29A494C2" Directory="TARGETDIR" Guid="F09471F0-5056-4C91-A474-21C5662B8AC1">
-                <File Id="filC6B97A68142D712CE291E1D18CCE23B8" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Logging.dll" />
+            <Component Id="Microsoft.Extensions.Logging.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Logging.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Logging.dll" />
             </Component>
-            <Component Id="cmpF7A7B31C33B25D213EA640F25AA5D206" Directory="TARGETDIR" Guid="332BFEF7-CD23-47D5-AC61-F3372ACF1BCE">
-                <File Id="filEFAC4E49FEF648B625B395AA2974A6E8" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Logging.EventLog.dll" />
+            <Component Id="Microsoft.Extensions.Logging.EventLog.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Logging.EventLog.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Logging.EventLog.dll" />
             </Component>
-            <Component Id="cmpEC7EC6D39CB3E1037D32F33BFC159139" Directory="TARGETDIR" Guid="8174D6AB-1322-4E5E-A8D2-68DF8E2594DB">
-                <File Id="fil2310630D5EE28D69859680E1B0A65DD6" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Logging.EventSource.dll" />
+            <Component Id="Microsoft.Extensions.Logging.EventSource.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Logging.EventSource.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Logging.EventSource.dll" />
             </Component>
-            <Component Id="cmpFEED22B46045D2ED37D8AC77897D31B6" Directory="TARGETDIR" Guid="7CC78F04-D50C-4EC5-9F02-AEEEDA43452A">
-                <File Id="fil226D03808184A9B5A8A7AD72CBB4B8EC" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Options.ConfigurationExtensions.dll" />
+            <Component Id="Microsoft.Extensions.Options.ConfigurationExtensions.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Options.ConfigurationExtensions.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Options.ConfigurationExtensions.dll" />
             </Component>
-            <Component Id="cmpF2C47B5B4FF40FF256F58C4C998FA865" Directory="TARGETDIR" Guid="33AE9DB1-E4E7-413E-8140-068704AA99E0">
-                <File Id="fil6C5BAA927055E2EA4DDC0C2759255D9F" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Options.dll" />
+            <Component Id="Microsoft.Extensions.Options.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Options.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Options.dll" />
             </Component>
-            <Component Id="cmp067948BD791077DB950FC74F23D9632C" Directory="TARGETDIR" Guid="86B09504-2CD4-46A7-8B4C-741A219F3E76">
-                <File Id="filE8C60BD18DF0BCBB77CEC821646DA670" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Extensions.Primitives.dll" />
+            <Component Id="Microsoft.Extensions.Primitives.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Primitives.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Primitives.dll" />
             </Component>
-            <Component Id="cmp400A07EEFDA0EFAA67CB4918430AE5BD" Directory="TARGETDIR" Guid="8C19E894-001A-42E3-BEEE-A136C14E7117">
-                <File Id="filC0D7DD4C98EEF989E6C2EDABCD8E9D11" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Foundation.winmd" />
+            <Component Id="Microsoft.Foundation.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Foundation.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Foundation.winmd" />
             </Component>
-            <Component Id="cmpD36FA0846FD35218379CD7797E19C7A0" Directory="TARGETDIR" Guid="C0D7852D-3BA3-4D1F-ACEF-204C234AC88F">
-                <File Id="filAD2672BDA3408C60AE21818C6361F6D5" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Graphics.winmd" />
+            <Component Id="Microsoft.Graphics.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Graphics.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Graphics.winmd" />
             </Component>
-            <Component Id="cmp8331BEEAD1A819D9AB076FE7F3F142C0" Directory="TARGETDIR" Guid="CF32E6FD-AC46-4C84-96F1-85399FE66D7F">
-                <File Id="fil1441BA752FA671438536D05924DACB21" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.InputStateManager.dll" />
+            <Component Id="Microsoft.InputStateManager.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.InputStateManager.dll" KeyPath="yes" Source="SourceDir\Microsoft.InputStateManager.dll" />
             </Component>
-            <Component Id="cmp473D7FB256BF619909516476006F3FCC" Directory="TARGETDIR" Guid="80AC6A64-18ED-4717-9C37-BD210E532475">
-                <File Id="fil11E4EECFDA52E39A4BB4FA841DBE9F59" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.InteractiveExperiences.Projection.dll" />
+            <Component Id="Microsoft.InteractiveExperiences.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.InteractiveExperiences.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.InteractiveExperiences.Projection.dll" />
             </Component>
-            <Component Id="cmpF4CC37C7611CAA9214C1BA16C60E8C4D" Directory="TARGETDIR" Guid="E4E398C4-557D-44BA-BA7E-C32CD93530B1">
-                <File Id="fil81DFEBD91F7F67C374C777E86BADF9E6" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Internal.FrameworkUdk.dll" />
+            <Component Id="Microsoft.Internal.FrameworkUdk.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Internal.FrameworkUdk.dll" KeyPath="yes" Source="SourceDir\Microsoft.Internal.FrameworkUdk.dll" />
             </Component>
-            <Component Id="cmpF5806A826E2D4E45AF80C832E1936ED8" Directory="TARGETDIR" Guid="2356FB3B-047F-4745-B6DC-ABE3734D6307">
-                <File Id="filD9D97B5FCB9EEF4F87A4FB26E71C95BD" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Composition.OSSupport.dll" />
+            <Component Id="Microsoft.UI.Composition.OSSupport.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Composition.OSSupport.dll" KeyPath="yes" Source="SourceDir\Microsoft.UI.Composition.OSSupport.dll" />
             </Component>
-            <Component Id="cmpA0C203A20F4C9E3AC0523B082CD8AFB5" Directory="TARGETDIR" Guid="4D39CD0F-A2EF-48C7-99B6-C9BB576AF781">
-                <File Id="fil0B031E4F641AF1677EFD41B743707C50" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Input.dll" />
+            <Component Id="Microsoft.UI.Input.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Input.dll" KeyPath="yes" Source="SourceDir\Microsoft.UI.Input.dll" />
             </Component>
-            <Component Id="cmpD992199C182D3317B0EBB64A2FF9A2F5" Directory="TARGETDIR" Guid="5035A915-F9DA-4095-818D-3DED5C725999">
-                <File Id="filBD82ED59E7CE6B93355E8683BD69F8BC" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Text.winmd" />
+            <Component Id="Microsoft.UI.Text.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Text.winmd" KeyPath="yes" Source="SourceDir\Microsoft.UI.Text.winmd" />
             </Component>
-            <Component Id="cmp17C99CC323F6B22A738B698F0692FF9A" Directory="TARGETDIR" Guid="488B8D46-C40A-4007-8CF8-E93CA7D57321">
-                <File Id="filF81C5861F4F82C884E31176F3EA0DECB" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Windowing.Core.dll" />
+            <Component Id="Microsoft.UI.Windowing.Core.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Windowing.Core.dll" KeyPath="yes" Source="SourceDir\Microsoft.UI.Windowing.Core.dll" />
             </Component>
-            <Component Id="cmpAE449A0AD49A527F52475B83C1177D9A" Directory="TARGETDIR" Guid="28DAC315-216E-4EE1-B33F-2A298D6DFCAB">
-                <File Id="filE5B30BD053A777F085721261B6B773B9" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.winmd" />
+            <Component Id="Microsoft.UI.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.winmd" KeyPath="yes" Source="SourceDir\Microsoft.UI.winmd" />
             </Component>
-            <Component Id="cmp6FF18344A9F7AF5D3D1373191D286DD0" Directory="TARGETDIR" Guid="8165FB2E-53CD-43D8-9D15-C412EDF4BABE">
-                <File Id="fil8028F57E1FC53C9A3B3C43427979EABE" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Xaml.Controls.dll" />
+            <Component Id="Microsoft.UI.Xaml.Controls.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Controls.dll" KeyPath="yes" Source="SourceDir\Microsoft.UI.Xaml.Controls.dll" />
             </Component>
-            <Component Id="cmpF84272906A6EF8C7254E58A9B8F70F22" Directory="TARGETDIR" Guid="7E667CE9-EF4E-4D5A-AE67-9B0E6527E2A9">
-                <File Id="filA8188CC2BE3B9DAFEF2BCB7FD7217AE5" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Xaml.Controls.pri" />
+            <Component Id="Microsoft.UI.Xaml.Controls.pri" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Controls.pri" KeyPath="yes" Source="SourceDir\Microsoft.UI.Xaml.Controls.pri" />
             </Component>
-            <Component Id="cmpD0566B3D988C2142B39F1389C46596A5" Directory="TARGETDIR" Guid="F8889ADC-86AB-49A8-A6B8-4EECD2F8E5B0">
-                <File Id="fil0DF1568D3E0760E011724B006AFC6E95" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.ui.xaml.dll" />
+            <Component Id="Microsoft.ui.xaml.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll" KeyPath="yes" Source="SourceDir\Microsoft.ui.xaml.dll" />
             </Component>
-            <Component Id="cmp7D2348A9CD30BE8F307A314D2AF36EF4" Directory="TARGETDIR" Guid="5F5D04E0-34E4-4DF6-8B4F-9F48A5F574AD">
-                <File Id="filFE04BF45D180E7DE43745C8471D36130" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Xaml.Internal.dll" />
+            <Component Id="Microsoft.UI.Xaml.Internal.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Internal.dll" KeyPath="yes" Source="SourceDir\Microsoft.UI.Xaml.Internal.dll" />
             </Component>
-            <Component Id="cmp42CE8E1891E0D034A21458A572ED3234" Directory="TARGETDIR" Guid="42A3886C-B7BE-4CB4-9931-F9986F9E7C35">
-                <File Id="fil879E7683FD8B55E0394B549E27594B94" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Xaml.Phone.dll" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll" KeyPath="yes" Source="SourceDir\Microsoft.UI.Xaml.Phone.dll" />
             </Component>
-            <Component Id="cmp8F8F9945F1270F2F95EC05E69916D5EB" Directory="TARGETDIR" Guid="665F7740-4112-4975-8D18-0066790FA360">
-                <File Id="filD535D1979BED91772F27485B31572F90" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.ui.xaml.resources.19h1.dll" />
+            <Component Id="Microsoft.ui.xaml.resources.19h1.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.resources.19h1.dll" KeyPath="yes" Source="SourceDir\Microsoft.ui.xaml.resources.19h1.dll" />
             </Component>
-            <Component Id="cmp5486F8360D01990C087F816900502C53" Directory="TARGETDIR" Guid="75FB86BB-40CF-4128-B625-9DE6316F758C">
-                <File Id="fil8FF32234498BAF700294B0D358410198" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.ui.xaml.resources.common.dll" />
+            <Component Id="Microsoft.ui.xaml.resources.common.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.resources.common.dll" KeyPath="yes" Source="SourceDir\Microsoft.ui.xaml.resources.common.dll" />
             </Component>
-            <Component Id="cmp7D5C4A31D364F8753C41B196E40E25CD" Directory="TARGETDIR" Guid="0E570F85-5D7D-4F6A-B57D-5FF8A40E2104">
-                <File Id="fil86E75056942BCFC262CB3336B8DDA961" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Xaml.winmd" />
+            <Component Id="Microsoft.UI.Xaml.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.winmd" KeyPath="yes" Source="SourceDir\Microsoft.UI.Xaml.winmd" />
             </Component>
-            <Component Id="cmpBBFD9C907537567B330655067FD07B93" Directory="TARGETDIR" Guid="0C4BFECB-A228-4C7C-9D90-D5192BB7B6FE">
-                <File Id="fil5A7A205E08062760189E8069AE3D73F3" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Web.WebView2.Core.dll" />
+            <Component Id="Microsoft.Web.WebView2.Core.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Web.WebView2.Core.dll" KeyPath="yes" Source="SourceDir\Microsoft.Web.WebView2.Core.dll" />
             </Component>
-            <Component Id="cmpF78B3E362F59D385CD1791F159A3F51F" Directory="TARGETDIR" Guid="F4AA5687-4F68-4FAE-A87C-473D4253FDAA">
-                <File Id="fil6865701E5007F5E22F68E69C0840356F" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Web.WebView2.Core.winmd" />
+            <Component Id="Microsoft.Web.WebView2.Core.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Web.WebView2.Core.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Web.WebView2.Core.winmd" />
             </Component>
-            <Component Id="cmpAE0B55963B2A18D4A7F022C74B292015" Directory="TARGETDIR" Guid="DDA61AC5-3CE8-4F07-9517-1A7DC4B535AD">
-                <File Id="fil3FC36D19D3D4F5BA3FD6410CD82F6A7A" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll" />
+            <Component Id="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll" />
             </Component>
-            <Component Id="cmp8794D85F0611743458E91E6FD6B0E762" Directory="TARGETDIR" Guid="3EB4B633-A5E4-4BA1-8B11-E90626F7ED66">
-                <File Id="filACA141F9F1F5C9459909E0A3A207C2C0" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.ApplicationModel.DynamicDependency.winmd" />
+            <Component Id="Microsoft.Windows.ApplicationModel.DynamicDependency.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.ApplicationModel.DynamicDependency.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.ApplicationModel.DynamicDependency.winmd" />
             </Component>
-            <Component Id="cmp6F0C8E19B11BB3A0FE3EFB1FCC968AEC" Directory="TARGETDIR" Guid="23AF18E8-5F49-4946-9737-012393DA632C">
-                <File Id="filDDF150D2CA8447072143ADF38331C7BC" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.ApplicationModel.Resources.dll" />
+            <Component Id="Microsoft.Windows.ApplicationModel.Resources.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.ApplicationModel.Resources.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.ApplicationModel.Resources.dll" />
             </Component>
-            <Component Id="cmp01C73C5F2D02B55F092385A0DC0F443D" Directory="TARGETDIR" Guid="0EACF119-DD40-4FE3-94E8-A0D56986D226">
-                <File Id="fil47D14C1B1295530DC85158D723524D8A" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.ApplicationModel.Resources.Projection.dll" />
+            <Component Id="Microsoft.Windows.ApplicationModel.Resources.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.ApplicationModel.Resources.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.ApplicationModel.Resources.Projection.dll" />
             </Component>
-            <Component Id="cmp27F3F43F939B837C5F4E83F1C188C9A3" Directory="TARGETDIR" Guid="D047FE0C-0CE5-403F-AB29-BBE623E34254">
-                <File Id="fil246988D9CE988CE675F5C5AF60FCD423" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.ApplicationModel.Resources.winmd" />
+            <Component Id="Microsoft.Windows.ApplicationModel.Resources.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.ApplicationModel.Resources.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.ApplicationModel.Resources.winmd" />
             </Component>
-            <Component Id="cmp64618856385EB19B17A5150E816D7210" Directory="TARGETDIR" Guid="FB12859E-C73F-4496-A6A7-9AD3C380EF52">
-                <File Id="fil1F9F357D12CA12BD7416AE779F08435E" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll" />
+            <Component Id="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll" />
             </Component>
-            <Component Id="cmp65EEA5D3C7C5A311B9FCAF511EDE9CF7" Directory="TARGETDIR" Guid="8BEE48EA-DDC2-4963-BEB4-8F7FD21F6FBD">
-                <File Id="fil5BDFD3165F5B08139FE655079C9A3525" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.ApplicationModel.WindowsAppRuntime.winmd" />
+            <Component Id="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.ApplicationModel.WindowsAppRuntime.winmd" />
             </Component>
-            <Component Id="cmp467EB5BAA6CC7E93C8FC997D4ECD4CEB" Directory="TARGETDIR" Guid="BEC7AB7D-1791-4B03-9229-477FD8DC8E6B">
-                <File Id="fil9858AA9BEEE95F1BE16198FBC00EA54C" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.AppLifecycle.Projection.dll" />
+            <Component Id="Microsoft.Windows.AppLifecycle.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.AppLifecycle.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.AppLifecycle.Projection.dll" />
             </Component>
-            <Component Id="cmp64653A4A894257D30CDF481153484489" Directory="TARGETDIR" Guid="9D64AE75-E2C1-4B56-8859-2DC683A5B720">
-                <File Id="filD745CB85F1EAFF170C3B9188CAC39948" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.AppLifecycle.winmd" />
+            <Component Id="Microsoft.Windows.AppLifecycle.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.AppLifecycle.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.AppLifecycle.winmd" />
             </Component>
-            <Component Id="cmpECD792D839569FA0369D136DB23A07A5" Directory="TARGETDIR" Guid="CB1DCA0C-4A47-4CE8-B331-89B179BBAD5C">
-                <File Id="fil85502433E1821C1A6010F19FDCCBB667" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.AppNotifications.Projection.dll" />
+            <Component Id="Microsoft.Windows.AppNotifications.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.AppNotifications.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.AppNotifications.Projection.dll" />
             </Component>
-            <Component Id="cmpB2E167D16ABEF1D64198AD0E7197B672" Directory="TARGETDIR" Guid="A147B354-4BE8-4954-95AF-C58E7797C41B">
-                <File Id="fil1E8164899AF8D561A656EB4E348B44ED" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.AppNotifications.winmd" />
+            <Component Id="Microsoft.Windows.AppNotifications.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.AppNotifications.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.AppNotifications.winmd" />
             </Component>
-            <Component Id="cmpF787E45E8FC6731296CA56E7E6962E6F" Directory="TARGETDIR" Guid="8A22EE50-545A-4531-AE7D-27470FD694F1">
-                <File Id="fil9A3F5A76BE6C3CFE7673F95F4C92FE19" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.PushNotifications.Projection.dll" />
+            <Component Id="Microsoft.Windows.PushNotifications.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.PushNotifications.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.PushNotifications.Projection.dll" />
             </Component>
-            <Component Id="cmp1D0CA8751164878E7BA53270CF490B31" Directory="TARGETDIR" Guid="E2F44A60-FE46-4199-8BA2-6C04949109A6">
-                <File Id="filBAE3F32209FD9FFD362FD0DB7B938784" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.PushNotifications.winmd" />
+            <Component Id="Microsoft.Windows.PushNotifications.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.PushNotifications.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.PushNotifications.winmd" />
             </Component>
-            <Component Id="cmp0E3F41C80D438847AE8CB2DE5560ABDD" Directory="TARGETDIR" Guid="C19D5CA0-7E9A-4CDE-B63F-E6CFDC115BE6">
-                <File Id="filC7A98F410539FBC3194534DE8E4F091F" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.SDK.NET.dll" />
+            <Component Id="Microsoft.Windows.SDK.NET.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.SDK.NET.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.SDK.NET.dll" />
             </Component>
-            <Component Id="cmpFA4E43BAA26C21C2C4599C3C368ADBDD" Directory="TARGETDIR" Guid="440C0F80-0256-435F-845A-72264AA018B9">
-                <File Id="fil150094EC388C1B2C147A8130A0D0F8DF" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.System.Power.Projection.dll" />
+            <Component Id="Microsoft.Windows.System.Power.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.System.Power.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.System.Power.Projection.dll" />
             </Component>
-            <Component Id="cmpBA0F1D8E59B45038BEF78E23CC0AFC8C" Directory="TARGETDIR" Guid="0813AD15-C64F-4C63-9C3A-0A44CB279B93">
-                <File Id="fil69A882FA6AF0B0BF89B3918438A802B3" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.System.Power.winmd" />
+            <Component Id="Microsoft.Windows.System.Power.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.System.Power.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.System.Power.winmd" />
             </Component>
-            <Component Id="cmp02D2A34D38AA98B9239439415F83CC9C" Directory="TARGETDIR" Guid="F0DECE2A-2A7C-44DD-AD20-3189C51A6730">
-                <File Id="fil64A7F5B48C556628A2583B2FDFEBEFAB" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.System.Projection.dll" />
+            <Component Id="Microsoft.Windows.System.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.System.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.System.Projection.dll" />
             </Component>
-            <Component Id="cmp4DC3D2E391EFF49EFF95DD8AAFDF4A2C" Directory="TARGETDIR" Guid="2B67A950-88A0-4B0E-8947-C45F2550F613">
-                <File Id="filAB2ED7CDE8823DAE8E176B76D590FF2C" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.Windows.System.winmd" />
+            <Component Id="Microsoft.Windows.System.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.System.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.System.winmd" />
             </Component>
-            <Component Id="cmp7FABFC5797A2946F2807D44FBAFCECC8" Directory="TARGETDIR" Guid="0E9E8C06-4E94-48F0-B120-A76344783252">
-                <File Id="fil6C05EC20D0F7E8074FA3814D3282DCC1" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.WindowsAppRuntime.Bootstrap.dll" />
+            <Component Id="Microsoft.WindowsAppRuntime.Bootstrap.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.WindowsAppRuntime.Bootstrap.dll" KeyPath="yes" Source="SourceDir\Microsoft.WindowsAppRuntime.Bootstrap.dll" />
             </Component>
-            <Component Id="cmp55435D418007F5D11EBD6A74DEF394C7" Directory="TARGETDIR" Guid="80BCAF79-DD31-478B-B5F8-8F08CB91806F">
-                <File Id="filFB01F304635AE477A46565873D4EA113" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" />
+            <Component Id="Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" KeyPath="yes" Source="SourceDir\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" />
             </Component>
-            <Component Id="cmp5F75C4D30B189E3275E4422D9E2D78B8" Directory="TARGETDIR" Guid="09D64F24-CCAF-45EA-8FBE-1FC03DB60326">
-                <File Id="fil4567A2E1C52C2CC2C0F7C19ABEAAC751" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.WindowsAppRuntime.dll" />
+            <Component Id="Microsoft.WindowsAppRuntime.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.WindowsAppRuntime.dll" KeyPath="yes" Source="SourceDir\Microsoft.WindowsAppRuntime.dll" />
             </Component>
-            <Component Id="cmpCF440B43152E237F48DECBB1285B1729" Directory="TARGETDIR" Guid="5959131C-A18C-473F-AE2E-2AA62AE967C2">
-                <File Id="fil674605D9DEC211A9CBE6FCDAB27509BB" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.WindowsAppRuntime.Insights.Resource.dll" />
+            <Component Id="Microsoft.WindowsAppRuntime.Insights.Resource.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.WindowsAppRuntime.Insights.Resource.dll" KeyPath="yes" Source="SourceDir\Microsoft.WindowsAppRuntime.Insights.Resource.dll" />
             </Component>
-            <Component Id="cmp0AF9424E0E8939B39F2DC8AB5CE5C736" Directory="TARGETDIR" Guid="31A73F52-CD30-4D59-A39F-A9F74A2297D4">
-                <File Id="fil9B1DF81B2BECBB36637F70382995AADB" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.WindowsAppRuntime.Release.Net.dll" />
+            <Component Id="Microsoft.WindowsAppRuntime.Release.Net.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.WindowsAppRuntime.Release.Net.dll" KeyPath="yes" Source="SourceDir\Microsoft.WindowsAppRuntime.Release.Net.dll" />
             </Component>
-            <Component Id="cmp2B5363FEA9834A70BECFEB36BB97ADF1" Directory="TARGETDIR" Guid="33E28411-4E9E-42B4-8169-1A650F9B4202">
-                <File Id="filD27C0CEC4F7DAC8AE89F14B5958F3270" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.WinUI.dll" />
+            <Component Id="Microsoft.WinUI.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.WinUI.dll" KeyPath="yes" Source="SourceDir\Microsoft.WinUI.dll" />
             </Component>
-            <Component Id="cmpB551351956235E6912E0E0D9322DA5AE" Directory="TARGETDIR" Guid="6B21E3FD-6EE6-4D99-A2F6-D7BE0383A8FF">
-                <File Id="fil6C5ABCCC50C380DBB37F65B754E9AD19" KeyPath="yes" Source="..\..\Publish\RTK\Mono.Cecil.dll" />
+            <Component Id="Mono.Cecil.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Mono.Cecil.dll" KeyPath="yes" Source="SourceDir\Mono.Cecil.dll" />
             </Component>
-            <Component Id="cmp34ECDAE8D1DB7B667839E915ED61EA31" Directory="TARGETDIR" Guid="6D971E7A-A118-4277-831F-013B6839F7A6">
-                <File Id="fil9EE833AC4B824E38A977704C46B60725" KeyPath="yes" Source="..\..\Publish\RTK\Mono.Cecil.Mdb.dll" />
+            <Component Id="Mono.Cecil.Mdb.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Mono.Cecil.Mdb.dll" KeyPath="yes" Source="SourceDir\Mono.Cecil.Mdb.dll" />
             </Component>
-            <Component Id="cmp10E5175EBDE77C34ED93DD9972DA60EE" Directory="TARGETDIR" Guid="11705AA6-70EE-425D-898F-AA21EE4609EA">
-                <File Id="fil2E93740AE8B4CF17FDF1F65915A95702" KeyPath="yes" Source="..\..\Publish\RTK\Mono.Cecil.Rocks.dll" />
+            <Component Id="Mono.Cecil.Pdb.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Mono.Cecil.Pdb.dll" KeyPath="yes" Source="SourceDir\Mono.Cecil.Pdb.dll" />
             </Component>
-            <Component Id="cmpB018B0DCFF738FA4A39FAAF77E87DE98" Directory="TARGETDIR" Guid="A7B953F8-529A-4189-ADE9-CD43413F3E65">
-                <File Id="fil24B1E01C6A313BEFFE5616506D22C774" KeyPath="yes" Source="..\..\Publish\RTK\MRM.dll" />
+            <Component Id="Mono.Cecil.Rocks.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Mono.Cecil.Rocks.dll" KeyPath="yes" Source="SourceDir\Mono.Cecil.Rocks.dll" />
             </Component>
-            <Component Id="cmp72974F93C3F42DAFDBFB2867D92E41D9" Directory="TARGETDIR" Guid="ED2492AB-D3B4-4DA0-AE35-5B9E6EF831C7">
-                <File Id="fil7F15BA8094994ADAD04DA907E934B5BD" KeyPath="yes" Source="..\..\Publish\RTK\Newtonsoft.Json.dll" />
+            <Component Id="MRM.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="MRM.dll" KeyPath="yes" Source="SourceDir\MRM.dll" />
             </Component>
-            <Component Id="cmp2A82FA5B80A25F147648C4BAD79309FB" Directory="TARGETDIR" Guid="5FA86A6A-2AAB-4554-820C-8B384772D1BA">
-                <File Id="fil5EC7DEE8D5F2944CA7D8218A00B527AE" KeyPath="yes" Source="..\..\Publish\RTK\ProcessMemoryUtilities.dll" />
+            <Component Id="Newtonsoft.Json.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Newtonsoft.Json.dll" KeyPath="yes" Source="SourceDir\Newtonsoft.Json.dll" />
             </Component>
-            <Component Id="cmp83C4DF7B61AAEB640B91013C6D924031" Directory="TARGETDIR" Guid="F556A51F-B23D-4592-9FC8-F46A28F827BF">
-                <File Id="fil5BF8310187D1B75C3D61C9AD3AEE5A59" KeyPath="yes" Source="..\..\Publish\RTK\PushNotificationsLongRunningTask.ProxyStub.dll" />
+            <Component Id="ProcessMemoryUtilities.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="ProcessMemoryUtilities.dll" KeyPath="yes" Source="SourceDir\ProcessMemoryUtilities.dll" />
             </Component>
-            <Component Id="cmpC44EE4157F58901307D096A1B38677EA" Directory="TARGETDIR" Guid="8B08CEB2-0C20-49CA-A87E-A3B716728CE4">
-                <File Id="filC5190B455E0F2173237B566CAD9F44A6" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Common.dll" />
+            <Component Id="PushNotificationsLongRunningTask.ProxyStub.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="PushNotificationsLongRunningTask.ProxyStub.dll" KeyPath="yes" Source="SourceDir\PushNotificationsLongRunningTask.ProxyStub.dll" />
             </Component>
-            <Component Id="cmpEEBBD32E734DC4DE77A84DE1301901AD" Directory="TARGETDIR" Guid="61AADF31-3FE3-4CEA-A0B1-BE4B5D6A62AD">
-                <File Id="fil7EF24786EA30E4740E5AC70F7D7448D0" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Model.dll" />
+            <Component Id="Raid.Common.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Common.dll" KeyPath="yes" Source="SourceDir\Raid.Common.dll" />
             </Component>
-            <Component Id="cmp57C40D3C3813A6CAE8A87A2730DD4751" Directory="TARGETDIR" Guid="A2BD3CA1-7A81-4B87-B767-241E2B7685CA">
-                <File Id="filA0B941EBB633DC962B0DCBE2F91009E6" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.Application.Core.dll" />
+            <Component Id="Raid.Common.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Common.pdb" KeyPath="yes" Source="SourceDir\Raid.Common.pdb" />
             </Component>
-            <Component Id="cmp37B6DC19C692165D6FE764BC18B339F7" Directory="TARGETDIR" Guid="CC9180DC-EA33-487C-A307-A9C352A54215">
-                <File Id="fil34C0E73EDD4AB4DD45C03DE0940A2F8C" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.DataModel.dll" />
+            <Component Id="Raid.Model.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Model.dll" KeyPath="yes" Source="SourceDir\Raid.Model.dll" />
             </Component>
-            <Component Id="cmp663F9167C350EFE9FCD28FDD64EAC174" Directory="TARGETDIR" Guid="534D7738-C423-41BB-94FB-F34169ECC0BF">
-                <File Id="fil5D14442429DC8EBA586A94E0B7B00918" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.deps.json" />
+            <Component Id="Raid.Model.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Model.pdb" KeyPath="yes" Source="SourceDir\Raid.Model.pdb" />
             </Component>
-            <Component Id="cmp3E112438AF76D9EE4D474C483C618C80" Directory="TARGETDIR" Guid="2354ABDE-4231-4575-B351-510464D06BF5">
-                <File Id="filDD089ED7B4B489F370BEB700690ABF4B" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.dll" />
+            <Component Id="Raid.Toolkit.Application.Core.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Application.Core.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Application.Core.dll" />
             </Component>
-            <Component Id="cmp555C3A3F1EC8273361A1202FDF87F962" Directory="TARGETDIR" Guid="E51E6A7C-57AB-43C8-8BD4-40AE5A4194B4">
-                <File Id="fil8C22E1519A2A47FFDBEEDE52069DFF32" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.exe" />
+            <Component Id="Raid.Toolkit.Application.Core.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Application.Core.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Application.Core.pdb" />
             </Component>
-            <Component Id="cmp44C4C4260B2C2C39A08CE2E8475A7328" Directory="TARGETDIR" Guid="8F0C2E05-FD60-4BA1-BE98-24101FBE66B2">
-                <File Id="filC417A87FF2423CF5C790C571FFE50C95" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.Extensibility.dll" />
+            <Component Id="Raid.Toolkit.DataModel.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.DataModel.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.DataModel.dll" />
             </Component>
-            <Component Id="cmp5F31A3BD676970CB629D9AB00542E3BF" Directory="TARGETDIR" Guid="494B4089-2063-423D-B687-479C2C6733A5">
-                <File Id="fil51ACF001B179DDDBC6AA298AD6C45DB8" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.Extensibility.Host.dll" />
+            <Component Id="Raid.Toolkit.DataModel.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.DataModel.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.DataModel.pdb" />
             </Component>
-            <Component Id="cmp5DFFF7D3E58E3D752F1991C01B106C6C" Directory="TARGETDIR" Guid="9E65C04B-45A6-4C7C-A11E-56A8FB608E1C">
-                <File Id="fil16FBFCF35675BB91CDFFB5E49AE3532B" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.Extension.Account.dll" />
+            <Component Id="Raid.Toolkit.deps.json" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.deps.json" KeyPath="yes" Source="SourceDir\Raid.Toolkit.deps.json" />
             </Component>
-            <Component Id="cmp9E1E42CA3A2216987C89EB785FE9B3A9" Directory="TARGETDIR" Guid="490A6180-CAE1-4B16-8D25-720BF5A55DB1">
-                <File Id="fil308F7F9E57415D6CEA433D6575EF33F7" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.Extension.Realtime.dll" />
+            <Component Id="Raid.Toolkit.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.dll" />
             </Component>
-            <Component Id="cmpA8A9650931E7FE41E352E62403E00749" Directory="TARGETDIR" Guid="57F826DD-E2ED-460B-8959-DCB8D11EF33A">
-                <File Id="filF0923678210884C81C9FD17263D02577" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.runtimeconfig.json" />
+            <Component Id="Raid.Toolkit.exe" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.exe" KeyPath="yes" Source="SourceDir\Raid.Toolkit.exe" />
             </Component>
-            <Component Id="cmpB7E809EF5D19F36A7A1ACE1ECF12A392" Directory="TARGETDIR" Guid="676193E0-F832-455C-88E9-34C385E8823D">
-                <File Id="fil8282221883C9475310EAF3FD6B95C9A8" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.UI.Forms.dll" />
+            <Component Id="Raid.Toolkit.Extensibility.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extensibility.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extensibility.dll" />
             </Component>
-            <Component Id="cmpBF7D7C7B2D7EABF0DB78A24E504C001A" Directory="TARGETDIR" Guid="19B3B3B4-CC6E-4D76-AE00-9A3C9FCE1534">
-                <File Id="fil9F5F5DC8C18F7A39639A8CD8D0D8EB05" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.UI.WinUI.dll" />
+            <Component Id="Raid.Toolkit.Extensibility.Host.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extensibility.Host.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extensibility.Host.dll" />
             </Component>
-            <Component Id="cmpD1668DDE8484CA37BB8DFA87F7EB314C" Directory="TARGETDIR" Guid="E9666CED-742B-4E9D-A784-F80474DFF5E7">
-                <File Id="filD4E7918562D6EE38125B5C426D01C18F" KeyPath="yes" Source="..\..\Publish\RTK\Raid.Toolkit.UI.WinUI.pri" />
+            <Component Id="Raid.Toolkit.Extensibility.Host.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extensibility.Host.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extensibility.Host.pdb" />
             </Component>
-            <Component Id="cmpF15018C592F948F609C5C9DB3CAD4ED8" Directory="TARGETDIR" Guid="9815B43B-4270-464F-AC25-FA027AD74F3F">
-                <File Id="filA3A17630DB090C643E65C965FA3CEA1D" KeyPath="yes" Source="..\..\Publish\RTK\SuperSocket.Channel.dll" />
+            <Component Id="Raid.Toolkit.Extensibility.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extensibility.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extensibility.pdb" />
             </Component>
-            <Component Id="cmpA6EE8E4AEDE97A796104CFB8CBD5B614" Directory="TARGETDIR" Guid="DEF05CFA-E6E9-4F2A-B2F5-6A92AE02CB15">
-                <File Id="filCE6E6F555AED0D2ED02235727D0DB6F1" KeyPath="yes" Source="..\..\Publish\RTK\SuperSocket.Command.dll" />
+            <Component Id="Raid.Toolkit.Extension.Account.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extension.Account.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extension.Account.dll" />
             </Component>
-            <Component Id="cmp8E0AB1E83242E89DDC321E2A93A6625A" Directory="TARGETDIR" Guid="F8E277BA-7E17-4129-A970-C50CD11747B4">
-                <File Id="fil6870858972A655AD033A680FC83A42D1" KeyPath="yes" Source="..\..\Publish\RTK\SuperSocket.Primitives.dll" />
+            <Component Id="Raid.Toolkit.Extension.Account.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extension.Account.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extension.Account.pdb" />
             </Component>
-            <Component Id="cmp662F9C971A6411301E91FD80D6E365C8" Directory="TARGETDIR" Guid="D5760FD2-5563-4E00-A0F4-30AF97532909">
-                <File Id="fil62CE9AA05FB479D68C9CFE781C680552" KeyPath="yes" Source="..\..\Publish\RTK\SuperSocket.ProtoBase.dll" />
+            <Component Id="Raid.Toolkit.Extension.Realtime.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extension.Realtime.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extension.Realtime.dll" />
             </Component>
-            <Component Id="cmp1BEC218B159FA21B3DBA680C4C1B8826" Directory="TARGETDIR" Guid="F4BB07BA-CD83-453C-BB47-92862D295E62">
-                <File Id="fil220593F817805CAA960DB370434F2B2D" KeyPath="yes" Source="..\..\Publish\RTK\SuperSocket.Server.dll" />
+            <Component Id="Raid.Toolkit.Extension.Realtime.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extension.Realtime.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extension.Realtime.pdb" />
             </Component>
-            <Component Id="cmp94298A3293516B82CD294E8ABBF79A83" Directory="TARGETDIR" Guid="03E24AE1-556C-4C3C-B6D6-A029DC495B03">
-                <File Id="fil31DBF4E04205EAD906DA2B3E20AC7847" KeyPath="yes" Source="..\..\Publish\RTK\SuperSocket.WebSocket.dll" />
+            <Component Id="Raid.Toolkit.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.pdb" />
             </Component>
-            <Component Id="cmpF96322BB55EADDC2E1ACC0443BBDF480" Directory="TARGETDIR" Guid="7F4FB99D-7D0E-496F-AFB7-F2C8F8B11B2F">
-                <File Id="fil1D28256CB4E6CC56BBCA733A53F1C64A" KeyPath="yes" Source="..\..\Publish\RTK\SuperSocket.WebSocket.Server.dll" />
+            <Component Id="Raid.Toolkit.runtimeconfig.json" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.runtimeconfig.json" KeyPath="yes" Source="SourceDir\Raid.Toolkit.runtimeconfig.json" />
             </Component>
-            <Component Id="cmpF0A2D458A47C143F793724A9D8724352" Directory="TARGETDIR" Guid="6E7B908F-7E2C-45B2-AF43-B17FFD00D32B">
-                <File Id="fil719BC4C0E7E8B3335A1625CC7E2DB262" KeyPath="yes" Source="..\..\Publish\RTK\System.Diagnostics.EventLog.Messages.dll" />
+            <Component Id="Raid.Toolkit.UI.Forms.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.UI.Forms.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.UI.Forms.dll" />
             </Component>
-            <Component Id="cmp9E320D39439267EBF2B6E8299B7919F0" Directory="TARGETDIR" Guid="65340FD9-1FC3-4F82-A624-07B84485662F">
-                <File Id="fil9A64C9849C18D5F341EFA5E05FA59182" KeyPath="yes" Source="..\..\Publish\RTK\System.IO.Pipelines.dll" />
+            <Component Id="Raid.Toolkit.UI.Forms.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.UI.Forms.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.UI.Forms.pdb" />
             </Component>
-            <Component Id="cmp630BE8638A0EEB2331EC10F70487F4D3" Directory="TARGETDIR" Guid="9F622B0A-1E3F-4AA9-A79E-CCD95A0A0B92">
-                <File Id="fil047BA000C5B11D127488EBAB9999FA25" KeyPath="yes" Source="..\..\Publish\RTK\Vestris.ResourceLib.dll" />
+            <Component Id="Raid.Toolkit.UI.WinUI.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.UI.WinUI.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.UI.WinUI.dll" />
             </Component>
-            <Component Id="cmpBA6C2B30B1F7AE0F5135E9BE31549655" Directory="TARGETDIR" Guid="1B4921FB-C099-487E-8F07-3FD9A12FA044">
-                <File Id="fil2BB6CBEDB5ECEA19AF740F788BD8C30F" KeyPath="yes" Source="..\..\Publish\RTK\WindowsAppRuntime.png" />
+            <Component Id="Raid.Toolkit.UI.WinUI.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.UI.WinUI.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.UI.WinUI.pdb" />
             </Component>
-            <Component Id="cmp9726B40569A9517800BBB9309CCC8D95" Directory="TARGETDIR" Guid="55FF86A9-72B1-43A7-943C-22029A5D7687">
-                <File Id="fil71270CA722F64E5E382103651C7D9637" KeyPath="yes" Source="..\..\Publish\RTK\WindowsAppSdk.AppxDeploymentExtensions.Desktop.dll" />
+            <Component Id="Raid.Toolkit.UI.WinUI.pri" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.UI.WinUI.pri" KeyPath="yes" Source="SourceDir\Raid.Toolkit.UI.WinUI.pri" />
             </Component>
-            <Component Id="cmp39F7D5D5D1176E349595BDF19D7D1849" Directory="TARGETDIR" Guid="303D6400-5FB0-4C02-9DEF-20E1B4F352C6">
-                <File Id="fil4E2BE9434FAA18BECA70DCDF76BEAF77" KeyPath="yes" Source="..\..\Publish\RTK\WinRT.Runtime.dll" />
+            <Component Id="SuperSocket.Channel.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="SuperSocket.Channel.dll" KeyPath="yes" Source="SourceDir\SuperSocket.Channel.dll" />
             </Component>
-            <Component Id="cmp17935BD6FD300CD6A443DD3179A9C238" Directory="TARGETDIR" Guid="A52B340B-E3CF-47E9-B04C-F2095CCF352A">
-                <File Id="fil7D3DF230769FF4D057D974EB5B9F7037" KeyPath="yes" Source="..\..\Publish\RTK\WinUIEdit.dll" />
+            <Component Id="SuperSocket.Command.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="SuperSocket.Command.dll" KeyPath="yes" Source="SourceDir\SuperSocket.Command.dll" />
             </Component>
-            <Component Id="cmp7C1B583CA6FDF853C512DA03D209223A" Directory="TARGETDIR" Guid="779D0670-2E67-4E4F-9776-8CEEA77F920A">
-                <File Id="fil989374167403141F20A51FA9DF9B53CA" KeyPath="yes" Source="..\..\Publish\RTK\WinUIEx.dll" />
+            <Component Id="SuperSocket.Primitives.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="SuperSocket.Primitives.dll" KeyPath="yes" Source="SourceDir\SuperSocket.Primitives.dll" />
             </Component>
-            <Component Id="cmp5A32856B16B537A370508A7D040A9278" Directory="TARGETDIR" Guid="13D62954-97A4-4A43-AD06-19F124EEF608">
-                <File Id="fil2F8D171C7DC1DF0FBCF962870DA50AA0" KeyPath="yes" Source="..\..\Publish\RTK\wuceffectsi.dll" />
+            <Component Id="SuperSocket.ProtoBase.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="SuperSocket.ProtoBase.dll" KeyPath="yes" Source="SourceDir\SuperSocket.ProtoBase.dll" />
             </Component>
-            <Component Id="cmp4A253CEEB1B841DA334A20487EBC136F" Directory="dir2E8F99F00520E27A206B5DDFCF4444A4" Guid="D79A59BA-FED9-4D1A-881C-A381B81B1C2D">
-                <File Id="fil63079BE634C1F5C3C72D13BFB5E224BA" KeyPath="yes" Source="..\..\Publish\RTK\af-ZA\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="SuperSocket.Server.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="SuperSocket.Server.dll" KeyPath="yes" Source="SourceDir\SuperSocket.Server.dll" />
             </Component>
-            <Component Id="cmp0FB838601EE4ACE2FD535A65BC84AE6D" Directory="dir2E8F99F00520E27A206B5DDFCF4444A4" Guid="1F0A40DF-9BC3-4D23-890A-BADB44F1F607">
-                <File Id="fil05AC93F49BC33C18D9343FBC8A4F43C0" KeyPath="yes" Source="..\..\Publish\RTK\af-ZA\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="SuperSocket.WebSocket.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="SuperSocket.WebSocket.dll" KeyPath="yes" Source="SourceDir\SuperSocket.WebSocket.dll" />
             </Component>
-            <Component Id="cmp36BEAA6FF9090EF9607B6AD02F222871" Directory="dir8A58EED63047C2902998D459D3EFA3C7" Guid="358DD21D-0BEA-4983-B508-464F4D6E5879">
-                <File Id="fil47D84367F2F88AA26D59D2261CCCF6DB" KeyPath="yes" Source="..\..\Publish\RTK\ar-SA\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="SuperSocket.WebSocket.Server.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="SuperSocket.WebSocket.Server.dll" KeyPath="yes" Source="SourceDir\SuperSocket.WebSocket.Server.dll" />
             </Component>
-            <Component Id="cmp9CFC458B608195014DEE01A3F43A516E" Directory="dir8A58EED63047C2902998D459D3EFA3C7" Guid="E2B15D76-1B75-4C2D-95B0-14E524DF45B3">
-                <File Id="fil818A77EC2DAB5C8570D6F90399D4EA0E" KeyPath="yes" Source="..\..\Publish\RTK\ar-SA\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="System.Diagnostics.EventLog.Messages.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="System.Diagnostics.EventLog.Messages.dll" KeyPath="yes" Source="SourceDir\System.Diagnostics.EventLog.Messages.dll" />
             </Component>
-            <Component Id="cmp888F9669FA058CC93AEFE98B43701D8A" Directory="dirF096CD595013FE4DC729DAD1BE618571" Guid="6E44A52E-387F-47DA-98EA-24DE54F0764E">
-                <File Id="filB7BCA22E32F730D1D72BEA461D3823F2" KeyPath="yes" Source="..\..\Publish\RTK\Assets\RaidToolkitLarge.png" />
+            <Component Id="System.IO.Pipelines.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="System.IO.Pipelines.dll" KeyPath="yes" Source="SourceDir\System.IO.Pipelines.dll" />
             </Component>
-            <Component Id="cmp99A20661955540680A8FA2A3183A7A54" Directory="dirF096CD595013FE4DC729DAD1BE618571" Guid="0DB08CD2-599C-4FEE-AB40-8155F60A9090">
-                <File Id="fil41FB74DBFFBF4AA7E2388C37DC92815F" KeyPath="yes" Source="..\..\Publish\RTK\Assets\Square150x150Logo.scale-200.png" />
+            <Component Id="Vestris.ResourceLib.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Vestris.ResourceLib.dll" KeyPath="yes" Source="SourceDir\Vestris.ResourceLib.dll" />
             </Component>
-            <Component Id="cmpF05EA23BF56764C7FFEC0C82219F6FD0" Directory="dir768415566258B043DE5160880EEDE36B" Guid="146A38F6-6E9D-4B7E-BCDC-F66E442D5474">
-                <File Id="filD7380B72942787259FEF3A6435E1F327" KeyPath="yes" Source="..\..\Publish\RTK\az-Latn-AZ\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="WindowsAppRuntime.png" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="WindowsAppRuntime.png" KeyPath="yes" Source="SourceDir\WindowsAppRuntime.png" />
             </Component>
-            <Component Id="cmp620DE36FDBCB7F9DA3FA739D95ED62BD" Directory="dir768415566258B043DE5160880EEDE36B" Guid="56BDD831-5C5E-4A45-B2AA-7164DF2137E9">
-                <File Id="fil0F70A5702CC5B92B4967A92DB60055B0" KeyPath="yes" Source="..\..\Publish\RTK\az-Latn-AZ\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="WindowsAppSdk.AppxDeploymentExtensions.Desktop.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="WindowsAppSdk.AppxDeploymentExtensions.Desktop.dll" KeyPath="yes" Source="SourceDir\WindowsAppSdk.AppxDeploymentExtensions.Desktop.dll" />
             </Component>
-            <Component Id="cmp874D6FFA2E649A0214B308CC3D666E2F" Directory="dir8C52A3E1EFC7D79F52DE6E19F3CC5C02" Guid="65526118-F6AE-42FD-A076-B0D20CE50CA1">
-                <File Id="filB3849CD60BD42F67B8542CA60C89BFB2" KeyPath="yes" Source="..\..\Publish\RTK\bg-BG\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="WinRT.Runtime.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="WinRT.Runtime.dll" KeyPath="yes" Source="SourceDir\WinRT.Runtime.dll" />
             </Component>
-            <Component Id="cmpD1B506BC9EB719DBA53811060F0B18C4" Directory="dir8C52A3E1EFC7D79F52DE6E19F3CC5C02" Guid="5D745E5F-9E05-40C4-966B-F8CA384BEFA6">
-                <File Id="fil7826493A1E8F97D2F4BFE52417D962DC" KeyPath="yes" Source="..\..\Publish\RTK\bg-BG\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="WinUIEdit.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="WinUIEdit.dll" KeyPath="yes" Source="SourceDir\WinUIEdit.dll" />
             </Component>
-            <Component Id="cmpF44558FCF58D89C8A24118D1C3BFEB1E" Directory="dir06E009179211E9380962BBE68525A5A7" Guid="C65F0531-DE8C-447F-A4F0-8B259E71947F">
-                <File Id="filBC5D249257150C1BF1AD13426A22511B" KeyPath="yes" Source="..\..\Publish\RTK\bs-Latn-BA\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="WinUIEx.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="WinUIEx.dll" KeyPath="yes" Source="SourceDir\WinUIEx.dll" />
             </Component>
-            <Component Id="cmp03D050828EB50989AD13529575DC7B69" Directory="dir06E009179211E9380962BBE68525A5A7" Guid="E9E6DA6F-0B14-4797-A66D-50FB3F05576F">
-                <File Id="fil53124370EE734B7428C2152C6465EA99" KeyPath="yes" Source="..\..\Publish\RTK\bs-Latn-BA\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="wuceffectsi.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="wuceffectsi.dll" KeyPath="yes" Source="SourceDir\wuceffectsi.dll" />
             </Component>
-            <Component Id="cmp310FE640546D7173CA50DA848F5F50C6" Directory="dirE78930CAC36FDBFB42C923AF1820A43D" Guid="08C91633-FF3C-47C5-A00A-B00B4A074F30">
-                <File Id="filDA26C507F684EAC051812C1FDB61D3C4" KeyPath="yes" Source="..\..\Publish\RTK\ca-ES\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui" Directory="af_ZA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui" KeyPath="yes" Source="SourceDir\af-ZA\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp7A975B5639311D5E7E3A423F431E4363" Directory="dirE78930CAC36FDBFB42C923AF1820A43D" Guid="44D979A4-45F3-47AB-9B43-408819937D9D">
-                <File Id="fil5381D7EEC501781883BD68E8F806C3AA" KeyPath="yes" Source="..\..\Publish\RTK\ca-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui" Directory="af_ZA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui" KeyPath="yes" Source="SourceDir\af-ZA\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp1799342B154F9F3FC56F80010FA2BAF8" Directory="dirF506CA25441B61318A8ABA99AB414AB9" Guid="985438D2-0030-41CA-A917-EFD7644C808F">
-                <File Id="fil3C4C4791366A0A15F734CA834661CEE7" KeyPath="yes" Source="..\..\Publish\RTK\cs-CZ\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_1" Directory="ar_SA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_1" KeyPath="yes" Source="SourceDir\ar-SA\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp55158CEB804EEAC74697BA1543B5970D" Directory="dirF506CA25441B61318A8ABA99AB414AB9" Guid="9BE30964-3977-4E83-8E52-FF42055DFEC3">
-                <File Id="fil51B9877FC178AD829D723B09D98A30D9" KeyPath="yes" Source="..\..\Publish\RTK\cs-CZ\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_1" Directory="ar_SA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_1" KeyPath="yes" Source="SourceDir\ar-SA\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpFD877D750B923B8219578C1D6F3EED06" Directory="dirA0E87E8F30FA771B95D30BEBF06CEDCD" Guid="1FDEF3D7-D7D5-4432-8553-E9A25EDD71DF">
-                <File Id="fil19FC8EB28BACCA27F520E43CD7A3012A" KeyPath="yes" Source="..\..\Publish\RTK\cy-GB\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="RaidToolkitLarge.png" Directory="Assets" Guid="PUT-GUID-HERE">
+                <File Id="RaidToolkitLarge.png" KeyPath="yes" Source="SourceDir\Assets\RaidToolkitLarge.png" />
             </Component>
-            <Component Id="cmp2CB9233FC8C512B55E3FA1CDBD17A1D6" Directory="dirA0E87E8F30FA771B95D30BEBF06CEDCD" Guid="C51AA4B6-87D9-43E8-8719-B9323550BE6C">
-                <File Id="fil567374AE6D26C6B43532CC1DBFC8DAB2" KeyPath="yes" Source="..\..\Publish\RTK\cy-GB\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Square150x150Logo.scale_200.png" Directory="Assets" Guid="PUT-GUID-HERE">
+                <File Id="Square150x150Logo.scale_200.png" KeyPath="yes" Source="SourceDir\Assets\Square150x150Logo.scale-200.png" />
             </Component>
-            <Component Id="cmpFD46D664392486BBFF4A7EBDE14BECD3" Directory="dir7553377991D5B2F525F621F52D9BF43A" Guid="4896F010-97F0-4C72-9668-EF05A95D26DE">
-                <File Id="fil43D79F5C55E2CC4405B0376BD5231C01" KeyPath="yes" Source="..\..\Publish\RTK\da-DK\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_2" Directory="az_Latn_AZ" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_2" KeyPath="yes" Source="SourceDir\az-Latn-AZ\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpE34E490B580F8A699373DA7947710D0E" Directory="dir7553377991D5B2F525F621F52D9BF43A" Guid="6D090702-D4B0-4EEC-9B2F-D800758D682E">
-                <File Id="fil17BA39539B7C54FBBEF909767612BA86" KeyPath="yes" Source="..\..\Publish\RTK\da-DK\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_2" Directory="az_Latn_AZ" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_2" KeyPath="yes" Source="SourceDir\az-Latn-AZ\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp11669512114D3ACF9FCD370280F8072B" Directory="dir7D245FA568FAB0A68786CFAC459CC70D" Guid="C6B63BF7-AC3B-4299-8308-8A40C92B1875">
-                <File Id="filC2F7EF96B9DF31007B1E94BAF8A436C8" KeyPath="yes" Source="..\..\Publish\RTK\de-DE\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_3" Directory="bg_BG" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_3" KeyPath="yes" Source="SourceDir\bg-BG\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp2483D54DA501FF7494215D77B0AC6D4C" Directory="dir7D245FA568FAB0A68786CFAC459CC70D" Guid="8136FE37-4065-466E-B3B6-39DA842CA448">
-                <File Id="fil898CF91D77BB30E34CDA611828682563" KeyPath="yes" Source="..\..\Publish\RTK\de-DE\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_3" Directory="bg_BG" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_3" KeyPath="yes" Source="SourceDir\bg-BG\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpF2D8D5BB11D5204C9DEBBBF508A9F5C0" Directory="dir2CCF193D75AC80CC688180C35BDE2E43" Guid="F69528D9-2957-4A20-B221-F3378DCB1703">
-                <File Id="fil4EA0C706F16AE740391BFA213A0DFBDB" KeyPath="yes" Source="..\..\Publish\RTK\el-GR\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_4" Directory="bs_Latn_BA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_4" KeyPath="yes" Source="SourceDir\bs-Latn-BA\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp6AF5827A8E3931A8D6E7FA8EFFA1BD7A" Directory="dir2CCF193D75AC80CC688180C35BDE2E43" Guid="37837728-C659-4DBA-B3A6-9AF5A7AD407A">
-                <File Id="filBC24656058B188A1DD62A725A03A90C7" KeyPath="yes" Source="..\..\Publish\RTK\el-GR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_4" Directory="bs_Latn_BA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_4" KeyPath="yes" Source="SourceDir\bs-Latn-BA\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp23D8A4E08271573B054301D5ACEE24C1" Directory="dir051F4039C4890BCC893859DA9F5C8358" Guid="B053A162-7043-4A58-AED2-F0EB95D028EF">
-                <File Id="fil9891047462053B2BE751653349A30201" KeyPath="yes" Source="..\..\Publish\RTK\en-GB\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_5" Directory="ca_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_5" KeyPath="yes" Source="SourceDir\ca-ES\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp941D79C3959A6EAF33C51F5048D2217E" Directory="dir051F4039C4890BCC893859DA9F5C8358" Guid="A8ECD4DC-C321-42DA-952A-89697D1E0D0C">
-                <File Id="fil58304FF30638778EC6AE414348F085CE" KeyPath="yes" Source="..\..\Publish\RTK\en-GB\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_5" Directory="ca_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_5" KeyPath="yes" Source="SourceDir\ca-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp5814933A943CBD38844F7C3C7C7A7044" Directory="dir90F3427C5DF8F9DA7DF0CCA58379BE3D" Guid="A652E9F8-365B-41F3-ACD5-9FB10B8963BD">
-                <File Id="fil9A0A987C9CEE32BA5CE562BB8203F291" KeyPath="yes" Source="..\..\Publish\RTK\en-us\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_6" Directory="cs_CZ" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_6" KeyPath="yes" Source="SourceDir\cs-CZ\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp1B1CC4818D97018394F3D2954E8F3E51" Directory="dir90F3427C5DF8F9DA7DF0CCA58379BE3D" Guid="E6FC64B5-D6B8-496D-953D-847A0CD1EF53">
-                <File Id="filE7948723DDB3B5832B170271C11E8620" KeyPath="yes" Source="..\..\Publish\RTK\en-us\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_6" Directory="cs_CZ" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_6" KeyPath="yes" Source="SourceDir\cs-CZ\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp2059510FAFE7DF2ABB07DF4B7C3FB837" Directory="dir4E7C9E18F48EF6EE24F0F0B8EC4069B6" Guid="8C75556C-62E2-41E7-9D82-46E223447A3F">
-                <File Id="filC141309C865B5824F4F6A9779015FA15" KeyPath="yes" Source="..\..\Publish\RTK\es-ES\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_7" Directory="cy_GB" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_7" KeyPath="yes" Source="SourceDir\cy-GB\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp68C7FE97A8EDA8F0207E161F1BC80150" Directory="dir4E7C9E18F48EF6EE24F0F0B8EC4069B6" Guid="C7BB3984-3130-4D5B-AAC4-84750811DC4E">
-                <File Id="filF0B190FA7FEAA04483541D0EF46D0981" KeyPath="yes" Source="..\..\Publish\RTK\es-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_7" Directory="cy_GB" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_7" KeyPath="yes" Source="SourceDir\cy-GB\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp72B3C582D427E3C5409D4E1A6664866F" Directory="dirB8CE1DA303A1FD1DB9F6A6374326B465" Guid="73E9936D-8FB5-41AA-83EB-0EDBFE2254E1">
-                <File Id="filEFC3D27D948820BF1BE4F8B8DBA2E414" KeyPath="yes" Source="..\..\Publish\RTK\es-MX\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_8" Directory="da_DK" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_8" KeyPath="yes" Source="SourceDir\da-DK\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpEC97274F8E23855BC49711EE7C06583A" Directory="dirB8CE1DA303A1FD1DB9F6A6374326B465" Guid="A4D37D70-92AB-48A9-BBDA-E335F17F8CF7">
-                <File Id="fil9EBAD72175CDF5FBE8D46FB91A9CF50A" KeyPath="yes" Source="..\..\Publish\RTK\es-MX\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_8" Directory="da_DK" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_8" KeyPath="yes" Source="SourceDir\da-DK\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp7ED060519ED32D363C85FFD96549BD75" Directory="dir61A7CC29AC4721315D1096F1F715F092" Guid="8D7D6101-8101-4E9D-8F3A-995AA741343D">
-                <File Id="fil856582816609143112D102CDF92DCEE5" KeyPath="yes" Source="..\..\Publish\RTK\et-EE\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_9" Directory="de_DE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_9" KeyPath="yes" Source="SourceDir\de-DE\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp0C6229AFA39AFA7A46625251C9B41801" Directory="dir61A7CC29AC4721315D1096F1F715F092" Guid="39D78D23-42A5-47D0-97C5-937C54AE900A">
-                <File Id="filC099E7FECDC5A58D6439F946204152DE" KeyPath="yes" Source="..\..\Publish\RTK\et-EE\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_9" Directory="de_DE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_9" KeyPath="yes" Source="SourceDir\de-DE\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp668142787EBA7BC3139BDFB3A98BC94C" Directory="dirA8AC8E4202EB8410FF9E02D7684FBD41" Guid="CD16D753-18F4-433F-A3A4-FC66BCFD247F">
-                <File Id="fil4F4007BA5157B92FCB2314635D27A216" KeyPath="yes" Source="..\..\Publish\RTK\eu-ES\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_10" Directory="el_GR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_10" KeyPath="yes" Source="SourceDir\el-GR\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpC862AA1F1322B05AC3C93ADC363A1D2A" Directory="dirA8AC8E4202EB8410FF9E02D7684FBD41" Guid="30A599F0-AB87-41D8-9262-3A12C5F00A6F">
-                <File Id="fil71A912A952B3DB0E4596456EE29B1758" KeyPath="yes" Source="..\..\Publish\RTK\eu-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_10" Directory="el_GR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_10" KeyPath="yes" Source="SourceDir\el-GR\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp3DE37C186B7DEEE5EBE20B0D44B04424" Directory="dir8322864BEA38E9E36883678718795DDC" Guid="7BB8674A-7866-40E8-8C7A-EBB3D3AB5B5B">
-                <File Id="fil9C3B07CAA01A224785FDBA8D15D8B7E3" KeyPath="yes" Source="..\..\Publish\RTK\fa-IR\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_11" Directory="en_GB" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_11" KeyPath="yes" Source="SourceDir\en-GB\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpF2D91AE5DEA17D9D9007EEB32E058488" Directory="dir8322864BEA38E9E36883678718795DDC" Guid="8FE41C70-1D52-47E7-AB30-811881ED6BF2">
-                <File Id="filD21D2620B003A05EB9D6FACCB8DF4593" KeyPath="yes" Source="..\..\Publish\RTK\fa-IR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_11" Directory="en_GB" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_11" KeyPath="yes" Source="SourceDir\en-GB\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpCEF957B5B85D6A79413C13AF1D3FFB18" Directory="dir365A6D3BBBDF34CAB43D78FD379DE3D0" Guid="55649A71-E091-4F27-AA36-3F1E7D44B836">
-                <File Id="fil2E18E26EB9A222DF907CEA74DCD57E7E" KeyPath="yes" Source="..\..\Publish\RTK\fi-FI\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_12" Directory="en_us" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_12" KeyPath="yes" Source="SourceDir\en-us\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp8CE91CA9C41C9A401B8C60D9AC270BD5" Directory="dir365A6D3BBBDF34CAB43D78FD379DE3D0" Guid="09A36DEC-B4E8-478A-A546-7243FE507D42">
-                <File Id="filE17F81999A2F920A0D400181EE88B82A" KeyPath="yes" Source="..\..\Publish\RTK\fi-FI\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_12" Directory="en_us" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_12" KeyPath="yes" Source="SourceDir\en-us\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp0C62FF03E6E4F3D4911FC04895311AC6" Directory="dirAEDEDA702A9F054202FF3CCF19992133" Guid="3A652123-79CA-4CBB-8097-0683B2480473">
-                <File Id="filB96C8F884237445126810D2566DD0AF7" KeyPath="yes" Source="..\..\Publish\RTK\fr-CA\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_13" Directory="es_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_13" KeyPath="yes" Source="SourceDir\es-ES\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpFF414BBD266908B4F0B1965007F598A2" Directory="dirAEDEDA702A9F054202FF3CCF19992133" Guid="BB954F62-5A49-479A-9C87-CE043A304010">
-                <File Id="filCFC8A990362A239E7DB528C98DBEA687" KeyPath="yes" Source="..\..\Publish\RTK\fr-CA\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_13" Directory="es_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_13" KeyPath="yes" Source="SourceDir\es-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp86AB091408D59B203B4DAB8265C2BFAB" Directory="dirCAED0528078BFC1954A646717711F191" Guid="4D9B6031-6F0B-4948-973B-1C022FC5F304">
-                <File Id="fil995CB3BFA31EA688151C9BF07CEB9DF5" KeyPath="yes" Source="..\..\Publish\RTK\fr-FR\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_14" Directory="es_MX" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_14" KeyPath="yes" Source="SourceDir\es-MX\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp4965CCAB436ED1E55C3889B35DBFAFFA" Directory="dirCAED0528078BFC1954A646717711F191" Guid="5B0F17EB-80C1-4AF4-9438-52E243CE9269">
-                <File Id="fil753B763462220A49EC7B6B751622A091" KeyPath="yes" Source="..\..\Publish\RTK\fr-FR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_14" Directory="es_MX" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_14" KeyPath="yes" Source="SourceDir\es-MX\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp05A171A9B4E5612797429FD9E925096A" Directory="dirED22A6E01730FF73397085E794A2F773" Guid="F55BB963-7C3E-4900-98DD-D43B6B36DEF6">
-                <File Id="fil68AE9F6C3D5FEEC97E2987ED6E8D4BA8" KeyPath="yes" Source="..\..\Publish\RTK\gl-ES\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_15" Directory="et_EE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_15" KeyPath="yes" Source="SourceDir\et-EE\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp9C2A94ACE597EE31BE63E234CA45AD16" Directory="dirED22A6E01730FF73397085E794A2F773" Guid="726CD261-803A-4DEC-9751-4078689E4DE8">
-                <File Id="fil49F19D106F5C1714D215D35C25D92830" KeyPath="yes" Source="..\..\Publish\RTK\gl-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_15" Directory="et_EE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_15" KeyPath="yes" Source="SourceDir\et-EE\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp76E97762A81199DC87A6C3BD48741CF9" Directory="dir22A08AAAEE7BEABA9D005C1BC83C60E1" Guid="D9ADC172-A5AE-4223-8D2C-03D8F9194672">
-                <File Id="fil22C440575F3C3CD7E7D8BA2EAF7F128E" KeyPath="yes" Source="..\..\Publish\RTK\he-IL\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_16" Directory="eu_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_16" KeyPath="yes" Source="SourceDir\eu-ES\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp3903D31680A066D3F3A6FDB6AD3FBDA3" Directory="dir22A08AAAEE7BEABA9D005C1BC83C60E1" Guid="093A98B4-E848-4E5C-ADF4-1A30791DFBA8">
-                <File Id="filBA9FD4FB463EBA17D6E11E758DC4FDCA" KeyPath="yes" Source="..\..\Publish\RTK\he-IL\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_16" Directory="eu_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_16" KeyPath="yes" Source="SourceDir\eu-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpFCDAA0775631E2184463924EBF916F15" Directory="dir0DEFCE688C00797B6FBBEA44C6DEBBC3" Guid="056A9794-F5BE-4EB4-8016-31EFFAE2CAA3">
-                <File Id="fil39F25451E9928437F728A402FE830256" KeyPath="yes" Source="..\..\Publish\RTK\hi-IN\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_17" Directory="fa_IR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_17" KeyPath="yes" Source="SourceDir\fa-IR\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpD5CEEFEE9DF60A3E42F264751E20D6A0" Directory="dir0DEFCE688C00797B6FBBEA44C6DEBBC3" Guid="482E8949-D472-4C0A-AA45-9749178EAE6A">
-                <File Id="fil9D5C4AA01D4CEC89132A2B6A831E6038" KeyPath="yes" Source="..\..\Publish\RTK\hi-IN\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_17" Directory="fa_IR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_17" KeyPath="yes" Source="SourceDir\fa-IR\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp2A3DFF5FDD41DB91EFE95FD83648795D" Directory="dir1B1C3CDA7101A72381C2D7E984D67BC4" Guid="42F2AB3D-990E-42C3-A275-BFF5ABFBDB3B">
-                <File Id="fil8CA2D4ABF6ABBE802624477344CB74C7" KeyPath="yes" Source="..\..\Publish\RTK\hr-HR\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_18" Directory="fi_FI" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_18" KeyPath="yes" Source="SourceDir\fi-FI\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpAAACC6D8DFF5ED1A1E106295612AC788" Directory="dir1B1C3CDA7101A72381C2D7E984D67BC4" Guid="5297F87C-408B-49DD-9A77-34BC5C846EC3">
-                <File Id="filC2CD797F308D95902988EB0461513BC3" KeyPath="yes" Source="..\..\Publish\RTK\hr-HR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_18" Directory="fi_FI" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_18" KeyPath="yes" Source="SourceDir\fi-FI\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp6E24F7836C673750029999045BB3F772" Directory="dirB8568BD15D796382E47F09FC23A95754" Guid="6719BDA9-2B87-4F72-8D33-D59D6406B973">
-                <File Id="filC15D98FFD537E896228FDC30958EFCD8" KeyPath="yes" Source="..\..\Publish\RTK\hu-HU\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_19" Directory="fr_CA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_19" KeyPath="yes" Source="SourceDir\fr-CA\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp26CD1A03CC33AD908C4547190D82A40D" Directory="dirB8568BD15D796382E47F09FC23A95754" Guid="01E1EEAE-FA50-4AE1-BF07-E160FB9CF902">
-                <File Id="fil85F622200323B261C9FE899567CF3C79" KeyPath="yes" Source="..\..\Publish\RTK\hu-HU\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_19" Directory="fr_CA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_19" KeyPath="yes" Source="SourceDir\fr-CA\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpA27E3754445460389B70026EF1081B58" Directory="dir46DD9F8E8E5334F6020D90AA055953A0" Guid="24E0F6F1-8051-4465-BFD3-16F4C07573CE">
-                <File Id="fil3CEA8E99B6B3D79DDB85AF26B4716FE5" KeyPath="yes" Source="..\..\Publish\RTK\id-ID\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_20" Directory="fr_FR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_20" KeyPath="yes" Source="SourceDir\fr-FR\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpC016FD0DEEF477A190E47A9FD67BF364" Directory="dir46DD9F8E8E5334F6020D90AA055953A0" Guid="A9CBC339-C786-487C-AFAE-7F43B7073C18">
-                <File Id="filF8B49711DE60C3AA8C3EA59D67E26F23" KeyPath="yes" Source="..\..\Publish\RTK\id-ID\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_20" Directory="fr_FR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_20" KeyPath="yes" Source="SourceDir\fr-FR\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpBD4430B9FD2B4C564324A60C5BCF4B7E" Directory="dirD9BB893C068C4C79EB1FBF5CD3186876" Guid="3C71D341-8C2B-452E-8D24-637DA921C3C0">
-                <File Id="fil186E3EE08C08C6173CA9D782DCAEC40F" KeyPath="yes" Source="..\..\Publish\RTK\is-IS\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_21" Directory="gl_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_21" KeyPath="yes" Source="SourceDir\gl-ES\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpEC2339730F25FCFEA5BB85DB5C9B78A1" Directory="dirD9BB893C068C4C79EB1FBF5CD3186876" Guid="2C146036-7D3A-4CCB-B7EC-A82036FEAB3D">
-                <File Id="fil878EAB5072E277B7CBB6C790FEB6AE67" KeyPath="yes" Source="..\..\Publish\RTK\is-IS\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_21" Directory="gl_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_21" KeyPath="yes" Source="SourceDir\gl-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp602F99BE6E5E4C327C7D84895E87741A" Directory="dir127E11C42B270711CF9A0B651BF5705A" Guid="87485B97-9CD2-4580-BB72-115DD189E73F">
-                <File Id="fil05CAD72EE9D2FCE529CB7927251BC552" KeyPath="yes" Source="..\..\Publish\RTK\it-IT\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_22" Directory="he_IL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_22" KeyPath="yes" Source="SourceDir\he-IL\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpAC13E188804B5DA2A1A7C6B284676782" Directory="dir127E11C42B270711CF9A0B651BF5705A" Guid="F7DDC8B4-EB0A-4F5F-A7CB-8E98FF5174C8">
-                <File Id="fil39779DB698C31C170F3B046195252428" KeyPath="yes" Source="..\..\Publish\RTK\it-IT\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_22" Directory="he_IL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_22" KeyPath="yes" Source="SourceDir\he-IL\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp858849939726EAB1053F298B49E89484" Directory="dirDE266F127412FC21C419CE07C986B7BB" Guid="3BE51057-E721-4661-B0EF-CB6CBF7A72B9">
-                <File Id="filAA653E0CCA5EE26AECF3893C839D85B1" KeyPath="yes" Source="..\..\Publish\RTK\ja-JP\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_23" Directory="hi_IN" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_23" KeyPath="yes" Source="SourceDir\hi-IN\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpED1C5EC4C41D680F2309066A28A1AB56" Directory="dirDE266F127412FC21C419CE07C986B7BB" Guid="ED9A8F70-0D7C-4665-B9BC-B2A41AE47F07">
-                <File Id="fil53E78EAB0369C44F2074D8A9A7425628" KeyPath="yes" Source="..\..\Publish\RTK\ja-JP\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_23" Directory="hi_IN" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_23" KeyPath="yes" Source="SourceDir\hi-IN\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpD030C94731F09B5E4453A57539DF756F" Directory="dir83CB9FFEFDEF5A635CF673F299FAEEE2" Guid="5BC56968-C058-406B-BBF7-FB608A60B368">
-                <File Id="fil91D2326513181B23772372C9B004B6DF" KeyPath="yes" Source="..\..\Publish\RTK\ka-GE\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_24" Directory="hr_HR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_24" KeyPath="yes" Source="SourceDir\hr-HR\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpFED1B7591676C16F8229D40CD7A32352" Directory="dir83CB9FFEFDEF5A635CF673F299FAEEE2" Guid="B2F97646-01EE-4D97-866A-CD8E4A838E2F">
-                <File Id="filD1D6C298CCE4CE9B265F0D716903A53C" KeyPath="yes" Source="..\..\Publish\RTK\ka-GE\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_24" Directory="hr_HR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_24" KeyPath="yes" Source="SourceDir\hr-HR\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp66782D1E3E52DEBDA0E01DA717DCA7EB" Directory="dir85095EFF900363E075A43AE226D3CFF2" Guid="5D740BB0-36C1-408E-8BCC-761248D70D90">
-                <File Id="filC05F0C3EAA48D4B82BDABDAFC7C499F3" KeyPath="yes" Source="..\..\Publish\RTK\kk-KZ\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_25" Directory="hu_HU" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_25" KeyPath="yes" Source="SourceDir\hu-HU\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp134359D43205DE744DE75102E1B56FF4" Directory="dir85095EFF900363E075A43AE226D3CFF2" Guid="1BD2DC60-0EC0-4E22-A7A0-C1A11A7DBE49">
-                <File Id="fil0B728D976C6ECC6B087708C3B20C7340" KeyPath="yes" Source="..\..\Publish\RTK\kk-KZ\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_25" Directory="hu_HU" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_25" KeyPath="yes" Source="SourceDir\hu-HU\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp8C51CECD775F8C9A092F1F535CFAAE32" Directory="dir3A576A4FD8C8A1573859EA7B46742BA8" Guid="F89CC10D-747D-4466-BE59-9FCBFDE369FF">
-                <File Id="filBD852DAB2DEA540FFA157ED4F2F0FA52" KeyPath="yes" Source="..\..\Publish\RTK\ko-KR\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_26" Directory="id_ID" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_26" KeyPath="yes" Source="SourceDir\id-ID\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp9AAE2878D77714A10D49C3186179B876" Directory="dir3A576A4FD8C8A1573859EA7B46742BA8" Guid="415F8C74-FF65-4A06-84A5-D3EFD74A2DA8">
-                <File Id="fil51D8B0A1C91491307B40E1E40C2D4BCC" KeyPath="yes" Source="..\..\Publish\RTK\ko-KR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_26" Directory="id_ID" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_26" KeyPath="yes" Source="SourceDir\id-ID\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp5AC08E31E596B6E07C1350DC602EC1D7" Directory="dir6C979DDE667D895FE4FCA7A040778799" Guid="8268C7B0-09DA-4F49-8E27-A4E8ACFB704C">
-                <File Id="filD6C5BFC5916F63624BA3817B3E0AAB9E" KeyPath="yes" Source="..\..\Publish\RTK\lt-LT\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_27" Directory="is_IS" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_27" KeyPath="yes" Source="SourceDir\is-IS\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpCFF62A1514DB14D159AA0A11260C8629" Directory="dir6C979DDE667D895FE4FCA7A040778799" Guid="F2BE10B3-52DA-42B0-B295-8E0920A97CDF">
-                <File Id="filCFCB91552A8D63F91AED117C54238AE9" KeyPath="yes" Source="..\..\Publish\RTK\lt-LT\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_27" Directory="is_IS" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_27" KeyPath="yes" Source="SourceDir\is-IS\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpD902C68206D6BDB2986BD4ED08F02CD4" Directory="dir820FDF5C8058B478A3C567979FE59987" Guid="A775E01D-B858-4C7F-82E4-5AE71279CBD3">
-                <File Id="filCFB7BB65ED357F266FBA1DA9C54EC4AC" KeyPath="yes" Source="..\..\Publish\RTK\lv-LV\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_28" Directory="it_IT" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_28" KeyPath="yes" Source="SourceDir\it-IT\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp9F22DD6D33BF712930C487558CEE631A" Directory="dir820FDF5C8058B478A3C567979FE59987" Guid="0D2154B6-C3C8-4117-8C40-3FE52A55E183">
-                <File Id="fil4C0E864373AF27EF78C3A6452F4FE256" KeyPath="yes" Source="..\..\Publish\RTK\lv-LV\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_28" Directory="it_IT" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_28" KeyPath="yes" Source="SourceDir\it-IT\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp8F903A8EAE35CFA0AE2B56DEE1252C36" Directory="dirB398D2165CEF97B2CA33C1092CD7A59F" Guid="B66B01A1-A6C4-4189-818C-8615AF9BBA3E">
-                <File Id="fil640E1B531503A635B78173896A68A5C2" KeyPath="yes" Source="..\..\Publish\RTK\Microsoft.UI.Xaml\Assets\NoiseAsset_256x256_PNG.png" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_29" Directory="ja_JP" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_29" KeyPath="yes" Source="SourceDir\ja-JP\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp215D0ED1EE2B746647E423BEBA14C9D6" Directory="dirF84F362E28F23F96E0CECD1ABAFFB072" Guid="8F211DEC-75FB-4B9C-9541-8C993CCE3EC7">
-                <File Id="fil9EA1529153B25DB85F26D7F45ACBBCF0" KeyPath="yes" Source="..\..\Publish\RTK\ms-MY\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_29" Directory="ja_JP" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_29" KeyPath="yes" Source="SourceDir\ja-JP\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpB96F85579155A7DB55C95F5552B37234" Directory="dirF84F362E28F23F96E0CECD1ABAFFB072" Guid="50813582-E14F-4839-AF05-5696E4D0C730">
-                <File Id="filB263E7A57A94A6C0B0AB7ECEF02117DB" KeyPath="yes" Source="..\..\Publish\RTK\ms-MY\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_30" Directory="ka_GE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_30" KeyPath="yes" Source="SourceDir\ka-GE\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpF8D39D05B2F4000ACAFC1C27ECAB6BE0" Directory="dir31610DA07C5E630A7EAD9A6463EEED9C" Guid="C8E501ED-F911-4BA9-98DB-890594418D86">
-                <File Id="fil485702AEF302AFE394C38B691096A1AE" KeyPath="yes" Source="..\..\Publish\RTK\nb-NO\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_30" Directory="ka_GE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_30" KeyPath="yes" Source="SourceDir\ka-GE\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpF5B76FF48C9931C7914D103054D53EF1" Directory="dir31610DA07C5E630A7EAD9A6463EEED9C" Guid="B28A9A13-0372-49F3-8B02-B76F97BC0372">
-                <File Id="fil893ECBFFBD2251A5AEB8A15E5DA09991" KeyPath="yes" Source="..\..\Publish\RTK\nb-NO\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_31" Directory="kk_KZ" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_31" KeyPath="yes" Source="SourceDir\kk-KZ\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp605304F605F84B225B9BFC8420D8D363" Directory="dirC3D9E80BDA9E7D475DFFCADD4989FD8F" Guid="4FD14135-0EFC-4FCB-8F27-67182457C217">
-                <File Id="fil06DD143279C28A4BB54390EA557DEF91" KeyPath="yes" Source="..\..\Publish\RTK\nl-NL\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_31" Directory="kk_KZ" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_31" KeyPath="yes" Source="SourceDir\kk-KZ\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp932F84868593CC026DF05F8020FE5195" Directory="dirC3D9E80BDA9E7D475DFFCADD4989FD8F" Guid="2CE111B2-9A94-4C83-BFC1-AD2D001BC59C">
-                <File Id="fil42C7E240A3C6FF76ED4C23B202A6B7CD" KeyPath="yes" Source="..\..\Publish\RTK\nl-NL\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_32" Directory="ko_KR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_32" KeyPath="yes" Source="SourceDir\ko-KR\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpE74CD1EC43927E734355B1FBFAA506E3" Directory="dir790D81D373AC114F8C648FB338FDF9A6" Guid="540754FE-729A-4680-9588-42719563F888">
-                <File Id="filCB281DA9D89CDC47F8A90B8F2687417A" KeyPath="yes" Source="..\..\Publish\RTK\nn-NO\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_32" Directory="ko_KR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_32" KeyPath="yes" Source="SourceDir\ko-KR\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp82D4AB076A98DBFEF445CEA5D2F584C1" Directory="dir790D81D373AC114F8C648FB338FDF9A6" Guid="ABF61E9D-5732-4AC2-9994-E97115D1D805">
-                <File Id="fil2C27BBB1DA13089915CCC50AB3E87C31" KeyPath="yes" Source="..\..\Publish\RTK\nn-NO\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_33" Directory="lt_LT" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_33" KeyPath="yes" Source="SourceDir\lt-LT\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp4D55C4419FB6AD34043C1AD43878BC38" Directory="dir7A384EAB79C935C2EF8FE3F2F9B3143C" Guid="B028C5EC-D910-4911-9F24-432C9D27B481">
-                <File Id="filE436E3CFC73AB8E0D7BFEFD3C7FF021F" KeyPath="yes" Source="..\..\Publish\RTK\pl-PL\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_33" Directory="lt_LT" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_33" KeyPath="yes" Source="SourceDir\lt-LT\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpE17B7AF578DE1E9138F5A5CF9FBA6A7E" Directory="dir7A384EAB79C935C2EF8FE3F2F9B3143C" Guid="58E9A54F-0414-46A7-B819-D71951318889">
-                <File Id="filF7D07C00C72FC98710B58F9498C8B087" KeyPath="yes" Source="..\..\Publish\RTK\pl-PL\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_34" Directory="lv_LV" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_34" KeyPath="yes" Source="SourceDir\lv-LV\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp12A39B795B01026A0263A72FFC02F6F6" Directory="dir06451880B7983577060F11D069200563" Guid="1DB784C6-417A-4645-891E-F7E82BB237A4">
-                <File Id="fil863E6D7B56C7E1AC9D853F5D2E40D800" KeyPath="yes" Source="..\..\Publish\RTK\pt-BR\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_34" Directory="lv_LV" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_34" KeyPath="yes" Source="SourceDir\lv-LV\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpC0EA5D3292848EF936BFF612CE8449BB" Directory="dir06451880B7983577060F11D069200563" Guid="2F469D78-A75C-4203-89BD-65601D80C3A6">
-                <File Id="filE77EDB4A204E90D127882D5B81B9924B" KeyPath="yes" Source="..\..\Publish\RTK\pt-BR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="NoiseAsset_256x256_PNG.png" Directory="Assets_1" Guid="PUT-GUID-HERE">
+                <File Id="NoiseAsset_256x256_PNG.png" KeyPath="yes" Source="SourceDir\Microsoft.UI.Xaml\Assets\NoiseAsset_256x256_PNG.png" />
             </Component>
-            <Component Id="cmp00E7548549F644977D646F8349997998" Directory="dir64EF89DDD3F9879EDFD8B06EA18FEE22" Guid="E9207623-D0EB-4558-8A94-0B0D492586DA">
-                <File Id="filE3C3B26B7C4948B663598A2F93EB5992" KeyPath="yes" Source="..\..\Publish\RTK\pt-PT\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_35" Directory="ms_MY" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_35" KeyPath="yes" Source="SourceDir\ms-MY\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp702EC1373FD30EDA45C47A48555A06C6" Directory="dir64EF89DDD3F9879EDFD8B06EA18FEE22" Guid="24C85AEB-3BDA-4AA8-8EAF-DBBC9423AD48">
-                <File Id="fil04E47F4C7D3CEF4EEAA3870D5458BC9D" KeyPath="yes" Source="..\..\Publish\RTK\pt-PT\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_35" Directory="ms_MY" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_35" KeyPath="yes" Source="SourceDir\ms-MY\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp2066B9884679283EC853CCA70ADD6A41" Directory="dir5A6163BDEE95B3E2028E25F6E281CDF2" Guid="A5D4381A-3449-4344-8654-C3F503FF9F3D">
-                <File Id="fil21BABACA76E3CAECBBE5F57EA2E5A33F" KeyPath="yes" Source="..\..\Publish\RTK\Resources\Square150x150Logo.scale-200.png" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_36" Directory="nb_NO" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_36" KeyPath="yes" Source="SourceDir\nb-NO\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp67E0E9D38235BAA954620705D5197693" Directory="dirBD417CDE45A71C718B98F065F9258F44" Guid="FFDB07BA-E833-4B7A-9203-43FE7ADE4419">
-                <File Id="filC46F374FA7363005FAA8F7667BDE6B9B" KeyPath="yes" Source="..\..\Publish\RTK\ro-RO\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_36" Directory="nb_NO" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_36" KeyPath="yes" Source="SourceDir\nb-NO\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpEC58F7A7F39C3418608AA2976145D629" Directory="dirBD417CDE45A71C718B98F065F9258F44" Guid="18A9FD7D-8EBA-4E80-9A0D-0EA9ACC36071">
-                <File Id="filFB6E15970E0973B019E324D2D3A8BD9D" KeyPath="yes" Source="..\..\Publish\RTK\ro-RO\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_37" Directory="nl_NL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_37" KeyPath="yes" Source="SourceDir\nl-NL\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpE848644038C1D53D67F367EB51DAD2CC" Directory="dir88566B38A2D7D3972AF67B9401A6879E" Guid="F43B1441-7350-4B7D-89F5-F1D73C289F6C">
-                <File Id="fil4E06000939F3F8079E006D8D3139AE9C" KeyPath="yes" Source="..\..\Publish\RTK\ru-RU\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_37" Directory="nl_NL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_37" KeyPath="yes" Source="SourceDir\nl-NL\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp328376DB8011DECD109A0F3EE89AF853" Directory="dir88566B38A2D7D3972AF67B9401A6879E" Guid="28249610-44FF-4014-95DB-A2EEAE4500D3">
-                <File Id="fil5254F6B00B375570BC811FF92F0A13A7" KeyPath="yes" Source="..\..\Publish\RTK\ru-RU\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_38" Directory="nn_NO" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_38" KeyPath="yes" Source="SourceDir\nn-NO\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp32055CD1E43090AC12C49753478DF458" Directory="dirFE3DA183E9A2F62433018E56DB82ACE9" Guid="8399F8DC-D635-44A7-B190-4F9D43D6456F">
-                <File Id="fil653B287E5F7293B00793A1630EBFCC0B" KeyPath="yes" Source="..\..\Publish\RTK\sk-SK\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_38" Directory="nn_NO" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_38" KeyPath="yes" Source="SourceDir\nn-NO\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpE1ACCB0508C272B98834F43694DA2C9F" Directory="dirFE3DA183E9A2F62433018E56DB82ACE9" Guid="F8D443F7-9D19-48F5-B796-CCB9AE42F3FF">
-                <File Id="filFF0AD6713799076E4D8F5B590FBFB90C" KeyPath="yes" Source="..\..\Publish\RTK\sk-SK\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_39" Directory="pl_PL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_39" KeyPath="yes" Source="SourceDir\pl-PL\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpA66ACE7AA5B10A372C97884510040F39" Directory="dir2B18810BB98C72963FF869A5D0FF2127" Guid="F836C76D-A5BC-437F-B473-EF3791B969B1">
-                <File Id="fil6B44B0290344374169279B5B7AC93C26" KeyPath="yes" Source="..\..\Publish\RTK\sl-SI\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_39" Directory="pl_PL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_39" KeyPath="yes" Source="SourceDir\pl-PL\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp5041176C595AFA346079147C0B90F8A5" Directory="dir2B18810BB98C72963FF869A5D0FF2127" Guid="B9CAC60A-5601-4726-810B-8F28EDD0A3B1">
-                <File Id="fil1D19F8E51380A4799271A3E7A6417778" KeyPath="yes" Source="..\..\Publish\RTK\sl-SI\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_40" Directory="pt_BR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_40" KeyPath="yes" Source="SourceDir\pt-BR\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp389C33BDEC97DCFCB88B8D946DA79180" Directory="dir4D26E729882A39FA7D66C0CEB36B5B7C" Guid="D6CC8695-683D-4DB0-A947-BCCA7E0DE455">
-                <File Id="fil1C8DEBCAE5FF4B76139C310F4EC7C587" KeyPath="yes" Source="..\..\Publish\RTK\sq-AL\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_40" Directory="pt_BR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_40" KeyPath="yes" Source="SourceDir\pt-BR\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp63457FF8F950B2ED87B6EB608AE203CF" Directory="dir4D26E729882A39FA7D66C0CEB36B5B7C" Guid="11DC1AEE-34F6-4E19-BA89-5C5808D65B4A">
-                <File Id="fil3F16F2E4B958EDD638F7C6B0D6506FA1" KeyPath="yes" Source="..\..\Publish\RTK\sq-AL\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_41" Directory="pt_PT" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_41" KeyPath="yes" Source="SourceDir\pt-PT\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpF2CB77E4174A982AAFB5DDDEFB39B570" Directory="dirC9BD5008D20CEEEF0CE0009814B9B8E2" Guid="A4E51D8E-231F-4377-B739-2AFCC8D21530">
-                <File Id="fil547D8877AD31210DC65D957C2B159CC1" KeyPath="yes" Source="..\..\Publish\RTK\sr-Cyrl-RS\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_41" Directory="pt_PT" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_41" KeyPath="yes" Source="SourceDir\pt-PT\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp22007C8308A4C16078EB9A2A6493D15A" Directory="dirC9BD5008D20CEEEF0CE0009814B9B8E2" Guid="0A91AF64-2CF7-4C20-9143-10BD9F0F9945">
-                <File Id="fil7D450CFF3241553C8FD062FA5141AA3E" KeyPath="yes" Source="..\..\Publish\RTK\sr-Cyrl-RS\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Square150x150Logo.scale_200.png_1" Directory="Resources" Guid="PUT-GUID-HERE">
+                <File Id="Square150x150Logo.scale_200.png_1" KeyPath="yes" Source="SourceDir\Resources\Square150x150Logo.scale-200.png" />
             </Component>
-            <Component Id="cmpCD5D42691A35ED8253EEB496C0D80416" Directory="dir3F1C2D4A36E696BE70929A2817E388E1" Guid="13CA48C4-441B-4060-9716-CA644600C380">
-                <File Id="filEBF84B8B6966D1E5B987BF6318DD48B1" KeyPath="yes" Source="..\..\Publish\RTK\sr-Latn-RS\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_42" Directory="ro_RO" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_42" KeyPath="yes" Source="SourceDir\ro-RO\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp5E06BDDD82739215C93242B41D7F8D63" Directory="dir3F1C2D4A36E696BE70929A2817E388E1" Guid="C6251775-1F80-4760-A886-11A57A46D38E">
-                <File Id="fil6C797C163CEA8DDAFB0196E818635D0F" KeyPath="yes" Source="..\..\Publish\RTK\sr-Latn-RS\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_42" Directory="ro_RO" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_42" KeyPath="yes" Source="SourceDir\ro-RO\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpEBFCCD3DAFF52A079EAD41143219C300" Directory="dir639732FFD67462C233ABBB2070ACA19E" Guid="2E036892-03CD-4416-95D4-59F795CA83E7">
-                <File Id="fil8F71CAB3F9C345946F8DB5FF9CBAC07B" KeyPath="yes" Source="..\..\Publish\RTK\sv-SE\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_43" Directory="ru_RU" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_43" KeyPath="yes" Source="SourceDir\ru-RU\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp90A41777761F4E7193AA8CE40EAC9CA0" Directory="dir639732FFD67462C233ABBB2070ACA19E" Guid="9E289506-8426-4E94-87BA-BEE8AED198AF">
-                <File Id="fil596000838D271536A9973CE42BB5BE3D" KeyPath="yes" Source="..\..\Publish\RTK\sv-SE\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_43" Directory="ru_RU" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_43" KeyPath="yes" Source="SourceDir\ru-RU\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp23AA3DD4BEB76F0E4DF24B4FA7B403DA" Directory="dir176421E4DA6C6090E37882030350EC17" Guid="2FE7592C-A998-4D19-97AE-AF804C30EF0B">
-                <File Id="filF5288F94641E0C7AE58212C84136C013" KeyPath="yes" Source="..\..\Publish\RTK\th-TH\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_44" Directory="sk_SK" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_44" KeyPath="yes" Source="SourceDir\sk-SK\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp416CF92B703B6704D5400649DC963AB3" Directory="dir176421E4DA6C6090E37882030350EC17" Guid="9FFE0BC2-0C79-4437-B6AC-6DF3B5D24A80">
-                <File Id="fil1EB7D2ECAFFBE85D23B321811E506DC1" KeyPath="yes" Source="..\..\Publish\RTK\th-TH\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_44" Directory="sk_SK" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_44" KeyPath="yes" Source="SourceDir\sk-SK\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp039622420A3FE5E6E6EB9EC46340F6CF" Directory="dir7C89C61B47CA39513CE4EEB384F1A11F" Guid="A7CACB09-6430-47CE-9606-0352723A0EE2">
-                <File Id="filE1D2CADE1F0290D7C18E8E1E0CC3E5B4" KeyPath="yes" Source="..\..\Publish\RTK\tr-TR\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_45" Directory="sl_SI" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_45" KeyPath="yes" Source="SourceDir\sl-SI\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp35DDD9674CF372DC8F85B62734A98009" Directory="dir7C89C61B47CA39513CE4EEB384F1A11F" Guid="F1EC7B64-D6A9-44BB-BB8A-23FB82C758E9">
-                <File Id="fil8A115F9C108D78449A9CC43A9A110EF1" KeyPath="yes" Source="..\..\Publish\RTK\tr-TR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_45" Directory="sl_SI" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_45" KeyPath="yes" Source="SourceDir\sl-SI\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpA47D3F3F8DC8E23C9A5AEEDA894B1B2C" Directory="dir129B2053638809FF01CC44381F3A7929" Guid="FED15B36-576E-49E2-AFD3-DB40D3789983">
-                <File Id="filF79F4A96427FFBFD444E37EDA7DA762F" KeyPath="yes" Source="..\..\Publish\RTK\uk-UA\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_46" Directory="sq_AL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_46" KeyPath="yes" Source="SourceDir\sq-AL\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpA57E0BD28A300FC33AF30819105F4EC1" Directory="dir129B2053638809FF01CC44381F3A7929" Guid="A270CA68-D6A3-4B09-B125-FDB99BD35873">
-                <File Id="fil48916774FB39835F1332DA945084CEF2" KeyPath="yes" Source="..\..\Publish\RTK\uk-UA\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_46" Directory="sq_AL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_46" KeyPath="yes" Source="SourceDir\sq-AL\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp835C1E4677DDEFD3D06FF8560C0460DE" Directory="dir7BEADDA5B92C8FC2400FFF618E5ECE1B" Guid="D50B4816-1D23-45AC-86D7-D08569636507">
-                <File Id="fil6ACDDB1CAFDBB77DD42BDDF06F90D7C1" KeyPath="yes" Source="..\..\Publish\RTK\vi-VN\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_47" Directory="sr_Cyrl_RS" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_47" KeyPath="yes" Source="SourceDir\sr-Cyrl-RS\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpDD13BB7DAF99A9BB6DCFF6255AB29909" Directory="dir7BEADDA5B92C8FC2400FFF618E5ECE1B" Guid="CC187972-B426-44E3-A57F-738E29F34AA0">
-                <File Id="fil73CBF250C917C97547BC318260C1A21D" KeyPath="yes" Source="..\..\Publish\RTK\vi-VN\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_47" Directory="sr_Cyrl_RS" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_47" KeyPath="yes" Source="SourceDir\sr-Cyrl-RS\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmpFE27D19E4F9EEE529FBEB5EA2FC0F773" Directory="dir50B6246B3834061C2B20218486FEF43C" Guid="2ECE3516-BC9C-4D21-B4AE-BB90CF8C5A7D">
-                <File Id="filAEC9F617DD2E3A029673B53E7AF66186" KeyPath="yes" Source="..\..\Publish\RTK\zh-CN\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_48" Directory="sr_Latn_RS" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_48" KeyPath="yes" Source="SourceDir\sr-Latn-RS\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmp5767ADAC167E44CCC484AA09FC3A77CF" Directory="dir50B6246B3834061C2B20218486FEF43C" Guid="AB54997E-225A-473D-9B26-7A1A78BE0540">
-                <File Id="filA342FA8F155AE91DC72D989871262941" KeyPath="yes" Source="..\..\Publish\RTK\zh-CN\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_48" Directory="sr_Latn_RS" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_48" KeyPath="yes" Source="SourceDir\sr-Latn-RS\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="cmp1A8A89DE97C33405756C60E4AB6DB965" Directory="dir7B82CCBA71D11659EBA31313CE3FF476" Guid="6312D2AF-5A6D-4B3E-ADF9-2B946032A74B">
-                <File Id="filC16734DB02DAFF0E4F2B1A367B0B8BDB" KeyPath="yes" Source="..\..\Publish\RTK\zh-TW\Microsoft.ui.xaml.dll.mui" />
+            <Component Id="Microsoft.ui.xaml.dll.mui_49" Directory="sv_SE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_49" KeyPath="yes" Source="SourceDir\sv-SE\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="cmpFAA90D01BF79D5FA43E1243E36E5B323" Directory="dir7B82CCBA71D11659EBA31313CE3FF476" Guid="68F0C228-4385-4046-BC91-F1C069FB629E">
-                <File Id="fil3ED86F9439B8336354826930A04D051F" KeyPath="yes" Source="..\..\Publish\RTK\zh-TW\Microsoft.UI.Xaml.Phone.dll.mui" />
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_49" Directory="sv_SE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_49" KeyPath="yes" Source="SourceDir\sv-SE\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_50" Directory="th_TH" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_50" KeyPath="yes" Source="SourceDir\th-TH\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_50" Directory="th_TH" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_50" KeyPath="yes" Source="SourceDir\th-TH\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_51" Directory="tr_TR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_51" KeyPath="yes" Source="SourceDir\tr-TR\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_51" Directory="tr_TR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_51" KeyPath="yes" Source="SourceDir\tr-TR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_52" Directory="uk_UA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_52" KeyPath="yes" Source="SourceDir\uk-UA\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_52" Directory="uk_UA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_52" KeyPath="yes" Source="SourceDir\uk-UA\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_53" Directory="vi_VN" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_53" KeyPath="yes" Source="SourceDir\vi-VN\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_53" Directory="vi_VN" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_53" KeyPath="yes" Source="SourceDir\vi-VN\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_54" Directory="zh_CN" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_54" KeyPath="yes" Source="SourceDir\zh-CN\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_54" Directory="zh_CN" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_54" KeyPath="yes" Source="SourceDir\zh-CN\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_55" Directory="zh_TW" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_55" KeyPath="yes" Source="SourceDir\zh-TW\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_55" Directory="zh_TW" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_55" KeyPath="yes" Source="SourceDir\zh-TW\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
         </ComponentGroup>
     </Fragment>
     <Fragment>
-        <DirectoryRef Id="dir7C2568510784D27CF4ACC59CA9D52769">
-            <Directory Id="dirB398D2165CEF97B2CA33C1092CD7A59F" Name="Assets" />
+        <DirectoryRef Id="Microsoft.UI.Xaml">
+            <Directory Id="Assets_1" Name="Assets" />
         </DirectoryRef>
     </Fragment>
 </Wix>
