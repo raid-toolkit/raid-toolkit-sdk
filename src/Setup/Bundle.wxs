@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Bundle logo-->
+<?define Logo = "..\\..\\assets\\AppIcon_64.png" ?>
+<!-- Bundle side logo-->
+<?define SideLogo = "..\\..\\assets\\sidebar.png" ?>
+<!-- Bundle icon-->
+<?define Icon = "..\\..\\assets\\AppIcon.ico" ?>
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+    xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+    <Bundle Name="Raid Toolkit" Version="$(env.AppVersion)" Manufacturer="Raid Toolkit" UpgradeCode="4d38424c-13d7-4f6d-9419-dd790281440d" IconSourceFile="$(var.Icon)">
+        <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.HyperlinkSidebarLicense">
+            <bal:WixStandardBootstrapperApplication LaunchTarget="[LocalAppDataFolder]\RaidToolkit\Raid.Toolkit.exe" LaunchArguments="--post-setup" ShowFilesInUse="yes" ShowVersion="yes" LicenseUrl="https://raw.githubusercontent.com/raid-toolkit/raid-toolkit-sdk/main/LICENSE" LogoSideFile="$(var.SideLogo)" LogoFile="$(var.Logo)" SuppressOptionsUI="yes"/>
+        </BootstrapperApplicationRef>
+        <Chain>
+            <PackageGroupRef Id="Net6"/>
+            <MsiPackage EnableFeatureSelection="yes" SourceFile="out\RaidToolkit.msi" DisplayInternalUI="no" />
+        </Chain>
+    </Bundle>
+
+    <Fragment>
+        <PackageGroup Id="Net6">
+            <ExePackage InstallCommand="/q" DetectCondition="Installed" Name="windowsdesktop-runtime-6.0.9-win-x64.exe" Compressed="no" DownloadUrl="https://download.visualstudio.microsoft.com/download/pr/fe8415d4-8a35-4af9-80a5-51306a96282d/05f9b2a1b4884238e69468e49b3a5453/windowsdesktop-runtime-6.0.9-win-x64.exe" Id="Net6Setup">
+                <RemotePayload Version="6.0.9.0" Size="57328120" Hash="71DD37FB8A5DF79F5EEE8983D472683F5A01F73C" ProductName="Runtime components" Description="Runtime components"/>
+            </ExePackage>
+        </PackageGroup>
+    </Fragment>
+
+</Wix>

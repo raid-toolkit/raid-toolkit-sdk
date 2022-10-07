@@ -43,6 +43,12 @@ jobs:
       - name: Setup MSBuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
 
+      # Versions
+      - uses: dotnet/nbgv@master
+        id: rtk_version
+        with:
+          setAllVars: true
+
       # Restore the application to populate the obj folder with RuntimeIdentifiers
       - name: Restore the application
         run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Release
@@ -51,10 +57,14 @@ jobs:
       - name: Publish App
         run: |
           msbuild $env:Solution_Name -m -t:"Build;Pack" -p:Configuration=Release -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
-          msbuild $env:App_csproj -m -t:Publish -p:TargetFramework=net6.0-windows10.0.19041.0 -p:Configuration=Release -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
 
-      # Versions
-      - uses: dotnet/nbgv@master
-        id: rtk_version
-        with:
-          setAllVars: true
+      - name: Build Setup
+        run: |
+          candle.exe -nologo -o out\ RaidToolkitBinaries.wxs Product.wxs Bundle.wxs -ext WixBalExtension
+          light.exe -nologo -o out\RaidToolkit.msi out\Product.wixobj out\RaidToolkitBinaries.wixobj -ext WixBalExtension
+          light.exe -nologo -o out\RaidToolkit.exe out\Bundle.wixobj -ext WixBalExtension
+        working-directory: ./src/Setup
+        env:
+          AppVersion: ${{ steps.rtk_version.outputs.Version }}
+          Prerelease: 1
+          BuildOutputDirectory: ..\Application\Raid.Toolkit\bin\x64\Release\net6.0-windows10.0.19041.0\win10-x64

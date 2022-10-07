@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1252"?>
 <Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
-    <Product Id="*" Name="Raid Toolkit" Manufacturer="Raid Toolkit" UpgradeCode="CFCBC4D3-CF5A-4DAC-BA0C-67867A4E1EDF" Language="1033" Codepage="932" Version="1.0.0">
-        <Package Id="*" Keywords="Installer" Description="Raid Toolkit Installer" Manufacturer="Raid Toolkit" InstallerVersion="100" Languages="1033" Compressed="yes" SummaryCodepage="932" />
+    <Product Id="*" Name="Raid Toolkit" Manufacturer="Raid Toolkit" UpgradeCode="CFCBC4D3-CF5A-4DAC-BA0C-67867A4E1EDF" Language="1033" Codepage="932" Version="$(env.AppVersion)">
+        <Package Id="*" Keywords="Installer" InstallScope="perUser" Description="Raid Toolkit Installer" Manufacturer="Raid Toolkit" InstallerVersion="100" Languages="1033" Compressed="yes" SummaryCodepage="932" />
 
         <Property Id="INSTALLDIR">
             <RegistrySearch Id="DetermineInstallLocation" Type="raw" Root="HKLM" Key="Software\RaidToolkit" Name="InstallLocation" />
@@ -24,6 +24,7 @@
                     (important when installing a newer version, because that is uninstall followed by install) -->
                 <RegistryKey Root="HKCU" Key="Software\RaidToolkit">
                     <RegistryValue Name="InstallFolder" Value="[INSTALLDIR]" KeyPath="yes" Type="string" />
+                    <RegistryValue Name="InstallPrereleases" Value="$(env.Prerelease)" Type="integer" />
                 </RegistryKey>
             </Component>
         </Directory>

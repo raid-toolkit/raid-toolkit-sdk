@@ -69,12 +69,6 @@ jobs:
         with:
           setAllVars: true
 
-      # Versions
-      - uses: dotnet/nbgv@master
-        id: rtk_version
-        with:
-          setAllVars: true
-
       # Create releases
       - name: Create RaidToolkit Release
         id: rtk_release
