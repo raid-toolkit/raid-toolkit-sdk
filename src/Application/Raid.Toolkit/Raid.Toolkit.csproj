@@ -49,7 +49,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="$(PkgIl2CppToolkit_Injection_Client)\runtimes\win7-x64\native\Il2CppToolkit.Injection.Host.dll">
+        <Content Include="$(PkgIl2CppToolkit_Injection_Client)\runtimes\win10-x64\native\Il2CppToolkit.Injection.Host.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
         <!--<Content Include="$(ProjectPriFullPath)" Link="$(ProjectPriFileName)">
