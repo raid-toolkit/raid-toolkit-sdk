@@ -12,6 +12,7 @@
         <Platforms>x64</Platforms>
         <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
         <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+        <IsPackable>false</IsPackable>
 
         <UseWinUI>true</UseWinUI>
         <WindowsPackageType>None</WindowsPackageType>
