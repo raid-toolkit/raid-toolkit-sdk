@@ -12,6 +12,7 @@ jobs:
     env:
       IS_CI: true
       Solution_Name: SDK.sln
+      Launcher_csproj: src\Application\Launcher\Launcher.csproj
       App_csproj: src\Application\Raid.Toolkit\Raid.Toolkit.csproj
       Client_csproj: src\ClientSDK\DotNet\Raid.Client.csproj
 
@@ -30,6 +31,9 @@ jobs:
           PRERELEASE: |
             main:true
             !default:false
+          PRERELEASEN: |
+            main:1
+            !default:0
 
       # Install the .NET Core workload
       - name: Install .NET Core
@@ -54,9 +58,10 @@ jobs:
         run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Release
 
       # Publish RTK
-      - name: Publish App
+      - name: Build App
         run: |
           msbuild $env:Solution_Name -m -t:"Build;Pack" -p:Configuration=Release -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
+          msbuild $env:Launcher_csproj -m -t:Publish -p:TargetFramework=net5.0-windows -p:Configuration=Release -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
 
       - name: Build Setup
         run: |
@@ -67,5 +72,5 @@ jobs:
         working-directory: ./src/Setup
         env:
           AppVersion: ${{ steps.rtk_version.outputs.Version }}
-          Prerelease: 1
+          Prerelease: ${{ env.PRERELEASEN }}
           BuildOutputDirectory: ..\Application\Raid.Toolkit\bin\x64\Release\net6.0-windows10.0.19041.0\win10-x64
