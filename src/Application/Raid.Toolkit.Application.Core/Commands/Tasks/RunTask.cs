@@ -27,11 +27,11 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
             await SingletonProcess.TryAcquireSingletonWithTimeout(Options.Wait ?? 0);
 
             AppHostBuilder
-                .AddWebSockets(AppHost.HandleMessage)
                 .AddExtensibility()
                 .AddLogging()
                 .AddUI()
-                .AddAppServices();
+                .AddAppServices()
+                .AddWebSockets(AppHost.HandleMessage);
 
             IHost host = AppHostBuilder.Build();
             ConfigureHost(host);
