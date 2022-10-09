@@ -13,8 +13,10 @@ namespace GitHub
     {
         private readonly Uri UpdateUri = new($"https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/latest");
         private readonly Uri ReleasesUri = new($"https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases");
-        private HttpClient Client;
+        private readonly HttpClient Client;
         private bool disposedValue;
+
+        public bool? InstallPrereleases { get; set; }
 
         public Updater()
         {
@@ -24,7 +26,7 @@ namespace GitHub
 
         public async Task<Release> GetLatestRelease()
         {
-            if (!RegistrySettings.InstallPrereleases)
+            if (InstallPrereleases != true && !RegistrySettings.InstallPrereleases)
             {
                 return await Client.GetObjectAsync<Release>(UpdateUri);
             }
@@ -39,6 +41,17 @@ namespace GitHub
             return asset == null
                 ? throw new FileNotFoundException("Update is missing required assets")
                 : Client.GetStreamAsync(asset.BrowserDownloadUrl);
+        }
+
+        public async Task<Stream> DownloadSetup(Release release, IProgress<float> progress)
+        {
+            Asset asset = release.Assets.FirstOrDefault(item => item.Name == "RaidToolkitSetup.exe");
+            if (asset == null)
+                throw new FileNotFoundException("Release is missing required assets");
+
+            Stream memoryStream = new MemoryStream();
+            await Client.DownloadAsync(asset.BrowserDownloadUrl.ToString(), memoryStream, progress);
+            return memoryStream;
         }
 
         protected virtual void Dispose(bool disposing)
