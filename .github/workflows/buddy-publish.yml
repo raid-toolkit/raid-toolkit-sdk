@@ -1,4 +1,4 @@
-name: Buddy Build
+name: Buddy Publish
 
 on:
   pull_request:
@@ -51,6 +51,7 @@ jobs:
           tag_name: v${{ steps.rtk_version.outputs.Version }}
           release_name: RaidToolkit v${{ steps.rtk_version.outputs.Version }}
           body: RaidToolkit v${{ steps.rtk_version.outputs.Version }}
-          repo: raid-toolkit/staged-release
+          owner: raid-toolkit
+          repo: staged-release
           draft: false
           prerelease: ${{ env.PRERELEASE }}
