@@ -53,6 +53,8 @@ namespace Raid.Toolkit.Application.Core.Host
             return assembly.GetManifestResourceStream($"Raid.Toolkit.Application.Core.appsettings.json");
         }
 
+        public static bool ForceRebuild { get; set; }
+
         private static bool _EnableLogging = false;
         public static bool EnableLogging
         {

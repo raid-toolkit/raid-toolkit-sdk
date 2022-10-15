@@ -27,7 +27,8 @@ namespace Raid.Toolkit.Application.Core.Host
     internal class UIOptions
     {
     }
-    internal class AppHostBuilderSettings
+
+    public class AppHostBuilderSettings
     {
         public static DeferredOptions<RunOptions> RunOptions = new(new());
         public static DeferredOptions<FileLoggerOptions> FileLoggerOptions = new(new());
@@ -94,7 +95,9 @@ namespace Raid.Toolkit.Application.Core.Host
         {
             if (TryAddFeature(Feature.Extensibility))
             {
-                ConfigureServices((context, services) => services.AddExtensibilityServices<PackageManager>());
+                ConfigureServices((context, services) => services
+                    .Configure<ExtensionHostOptions>(config => config.ForceRebuild = AppHost.ForceRebuild)
+                    .AddExtensibilityServices<PackageManager>());
             }
             return this;
         }

@@ -13,7 +13,7 @@ namespace Raid.Toolkit.UI.WinUI
 {
     public class AppWinUI : IAppUI, IHostedService, IDisposable
     {
-        private SplashScreen? SplashScreen;
+        private MainWindow? MainWindow;
         private readonly IServiceProvider ServiceProvider;
         private bool IsDisposed;
 
@@ -103,9 +103,9 @@ namespace Raid.Toolkit.UI.WinUI
         {
             Post(() =>
             {
-                SplashScreen ??= ActivatorUtilities.CreateInstance<SplashScreen>(ServiceProvider);
-                SplashScreen.Activate();
-                _ = SplashScreen.BringToFront();
+                MainWindow ??= ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider);
+                MainWindow.Activate();
+                _ = MainWindow.BringToFront();
             });
         }
 
@@ -137,11 +137,11 @@ namespace Raid.Toolkit.UI.WinUI
                 {
                     if (disposing)
                     {
-                        SplashScreen?.Close();
+                        MainWindow?.Close();
                         System.Windows.Forms.Application.Exit();
                     }
 
-                    SplashScreen = null;
+                    MainWindow = null;
                 });
 
                 IsDisposed = true;
@@ -191,12 +191,12 @@ namespace Raid.Toolkit.UI.WinUI
 
         public void Run()
         {
-            SplashScreen ??= ActivatorUtilities.CreateInstance<SplashScreen>(ServiceProvider);
-            SplashScreen.Activate();
-            _ = SplashScreen.BringToFront();
-            //SplashScreen ??= ActivatorUtilities.CreateInstance<SplashScreen>(ServiceProvider);
-            //SplashScreen.Activate();
-            //_ = SplashScreen.BringToFront();
+            MainWindow ??= ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider);
+            MainWindow.Activate();
+            _ = MainWindow.BringToFront();
+            //MainWindow ??= ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider);
+            //MainWindow.Activate();
+            //_ = MainWindow.BringToFront();
             //AppTray = ActivatorUtilities.CreateInstance<AppTray>(ServiceProvider);
             //Post(() =>
             //{

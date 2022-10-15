@@ -13,7 +13,6 @@ namespace Raid.Toolkit.UI.Forms
 {
     public class AppForms : IAppUI, IHostedService, IDisposable
     {
-        //private SplashScreen? SplashScreen;
         private readonly AppService AppService;
         private readonly IServiceProvider ServiceProvider;
         private bool IsDisposed;

@@ -1,6 +1,9 @@
+using System;
 using System.Diagnostics;
 
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Animation;
 
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Extensibility;
@@ -16,13 +19,13 @@ namespace Raid.Toolkit.UI.WinUI
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SplashScreen : RTKWindow
+    public sealed partial class MainWindow : RTKWindow
     {
         private readonly IAppUI AppUI;
         private readonly IModelLoader Loader;
         private readonly IMenuManager MenuManager;
 
-        public SplashScreen(
+        public MainWindow(
             IModelLoader loader,
             IAppUI appUI,
             IMenuManager menuManager
@@ -45,7 +48,7 @@ namespace Raid.Toolkit.UI.WinUI
             SetTitleBar(TitleBar);
             IsShownInSwitchers = true;
 
-            this.CenterOnScreen(400, 450);
+            this.CenterOnScreen(400, 700);
 #pragma warning disable CS0436 // Type conflicts with imported type
             VersionRTK.Text = ThisAssembly.AssemblyFileVersion;
 #pragma warning restore CS0436 // Type conflicts with imported type
@@ -60,7 +63,7 @@ namespace Raid.Toolkit.UI.WinUI
                 {
                     case IModelLoader.LoadState.Initialize:
                         {
-                            Height = 600;
+                            //Height = 600;
                             VersionRaid.Text = Loader.GameVersion;
                             LoadProgressGrid.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
                             LoadMessage.Text = "Initializing...";
@@ -84,9 +87,11 @@ namespace Raid.Toolkit.UI.WinUI
                         break;
                     case IModelLoader.LoadState.Loaded:
                         {
-                            Height = 510;
+                            //Height = 510;
                             LoadProgressGrid.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
                             LinksGrid.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+                            ShrinkLogoAnimation.Begin();
+                            // ShrinkLogoStoryboard.Begin();
                         }
                         break;
                     case IModelLoader.LoadState.Error:

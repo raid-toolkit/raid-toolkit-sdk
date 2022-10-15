@@ -1,4 +1,6 @@
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+
 using Raid.Toolkit.Common;
 using System;
 using System.Collections.Generic;
@@ -7,6 +9,10 @@ using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
+    public class ExtensionHostOptions
+    {
+        public bool ForceRebuild { get; set; } = false;
+    }
     public class ExtensionHostController : IExtensionHostController, IDisposable
     {
         private readonly IModelLoader ModelLoader;
@@ -15,6 +21,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IServiceProvider ServiceProvider;
         private readonly IWindowManager WindowManager;
         private readonly ILogger<ExtensionHostController> Logger;
+        private readonly IOptions<ExtensionHostOptions> Options;
         private readonly Dictionary<string, ExtensionHost> ExtensionPackages = new();
         private readonly Dictionary<Type, IDisposable> Instances = new();
         private bool IsDisposed;
@@ -25,6 +32,7 @@ namespace Raid.Toolkit.Extensibility.Host
             IModelLoader modelLoader,
             IServiceProvider serviceProvider,
             IWindowManager windowManager,
+            IOptions<ExtensionHostOptions> options,
             ILogger<ExtensionHostController> logger
             )
         {
@@ -33,6 +41,7 @@ namespace Raid.Toolkit.Extensibility.Host
             ModelLoader = modelLoader;
             ServiceProvider = serviceProvider;
             WindowManager = windowManager;
+            Options = options;
             Logger = logger;
         }
 
@@ -62,7 +71,7 @@ namespace Raid.Toolkit.Extensibility.Host
             }
 
             var typePatterns = ExtensionPackages.Values.SelectMany(host => host.GetIncludeTypes());
-            return Task.Run(() => ModelLoader.BuildAndLoad(typePatterns, false));
+            return Task.Run(() => ModelLoader.BuildAndLoad(typePatterns, Options.Value.ForceRebuild));
         }
 
         public void ActivateExtensions()

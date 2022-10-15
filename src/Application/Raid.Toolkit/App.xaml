@@ -8,19 +8,21 @@
             <ResourceDictionary.MergedDictionaries>
                 <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls" />
 				<ResourceDictionary>
-					<Storyboard x:Key="splashStartLoading">
-						<DoubleAnimation Storyboard.TargetName="window" Storyboard.TargetProperty="Height" Duration="0:0:.5" To="550" BeginTime="0:0:0"/>
+					<Storyboard x:Key="shrinkHeader">
+						<DoubleAnimation Storyboard.TargetName="iconRow" Storyboard.TargetProperty="Height" Duration="0:0:.5" To="150" BeginTime="0:0:0"/>
+						<DoubleAnimation Storyboard.TargetName="logoRow" Storyboard.TargetProperty="Height" Duration="0:0:.5" To="50" BeginTime="0:0:0"/>
+					</Storyboard>
+					<Storyboard x:Key="growHeader">
+						<DoubleAnimation Storyboard.TargetName="iconRow" Storyboard.TargetProperty="Height" Duration="0:0:.5" To="300" BeginTime="0:0:0"/>
+						<DoubleAnimation Storyboard.TargetName="logoRow" Storyboard.TargetProperty="Height" Duration="0:0:.5" To="100" BeginTime="0:0:0"/>
 					</Storyboard>
 
-					<Storyboard x:Key="splashReady">
-						<DoubleAnimation Storyboard.TargetName="window" Storyboard.TargetProperty="Height" Duration="0:0:.5" To="400" BeginTime="0:0:1"/>
-					</Storyboard>
 					<SolidColorBrush x:Key="WindowCaptionBackgroundDisabled">Transparent</SolidColorBrush>
 					<SolidColorBrush x:Key="WindowCaptionBackground">Transparent</SolidColorBrush>
 				</ResourceDictionary>
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
-            <!-- Other app resources here -->
+			<!-- Other app resources here -->
         </ResourceDictionary>
     </Application.Resources>
 </Application>

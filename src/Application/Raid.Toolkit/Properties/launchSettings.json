@@ -11,12 +11,17 @@
     },
     "Standalone": {
       "commandName": "Project",
-      "commandLineArgs": "--standalone"
+      "commandLineArgs": "--standalone --force-rebuild",
+      "hotReloadEnabled": true
     },
     "Install Extension": {
       "commandName": "Project",
       "commandLineArgs": "install D:\\git\\github\\raid-toolkit\\private-tools\\ArenaBot\\bin\\x64\\Debug\\net6.0-windows\\ArenaBot.rtkx",
       "nativeDebugging": true
+    },
+    "WinForms": {
+      "commandName": "Project",
+      "commandLineArgs": "--standalone --render-engine WinForms"
     }
   }
 }

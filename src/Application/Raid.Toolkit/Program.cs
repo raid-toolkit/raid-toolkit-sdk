@@ -16,11 +16,16 @@ namespace Raid.Toolkit
         private static async Task<int> Main(string[] args)
         {
             CommonOptions.Parse(args);
-            AppHost.EnableLogging = CommonOptions.Value?.DisableLogging ?? true;
+            AppHost.EnableLogging = !CommonOptions.Value.DisableLogging;
+            AppHost.ForceRebuild = CommonOptions.Value.ForceRebuild;
 
-            //Entrypoint<AppForms, FormsProgramHost> entry = new();
-            Entrypoint<AppWinUI, WinUIProgramHost> entry = new();
-            CommandTaskManager commandManager = entry.CreateInstance<CommandTaskManager>();
+            IEntrypoint entrypoint = CommonOptions.Value.RenderEngine switch
+            {
+                RenderingEngine.WinForms => new Entrypoint<AppForms, FormsProgramHost>(),
+                RenderingEngine.WinUI => new Entrypoint<AppWinUI, WinUIProgramHost>(),
+                _ => new Entrypoint<AppWinUI, WinUIProgramHost>(),
+            };
+            CommandTaskManager commandManager = entrypoint.CreateInstance<CommandTaskManager>();
             ICommandTask? task = commandManager.Parse(args);
             if (task == null)
                 return 255;
