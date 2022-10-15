@@ -63,7 +63,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.RELEASE_STAGING_GITHUB }}
 
       # Create releases
-      - name: Create RaidToolkit Release
+      - name: Create RaidToolkit Release (buddy)
         id: rtk_release
         uses: actions/create-release@v1
         env:
