@@ -44,7 +44,7 @@ jobs:
       - name: Checkout public repository
         uses: actions/checkout@v2
         with:
-          repository: staged-release
+          repository: raid-toolkit/staged-release
           path: staged-release
           GITHUB_TOKEN: ${{ secrets.RELEASE_STAGING_GITHUB }}
 
