@@ -1,0 +1,56 @@
+name: Buddy Build
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    env:
+      IS_CI: true
+      Solution_Name: SDK.sln
+      Launcher_csproj: src\Application\Launcher\Launcher.csproj
+      App_csproj: src\Application\Raid.Toolkit\Raid.Toolkit.csproj
+      Client_csproj: src\ClientSDK\DotNet\Raid.Client.csproj
+
+    steps:
+      - uses: mickem/clean-after-action@v1
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Set branch-based environment variables
+        uses: iamtheyammer/branch-env-vars@v1.0.4
+        with:
+          PRERELEASE: |
+            main:true
+            !default:false
+          PRERELEASEN: |
+            main:1
+            !default:0
+
+      # Versions
+      - uses: dotnet/nbgv@master
+        id: rtk_version
+        with:
+          setAllVars: true
+
+      # Create releases
+      - name: Create RaidToolkit Release
+        id: rtk_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.rtk_version.outputs.Version }}
+          release_name: RaidToolkit v${{ steps.rtk_version.outputs.Version }}
+          body: RaidToolkit v${{ steps.rtk_version.outputs.Version }}
+          repo: raid-toolkit/staged-release
+          draft: false
+          prerelease: ${{ env.PRERELEASE }}
