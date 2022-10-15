@@ -46,7 +46,6 @@ jobs:
         with:
           repository: staged-release
           path: staged-release
-        with:
           GITHUB_TOKEN: ${{ secrets.RELEASE_STAGING_GITHUB }}
 
       - name: Create tag in public repository
