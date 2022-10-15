@@ -53,7 +53,7 @@ jobs:
           cd ${{github.workspace}}/staged-release
           git tag v${{ steps.rtk_version.outputs.Version }}
           git push --tags --porcelain
-        with:
+        env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_STAGING_GITHUB }}
 
       - name: Bump version and push tag
