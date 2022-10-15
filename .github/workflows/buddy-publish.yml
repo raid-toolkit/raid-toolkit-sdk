@@ -46,7 +46,7 @@ jobs:
         id: rtk_release
         uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_STAGING_GITHUB }}
         with:
           tag_name: v${{ steps.rtk_version.outputs.Version }}
           release_name: RaidToolkit v${{ steps.rtk_version.outputs.Version }}
@@ -55,4 +55,3 @@ jobs:
           repo: staged-release
           draft: false
           prerelease: ${{ env.PRERELEASE }}
-          token: ${{ secrets.RELEASE_STAGING_GITHUB }}
