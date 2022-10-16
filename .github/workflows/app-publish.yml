@@ -22,7 +22,9 @@ jobs:
     env:
       IS_CI: true
       Solution_Name: SDK.sln
+      Launcher_csproj: src\Application\Launcher\Launcher.csproj
       App_csproj: src\Application\Raid.Toolkit\Raid.Toolkit.csproj
+      Client_csproj: src\ClientSDK\DotNet\Raid.Client.csproj
 
     steps:
       - uses: mickem/clean-after-action@v1
@@ -36,10 +38,12 @@ jobs:
       - name: Set branch-based environment variables
         uses: iamtheyammer/branch-env-vars@v1.0.4
         with:
-          bevOverwrite: true
           PRERELEASE: |
             main:true
             !default:false
+          PRERELEASEN: |
+            main:1
+            !default:0
 
       # Install the .NET Core workload
       - name: Install .NET Core
@@ -53,12 +57,18 @@ jobs:
       - name: Setup MSBuild.exe
         uses: microsoft/setup-msbuild@v1.0.2
 
+      # Versions
+      - uses: dotnet/nbgv@master
+        id: rtk_version
+        with:
+          setAllVars: true
+
       # Restore the application to populate the obj folder with RuntimeIdentifiers
       - name: Restore the application
         run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Release
 
       # Publish RTK
-      - name: Publish App
+      - name: Build App
         run: |
           msbuild $env:Solution_Name -m -t:"Build;Pack" -p:Configuration=Release -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
           msbuild $env:Launcher_csproj -m -t:Publish -p:TargetFramework=net5.0-windows -p:Configuration=Release -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
@@ -66,7 +76,8 @@ jobs:
       - name: Build Setup
         run: |
           $env:Path += ";C:\Program Files (x86)\WiX Toolset v3.11\bin"
-          candle.exe -nologo -o out\ RaidToolkitBinaries.wxs Product.wxs Bundle.wxs -ext WixBalExtension
+          heat.exe dir $env:BuildOutputDirectory -cg RaidToolkitBinaries -out out\RaidToolkitBinaries.wxs -dr INSTALLDIR -srd -suid -sreg -g1 -var env.BuildOutputDirectory -ag
+          candle.exe -nologo -o out\ out\RaidToolkitBinaries.wxs Product.wxs Bundle.wxs -ext WixBalExtension
           light.exe -nologo -o out\RaidToolkit.msi out\Product.wixobj out\RaidToolkitBinaries.wixobj -ext WixBalExtension
           light.exe -nologo -o out\RaidToolkitSetup.exe out\Bundle.wixobj -ext WixBalExtension
         working-directory: ./src/Setup
@@ -75,68 +86,18 @@ jobs:
           Prerelease: ${{ env.PRERELEASEN }}
           BuildOutputDirectory: ..\Application\Raid.Toolkit\bin\x64\Release\net6.0-windows10.0.19041.0\win10-x64
 
-      # Versions
-      - uses: dotnet/nbgv@master
-        id: rtk_version
-        with:
-          setAllVars: true
-
-      # Create releases
-      - name: Create RaidToolkit Release
-        id: rtk_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create release
+        uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ steps.rtk_version.outputs.Version }}
-          release_name: RaidToolkit v${{ steps.rtk_version.outputs.Version }}
-          body: RaidToolkit v${{ steps.rtk_version.outputs.Version }}
-          draft: false
-          prerelease: ${{ env.PRERELEASE }}
-
-      - name: Upload Upgrade Launcher Asset
-        id: upload-raidtoolkit-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
-          asset_path: ./publish/RTK/Launcher.exe
-          asset_name: Raid.Toolkit.exe
-          asset_content_type: application/octet-stream
-
-      - name: Upload Setup
-        id: upload-raidtoolkit-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
-          asset_path: ./src/Setup/out/RaidToolkitSetup.exe
-          asset_name: RaidToolkitSetup.exe
-          asset_content_type: application/octet-stream
-
-      - name: Upload Setup
-        id: upload-raidtoolkit-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
-          asset_path: ./src/Setup/out/RaidToolkit.msi
-          asset_name: RaidToolkit.msi
-          asset_content_type: application/octet-stream
-
-      - name: Upload TPN Asset
-        id: upload-tpn-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
-          asset_path: ThirdPartyNotice.txt
-          asset_name: ThirdPartyNotice.txt
-          asset_content_type: text/plain
+          prerelease: true
+          body_path: CHANGES.md
+          files: |
+            UPGRADE_2.0.md
+            publish/RTK/Raid.Toolkit.exe
+            src/Setup/out/RaidToolkit.msi
+            src/Setup/out/RaidToolkitSetup.exe
+            ThirdPartyNotice.txt
 
       # NuGet Push
       - name: Push client package to Nuget registry
