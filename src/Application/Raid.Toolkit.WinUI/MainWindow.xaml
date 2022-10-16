@@ -11,12 +11,28 @@
 		<Grid.Resources>
 			<xaml:GridLengthConverter x:Key="GridLengthConverter"/>
 			<Storyboard x:Name="ShrinkLogoAnimation">
-				<DoubleAnimation Storyboard.TargetName="iconImage" Storyboard.TargetProperty="Height" To="200" Duration="0:0:0.5" EnableDependentAnimation="True" />
-				<DoubleAnimation Storyboard.TargetName="logoImage" Storyboard.TargetProperty="Height" To="66" Duration="0:0:0.5" EnableDependentAnimation="True" />
+				<DoubleAnimation Storyboard.TargetName="iconImage" Storyboard.TargetProperty="Height" To="150" Duration="0:0:0.5" EnableDependentAnimation="True">
+					<DoubleAnimation.EasingFunction>
+						<CubicEase />
+					</DoubleAnimation.EasingFunction>
+				</DoubleAnimation>
+				<DoubleAnimation Storyboard.TargetName="logoImage" Storyboard.TargetProperty="Height" To="50" Duration="0:0:0.5" EnableDependentAnimation="True">
+					<DoubleAnimation.EasingFunction>
+						<CubicEase />
+					</DoubleAnimation.EasingFunction>
+				</DoubleAnimation>
 			</Storyboard>
 			<Storyboard x:Name="GrowLogoAnimation">
-				<DoubleAnimation Storyboard.TargetName="iconImage" Storyboard.TargetProperty="Height" To="300" Duration="0:0:0.5" EnableDependentAnimation="True" />
-				<DoubleAnimation Storyboard.TargetName="logoImage" Storyboard.TargetProperty="Height" To="100" Duration="0:0:0.5" EnableDependentAnimation="True" />
+				<DoubleAnimation Storyboard.TargetName="iconImage" Storyboard.TargetProperty="Height" To="300" Duration="0:0:0.5" EnableDependentAnimation="True">
+					<DoubleAnimation.EasingFunction>
+						<CubicEase />
+					</DoubleAnimation.EasingFunction>
+				</DoubleAnimation>
+				<DoubleAnimation Storyboard.TargetName="logoImage" Storyboard.TargetProperty="Height" To="100" Duration="0:0:0.5" EnableDependentAnimation="True">
+					<DoubleAnimation.EasingFunction>
+						<CubicEase />
+					</DoubleAnimation.EasingFunction>
+				</DoubleAnimation>
 			</Storyboard>
 		</Grid.Resources>
 		<Grid.RowDefinitions>
@@ -39,28 +55,15 @@
 		</Grid>
 		<Image Grid.Row="1" x:Name="iconImage" Source="/Assets/Square150x150Logo.scale-200.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="300" />
 		<Image Grid.Row="2" x:Name="logoImage" Source="/Assets/RaidToolkitLarge.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" />
-		<!--<StackPanel Grid.Row="3" x:Name="LinksGrid" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="22" Visibility="Collapsed">
+		
+		<StackPanel Grid.Row="4" x:Name="LinksGrid" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="22" Visibility="Collapsed">
 			<Button Content="Website" HorizontalAlignment="Center" Click="Website_Click" />
 			<Button Content="Discord" HorizontalAlignment="Center" Click="Discord_Click" />
-		</StackPanel>-->
-		<Grid Grid.Row="4" x:Name="LinksGrid" Visibility="Collapsed">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="60" />
-				<RowDefinition Height="120*" />
-				<RowDefinition Height="60" />
-			</Grid.RowDefinitions>
-			<TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Settings" FontSize="18" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" />
-			<StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-				<CheckBox x:Name="AutoUpdate" HorizontalAlignment="Left" Content="Automatically check for updates" />
-				<CheckBox x:Name="RunOnStartup" HorizontalAlignment="Left" Content="Run on startup" />
-				<CheckBox x:Name="ClickToFocus" HorizontalAlignment="Left" Content="Click tray icon to launch/focus Raid" />
-				<CheckBox x:Name="InstallPreRelease" HorizontalAlignment="Left" Content="Install pre-release builds" />
-			</StackPanel>
-			<StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
-				<Button Content="Save" Style="{ThemeResource AccentButtonStyle}" />
-				<Button Content="Cancel" />
-			</StackPanel>
-		</Grid>
+			<Button Content="Settings" HorizontalAlignment="Center" Click="Settings_Click" />
+		</StackPanel>
+		
+		<local:SettingsPanel Grid.Row="4" x:Name="Settings" Visibility="Collapsed" SettingsSaved="Settings_SettingsSaved" SettingsDiscarded="Settings_SettingsDiscarded" />
+		
 		<Grid x:Name="LoadProgressGrid" Grid.Row="4" Margin="15,10,15,0">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="40*" />

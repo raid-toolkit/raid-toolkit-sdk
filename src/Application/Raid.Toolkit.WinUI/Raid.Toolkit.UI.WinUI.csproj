@@ -14,6 +14,9 @@
         <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
+    <ItemGroup>
+      <None Remove="SettingsPanel.xaml" />
+    </ItemGroup>
 
     <ItemGroup>
         <Content Update="Assets\RaidToolkitLarge.png">
@@ -84,6 +87,11 @@
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>FormsResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+      <Page Update="SettingsPanel.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
     </ItemGroup>
     <ItemGroup>
         <Page Update="InstallExtensionWindow.xaml">
