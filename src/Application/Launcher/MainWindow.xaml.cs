@@ -1,11 +1,3 @@
-using GitHub;
-using GitHub.Schema;
-
-using Newtonsoft.Json;
-
-using Raid.Toolkit.Common;
-using Raid.Toolkit.Extensibility;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -23,7 +15,11 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using GitHub;
+using GitHub.Schema;
+using Newtonsoft.Json;
+using Raid.Toolkit.Common;
+using Raid.Toolkit.Extensibility;
 using Path = System.IO.Path;
 
 namespace Launcher

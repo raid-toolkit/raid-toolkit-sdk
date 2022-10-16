@@ -45,28 +45,25 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             _PollInterval = settings.Value.PollIntervalMs > 0 ? TimeSpan.FromMilliseconds(settings.Value.PollIntervalMs) : new TimeSpan(0, 15, 0);
         }
 
-        public async Task InstallRelease(Release release, string exeName)
+        public async Task InstallRelease(Release release)
         {
-            string exePath = Process.GetCurrentProcess().MainModule!.FileName!;
             try
             {
-                Stream newRelease = await Updater.DownloadRelease(release);
-                string tempDownload = Path.Combine(RegistrySettings.InstallationPath, $"{exeName}.update");
-                string currentBackup = Path.Combine(RegistrySettings.InstallationPath, $"{Path.GetFileNameWithoutExtension(exeName)}.{ThisAssembly.AssemblyFileVersion}.exe");
+                Stream newRelease = await Updater.DownloadSetup(release, null);
+                string tempDownload = Path.Combine(RegistrySettings.InstallationPath, $"RaidToolkitSetup.{release.TagName}.exe");
+                if (File.Exists(tempDownload))
+                    File.Delete(tempDownload);
+
                 using (Stream newFile = File.Create(tempDownload))
                 {
                     newRelease.CopyTo(newFile);
                 }
 
-                if (File.Exists(currentBackup))
-                    File.Delete(currentBackup);
-
-                File.Move(exePath, currentBackup, true);
-                File.Move(tempDownload, exePath);
+                Process.Start(tempDownload, "/install LaunchAfterInstallation=1");
             }
             catch (Exception ex)
             {
-                Logger.LogError(ServiceError.MissingUpdateAsset.EventId(), ex, $"Failed to update to {release.TagName} for '{exePath}'");
+                Logger.LogError(ServiceError.MissingUpdateAsset.EventId(), ex, $"Failed to update to {release.TagName}");
                 throw;
             }
         }

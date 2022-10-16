@@ -52,8 +52,8 @@ namespace Raid.Toolkit.Application.Core.Host
                 return;
             try
             {
-                await UpdateService.InstallRelease(release, AppHost.ExecutableName);
-                Restart(postUpdate: true);
+                await UpdateService.InstallRelease(release);
+                Exit();
             }
             catch { }
         }
