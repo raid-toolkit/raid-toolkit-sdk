@@ -6,16 +6,28 @@
         <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
         <LangVersion>10.0</LangVersion>
         <Nullable>enable</Nullable>
-        <UseWindowsForms>true</UseWindowsForms>
-        <PublishSingleFile>true</PublishSingleFile>
-        <SelfContained>false</SelfContained>
-        <IncludeAllContentForSelfExtract>true</IncludeAllContentForSelfExtract>
         <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
         <ApplicationIcon>..\Assets\AppIcon.ico</ApplicationIcon>
         <Platforms>x64</Platforms>
         <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
         <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
         <IsPackable>false</IsPackable>
+
+        <UseWinUI>true</UseWinUI>
+        <WindowsPackageType>None</WindowsPackageType>
+        <SelfContained>false</SelfContained>
+        <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.4" GeneratePathProperty="true" />
+        <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
+        <Manifest Include="$(ApplicationManifest)" />
+    </ItemGroup>
+
+    <PropertyGroup>
+        <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     </PropertyGroup>
 
     <ItemGroup>
@@ -38,9 +50,12 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Content Include="$(PkgIl2CppToolkit_Injection_Client)\runtimes\win7-x64\native\Il2CppToolkit.Injection.Host.dll">
+        <Content Include="$(PkgIl2CppToolkit_Injection_Client)\runtimes\win10-x64\native\Il2CppToolkit.Injection.Host.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+        <!--<Content Include="$(ProjectPriFullPath)" Link="$(ProjectPriFileName)">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>-->
     </ItemGroup>
 
     <ItemGroup>
@@ -49,6 +64,12 @@
         <ProjectReference Include="$(SourceDir)Shared\Extensibility\Extensibility.csproj" />
         <ProjectReference Include="$(SourceDir)Shared\Extensibility.Host\Extensibility.Host.csproj" />
         <ProjectReference Include="..\Raid.Toolkit.Application.Core\Raid.Toolkit.Application.Core.csproj" />
-        <ProjectReference Include="..\Raid.Toolkit.UI.Forms\Raid.Toolkit.UI.Forms.csproj" />
+        <ProjectReference Include="..\Raid.Toolkit.UI.Forms\Raid.Toolkit.UI.Forms.csproj">
+            <IncludeAssets>all</IncludeAssets>
+        </ProjectReference>
+        <ProjectReference Include="..\Raid.Toolkit.WinUI\Raid.Toolkit.UI.WinUI.csproj">
+            <IncludeAssets>all</IncludeAssets>
+            <Private>True</Private>
+        </ProjectReference>
     </ItemGroup>
 </Project>

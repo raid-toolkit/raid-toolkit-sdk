@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Product Id="*" Name="Raid Toolkit" Manufacturer="Raid Toolkit" UpgradeCode="CFCBC4D3-CF5A-4DAC-BA0C-67867A4E1EDF" Language="1033" Codepage="932" Version="$(env.AppVersion)">
+        <Package Id="*" Keywords="Installer" InstallScope="perUser" Description="Raid Toolkit Installer" Manufacturer="Raid Toolkit" InstallerVersion="100" Languages="1033" Compressed="yes" SummaryCodepage="932" />
+        <Upgrade Id="CFCBC4D3-CF5A-4DAC-BA0C-67867A4E1EDF">
+            <UpgradeVersion OnlyDetect="no" Property="PREVIOUSFOUND" Minimum="2.0.0" IncludeMinimum="yes" Maximum="3.0.0" IncludeMaximum="no" />
+        </Upgrade>
+
+        <InstallExecuteSequence>
+            <Custom Action="SET_UPGRADE_FLAG" After="AppSearch">Not Installed AND PREVIOUSFOUND</Custom>
+            <RemoveExistingProducts Before="InstallInitialize" />
+            <Custom Action="EXECUTE_AFTER_FINALIZE" After="InstallFinalize">
+                <![CDATA[LAUNCHAFTERINSTALLATION=1]]>
+            </Custom>
+        </InstallExecuteSequence>
+
+        <Property Id="INSTALLDIR">
+            <RegistrySearch Id="DetermineInstallLocation" Type="raw" Root="HKLM" Key="Software\RaidToolkit" Name="InstallLocation" />
+        </Property>
+
+        <Icon Id="AppIcon" SourceFile="..\..\assets\AppIcon.ico" />
+
+        <MediaTemplate EmbedCab="yes"/>
+        <Directory Id="TARGETDIR" Name="SourceDir">
+            <Directory Id="LocalAppDataFolder" Name="AppData">
+                <Directory Id="INSTALLDIR" Name="RaidToolkit">
+                    <Component Id="RaidToolkitDir" Guid="61C46BC9-3C11-494B-9A46-63932DF551A7">
+                        <RemoveFolder Id="RaidToolkit" On="uninstall" />
+                    </Component>
+                </Directory>
+            </Directory>
+
+            <Component Id="RegInstallLocation" Guid="A0C9B19E-F3AE-406E-9641-7CCD82D4CEBE">
+                <!-- Do NOT use the application's default registry key here, because THIS key will be removed on uninstall
+                    (important when installing a newer version, because that is uninstall followed by install) -->
+                <RegistryKey Root="HKCU" Key="Software\RaidToolkit">
+                    <RegistryValue Name="InstallFolder" Value="[INSTALLDIR]" KeyPath="yes" Type="string" />
+                    <RegistryValue Name="InstallPrereleases" Value="$(env.Prerelease)" Type="integer" />
+                </RegistryKey>
+            </Component>
+        </Directory>
+
+        <Feature Id="Complete" Title="Raid Toolkit" Display="expand" Level="1" ConfigurableDirectory="INSTALLDIR">
+            <Feature Id="MainProgram" Title="Program" Description="Raid Toolkit Application" Level="1">
+                <ComponentGroupRef Id="RaidToolkitBinaries" />
+                <ComponentRef Id="RaidToolkitDir" />
+                <ComponentRef Id="RegInstallLocation" />
+            </Feature>
+        </Feature>
+
+        <Property Id="LAUNCHAFTERINSTALLATION" Value=" " />
+        <Property Id="UPGRADE_FLAG" Value=" " />
+        <CustomAction Id="SET_UPGRADE_FLAG" Property="UPGRADE_FLAG" Value="--post-update" />
+        <CustomAction Id="EXECUTE_AFTER_FINALIZE" Execute="immediate" Impersonate="no" Return="asyncNoWait" FileKey="Raid.Toolkit.exe" ExeCommand="[UPGRADE_FLAG]" />
+    </Product>
+</Wix>

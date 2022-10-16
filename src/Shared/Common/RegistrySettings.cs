@@ -22,6 +22,7 @@ namespace Raid.Toolkit.Common
         public const string AutoUpdateKey = @"AutoUpdate";
         public const string IsInstalledKey = "IsInstalled";
         public const string ClickToStartKey = "ClickToStart";
+        public const string RepositoryKey = "Repository";
         public const string InstallPrereleasesKey = "InstallPrereleases";
         public const string StartupName = "RaidToolkitService";
         public const string Protocol = "rtk";
@@ -30,6 +31,7 @@ namespace Raid.Toolkit.Common
         // early access flags
         public const string FlagsHive = $"{RTKHive}\\Flags";
 
+        public static readonly string DefaultRepository = "raid-toolkit/raid-toolkit-sdk";
         public static readonly string DefaultInstallationPath;
         public static readonly uint DefaultActivationPort = 9998;
         public static string InstalledExecutablePath => Path.Combine(InstallationPath, ExecutableName);
@@ -100,6 +102,20 @@ namespace Raid.Toolkit.Common
             {
                 var hive = Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive);
                 hive.SetValue(RegistrySettings.InstallFolderKey, value, RegistryValueKind.String);
+            }
+        }
+
+        public static string Repository
+        {
+            get
+            {
+                var hive = Registry.CurrentUser.OpenSubKey(RTKHive);
+                return hive == null ? DefaultRepository : (string)hive.GetValue(RepositoryKey, DefaultRepository)!;
+            }
+            set
+            {
+                var hive = Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive);
+                hive.SetValue(RegistrySettings.RepositoryKey, value, RegistryValueKind.String);
             }
         }
 

@@ -27,15 +27,16 @@ namespace Raid.Toolkit.Application.Core.Host
     internal class UIOptions
     {
     }
-    internal class AppHostBuilderSettings
+
+    public class AppHostBuilderSettings
     {
         public static DeferredOptions<RunOptions> RunOptions = new(new());
         public static DeferredOptions<FileLoggerOptions> FileLoggerOptions = new(new());
     }
-    internal class AppHostBuilder<TAppUI> : HostBuilder, IAppHostBuilder
+
+    internal class AppHostBuilder<TAppUI> : HostBuilderAdapter, IAppHostBuilder
         where TAppUI : class, IAppUI, IHostedService, IDisposable
     {
-
         [Flags]
         private enum Feature
         {
@@ -57,7 +58,18 @@ namespace Raid.Toolkit.Application.Core.Host
         }
 
         public AppHostBuilder()
-            : base()
+            : base(new HostBuilder())
+        {
+            InitializeComponent();
+        }
+
+        public AppHostBuilder(IHostBuilder hostBuilder)
+            : base(hostBuilder)
+        {
+            InitializeComponent();
+        }
+
+        private void InitializeComponent()
         {
             // default to always include logging, since it is only enabled once configured
             _ = AddLogging();
@@ -65,60 +77,67 @@ namespace Raid.Toolkit.Application.Core.Host
 
         public IAppHostBuilder AddAppServices()
         {
-            return !TryAddFeature(Feature.AppServices)
-                ? this
-                : (IAppHostBuilder)ConfigureServices((context, services) => services
-                .AddSingleton<AppService>()
-                .AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)
-                .Configure<AppSettings>(opts => context.Configuration.GetSection("app").Bind(opts))
-                .Configure<ProcessManagerSettings>(opts => context.Configuration.GetSection("app:ProcessManager").Bind(opts))
-                .Configure<DataUpdateSettings>(opts => context.Configuration.GetSection("app:DataSettings").Bind(opts))
-                .Configure<StorageSettings>(opts => context.Configuration.GetSection("app:StorageSettings").Bind(opts))
-                );
+            if (TryAddFeature(Feature.AppServices))
+            {
+                ConfigureServices((context, services) => services
+                    .AddSingleton<AppService>()
+                    .AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)
+                    .Configure<AppSettings>(opts => context.Configuration.GetSection("app").Bind(opts))
+                    .Configure<ProcessManagerSettings>(opts => context.Configuration.GetSection("app:ProcessManager").Bind(opts))
+                    .Configure<DataUpdateSettings>(opts => context.Configuration.GetSection("app:DataSettings").Bind(opts))
+                    .Configure<StorageSettings>(opts => context.Configuration.GetSection("app:StorageSettings").Bind(opts))
+                    );
+            }
+            return this;
         }
 
         public IAppHostBuilder AddExtensibility()
         {
-            return !TryAddFeature(Feature.Extensibility)
-                ? this
-                : (IAppHostBuilder)ConfigureServices((context, services) => services
-                .AddExtensibilityServices<PackageManager>()
-                );
+            if (TryAddFeature(Feature.Extensibility))
+            {
+                ConfigureServices((context, services) => services
+                    .Configure<ExtensionHostOptions>(config => config.ForceRebuild = AppHost.ForceRebuild)
+                    .AddExtensibilityServices<PackageManager>());
+            }
+            return this;
         }
 
         public IAppHostBuilder AddLogging()
         {
-            return !TryAddFeature(Feature.Logging)
-                ? this
-                : (IAppHostBuilder)ConfigureServices((context, services) => services
-                .AddSingleton<IOptionsMonitor<FileLoggerOptions>>(AppHostBuilderSettings.FileLoggerOptions)
-                .AddLogging(builder => builder.AddFile())
-                );
+            if (TryAddFeature(Feature.Logging))
+            {
+                ConfigureServices((context, services) => services
+                    .AddSingleton<IOptionsMonitor<FileLoggerOptions>>(AppHostBuilderSettings.FileLoggerOptions)
+                    .AddLogging(builder => builder.AddFile())
+                    );
+            }
+            return this;
         }
 
         public IAppHostBuilder AddUI()
         {
-            return !TryAddFeature(Feature.UI)
-                ? this
-                : (IAppHostBuilder)
+            if (TryAddFeature(Feature.UI))
+            {
                 AddAppServices()
                 .ConfigureServices((context, services) => services
                     .AddHostedServiceSingleton<IAppUI, TAppUI>()
                 );
+            }
+            return this;
         }
 
         public IAppHostBuilder AddWebSockets(Func<WebSocketSession, WebSocketPackage, ValueTask> messageHandler)
         {
-            if (!TryAddFeature(Feature.WebSocket))
-                return this;
-
-            _ = this.AsWebSocketHostBuilder()
-                .UseSessionFactory<SessionFactory>()
-                .UseWebSocketMessageHandler(messageHandler)
-                .ConfigureAppConfiguration(config => config
-                    .AddJsonStream(AppHost.GetEmbeddedSettings())
-                    .AddJsonFile(Path.Combine(AppHost.ExecutableDirectory, "appsettings.json"), true)
-                );
+            if (TryAddFeature(Feature.WebSocket))
+            {
+                Wrap(HostBuilder.AsWebSocketHostBuilder()
+                    .UseSessionFactory<SessionFactory>()
+                    .UseWebSocketMessageHandler(messageHandler)
+                    .ConfigureAppConfiguration(config => config
+                        .AddJsonStream(AppHost.GetEmbeddedSettings())
+                        .AddJsonFile(Path.Combine(AppHost.ExecutableDirectory, "appsettings.json"), true)
+                    ));
+            }
             return this;
         }
     }

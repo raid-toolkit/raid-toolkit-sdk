@@ -1,19 +1,13 @@
 using System;
-using System.Linq;
-using System.Windows.Forms;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
 using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Application.Core;
-using SuperSocket.Command;
-
-using FormsApplication = System.Windows.Forms.Application;
 using System.Threading.Tasks;
 using Raid.Toolkit.Application.Core.Commands;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.UI.Forms;
+using Raid.Toolkit.UI.WinUI;
+using GitHub;
 
 namespace Raid.Toolkit
 {
@@ -23,10 +17,16 @@ namespace Raid.Toolkit
         private static async Task<int> Main(string[] args)
         {
             CommonOptions.Parse(args);
-            AppHost.EnableLogging = CommonOptions.Value?.DisableLogging ?? true;
+            AppHost.EnableLogging = !CommonOptions.Value.DisableLogging;
+            AppHost.ForceRebuild = CommonOptions.Value.ForceRebuild;
 
-            Entrypoint<AppForms, FormsProgramHost> entry = new();
-            CommandTaskManager commandManager = entry.CreateInstance<CommandTaskManager>();
+            IEntrypoint entrypoint = CommonOptions.Value.RenderEngine switch
+            {
+                RenderingEngine.WinForms => new Entrypoint<AppForms, FormsProgramHost>(),
+                RenderingEngine.WinUI => new Entrypoint<AppWinUI, WinUIProgramHost>(),
+                _ => new Entrypoint<AppWinUI, WinUIProgramHost>(),
+            };
+            CommandTaskManager commandManager = entrypoint.CreateInstance<CommandTaskManager>();
             ICommandTask? task = commandManager.Parse(args);
             if (task == null)
                 return 255;

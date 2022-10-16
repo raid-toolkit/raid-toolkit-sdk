@@ -42,11 +42,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{6E0F3172-D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetClientTest", "src\Tests\DotNetClientTest\DotNetClientTest.csproj", "{F28408B2-CFA1-4B67-897B-27D00DBA5D17}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Toolkit.WinUI", "src\Application\Raid.Toolkit.WinUI\Raid.Toolkit.WinUI.csproj", "{23C851EC-D893-4CF2-8440-ABA6D48E633C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Toolkit.UI.WinUI", "src\Application\Raid.Toolkit.WinUI\Raid.Toolkit.UI.WinUI.csproj", "{23C851EC-D893-4CF2-8440-ABA6D48E633C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Toolkit.UI.Forms", "src\Application\Raid.Toolkit.UI.Forms\Raid.Toolkit.UI.Forms.csproj", "{12050661-B883-4CE9-BC80-A3619F0E7782}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Toolkit.Application.Core", "src\Application\Raid.Toolkit.Application.Core\Raid.Toolkit.Application.Core.csproj", "{609699E4-6640-435C-A8E4-4257236B37E3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Setup", "Setup", "{6941AF4B-91A0-491B-AABE-26DF0C74290C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Launcher", "src\Application\Launcher\Launcher.csproj", "{25A51A8F-36FC-4781-8478-95B584E5ADB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -116,6 +120,10 @@ Global
 		{609699E4-6640-435C-A8E4-4257236B37E3}.Debug|x64.Build.0 = Debug|x64
 		{609699E4-6640-435C-A8E4-4257236B37E3}.Release|x64.ActiveCfg = Release|x64
 		{609699E4-6640-435C-A8E4-4257236B37E3}.Release|x64.Build.0 = Release|x64
+		{25A51A8F-36FC-4781-8478-95B584E5ADB4}.Debug|x64.ActiveCfg = Debug|x64
+		{25A51A8F-36FC-4781-8478-95B584E5ADB4}.Debug|x64.Build.0 = Debug|x64
+		{25A51A8F-36FC-4781-8478-95B584E5ADB4}.Release|x64.ActiveCfg = Release|x64
+		{25A51A8F-36FC-4781-8478-95B584E5ADB4}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,6 +144,7 @@ Global
 		{23C851EC-D893-4CF2-8440-ABA6D48E633C} = {08373AFF-D91F-4419-980A-78F4F7985B9B}
 		{12050661-B883-4CE9-BC80-A3619F0E7782} = {08373AFF-D91F-4419-980A-78F4F7985B9B}
 		{609699E4-6640-435C-A8E4-4257236B37E3} = {08373AFF-D91F-4419-980A-78F4F7985B9B}
+		{25A51A8F-36FC-4781-8478-95B584E5ADB4} = {08373AFF-D91F-4419-980A-78F4F7985B9B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6c06054a-68d8-49d4-bd28-383cc9836d20}

@@ -1,45 +1,54 @@
 using System;
 using System.Diagnostics;
-using System.Windows.Forms;
+
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Animation;
+
+using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Extensibility;
-using Raid.Toolkit.WinUI.Base;
+using Raid.Toolkit.UI.WinUI.Base;
+
 using WinUIEx;
-using static UnityEngine.UI.Slider;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace Raid.Toolkit.WinUI
+namespace Raid.Toolkit.UI.WinUI
 {
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class SplashScreen : RTKWindow
+    public sealed partial class MainWindow : RTKWindow
     {
+        private readonly IAppUI AppUI;
         private readonly IModelLoader Loader;
         private readonly IMenuManager MenuManager;
 
-        public SplashScreen(
+        public MainWindow(
             IModelLoader loader,
+            IAppUI appUI,
             IMenuManager menuManager
             )
         {
             Loader = loader;
+            AppUI = appUI;
             MenuManager = menuManager;
             Loader.OnStateUpdated += Loader_OnStateUpdated;
             InitializeComponent();
 
-            this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.Purple);
+            // this.SetTitleBarBackgroundColors(Microsoft.UI.Colors.Purple);
             AppWindow.Closing += AppWindow_Closing;
 
-            IsShownInSwitchers = true;
+            this.SetWindowPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped);
             IsMinimizable = false;
             IsMaximizable = false;
             IsResizable = false;
-            this.SetWindowPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped);
-            this.CenterOnScreen(400, 450);
+            ExtendsContentIntoTitleBar = true;
+            SetTitleBar(TitleBar);
+            IsShownInSwitchers = true;
+
+            this.CenterOnScreen(400, 700);
 #pragma warning disable CS0436 // Type conflicts with imported type
             VersionRTK.Text = ThisAssembly.AssemblyFileVersion;
 #pragma warning restore CS0436 // Type conflicts with imported type
@@ -48,13 +57,13 @@ namespace Raid.Toolkit.WinUI
 
         private void Loader_OnStateUpdated(object? sender, IModelLoader.ModelLoaderEventArgs e)
         {
-            RTKApplication.Post(() =>
+            AppUI.Dispatch(() =>
             {
                 switch (e.LoadState)
                 {
                     case IModelLoader.LoadState.Initialize:
                         {
-                            Height = 600;
+                            //Height = 600;
                             VersionRaid.Text = Loader.GameVersion;
                             LoadProgressGrid.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
                             LoadMessage.Text = "Initializing...";
@@ -78,9 +87,11 @@ namespace Raid.Toolkit.WinUI
                         break;
                     case IModelLoader.LoadState.Loaded:
                         {
-                            Height = 510;
+                            //Height = 510;
                             LoadProgressGrid.Visibility = Microsoft.UI.Xaml.Visibility.Collapsed;
                             LinksGrid.Visibility = Microsoft.UI.Xaml.Visibility.Visible;
+                            ShrinkLogoAnimation.Begin();
+                            // ShrinkLogoStoryboard.Begin();
                         }
                         break;
                     case IModelLoader.LoadState.Error:

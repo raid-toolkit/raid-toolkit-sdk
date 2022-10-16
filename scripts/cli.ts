@@ -1,4 +1,5 @@
 import caporal from 'caporal';
+import path from 'path';
 import { bumpNugetVersions, BumpVerionsOptions } from './bump-nuget-versions';
 import { build } from './build';
 import { buildOptions, BuildOptions } from './options';
@@ -21,6 +22,7 @@ cli
 
 cli
   .command('publish', 'Build deployable packages')
+  .option('-o, --only', 'Publish only')
   .option('-f, --flavor <flavor>', 'Build flavor', ['Debug', 'Release'], 'Debug')
   .option('-p, --platform <platform>', 'Platform', ['x64'], 'x64')
   .action(publishBuild);
@@ -33,15 +35,20 @@ function bumpVersions(_args: any, opts: BumpVerionsOptions, _logger: any) {
 }
 
 async function publishBuild(_args: any, opts: Partial<BuildOptions>, _logger: any) {
+  if (!opts.only) {
+    await build(
+      buildOptions({
+        targets: ['Restore', 'Build'],
+        ...opts,
+      })
+    );
+  }
   await build(
     buildOptions({
-      targets: ['Restore', 'Build'],
-    })
-  );
-  await build(
-    buildOptions({
-      targetFramework: 'net6.0-windows',
-      targets: ['Pack', 'Publish'],
+      project: path.resolve(__dirname, '../src/Application/Raid.Toolkit/Raid.Toolkit.csproj'),
+      targetFramework: 'net6.0-windows10.0.19041.0',
+      targets: ['Publish'],
+      ...opts,
     })
   );
 }

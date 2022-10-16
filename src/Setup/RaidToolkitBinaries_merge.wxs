@@ -1,0 +1,840 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="INSTALLDIR">
+            <Directory Id="af_ZA" Name="af-ZA" />
+            <Directory Id="ar_SA" Name="ar-SA" />
+            <Directory Id="Assets" Name="Assets" />
+            <Directory Id="az_Latn_AZ" Name="az-Latn-AZ" />
+            <Directory Id="bg_BG" Name="bg-BG" />
+            <Directory Id="bs_Latn_BA" Name="bs-Latn-BA" />
+            <Directory Id="ca_ES" Name="ca-ES" />
+            <Directory Id="cs_CZ" Name="cs-CZ" />
+            <Directory Id="cy_GB" Name="cy-GB" />
+            <Directory Id="da_DK" Name="da-DK" />
+            <Directory Id="de_DE" Name="de-DE" />
+            <Directory Id="el_GR" Name="el-GR" />
+            <Directory Id="en_GB" Name="en-GB" />
+            <Directory Id="en_us" Name="en-us" />
+            <Directory Id="es_ES" Name="es-ES" />
+            <Directory Id="es_MX" Name="es-MX" />
+            <Directory Id="et_EE" Name="et-EE" />
+            <Directory Id="eu_ES" Name="eu-ES" />
+            <Directory Id="fa_IR" Name="fa-IR" />
+            <Directory Id="fi_FI" Name="fi-FI" />
+            <Directory Id="fr_CA" Name="fr-CA" />
+            <Directory Id="fr_FR" Name="fr-FR" />
+            <Directory Id="gl_ES" Name="gl-ES" />
+            <Directory Id="he_IL" Name="he-IL" />
+            <Directory Id="hi_IN" Name="hi-IN" />
+            <Directory Id="hr_HR" Name="hr-HR" />
+            <Directory Id="hu_HU" Name="hu-HU" />
+            <Directory Id="id_ID" Name="id-ID" />
+            <Directory Id="is_IS" Name="is-IS" />
+            <Directory Id="it_IT" Name="it-IT" />
+            <Directory Id="ja_JP" Name="ja-JP" />
+            <Directory Id="ka_GE" Name="ka-GE" />
+            <Directory Id="kk_KZ" Name="kk-KZ" />
+            <Directory Id="ko_KR" Name="ko-KR" />
+            <Directory Id="lt_LT" Name="lt-LT" />
+            <Directory Id="lv_LV" Name="lv-LV" />
+            <Directory Id="Microsoft.UI.Xaml" Name="Microsoft.UI.Xaml" />
+            <Directory Id="ms_MY" Name="ms-MY" />
+            <Directory Id="nb_NO" Name="nb-NO" />
+            <Directory Id="nl_NL" Name="nl-NL" />
+            <Directory Id="nn_NO" Name="nn-NO" />
+            <Directory Id="pl_PL" Name="pl-PL" />
+            <Directory Id="pt_BR" Name="pt-BR" />
+            <Directory Id="pt_PT" Name="pt-PT" />
+            <Directory Id="Resources" Name="Resources" />
+            <Directory Id="ro_RO" Name="ro-RO" />
+            <Directory Id="ru_RU" Name="ru-RU" />
+            <Directory Id="sk_SK" Name="sk-SK" />
+            <Directory Id="sl_SI" Name="sl-SI" />
+            <Directory Id="sq_AL" Name="sq-AL" />
+            <Directory Id="sr_Cyrl_RS" Name="sr-Cyrl-RS" />
+            <Directory Id="sr_Latn_RS" Name="sr-Latn-RS" />
+            <Directory Id="sv_SE" Name="sv-SE" />
+            <Directory Id="th_TH" Name="th-TH" />
+            <Directory Id="tr_TR" Name="tr-TR" />
+            <Directory Id="uk_UA" Name="uk-UA" />
+            <Directory Id="vi_VN" Name="vi-VN" />
+            <Directory Id="zh_CN" Name="zh-CN" />
+            <Directory Id="zh_TW" Name="zh-TW" />
+        </DirectoryRef>
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="RaidToolkitBinaries">
+            <Component Id="CommandLine.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="CommandLine.dll" KeyPath="yes" Source="SourceDir\CommandLine.dll" />
+            </Component>
+            <Component Id="CoreMessagingXP.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="CoreMessagingXP.dll" KeyPath="yes" Source="SourceDir\CoreMessagingXP.dll" />
+            </Component>
+            <Component Id="dcompi.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="dcompi.dll" KeyPath="yes" Source="SourceDir\dcompi.dll" />
+            </Component>
+            <Component Id="dwmcorei.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="dwmcorei.dll" KeyPath="yes" Source="SourceDir\dwmcorei.dll" />
+            </Component>
+            <Component Id="DwmSceneI.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="DwmSceneI.dll" KeyPath="yes" Source="SourceDir\DwmSceneI.dll" />
+            </Component>
+            <Component Id="DWriteCore.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="DWriteCore.dll" KeyPath="yes" Source="SourceDir\DWriteCore.dll" />
+            </Component>
+            <Component Id="Google.Protobuf.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Google.Protobuf.dll" KeyPath="yes" Source="SourceDir\Google.Protobuf.dll" />
+            </Component>
+            <Component Id="Grpc.Core.Api.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Grpc.Core.Api.dll" KeyPath="yes" Source="SourceDir\Grpc.Core.Api.dll" />
+            </Component>
+            <Component Id="Grpc.Net.Client.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Grpc.Net.Client.dll" KeyPath="yes" Source="SourceDir\Grpc.Net.Client.dll" />
+            </Component>
+            <Component Id="Grpc.Net.Common.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Grpc.Net.Common.dll" KeyPath="yes" Source="SourceDir\Grpc.Net.Common.dll" />
+            </Component>
+            <Component Id="Il2CppToolkit.Common.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Il2CppToolkit.Common.dll" KeyPath="yes" Source="SourceDir\Il2CppToolkit.Common.dll" />
+            </Component>
+            <Component Id="Il2CppToolkit.Injection.Client.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Il2CppToolkit.Injection.Client.dll" KeyPath="yes" Source="SourceDir\Il2CppToolkit.Injection.Client.dll" />
+            </Component>
+            <Component Id="Il2CppToolkit.Injection.Host.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Il2CppToolkit.Injection.Host.dll" KeyPath="yes" Source="SourceDir\Il2CppToolkit.Injection.Host.dll" />
+            </Component>
+            <Component Id="Il2CppToolkit.Metadata.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Il2CppToolkit.Metadata.dll" KeyPath="yes" Source="SourceDir\Il2CppToolkit.Metadata.dll" />
+            </Component>
+            <Component Id="Il2CppToolkit.ReverseCompiler.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Il2CppToolkit.ReverseCompiler.dll" KeyPath="yes" Source="SourceDir\Il2CppToolkit.ReverseCompiler.dll" />
+            </Component>
+            <Component Id="Il2CppToolkit.Runtime.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Il2CppToolkit.Runtime.dll" KeyPath="yes" Source="SourceDir\Il2CppToolkit.Runtime.dll" />
+            </Component>
+            <Component Id="Il2CppToolkit.Target.NetCore.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Il2CppToolkit.Target.NetCore.dll" KeyPath="yes" Source="SourceDir\Il2CppToolkit.Target.NetCore.dll" />
+            </Component>
+            <Component Id="Karambolo.Extensions.Logging.File.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Karambolo.Extensions.Logging.File.dll" KeyPath="yes" Source="SourceDir\Karambolo.Extensions.Logging.File.dll" />
+            </Component>
+            <Component Id="marshal.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="marshal.dll" KeyPath="yes" Source="SourceDir\marshal.dll" />
+            </Component>
+            <Component Id="Microsoft.DirectManipulation.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.DirectManipulation.dll" KeyPath="yes" Source="SourceDir\Microsoft.DirectManipulation.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Configuration.Abstractions.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.Abstractions.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.Abstractions.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Configuration.Binder.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.Binder.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.Binder.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Configuration.CommandLine.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.CommandLine.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.CommandLine.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Configuration.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Configuration.EnvironmentVariables.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.EnvironmentVariables.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.EnvironmentVariables.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Configuration.FileExtensions.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.FileExtensions.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.FileExtensions.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Configuration.Json.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.Json.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.Json.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Configuration.UserSecrets.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Configuration.UserSecrets.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Configuration.UserSecrets.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.DependencyInjection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.DependencyInjection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.DependencyInjection.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.FileProviders.Abstractions.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.FileProviders.Abstractions.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.FileProviders.Abstractions.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.FileProviders.Physical.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.FileProviders.Physical.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.FileProviders.Physical.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.FileSystemGlobbing.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.FileSystemGlobbing.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.FileSystemGlobbing.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Hosting.Abstractions.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Hosting.Abstractions.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Hosting.Abstractions.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Hosting.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Hosting.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Hosting.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Logging.Abstractions.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Logging.Abstractions.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Logging.Abstractions.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Logging.Configuration.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Logging.Configuration.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Logging.Configuration.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Logging.Console.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Logging.Console.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Logging.Console.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Logging.Debug.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Logging.Debug.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Logging.Debug.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Logging.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Logging.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Logging.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Logging.EventLog.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Logging.EventLog.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Logging.EventLog.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Logging.EventSource.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Logging.EventSource.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Logging.EventSource.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Options.ConfigurationExtensions.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Options.ConfigurationExtensions.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Options.ConfigurationExtensions.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Options.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Options.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Options.dll" />
+            </Component>
+            <Component Id="Microsoft.Extensions.Primitives.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Extensions.Primitives.dll" KeyPath="yes" Source="SourceDir\Microsoft.Extensions.Primitives.dll" />
+            </Component>
+            <Component Id="Microsoft.Foundation.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Foundation.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Foundation.winmd" />
+            </Component>
+            <Component Id="Microsoft.Graphics.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Graphics.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Graphics.winmd" />
+            </Component>
+            <Component Id="Microsoft.InputStateManager.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.InputStateManager.dll" KeyPath="yes" Source="SourceDir\Microsoft.InputStateManager.dll" />
+            </Component>
+            <Component Id="Microsoft.InteractiveExperiences.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.InteractiveExperiences.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.InteractiveExperiences.Projection.dll" />
+            </Component>
+            <Component Id="Microsoft.Internal.FrameworkUdk.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Internal.FrameworkUdk.dll" KeyPath="yes" Source="SourceDir\Microsoft.Internal.FrameworkUdk.dll" />
+            </Component>
+            <Component Id="Microsoft.UI.Composition.OSSupport.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Composition.OSSupport.dll" KeyPath="yes" Source="SourceDir\Microsoft.UI.Composition.OSSupport.dll" />
+            </Component>
+            <Component Id="Microsoft.UI.Input.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Input.dll" KeyPath="yes" Source="SourceDir\Microsoft.UI.Input.dll" />
+            </Component>
+            <Component Id="Microsoft.UI.Text.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Text.winmd" KeyPath="yes" Source="SourceDir\Microsoft.UI.Text.winmd" />
+            </Component>
+            <Component Id="Microsoft.UI.Windowing.Core.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Windowing.Core.dll" KeyPath="yes" Source="SourceDir\Microsoft.UI.Windowing.Core.dll" />
+            </Component>
+            <Component Id="Microsoft.UI.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.winmd" KeyPath="yes" Source="SourceDir\Microsoft.UI.winmd" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Controls.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Controls.dll" KeyPath="yes" Source="SourceDir\Microsoft.UI.Xaml.Controls.dll" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Controls.pri" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Controls.pri" KeyPath="yes" Source="SourceDir\Microsoft.UI.Xaml.Controls.pri" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll" KeyPath="yes" Source="SourceDir\Microsoft.ui.xaml.dll" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Internal.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Internal.dll" KeyPath="yes" Source="SourceDir\Microsoft.UI.Xaml.Internal.dll" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll" KeyPath="yes" Source="SourceDir\Microsoft.UI.Xaml.Phone.dll" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.resources.19h1.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.resources.19h1.dll" KeyPath="yes" Source="SourceDir\Microsoft.ui.xaml.resources.19h1.dll" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.resources.common.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.resources.common.dll" KeyPath="yes" Source="SourceDir\Microsoft.ui.xaml.resources.common.dll" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.winmd" KeyPath="yes" Source="SourceDir\Microsoft.UI.Xaml.winmd" />
+            </Component>
+            <Component Id="Microsoft.Web.WebView2.Core.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Web.WebView2.Core.dll" KeyPath="yes" Source="SourceDir\Microsoft.Web.WebView2.Core.dll" />
+            </Component>
+            <Component Id="Microsoft.Web.WebView2.Core.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Web.WebView2.Core.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Web.WebView2.Core.winmd" />
+            </Component>
+            <Component Id="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll" />
+            </Component>
+            <Component Id="Microsoft.Windows.ApplicationModel.DynamicDependency.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.ApplicationModel.DynamicDependency.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.ApplicationModel.DynamicDependency.winmd" />
+            </Component>
+            <Component Id="Microsoft.Windows.ApplicationModel.Resources.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.ApplicationModel.Resources.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.ApplicationModel.Resources.dll" />
+            </Component>
+            <Component Id="Microsoft.Windows.ApplicationModel.Resources.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.ApplicationModel.Resources.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.ApplicationModel.Resources.Projection.dll" />
+            </Component>
+            <Component Id="Microsoft.Windows.ApplicationModel.Resources.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.ApplicationModel.Resources.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.ApplicationModel.Resources.winmd" />
+            </Component>
+            <Component Id="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll" />
+            </Component>
+            <Component Id="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.ApplicationModel.WindowsAppRuntime.winmd" />
+            </Component>
+            <Component Id="Microsoft.Windows.AppLifecycle.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.AppLifecycle.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.AppLifecycle.Projection.dll" />
+            </Component>
+            <Component Id="Microsoft.Windows.AppLifecycle.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.AppLifecycle.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.AppLifecycle.winmd" />
+            </Component>
+            <Component Id="Microsoft.Windows.AppNotifications.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.AppNotifications.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.AppNotifications.Projection.dll" />
+            </Component>
+            <Component Id="Microsoft.Windows.AppNotifications.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.AppNotifications.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.AppNotifications.winmd" />
+            </Component>
+            <Component Id="Microsoft.Windows.PushNotifications.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.PushNotifications.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.PushNotifications.Projection.dll" />
+            </Component>
+            <Component Id="Microsoft.Windows.PushNotifications.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.PushNotifications.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.PushNotifications.winmd" />
+            </Component>
+            <Component Id="Microsoft.Windows.SDK.NET.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.SDK.NET.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.SDK.NET.dll" />
+            </Component>
+            <Component Id="Microsoft.Windows.System.Power.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.System.Power.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.System.Power.Projection.dll" />
+            </Component>
+            <Component Id="Microsoft.Windows.System.Power.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.System.Power.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.System.Power.winmd" />
+            </Component>
+            <Component Id="Microsoft.Windows.System.Projection.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.System.Projection.dll" KeyPath="yes" Source="SourceDir\Microsoft.Windows.System.Projection.dll" />
+            </Component>
+            <Component Id="Microsoft.Windows.System.winmd" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.Windows.System.winmd" KeyPath="yes" Source="SourceDir\Microsoft.Windows.System.winmd" />
+            </Component>
+            <Component Id="Microsoft.WindowsAppRuntime.Bootstrap.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.WindowsAppRuntime.Bootstrap.dll" KeyPath="yes" Source="SourceDir\Microsoft.WindowsAppRuntime.Bootstrap.dll" />
+            </Component>
+            <Component Id="Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" KeyPath="yes" Source="SourceDir\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" />
+            </Component>
+            <Component Id="Microsoft.WindowsAppRuntime.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.WindowsAppRuntime.dll" KeyPath="yes" Source="SourceDir\Microsoft.WindowsAppRuntime.dll" />
+            </Component>
+            <Component Id="Microsoft.WindowsAppRuntime.Insights.Resource.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.WindowsAppRuntime.Insights.Resource.dll" KeyPath="yes" Source="SourceDir\Microsoft.WindowsAppRuntime.Insights.Resource.dll" />
+            </Component>
+            <Component Id="Microsoft.WindowsAppRuntime.Release.Net.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.WindowsAppRuntime.Release.Net.dll" KeyPath="yes" Source="SourceDir\Microsoft.WindowsAppRuntime.Release.Net.dll" />
+            </Component>
+            <Component Id="Microsoft.WinUI.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.WinUI.dll" KeyPath="yes" Source="SourceDir\Microsoft.WinUI.dll" />
+            </Component>
+            <Component Id="Mono.Cecil.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Mono.Cecil.dll" KeyPath="yes" Source="SourceDir\Mono.Cecil.dll" />
+            </Component>
+            <Component Id="Mono.Cecil.Mdb.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Mono.Cecil.Mdb.dll" KeyPath="yes" Source="SourceDir\Mono.Cecil.Mdb.dll" />
+            </Component>
+            <Component Id="Mono.Cecil.Pdb.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Mono.Cecil.Pdb.dll" KeyPath="yes" Source="SourceDir\Mono.Cecil.Pdb.dll" />
+            </Component>
+            <Component Id="Mono.Cecil.Rocks.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Mono.Cecil.Rocks.dll" KeyPath="yes" Source="SourceDir\Mono.Cecil.Rocks.dll" />
+            </Component>
+            <Component Id="MRM.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="MRM.dll" KeyPath="yes" Source="SourceDir\MRM.dll" />
+            </Component>
+            <Component Id="Newtonsoft.Json.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Newtonsoft.Json.dll" KeyPath="yes" Source="SourceDir\Newtonsoft.Json.dll" />
+            </Component>
+            <Component Id="ProcessMemoryUtilities.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="ProcessMemoryUtilities.dll" KeyPath="yes" Source="SourceDir\ProcessMemoryUtilities.dll" />
+            </Component>
+            <Component Id="PushNotificationsLongRunningTask.ProxyStub.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="PushNotificationsLongRunningTask.ProxyStub.dll" KeyPath="yes" Source="SourceDir\PushNotificationsLongRunningTask.ProxyStub.dll" />
+            </Component>
+            <Component Id="Raid.Common.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Common.dll" KeyPath="yes" Source="SourceDir\Raid.Common.dll" />
+            </Component>
+            <Component Id="Raid.Common.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Common.pdb" KeyPath="yes" Source="SourceDir\Raid.Common.pdb" />
+            </Component>
+            <Component Id="Raid.Model.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Model.dll" KeyPath="yes" Source="SourceDir\Raid.Model.dll" />
+            </Component>
+            <Component Id="Raid.Model.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Model.pdb" KeyPath="yes" Source="SourceDir\Raid.Model.pdb" />
+            </Component>
+            <Component Id="Raid.Toolkit.Application.Core.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Application.Core.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Application.Core.dll" />
+            </Component>
+            <Component Id="Raid.Toolkit.Application.Core.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Application.Core.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Application.Core.pdb" />
+            </Component>
+            <Component Id="Raid.Toolkit.DataModel.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.DataModel.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.DataModel.dll" />
+            </Component>
+            <Component Id="Raid.Toolkit.DataModel.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.DataModel.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.DataModel.pdb" />
+            </Component>
+            <Component Id="Raid.Toolkit.deps.json" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.deps.json" KeyPath="yes" Source="SourceDir\Raid.Toolkit.deps.json" />
+            </Component>
+            <Component Id="Raid.Toolkit.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.dll" />
+            </Component>
+            <Component Id="Raid.Toolkit.exe" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.exe" KeyPath="yes" Source="SourceDir\Raid.Toolkit.exe" />
+            </Component>
+            <Component Id="Raid.Toolkit.Extensibility.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extensibility.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extensibility.dll" />
+            </Component>
+            <Component Id="Raid.Toolkit.Extensibility.Host.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extensibility.Host.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extensibility.Host.dll" />
+            </Component>
+            <Component Id="Raid.Toolkit.Extensibility.Host.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extensibility.Host.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extensibility.Host.pdb" />
+            </Component>
+            <Component Id="Raid.Toolkit.Extensibility.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extensibility.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extensibility.pdb" />
+            </Component>
+            <Component Id="Raid.Toolkit.Extension.Account.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extension.Account.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extension.Account.dll" />
+            </Component>
+            <Component Id="Raid.Toolkit.Extension.Account.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extension.Account.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extension.Account.pdb" />
+            </Component>
+            <Component Id="Raid.Toolkit.Extension.Realtime.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extension.Realtime.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extension.Realtime.dll" />
+            </Component>
+            <Component Id="Raid.Toolkit.Extension.Realtime.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.Extension.Realtime.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.Extension.Realtime.pdb" />
+            </Component>
+            <Component Id="Raid.Toolkit.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.pdb" />
+            </Component>
+            <Component Id="Raid.Toolkit.runtimeconfig.json" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.runtimeconfig.json" KeyPath="yes" Source="SourceDir\Raid.Toolkit.runtimeconfig.json" />
+            </Component>
+            <Component Id="Raid.Toolkit.UI.Forms.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.UI.Forms.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.UI.Forms.dll" />
+            </Component>
+            <Component Id="Raid.Toolkit.UI.Forms.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.UI.Forms.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.UI.Forms.pdb" />
+            </Component>
+            <Component Id="Raid.Toolkit.UI.WinUI.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.UI.WinUI.dll" KeyPath="yes" Source="SourceDir\Raid.Toolkit.UI.WinUI.dll" />
+            </Component>
+            <Component Id="Raid.Toolkit.UI.WinUI.pdb" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.UI.WinUI.pdb" KeyPath="yes" Source="SourceDir\Raid.Toolkit.UI.WinUI.pdb" />
+            </Component>
+            <Component Id="Raid.Toolkit.UI.WinUI.pri" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Raid.Toolkit.UI.WinUI.pri" KeyPath="yes" Source="SourceDir\Raid.Toolkit.UI.WinUI.pri" />
+            </Component>
+            <Component Id="SuperSocket.Channel.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="SuperSocket.Channel.dll" KeyPath="yes" Source="SourceDir\SuperSocket.Channel.dll" />
+            </Component>
+            <Component Id="SuperSocket.Command.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="SuperSocket.Command.dll" KeyPath="yes" Source="SourceDir\SuperSocket.Command.dll" />
+            </Component>
+            <Component Id="SuperSocket.Primitives.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="SuperSocket.Primitives.dll" KeyPath="yes" Source="SourceDir\SuperSocket.Primitives.dll" />
+            </Component>
+            <Component Id="SuperSocket.ProtoBase.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="SuperSocket.ProtoBase.dll" KeyPath="yes" Source="SourceDir\SuperSocket.ProtoBase.dll" />
+            </Component>
+            <Component Id="SuperSocket.Server.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="SuperSocket.Server.dll" KeyPath="yes" Source="SourceDir\SuperSocket.Server.dll" />
+            </Component>
+            <Component Id="SuperSocket.WebSocket.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="SuperSocket.WebSocket.dll" KeyPath="yes" Source="SourceDir\SuperSocket.WebSocket.dll" />
+            </Component>
+            <Component Id="SuperSocket.WebSocket.Server.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="SuperSocket.WebSocket.Server.dll" KeyPath="yes" Source="SourceDir\SuperSocket.WebSocket.Server.dll" />
+            </Component>
+            <Component Id="System.Diagnostics.EventLog.Messages.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="System.Diagnostics.EventLog.Messages.dll" KeyPath="yes" Source="SourceDir\System.Diagnostics.EventLog.Messages.dll" />
+            </Component>
+            <Component Id="System.IO.Pipelines.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="System.IO.Pipelines.dll" KeyPath="yes" Source="SourceDir\System.IO.Pipelines.dll" />
+            </Component>
+            <Component Id="Vestris.ResourceLib.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="Vestris.ResourceLib.dll" KeyPath="yes" Source="SourceDir\Vestris.ResourceLib.dll" />
+            </Component>
+            <Component Id="WindowsAppRuntime.png" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="WindowsAppRuntime.png" KeyPath="yes" Source="SourceDir\WindowsAppRuntime.png" />
+            </Component>
+            <Component Id="WindowsAppSdk.AppxDeploymentExtensions.Desktop.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="WindowsAppSdk.AppxDeploymentExtensions.Desktop.dll" KeyPath="yes" Source="SourceDir\WindowsAppSdk.AppxDeploymentExtensions.Desktop.dll" />
+            </Component>
+            <Component Id="WinRT.Runtime.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="WinRT.Runtime.dll" KeyPath="yes" Source="SourceDir\WinRT.Runtime.dll" />
+            </Component>
+            <Component Id="WinUIEdit.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="WinUIEdit.dll" KeyPath="yes" Source="SourceDir\WinUIEdit.dll" />
+            </Component>
+            <Component Id="WinUIEx.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="WinUIEx.dll" KeyPath="yes" Source="SourceDir\WinUIEx.dll" />
+            </Component>
+            <Component Id="wuceffectsi.dll" Directory="INSTALLDIR" Guid="PUT-GUID-HERE">
+                <File Id="wuceffectsi.dll" KeyPath="yes" Source="SourceDir\wuceffectsi.dll" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui" Directory="af_ZA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui" KeyPath="yes" Source="SourceDir\af-ZA\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui" Directory="af_ZA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui" KeyPath="yes" Source="SourceDir\af-ZA\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_1" Directory="ar_SA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_1" KeyPath="yes" Source="SourceDir\ar-SA\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_1" Directory="ar_SA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_1" KeyPath="yes" Source="SourceDir\ar-SA\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="RaidToolkitLarge.png" Directory="Assets" Guid="PUT-GUID-HERE">
+                <File Id="RaidToolkitLarge.png" KeyPath="yes" Source="SourceDir\Assets\RaidToolkitLarge.png" />
+            </Component>
+            <Component Id="Square150x150Logo.scale_200.png" Directory="Assets" Guid="PUT-GUID-HERE">
+                <File Id="Square150x150Logo.scale_200.png" KeyPath="yes" Source="SourceDir\Assets\Square150x150Logo.scale-200.png" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_2" Directory="az_Latn_AZ" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_2" KeyPath="yes" Source="SourceDir\az-Latn-AZ\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_2" Directory="az_Latn_AZ" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_2" KeyPath="yes" Source="SourceDir\az-Latn-AZ\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_3" Directory="bg_BG" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_3" KeyPath="yes" Source="SourceDir\bg-BG\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_3" Directory="bg_BG" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_3" KeyPath="yes" Source="SourceDir\bg-BG\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_4" Directory="bs_Latn_BA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_4" KeyPath="yes" Source="SourceDir\bs-Latn-BA\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_4" Directory="bs_Latn_BA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_4" KeyPath="yes" Source="SourceDir\bs-Latn-BA\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_5" Directory="ca_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_5" KeyPath="yes" Source="SourceDir\ca-ES\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_5" Directory="ca_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_5" KeyPath="yes" Source="SourceDir\ca-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_6" Directory="cs_CZ" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_6" KeyPath="yes" Source="SourceDir\cs-CZ\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_6" Directory="cs_CZ" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_6" KeyPath="yes" Source="SourceDir\cs-CZ\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_7" Directory="cy_GB" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_7" KeyPath="yes" Source="SourceDir\cy-GB\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_7" Directory="cy_GB" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_7" KeyPath="yes" Source="SourceDir\cy-GB\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_8" Directory="da_DK" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_8" KeyPath="yes" Source="SourceDir\da-DK\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_8" Directory="da_DK" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_8" KeyPath="yes" Source="SourceDir\da-DK\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_9" Directory="de_DE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_9" KeyPath="yes" Source="SourceDir\de-DE\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_9" Directory="de_DE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_9" KeyPath="yes" Source="SourceDir\de-DE\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_10" Directory="el_GR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_10" KeyPath="yes" Source="SourceDir\el-GR\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_10" Directory="el_GR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_10" KeyPath="yes" Source="SourceDir\el-GR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_11" Directory="en_GB" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_11" KeyPath="yes" Source="SourceDir\en-GB\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_11" Directory="en_GB" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_11" KeyPath="yes" Source="SourceDir\en-GB\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_12" Directory="en_us" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_12" KeyPath="yes" Source="SourceDir\en-us\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_12" Directory="en_us" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_12" KeyPath="yes" Source="SourceDir\en-us\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_13" Directory="es_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_13" KeyPath="yes" Source="SourceDir\es-ES\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_13" Directory="es_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_13" KeyPath="yes" Source="SourceDir\es-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_14" Directory="es_MX" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_14" KeyPath="yes" Source="SourceDir\es-MX\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_14" Directory="es_MX" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_14" KeyPath="yes" Source="SourceDir\es-MX\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_15" Directory="et_EE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_15" KeyPath="yes" Source="SourceDir\et-EE\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_15" Directory="et_EE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_15" KeyPath="yes" Source="SourceDir\et-EE\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_16" Directory="eu_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_16" KeyPath="yes" Source="SourceDir\eu-ES\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_16" Directory="eu_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_16" KeyPath="yes" Source="SourceDir\eu-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_17" Directory="fa_IR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_17" KeyPath="yes" Source="SourceDir\fa-IR\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_17" Directory="fa_IR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_17" KeyPath="yes" Source="SourceDir\fa-IR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_18" Directory="fi_FI" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_18" KeyPath="yes" Source="SourceDir\fi-FI\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_18" Directory="fi_FI" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_18" KeyPath="yes" Source="SourceDir\fi-FI\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_19" Directory="fr_CA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_19" KeyPath="yes" Source="SourceDir\fr-CA\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_19" Directory="fr_CA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_19" KeyPath="yes" Source="SourceDir\fr-CA\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_20" Directory="fr_FR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_20" KeyPath="yes" Source="SourceDir\fr-FR\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_20" Directory="fr_FR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_20" KeyPath="yes" Source="SourceDir\fr-FR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_21" Directory="gl_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_21" KeyPath="yes" Source="SourceDir\gl-ES\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_21" Directory="gl_ES" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_21" KeyPath="yes" Source="SourceDir\gl-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_22" Directory="he_IL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_22" KeyPath="yes" Source="SourceDir\he-IL\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_22" Directory="he_IL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_22" KeyPath="yes" Source="SourceDir\he-IL\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_23" Directory="hi_IN" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_23" KeyPath="yes" Source="SourceDir\hi-IN\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_23" Directory="hi_IN" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_23" KeyPath="yes" Source="SourceDir\hi-IN\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_24" Directory="hr_HR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_24" KeyPath="yes" Source="SourceDir\hr-HR\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_24" Directory="hr_HR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_24" KeyPath="yes" Source="SourceDir\hr-HR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_25" Directory="hu_HU" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_25" KeyPath="yes" Source="SourceDir\hu-HU\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_25" Directory="hu_HU" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_25" KeyPath="yes" Source="SourceDir\hu-HU\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_26" Directory="id_ID" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_26" KeyPath="yes" Source="SourceDir\id-ID\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_26" Directory="id_ID" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_26" KeyPath="yes" Source="SourceDir\id-ID\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_27" Directory="is_IS" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_27" KeyPath="yes" Source="SourceDir\is-IS\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_27" Directory="is_IS" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_27" KeyPath="yes" Source="SourceDir\is-IS\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_28" Directory="it_IT" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_28" KeyPath="yes" Source="SourceDir\it-IT\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_28" Directory="it_IT" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_28" KeyPath="yes" Source="SourceDir\it-IT\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_29" Directory="ja_JP" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_29" KeyPath="yes" Source="SourceDir\ja-JP\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_29" Directory="ja_JP" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_29" KeyPath="yes" Source="SourceDir\ja-JP\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_30" Directory="ka_GE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_30" KeyPath="yes" Source="SourceDir\ka-GE\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_30" Directory="ka_GE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_30" KeyPath="yes" Source="SourceDir\ka-GE\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_31" Directory="kk_KZ" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_31" KeyPath="yes" Source="SourceDir\kk-KZ\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_31" Directory="kk_KZ" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_31" KeyPath="yes" Source="SourceDir\kk-KZ\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_32" Directory="ko_KR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_32" KeyPath="yes" Source="SourceDir\ko-KR\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_32" Directory="ko_KR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_32" KeyPath="yes" Source="SourceDir\ko-KR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_33" Directory="lt_LT" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_33" KeyPath="yes" Source="SourceDir\lt-LT\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_33" Directory="lt_LT" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_33" KeyPath="yes" Source="SourceDir\lt-LT\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_34" Directory="lv_LV" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_34" KeyPath="yes" Source="SourceDir\lv-LV\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_34" Directory="lv_LV" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_34" KeyPath="yes" Source="SourceDir\lv-LV\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="NoiseAsset_256x256_PNG.png" Directory="Assets_1" Guid="PUT-GUID-HERE">
+                <File Id="NoiseAsset_256x256_PNG.png" KeyPath="yes" Source="SourceDir\Microsoft.UI.Xaml\Assets\NoiseAsset_256x256_PNG.png" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_35" Directory="ms_MY" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_35" KeyPath="yes" Source="SourceDir\ms-MY\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_35" Directory="ms_MY" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_35" KeyPath="yes" Source="SourceDir\ms-MY\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_36" Directory="nb_NO" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_36" KeyPath="yes" Source="SourceDir\nb-NO\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_36" Directory="nb_NO" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_36" KeyPath="yes" Source="SourceDir\nb-NO\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_37" Directory="nl_NL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_37" KeyPath="yes" Source="SourceDir\nl-NL\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_37" Directory="nl_NL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_37" KeyPath="yes" Source="SourceDir\nl-NL\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_38" Directory="nn_NO" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_38" KeyPath="yes" Source="SourceDir\nn-NO\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_38" Directory="nn_NO" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_38" KeyPath="yes" Source="SourceDir\nn-NO\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_39" Directory="pl_PL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_39" KeyPath="yes" Source="SourceDir\pl-PL\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_39" Directory="pl_PL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_39" KeyPath="yes" Source="SourceDir\pl-PL\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_40" Directory="pt_BR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_40" KeyPath="yes" Source="SourceDir\pt-BR\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_40" Directory="pt_BR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_40" KeyPath="yes" Source="SourceDir\pt-BR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_41" Directory="pt_PT" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_41" KeyPath="yes" Source="SourceDir\pt-PT\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_41" Directory="pt_PT" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_41" KeyPath="yes" Source="SourceDir\pt-PT\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Square150x150Logo.scale_200.png_1" Directory="Resources" Guid="PUT-GUID-HERE">
+                <File Id="Square150x150Logo.scale_200.png_1" KeyPath="yes" Source="SourceDir\Resources\Square150x150Logo.scale-200.png" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_42" Directory="ro_RO" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_42" KeyPath="yes" Source="SourceDir\ro-RO\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_42" Directory="ro_RO" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_42" KeyPath="yes" Source="SourceDir\ro-RO\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_43" Directory="ru_RU" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_43" KeyPath="yes" Source="SourceDir\ru-RU\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_43" Directory="ru_RU" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_43" KeyPath="yes" Source="SourceDir\ru-RU\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_44" Directory="sk_SK" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_44" KeyPath="yes" Source="SourceDir\sk-SK\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_44" Directory="sk_SK" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_44" KeyPath="yes" Source="SourceDir\sk-SK\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_45" Directory="sl_SI" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_45" KeyPath="yes" Source="SourceDir\sl-SI\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_45" Directory="sl_SI" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_45" KeyPath="yes" Source="SourceDir\sl-SI\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_46" Directory="sq_AL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_46" KeyPath="yes" Source="SourceDir\sq-AL\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_46" Directory="sq_AL" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_46" KeyPath="yes" Source="SourceDir\sq-AL\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_47" Directory="sr_Cyrl_RS" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_47" KeyPath="yes" Source="SourceDir\sr-Cyrl-RS\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_47" Directory="sr_Cyrl_RS" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_47" KeyPath="yes" Source="SourceDir\sr-Cyrl-RS\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_48" Directory="sr_Latn_RS" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_48" KeyPath="yes" Source="SourceDir\sr-Latn-RS\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_48" Directory="sr_Latn_RS" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_48" KeyPath="yes" Source="SourceDir\sr-Latn-RS\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_49" Directory="sv_SE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_49" KeyPath="yes" Source="SourceDir\sv-SE\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_49" Directory="sv_SE" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_49" KeyPath="yes" Source="SourceDir\sv-SE\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_50" Directory="th_TH" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_50" KeyPath="yes" Source="SourceDir\th-TH\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_50" Directory="th_TH" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_50" KeyPath="yes" Source="SourceDir\th-TH\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_51" Directory="tr_TR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_51" KeyPath="yes" Source="SourceDir\tr-TR\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_51" Directory="tr_TR" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_51" KeyPath="yes" Source="SourceDir\tr-TR\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_52" Directory="uk_UA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_52" KeyPath="yes" Source="SourceDir\uk-UA\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_52" Directory="uk_UA" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_52" KeyPath="yes" Source="SourceDir\uk-UA\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_53" Directory="vi_VN" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_53" KeyPath="yes" Source="SourceDir\vi-VN\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_53" Directory="vi_VN" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_53" KeyPath="yes" Source="SourceDir\vi-VN\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_54" Directory="zh_CN" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_54" KeyPath="yes" Source="SourceDir\zh-CN\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_54" Directory="zh_CN" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_54" KeyPath="yes" Source="SourceDir\zh-CN\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.ui.xaml.dll.mui_55" Directory="zh_TW" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.ui.xaml.dll.mui_55" KeyPath="yes" Source="SourceDir\zh-TW\Microsoft.ui.xaml.dll.mui" />
+            </Component>
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_55" Directory="zh_TW" Guid="PUT-GUID-HERE">
+                <File Id="Microsoft.UI.Xaml.Phone.dll.mui_55" KeyPath="yes" Source="SourceDir\zh-TW\Microsoft.UI.Xaml.Phone.dll.mui" />
+            </Component>
+        </ComponentGroup>
+    </Fragment>
+    <Fragment>
+        <DirectoryRef Id="Microsoft.UI.Xaml">
+            <Directory Id="Assets_1" Name="Assets" />
+        </DirectoryRef>
+    </Fragment>
+</Wix>

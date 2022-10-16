@@ -2,15 +2,21 @@ using CommandLine;
 
 namespace Raid.Toolkit.Application.Core.Commands
 {
+    public enum RenderingEngine
+    {
+        WinUI,
+        WinForms,
+    }
     public class CommonOptions
     {
-        public static CommonOptions? Value { get; private set; }
+        public static CommonOptions Value { get; private set; } = new();
 
         public static void Parse(string[] arguments)
         {
             Parser parser = new(settings =>
             {
                 settings.IgnoreUnknownArguments = true;
+                settings.CaseInsensitiveEnumValues = true;
             });
             parser.ParseArguments<CommonOptions>(arguments).WithParsed(options => Value = options);
         }
@@ -20,5 +26,11 @@ namespace Raid.Toolkit.Application.Core.Commands
 
         [Option('q', "quiet")]
         public bool DisableLogging { get; set; }
+
+        [Option("force-rebuild")]
+        public bool ForceRebuild { get; set; }
+
+        [Option("render-engine")]
+        public RenderingEngine RenderEngine { get; set; } = RenderingEngine.WinUI;
     }
 }

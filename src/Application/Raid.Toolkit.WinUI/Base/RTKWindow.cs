@@ -1,12 +1,8 @@
 using Microsoft.UI.Xaml;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 using WinUIEx;
 
-namespace Raid.Toolkit.WinUI.Base
+namespace Raid.Toolkit.UI.WinUI.Base
 {
     public abstract class RTKWindow : WindowEx
     {

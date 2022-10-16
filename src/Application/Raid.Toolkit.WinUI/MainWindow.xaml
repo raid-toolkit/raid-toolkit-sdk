@@ -1,0 +1,116 @@
+﻿<rtkuibase:RTKWindow x:Name="window" x:Class="Raid.Toolkit.UI.WinUI.MainWindow"
+    xmlns:winex="using:WinUIEx"
+    xmlns:rtkuibase="using:Raid.Toolkit.UI.WinUI.Base"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Raid.Toolkit.UI.WinUI"
+    xmlns:xaml="using:Raid.Toolkit.UI.WinUI.Xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="Raid Toolkit">
+	<Grid>
+		<Grid.Resources>
+			<xaml:GridLengthConverter x:Key="GridLengthConverter"/>
+			<Storyboard x:Name="ShrinkLogoAnimation">
+				<DoubleAnimation Storyboard.TargetName="iconImage" Storyboard.TargetProperty="Height" To="200" Duration="0:0:0.5" EnableDependentAnimation="True" />
+				<DoubleAnimation Storyboard.TargetName="logoImage" Storyboard.TargetProperty="Height" To="66" Duration="0:0:0.5" EnableDependentAnimation="True" />
+			</Storyboard>
+			<Storyboard x:Name="GrowLogoAnimation">
+				<DoubleAnimation Storyboard.TargetName="iconImage" Storyboard.TargetProperty="Height" To="300" Duration="0:0:0.5" EnableDependentAnimation="True" />
+				<DoubleAnimation Storyboard.TargetName="logoImage" Storyboard.TargetProperty="Height" To="100" Duration="0:0:0.5" EnableDependentAnimation="True" />
+			</Storyboard>
+		</Grid.Resources>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="28" />
+			<RowDefinition x:Name="iconRow" Height="Auto" />
+			<RowDefinition x:Name="logoRow" Height="Auto" />
+			<RowDefinition Height="20" />
+			<RowDefinition Height="150*" />
+		</Grid.RowDefinitions>
+		<Grid x:Name="TitleBar" Grid.Row="0">
+			<Grid.Shadow>
+				<ThemeShadow />
+			</Grid.Shadow>
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="28" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<Image Grid.Column="0" Source="/Assets/Square150x150Logo.scale-200.png" VerticalAlignment="Center" HorizontalAlignment="Center" Width="22" />
+			<TextBlock Grid.Column="1" FontSize="12" VerticalAlignment="Center" Margin="5,0,0,0">Raid Toolkit</TextBlock>
+		</Grid>
+		<Image Grid.Row="1" x:Name="iconImage" Source="/Assets/Square150x150Logo.scale-200.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="300" />
+		<Image Grid.Row="2" x:Name="logoImage" Source="/Assets/RaidToolkitLarge.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" />
+		<!--<StackPanel Grid.Row="3" x:Name="LinksGrid" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="22" Visibility="Collapsed">
+			<Button Content="Website" HorizontalAlignment="Center" Click="Website_Click" />
+			<Button Content="Discord" HorizontalAlignment="Center" Click="Discord_Click" />
+		</StackPanel>-->
+		<Grid Grid.Row="4" x:Name="LinksGrid" Visibility="Collapsed">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="60" />
+				<RowDefinition Height="120*" />
+				<RowDefinition Height="60" />
+			</Grid.RowDefinitions>
+			<TextBlock Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Top" Text="Settings" FontSize="18" Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}" />
+			<StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+				<CheckBox x:Name="AutoUpdate" HorizontalAlignment="Left" Content="Automatically check for updates" />
+				<CheckBox x:Name="RunOnStartup" HorizontalAlignment="Left" Content="Run on startup" />
+				<CheckBox x:Name="ClickToFocus" HorizontalAlignment="Left" Content="Click tray icon to launch/focus Raid" />
+				<CheckBox x:Name="InstallPreRelease" HorizontalAlignment="Left" Content="Install pre-release builds" />
+			</StackPanel>
+			<StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="15">
+				<Button Content="Save" Style="{ThemeResource AccentButtonStyle}" />
+				<Button Content="Cancel" />
+			</StackPanel>
+		</Grid>
+		<Grid x:Name="LoadProgressGrid" Grid.Row="4" Margin="15,10,15,0">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="40*" />
+				<RowDefinition Height="20" />
+				<RowDefinition Height="20" />
+			</Grid.RowDefinitions>
+			<TextBlock x:Name="LoadMessage" Grid.Row="0" Foreground="Gray" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+			</TextBlock>
+			<TextBlock x:Name="LoadStatus" TextAlignment="Center" Grid.Row="1">
+                Processing
+			</TextBlock>
+			<ProgressBar Grid.Row="2" x:Name="LoadProgress" Minimum="0" Maximum="100" Value="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+		</Grid>
+
+		<!--Version numbers -->
+		<Grid Grid.Row="1" VerticalAlignment="Top">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="150*" />
+				<ColumnDefinition Width="150*" />
+			</Grid.ColumnDefinitions>
+			<Viewbox Margin="1,1,1,0" Grid.Column="0" Height="18" HorizontalAlignment="Left">
+				<Grid>
+					<Rectangle Fill="Black" Opacity="0.5"  Translation="0,0,10">
+						<Rectangle.Shadow>
+							<ThemeShadow />
+						</Rectangle.Shadow>
+					</Rectangle>
+					<TextBlock Padding="10,2,10,2" VerticalAlignment="Top" Foreground="Purple" FontFamily="Consolas" IsTextSelectionEnabled="True">
+                        RSL: 
+                        <Underline>
+                            v<Run x:Name="VersionRaid" Text="??" />
+                        </Underline>
+					</TextBlock>
+				</Grid>
+			</Viewbox>
+			<Viewbox Margin="1,1,1,0" Grid.Column="1" Height="18" HorizontalAlignment="Right">
+				<Grid>
+					<Rectangle Fill="Black" Opacity="0.5" Translation="0,0,10">
+						<Rectangle.Shadow>
+							<ThemeShadow />
+						</Rectangle.Shadow>
+					</Rectangle>
+					<TextBlock Padding="10,2,10,2" VerticalAlignment="Top" Foreground="Purple" FontFamily="Consolas" IsTextSelectionEnabled="True">
+                    RTK: 
+                        <Underline>
+                            v<Run x:Name="VersionRTK" Text="??" />
+                        </Underline>
+					</TextBlock>
+				</Grid>
+			</Viewbox>
+		</Grid>
+	</Grid>
+</rtkuibase:RTKWindow>

@@ -61,13 +61,19 @@ jobs:
       - name: Publish App
         run: |
           msbuild $env:Solution_Name -m -t:"Build;Pack" -p:Configuration=Release -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
-          msbuild $env:App_csproj -m -t:Publish -p:TargetFramework=net6.0-windows10.0.19041.0 -p:Configuration=Release -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
+          msbuild $env:Launcher_csproj -m -t:Publish -p:TargetFramework=net5.0-windows -p:Configuration=Release -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
 
-      # Versions
-      - uses: dotnet/nbgv@master
-        id: rtk_version
-        with:
-          setAllVars: true
+      - name: Build Setup
+        run: |
+          $env:Path += ";C:\Program Files (x86)\WiX Toolset v3.11\bin"
+          candle.exe -nologo -o out\ RaidToolkitBinaries.wxs Product.wxs Bundle.wxs -ext WixBalExtension
+          light.exe -nologo -o out\RaidToolkit.msi out\Product.wixobj out\RaidToolkitBinaries.wixobj -ext WixBalExtension
+          light.exe -nologo -o out\RaidToolkitSetup.exe out\Bundle.wixobj -ext WixBalExtension
+        working-directory: ./src/Setup
+        env:
+          AppVersion: ${{ steps.rtk_version.outputs.Version }}
+          Prerelease: ${{ env.PRERELEASEN }}
+          BuildOutputDirectory: ..\Application\Raid.Toolkit\bin\x64\Release\net6.0-windows10.0.19041.0\win10-x64
 
       # Versions
       - uses: dotnet/nbgv@master
@@ -88,16 +94,38 @@ jobs:
           draft: false
           prerelease: ${{ env.PRERELEASE }}
 
-      - name: Upload Raid.Toolkit Asset
+      - name: Upload Upgrade Launcher Asset
         id: upload-raidtoolkit-asset
         uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.rtk_release.outputs.upload_url }}
-          asset_path: ./publish/RTK/Raid.Toolkit.exe
+          asset_path: ./publish/RTK/Launcher.exe
           asset_name: Raid.Toolkit.exe
-          asset_content_type: application/zip
+          asset_content_type: application/octet-stream
+
+      - name: Upload Setup
+        id: upload-raidtoolkit-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
+          asset_path: ./src/Setup/out/RaidToolkitSetup.exe
+          asset_name: RaidToolkitSetup.exe
+          asset_content_type: application/octet-stream
+
+      - name: Upload Setup
+        id: upload-raidtoolkit-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.rtk_release.outputs.upload_url }}
+          asset_path: ./src/Setup/out/RaidToolkit.msi
+          asset_name: RaidToolkit.msi
+          asset_content_type: application/octet-stream
 
       - name: Upload TPN Asset
         id: upload-tpn-asset

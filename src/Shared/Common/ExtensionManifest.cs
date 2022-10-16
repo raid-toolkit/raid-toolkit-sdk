@@ -24,6 +24,9 @@ namespace Raid.Toolkit.Extensibility
         [JsonProperty("codegen")]
         public ExtensionManifestCodegen Codegen { get; set; }
 
+        [JsonProperty("requireVersion")]
+        public string RequireVersion { get; set; }
+
         public static ExtensionManifest FromAssembly(Assembly asm)
         {
             JsonSerializer serializer = new();
