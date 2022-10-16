@@ -48,10 +48,9 @@ jobs:
           # note you'll typically need to create a personal access token
           # with permissions to create releases in the other repo
           token: ${{ secrets.RELEASE_STAGING_GITHUB }}
+          repository: raid-toolkit/staged-release
           files: |
             UPGRADE_2.0.md
-        env:
-          GITHUB_REPOSITORY: raid-toolkit/staged-release
 
       # Create releases
       # - name: Create RaidToolkit Release (buddy)
