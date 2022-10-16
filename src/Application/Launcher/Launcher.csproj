@@ -11,6 +11,7 @@
 		<SelfContained>false</SelfContained>
 		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
 		<PublishReadyToRun>true</PublishReadyToRun>
+		<AssemblyName>Raid.Toolkit</AssemblyName>
 	</PropertyGroup>
 
 	<ItemGroup>

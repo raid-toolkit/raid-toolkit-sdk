@@ -74,3 +74,16 @@ jobs:
           AppVersion: ${{ steps.rtk_version.outputs.Version }}
           Prerelease: ${{ env.PRERELEASEN }}
           BuildOutputDirectory: ..\Application\Raid.Toolkit\bin\x64\Release\net6.0-windows10.0.19041.0\win10-x64
+
+      - name: Release to staging
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.rtk_version.outputs.Version }}
+          token: ${{ secrets.RELEASE_STAGING_GITHUB }}
+          repository: raid-toolkit/staged-release
+          files: |
+            UPGRADE_2.0.md
+            publish/RTK/Raid.Toolkit.exe
+            src/Setup/out/RaidToolkit.msi
+            src/Setup/out/RaidToolkitSetup.exe
+            ThirdPartyNotice.txt
