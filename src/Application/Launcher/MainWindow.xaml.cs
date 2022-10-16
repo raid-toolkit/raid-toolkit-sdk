@@ -15,11 +15,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+
 using GitHub;
 using GitHub.Schema;
+
 using Newtonsoft.Json;
+
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
+
 using Path = System.IO.Path;
 
 namespace Launcher
@@ -36,14 +40,18 @@ namespace Launcher
         public MainWindow()
         {
             InitializeComponent();
+
+            // first run experience not required if they previously used RTK
+            if (RegistrySettings.IsInstalled)
+            {
+                RegistrySettings.FirstRun = false;
+            }
+
             Updater = new Updater()
             {
                 InstallPrereleases = RegistrySettings.InstallPrereleases
             };
-            //installPrereleaseCheckBox.Checked = RegistrySettings.InstallPrereleases;
-            //Assembly asm = Assembly.GetExecutingAssembly();
-            //using (Stream stream = asm.GetManifestResourceStream("Launcher.ReleaseNotes_v2.x.rtf"))
-            //    richTextBox1.LoadFile(stream, RichTextBoxStreamType.RichText);
+            installPrereleaseCheckBox.IsChecked = RegistrySettings.InstallPrereleases;
         }
 
         private async Task RefreshRelease()
@@ -64,10 +72,19 @@ namespace Launcher
                     latestReleaseCheck.Status = CheckStatus.Fail;
                     return;
                 }
-                latestReleaseCheck.DisplayName = $"Latest release: {LatestRelease.TagName}";
-                latestReleaseCheck.Foreground = new SolidColorBrush(Colors.LimeGreen);
-                latestReleaseCheck.Status = CheckStatus.Success;
-                updateButton.IsEnabled = true;
+                if (!Updater.IsValidRelease(LatestRelease))
+                {
+                    latestReleaseCheck.DisplayName = $"Latest release: {LatestRelease.TagName}\nInstaller not found!";
+                    latestReleaseCheck.Foreground = new SolidColorBrush(Colors.Red);
+                    latestReleaseCheck.Status = CheckStatus.Fail;
+                }
+                else
+                {
+                    latestReleaseCheck.DisplayName = $"Latest release: {LatestRelease.TagName}";
+                    latestReleaseCheck.Foreground = new SolidColorBrush(Colors.LimeGreen);
+                    latestReleaseCheck.Status = CheckStatus.Success;
+                    updateButton.IsEnabled = true;
+                }
             }
             finally
             {
@@ -76,7 +93,7 @@ namespace Launcher
             }
         }
 
-        private async void installPrereleaseCheckBox_CheckedChanged(object sender, EventArgs e)
+        private async void installPrereleaseCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             Updater.InstallPrereleases = installPrereleaseCheckBox.IsChecked;
             await RefreshRelease();
@@ -164,11 +181,6 @@ namespace Launcher
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            await RefreshRelease();
-        }
-
-        private async void installPrereleaseCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             await RefreshRelease();
         }

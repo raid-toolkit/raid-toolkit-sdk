@@ -7,22 +7,22 @@
         mc:Ignorable="d"
 		Background="Black"
 		Loaded="Window_Loaded"
-        Title="Raid Toolkit Launcher" Height="650" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/AppIcon.ico">
+        Title="Raid Toolkit Launcher" Height="700" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" Icon="/AppIcon.ico">
 	<Grid>
 		<Grid.RowDefinitions>
 			<RowDefinition Height="300" />
 			<RowDefinition Height="100" />
-			<RowDefinition Height="30" />
-			<RowDefinition Height="150*" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="10*" />
 			<RowDefinition Height="44" />
 		</Grid.RowDefinitions>
 		<Image Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" RenderOptions.BitmapScalingMode="Fant" Source="/Square150x150Logo.scale-200.png" />
 		<Image Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" RenderOptions.BitmapScalingMode="Fant" Source="/RaidToolkitLarge.png" />
-		<ProgressBar x:Name="progressBar" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Maximum="1" Minimum="0" Margin="15,0,15,0" />
+		<ProgressBar x:Name="progressBar" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" Maximum="1" Minimum="0" Margin="15,0,15,0" />
 		<CheckBox Checked="installPrereleaseCheckBox_Checked" Unchecked="installPrereleaseCheckBox_Checked" x:Name="installPrereleaseCheckBox" Grid.Row="4" Content="Install prerelease builds" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White"/>
 		<Button Grid.Row="4" x:Name="updateButton" Content="Start update" Padding="10,2,10,2" Margin="0,0,10,0" Click="updateButton_Click" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-		<StackPanel Grid.Row="3" Margin="10,0,10,0">
-			<local:InstallCheck DisplayName="Install Checks" />
+		<StackPanel Grid.Row="2" Margin="10,0,10,0">
+			<TextBlock FontSize="20" TextAlignment="Center" Text="Installation pre-checks" Foreground="Yellow" Margin="0,10,0,10" />
 			<local:InstallCheck DisplayName="Operating System (Win10+)" Check="OperatingSystem_Check" />
 			<local:InstallCheck DisplayName="Unsupported v1.x extensions" MouseDoubleClick="UnsupportedExtensions_MouseDoubleClick" Check="UnsupportedExtensions_Check" />
 			<local:InstallCheck x:Name="latestReleaseCheck" DisplayName="Latest Release" />

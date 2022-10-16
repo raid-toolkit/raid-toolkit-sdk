@@ -15,8 +15,9 @@ namespace Raid.Toolkit.UI.WinUI
     {
         private MainWindow? MainWindow;
         private readonly IServiceProvider ServiceProvider;
-        private bool IsDisposed;
+        private MainWindow MainWindowUnsafe => MainWindow ??= ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider);
 
+        private bool IsDisposed;
         private AppTray? AppTray;
 
         public SynchronizationContext? SynchronizationContext { get; }
@@ -103,9 +104,8 @@ namespace Raid.Toolkit.UI.WinUI
         {
             Post(() =>
             {
-                MainWindow ??= ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider);
-                MainWindow.Activate();
-                _ = MainWindow.BringToFront();
+                MainWindowUnsafe.Activate();
+                MainWindowUnsafe.BringToFront();
             });
         }
 
@@ -159,9 +159,8 @@ namespace Raid.Toolkit.UI.WinUI
         {
             Post(() =>
             {
-                SettingsWindow settingsWindow = ActivatorUtilities.CreateInstance<SettingsWindow>(ServiceProvider);
-                settingsWindow.Activate();
-                _ = settingsWindow.BringToFront();
+                MainWindowUnsafe.OpenSettings();
+                ShowMain();
             });
         }
 
@@ -194,14 +193,6 @@ namespace Raid.Toolkit.UI.WinUI
             MainWindow ??= ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider);
             MainWindow.Activate();
             _ = MainWindow.BringToFront();
-            //MainWindow ??= ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider);
-            //MainWindow.Activate();
-            //_ = MainWindow.BringToFront();
-            //AppTray = ActivatorUtilities.CreateInstance<AppTray>(ServiceProvider);
-            //Post(() =>
-            //{
-            //    AppTray = ActivatorUtilities.CreateInstance<AppTray>(ServiceProvider);
-            //});
         }
     }
 }

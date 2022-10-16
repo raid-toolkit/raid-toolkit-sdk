@@ -19,6 +19,6 @@
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 		<Label Grid.Column="0" Foreground="{Binding ElementName=control, Path=Foreground}" Content="{Binding ElementName=control, Path=Status, Converter={StaticResource IconConverter}}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16" />
-		<Label x:Name="label" Grid.Column="1" Margin="5,0,0,0" Foreground="{Binding ElementName=control, Path=Foreground}" Content="{Binding ElementName=control, Path=DisplayName}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" />
+		<TextBlock x:Name="label" Grid.Column="1" Margin="5,0,0,0" Foreground="{Binding ElementName=control, Path=Foreground}" Text="{Binding ElementName=control, Path=DisplayName}" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="16" />
 	</Grid>
 </UserControl>
