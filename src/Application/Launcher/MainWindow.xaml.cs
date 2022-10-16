@@ -3,18 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 using GitHub;
 using GitHub.Schema;
@@ -31,11 +23,11 @@ namespace Launcher
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IDisposable
     {
-        private Updater Updater;
+        private readonly Updater Updater;
         private Release? LatestRelease;
-        private List<ExtensionManifest> UnsupportedExtensions = new();
+        private readonly List<ExtensionManifest> UnsupportedExtensions = new();
 
         public MainWindow()
         {
@@ -110,15 +102,17 @@ namespace Launcher
                 using (Stream installer = await Updater.DownloadSetup(LatestRelease, progress))
                 using (FileStream fileStream = File.Create(installerPath))
                 {
-                    installer.Seek(0, SeekOrigin.Begin);
+                    _ = installer.Seek(0, SeekOrigin.Begin);
                     installer.CopyTo(fileStream);
                     fileStream.Close();
                 }
-                string thisProcessPath = System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName!;
+                string thisProcessPath = Process.GetCurrentProcess().MainModule!.FileName!;
                 string thisProcessDir = Path.GetDirectoryName(thisProcessPath)!;
                 string thisProcessRenamed = Path.Combine(thisProcessDir, "UpgradeLauncher.exe");
+                if (File.Exists(thisProcessRenamed))
+                    File.Delete(thisProcessRenamed);
                 File.Move(thisProcessPath, thisProcessRenamed);
-                Process.Start(installerPath);
+                _ = Process.Start(installerPath);
                 Close();
             }
             catch (Exception ex)
@@ -164,7 +158,7 @@ namespace Launcher
                 ExtensionManifest? manifest = JsonConvert.DeserializeObject<ExtensionManifest>(await File.ReadAllTextAsync(manifestPath));
                 if (manifest == null)
                     continue;
-                if (string.IsNullOrEmpty(manifest.RequireVersion) || Version.TryParse(manifest.RequireVersion, out Version? version) && version < new Version(2, 0))
+                if (string.IsNullOrEmpty(manifest.RequireVersion) || (Version.TryParse(manifest.RequireVersion, out Version? version) && version < new Version(2, 0)))
                     UnsupportedExtensions.Add(manifest);
             }
             if (UnsupportedExtensions.Count == 0)
@@ -177,12 +171,17 @@ namespace Launcher
 
         private void UnsupportedExtensions_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show(string.Join(' ', UnsupportedExtensions.Select(e => e.Id)), "Unsupported Extensions");
+            _ = MessageBox.Show(string.Join(' ', UnsupportedExtensions.Select(e => e.Id)), "Unsupported Extensions");
         }
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
             await RefreshRelease();
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
     }
 }
