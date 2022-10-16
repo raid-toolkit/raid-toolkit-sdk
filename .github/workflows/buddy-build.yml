@@ -79,6 +79,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ steps.rtk_version.outputs.Version }}
+          prerelease: true
           token: ${{ secrets.RELEASE_STAGING_GITHUB }}
           repository: raid-toolkit/staged-release
           files: |
