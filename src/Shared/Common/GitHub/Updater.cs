@@ -4,15 +4,17 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
+
 using GitHub.Schema;
+
 using Raid.Toolkit.Common;
 
 namespace GitHub
 {
     public class Updater : IDisposable
     {
-        private readonly Uri UpdateUri = new($"https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases/latest");
-        private readonly Uri ReleasesUri = new($"https://api.github.com/repos/raid-toolkit/raid-toolkit-sdk/releases");
+        private readonly Uri UpdateUri = new($"https://api.github.com/repos/{RegistrySettings.Repository}/releases/latest");
+        private readonly Uri ReleasesUri = new($"https://api.github.com/repos/{RegistrySettings.Repository}/releases");
         private readonly HttpClient Client;
         private bool disposedValue;
 
