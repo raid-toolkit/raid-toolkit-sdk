@@ -21,6 +21,7 @@ namespace Raid.Toolkit.Common
         public const string ActivationPortKey = @"ActivationPort";
         public const string AutoUpdateKey = @"AutoUpdate";
         public const string IsInstalledKey = "IsInstalled";
+        public const string FirstRunKey = "FirstRun";
         public const string ClickToStartKey = "ClickToStart";
         public const string RepositoryKey = "Repository";
         public const string InstallPrereleasesKey = "InstallPrereleases";
@@ -79,6 +80,11 @@ namespace Raid.Toolkit.Common
         {
             get => IsSettingEnabled(RTKHive, InstallPrereleasesKey);
             set => Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.InstallPrereleasesKey, value ? 1 : 0, RegistryValueKind.DWord);
+        }
+        public static bool FirstRun
+        {
+            get => IsSettingEnabled(RTKHive, FirstRunKey, defaultValue: true);
+            set => Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.FirstRunKey, value ? 1 : 0, RegistryValueKind.DWord);
         }
 
         public static bool AutomaticallyCheckForUpdates

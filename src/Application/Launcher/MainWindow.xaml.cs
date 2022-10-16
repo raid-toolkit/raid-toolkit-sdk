@@ -40,6 +40,13 @@ namespace Launcher
         public MainWindow()
         {
             InitializeComponent();
+
+            // first run experience not required if they previously used RTK
+            if (RegistrySettings.IsInstalled)
+            {
+                RegistrySettings.FirstRun = false;
+            }
+
             Updater = new Updater()
             {
                 InstallPrereleases = RegistrySettings.InstallPrereleases
