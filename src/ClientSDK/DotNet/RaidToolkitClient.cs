@@ -50,8 +50,8 @@ namespace Raid.Client
                 throw new FileNotFoundException("Could not find the latest release");
             }
 
-            string tempFile = Path.Combine(Path.GetTempPath(), "Raid.Toolkit.exe");
-            using (var stream = await updater.DownloadRelease(release))
+            string tempFile = Path.Combine(Path.GetTempPath(), "RaidToolkitSetup.exe");
+            using (var stream = await updater.DownloadSetup(release, null))
             {
                 using Stream newFile = File.Create(tempFile);
                 stream.CopyTo(newFile);

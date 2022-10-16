@@ -20,6 +20,16 @@ namespace GitHub
 
         public bool? InstallPrereleases { get; set; }
 
+        private bool InstallPrereleasesEffective
+        {
+            get
+            {
+                if (InstallPrereleases.HasValue)
+                    return InstallPrereleases.Value;
+                return RegistrySettings.InstallPrereleases;
+            }
+        }
+
         public Updater()
         {
             Client = new HttpClient();
@@ -28,7 +38,7 @@ namespace GitHub
 
         public async Task<Release> GetLatestRelease()
         {
-            if ((InstallPrereleases.HasValue && !InstallPrereleases.Value) || !RegistrySettings.InstallPrereleases)
+            if (!InstallPrereleasesEffective)
             {
                 return await Client.GetObjectAsync<Release>(UpdateUri);
             }
@@ -37,12 +47,9 @@ namespace GitHub
             return latestPrerelease;
         }
 
-        public Task<Stream> DownloadRelease(Release release)
+        public bool IsValidRelease(Release release)
         {
-            Asset asset = release.Assets.FirstOrDefault(asset => asset.Name == "Raid.Toolkit.exe");
-            return asset == null
-                ? throw new FileNotFoundException("Update is missing required assets")
-                : Client.GetStreamAsync(asset.BrowserDownloadUrl);
+            return release.Assets.Any(item => item.Name == "RaidToolkitSetup.exe");
         }
 
         public async Task<Stream> DownloadSetup(Release release, IProgress<float> progress)
