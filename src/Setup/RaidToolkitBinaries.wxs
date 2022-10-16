@@ -66,1105 +66,1105 @@
     </Fragment>
     <Fragment>
         <ComponentGroup Id="RaidToolkitBinaries">
-            <Component Id="App.xbf" Directory="INSTALLDIR" Guid="7B2A5140-4A54-47E1-B07C-1D854A4942AD">
+            <Component Id="App.xbf" Directory="INSTALLDIR" Guid="*">
                 <File Id="App.xbf" KeyPath="yes" Source="$(env.BuildOutputDirectory)\App.xbf" />
             </Component>
-            <Component Id="CommandLine.dll" Directory="INSTALLDIR" Guid="DA7C789E-4ED1-46FF-B86B-653B271C9C5C">
+            <Component Id="CommandLine.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="CommandLine.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\CommandLine.dll" />
             </Component>
-            <Component Id="CoreMessagingXP.dll" Directory="INSTALLDIR" Guid="D6592D78-8A5E-44A5-8812-D9B7185568FC">
+            <Component Id="CoreMessagingXP.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="CoreMessagingXP.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\CoreMessagingXP.dll" />
             </Component>
-            <Component Id="dcompi.dll" Directory="INSTALLDIR" Guid="5ABA9138-611F-4D75-9F9A-51C6D37F053D">
+            <Component Id="dcompi.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="dcompi.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\dcompi.dll" />
             </Component>
-            <Component Id="dwmcorei.dll" Directory="INSTALLDIR" Guid="90134284-7FB7-4EFF-BA1E-FA54C2C9F7FC">
+            <Component Id="dwmcorei.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="dwmcorei.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\dwmcorei.dll" />
             </Component>
-            <Component Id="DwmSceneI.dll" Directory="INSTALLDIR" Guid="FA6E911E-7B2A-449C-9DD6-F77848E61DC6">
+            <Component Id="DwmSceneI.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="DwmSceneI.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\DwmSceneI.dll" />
             </Component>
-            <Component Id="DWriteCore.dll" Directory="INSTALLDIR" Guid="28303DBC-B822-40DA-B320-8EF117D11652">
+            <Component Id="DWriteCore.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="DWriteCore.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\DWriteCore.dll" />
             </Component>
-            <Component Id="Google.Protobuf.dll" Directory="INSTALLDIR" Guid="31060796-9857-4B01-8E29-D7370B4D4F03">
+            <Component Id="Google.Protobuf.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Google.Protobuf.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Google.Protobuf.dll" />
             </Component>
-            <Component Id="Grpc.Core.Api.dll" Directory="INSTALLDIR" Guid="856D9D14-8DDE-4A6B-B8E1-F446145FA45F">
+            <Component Id="Grpc.Core.Api.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Grpc.Core.Api.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Grpc.Core.Api.dll" />
             </Component>
-            <Component Id="Grpc.Net.Client.dll" Directory="INSTALLDIR" Guid="32DEACF8-1AD2-4806-B4C5-296C08B6275A">
+            <Component Id="Grpc.Net.Client.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Grpc.Net.Client.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Grpc.Net.Client.dll" />
             </Component>
-            <Component Id="Grpc.Net.Common.dll" Directory="INSTALLDIR" Guid="ED486A07-FB1E-40D8-BEC1-DD70B00B5F25">
+            <Component Id="Grpc.Net.Common.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Grpc.Net.Common.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Grpc.Net.Common.dll" />
             </Component>
-            <Component Id="Il2CppToolkit.Common.dll" Directory="INSTALLDIR" Guid="6AB865E3-9107-4A67-AA26-BD98300193E0">
+            <Component Id="Il2CppToolkit.Common.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Il2CppToolkit.Common.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Il2CppToolkit.Common.dll" />
             </Component>
-            <Component Id="Il2CppToolkit.Injection.Client.dll" Directory="INSTALLDIR" Guid="5181F57C-3793-4BB0-AC3F-F0C8FAE4F22D">
+            <Component Id="Il2CppToolkit.Injection.Client.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Il2CppToolkit.Injection.Client.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Il2CppToolkit.Injection.Client.dll" />
             </Component>
-            <Component Id="Il2CppToolkit.Injection.Host.dll" Directory="INSTALLDIR" Guid="58746491-64EE-445D-BAC1-A402851B7E32">
+            <Component Id="Il2CppToolkit.Injection.Host.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Il2CppToolkit.Injection.Host.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Il2CppToolkit.Injection.Host.dll" />
             </Component>
-            <Component Id="Il2CppToolkit.Metadata.dll" Directory="INSTALLDIR" Guid="4E32848C-78D4-42E2-8801-F5E8A48CB76E">
+            <Component Id="Il2CppToolkit.Metadata.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Il2CppToolkit.Metadata.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Il2CppToolkit.Metadata.dll" />
             </Component>
-            <Component Id="Il2CppToolkit.ReverseCompiler.dll" Directory="INSTALLDIR" Guid="65EFA24D-B550-4223-9128-D13D2688ED2F">
+            <Component Id="Il2CppToolkit.ReverseCompiler.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Il2CppToolkit.ReverseCompiler.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Il2CppToolkit.ReverseCompiler.dll" />
             </Component>
-            <Component Id="Il2CppToolkit.Runtime.dll" Directory="INSTALLDIR" Guid="BF590D65-493E-445F-89AD-9893F23F78ED">
+            <Component Id="Il2CppToolkit.Runtime.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Il2CppToolkit.Runtime.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Il2CppToolkit.Runtime.dll" />
             </Component>
-            <Component Id="Il2CppToolkit.Target.NetCore.dll" Directory="INSTALLDIR" Guid="E7AFA4C1-EF49-49E8-9736-53B571243FD9">
+            <Component Id="Il2CppToolkit.Target.NetCore.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Il2CppToolkit.Target.NetCore.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Il2CppToolkit.Target.NetCore.dll" />
             </Component>
-            <Component Id="Karambolo.Extensions.Logging.File.dll" Directory="INSTALLDIR" Guid="C3A9E637-D352-4335-BB77-BEF4EE643D30">
+            <Component Id="Karambolo.Extensions.Logging.File.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Karambolo.Extensions.Logging.File.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Karambolo.Extensions.Logging.File.dll" />
             </Component>
-            <Component Id="marshal.dll" Directory="INSTALLDIR" Guid="E0D6D5DC-3B6F-44E0-9D8B-C647C22C6F6A">
+            <Component Id="marshal.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="marshal.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\marshal.dll" />
             </Component>
-            <Component Id="Microsoft.DirectManipulation.dll" Directory="INSTALLDIR" Guid="EA7B9B84-0A97-4451-8C63-B8F8BBBC452E">
+            <Component Id="Microsoft.DirectManipulation.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.DirectManipulation.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.DirectManipulation.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Configuration.Abstractions.dll" Directory="INSTALLDIR" Guid="A13AFF8B-9DC4-45DE-88A9-EB043E44118C">
+            <Component Id="Microsoft.Extensions.Configuration.Abstractions.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Configuration.Abstractions.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Configuration.Abstractions.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Configuration.Binder.dll" Directory="INSTALLDIR" Guid="AA187CB2-8F6C-4B56-B6AE-5AFCB470C96A">
+            <Component Id="Microsoft.Extensions.Configuration.Binder.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Configuration.Binder.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Configuration.Binder.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Configuration.CommandLine.dll" Directory="INSTALLDIR" Guid="E3DEDC5F-8FE4-4BAA-9471-F425AED72263">
+            <Component Id="Microsoft.Extensions.Configuration.CommandLine.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Configuration.CommandLine.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Configuration.CommandLine.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Configuration.dll" Directory="INSTALLDIR" Guid="9452DE86-FB06-4E26-9A47-53548B39C7F4">
+            <Component Id="Microsoft.Extensions.Configuration.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Configuration.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Configuration.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Configuration.EnvironmentVariables.dll" Directory="INSTALLDIR" Guid="B3322045-F5EA-47CB-8A89-36621FE25782">
+            <Component Id="Microsoft.Extensions.Configuration.EnvironmentVariables.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Configuration.EnvironmentVariables.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Configuration.EnvironmentVariables.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Configuration.FileExtensions.dll" Directory="INSTALLDIR" Guid="30F9AC4C-D76D-4642-9EB3-1375418263FB">
+            <Component Id="Microsoft.Extensions.Configuration.FileExtensions.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Configuration.FileExtensions.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Configuration.FileExtensions.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Configuration.Json.dll" Directory="INSTALLDIR" Guid="9B967595-A5C1-4D9F-905D-B79AD378928F">
+            <Component Id="Microsoft.Extensions.Configuration.Json.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Configuration.Json.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Configuration.Json.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Configuration.UserSecrets.dll" Directory="INSTALLDIR" Guid="B89A26B6-E157-4960-B7EB-47B18F1C8EF9">
+            <Component Id="Microsoft.Extensions.Configuration.UserSecrets.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Configuration.UserSecrets.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Configuration.UserSecrets.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Directory="INSTALLDIR" Guid="DFFED0FE-9281-4BFB-9180-9CC5AA3CC9D8">
+            <Component Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.DependencyInjection.Abstractions.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.DependencyInjection.dll" Directory="INSTALLDIR" Guid="A8E14091-24E9-4E63-AA61-B4BE4EE285C6">
+            <Component Id="Microsoft.Extensions.DependencyInjection.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.DependencyInjection.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.DependencyInjection.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.FileProviders.Abstractions.dll" Directory="INSTALLDIR" Guid="D0B2E426-C8D6-4FA3-A625-4575F10D3FBA">
+            <Component Id="Microsoft.Extensions.FileProviders.Abstractions.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.FileProviders.Abstractions.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.FileProviders.Abstractions.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.FileProviders.Physical.dll" Directory="INSTALLDIR" Guid="5B0144D0-D531-43C3-80EB-51327941ED57">
+            <Component Id="Microsoft.Extensions.FileProviders.Physical.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.FileProviders.Physical.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.FileProviders.Physical.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.FileSystemGlobbing.dll" Directory="INSTALLDIR" Guid="096C761F-1CE6-4C20-BA26-CDCFBFEAA36E">
+            <Component Id="Microsoft.Extensions.FileSystemGlobbing.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.FileSystemGlobbing.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.FileSystemGlobbing.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Hosting.Abstractions.dll" Directory="INSTALLDIR" Guid="52C2BD18-1EEC-41CB-B989-C533E278B0F5">
+            <Component Id="Microsoft.Extensions.Hosting.Abstractions.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Hosting.Abstractions.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Hosting.Abstractions.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Hosting.dll" Directory="INSTALLDIR" Guid="26E85D2C-B1A9-4449-8AF5-57639FCC5F44">
+            <Component Id="Microsoft.Extensions.Hosting.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Hosting.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Hosting.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Logging.Abstractions.dll" Directory="INSTALLDIR" Guid="0BA5BCB3-2D7E-4945-817F-FD4C03BB9882">
+            <Component Id="Microsoft.Extensions.Logging.Abstractions.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Logging.Abstractions.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Logging.Abstractions.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Logging.Configuration.dll" Directory="INSTALLDIR" Guid="9E8FD5D7-1A7E-421E-AC61-9E94FEAC436F">
+            <Component Id="Microsoft.Extensions.Logging.Configuration.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Logging.Configuration.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Logging.Configuration.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Logging.Console.dll" Directory="INSTALLDIR" Guid="70861A56-8C00-46E8-9E38-93E9061F30E2">
+            <Component Id="Microsoft.Extensions.Logging.Console.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Logging.Console.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Logging.Console.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Logging.Debug.dll" Directory="INSTALLDIR" Guid="C9A038D5-F80D-4E9B-AE7D-8F86E767165C">
+            <Component Id="Microsoft.Extensions.Logging.Debug.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Logging.Debug.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Logging.Debug.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Logging.dll" Directory="INSTALLDIR" Guid="E07E43CB-DB47-4AFA-B918-86B9B463FF4D">
+            <Component Id="Microsoft.Extensions.Logging.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Logging.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Logging.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Logging.EventLog.dll" Directory="INSTALLDIR" Guid="D9424CEC-67C9-4BB6-A0DB-06518B062896">
+            <Component Id="Microsoft.Extensions.Logging.EventLog.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Logging.EventLog.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Logging.EventLog.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Logging.EventSource.dll" Directory="INSTALLDIR" Guid="9612A7E6-23A9-48B2-A7F7-F4818E005316">
+            <Component Id="Microsoft.Extensions.Logging.EventSource.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Logging.EventSource.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Logging.EventSource.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Options.ConfigurationExtensions.dll" Directory="INSTALLDIR" Guid="E3562EA0-FFE9-4458-9C40-43243E45BBBF">
+            <Component Id="Microsoft.Extensions.Options.ConfigurationExtensions.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Options.ConfigurationExtensions.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Options.ConfigurationExtensions.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Options.dll" Directory="INSTALLDIR" Guid="4ABADE00-A647-4D15-AB3E-2B6C70F47D6C">
+            <Component Id="Microsoft.Extensions.Options.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Options.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Options.dll" />
             </Component>
-            <Component Id="Microsoft.Extensions.Primitives.dll" Directory="INSTALLDIR" Guid="9FBE74C4-6901-416D-8CDB-A26883AD1106">
+            <Component Id="Microsoft.Extensions.Primitives.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Extensions.Primitives.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Extensions.Primitives.dll" />
             </Component>
-            <Component Id="Microsoft.Foundation.winmd" Directory="INSTALLDIR" Guid="C0B0F041-5254-43E6-9DF0-E43F729F1082">
+            <Component Id="Microsoft.Foundation.winmd" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Foundation.winmd" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Foundation.winmd" />
             </Component>
-            <Component Id="Microsoft.Graphics.winmd" Directory="INSTALLDIR" Guid="C7B0233D-FF6B-4AB3-9A07-097B45DC0AF1">
+            <Component Id="Microsoft.Graphics.winmd" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Graphics.winmd" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Graphics.winmd" />
             </Component>
-            <Component Id="Microsoft.InputStateManager.dll" Directory="INSTALLDIR" Guid="244FF208-A5EB-4B36-8931-075808F10857">
+            <Component Id="Microsoft.InputStateManager.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.InputStateManager.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.InputStateManager.dll" />
             </Component>
-            <Component Id="Microsoft.InteractiveExperiences.Projection.dll" Directory="INSTALLDIR" Guid="7843153F-4424-4C95-9362-64A4C64AF0FD">
+            <Component Id="Microsoft.InteractiveExperiences.Projection.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.InteractiveExperiences.Projection.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.InteractiveExperiences.Projection.dll" />
             </Component>
-            <Component Id="Microsoft.Internal.FrameworkUdk.dll" Directory="INSTALLDIR" Guid="BD3F3F58-589E-41CF-9482-9ACEE213F7FD">
+            <Component Id="Microsoft.Internal.FrameworkUdk.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Internal.FrameworkUdk.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Internal.FrameworkUdk.dll" />
             </Component>
-            <Component Id="Microsoft.UI.Composition.OSSupport.dll" Directory="INSTALLDIR" Guid="6FAB585E-5896-443B-9C43-259FAF975F5E">
+            <Component Id="Microsoft.UI.Composition.OSSupport.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.UI.Composition.OSSupport.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.UI.Composition.OSSupport.dll" />
             </Component>
-            <Component Id="Microsoft.UI.Input.dll" Directory="INSTALLDIR" Guid="53ACA5B1-7924-4CAC-BD90-E5CF2CC76459">
+            <Component Id="Microsoft.UI.Input.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.UI.Input.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.UI.Input.dll" />
             </Component>
-            <Component Id="Microsoft.UI.Text.winmd" Directory="INSTALLDIR" Guid="981FF81E-68A6-49BA-ADA5-84ADDFDB2651">
+            <Component Id="Microsoft.UI.Text.winmd" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.UI.Text.winmd" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.UI.Text.winmd" />
             </Component>
-            <Component Id="Microsoft.UI.Windowing.Core.dll" Directory="INSTALLDIR" Guid="4200B0C5-64B6-49F6-B0BA-A1C6A72CEDCA">
+            <Component Id="Microsoft.UI.Windowing.Core.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.UI.Windowing.Core.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.UI.Windowing.Core.dll" />
             </Component>
-            <Component Id="Microsoft.UI.winmd" Directory="INSTALLDIR" Guid="1FBF764E-C040-401C-BBC3-4574B5326015">
+            <Component Id="Microsoft.UI.winmd" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.UI.winmd" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.UI.winmd" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Controls.dll" Directory="INSTALLDIR" Guid="8B9D9283-5A23-4E30-9D6B-7E037502F359">
+            <Component Id="Microsoft.UI.Xaml.Controls.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Controls.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.UI.Xaml.Controls.dll" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Controls.pri" Directory="INSTALLDIR" Guid="DD723D42-841C-4894-B61D-05771EAEEEC1">
+            <Component Id="Microsoft.UI.Xaml.Controls.pri" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Controls.pri" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.UI.Xaml.Controls.pri" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll" Directory="INSTALLDIR" Guid="14B3DCE8-0A75-4B93-AA66-F33FC388A819">
+            <Component Id="Microsoft.ui.xaml.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.ui.xaml.dll" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Internal.dll" Directory="INSTALLDIR" Guid="AA03A65F-4847-4989-A102-4EF40DF77429">
+            <Component Id="Microsoft.UI.Xaml.Internal.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Internal.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.UI.Xaml.Internal.dll" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll" Directory="INSTALLDIR" Guid="51C09AB5-2FC6-4A8D-9870-78BD9D19B6FC">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.UI.Xaml.Phone.dll" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.resources.19h1.dll" Directory="INSTALLDIR" Guid="93D71C80-9F25-41DE-BA9A-2886C647836A">
+            <Component Id="Microsoft.ui.xaml.resources.19h1.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.ui.xaml.resources.19h1.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.ui.xaml.resources.19h1.dll" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.resources.common.dll" Directory="INSTALLDIR" Guid="F1E600D6-E789-44B4-8148-962E9339AE9D">
+            <Component Id="Microsoft.ui.xaml.resources.common.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.ui.xaml.resources.common.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.ui.xaml.resources.common.dll" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.winmd" Directory="INSTALLDIR" Guid="A67D5A27-06DD-4061-824F-C28BBDCBC00B">
+            <Component Id="Microsoft.UI.Xaml.winmd" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.UI.Xaml.winmd" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.UI.Xaml.winmd" />
             </Component>
-            <Component Id="Microsoft.Web.WebView2.Core.dll" Directory="INSTALLDIR" Guid="1F3C53A2-60C8-4B02-B88C-13E215B07EC3">
+            <Component Id="Microsoft.Web.WebView2.Core.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Web.WebView2.Core.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Web.WebView2.Core.dll" />
             </Component>
-            <Component Id="Microsoft.Web.WebView2.Core.winmd" Directory="INSTALLDIR" Guid="B4E1A39B-7577-4588-AD2E-C8F6FD161A28">
+            <Component Id="Microsoft.Web.WebView2.Core.winmd" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Web.WebView2.Core.winmd" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Web.WebView2.Core.winmd" />
             </Component>
-            <Component Id="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll" Directory="INSTALLDIR" Guid="3AA5E12C-6467-4E1F-9FA2-C71E13B87B84">
+            <Component Id="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.ApplicationModel.DynamicDependency.Projection.dll" />
             </Component>
-            <Component Id="Microsoft.Windows.ApplicationModel.DynamicDependency.winmd" Directory="INSTALLDIR" Guid="1BE32010-253B-4FF2-8253-8342FF27F44D">
+            <Component Id="Microsoft.Windows.ApplicationModel.DynamicDependency.winmd" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.ApplicationModel.DynamicDependency.winmd" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.ApplicationModel.DynamicDependency.winmd" />
             </Component>
-            <Component Id="Microsoft.Windows.ApplicationModel.Resources.dll" Directory="INSTALLDIR" Guid="0111ADDA-C241-4F68-B7ED-0547A06AA2D9">
+            <Component Id="Microsoft.Windows.ApplicationModel.Resources.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.ApplicationModel.Resources.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.ApplicationModel.Resources.dll" />
             </Component>
-            <Component Id="Microsoft.Windows.ApplicationModel.Resources.Projection.dll" Directory="INSTALLDIR" Guid="31CEA37E-91A5-41F3-90BA-E9334E80B690">
+            <Component Id="Microsoft.Windows.ApplicationModel.Resources.Projection.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.ApplicationModel.Resources.Projection.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.ApplicationModel.Resources.Projection.dll" />
             </Component>
-            <Component Id="Microsoft.Windows.ApplicationModel.Resources.winmd" Directory="INSTALLDIR" Guid="361D92D3-4638-4E37-A7BC-C3944E35732F">
+            <Component Id="Microsoft.Windows.ApplicationModel.Resources.winmd" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.ApplicationModel.Resources.winmd" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.ApplicationModel.Resources.winmd" />
             </Component>
-            <Component Id="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll" Directory="INSTALLDIR" Guid="DC6B915B-813E-4986-865B-2EAFFE9E0C1D">
+            <Component Id="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.ApplicationModel.WindowsAppRuntime.Projection.dll" />
             </Component>
-            <Component Id="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.winmd" Directory="INSTALLDIR" Guid="7F2E4FA0-BBBB-41A2-86F2-680FCA145660">
+            <Component Id="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.winmd" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.ApplicationModel.WindowsAppRuntime.winmd" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.ApplicationModel.WindowsAppRuntime.winmd" />
             </Component>
-            <Component Id="Microsoft.Windows.AppLifecycle.Projection.dll" Directory="INSTALLDIR" Guid="FA9ACB0D-5895-4B43-8108-1F247363B65B">
+            <Component Id="Microsoft.Windows.AppLifecycle.Projection.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.AppLifecycle.Projection.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.AppLifecycle.Projection.dll" />
             </Component>
-            <Component Id="Microsoft.Windows.AppLifecycle.winmd" Directory="INSTALLDIR" Guid="5F15D470-D190-455B-A4EB-F5CFD8840F64">
+            <Component Id="Microsoft.Windows.AppLifecycle.winmd" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.AppLifecycle.winmd" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.AppLifecycle.winmd" />
             </Component>
-            <Component Id="Microsoft.Windows.AppNotifications.Projection.dll" Directory="INSTALLDIR" Guid="CD9B2741-509E-401F-9A5D-D365B408291E">
+            <Component Id="Microsoft.Windows.AppNotifications.Projection.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.AppNotifications.Projection.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.AppNotifications.Projection.dll" />
             </Component>
-            <Component Id="Microsoft.Windows.AppNotifications.winmd" Directory="INSTALLDIR" Guid="A3F66C20-3DFE-4E55-9FF0-5D79508BB251">
+            <Component Id="Microsoft.Windows.AppNotifications.winmd" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.AppNotifications.winmd" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.AppNotifications.winmd" />
             </Component>
-            <Component Id="Microsoft.Windows.PushNotifications.Projection.dll" Directory="INSTALLDIR" Guid="2410BE97-8B05-4F89-B164-CEE529715505">
+            <Component Id="Microsoft.Windows.PushNotifications.Projection.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.PushNotifications.Projection.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.PushNotifications.Projection.dll" />
             </Component>
-            <Component Id="Microsoft.Windows.PushNotifications.winmd" Directory="INSTALLDIR" Guid="88EB84CF-D605-4F3C-804C-EF01B326C841">
+            <Component Id="Microsoft.Windows.PushNotifications.winmd" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.PushNotifications.winmd" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.PushNotifications.winmd" />
             </Component>
-            <Component Id="Microsoft.Windows.SDK.NET.dll" Directory="INSTALLDIR" Guid="A925C4A3-E6EA-43FA-B565-D6D0A1F8531B">
+            <Component Id="Microsoft.Windows.SDK.NET.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.SDK.NET.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.SDK.NET.dll" />
             </Component>
-            <Component Id="Microsoft.Windows.System.Power.Projection.dll" Directory="INSTALLDIR" Guid="BA58E92C-2C21-45A9-8C34-AF82FF34F931">
+            <Component Id="Microsoft.Windows.System.Power.Projection.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.System.Power.Projection.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.System.Power.Projection.dll" />
             </Component>
-            <Component Id="Microsoft.Windows.System.Power.winmd" Directory="INSTALLDIR" Guid="3667E5D2-3468-46F4-9109-589770C75988">
+            <Component Id="Microsoft.Windows.System.Power.winmd" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.System.Power.winmd" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.System.Power.winmd" />
             </Component>
-            <Component Id="Microsoft.Windows.System.Projection.dll" Directory="INSTALLDIR" Guid="31224A98-7FD4-41B9-B2D7-BA2A1C5AF7C6">
+            <Component Id="Microsoft.Windows.System.Projection.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.System.Projection.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.System.Projection.dll" />
             </Component>
-            <Component Id="Microsoft.Windows.System.winmd" Directory="INSTALLDIR" Guid="09AEB864-A6AB-4C48-B06B-0720DF3B3667">
+            <Component Id="Microsoft.Windows.System.winmd" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.Windows.System.winmd" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.Windows.System.winmd" />
             </Component>
-            <Component Id="Microsoft.WindowsAppRuntime.Bootstrap.dll" Directory="INSTALLDIR" Guid="3959C9C9-4A01-41FC-BBB0-5444261464ED">
+            <Component Id="Microsoft.WindowsAppRuntime.Bootstrap.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.WindowsAppRuntime.Bootstrap.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.WindowsAppRuntime.Bootstrap.dll" />
             </Component>
-            <Component Id="Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" Directory="INSTALLDIR" Guid="C4D3EF41-C779-4885-A259-F14181A78EEA">
+            <Component Id="Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.WindowsAppRuntime.Bootstrap.Net.dll" />
             </Component>
-            <Component Id="Microsoft.WindowsAppRuntime.dll" Directory="INSTALLDIR" Guid="51A409AE-CD2F-46FA-B309-F18D9A937445">
+            <Component Id="Microsoft.WindowsAppRuntime.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.WindowsAppRuntime.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.WindowsAppRuntime.dll" />
             </Component>
-            <Component Id="Microsoft.WindowsAppRuntime.Insights.Resource.dll" Directory="INSTALLDIR" Guid="B756730E-E0D7-4A42-BF6B-838241D2B4AE">
+            <Component Id="Microsoft.WindowsAppRuntime.Insights.Resource.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.WindowsAppRuntime.Insights.Resource.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.WindowsAppRuntime.Insights.Resource.dll" />
             </Component>
-            <Component Id="Microsoft.WindowsAppRuntime.Release.Net.dll" Directory="INSTALLDIR" Guid="4DE3E741-CBFF-4C93-9D42-1F2BE7AF0C2D">
+            <Component Id="Microsoft.WindowsAppRuntime.Release.Net.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.WindowsAppRuntime.Release.Net.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.WindowsAppRuntime.Release.Net.dll" />
             </Component>
-            <Component Id="Microsoft.WinUI.dll" Directory="INSTALLDIR" Guid="49C1573E-02D0-42EE-9DB7-C70F3E2228F1">
+            <Component Id="Microsoft.WinUI.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Microsoft.WinUI.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.WinUI.dll" />
             </Component>
-            <Component Id="Mono.Cecil.dll" Directory="INSTALLDIR" Guid="64D742E4-9B1C-4012-8576-0CD7B6620F6A">
+            <Component Id="Mono.Cecil.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Mono.Cecil.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Mono.Cecil.dll" />
             </Component>
-            <Component Id="Mono.Cecil.Mdb.dll" Directory="INSTALLDIR" Guid="6FA41555-F6E9-4DAD-9BB7-E01361889439">
+            <Component Id="Mono.Cecil.Mdb.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Mono.Cecil.Mdb.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Mono.Cecil.Mdb.dll" />
             </Component>
-            <Component Id="Mono.Cecil.Pdb.dll" Directory="INSTALLDIR" Guid="BDCFABBD-51D7-4C5B-96B8-FB12E18E093F">
+            <Component Id="Mono.Cecil.Pdb.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Mono.Cecil.Pdb.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Mono.Cecil.Pdb.dll" />
             </Component>
-            <Component Id="Mono.Cecil.Rocks.dll" Directory="INSTALLDIR" Guid="52C47469-B644-40A3-8888-B81865CA4F03">
+            <Component Id="Mono.Cecil.Rocks.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Mono.Cecil.Rocks.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Mono.Cecil.Rocks.dll" />
             </Component>
-            <Component Id="MRM.dll" Directory="INSTALLDIR" Guid="CE3ABB23-0E08-4E9E-AB18-299C348937EC">
+            <Component Id="MRM.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="MRM.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\MRM.dll" />
             </Component>
-            <Component Id="Newtonsoft.Json.dll" Directory="INSTALLDIR" Guid="05EFE9D1-5E5B-43A8-AE6A-96611870D6D9">
+            <Component Id="Newtonsoft.Json.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Newtonsoft.Json.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Newtonsoft.Json.dll" />
             </Component>
-            <Component Id="ProcessMemoryUtilities.dll" Directory="INSTALLDIR" Guid="DE2C70D2-BA57-4F41-9FFE-CE89CC22925D">
+            <Component Id="ProcessMemoryUtilities.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="ProcessMemoryUtilities.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ProcessMemoryUtilities.dll" />
             </Component>
-            <Component Id="PushNotificationsLongRunningTask.ProxyStub.dll" Directory="INSTALLDIR" Guid="90C31139-2270-4FCC-86B5-386EB25BC82F">
+            <Component Id="PushNotificationsLongRunningTask.ProxyStub.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="PushNotificationsLongRunningTask.ProxyStub.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\PushNotificationsLongRunningTask.ProxyStub.dll" />
             </Component>
-            <Component Id="Raid.Common.dll" Directory="INSTALLDIR" Guid="82F52B2F-7B63-4451-8497-8C04E37A2E06">
+            <Component Id="Raid.Common.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Common.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Common.dll" />
             </Component>
-            <Component Id="Raid.Common.pdb" Directory="INSTALLDIR" Guid="58A6C46D-786E-4F97-BBF4-337EFFFA21F7">
+            <Component Id="Raid.Common.pdb" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Common.pdb" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Common.pdb" />
             </Component>
-            <Component Id="Raid.Model.dll" Directory="INSTALLDIR" Guid="04C5BA5C-DFFE-4BCA-8A8E-8595C14CD4A1">
+            <Component Id="Raid.Model.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Model.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Model.dll" />
             </Component>
-            <Component Id="Raid.Model.pdb" Directory="INSTALLDIR" Guid="A272F67F-2C63-45F7-98BE-13FEE8268B42">
+            <Component Id="Raid.Model.pdb" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Model.pdb" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Model.pdb" />
             </Component>
-            <Component Id="Raid.Toolkit.Application.Core.dll" Directory="INSTALLDIR" Guid="02390ED3-5A6A-4233-95B4-4149D15B8841">
+            <Component Id="Raid.Toolkit.Application.Core.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.Application.Core.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.Application.Core.dll" />
             </Component>
-            <Component Id="Raid.Toolkit.Application.Core.pdb" Directory="INSTALLDIR" Guid="59F09577-83A9-4329-BFBB-206C466FD9F4">
+            <Component Id="Raid.Toolkit.Application.Core.pdb" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.Application.Core.pdb" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.Application.Core.pdb" />
             </Component>
-            <Component Id="Raid.Toolkit.DataModel.dll" Directory="INSTALLDIR" Guid="EE40CFFA-0287-4F28-A3C7-BC766A8FD857">
+            <Component Id="Raid.Toolkit.DataModel.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.DataModel.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.DataModel.dll" />
             </Component>
-            <Component Id="Raid.Toolkit.DataModel.pdb" Directory="INSTALLDIR" Guid="AD04FBAD-91E8-4496-9C0E-0CE47B759C96">
+            <Component Id="Raid.Toolkit.DataModel.pdb" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.DataModel.pdb" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.DataModel.pdb" />
             </Component>
-            <Component Id="Raid.Toolkit.deps.json" Directory="INSTALLDIR" Guid="E685B1AF-EA4B-46AD-A36A-292E00206969">
+            <Component Id="Raid.Toolkit.deps.json" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.deps.json" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.deps.json" />
             </Component>
-            <Component Id="Raid.Toolkit.dll" Directory="INSTALLDIR" Guid="57E12456-FF09-4032-88A9-A52549E29392">
+            <Component Id="Raid.Toolkit.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.dll" />
             </Component>
-            <Component Id="Raid.Toolkit.exe" Directory="INSTALLDIR" Guid="5C8D87C5-2DA0-497D-A8FB-D3DA4C1990BB">
+            <Component Id="Raid.Toolkit.exe" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.exe" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.exe" />
             </Component>
-            <Component Id="Raid.Toolkit.Extensibility.dll" Directory="INSTALLDIR" Guid="A796618F-2BA0-46C6-BAE3-98AD92F248B2">
+            <Component Id="Raid.Toolkit.Extensibility.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.Extensibility.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.Extensibility.dll" />
             </Component>
-            <Component Id="Raid.Toolkit.Extensibility.Host.dll" Directory="INSTALLDIR" Guid="9EC6C01A-9523-4BE0-A3E1-D6CBE95CC1CE">
+            <Component Id="Raid.Toolkit.Extensibility.Host.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.Extensibility.Host.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.Extensibility.Host.dll" />
             </Component>
-            <Component Id="Raid.Toolkit.Extensibility.Host.pdb" Directory="INSTALLDIR" Guid="EBCB7CA2-6B42-4283-AFA1-7E7A576D3A38">
+            <Component Id="Raid.Toolkit.Extensibility.Host.pdb" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.Extensibility.Host.pdb" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.Extensibility.Host.pdb" />
             </Component>
-            <Component Id="Raid.Toolkit.Extensibility.pdb" Directory="INSTALLDIR" Guid="D4B53226-890F-4107-B1B0-85F45C7416B6">
+            <Component Id="Raid.Toolkit.Extensibility.pdb" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.Extensibility.pdb" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.Extensibility.pdb" />
             </Component>
-            <Component Id="Raid.Toolkit.Extension.Account.dll" Directory="INSTALLDIR" Guid="BFE4AFC3-ED3F-4B4A-93D3-F650D893DB47">
+            <Component Id="Raid.Toolkit.Extension.Account.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.Extension.Account.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.Extension.Account.dll" />
             </Component>
-            <Component Id="Raid.Toolkit.Extension.Account.pdb" Directory="INSTALLDIR" Guid="C8C0B2DE-F713-4FF5-AEA6-1ED66B7168D3">
+            <Component Id="Raid.Toolkit.Extension.Account.pdb" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.Extension.Account.pdb" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.Extension.Account.pdb" />
             </Component>
-            <Component Id="Raid.Toolkit.Extension.Realtime.dll" Directory="INSTALLDIR" Guid="FC95CDA2-C25A-4FED-A9C8-D97413490B86">
+            <Component Id="Raid.Toolkit.Extension.Realtime.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.Extension.Realtime.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.Extension.Realtime.dll" />
             </Component>
-            <Component Id="Raid.Toolkit.Extension.Realtime.pdb" Directory="INSTALLDIR" Guid="464B512A-F51E-4476-AF4E-ED9F7C553858">
+            <Component Id="Raid.Toolkit.Extension.Realtime.pdb" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.Extension.Realtime.pdb" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.Extension.Realtime.pdb" />
             </Component>
-            <Component Id="Raid.Toolkit.pdb" Directory="INSTALLDIR" Guid="5CFDED09-F04B-4A9F-A446-57647EE25116">
+            <Component Id="Raid.Toolkit.pdb" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.pdb" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.pdb" />
             </Component>
-            <Component Id="Raid.Toolkit.pri" Directory="INSTALLDIR" Guid="A56DC961-6442-456C-8DC5-8814E72FCBFD">
+            <Component Id="Raid.Toolkit.pri" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.pri" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.pri" />
             </Component>
-            <Component Id="Raid.Toolkit.runtimeconfig.json" Directory="INSTALLDIR" Guid="EBF587BA-220F-49D8-86A2-E575EF77FE08">
+            <Component Id="Raid.Toolkit.runtimeconfig.json" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.runtimeconfig.json" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.runtimeconfig.json" />
             </Component>
-            <Component Id="Raid.Toolkit.UI.Forms.dll" Directory="INSTALLDIR" Guid="9DA3E60C-9CA7-410B-891A-61DB04F90F09">
+            <Component Id="Raid.Toolkit.UI.Forms.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.UI.Forms.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.Forms.dll" />
             </Component>
-            <Component Id="Raid.Toolkit.UI.Forms.pdb" Directory="INSTALLDIR" Guid="EA10B9D7-7486-45AB-8A29-FA9E1AC518FD">
+            <Component Id="Raid.Toolkit.UI.Forms.pdb" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.UI.Forms.pdb" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.Forms.pdb" />
             </Component>
-            <Component Id="Raid.Toolkit.UI.WinUI.dll" Directory="INSTALLDIR" Guid="EA8F72A7-639A-4FDB-833B-19316E8BBD9D">
+            <Component Id="Raid.Toolkit.UI.WinUI.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.UI.WinUI.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI.dll" />
             </Component>
-            <Component Id="Raid.Toolkit.UI.WinUI.pdb" Directory="INSTALLDIR" Guid="4A11931A-1087-4BE6-BA69-EA87428BBE65">
+            <Component Id="Raid.Toolkit.UI.WinUI.pdb" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.UI.WinUI.pdb" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI.pdb" />
             </Component>
-            <Component Id="Raid.Toolkit.UI.WinUI.pri" Directory="INSTALLDIR" Guid="0D170DD1-FD94-467D-AF55-72A3658A968B">
+            <Component Id="Raid.Toolkit.UI.WinUI.pri" Directory="INSTALLDIR" Guid="*">
                 <File Id="Raid.Toolkit.UI.WinUI.pri" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI.pri" />
             </Component>
-            <Component Id="SuperSocket.Channel.dll" Directory="INSTALLDIR" Guid="4A5AF0A7-1223-4AE1-BBFF-82CA303EF154">
+            <Component Id="SuperSocket.Channel.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="SuperSocket.Channel.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\SuperSocket.Channel.dll" />
             </Component>
-            <Component Id="SuperSocket.Command.dll" Directory="INSTALLDIR" Guid="8166B075-F111-410D-97B6-4ADF8F50D389">
+            <Component Id="SuperSocket.Command.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="SuperSocket.Command.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\SuperSocket.Command.dll" />
             </Component>
-            <Component Id="SuperSocket.Primitives.dll" Directory="INSTALLDIR" Guid="E5FCDC44-A7AD-4F7C-88CC-AF13314BD790">
+            <Component Id="SuperSocket.Primitives.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="SuperSocket.Primitives.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\SuperSocket.Primitives.dll" />
             </Component>
-            <Component Id="SuperSocket.ProtoBase.dll" Directory="INSTALLDIR" Guid="27518DFC-3E89-4FBF-949C-5FCB6D799318">
+            <Component Id="SuperSocket.ProtoBase.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="SuperSocket.ProtoBase.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\SuperSocket.ProtoBase.dll" />
             </Component>
-            <Component Id="SuperSocket.Server.dll" Directory="INSTALLDIR" Guid="DAF9677F-A63D-41B9-981A-82EFC455EA91">
+            <Component Id="SuperSocket.Server.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="SuperSocket.Server.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\SuperSocket.Server.dll" />
             </Component>
-            <Component Id="SuperSocket.WebSocket.dll" Directory="INSTALLDIR" Guid="810078E0-3DDF-4C15-AC63-FABA020DD2A1">
+            <Component Id="SuperSocket.WebSocket.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="SuperSocket.WebSocket.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\SuperSocket.WebSocket.dll" />
             </Component>
-            <Component Id="SuperSocket.WebSocket.Server.dll" Directory="INSTALLDIR" Guid="9E72E1C4-DACA-49CA-BF8B-6771A7061631">
+            <Component Id="SuperSocket.WebSocket.Server.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="SuperSocket.WebSocket.Server.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\SuperSocket.WebSocket.Server.dll" />
             </Component>
-            <Component Id="System.Diagnostics.EventLog.Messages.dll" Directory="INSTALLDIR" Guid="90D3BAE1-F8F0-4CDA-AC54-6CD94BAB8F88">
+            <Component Id="System.Diagnostics.EventLog.Messages.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="System.Diagnostics.EventLog.Messages.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\System.Diagnostics.EventLog.Messages.dll" />
             </Component>
-            <Component Id="System.IO.Pipelines.dll" Directory="INSTALLDIR" Guid="18ABCE0F-C0B7-4263-9CB1-F11D1D9D76FB">
+            <Component Id="System.IO.Pipelines.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="System.IO.Pipelines.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\System.IO.Pipelines.dll" />
             </Component>
-            <Component Id="Vestris.ResourceLib.dll" Directory="INSTALLDIR" Guid="7BC525E3-E6F7-4015-9C7C-62EEA8B5812C">
+            <Component Id="Vestris.ResourceLib.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="Vestris.ResourceLib.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Vestris.ResourceLib.dll" />
             </Component>
-            <Component Id="WindowsAppRuntime.png" Directory="INSTALLDIR" Guid="FED75C09-F103-42E3-AC22-1C49977CD6FC">
+            <Component Id="WindowsAppRuntime.png" Directory="INSTALLDIR" Guid="*">
                 <File Id="WindowsAppRuntime.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\WindowsAppRuntime.png" />
             </Component>
-            <Component Id="WindowsAppSdk.AppxDeploymentExtensions.Desktop.dll" Directory="INSTALLDIR" Guid="F868B1C4-794C-4C7E-9FC8-B28C21C1C2BB">
+            <Component Id="WindowsAppSdk.AppxDeploymentExtensions.Desktop.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="WindowsAppSdk.AppxDeploymentExtensions.Desktop.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\WindowsAppSdk.AppxDeploymentExtensions.Desktop.dll" />
             </Component>
-            <Component Id="WinRT.Runtime.dll" Directory="INSTALLDIR" Guid="D6CBB511-BC86-45F5-AFC5-F7F110533930">
+            <Component Id="WinRT.Runtime.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="WinRT.Runtime.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\WinRT.Runtime.dll" />
             </Component>
-            <Component Id="WinUIEdit.dll" Directory="INSTALLDIR" Guid="6902E9B9-A600-43DC-B9DE-6C8067CB6025">
+            <Component Id="WinUIEdit.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="WinUIEdit.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\WinUIEdit.dll" />
             </Component>
-            <Component Id="WinUIEx.dll" Directory="INSTALLDIR" Guid="15A3582B-FAD8-49AD-BA18-EEBD1B77CE78">
+            <Component Id="WinUIEx.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="WinUIEx.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\WinUIEx.dll" />
             </Component>
-            <Component Id="wuceffectsi.dll" Directory="INSTALLDIR" Guid="38B24C21-4558-45A9-972D-DF32B8F48823">
+            <Component Id="wuceffectsi.dll" Directory="INSTALLDIR" Guid="*">
                 <File Id="wuceffectsi.dll" KeyPath="yes" Source="$(env.BuildOutputDirectory)\wuceffectsi.dll" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui" Directory="af_ZA" Guid="1776D964-F55A-42E7-BBAD-BF9B82E1CC4A">
+            <Component Id="Microsoft.ui.xaml.dll.mui" Directory="af_ZA" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui" KeyPath="yes" Source="$(env.BuildOutputDirectory)\af-ZA\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui" Directory="af_ZA" Guid="EC4CB2D4-CE8A-4968-9564-CFFBC45C30DE">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui" Directory="af_ZA" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui" KeyPath="yes" Source="$(env.BuildOutputDirectory)\af-ZA\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_1" Directory="ar_SA" Guid="702DC9EB-4459-4CD7-AD19-F0A9BD9AB201">
+            <Component Id="Microsoft.ui.xaml.dll.mui_1" Directory="ar_SA" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_1" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ar-SA\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_1" Directory="ar_SA" Guid="2FBB4792-8425-4A52-9B5E-71814716DD83">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_1" Directory="ar_SA" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_1" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ar-SA\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="RaidToolkitLarge.png" Directory="Assets" Guid="AC7C4491-7E78-4F6F-B732-E5BD4D08AE37">
+            <Component Id="RaidToolkitLarge.png" Directory="Assets" Guid="*">
                 <File Id="RaidToolkitLarge.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Assets\RaidToolkitLarge.png" />
             </Component>
-            <Component Id="Square150x150Logo.scale_200.png" Directory="Assets" Guid="B993D085-520E-459B-940B-483304EA989A">
+            <Component Id="Square150x150Logo.scale_200.png" Directory="Assets" Guid="*">
                 <File Id="Square150x150Logo.scale_200.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Assets\Square150x150Logo.scale-200.png" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_2" Directory="az_Latn_AZ" Guid="E23A76E6-6A0D-4E34-A2CA-A27E50C987BD">
+            <Component Id="Microsoft.ui.xaml.dll.mui_2" Directory="az_Latn_AZ" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_2" KeyPath="yes" Source="$(env.BuildOutputDirectory)\az-Latn-AZ\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_2" Directory="az_Latn_AZ" Guid="D622CCBF-4B70-4880-B0A6-1F99F2AA0C76">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_2" Directory="az_Latn_AZ" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_2" KeyPath="yes" Source="$(env.BuildOutputDirectory)\az-Latn-AZ\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_3" Directory="bg_BG" Guid="701BB1DC-39F6-4496-A5BE-D52023E04B69">
+            <Component Id="Microsoft.ui.xaml.dll.mui_3" Directory="bg_BG" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_3" KeyPath="yes" Source="$(env.BuildOutputDirectory)\bg-BG\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_3" Directory="bg_BG" Guid="8089A037-5509-44DC-8FA6-A9CAA35BCE13">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_3" Directory="bg_BG" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_3" KeyPath="yes" Source="$(env.BuildOutputDirectory)\bg-BG\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_4" Directory="bs_Latn_BA" Guid="8D636AC0-25F7-4CFB-9BB6-2A8FD7CBBB50">
+            <Component Id="Microsoft.ui.xaml.dll.mui_4" Directory="bs_Latn_BA" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_4" KeyPath="yes" Source="$(env.BuildOutputDirectory)\bs-Latn-BA\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_4" Directory="bs_Latn_BA" Guid="A04118F3-A5CE-40DD-9353-DA593CE9B87C">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_4" Directory="bs_Latn_BA" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_4" KeyPath="yes" Source="$(env.BuildOutputDirectory)\bs-Latn-BA\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_5" Directory="ca_ES" Guid="E77C0478-90FA-4E65-AAA5-EAC8587BCAC1">
+            <Component Id="Microsoft.ui.xaml.dll.mui_5" Directory="ca_ES" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_5" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ca-ES\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_5" Directory="ca_ES" Guid="C87DFD3D-9363-41D4-A68A-570C3AAED23C">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_5" Directory="ca_ES" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_5" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ca-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_6" Directory="cs_CZ" Guid="356148A0-C3DA-47FB-ADAC-A8C982388DB4">
+            <Component Id="Microsoft.ui.xaml.dll.mui_6" Directory="cs_CZ" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_6" KeyPath="yes" Source="$(env.BuildOutputDirectory)\cs-CZ\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_6" Directory="cs_CZ" Guid="5D763AAD-0C5E-4AED-8865-BE6BBB94E68A">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_6" Directory="cs_CZ" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_6" KeyPath="yes" Source="$(env.BuildOutputDirectory)\cs-CZ\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_7" Directory="cy_GB" Guid="445AF3B7-C4E6-41E9-848E-014BF52BBE83">
+            <Component Id="Microsoft.ui.xaml.dll.mui_7" Directory="cy_GB" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_7" KeyPath="yes" Source="$(env.BuildOutputDirectory)\cy-GB\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_7" Directory="cy_GB" Guid="A50D7795-A04D-4F4C-8C6E-BFFE208B9A34">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_7" Directory="cy_GB" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_7" KeyPath="yes" Source="$(env.BuildOutputDirectory)\cy-GB\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_8" Directory="da_DK" Guid="4627DA72-9B21-44FC-B506-EDAC592DCE3B">
+            <Component Id="Microsoft.ui.xaml.dll.mui_8" Directory="da_DK" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_8" KeyPath="yes" Source="$(env.BuildOutputDirectory)\da-DK\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_8" Directory="da_DK" Guid="2465DA4C-7862-4F22-8F6D-49C9BEC8094F">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_8" Directory="da_DK" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_8" KeyPath="yes" Source="$(env.BuildOutputDirectory)\da-DK\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_9" Directory="de_DE" Guid="15356DF5-0BE6-4D02-A011-09C44A049E5B">
+            <Component Id="Microsoft.ui.xaml.dll.mui_9" Directory="de_DE" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_9" KeyPath="yes" Source="$(env.BuildOutputDirectory)\de-DE\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_9" Directory="de_DE" Guid="60B09A5E-1AB9-4F5B-AD29-6439EBA6D97B">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_9" Directory="de_DE" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_9" KeyPath="yes" Source="$(env.BuildOutputDirectory)\de-DE\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_10" Directory="el_GR" Guid="A1949F98-F8A5-4A93-A1D6-09C9786994B2">
+            <Component Id="Microsoft.ui.xaml.dll.mui_10" Directory="el_GR" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_10" KeyPath="yes" Source="$(env.BuildOutputDirectory)\el-GR\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_10" Directory="el_GR" Guid="AF81DCA2-B1CD-4D24-82A6-024BC4B55C72">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_10" Directory="el_GR" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_10" KeyPath="yes" Source="$(env.BuildOutputDirectory)\el-GR\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_11" Directory="en_GB" Guid="89C08ABD-91D1-43A7-B0D5-02BD1D29B673">
+            <Component Id="Microsoft.ui.xaml.dll.mui_11" Directory="en_GB" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_11" KeyPath="yes" Source="$(env.BuildOutputDirectory)\en-GB\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_11" Directory="en_GB" Guid="553CD725-524A-4EFE-8F26-039CC00634AE">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_11" Directory="en_GB" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_11" KeyPath="yes" Source="$(env.BuildOutputDirectory)\en-GB\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_12" Directory="en_us" Guid="74034B9A-28C2-474B-9C1A-59DE91F9BE9D">
+            <Component Id="Microsoft.ui.xaml.dll.mui_12" Directory="en_us" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_12" KeyPath="yes" Source="$(env.BuildOutputDirectory)\en-us\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_12" Directory="en_us" Guid="4E1D79AF-41FB-44EE-BBF9-F0E5CBF05A51">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_12" Directory="en_us" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_12" KeyPath="yes" Source="$(env.BuildOutputDirectory)\en-us\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_13" Directory="es_ES" Guid="BC51E671-E150-403D-9F83-968F79F6CB83">
+            <Component Id="Microsoft.ui.xaml.dll.mui_13" Directory="es_ES" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_13" KeyPath="yes" Source="$(env.BuildOutputDirectory)\es-ES\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_13" Directory="es_ES" Guid="94377442-9ADB-4DE9-B208-D7C020D7A48B">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_13" Directory="es_ES" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_13" KeyPath="yes" Source="$(env.BuildOutputDirectory)\es-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_14" Directory="es_MX" Guid="45C2C7FD-D80D-4DB8-A407-D4D877837EA2">
+            <Component Id="Microsoft.ui.xaml.dll.mui_14" Directory="es_MX" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_14" KeyPath="yes" Source="$(env.BuildOutputDirectory)\es-MX\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_14" Directory="es_MX" Guid="6D1DC428-DD29-4E5F-B592-6B6C597384A4">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_14" Directory="es_MX" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_14" KeyPath="yes" Source="$(env.BuildOutputDirectory)\es-MX\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_15" Directory="et_EE" Guid="D9968292-F411-4B9A-AE38-99D99F284472">
+            <Component Id="Microsoft.ui.xaml.dll.mui_15" Directory="et_EE" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_15" KeyPath="yes" Source="$(env.BuildOutputDirectory)\et-EE\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_15" Directory="et_EE" Guid="D0BE405F-D2D4-4B5E-A949-F64AFE5802CF">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_15" Directory="et_EE" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_15" KeyPath="yes" Source="$(env.BuildOutputDirectory)\et-EE\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_16" Directory="eu_ES" Guid="E80429C2-2C8A-43B0-9D7E-77606D72B37D">
+            <Component Id="Microsoft.ui.xaml.dll.mui_16" Directory="eu_ES" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_16" KeyPath="yes" Source="$(env.BuildOutputDirectory)\eu-ES\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_16" Directory="eu_ES" Guid="FF468165-AE94-43F1-9B67-46D9FD27F32D">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_16" Directory="eu_ES" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_16" KeyPath="yes" Source="$(env.BuildOutputDirectory)\eu-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_17" Directory="fa_IR" Guid="8955D375-6DD5-4D7F-8836-884944482C9B">
+            <Component Id="Microsoft.ui.xaml.dll.mui_17" Directory="fa_IR" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_17" KeyPath="yes" Source="$(env.BuildOutputDirectory)\fa-IR\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_17" Directory="fa_IR" Guid="E7772E41-DE95-4FEB-A3A4-4F4C1B7EEBFD">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_17" Directory="fa_IR" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_17" KeyPath="yes" Source="$(env.BuildOutputDirectory)\fa-IR\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_18" Directory="fi_FI" Guid="C10A7822-7C6A-403F-84BA-80CD53F6712F">
+            <Component Id="Microsoft.ui.xaml.dll.mui_18" Directory="fi_FI" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_18" KeyPath="yes" Source="$(env.BuildOutputDirectory)\fi-FI\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_18" Directory="fi_FI" Guid="CE560C39-5DD0-45C5-887C-781DBB093C88">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_18" Directory="fi_FI" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_18" KeyPath="yes" Source="$(env.BuildOutputDirectory)\fi-FI\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_19" Directory="fr_CA" Guid="34733015-73B4-4157-9104-398B85E02470">
+            <Component Id="Microsoft.ui.xaml.dll.mui_19" Directory="fr_CA" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_19" KeyPath="yes" Source="$(env.BuildOutputDirectory)\fr-CA\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_19" Directory="fr_CA" Guid="34A49A3D-A27D-4D1B-8D8A-BEC6642B17D0">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_19" Directory="fr_CA" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_19" KeyPath="yes" Source="$(env.BuildOutputDirectory)\fr-CA\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_20" Directory="fr_FR" Guid="D5225145-C704-4B93-8587-043C58759054">
+            <Component Id="Microsoft.ui.xaml.dll.mui_20" Directory="fr_FR" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_20" KeyPath="yes" Source="$(env.BuildOutputDirectory)\fr-FR\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_20" Directory="fr_FR" Guid="392211A0-8886-434F-9F71-F7D64234FA9A">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_20" Directory="fr_FR" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_20" KeyPath="yes" Source="$(env.BuildOutputDirectory)\fr-FR\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_21" Directory="gl_ES" Guid="CC974FA2-63FE-4434-B58E-F87D8D991381">
+            <Component Id="Microsoft.ui.xaml.dll.mui_21" Directory="gl_ES" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_21" KeyPath="yes" Source="$(env.BuildOutputDirectory)\gl-ES\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_21" Directory="gl_ES" Guid="AC5509F6-97C9-4685-BC3D-F2A7BCBD53D3">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_21" Directory="gl_ES" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_21" KeyPath="yes" Source="$(env.BuildOutputDirectory)\gl-ES\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_22" Directory="he_IL" Guid="4EF5F197-E53F-451C-A151-3D64A72441B7">
+            <Component Id="Microsoft.ui.xaml.dll.mui_22" Directory="he_IL" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_22" KeyPath="yes" Source="$(env.BuildOutputDirectory)\he-IL\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_22" Directory="he_IL" Guid="DBB23222-E11F-4008-9986-59F0CBBAE5C6">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_22" Directory="he_IL" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_22" KeyPath="yes" Source="$(env.BuildOutputDirectory)\he-IL\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_23" Directory="hi_IN" Guid="E6A48D7D-E393-4F20-905F-45704D743AAF">
+            <Component Id="Microsoft.ui.xaml.dll.mui_23" Directory="hi_IN" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_23" KeyPath="yes" Source="$(env.BuildOutputDirectory)\hi-IN\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_23" Directory="hi_IN" Guid="0C306479-7607-4B7A-9DDE-5A2BB7348EAC">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_23" Directory="hi_IN" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_23" KeyPath="yes" Source="$(env.BuildOutputDirectory)\hi-IN\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_24" Directory="hr_HR" Guid="84B0A70B-9577-442C-BE20-0AB646B75495">
+            <Component Id="Microsoft.ui.xaml.dll.mui_24" Directory="hr_HR" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_24" KeyPath="yes" Source="$(env.BuildOutputDirectory)\hr-HR\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_24" Directory="hr_HR" Guid="8DBE1B36-E3B9-483F-9793-0AD0536AB109">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_24" Directory="hr_HR" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_24" KeyPath="yes" Source="$(env.BuildOutputDirectory)\hr-HR\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_25" Directory="hu_HU" Guid="9A3D001B-E4ED-41AB-989E-0689DB4C130D">
+            <Component Id="Microsoft.ui.xaml.dll.mui_25" Directory="hu_HU" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_25" KeyPath="yes" Source="$(env.BuildOutputDirectory)\hu-HU\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_25" Directory="hu_HU" Guid="697E14FE-4349-4AE5-B1D0-970649446186">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_25" Directory="hu_HU" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_25" KeyPath="yes" Source="$(env.BuildOutputDirectory)\hu-HU\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_26" Directory="id_ID" Guid="FB96C602-37F0-4403-A889-719B1A702EBF">
+            <Component Id="Microsoft.ui.xaml.dll.mui_26" Directory="id_ID" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_26" KeyPath="yes" Source="$(env.BuildOutputDirectory)\id-ID\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_26" Directory="id_ID" Guid="C25BB443-666D-42B3-B87D-83AF32A4CE8D">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_26" Directory="id_ID" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_26" KeyPath="yes" Source="$(env.BuildOutputDirectory)\id-ID\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_27" Directory="is_IS" Guid="AAA4D98E-5EE9-4B23-9C4E-3AA1252F8757">
+            <Component Id="Microsoft.ui.xaml.dll.mui_27" Directory="is_IS" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_27" KeyPath="yes" Source="$(env.BuildOutputDirectory)\is-IS\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_27" Directory="is_IS" Guid="5CE222CC-A262-48A6-9DCB-B80345D15C92">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_27" Directory="is_IS" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_27" KeyPath="yes" Source="$(env.BuildOutputDirectory)\is-IS\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_28" Directory="it_IT" Guid="42D412F6-F288-4181-9AF2-B920B049A66A">
+            <Component Id="Microsoft.ui.xaml.dll.mui_28" Directory="it_IT" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_28" KeyPath="yes" Source="$(env.BuildOutputDirectory)\it-IT\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_28" Directory="it_IT" Guid="5D47049A-8299-44FC-A243-E5067C714D1D">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_28" Directory="it_IT" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_28" KeyPath="yes" Source="$(env.BuildOutputDirectory)\it-IT\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_29" Directory="ja_JP" Guid="255C119B-F929-4164-A3F8-836FE8E9D5A0">
+            <Component Id="Microsoft.ui.xaml.dll.mui_29" Directory="ja_JP" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_29" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ja-JP\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_29" Directory="ja_JP" Guid="FAA46432-FF4B-43B7-9740-3D222506C37E">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_29" Directory="ja_JP" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_29" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ja-JP\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_30" Directory="ka_GE" Guid="C6DAD36E-A429-482D-A9BD-07FBDCDDD314">
+            <Component Id="Microsoft.ui.xaml.dll.mui_30" Directory="ka_GE" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_30" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ka-GE\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_30" Directory="ka_GE" Guid="16598CB7-A029-4039-BDF5-D19D96D67D8B">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_30" Directory="ka_GE" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_30" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ka-GE\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_31" Directory="kk_KZ" Guid="A0FD75C0-87AE-45A3-86DD-EF36E98EED51">
+            <Component Id="Microsoft.ui.xaml.dll.mui_31" Directory="kk_KZ" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_31" KeyPath="yes" Source="$(env.BuildOutputDirectory)\kk-KZ\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_31" Directory="kk_KZ" Guid="72A312CE-A0C7-4AF1-AE13-E58326D82526">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_31" Directory="kk_KZ" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_31" KeyPath="yes" Source="$(env.BuildOutputDirectory)\kk-KZ\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_32" Directory="ko_KR" Guid="F9807DBF-37CA-4BC3-BC96-3C003AA4DAA8">
+            <Component Id="Microsoft.ui.xaml.dll.mui_32" Directory="ko_KR" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_32" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ko-KR\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_32" Directory="ko_KR" Guid="2614EC87-703D-47A4-98EF-5124CB05EFF0">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_32" Directory="ko_KR" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_32" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ko-KR\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_33" Directory="lt_LT" Guid="FE767BDC-BDCB-49DD-8E45-2779C899C262">
+            <Component Id="Microsoft.ui.xaml.dll.mui_33" Directory="lt_LT" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_33" KeyPath="yes" Source="$(env.BuildOutputDirectory)\lt-LT\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_33" Directory="lt_LT" Guid="9456E5E4-1D1C-4C36-9BDC-0C0503C90F9A">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_33" Directory="lt_LT" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_33" KeyPath="yes" Source="$(env.BuildOutputDirectory)\lt-LT\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_34" Directory="lv_LV" Guid="682ACCF4-8781-4DA2-9C0C-5EAA99D88B05">
+            <Component Id="Microsoft.ui.xaml.dll.mui_34" Directory="lv_LV" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_34" KeyPath="yes" Source="$(env.BuildOutputDirectory)\lv-LV\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_34" Directory="lv_LV" Guid="A705148F-B23B-4AC8-896D-0A536F125C9A">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_34" Directory="lv_LV" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_34" KeyPath="yes" Source="$(env.BuildOutputDirectory)\lv-LV\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="NoiseAsset_256x256_PNG.png" Directory="Assets_1" Guid="CA1D3A4D-CF5D-4FA3-BBEB-93A7BC39F5C7">
+            <Component Id="NoiseAsset_256x256_PNG.png" Directory="Assets_1" Guid="*">
                 <File Id="NoiseAsset_256x256_PNG.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Microsoft.UI.Xaml\Assets\NoiseAsset_256x256_PNG.png" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_35" Directory="ms_MY" Guid="8FEC1553-85E7-408E-B324-7218A6785CA5">
+            <Component Id="Microsoft.ui.xaml.dll.mui_35" Directory="ms_MY" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_35" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ms-MY\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_35" Directory="ms_MY" Guid="29516D1A-7275-41A0-BAA6-D765E3EBF66C">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_35" Directory="ms_MY" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_35" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ms-MY\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_36" Directory="nb_NO" Guid="7A4CA858-F510-44CD-BBF4-B59E70433274">
+            <Component Id="Microsoft.ui.xaml.dll.mui_36" Directory="nb_NO" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_36" KeyPath="yes" Source="$(env.BuildOutputDirectory)\nb-NO\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_36" Directory="nb_NO" Guid="A818BA04-12AB-419E-B14C-B4930F6BE895">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_36" Directory="nb_NO" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_36" KeyPath="yes" Source="$(env.BuildOutputDirectory)\nb-NO\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_37" Directory="nl_NL" Guid="83E23FF7-9428-4F20-BFE1-80A670B5D3C1">
+            <Component Id="Microsoft.ui.xaml.dll.mui_37" Directory="nl_NL" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_37" KeyPath="yes" Source="$(env.BuildOutputDirectory)\nl-NL\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_37" Directory="nl_NL" Guid="94BD7870-ECE9-4063-804D-686DDFFEAD0F">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_37" Directory="nl_NL" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_37" KeyPath="yes" Source="$(env.BuildOutputDirectory)\nl-NL\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_38" Directory="nn_NO" Guid="3F17F509-6AEF-4983-BC8C-559A978B0E7E">
+            <Component Id="Microsoft.ui.xaml.dll.mui_38" Directory="nn_NO" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_38" KeyPath="yes" Source="$(env.BuildOutputDirectory)\nn-NO\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_38" Directory="nn_NO" Guid="9EE738F3-6A65-4887-8F75-6CFB2BEA4217">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_38" Directory="nn_NO" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_38" KeyPath="yes" Source="$(env.BuildOutputDirectory)\nn-NO\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_39" Directory="pl_PL" Guid="A3524AFD-B508-4F68-832B-A1BD3AE76A5C">
+            <Component Id="Microsoft.ui.xaml.dll.mui_39" Directory="pl_PL" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_39" KeyPath="yes" Source="$(env.BuildOutputDirectory)\pl-PL\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_39" Directory="pl_PL" Guid="10F86C3C-B619-46A3-8A9C-705CBBFE76E8">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_39" Directory="pl_PL" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_39" KeyPath="yes" Source="$(env.BuildOutputDirectory)\pl-PL\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_40" Directory="pt_BR" Guid="8FBFB0E4-E5AA-4E20-B7EC-E15B7F245C45">
+            <Component Id="Microsoft.ui.xaml.dll.mui_40" Directory="pt_BR" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_40" KeyPath="yes" Source="$(env.BuildOutputDirectory)\pt-BR\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_40" Directory="pt_BR" Guid="B31279C5-A138-447B-8E44-7D6EE12E3AC7">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_40" Directory="pt_BR" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_40" KeyPath="yes" Source="$(env.BuildOutputDirectory)\pt-BR\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_41" Directory="pt_PT" Guid="F6C74CB4-FD6A-4057-9EA1-3F346A65B42E">
+            <Component Id="Microsoft.ui.xaml.dll.mui_41" Directory="pt_PT" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_41" KeyPath="yes" Source="$(env.BuildOutputDirectory)\pt-PT\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_41" Directory="pt_PT" Guid="3D86C1A6-81FE-4D33-96EB-DB5C8B16103E">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_41" Directory="pt_PT" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_41" KeyPath="yes" Source="$(env.BuildOutputDirectory)\pt-PT\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="InstallExtensionWindow.xaml" Directory="Raid.Toolkit.UI.WinUI" Guid="05FF17D7-175C-44FF-9BE4-9B57DCE2BB5F">
+            <Component Id="InstallExtensionWindow.xaml" Directory="Raid.Toolkit.UI.WinUI" Guid="*">
                 <File Id="InstallExtensionWindow.xaml" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\InstallExtensionWindow.xaml" />
             </Component>
-            <Component Id="InstallExtensionWindow.xbf" Directory="Raid.Toolkit.UI.WinUI" Guid="3E4C601C-DEF1-451A-B3BC-1B374B292793">
+            <Component Id="InstallExtensionWindow.xbf" Directory="Raid.Toolkit.UI.WinUI" Guid="*">
                 <File Id="InstallExtensionWindow.xbf" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\InstallExtensionWindow.xbf" />
             </Component>
-            <Component Id="SettingsWindow.xaml" Directory="Raid.Toolkit.UI.WinUI" Guid="6EBB5A21-594B-4404-A9E4-29A5383BF6AD">
+            <Component Id="MainWindow.xaml" Directory="Raid.Toolkit.UI.WinUI" Guid="*">
+                <File Id="MainWindow.xaml" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\MainWindow.xaml" />
+            </Component>
+            <Component Id="MainWindow.xbf" Directory="Raid.Toolkit.UI.WinUI" Guid="*">
+                <File Id="MainWindow.xbf" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\MainWindow.xbf" />
+            </Component>
+            <Component Id="SettingsWindow.xaml" Directory="Raid.Toolkit.UI.WinUI" Guid="*">
                 <File Id="SettingsWindow.xaml" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\SettingsWindow.xaml" />
             </Component>
-            <Component Id="SettingsWindow.xbf" Directory="Raid.Toolkit.UI.WinUI" Guid="1D22ADD0-3475-4103-A11C-31B3ACBC3AF9">
+            <Component Id="SettingsWindow.xbf" Directory="Raid.Toolkit.UI.WinUI" Guid="*">
                 <File Id="SettingsWindow.xbf" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\SettingsWindow.xbf" />
             </Component>
-            <Component Id="SplashScreen.xaml" Directory="Raid.Toolkit.UI.WinUI" Guid="CF284C34-74D4-4B90-ADD2-8583F735FF52">
-                <File Id="SplashScreen.xaml" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\SplashScreen.xaml" />
-            </Component>
-            <Component Id="SplashScreen.xbf" Directory="Raid.Toolkit.UI.WinUI" Guid="5E973EF3-915C-4D3E-9CDF-2F5D1962B665">
-                <File Id="SplashScreen.xbf" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\SplashScreen.xbf" />
-            </Component>
-            <Component Id="AppIcon.ico" Directory="Assets_2" Guid="7E837ED9-A759-480C-AC14-705AC702E9FE">
+            <Component Id="AppIcon.ico" Directory="Assets_2" Guid="*">
                 <File Id="AppIcon.ico" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Assets\AppIcon.ico" />
             </Component>
-            <Component Id="LockScreenLogo.scale_200.png" Directory="Assets_2" Guid="E7C9969B-13AD-4B93-B40F-7571223E64A4">
+            <Component Id="LockScreenLogo.scale_200.png" Directory="Assets_2" Guid="*">
                 <File Id="LockScreenLogo.scale_200.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Assets\LockScreenLogo.scale-200.png" />
             </Component>
-            <Component Id="RaidToolkitLarge.png_1" Directory="Assets_2" Guid="3A5231EA-1717-4442-8547-71FEA4562865">
+            <Component Id="RaidToolkitLarge.png_1" Directory="Assets_2" Guid="*">
                 <File Id="RaidToolkitLarge.png_1" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Assets\RaidToolkitLarge.png" />
             </Component>
-            <Component Id="SplashScreen.scale_200.png" Directory="Assets_2" Guid="3F696349-B67F-4C67-A939-3CF45B3129FE">
+            <Component Id="SplashScreen.scale_200.png" Directory="Assets_2" Guid="*">
                 <File Id="SplashScreen.scale_200.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Assets\SplashScreen.scale-200.png" />
             </Component>
-            <Component Id="Square150x150Logo.scale_200.png_1" Directory="Assets_2" Guid="4F1E7785-2F82-4D35-B47F-E647B4219B96">
+            <Component Id="Square150x150Logo.scale_200.png_1" Directory="Assets_2" Guid="*">
                 <File Id="Square150x150Logo.scale_200.png_1" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Assets\Square150x150Logo.scale-200.png" />
             </Component>
-            <Component Id="Square44x44Logo.scale_200.png" Directory="Assets_2" Guid="3B4358EE-599C-40E9-9831-8FA70E2EC51A">
+            <Component Id="Square44x44Logo.scale_200.png" Directory="Assets_2" Guid="*">
                 <File Id="Square44x44Logo.scale_200.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Assets\Square44x44Logo.scale-200.png" />
             </Component>
-            <Component Id="Square44x44Logo.targetsize_24_altform_unplated.png" Directory="Assets_2" Guid="5110D417-D162-4B47-AA9C-9FAF9BF8FC62">
+            <Component Id="Square44x44Logo.targetsize_24_altform_unplated.png" Directory="Assets_2" Guid="*">
                 <File Id="Square44x44Logo.targetsize_24_altform_unplated.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
             </Component>
-            <Component Id="StoreLogo.png" Directory="Assets_2" Guid="007BD362-E024-4988-9D6B-FD7B26FC79EC">
+            <Component Id="StoreLogo.png" Directory="Assets_2" Guid="*">
                 <File Id="StoreLogo.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Assets\StoreLogo.png" />
             </Component>
-            <Component Id="Wide310x150Logo.scale_200.png" Directory="Assets_2" Guid="66F53CA8-4EBA-42B4-A8B6-E56FC706DE5B">
+            <Component Id="Wide310x150Logo.scale_200.png" Directory="Assets_2" Guid="*">
                 <File Id="Wide310x150Logo.scale_200.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Assets\Wide310x150Logo.scale-200.png" />
             </Component>
-            <Component Id="AoEContinuousDamage.png" Directory="Resources" Guid="75F5AA41-C302-473F-AD5F-76401A06B832">
+            <Component Id="AoEContinuousDamage.png" Directory="Resources" Guid="*">
                 <File Id="AoEContinuousDamage.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\AoEContinuousDamage.png" />
             </Component>
-            <Component Id="BlockActiveSkills.png" Directory="Resources" Guid="0E2ACAD3-856C-4712-8738-B3FF1FE82AA9">
+            <Component Id="BlockActiveSkills.png" Directory="Resources" Guid="*">
                 <File Id="BlockActiveSkills.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\BlockActiveSkills.png" />
             </Component>
-            <Component Id="BlockBuffs.png" Directory="Resources" Guid="CEAE0ADE-09BE-4823-8796-1D359ECD91B8">
+            <Component Id="BlockBuffs.png" Directory="Resources" Guid="*">
                 <File Id="BlockBuffs.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\BlockBuffs.png" />
             </Component>
-            <Component Id="BlockDamage.png" Directory="Resources" Guid="79A42737-B719-4EBF-B018-A91867F2AD6D">
+            <Component Id="BlockDamage.png" Directory="Resources" Guid="*">
                 <File Id="BlockDamage.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\BlockDamage.png" />
             </Component>
-            <Component Id="BlockDebuff.png" Directory="Resources" Guid="9B2B03E2-34CA-47F6-AA72-EFB382D18D45">
+            <Component Id="BlockDebuff.png" Directory="Resources" Guid="*">
                 <File Id="BlockDebuff.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\BlockDebuff.png" />
             </Component>
-            <Component Id="BlockHeal.png" Directory="Resources" Guid="72F95DB3-BE56-4C0C-AB8F-C4FD797056ED">
+            <Component Id="BlockHeal.png" Directory="Resources" Guid="*">
                 <File Id="BlockHeal.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\BlockHeal.png" />
             </Component>
-            <Component Id="BlockHeal2.png" Directory="Resources" Guid="C9DF89CF-0D64-425D-B430-C721455EFE93">
+            <Component Id="BlockHeal2.png" Directory="Resources" Guid="*">
                 <File Id="BlockHeal2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\BlockHeal2.png" />
             </Component>
-            <Component Id="BlockPassiveSkills.png" Directory="Resources" Guid="760F9140-4EE1-4A78-98D3-E07D082A3388">
+            <Component Id="BlockPassiveSkills.png" Directory="Resources" Guid="*">
                 <File Id="BlockPassiveSkills.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\BlockPassiveSkills.png" />
             </Component>
-            <Component Id="BlockRevive.png" Directory="Resources" Guid="E8A4D962-260B-49E1-A32A-A919AB3B75C3">
+            <Component Id="BlockRevive.png" Directory="Resources" Guid="*">
                 <File Id="BlockRevive.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\BlockRevive.png" />
             </Component>
-            <Component Id="BloodRage.png" Directory="Resources" Guid="EFDAFCE8-3D9D-48F9-95FA-23574257A559">
+            <Component Id="BloodRage.png" Directory="Resources" Guid="*">
                 <File Id="BloodRage.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\BloodRage.png" />
             </Component>
-            <Component Id="Cocoon.png" Directory="Resources" Guid="F65EB4A1-6290-4B7D-95C2-995B982021F0">
+            <Component Id="Cocoon.png" Directory="Resources" Guid="*">
                 <File Id="Cocoon.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Cocoon.png" />
             </Component>
-            <Component Id="ContinuousDamage.png" Directory="Resources" Guid="C3399818-ADE5-463E-B9B2-8D928A11ECB3">
+            <Component Id="ContinuousDamage.png" Directory="Resources" Guid="*">
                 <File Id="ContinuousDamage.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\ContinuousDamage.png" />
             </Component>
-            <Component Id="ContinuousDamage2.png" Directory="Resources" Guid="DED4D7AE-4D97-4645-8A29-3EEBCBAD97A9">
+            <Component Id="ContinuousDamage2.png" Directory="Resources" Guid="*">
                 <File Id="ContinuousDamage2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\ContinuousDamage2.png" />
             </Component>
-            <Component Id="ContinuousHeal.png" Directory="Resources" Guid="996E840D-90BE-4450-81BB-BE647099618A">
+            <Component Id="ContinuousHeal.png" Directory="Resources" Guid="*">
                 <File Id="ContinuousHeal.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\ContinuousHeal.png" />
             </Component>
-            <Component Id="ContinuousHeal2.png" Directory="Resources" Guid="2D0079A7-5AA1-42CB-A466-097B3F421E9C">
+            <Component Id="ContinuousHeal2.png" Directory="Resources" Guid="*">
                 <File Id="ContinuousHeal2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\ContinuousHeal2.png" />
             </Component>
-            <Component Id="Digestion.png" Directory="Resources" Guid="BBEB583C-B282-4589-BDE4-841C83BA2FC8">
+            <Component Id="Digestion.png" Directory="Resources" Guid="*">
                 <File Id="Digestion.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Digestion.png" />
             </Component>
-            <Component Id="ElectricMark.png" Directory="Resources" Guid="B1AC9945-AE54-4BEC-8323-7C6F4DC7F0C5">
+            <Component Id="ElectricMark.png" Directory="Resources" Guid="*">
                 <File Id="ElectricMark.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\ElectricMark.png" />
             </Component>
-            <Component Id="Enrage.png" Directory="Resources" Guid="1EEAFAC4-283F-4419-A599-FEC93294A7ED">
+            <Component Id="Enrage.png" Directory="Resources" Guid="*">
                 <File Id="Enrage.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Enrage.png" />
             </Component>
-            <Component Id="Fear.png" Directory="Resources" Guid="5A331F70-5C1B-44A9-90F2-B537EB225D63">
+            <Component Id="Fear.png" Directory="Resources" Guid="*">
                 <File Id="Fear.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Fear.png" />
             </Component>
-            <Component Id="Fear2.png" Directory="Resources" Guid="6E64B86A-C7CA-4CE6-A48F-C1C3CD021045">
+            <Component Id="Fear2.png" Directory="Resources" Guid="*">
                 <File Id="Fear2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Fear2.png" />
             </Component>
-            <Component Id="Freeze.png" Directory="Resources" Guid="DC229A95-7E08-45E4-90FA-302D208EF272">
+            <Component Id="Freeze.png" Directory="Resources" Guid="*">
                 <File Id="Freeze.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Freeze.png" />
             </Component>
-            <Component Id="HungerCounter.png" Directory="Resources" Guid="1E7CDBDE-6B12-4A90-A5A0-54BE02C57BF5">
+            <Component Id="HungerCounter.png" Directory="Resources" Guid="*">
                 <File Id="HungerCounter.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\HungerCounter.png" />
             </Component>
-            <Component Id="HydraHitCounter.png" Directory="Resources" Guid="25B213A6-ABD5-416B-92A7-E4B120F09E6D">
+            <Component Id="HydraHitCounter.png" Directory="Resources" Guid="*">
                 <File Id="HydraHitCounter.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\HydraHitCounter.png" />
             </Component>
-            <Component Id="HydraNeckIncreaseDamageTaken.png" Directory="Resources" Guid="7AAF5CFD-14D9-474A-9D41-4ABBC14B2245">
+            <Component Id="HydraNeckIncreaseDamageTaken.png" Directory="Resources" Guid="*">
                 <File Id="HydraNeckIncreaseDamageTaken.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\HydraNeckIncreaseDamageTaken.png" />
             </Component>
-            <Component Id="IncreaseCritResistance.png" Directory="Resources" Guid="A7DE0B2D-41FF-4DAA-BBBB-75F3E8E3921F">
+            <Component Id="IncreaseCritResistance.png" Directory="Resources" Guid="*">
                 <File Id="IncreaseCritResistance.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\IncreaseCritResistance.png" />
             </Component>
-            <Component Id="IncreaseCritResistance2.png" Directory="Resources" Guid="A5AB85E4-7E75-44A3-9C44-3B460E0711C0">
+            <Component Id="IncreaseCritResistance2.png" Directory="Resources" Guid="*">
                 <File Id="IncreaseCritResistance2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\IncreaseCritResistance2.png" />
             </Component>
-            <Component Id="IncreaseDamageTaken.png" Directory="Resources" Guid="F573DD40-4504-4FEA-BF16-61099EAD1EF5">
+            <Component Id="IncreaseDamageTaken.png" Directory="Resources" Guid="*">
                 <File Id="IncreaseDamageTaken.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\IncreaseDamageTaken.png" />
             </Component>
-            <Component Id="IncreaseDamageTaken2.png" Directory="Resources" Guid="60FB17A4-7428-4065-AC7C-AEC036748C98">
+            <Component Id="IncreaseDamageTaken2.png" Directory="Resources" Guid="*">
                 <File Id="IncreaseDamageTaken2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\IncreaseDamageTaken2.png" />
             </Component>
-            <Component Id="IncreaseMaxHp.png" Directory="Resources" Guid="2BDE9F49-17EE-4D2F-BADD-0B0F8AA4EF9E">
+            <Component Id="IncreaseMaxHp.png" Directory="Resources" Guid="*">
                 <File Id="IncreaseMaxHp.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\IncreaseMaxHp.png" />
             </Component>
-            <Component Id="IncreasePoisoning.png" Directory="Resources" Guid="92A53DBB-CA5A-485F-95BB-61E245A14528">
+            <Component Id="IncreasePoisoning.png" Directory="Resources" Guid="*">
                 <File Id="IncreasePoisoning.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\IncreasePoisoning.png" />
             </Component>
-            <Component Id="IncreasePoisoning2.png" Directory="Resources" Guid="A2A942B7-4C4F-48FC-82C7-0F4486105251">
+            <Component Id="IncreasePoisoning2.png" Directory="Resources" Guid="*">
                 <File Id="IncreasePoisoning2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\IncreasePoisoning2.png" />
             </Component>
-            <Component Id="IncreaseStamina.png" Directory="Resources" Guid="1ED43625-6C68-4386-9C73-751060042818">
+            <Component Id="IncreaseStamina.png" Directory="Resources" Guid="*">
                 <File Id="IncreaseStamina.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\IncreaseStamina.png" />
             </Component>
-            <Component Id="Invisible.png" Directory="Resources" Guid="F95934E9-FF50-4950-ACB7-BF59DF076A83">
+            <Component Id="Invisible.png" Directory="Resources" Guid="*">
                 <File Id="Invisible.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Invisible.png" />
             </Component>
-            <Component Id="Invisible2.png" Directory="Resources" Guid="78819D8C-F081-4F98-AA5E-14E834D01E40">
+            <Component Id="Invisible2.png" Directory="Resources" Guid="*">
                 <File Id="Invisible2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Invisible2.png" />
             </Component>
-            <Component Id="LifeDrainOnDamage.png" Directory="Resources" Guid="6978CEE4-AE61-4D1B-90B6-BFA3B9E3E15B">
+            <Component Id="LifeDrainOnDamage.png" Directory="Resources" Guid="*">
                 <File Id="LifeDrainOnDamage.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\LifeDrainOnDamage.png" />
             </Component>
-            <Component Id="Lock_16x.png" Directory="Resources" Guid="AEAEAF50-8B11-4380-BDF4-1245DE838EF1">
+            <Component Id="Lock_16x.png" Directory="Resources" Guid="*">
                 <File Id="Lock_16x.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Lock_16x.png" />
             </Component>
-            <Component Id="Mark.png" Directory="Resources" Guid="F2DD11AD-D1B7-4405-A8F7-162FFC16F97A">
+            <Component Id="Mark.png" Directory="Resources" Guid="*">
                 <File Id="Mark.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Mark.png" />
             </Component>
-            <Component Id="MinotaurIncreaseDamage.png" Directory="Resources" Guid="311B3F6B-B067-49CE-A500-281F82CA6876">
+            <Component Id="MinotaurIncreaseDamage.png" Directory="Resources" Guid="*">
                 <File Id="MinotaurIncreaseDamage.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\MinotaurIncreaseDamage.png" />
             </Component>
-            <Component Id="MinotaurIncreaseDamageTaken.png" Directory="Resources" Guid="96192D60-CF74-4B59-A80E-8BE260D07655">
+            <Component Id="MinotaurIncreaseDamageTaken.png" Directory="Resources" Guid="*">
                 <File Id="MinotaurIncreaseDamageTaken.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\MinotaurIncreaseDamageTaken.png" />
             </Component>
-            <Component Id="MirrorDamage.png" Directory="Resources" Guid="838BAA05-121C-4023-8C57-14111F731876">
+            <Component Id="MirrorDamage.png" Directory="Resources" Guid="*">
                 <File Id="MirrorDamage.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\MirrorDamage.png" />
             </Component>
-            <Component Id="NewbieDefence.png" Directory="Resources" Guid="B301B701-5703-4DB7-80EC-F6C0176A10F8">
+            <Component Id="NewbieDefence.png" Directory="Resources" Guid="*">
                 <File Id="NewbieDefence.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\NewbieDefence.png" />
             </Component>
-            <Component Id="Petrification.png" Directory="Resources" Guid="84C13614-FC5D-4E18-8622-E1066A01E75F">
+            <Component Id="Petrification.png" Directory="Resources" Guid="*">
                 <File Id="Petrification.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Petrification.png" />
             </Component>
-            <Component Id="PoisonCloud.png" Directory="Resources" Guid="5F4F0563-3679-4E80-8A01-30F4F5FBFCDF">
+            <Component Id="PoisonCloud.png" Directory="Resources" Guid="*">
                 <File Id="PoisonCloud.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\PoisonCloud.png" />
             </Component>
-            <Component Id="Provoke.png" Directory="Resources" Guid="256222EB-C72E-46FA-8E1E-C4F48094604D">
+            <Component Id="Provoke.png" Directory="Resources" Guid="*">
                 <File Id="Provoke.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Provoke.png" />
             </Component>
-            <Component Id="RaidToolkitLarge.png_2" Directory="Resources" Guid="BFE799DE-2048-4CDD-A9D9-6C6FA464C194">
+            <Component Id="RaidToolkitLarge.png_2" Directory="Resources" Guid="*">
                 <File Id="RaidToolkitLarge.png_2" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\RaidToolkitLarge.png" />
             </Component>
-            <Component Id="ReduceDamageTaken.png" Directory="Resources" Guid="3AC38DBF-A63C-4AA7-AE57-6EF97A1AF72F">
+            <Component Id="ReduceDamageTaken.png" Directory="Resources" Guid="*">
                 <File Id="ReduceDamageTaken.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\ReduceDamageTaken.png" />
             </Component>
-            <Component Id="ReduceDamageTaken2.png" Directory="Resources" Guid="87995202-B6F0-44B9-9A7B-7813C1060F8A">
+            <Component Id="ReduceDamageTaken2.png" Directory="Resources" Guid="*">
                 <File Id="ReduceDamageTaken2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\ReduceDamageTaken2.png" />
             </Component>
-            <Component Id="ReduceStamina.png" Directory="Resources" Guid="3503696F-87C3-4D67-899D-3C6D5F3507DE">
+            <Component Id="ReduceStamina.png" Directory="Resources" Guid="*">
                 <File Id="ReduceStamina.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\ReduceStamina.png" />
             </Component>
-            <Component Id="ReflectDamage.png" Directory="Resources" Guid="2C5C6585-9250-4040-A898-CEBD793E04AB">
+            <Component Id="ReflectDamage.png" Directory="Resources" Guid="*">
                 <File Id="ReflectDamage.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\ReflectDamage.png" />
             </Component>
-            <Component Id="ReflectDamage2.png" Directory="Resources" Guid="3729DF13-BAA6-481E-999B-E5F1B7374FF5">
+            <Component Id="ReflectDamage2.png" Directory="Resources" Guid="*">
                 <File Id="ReflectDamage2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\ReflectDamage2.png" />
             </Component>
-            <Component Id="Refresh_16x.png" Directory="Resources" Guid="E41BC933-E101-4D65-89EF-11FAA38BECA1">
+            <Component Id="Refresh_16x.png" Directory="Resources" Guid="*">
                 <File Id="Refresh_16x.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Refresh_16x.png" />
             </Component>
-            <Component Id="ReviveOnDeath.png" Directory="Resources" Guid="0E3158E4-5E7F-478B-A344-FBD100FAD5D1">
+            <Component Id="ReviveOnDeath.png" Directory="Resources" Guid="*">
                 <File Id="ReviveOnDeath.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\ReviveOnDeath.png" />
             </Component>
-            <Component Id="Selection.png" Directory="Resources" Guid="957B7773-1C97-48E3-85C9-9214B05BD4B1">
+            <Component Id="Selection.png" Directory="Resources" Guid="*">
                 <File Id="Selection.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Selection.png" />
             </Component>
-            <Component Id="Settings_16x.png" Directory="Resources" Guid="0D62667F-5ABC-4D18-921B-6BB8B3E50D00">
+            <Component Id="Settings_16x.png" Directory="Resources" Guid="*">
                 <File Id="Settings_16x.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Settings_16x.png" />
             </Component>
-            <Component Id="ShareDamage.png" Directory="Resources" Guid="AA005A8C-5833-4FA0-BBA8-586621F0E13E">
+            <Component Id="ShareDamage.png" Directory="Resources" Guid="*">
                 <File Id="ShareDamage.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\ShareDamage.png" />
             </Component>
-            <Component Id="ShareDamage2.png" Directory="Resources" Guid="6E1299BA-74EA-49AA-BFC4-67CD4A00F112">
+            <Component Id="ShareDamage2.png" Directory="Resources" Guid="*">
                 <File Id="ShareDamage2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\ShareDamage2.png" />
             </Component>
-            <Component Id="Shield.png" Directory="Resources" Guid="FCC9B519-E6A6-4979-B92C-F98EF4ED8B7C">
+            <Component Id="Shield.png" Directory="Resources" Guid="*">
                 <File Id="Shield.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Shield.png" />
             </Component>
-            <Component Id="Shield2.png" Directory="Resources" Guid="9C505196-B917-4F77-BE16-6F954A96C7CE">
+            <Component Id="Shield2.png" Directory="Resources" Guid="*">
                 <File Id="Shield2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Shield2.png" />
             </Component>
-            <Component Id="Sleep.png" Directory="Resources" Guid="EA115832-5A6B-485E-8E12-E877A196350C">
+            <Component Id="Sleep.png" Directory="Resources" Guid="*">
                 <File Id="Sleep.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Sleep.png" />
             </Component>
-            <Component Id="Square150x150Logo.scale_200.png_2" Directory="Resources" Guid="95C730B6-8018-4262-ACF3-C740153ECD98">
+            <Component Id="Square150x150Logo.scale_200.png_2" Directory="Resources" Guid="*">
                 <File Id="Square150x150Logo.scale_200.png_2" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Square150x150Logo.scale-200.png" />
             </Component>
-            <Component Id="StatusCounterAttack.png" Directory="Resources" Guid="2260667B-3E54-445B-89BE-DB08B69DB9CC">
+            <Component Id="StatusCounterAttack.png" Directory="Resources" Guid="*">
                 <File Id="StatusCounterAttack.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusCounterAttack.png" />
             </Component>
-            <Component Id="StatusIncreaseAccuracy.png" Directory="Resources" Guid="B71F576B-1222-4594-82B2-BCD4A370EF8F">
+            <Component Id="StatusIncreaseAccuracy.png" Directory="Resources" Guid="*">
                 <File Id="StatusIncreaseAccuracy.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusIncreaseAccuracy.png" />
             </Component>
-            <Component Id="StatusIncreaseAccuracy2.png" Directory="Resources" Guid="5CFE46C8-AB0C-432A-979E-E587CA8517F7">
+            <Component Id="StatusIncreaseAccuracy2.png" Directory="Resources" Guid="*">
                 <File Id="StatusIncreaseAccuracy2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusIncreaseAccuracy2.png" />
             </Component>
-            <Component Id="StatusIncreaseAttack.png" Directory="Resources" Guid="ECA8910D-0290-4785-B2B6-83BCC92EFDDC">
+            <Component Id="StatusIncreaseAttack.png" Directory="Resources" Guid="*">
                 <File Id="StatusIncreaseAttack.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusIncreaseAttack.png" />
             </Component>
-            <Component Id="StatusIncreaseAttack2.png" Directory="Resources" Guid="3B535CE6-C092-468C-B9D6-261E8E2EEC72">
+            <Component Id="StatusIncreaseAttack2.png" Directory="Resources" Guid="*">
                 <File Id="StatusIncreaseAttack2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusIncreaseAttack2.png" />
             </Component>
-            <Component Id="StatusIncreaseCriticalChance.png" Directory="Resources" Guid="33BED223-87E5-419D-A478-C4177CD734C5">
+            <Component Id="StatusIncreaseCriticalChance.png" Directory="Resources" Guid="*">
                 <File Id="StatusIncreaseCriticalChance.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusIncreaseCriticalChance.png" />
             </Component>
-            <Component Id="StatusIncreaseCriticalChance2.png" Directory="Resources" Guid="496FFFE3-35F3-4A17-88DE-ED28D17AE5F5">
+            <Component Id="StatusIncreaseCriticalChance2.png" Directory="Resources" Guid="*">
                 <File Id="StatusIncreaseCriticalChance2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusIncreaseCriticalChance2.png" />
             </Component>
-            <Component Id="StatusIncreaseCriticalDamage.png" Directory="Resources" Guid="9E9B7972-421F-4C41-834F-711DAF25A632">
+            <Component Id="StatusIncreaseCriticalDamage.png" Directory="Resources" Guid="*">
                 <File Id="StatusIncreaseCriticalDamage.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusIncreaseCriticalDamage.png" />
             </Component>
-            <Component Id="StatusIncreaseCriticalDamage2.png" Directory="Resources" Guid="EDC04372-1CA8-45BD-92DC-F418094999A9">
+            <Component Id="StatusIncreaseCriticalDamage2.png" Directory="Resources" Guid="*">
                 <File Id="StatusIncreaseCriticalDamage2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusIncreaseCriticalDamage2.png" />
             </Component>
-            <Component Id="StatusIncreaseDefence.png" Directory="Resources" Guid="2C854CF9-F579-4EB6-AFBC-8B8AB2145CC3">
+            <Component Id="StatusIncreaseDefence.png" Directory="Resources" Guid="*">
                 <File Id="StatusIncreaseDefence.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusIncreaseDefence.png" />
             </Component>
-            <Component Id="StatusIncreaseDefence2.png" Directory="Resources" Guid="F37D53F9-4922-46EE-8AF7-9AB35DFDAF7E">
+            <Component Id="StatusIncreaseDefence2.png" Directory="Resources" Guid="*">
                 <File Id="StatusIncreaseDefence2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusIncreaseDefence2.png" />
             </Component>
-            <Component Id="StatusIncreaseResistance.png" Directory="Resources" Guid="B3667E88-2E08-469B-A77E-FC9AE799C5A4">
+            <Component Id="StatusIncreaseResistance.png" Directory="Resources" Guid="*">
                 <File Id="StatusIncreaseResistance.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusIncreaseResistance.png" />
             </Component>
-            <Component Id="StatusIncreaseResistance2.png" Directory="Resources" Guid="06DA5AE3-69AA-411F-9E8E-79A9A3274C4C">
+            <Component Id="StatusIncreaseResistance2.png" Directory="Resources" Guid="*">
                 <File Id="StatusIncreaseResistance2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusIncreaseResistance2.png" />
             </Component>
-            <Component Id="StatusIncreaseSpeed.png" Directory="Resources" Guid="863C6834-FE8E-4548-BBCC-FA82CF7C2A5B">
+            <Component Id="StatusIncreaseSpeed.png" Directory="Resources" Guid="*">
                 <File Id="StatusIncreaseSpeed.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusIncreaseSpeed.png" />
             </Component>
-            <Component Id="StatusIncreaseSpeed2.png" Directory="Resources" Guid="B1B4CA44-C24D-4FB6-98DC-CBCC78AEDB78">
+            <Component Id="StatusIncreaseSpeed2.png" Directory="Resources" Guid="*">
                 <File Id="StatusIncreaseSpeed2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusIncreaseSpeed2.png" />
             </Component>
-            <Component Id="StatusReduceAccuracy.png" Directory="Resources" Guid="8854470A-629A-4647-93BB-D8DF6ACCC8BA">
+            <Component Id="StatusReduceAccuracy.png" Directory="Resources" Guid="*">
                 <File Id="StatusReduceAccuracy.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusReduceAccuracy.png" />
             </Component>
-            <Component Id="StatusReduceAccuracy2.png" Directory="Resources" Guid="299CF7E1-E790-4AA3-8F37-21A2CC4842A7">
+            <Component Id="StatusReduceAccuracy2.png" Directory="Resources" Guid="*">
                 <File Id="StatusReduceAccuracy2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusReduceAccuracy2.png" />
             </Component>
-            <Component Id="StatusReduceAttack.png" Directory="Resources" Guid="8DC842E2-7E4F-4BD2-A3C7-2DA9221A1A7D">
+            <Component Id="StatusReduceAttack.png" Directory="Resources" Guid="*">
                 <File Id="StatusReduceAttack.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusReduceAttack.png" />
             </Component>
-            <Component Id="StatusReduceAttack2.png" Directory="Resources" Guid="008E03F5-837A-4106-BB96-EEB6CCC346F5">
+            <Component Id="StatusReduceAttack2.png" Directory="Resources" Guid="*">
                 <File Id="StatusReduceAttack2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusReduceAttack2.png" />
             </Component>
-            <Component Id="StatusReduceCriticalChance.png" Directory="Resources" Guid="FA1AA027-A981-47F6-9D1E-3B7E60B88144">
+            <Component Id="StatusReduceCriticalChance.png" Directory="Resources" Guid="*">
                 <File Id="StatusReduceCriticalChance.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusReduceCriticalChance.png" />
             </Component>
-            <Component Id="StatusReduceCriticalChance2.png" Directory="Resources" Guid="C59F3B2A-DAC4-4DF5-B48B-12A74747C71E">
+            <Component Id="StatusReduceCriticalChance2.png" Directory="Resources" Guid="*">
                 <File Id="StatusReduceCriticalChance2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusReduceCriticalChance2.png" />
             </Component>
-            <Component Id="StatusReduceCriticalDamage.png" Directory="Resources" Guid="AC2663B2-FBAE-4D91-B5B5-811DC9958717">
+            <Component Id="StatusReduceCriticalDamage.png" Directory="Resources" Guid="*">
                 <File Id="StatusReduceCriticalDamage.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusReduceCriticalDamage.png" />
             </Component>
-            <Component Id="StatusReduceCriticalDamage2.png" Directory="Resources" Guid="EED49552-FF2A-4A20-BE56-1E8C6E8014BD">
+            <Component Id="StatusReduceCriticalDamage2.png" Directory="Resources" Guid="*">
                 <File Id="StatusReduceCriticalDamage2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusReduceCriticalDamage2.png" />
             </Component>
-            <Component Id="StatusReduceDefence.png" Directory="Resources" Guid="DA8A6C50-74A4-4897-9E02-95B523E3D145">
+            <Component Id="StatusReduceDefence.png" Directory="Resources" Guid="*">
                 <File Id="StatusReduceDefence.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusReduceDefence.png" />
             </Component>
-            <Component Id="StatusReduceDefence2.png" Directory="Resources" Guid="F928DAC9-1F26-4760-8654-94955BFEF606">
+            <Component Id="StatusReduceDefence2.png" Directory="Resources" Guid="*">
                 <File Id="StatusReduceDefence2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusReduceDefence2.png" />
             </Component>
-            <Component Id="StatusReduceResistance.png" Directory="Resources" Guid="963AB4A1-8913-4341-90B2-EB3ADB3F445F">
+            <Component Id="StatusReduceResistance.png" Directory="Resources" Guid="*">
                 <File Id="StatusReduceResistance.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusReduceResistance.png" />
             </Component>
-            <Component Id="StatusReduceResistance2.png" Directory="Resources" Guid="E6731680-0576-4E0D-B8DC-786F09957B09">
+            <Component Id="StatusReduceResistance2.png" Directory="Resources" Guid="*">
                 <File Id="StatusReduceResistance2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusReduceResistance2.png" />
             </Component>
-            <Component Id="StatusReduceSpeed.png" Directory="Resources" Guid="0A996FA0-6003-4519-9D16-EB9AB223FAF4">
+            <Component Id="StatusReduceSpeed.png" Directory="Resources" Guid="*">
                 <File Id="StatusReduceSpeed.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusReduceSpeed.png" />
             </Component>
-            <Component Id="StatusReduceSpeed2.png" Directory="Resources" Guid="300810E8-94C8-4098-9196-AF17A4A4EBC1">
+            <Component Id="StatusReduceSpeed2.png" Directory="Resources" Guid="*">
                 <File Id="StatusReduceSpeed2.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StatusReduceSpeed2.png" />
             </Component>
-            <Component Id="Status_Effect_Temp.png" Directory="Resources" Guid="5F741F6E-7FC3-4DDF-9258-6A8A1C3AA972">
+            <Component Id="Status_Effect_Temp.png" Directory="Resources" Guid="*">
                 <File Id="Status_Effect_Temp.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Status_Effect_Temp.png" />
             </Component>
-            <Component Id="StoneSkin.png" Directory="Resources" Guid="2A42D2D2-3C2D-4AC0-AED7-D3A25B541705">
+            <Component Id="StoneSkin.png" Directory="Resources" Guid="*">
                 <File Id="StoneSkin.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\StoneSkin.png" />
             </Component>
-            <Component Id="Stun.png" Directory="Resources" Guid="58AAD573-E3B9-4A66-951A-0205EAA891AB">
+            <Component Id="Stun.png" Directory="Resources" Guid="*">
                 <File Id="Stun.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Stun.png" />
             </Component>
-            <Component Id="SwapHealth.png" Directory="Resources" Guid="C4B74AB7-0B21-4633-9E99-B964FF5F926D">
+            <Component Id="SwapHealth.png" Directory="Resources" Guid="*">
                 <File Id="SwapHealth.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\SwapHealth.png" />
             </Component>
-            <Component Id="TimeBomb.png" Directory="Resources" Guid="4C5ABA08-8713-4FE8-A676-900EC3BC1274">
+            <Component Id="TimeBomb.png" Directory="Resources" Guid="*">
                 <File Id="TimeBomb.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\TimeBomb.png" />
             </Component>
-            <Component Id="Unkillable.png" Directory="Resources" Guid="2021F9B3-BCA2-4B95-8525-CC10A81BC656">
+            <Component Id="Unkillable.png" Directory="Resources" Guid="*">
                 <File Id="Unkillable.png" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Raid.Toolkit.UI.WinUI\Resources\Unkillable.png" />
             </Component>
-            <Component Id="Square150x150Logo.scale_200.png_3" Directory="Resources_1" Guid="3F4BDCE9-6314-4AB7-9A5B-28313639CEDE">
+            <Component Id="Square150x150Logo.scale_200.png_3" Directory="Resources_1" Guid="*">
                 <File Id="Square150x150Logo.scale_200.png_3" KeyPath="yes" Source="$(env.BuildOutputDirectory)\Resources\Square150x150Logo.scale-200.png" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_42" Directory="ro_RO" Guid="A3079EE1-03BF-45B6-875B-7C5512F2470B">
+            <Component Id="Microsoft.ui.xaml.dll.mui_42" Directory="ro_RO" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_42" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ro-RO\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_42" Directory="ro_RO" Guid="6FB9CD0B-219F-4DA1-8FD5-6D712A11FEBE">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_42" Directory="ro_RO" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_42" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ro-RO\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_43" Directory="ru_RU" Guid="2DB55370-0FC1-475F-8F93-E60037C185DA">
+            <Component Id="Microsoft.ui.xaml.dll.mui_43" Directory="ru_RU" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_43" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ru-RU\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_43" Directory="ru_RU" Guid="E3F15A2B-7C07-4EBA-AF03-7DE9BB225138">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_43" Directory="ru_RU" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_43" KeyPath="yes" Source="$(env.BuildOutputDirectory)\ru-RU\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_44" Directory="sk_SK" Guid="E5FF3BF3-D820-43FA-8E5D-45E8B688A4B0">
+            <Component Id="Microsoft.ui.xaml.dll.mui_44" Directory="sk_SK" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_44" KeyPath="yes" Source="$(env.BuildOutputDirectory)\sk-SK\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_44" Directory="sk_SK" Guid="09B84DB6-CD29-4AA4-AF42-41967608A1FD">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_44" Directory="sk_SK" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_44" KeyPath="yes" Source="$(env.BuildOutputDirectory)\sk-SK\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_45" Directory="sl_SI" Guid="9A503BA4-1130-4F5C-8ADE-A00300F57A20">
+            <Component Id="Microsoft.ui.xaml.dll.mui_45" Directory="sl_SI" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_45" KeyPath="yes" Source="$(env.BuildOutputDirectory)\sl-SI\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_45" Directory="sl_SI" Guid="5BD4D83D-9D1D-4B76-86BA-B442F15D8487">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_45" Directory="sl_SI" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_45" KeyPath="yes" Source="$(env.BuildOutputDirectory)\sl-SI\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_46" Directory="sq_AL" Guid="5EFAAB00-FEAA-49E1-A29F-8D6C9337E56E">
+            <Component Id="Microsoft.ui.xaml.dll.mui_46" Directory="sq_AL" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_46" KeyPath="yes" Source="$(env.BuildOutputDirectory)\sq-AL\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_46" Directory="sq_AL" Guid="7335984D-17B8-4F90-B768-59883BE5FD62">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_46" Directory="sq_AL" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_46" KeyPath="yes" Source="$(env.BuildOutputDirectory)\sq-AL\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_47" Directory="sr_Cyrl_RS" Guid="49389089-5596-4E10-B93B-A830E65970D2">
+            <Component Id="Microsoft.ui.xaml.dll.mui_47" Directory="sr_Cyrl_RS" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_47" KeyPath="yes" Source="$(env.BuildOutputDirectory)\sr-Cyrl-RS\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_47" Directory="sr_Cyrl_RS" Guid="A8A1F868-D36D-48F7-8032-5992CC1E3E43">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_47" Directory="sr_Cyrl_RS" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_47" KeyPath="yes" Source="$(env.BuildOutputDirectory)\sr-Cyrl-RS\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_48" Directory="sr_Latn_RS" Guid="E14802B5-5C38-4A7A-9363-E234D24C0FE1">
+            <Component Id="Microsoft.ui.xaml.dll.mui_48" Directory="sr_Latn_RS" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_48" KeyPath="yes" Source="$(env.BuildOutputDirectory)\sr-Latn-RS\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_48" Directory="sr_Latn_RS" Guid="02DEEDC1-21B2-42D0-9403-76B986CBB5B0">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_48" Directory="sr_Latn_RS" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_48" KeyPath="yes" Source="$(env.BuildOutputDirectory)\sr-Latn-RS\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_49" Directory="sv_SE" Guid="CCCC91E2-450D-4D9F-B8CC-75BDFE9BF32E">
+            <Component Id="Microsoft.ui.xaml.dll.mui_49" Directory="sv_SE" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_49" KeyPath="yes" Source="$(env.BuildOutputDirectory)\sv-SE\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_49" Directory="sv_SE" Guid="7B5A7CC6-5A97-4240-AB86-98DBD8BAA6DC">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_49" Directory="sv_SE" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_49" KeyPath="yes" Source="$(env.BuildOutputDirectory)\sv-SE\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_50" Directory="th_TH" Guid="2612C414-DD3A-432F-9821-E4281AC3101F">
+            <Component Id="Microsoft.ui.xaml.dll.mui_50" Directory="th_TH" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_50" KeyPath="yes" Source="$(env.BuildOutputDirectory)\th-TH\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_50" Directory="th_TH" Guid="D3FB7284-ACE1-4F57-AB99-584FCD8AFF55">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_50" Directory="th_TH" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_50" KeyPath="yes" Source="$(env.BuildOutputDirectory)\th-TH\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_51" Directory="tr_TR" Guid="CE9DE819-5ED9-43D6-A7C0-272C831B2CF6">
+            <Component Id="Microsoft.ui.xaml.dll.mui_51" Directory="tr_TR" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_51" KeyPath="yes" Source="$(env.BuildOutputDirectory)\tr-TR\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_51" Directory="tr_TR" Guid="CC090527-BB38-41E2-A299-C9032AB36AE1">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_51" Directory="tr_TR" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_51" KeyPath="yes" Source="$(env.BuildOutputDirectory)\tr-TR\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_52" Directory="uk_UA" Guid="AE495904-1D7B-49A7-A877-3116CA7A70A8">
+            <Component Id="Microsoft.ui.xaml.dll.mui_52" Directory="uk_UA" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_52" KeyPath="yes" Source="$(env.BuildOutputDirectory)\uk-UA\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_52" Directory="uk_UA" Guid="CCF89CD4-0010-4C19-B770-651E8A502707">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_52" Directory="uk_UA" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_52" KeyPath="yes" Source="$(env.BuildOutputDirectory)\uk-UA\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_53" Directory="vi_VN" Guid="8D6D0591-4698-485D-8F69-8C80D0BCC980">
+            <Component Id="Microsoft.ui.xaml.dll.mui_53" Directory="vi_VN" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_53" KeyPath="yes" Source="$(env.BuildOutputDirectory)\vi-VN\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_53" Directory="vi_VN" Guid="AD5F6270-779A-4352-90D6-604269BE36AC">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_53" Directory="vi_VN" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_53" KeyPath="yes" Source="$(env.BuildOutputDirectory)\vi-VN\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_54" Directory="zh_CN" Guid="6D250A33-423C-4D48-8656-B15CD7FD2E0F">
+            <Component Id="Microsoft.ui.xaml.dll.mui_54" Directory="zh_CN" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_54" KeyPath="yes" Source="$(env.BuildOutputDirectory)\zh-CN\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_54" Directory="zh_CN" Guid="4783B248-2A22-41E4-9277-DB958542A5C6">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_54" Directory="zh_CN" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_54" KeyPath="yes" Source="$(env.BuildOutputDirectory)\zh-CN\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
-            <Component Id="Microsoft.ui.xaml.dll.mui_55" Directory="zh_TW" Guid="F85DC9BB-A3D4-4F5D-BD3F-D50BDC7DD47B">
+            <Component Id="Microsoft.ui.xaml.dll.mui_55" Directory="zh_TW" Guid="*">
                 <File Id="Microsoft.ui.xaml.dll.mui_55" KeyPath="yes" Source="$(env.BuildOutputDirectory)\zh-TW\Microsoft.ui.xaml.dll.mui" />
             </Component>
-            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_55" Directory="zh_TW" Guid="6E2064B2-30A6-4902-92ED-1278DB6C747C">
+            <Component Id="Microsoft.UI.Xaml.Phone.dll.mui_55" Directory="zh_TW" Guid="*">
                 <File Id="Microsoft.UI.Xaml.Phone.dll.mui_55" KeyPath="yes" Source="$(env.BuildOutputDirectory)\zh-TW\Microsoft.UI.Xaml.Phone.dll.mui" />
             </Component>
         </ComponentGroup>
