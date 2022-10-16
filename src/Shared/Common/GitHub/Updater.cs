@@ -28,7 +28,7 @@ namespace GitHub
 
         public async Task<Release> GetLatestRelease()
         {
-            if (InstallPrereleases != true && !RegistrySettings.InstallPrereleases)
+            if ((InstallPrereleases.HasValue && !InstallPrereleases.Value) || !RegistrySettings.InstallPrereleases)
             {
                 return await Client.GetObjectAsync<Release>(UpdateUri);
             }

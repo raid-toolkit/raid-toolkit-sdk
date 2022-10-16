@@ -97,6 +97,10 @@ namespace Launcher
                     installer.CopyTo(fileStream);
                     fileStream.Close();
                 }
+                string thisProcessPath = System.Diagnostics.Process.GetCurrentProcess().MainModule!.FileName!;
+                string thisProcessDir = Path.GetDirectoryName(thisProcessPath)!;
+                string thisProcessRenamed = Path.Combine(thisProcessDir, "UpgradeLauncher.exe");
+                File.Move(thisProcessPath, thisProcessRenamed);
                 Process.Start(installerPath);
                 Close();
             }
