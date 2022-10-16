@@ -1,5 +1,75 @@
 {
   "xmlTools.splitAttributesOnFormat": false,
+  "editor.detectIndentation": false,
+  "editor.tabSize": 4,
+  "editor.fontFamily": "Operator Mono",
+  "editor.fontWeight": "300",
+  "debug.console.fontFamily": "Operator Mono",
+  "debug.console.wordWrap": false,
+  "debug.console.collapseIdenticalLines": false,
+  "terminal.integrated.fontWeight": "300",
+  "[json]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+  },
+  "[jsonc]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+  },
+  "[typescript]": {
+    "editor.detectIndentation": false,
+    "editor.tabSize": 2,
+  },
+  "[csharp]": {
+    "editor.defaultFormatter": "ms-dotnettools.csharp",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll": true
+    }
+  },
+  "omnisharp.useModernNet": true,
+  "omnisharp.defaultLaunchSolution": "SDK.sln",
+  "omnisharp.enableImportCompletion": true,
+  "omnisharp.enableEditorConfigSupport": true,
+  "omnisharp.organizeImportsOnFormat": true,
+  "omnisharp.enableRoslynAnalyzers": true,
+  // "omnisharp.useEditorFormattingSettings": true,
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": [
+          //following will be in italic (=FlottFlott)
+          "comment",
+          "comment.block",
+          "comment.block.documentation",
+          "punctuation.squarebracket.open.cs",
+          "punctuation.squarebracket.close.cs",
+          "entity.name.type.class", //class names
+          "keyword", //import, export, return…
+          "constant", //String, Number, Boolean…, this, super
+          "storage.modifier", //static keyword
+          "storage.type.class.js", //class keyword
+        ],
+        "settings": {
+          "fontStyle": "italic"
+        }
+      },
+      {
+        "scope": [
+          //following will be excluded from italics (VSCode has some defaults for italics)
+          "invalid",
+          "keyword.operator",
+          "constant.numeric.css",
+          "keyword.other.unit.px.css",
+          "constant.numeric.decimal.js",
+          "constant.numeric.json"
+        ],
+        "settings": {
+          "fontStyle": ""
+        }
+      }
+    ]
+  },
   "files.associations": {
     "appsettings.json": "jsonc",
     "algorithm": "cpp",
@@ -66,74 +136,6 @@
     "xtr1common": "cpp",
     "xtree": "cpp",
     "xutility": "cpp"
-  },
-  "editor.detectIndentation": false,
-  "editor.tabSize": 4,
-  "editor.fontFamily": "Operator Mono",
-  "editor.fontWeight": "300",
-  "terminal.integrated.shellIntegration.decorationsEnabled": true,
-  "debug.console.fontFamily": "Operator Mono",
-  "debug.console.wordWrap": false,
-  "debug.console.collapseIdenticalLines": false,
-  "terminal.integrated.fontWeight": "300",
-  "[json]": {
-    "editor.detectIndentation": false,
-    "editor.tabSize": 2,
-  },
-  "[jsonc]": {
-    "editor.detectIndentation": false,
-    "editor.tabSize": 2,
-  },
-  "[typescript]": {
-    "editor.detectIndentation": false,
-    "editor.tabSize": 2,
-  },
-  "[csharp]": {
-    "editor.defaultFormatter": "ms-dotnettools.csharp",
-    "editor.formatOnSave": true,
-    "editor.codeActionsOnSave": {
-      "source.fixAll": true
-    }
-  },
-  "omnisharp.enableEditorConfigSupport": true,
-  "omnisharp.organizeImportsOnFormat": true,
-  "omnisharp.enableRoslynAnalyzers": true,
-  // "omnisharp.useEditorFormattingSettings": true,
-  "editor.tokenColorCustomizations": {
-    "textMateRules": [
-      {
-        "scope": [
-          //following will be in italic (=FlottFlott)
-          "comment",
-          "comment.block",
-          "comment.block.documentation",
-          "punctuation.squarebracket.open.cs",
-          "punctuation.squarebracket.close.cs",
-          "entity.name.type.class", //class names
-          "keyword", //import, export, return…
-          "constant", //String, Number, Boolean…, this, super
-          "storage.modifier", //static keyword
-          "storage.type.class.js", //class keyword
-        ],
-        "settings": {
-          "fontStyle": "italic"
-        }
-      },
-      {
-        "scope": [
-          //following will be excluded from italics (VSCode has some defaults for italics)
-          "invalid",
-          "keyword.operator",
-          "constant.numeric.css",
-          "keyword.other.unit.px.css",
-          "constant.numeric.decimal.js",
-          "constant.numeric.json"
-        ],
-        "settings": {
-          "fontStyle": ""
-        }
-      }
-    ]
   },
   "files.exclude": {
     "**/.git": true,
