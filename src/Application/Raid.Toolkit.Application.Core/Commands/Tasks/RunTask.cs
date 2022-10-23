@@ -24,7 +24,10 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
 
         public async Task<int> Invoke()
         {
-            await SingletonProcess.TryAcquireSingletonWithTimeout(Options.Wait ?? 0);
+            if (!Options.Standalone)
+            {
+                await SingletonProcess.TryAcquireSingletonWithTimeout(Options.Wait ?? 0);
+            }
 
             AppHostBuilder
                 .AddExtensibility()

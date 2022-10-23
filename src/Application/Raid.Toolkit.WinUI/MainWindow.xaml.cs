@@ -79,6 +79,8 @@ namespace Raid.Toolkit.UI.WinUI
             ExtendsContentIntoTitleBar = true;
             SetTitleBar(TitleBar);
             IsShownInSwitchers = true;
+            this.SetIsMaximizable(false);
+            this.SetIsMinimizable(false);
 
             this.CenterOnScreen(400, 550);
 #pragma warning disable CS0436 // Type conflicts with imported type

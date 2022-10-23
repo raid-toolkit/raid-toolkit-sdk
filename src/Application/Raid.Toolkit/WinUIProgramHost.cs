@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.UI.Dispatching;
 
 using Raid.Toolkit.Application.Core;
@@ -22,8 +23,11 @@ namespace Raid.Toolkit.UI.WinUI
 
         public Task Start(IHost host, Action startupFunction)
         {
+            NotificationManager notificationManager = new();
+            notificationManager.Init();
             XamlCheckProcessRequirements();
             WinRT.ComWrappersSupport.InitializeComWrappers();
+            //ToastNotificationManagerCompat.OnActivated += ToastNotificationManagerCompat_OnActivated;
 
             AppHost.Start(host);
 
@@ -53,7 +57,13 @@ namespace Raid.Toolkit.UI.WinUI
                     XamlApplication.Current.Exit();
                 }
             });
+            notificationManager.Unregister();
             return Task.CompletedTask;
+        }
+
+        private void ToastNotificationManagerCompat_OnActivated(ToastNotificationActivatedEventArgsCompat e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

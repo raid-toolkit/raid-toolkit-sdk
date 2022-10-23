@@ -11,7 +11,7 @@
     },
     "Standalone": {
       "commandName": "Project",
-      "commandLineArgs": "--standalone --force-rebuild",
+      "commandLineArgs": "--standalone",
       "hotReloadEnabled": true
     },
     "Install Extension": {
