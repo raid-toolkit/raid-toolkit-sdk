@@ -2,6 +2,8 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 
+using Client.ViewModel.Notifications;
+
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Extensibility;
@@ -46,12 +48,13 @@ namespace Raid.Toolkit.UI.WinUI
                 bool hasUpdate = await UpdateService.CheckForUpdates(force: true);
                 if (!hasUpdate)
                 {
-                    AppUI.ShowNotification(
-                        "No updates",
-                        $"You are already running the latest version!",
-                        ToolTipIcon.None,
-                        kDefaultBalloonTipTimeout
-                    );
+                    Notify.SendNotification(new ToastNotification("No updates", "You are already running the latest version!", "none"));
+                    //AppUI.ShowNotification(
+                    //    "No updates",
+                    //    $"You are already running the latest version!",
+                    //    ToolTipIcon.None,
+                    //    kDefaultBalloonTipTimeout
+                    //);
                 }
             }
 
@@ -76,17 +79,30 @@ namespace Raid.Toolkit.UI.WinUI
             private readonly IAppUI AppUI;
             private readonly AppService AppService;
             private readonly UpdateService UpdateService;
+            private readonly INotificationSink Notify;
+
+            protected override void Dispose(bool disposing)
+            {
+                base.Dispose(disposing);
+                if (disposing)
+                {
+                    Notify?.Dispose();
+                }
+            }
 
             public AppTrayMenu(
                 AppService appService,
                 UpdateService updateService,
                 IMenuManager menuManager,
-                IAppUI appUI)
+                IAppUI appUI,
+                INotificationManager notificationManager)
             {
                 AppService = appService;
                 UpdateService = updateService;
                 MenuManager = menuManager;
                 AppUI = appUI;
+                Notify = notificationManager.RegisterHandler("apptray");
+                Notify.Activated += Notify_Activated;
 
                 // 
                 // this
@@ -155,6 +171,11 @@ namespace Raid.Toolkit.UI.WinUI
                 this.closeMenuItem.Size = new System.Drawing.Size(170, 22);
                 this.closeMenuItem.Text = "Close";
                 this.closeMenuItem.Click += new System.EventHandler(this.closeMenuItem_Click);
+            }
+
+            private void Notify_Activated(object? sender, NotificationActivationEventArgs e)
+            {
+                // TODO:
             }
         }
     }

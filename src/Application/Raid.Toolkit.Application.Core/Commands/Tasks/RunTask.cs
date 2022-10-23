@@ -6,6 +6,7 @@ using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Commands.Matchers;
 using Raid.Toolkit.Common;
+using Raid.Toolkit.Extensibility;
 
 namespace Raid.Toolkit.Application.Core.Commands.Tasks
 {
@@ -35,6 +36,7 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
                 .AddUI()
                 .AddAppServices()
                 .AddWebSockets(AppHost.HandleMessage);
+            AppHostBuilder.ConfigureServices(services => ProgramHost.ConfigureServices(services));
 
             IHost host = AppHostBuilder.Build();
             ConfigureHost(host);
@@ -46,7 +48,12 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
 
             await ProgramHost.Start(host, () =>
             {
-                _ = Task.Run(() => host.StartAsync());
+                _ = Task.Run(() =>
+                {
+                    host.StartAsync();
+                    INotificationManager? notificationManager = host.Services.GetService<INotificationManager>();
+                    notificationManager?.Initialize();
+                });
             });
 
             return 0;

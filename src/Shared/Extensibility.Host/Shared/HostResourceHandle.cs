@@ -2,7 +2,7 @@ using System;
 
 namespace Raid.Toolkit.Extensibility
 {
-    internal class HostResourceHandle : IDisposable
+    public class HostResourceHandle : IDisposable
     {
         private bool IsDisposed;
         private Action Callback;

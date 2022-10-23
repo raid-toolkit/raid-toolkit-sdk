@@ -84,7 +84,7 @@ namespace Raid.Toolkit.UI.WinUI
             var notifyIcon = NotifyIcon;
             if (notifyIcon == null)
                 return;
-
+            
             AppUI.Dispatch(() =>
             {
                 notifyIcon.ShowBalloonTip(timeoutMs, title, description, icon);

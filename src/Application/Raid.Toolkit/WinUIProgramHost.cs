@@ -6,6 +6,7 @@ using Microsoft.UI.Dispatching;
 using Raid.Toolkit.Application.Core;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Host;
+using Raid.Toolkit.Extensibility;
 
 using System;
 using System.Runtime.InteropServices;
@@ -21,10 +22,13 @@ namespace Raid.Toolkit.UI.WinUI
         [DllImport("Microsoft.ui.xaml.dll")]
         private static extern void XamlCheckProcessRequirements();
 
+        public void ConfigureServices(IServiceCollection services)
+        {
+            services.AddHostedServiceSingleton<INotificationManager, NotificationManager>();
+        }
+
         public Task Start(IHost host, Action startupFunction)
         {
-            NotificationManager notificationManager = new();
-            notificationManager.Init();
             XamlCheckProcessRequirements();
             WinRT.ComWrappersSupport.InitializeComWrappers();
             //ToastNotificationManagerCompat.OnActivated += ToastNotificationManagerCompat_OnActivated;
@@ -57,7 +61,6 @@ namespace Raid.Toolkit.UI.WinUI
                     XamlApplication.Current.Exit();
                 }
             });
-            notificationManager.Unregister();
             return Task.CompletedTask;
         }
 

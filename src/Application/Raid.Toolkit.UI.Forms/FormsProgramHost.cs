@@ -11,6 +11,10 @@ namespace Raid.Toolkit.UI.Forms
 {
     public class FormsProgramHost : IProgramHost
     {
+        public void ConfigureServices(IServiceCollection services)
+        {
+        }
+
         public async Task Start(IHost host, Action startupFunction)
         {
             AppHost.Start(host);

@@ -121,7 +121,7 @@ namespace Raid.Toolkit.Application.Core.Host
                 AddAppServices()
                 .ConfigureServices((context, services) => services
                     .AddHostedServiceSingleton<IAppUI, TAppUI>()
-                );
+                    );
             }
             return this;
         }
