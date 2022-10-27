@@ -97,6 +97,7 @@ namespace Launcher
                 return;
             try
             {
+                updateButton.IsEnabled = false;
                 Progress<float> progress = new(value => progressBar.Value = value);
                 string installerPath = Path.Combine(Path.GetTempPath(), "RaidToolkitSetup.exe");
                 using (Stream installer = await Updater.DownloadSetup(LatestRelease, progress))
@@ -120,6 +121,7 @@ namespace Launcher
                 latestReleaseCheck.Status = CheckStatus.Fail;
                 latestReleaseCheck.DisplayName = ex.Message;
                 latestReleaseCheck.Foreground = new SolidColorBrush(Colors.Red);
+                updateButton.IsEnabled = true;
             }
         }
 
