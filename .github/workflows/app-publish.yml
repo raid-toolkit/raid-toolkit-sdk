@@ -95,7 +95,6 @@ jobs:
           files: |
             UPGRADE_2.0.md
             publish/RTK/Raid.Toolkit.exe
-            src/Setup/out/RaidToolkit.msi
             src/Setup/out/RaidToolkitSetup.exe
             ThirdPartyNotice.txt
 

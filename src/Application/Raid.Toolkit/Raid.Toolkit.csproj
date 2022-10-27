@@ -13,7 +13,10 @@
         <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
         <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
         <IsPackable>false</IsPackable>
-
+		
+		<!-- https://github.com/dotnet/maui/issues/5886#issuecomment-1123106200 -->
+		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
+		
         <UseWinUI>true</UseWinUI>
         <WindowsPackageType>None</WindowsPackageType>
         <SelfContained>false</SelfContained>
