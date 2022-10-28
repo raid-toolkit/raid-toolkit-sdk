@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Toolkit.Uwp.Notifications;
 using Microsoft.Windows.AppNotifications;
 
 using Raid.Toolkit.Application.Core.Commands.Base;
@@ -126,15 +125,15 @@ namespace Raid.Toolkit.UI.WinUI
         {
             Post(() =>
             {
-                string xmlPayload = new ToastContentBuilder()
-                    .AddArgument("action", "viewConversation")
-                    .AddArgument("conversationId", 9813)
-                    .AddText(title)
-                    .AddText(description)
-                    .GetXml().GetXml();
+                //string xmlPayload = new ToastContentBuilder()
+                //    .AddArgument("action", "viewConversation")
+                //    .AddArgument("conversationId", 9813)
+                //    .AddText(title)
+                //    .AddText(description)
+                //    .GetXml().GetXml();
 
-                var toast = new AppNotification(xmlPayload);
-                AppNotificationManager.Default.Show(toast);
+                //var toast = new AppNotification(xmlPayload);
+                //AppNotificationManager.Default.Show(toast);
                 //AppTray?.ShowNotification(title, description, icon, timeoutMs, onActivate);
             });
         }

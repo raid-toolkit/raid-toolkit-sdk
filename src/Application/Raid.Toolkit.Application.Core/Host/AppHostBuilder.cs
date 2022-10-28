@@ -13,6 +13,7 @@ using Raid.Toolkit.Extensibility.Host;
 using Raid.Toolkit.Extensibility.Host.Services;
 using SuperSocket.WebSocket;
 using SuperSocket.WebSocket.Server;
+using Raid.Toolkit.Extensibility.Interfaces;
 
 namespace Raid.Toolkit.Application.Core.Host
 {
@@ -80,7 +81,7 @@ namespace Raid.Toolkit.Application.Core.Host
             if (TryAddFeature(Feature.AppServices))
             {
                 ConfigureServices((context, services) => services
-                    .AddSingleton<AppService>()
+                    .AddSingleton<IAppService, AppService>()
                     .AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)
                     .Configure<AppSettings>(opts => context.Configuration.GetSection("app").Bind(opts))
                     .Configure<ProcessManagerSettings>(opts => context.Configuration.GetSection("app:ProcessManager").Bind(opts))

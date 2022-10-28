@@ -41,7 +41,7 @@
 
     <ItemGroup>
         <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
-        <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="7.1.2" />
+        <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.4" GeneratePathProperty="true" />
         <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
         <PackageReference Include="WinUIEx" Version="1.8.0" />

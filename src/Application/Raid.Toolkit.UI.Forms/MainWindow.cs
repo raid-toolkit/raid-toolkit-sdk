@@ -14,6 +14,7 @@ using Raid.Toolkit.Model;
 using Raid.Toolkit.UI.Forms;
 
 using ErrorEventArgs = Raid.Toolkit.Extensibility.Host.Services.ErrorEventArgs;
+using Raid.Toolkit.Extensibility.Interfaces;
 
 namespace Raid.Toolkit.UI.Forms
 {
@@ -22,7 +23,7 @@ namespace Raid.Toolkit.UI.Forms
         private const int kDefaultBalloonTipTimeout = 10000;
         private GitHub.Schema.Release? LatestRelease;
         private readonly UpdateService UpdateService;
-        private readonly AppService AppService;
+        private readonly IAppService AppService;
         private readonly ILogger<MainWindow> Logger;
         private readonly RunOptions RunOptions;
         private readonly IOptions<ProcessManagerSettings> Settings;
@@ -38,7 +39,7 @@ namespace Raid.Toolkit.UI.Forms
             IOptions<ProcessManagerSettings> settings,
             ILogger<MainWindow> logger,
             UpdateService updateService,
-            AppService mainService,
+            IAppService mainService,
             RunOptions runOptions,
             ErrorService errorService,
             IMenuManager menuManager,
@@ -211,10 +212,7 @@ namespace Raid.Toolkit.UI.Forms
 
         private void InstallUpdate()
         {
-            if (LatestRelease == null)
-                return;
-
-            AppService.InstallUpdate(LatestRelease);
+            UpdateService.InstallUpdate();
         }
 
         private void closeMenuItem_Click(object sender, EventArgs e)
@@ -239,7 +237,7 @@ namespace Raid.Toolkit.UI.Forms
 
         private async void checkUpdatesMenuItem_Click(object sender, EventArgs e)
         {
-            bool hasUpdate = await UpdateService.CheckForUpdates(force: true);
+            bool hasUpdate = await UpdateService.CheckForUpdates(userRequested: true, force: true);
             if (!hasUpdate)
             {
                 //ShowBalloonTip(

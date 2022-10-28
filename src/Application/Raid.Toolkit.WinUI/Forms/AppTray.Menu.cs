@@ -8,6 +8,8 @@ using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host.Services;
+using Raid.Toolkit.Extensibility.Interfaces;
+using Raid.Toolkit.Extensibility.Notifications;
 using Raid.Toolkit.UI.WinUI.Forms;
 
 namespace Raid.Toolkit.UI.WinUI
@@ -40,15 +42,16 @@ namespace Raid.Toolkit.UI.WinUI
 
             private void installUpdateMenuItem_Click(object? sender, EventArgs e)
             {
-                AppService.InstallUpdate();
+                UpdateService.InstallUpdate();
+                AppService.Exit();
             }
 
             private async void checkUpdatesMenuItem_Click(object? sender, EventArgs e)
             {
-                bool hasUpdate = await UpdateService.CheckForUpdates(force: true);
+                bool hasUpdate = await UpdateService.CheckForUpdates(userRequested: true, force: true);
                 if (!hasUpdate)
                 {
-                    Notify.SendNotification(new ToastNotification("No updates", "You are already running the latest version!", "none"));
+                    // Notify.SendNotification(new ToastNotification("No updates", "You are already running the latest version!", "none"));
                     //AppUI.ShowNotification(
                     //    "No updates",
                     //    $"You are already running the latest version!",
@@ -77,7 +80,7 @@ namespace Raid.Toolkit.UI.WinUI
             private readonly ToolStripMenuItem manageExtensionsToolStripMenuItem = new();
             private readonly IMenuManager MenuManager;
             private readonly IAppUI AppUI;
-            private readonly AppService AppService;
+            private readonly IAppService AppService;
             private readonly UpdateService UpdateService;
             private readonly INotificationSink Notify;
 
@@ -91,7 +94,7 @@ namespace Raid.Toolkit.UI.WinUI
             }
 
             public AppTrayMenu(
-                AppService appService,
+                IAppService appService,
                 UpdateService updateService,
                 IMenuManager menuManager,
                 IAppUI appUI,

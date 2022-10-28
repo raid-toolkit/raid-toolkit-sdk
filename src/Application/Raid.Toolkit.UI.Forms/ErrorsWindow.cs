@@ -7,17 +7,18 @@ using Microsoft.Extensions.Options;
 
 using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Extensibility.Host.Services;
+using Raid.Toolkit.Extensibility.Interfaces;
 
 namespace Raid.Toolkit.UI.Forms
 {
     public partial class ErrorsWindow : Form
     {
-        private readonly AppService AppService;
+        private readonly IAppService AppService;
         private readonly ErrorService ErrorService;
         private readonly FileLoggerOptions? LoggerSettings;
         private readonly string? LogDirectory;
 
-        public ErrorsWindow(ErrorService errorService, AppService appService, IOptions<FileLoggerOptions> loggerSettings)
+        public ErrorsWindow(ErrorService errorService, IAppService appService, IOptions<FileLoggerOptions> loggerSettings)
         {
             InitializeComponent();
             AppService = appService;

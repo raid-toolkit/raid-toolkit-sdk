@@ -6,6 +6,7 @@ using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Commands.Matchers;
 using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Extensibility;
+using Raid.Toolkit.Extensibility.Interfaces;
 
 using FormsApplication = System.Windows.Forms.Application;
 
@@ -13,7 +14,7 @@ namespace Raid.Toolkit.UI.Forms
 {
     public class AppForms : IAppUI, IHostedService, IDisposable
     {
-        private readonly AppService AppService;
+        private readonly IAppService AppService;
         private readonly IServiceProvider ServiceProvider;
         private bool IsDisposed;
 
@@ -52,7 +53,7 @@ namespace Raid.Toolkit.UI.Forms
             FormsSynchronizationContext = new WindowsFormsSynchronizationContext();
         }
 
-        public AppForms(IServiceProvider serviceProvider, AppService appService)
+        public AppForms(IServiceProvider serviceProvider, IAppService appService)
         {
             ServiceProvider = serviceProvider;
             AppService = appService;

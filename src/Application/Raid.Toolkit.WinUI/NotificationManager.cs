@@ -1,43 +1,18 @@
-using Microsoft.Extensions.Hosting;
-using Microsoft.Toolkit.Uwp.Notifications;
-using Microsoft.Windows.AppNotifications;
-
-using Raid.Toolkit.Extensibility;
-
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.Windows.AppNotifications;
+using Raid.Toolkit.Application.Core;
+using Raid.Toolkit.Common;
+using Raid.Toolkit.Extensibility;
 
 namespace Raid.Toolkit.UI.WinUI
 {
-    public class ToastNotification : INotification
-    {
-        private readonly string Title;
-        private readonly string Message;
-        private readonly string Action;
-        public string ScenarioId { get; set; } = String.Empty;
-
-        public ToastNotification(string title, string message, string action)
-        {
-            Title = title;
-            Message = message;
-            Action = action;
-        }
-
-        public string GetXml()
-        {
-            return new ToastContentBuilder()
-                .AddArgument(NotificationConstants.ScenarioId, ScenarioId)
-                .AddArgument("action", Action)
-                .AddText(Title)
-                .AddText(Message)
-                .GetXml().GetXml();
-        }
-    }
-
     public class NotificationSink : INotificationSink
     {
         private readonly NotificationManager NotificationManager;
@@ -52,10 +27,10 @@ namespace Raid.Toolkit.UI.WinUI
             ScenarioId = scenarioId;
         }
 
-        public void SendNotification(INotification appNotification)
+        public void SendNotification(INotification notification)
         {
-            appNotification.ScenarioId = ScenarioId;
-            AppNotification toast = new(appNotification.GetXml());
+            notification.ScenarioId = ScenarioId;
+            AppNotification toast = new(notification.GetXml());
             AppNotificationManager.Default.Show(toast);
         }
 
@@ -70,7 +45,7 @@ namespace Raid.Toolkit.UI.WinUI
             {
                 if (disposing)
                 {
-                    NotificationManager.UnregisterHandler(ScenarioId);
+                    _ = NotificationManager.UnregisterHandler(ScenarioId);
                 }
 
                 IsDisposed = true;
@@ -89,11 +64,13 @@ namespace Raid.Toolkit.UI.WinUI
     {
         private volatile bool IsRegistered;
 
+        private readonly ILogger<NotificationManager> Logger;
         private readonly ConcurrentDictionary<string, NotificationSink> NotificationHandlers = new();
 
-        public NotificationManager()
+        public NotificationManager(ILogger<NotificationManager> logger)
         {
             IsRegistered = false;
+            Logger = logger;
         }
 
         ~NotificationManager()
@@ -104,10 +81,9 @@ namespace Raid.Toolkit.UI.WinUI
         public INotificationSink RegisterHandler(string scenarioId)
         {
             NotificationSink sink = new(this, scenarioId);
-            if (!NotificationHandlers.TryAdd(scenarioId, sink))
-                throw new ArgumentException("Scenario already has a handler registered", nameof(scenarioId));
-
-            return sink;
+            return !NotificationHandlers.TryAdd(scenarioId, sink)
+                ? throw new ArgumentException("Scenario already has a handler registered", nameof(scenarioId))
+                : (INotificationSink)sink;
         }
 
         public bool UnregisterHandler(string scenarioId)
@@ -155,19 +131,19 @@ namespace Raid.Toolkit.UI.WinUI
             {
                 sink.Handle(args, inputs);
             }
-            catch
+            catch (Exception ex)
             {
-                // TODO: Log error
+                Logger.LogError(ApplicationError.NotificationHandlerError.EventId(), ex, "An exception occurred handling notification activation");
                 return false;
             }
             return true;
         }
 
-        void OnNotificationInvoked(object sender, AppNotificationActivatedEventArgs notificationActivatedEventArgs)
+        private void OnNotificationInvoked(object sender, AppNotificationActivatedEventArgs notificationActivatedEventArgs)
         {
             if (!DispatchNotification(notificationActivatedEventArgs))
             {
-                // TODO: Log lossy notification
+                Logger.LogError(ApplicationError.NotificationHandlerNotFound.EventId(), "Notification handler not found");
             }
         }
 
