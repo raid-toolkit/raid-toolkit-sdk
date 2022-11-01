@@ -1,15 +1,20 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
+
+using CommunityToolkit.WinUI.Notifications;
+
 using GitHub;
 using GitHub.Schema;
 using Il2CppToolkit.Common.Errors;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Raid.Toolkit.Common;
+using Raid.Toolkit.Extensibility.Interfaces;
 using Raid.Toolkit.Extensibility.Notifications;
 
 namespace Raid.Toolkit.Extensibility.Host.Services
@@ -30,6 +35,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
         }
 
         private readonly Updater Updater;
+        private readonly IAppService AppService;
         private readonly INotificationSink Notify;
         private readonly bool Enabled;
         private readonly Version CurrentVersion;
@@ -42,6 +48,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
         public UpdateService(
             ILogger<UpdateService> logger,
             IOptions<UpdateSettings> settings,
+            IAppService appService,
             Updater updater,
             INotificationManager notificationManager)
             : base(logger)
@@ -50,6 +57,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             ErrorHandler.VerifyElseThrow(fileVersion != null, ServiceError.UnhandledException, "Missing version information");
             CurrentVersion = Version.Parse(fileVersion!);
             Updater = updater;
+            AppService = appService;
             Enabled = RegistrySettings.AutomaticallyCheckForUpdates;
             _PollInterval = settings.Value.PollIntervalMs > 0 ? TimeSpan.FromMilliseconds(settings.Value.PollIntervalMs) : new TimeSpan(0, 15, 0);
 
@@ -59,11 +67,17 @@ namespace Raid.Toolkit.Extensibility.Host.Services
 
         private void Notify_Activated(object? sender, NotificationActivationEventArgs e)
         {
-            if (e.Arguments.TryGetValue("action", out string? action) && action == "install-update")
+            if (e.Arguments.TryGetValue(NotificationConstants.Action, out string? action))
             {
-
+                switch (action)
+                {
+                    case "install-update":
+                        {
+                            InstallUpdate();
+                            break;
+                        }
+                }
             }
-            // throw new NotImplementedException();
         }
 
         public Task InstallUpdate()
@@ -85,7 +99,8 @@ namespace Raid.Toolkit.Extensibility.Host.Services
                     newRelease.CopyTo(newFile);
                 }
 
-                _ = Process.Start(tempDownload, "/install LaunchAfterInstallation=1");
+                _ = Process.Start(tempDownload, "/update LaunchAfterInstallation=1");
+                AppService.Exit();
             }
             catch (Exception ex)
             {
@@ -121,20 +136,22 @@ namespace Raid.Toolkit.Extensibility.Host.Services
                 {
                     PendingRelease = release;
                     UpdateAvailable?.Raise(this, new(release));
-                    ToastNotification notification = new(
-                        "Update available",
-                        $"A new version has been released!\n{release.TagName} is now available for install. Click here to install and update!",
-                        "install-update"
-                        );
-                    Notify.SendNotification(notification);
+                    ToastContentBuilder tcb = new ToastContentBuilder()
+                        .AddText("Update available")
+                        .AddText($"A new version has been released!\n{release.TagName} is now available for install. Click here to install and update!")
+                        .AddButton(new ToastButton("Update now", "install-update"))
+                        .AddButton(new ToastButtonSnooze("Update later"))
+                        .AddButton(new ToastButtonDismiss());
+                    Notify.SendNotification(tcb.Content);
                     return true;
                 }
             }
             else if (userRequested)
             {
-                ToastNotification notification = new("No updates", "You are already running the latest version!", "none");
-                Notify.SendNotification(notification);
-
+                ToastContentBuilder tcb = new ToastContentBuilder()
+                    .AddText("No updates")
+                    .AddText("You are already running the latest version!");
+                Notify.SendNotification(tcb.Content);
             }
             return false;
         }

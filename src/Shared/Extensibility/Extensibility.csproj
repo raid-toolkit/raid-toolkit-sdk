@@ -1,19 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net6.0-windows</TargetFrameworks>
-        <LangVersion>10.0</LangVersion>
         <RootNamespace>Raid.Toolkit.Extensibility</RootNamespace>
         <AssemblyName>Raid.Toolkit.Extensibility</AssemblyName>
-        <UseWindowsForms>true</UseWindowsForms>
-        <Platforms>x64</Platforms>
+		<UseWindowsForms>true</UseWindowsForms>
     </PropertyGroup>
+	<Import Project="$(BuildTargetProps)"/>
 
     <ItemGroup>
+        <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
         <PackageReference Include="il2cpptoolkit.common" Version="2.0.101-alpha" />
         <PackageReference Include="il2cpptoolkit.metadata" Version="2.0.101-alpha" />
         <PackageReference Include="il2cpptoolkit.runtime" Version="2.0.101-alpha" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.4" />
     </ItemGroup>
 
     <ItemGroup>

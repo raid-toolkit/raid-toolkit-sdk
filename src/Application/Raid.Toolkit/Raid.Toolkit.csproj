@@ -1,21 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(BuildTargetProps)" />
 
-    <PropertyGroup>
+	<PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFrameworks>net6.0-windows10.0.19041.0</TargetFrameworks>
-        <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-        <LangVersion>10.0</LangVersion>
         <Nullable>enable</Nullable>
         <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <ApplicationIcon>..\Assets\AppIcon.ico</ApplicationIcon>
-        <Platforms>x64</Platforms>
-        <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
-        <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
         <IsPackable>false</IsPackable>
-		
-		<!-- https://github.com/dotnet/maui/issues/5886#issuecomment-1123106200 -->
-		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
 		
         <UseWinUI>true</UseWinUI>
         <WindowsPackageType>None</WindowsPackageType>
@@ -23,7 +15,7 @@
         <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     </PropertyGroup>
 
-    <ItemGroup>
+	<ItemGroup>
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.4" GeneratePathProperty="true" />
         <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
         <Manifest Include="$(ApplicationManifest)" />

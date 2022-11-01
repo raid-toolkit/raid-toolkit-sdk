@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+
+using CommunityToolkit.WinUI.Notifications;
+
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Windows.AppNotifications;
@@ -27,11 +30,11 @@ namespace Raid.Toolkit.UI.WinUI
             ScenarioId = scenarioId;
         }
 
-        public void SendNotification(INotification notification)
+        public AppNotification SendNotification(ToastContent content)
         {
-            notification.ScenarioId = ScenarioId;
-            AppNotification toast = new(notification.GetXml());
+            AppNotification toast = new(content.GetContent());
             AppNotificationManager.Default.Show(toast);
+            return toast;
         }
 
         internal void Handle(IReadOnlyDictionary<string, string> args, IReadOnlyDictionary<string, string> inputs)

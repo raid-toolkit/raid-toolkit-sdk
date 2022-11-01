@@ -14,5 +14,6 @@
         <RootDirectory>$(MSBuildThisFileDirectory)</RootDirectory>
         <BinDir>$(RootDirectory)bin\</BinDir>
         <SourceDir>$(RootDirectory)src\</SourceDir>
+		<BuildTargetProps>$(RootDirectory)BuildTargets.Props</BuildTargetProps>
     </PropertyGroup>
 </Project>

@@ -1,3 +1,7 @@
+using CommunityToolkit.WinUI.Notifications;
+
+using Microsoft.Windows.AppNotifications;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +29,7 @@ namespace Raid.Toolkit.Extensibility
     public interface INotificationSink : IDisposable
     {
         public event EventHandler<NotificationActivationEventArgs> Activated;
-        void SendNotification(INotification notification);
+        AppNotification SendNotification(ToastContent notification);
     }
     public interface INotificationManager
     {
@@ -35,5 +39,6 @@ namespace Raid.Toolkit.Extensibility
     public static class NotificationConstants
     {
         public static string ScenarioId => "scenarioId";
+        public static string Action => "action";
     }
 }
