@@ -13,6 +13,8 @@
         <WindowsPackageType>None</WindowsPackageType>
         <SelfContained>false</SelfContained>
         <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+		<AssemblyTitle>Raid Toolkit</AssemblyTitle>
+		<ProductName>Raid Toolkit</ProductName>
     </PropertyGroup>
 
 	<ItemGroup>

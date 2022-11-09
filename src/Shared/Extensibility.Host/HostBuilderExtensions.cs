@@ -2,6 +2,7 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host.Services;
+using Raid.Toolkit.Extensibility.Notifications;
 using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
 using Raid.Toolkit.Model;
@@ -53,6 +54,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 .AddHostedServiceSingleton<UpdateService>()
                 .AddHostedService<ApplicationHost>()
                 .AddHostedService<ServiceExecutor>()
+                .AddHostedServiceSingleton<INotificationManager, NotificationManager>()
                 .AddHostedServiceSingleton<IDataStorageReaderWriter, FileStorageService>()
             ;
         }

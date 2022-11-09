@@ -11,7 +11,6 @@ using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Model;
-using Raid.Toolkit.UI.Forms;
 
 using ErrorEventArgs = Raid.Toolkit.Extensibility.Host.Services.ErrorEventArgs;
 using Raid.Toolkit.Extensibility.Interfaces;
@@ -20,8 +19,6 @@ namespace Raid.Toolkit.UI.Forms
 {
     internal partial class MainWindow : Form
     {
-        private const int kDefaultBalloonTipTimeout = 10000;
-        private GitHub.Schema.Release? LatestRelease;
         private readonly UpdateService UpdateService;
         private readonly IAppService AppService;
         private readonly ILogger<MainWindow> Logger;
@@ -57,9 +54,6 @@ namespace Raid.Toolkit.UI.Forms
             SettingsStorage = settingsStorage;
             MenuManager = menuManager;
             ErrorsWindow = ActivatorUtilities.CreateInstance<ErrorsWindow>(ServiceProvider);
-
-            // must trigger load here
-            UpdateService.UpdateAvailable += OnUpdateAvailable;
 
             // subscribe to error events
             ErrorService.OnErrorAdded += OnErrorAdded;
@@ -190,24 +184,6 @@ namespace Raid.Toolkit.UI.Forms
             SettingsStorage.Write<UserSettings>(SettingsDataContext.Default, ".usersettings", settings);
             Logger.LogInformation(ServiceEvent.UserPermissionAccept.EventId(), $"Permission accepted for {origin}");
             return true;
-        }
-
-        private void OnUpdateAvailable(object? sender, UpdateService.UpdateAvailbleEventArgs e)
-        {
-            InvokeIfNeeded(() =>
-            {
-                if (LatestRelease?.TagName == e.Release.TagName)
-                    return; // already notified for this update
-
-                LatestRelease = e.Release;
-                //ShowBalloonTip(
-                //    kDefaultBalloonTipTimeout,
-                //    "Update available",
-                //    $"A new version has been released!\n{e.Release.TagName} is now available for install. Click here to install and update!",
-                //    ToolTipIcon.Info,
-                //    InstallUpdate);
-                //installUpdateMenuItem.Visible = true;
-            });
         }
 
         private void InstallUpdate()

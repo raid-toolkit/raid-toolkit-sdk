@@ -23,7 +23,6 @@ namespace Raid.Toolkit.UI.WinUI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddHostedServiceSingleton<INotificationManager, NotificationManager>();
         }
 
         public Task Start(IHost host, Action startupFunction)

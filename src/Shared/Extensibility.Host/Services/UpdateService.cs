@@ -96,6 +96,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
 
                 using (Stream newFile = File.Create(tempDownload))
                 {
+                    newRelease.Seek(0, SeekOrigin.Begin);
                     newRelease.CopyTo(newFile);
                 }
 
@@ -139,7 +140,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
                     ToastContentBuilder tcb = new ToastContentBuilder()
                         .AddText("Update available")
                         .AddText($"A new version has been released!\n{release.TagName} is now available for install. Click here to install and update!")
-                        .AddButton(new ToastButton("Update now", "install-update"))
+                        .AddButton(new ToastButton("Update now", Notify.GetArguments("install-update")))
                         .AddButton(new ToastButtonSnooze("Update later"))
                         .AddButton(new ToastButtonDismiss());
                     Notify.SendNotification(tcb.Content);

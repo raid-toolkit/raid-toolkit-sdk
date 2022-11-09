@@ -7,7 +7,7 @@
     <Identity Name="4890c5ca-14c9-4dd3-a1c3-4a489733f5e1" Publisher="CN=Daniel Chattan" Version="1.0.0.0" />
 
     <Properties>
-        <DisplayName>SelfContainedDeployment</DisplayName>
+        <DisplayName>Raid Toolkit</DisplayName>
         <PublisherDisplayName>Daniel Chattan</PublisherDisplayName>
         <Logo>Assets\logo.png</Logo>
     </Properties>
@@ -23,6 +23,7 @@
 
     <Applications>
         <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="$targetentrypoint$">
+            <uap:VisualElements DisplayName="Raid Toolkit" Description="Raid Toolkit" BackgroundColor="transparent" />
             <Extensions>
                 <!--Specify which CLSID to activate when toast clicked-->
                 <desktop:Extension Category="windows.toastNotificationActivation">
