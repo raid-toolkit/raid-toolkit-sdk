@@ -90,7 +90,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             try
             {
                 Stream newRelease = await Updater.DownloadSetup(release, null);
-                string tempDownload = Path.Combine(RegistrySettings.InstallationPath, $"RaidToolkitSetup.{release.TagName}.exe");
+                string tempDownload = Path.Combine(Path.GetTempPath(), $"RaidToolkitSetup.exe");
                 if (File.Exists(tempDownload))
                     File.Delete(tempDownload);
 

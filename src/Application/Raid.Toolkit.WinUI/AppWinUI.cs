@@ -121,23 +121,6 @@ namespace Raid.Toolkit.UI.WinUI
             return false;
         }
 
-        public void ShowNotification(string title, string description, System.Windows.Forms.ToolTipIcon icon, int timeoutMs, Action? onActivate = null)
-        {
-            Post(() =>
-            {
-                //string xmlPayload = new ToastContentBuilder()
-                //    .AddArgument("action", "viewConversation")
-                //    .AddArgument("conversationId", 9813)
-                //    .AddText(title)
-                //    .AddText(description)
-                //    .GetXml().GetXml();
-
-                //var toast = new AppNotification(xmlPayload);
-                //AppNotificationManager.Default.Show(toast);
-                //AppTray?.ShowNotification(title, description, icon, timeoutMs, onActivate);
-            });
-        }
-
         protected virtual void Dispose(bool disposing)
         {
             if (!IsDisposed)

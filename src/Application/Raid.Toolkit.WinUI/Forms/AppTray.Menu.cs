@@ -48,17 +48,7 @@ namespace Raid.Toolkit.UI.WinUI
 
             private async void checkUpdatesMenuItem_Click(object? sender, EventArgs e)
             {
-                bool hasUpdate = await UpdateService.CheckForUpdates(userRequested: true, force: true);
-                if (!hasUpdate)
-                {
-                    // Notify.SendNotification(new ToastNotification("No updates", "You are already running the latest version!", "none"));
-                    //AppUI.ShowNotification(
-                    //    "No updates",
-                    //    $"You are already running the latest version!",
-                    //    ToolTipIcon.None,
-                    //    kDefaultBalloonTipTimeout
-                    //);
-                }
+                _ = await UpdateService.CheckForUpdates(userRequested: true, force: true);
             }
 
             private void closeMenuItem_Click(object? sender, EventArgs e)

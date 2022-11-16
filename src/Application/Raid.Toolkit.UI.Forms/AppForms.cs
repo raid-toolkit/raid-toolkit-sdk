@@ -168,14 +168,6 @@ namespace Raid.Toolkit.UI.Forms
             return result == DialogResult.OK;
         }
 
-        public void ShowNotification(string title, string description, System.Windows.Forms.ToolTipIcon icon, int timeoutMs, Action? onActivate = null)
-        {
-            Dispatch(() =>
-            {
-                AppTray?.ShowNotification(title, description, icon, timeoutMs, onActivate);
-            });
-        }
-
         public void ShowSettings()
         {
             ShowAndTrack<SettingsWindow>();

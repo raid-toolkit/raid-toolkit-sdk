@@ -38,16 +38,7 @@ namespace Raid.Toolkit.UI.Forms
 
         private async void checkUpdatesMenuItem_Click(object? sender, EventArgs e)
         {
-            bool hasUpdate = await UpdateService.CheckForUpdates(userRequested: true, force: true);
-            if (!hasUpdate)
-            {
-                //AppUI.ShowNotification(
-                //    "No updates",
-                //    $"You are already running the latest version!",
-                //    ToolTipIcon.None,
-                //    kDefaultBalloonTipTimeout
-                //);
-            }
+            _ = await UpdateService.CheckForUpdates(userRequested: true, force: true);
         }
 
         private void closeMenuItem_Click(object? sender, EventArgs e)

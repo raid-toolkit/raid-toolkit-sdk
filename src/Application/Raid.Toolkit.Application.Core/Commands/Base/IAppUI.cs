@@ -16,6 +16,5 @@ namespace Raid.Toolkit.Application.Core.Commands.Base
         void ShowSettings();
         void ShowErrors();
         void ShowExtensionManager();
-        void ShowNotification(string title, string description, System.Windows.Forms.ToolTipIcon icon, int timeoutMs, Action? onActivate = null);
     }
 }
