@@ -52,20 +52,26 @@ namespace Raid.Toolkit.UI.WinUI
                 finally
                 {
                     IHostApplicationLifetime lifetimeService = host.Services.GetRequiredService<IHostApplicationLifetime>();
-                    try
+                    CancellationTokenSource tokenSource = new(5000);
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    Task.Run(async () =>
                     {
-                        lifetimeService.StopApplication();
-                        await host.StopAsync();
-                    }
-                    catch (Exception e)
-                    {
-                        endTask.SetException(e);
-                    }
-                    finally
-                    {
-                        XamlApplication.Current.Exit();
-                        endTask.TrySetResult();
-                    }
+                        try
+                        {
+                            lifetimeService.StopApplication();
+                            await host.StopAsync(tokenSource.Token);
+                        }
+                        catch (Exception e)
+                        {
+                            endTask.SetException(e);
+                        }
+                        finally
+                        {
+                            XamlApplication.Current.Exit();
+                            endTask.TrySetResult();
+                        }
+                    });
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 }
             });
             return endTask.Task;

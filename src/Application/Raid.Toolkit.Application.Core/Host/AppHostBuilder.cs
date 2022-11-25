@@ -82,7 +82,7 @@ namespace Raid.Toolkit.Application.Core.Host
             {
                 ConfigureServices((context, services) => services
                     .AddSingleton<IAppService, AppService>()
-                    .AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)
+                    //.AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)
                     .Configure<AppSettings>(opts => context.Configuration.GetSection("app").Bind(opts))
                     .Configure<ProcessManagerSettings>(opts => context.Configuration.GetSection("app:ProcessManager").Bind(opts))
                     .Configure<DataUpdateSettings>(opts => context.Configuration.GetSection("app:DataSettings").Bind(opts))
@@ -107,10 +107,10 @@ namespace Raid.Toolkit.Application.Core.Host
         {
             if (TryAddFeature(Feature.Logging))
             {
-                ConfigureServices((context, services) => services
-                    .AddSingleton<IOptionsMonitor<FileLoggerOptions>>(AppHostBuilderSettings.FileLoggerOptions)
-                    .AddLogging(builder => builder.AddFile())
-                    );
+                //ConfigureServices((context, services) => services
+                //    .AddSingleton<IOptionsMonitor<FileLoggerOptions>>(AppHostBuilderSettings.FileLoggerOptions)
+                //    .AddLogging(builder => builder.AddFile())
+                //    );
             }
             return this;
         }
@@ -131,13 +131,13 @@ namespace Raid.Toolkit.Application.Core.Host
         {
             if (TryAddFeature(Feature.WebSocket))
             {
-                Wrap(HostBuilder.AsWebSocketHostBuilder()
-                    .UseSessionFactory<SessionFactory>()
-                    .UseWebSocketMessageHandler(messageHandler)
-                    .ConfigureAppConfiguration(config => config
-                        .AddJsonStream(AppHost.GetEmbeddedSettings())
-                        .AddJsonFile(Path.Combine(AppHost.ExecutableDirectory, "appsettings.json"), true)
-                    ));
+                //Wrap(HostBuilder.AsWebSocketHostBuilder()
+                //    .UseSessionFactory<SessionFactory>()
+                //    .UseWebSocketMessageHandler(messageHandler)
+                //    .ConfigureAppConfiguration(config => config
+                //        .AddJsonStream(AppHost.GetEmbeddedSettings())
+                //        .AddJsonFile(Path.Combine(AppHost.ExecutableDirectory, "appsettings.json"), true)
+                //    ));
             }
             return this;
         }

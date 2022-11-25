@@ -7,11 +7,15 @@ using System.Threading.Tasks;
 
 using CommunityToolkit.WinUI.Notifications;
 
+using Il2CppToolkit.Common.Errors;
+
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Windows.AppNotifications;
 
 using Raid.Toolkit.Common;
+
+using Windows.Foundation.Metadata;
 
 namespace Raid.Toolkit.Extensibility.Notifications
 {
@@ -76,12 +80,13 @@ namespace Raid.Toolkit.Extensibility.Notifications
         private volatile bool IsRegistered;
 
         private readonly ILogger<NotificationManager> Logger;
-        private readonly ConcurrentDictionary<string, NotificationSink> NotificationHandlers = new();
+        private readonly ConcurrentDictionary<string, object> NotificationHandlers = new();
 
         public NotificationManager(ILogger<NotificationManager> logger)
         {
             IsRegistered = false;
             Logger = logger;
+            Initialize();
         }
 
         ~NotificationManager()
@@ -92,9 +97,19 @@ namespace Raid.Toolkit.Extensibility.Notifications
         public INotificationSink RegisterHandler(string scenarioId)
         {
             NotificationSink sink = new(this, scenarioId);
-            return !NotificationHandlers.TryAdd(scenarioId, sink)
-                ? throw new ArgumentException("Scenario already has a handler registered", nameof(scenarioId))
-                : (INotificationSink)sink;
+            NotificationHandlers.AddOrUpdate(scenarioId, sink, (scenarioId, entry) =>
+            {
+                if (entry is AppNotificationActivatedEventArgs eventArgs)
+                {
+                    DispatchNotificationArgs(sink, eventArgs);
+                }
+                else
+                {
+                    throw new ArgumentException("Scenario already has a handler registered", nameof(scenarioId));
+                }
+                return sink;
+            });
+            return sink;
         }
 
         public bool UnregisterHandler(string scenarioId)
@@ -124,28 +139,43 @@ namespace Raid.Toolkit.Extensibility.Notifications
             }
         }
 
-        public bool DispatchNotification(AppNotificationActivatedEventArgs notificationActivatedEventArgs)
+        private static void DispatchNotificationArgs(NotificationSink sink, AppNotificationActivatedEventArgs notificationActivatedEventArgs)
         {
             string arg = notificationActivatedEventArgs.Argument;
-            if (!arg.Contains('=')) // not kvp?
-            {
-                arg = $"{NotificationConstants.Action}={arg}";
-            }
-            IReadOnlyDictionary<string, string> args = arg
-                .Split(';')
-                .Select(v => v.Split('='))
-                .ToDictionary(kvp => kvp[0], kvp => kvp[1]);
+            IReadOnlyDictionary<string, string> args = ParseArgs(ref arg);
             Dictionary<string, string> inputs = new(notificationActivatedEventArgs.UserInput);
-            if (!args.TryGetValue(NotificationConstants.ScenarioId, out string? scenarioId)
-                || string.IsNullOrEmpty(scenarioId)
-                || !NotificationHandlers.TryGetValue(scenarioId, out NotificationSink? sink)
-                || sink == null)
+            sink.Handle(args, inputs);
+        }
+
+        public bool HandleNotificationActivated(AppNotificationActivatedEventArgs notificationActivatedEventArgs)
+        {
+            string arg = notificationActivatedEventArgs.Argument;
+            IReadOnlyDictionary<string, string> args = ParseArgs(ref arg);
+            if (!args.TryGetValue(NotificationConstants.ScenarioId, out string? scenarioId) || string.IsNullOrEmpty(scenarioId))
             {
                 return false;
             }
             try
             {
-                sink.Handle(args, inputs);
+                if (!NotificationHandlers.TryGetValue(scenarioId, out object? entry))
+                {
+                    if (!NotificationHandlers.TryAdd(scenarioId, notificationActivatedEventArgs))
+                    {
+                        throw new ApplicationException("Duplicate NotificationActivatedEvent is unexpected");
+                    }
+                }
+                else if (entry is NotificationSink sink)
+                {
+                    DispatchNotificationArgs(sink, notificationActivatedEventArgs);
+                }
+                else if (entry is AppNotificationActivatedEventArgs)
+                {
+                    throw new ApplicationException("Duplicate NotificationActivatedEvent is unexpected");
+                }
+                else
+                {
+                    throw new ApplicationException($"Unexpected value type {entry.GetType().Name} in NotificationHandlers");
+                }
             }
             catch (Exception ex)
             {
@@ -157,10 +187,23 @@ namespace Raid.Toolkit.Extensibility.Notifications
 
         private void OnNotificationInvoked(object sender, AppNotificationActivatedEventArgs notificationActivatedEventArgs)
         {
-            if (!DispatchNotification(notificationActivatedEventArgs))
+            if (!HandleNotificationActivated(notificationActivatedEventArgs))
             {
                 Logger.LogError(HostError.NotificationHandlerNotFound.EventId(), "Notification handler not found");
             }
+        }
+
+        private static IReadOnlyDictionary<string, string> ParseArgs(ref string arg)
+        {
+            if (!arg.Contains('=')) // not kvp?
+            {
+                arg = $"{NotificationConstants.Action}={arg}";
+            }
+            IReadOnlyDictionary<string, string> args = arg
+                .Split(';')
+                .Select(v => v.Split('='))
+                .ToDictionary(kvp => kvp[0], kvp => kvp[1]);
+            return args;
         }
 
         public Task StartAsync(CancellationToken cancellationToken)
