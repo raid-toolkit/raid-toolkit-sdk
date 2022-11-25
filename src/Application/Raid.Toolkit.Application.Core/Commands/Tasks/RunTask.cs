@@ -45,6 +45,10 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
 
             // must allow AppUI to initialize any process hooks before
             // the synchronization context is requested
+
+            INotificationManager? notificationManager = host.Services.GetService<INotificationManager>();
+            notificationManager?.Initialize();
+
             await ProgramHost.Start(host, () =>
             {
                 _ = Task.Run(() =>

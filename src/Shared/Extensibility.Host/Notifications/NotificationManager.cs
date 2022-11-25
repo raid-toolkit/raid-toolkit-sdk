@@ -86,7 +86,6 @@ namespace Raid.Toolkit.Extensibility.Notifications
         {
             IsRegistered = false;
             Logger = logger;
-            Initialize();
         }
 
         ~NotificationManager()
