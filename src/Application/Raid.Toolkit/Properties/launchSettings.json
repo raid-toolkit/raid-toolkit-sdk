@@ -22,6 +22,11 @@
     "WinForms": {
       "commandName": "Project",
       "commandLineArgs": "--standalone --render-engine WinForms"
+    },
+    "ToastActivation": {
+      "commandName": "Project",
+      "commandLineArgs": "----AppNotificationActivated: -Embedding",
+      "hotReloadEnabled": true
     }
   }
 }

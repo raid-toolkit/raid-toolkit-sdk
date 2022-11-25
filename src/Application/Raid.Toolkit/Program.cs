@@ -8,6 +8,7 @@ using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.UI.Forms;
 using Raid.Toolkit.UI.WinUI;
 using GitHub;
+using System.Linq;
 
 namespace Raid.Toolkit
 {
@@ -16,6 +17,11 @@ namespace Raid.Toolkit
         [STAThread]
         private static async Task<int> Main(string[] args)
         {
+            if (args[0] == "----AppNotificationActivated:")
+                args = args[1..];
+            if (args[0] == "-Embedding")
+                args = args[1..];
+
             CommonOptions.Parse(args);
             AppHost.EnableLogging = !CommonOptions.Value.DisableLogging;
             AppHost.ForceRebuild = CommonOptions.Value.ForceRebuild;
