@@ -66,7 +66,8 @@ jobs:
       - name: Build Setup
         run: |
           $env:Path += ";C:\Program Files (x86)\WiX Toolset v3.11\bin"
-          candle.exe -nologo -o out\ RaidToolkitBinaries.wxs Product.wxs Bundle.wxs -ext WixBalExtension
+          heat.exe dir $env:BuildOutputDirectory -cg RaidToolkitBinaries -out out\RaidToolkitBinaries.wxs -dr INSTALLDIR -srd -suid -sreg -g1 -var env.BuildOutputDirectory -ag
+          candle.exe -nologo -o out\ out\RaidToolkitBinaries.wxs Product.wxs Bundle.wxs -ext WixBalExtension
           light.exe -nologo -o out\RaidToolkit.msi out\Product.wixobj out\RaidToolkitBinaries.wixobj -ext WixBalExtension
           light.exe -nologo -o out\RaidToolkitSetup.exe out\Bundle.wixobj -ext WixBalExtension
         working-directory: ./src/Setup
