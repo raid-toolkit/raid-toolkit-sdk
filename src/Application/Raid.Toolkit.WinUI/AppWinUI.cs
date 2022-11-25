@@ -183,8 +183,6 @@ namespace Raid.Toolkit.UI.WinUI
         public void Run()
         {
             MainWindow ??= ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider);
-            MainWindow.Activate();
-            _ = MainWindow.BringToFront();
         }
     }
 }

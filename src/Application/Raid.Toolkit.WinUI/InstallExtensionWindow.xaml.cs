@@ -13,6 +13,7 @@ namespace Raid.Toolkit.UI.WinUI
         public InstallExtensionWindow()
         {
             this.InitializeComponent();
+            CenterWindowInMonitor();
         }
     }
 }

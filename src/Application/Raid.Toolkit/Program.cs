@@ -14,13 +14,16 @@ namespace Raid.Toolkit
 {
     internal static class Program
     {
+        private static string CleanArgument(string arg) => arg switch
+        {
+            "-Embedding" => "--Embedding",
+            "----AppNotificationActivated:" => "----AppNotificationActivated",
+            _ => arg,
+        };
         [STAThread]
         private static async Task<int> Main(string[] args)
         {
-            if (args[0] == "----AppNotificationActivated:")
-                args = args[1..];
-            if (args[0] == "-Embedding")
-                args = args[1..];
+            args = args.Select(CleanArgument).ToArray();
 
             CommonOptions.Parse(args);
             AppHost.EnableLogging = !CommonOptions.Value.DisableLogging;

@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 
 using Microsoft.UI.Xaml;
 
+using Raid.Toolkit.Application.Core.Commands;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Common;
-using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.UI.WinUI.Base;
 
 using WinUIEx;
@@ -59,8 +59,7 @@ namespace Raid.Toolkit.UI.WinUI
 
         public MainWindow(
             IModelLoader loader,
-            IAppUI appUI,
-            IMenuManager menuManager
+            IAppUI appUI
             )
         {
             Loader = loader;
@@ -71,6 +70,8 @@ namespace Raid.Toolkit.UI.WinUI
             AppWindow.Closing += AppWindow_Closing;
 
             this.SetWindowPresenter(Microsoft.UI.Windowing.AppWindowPresenterKind.Overlapped);
+            Width = 400;
+            Height = 550;
             IsMinimizable = false;
             IsMaximizable = false;
             IsResizable = false;
@@ -79,8 +80,8 @@ namespace Raid.Toolkit.UI.WinUI
             IsShownInSwitchers = true;
             this.SetIsMaximizable(false);
             this.SetIsMinimizable(false);
+            CenterWindowInMonitor();
 
-            this.CenterOnScreen(400, 550);
 #pragma warning disable CS0436 // Type conflicts with imported type
             VersionRTK.Text = ThisAssembly.AssemblyFileVersion;
 #pragma warning restore CS0436 // Type conflicts with imported type
@@ -90,6 +91,12 @@ namespace Raid.Toolkit.UI.WinUI
             ContentElements.Add(Settings);
             ContentElements.Add(LoadProgressGrid);
             ContentElements.Add(LinksGrid);
+
+            if (!CommonOptions.Value.Embedding)
+            {
+                Activate();
+                BringToFront();
+            }
         }
 
         private void Loader_OnStateUpdated(object? sender, IModelLoader.ModelLoaderEventArgs e)

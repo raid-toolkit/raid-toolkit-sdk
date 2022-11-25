@@ -27,6 +27,9 @@ namespace Raid.Toolkit.Application.Core.Commands
         [Option('q', "quiet")]
         public bool DisableLogging { get; set; }
 
+        [Option("Embedding")]
+        public bool Embedding { get; set; }
+
         [Option("force-rebuild")]
         public bool ForceRebuild { get; set; }
 
