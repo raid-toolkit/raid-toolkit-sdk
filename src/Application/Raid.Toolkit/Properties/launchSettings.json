@@ -25,7 +25,7 @@
     },
     "ToastActivation": {
       "commandName": "Project",
-      "commandLineArgs": "-Embedding --standalone",
+      "commandLineArgs": "--AppNotificationActivated: -Embedding --standalone",
       "hotReloadEnabled": true
     }
   }

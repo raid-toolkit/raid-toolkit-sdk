@@ -1,3 +1,5 @@
+using Client.Model.Network.GameServer;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Dispatching;
@@ -32,6 +34,7 @@ namespace Raid.Toolkit.UI.WinUI
 
             AppHost.Start(host);
 
+            TaskCompletionSource endTask = new();
             XamlApplication.Start(async (p) =>
             {
                 try
@@ -54,11 +57,18 @@ namespace Raid.Toolkit.UI.WinUI
                         lifetimeService.StopApplication();
                         await host.StopAsync();
                     }
-                    catch { }
-                    XamlApplication.Current.Exit();
+                    catch (Exception e)
+                    {
+                        endTask.SetException(e);
+                    }
+                    finally
+                    {
+                        XamlApplication.Current.Exit();
+                        endTask.TrySetResult();
+                    }
                 }
             });
-            return Task.CompletedTask;
+            return endTask.Task;
         }
     }
 }
