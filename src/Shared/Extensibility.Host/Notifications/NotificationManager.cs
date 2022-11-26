@@ -1,35 +1,34 @@
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 using CommunityToolkit.WinUI.Notifications;
 
-using Il2CppToolkit.Common.Errors;
-
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Windows.AppLifecycle;
 using Microsoft.Windows.AppNotifications;
 
 using Raid.Toolkit.Common;
 
-using Windows.Foundation.Metadata;
+using Windows.ApplicationModel.Activation;
 
 namespace Raid.Toolkit.Extensibility.Notifications
 {
     public class NotificationSink : INotificationSink
     {
-        private readonly NotificationManager NotificationManager;
-        private readonly string ScenarioId;
+        internal NotificationManager? NotificationManager { get; set; }
+        public string ScenarioId { get; }
         private bool IsDisposed;
 
         public event EventHandler<NotificationActivationEventArgs>? Activated;
 
-        public NotificationSink(NotificationManager notificationManager, string scenarioId)
+        public NotificationSink(string scenarioId)
         {
-            NotificationManager = notificationManager;
             ScenarioId = scenarioId;
         }
 
@@ -49,9 +48,9 @@ namespace Raid.Toolkit.Extensibility.Notifications
             return string.Join(';', kvps.Select(kvp => $"{kvp.Key}={kvp.Value}"));
         }
 
-        internal void Handle(IReadOnlyDictionary<string, string> args, IReadOnlyDictionary<string, string> inputs)
+        public void Handle(NotificationActivationEventArgs eventArgs)
         {
-            Activated?.Invoke(this, new NotificationActivationEventArgs(args, inputs));
+            Activated?.Invoke(this, eventArgs);
         }
 
         protected virtual void Dispose(bool disposing)
@@ -60,7 +59,7 @@ namespace Raid.Toolkit.Extensibility.Notifications
             {
                 if (disposing)
                 {
-                    _ = NotificationManager.UnregisterHandler(ScenarioId);
+                    NotificationManager?.UnregisterHandler(ScenarioId);
                 }
 
                 IsDisposed = true;
@@ -93,12 +92,11 @@ namespace Raid.Toolkit.Extensibility.Notifications
             Unregister();
         }
 
-        public INotificationSink RegisterHandler(string scenarioId)
+        public void RegisterHandler(INotificationSink sink)
         {
-            NotificationSink sink = new(this, scenarioId);
-            NotificationHandlers.AddOrUpdate(scenarioId, sink, (scenarioId, entry) =>
+            NotificationHandlers.AddOrUpdate(sink.ScenarioId, sink, (scenarioId, entry) =>
             {
-                if (entry is AppNotificationActivatedEventArgs eventArgs)
+                if (entry is NotificationActivationEventArgs eventArgs)
                 {
                     DispatchNotificationArgs(sink, eventArgs);
                 }
@@ -108,7 +106,6 @@ namespace Raid.Toolkit.Extensibility.Notifications
                 }
                 return sink;
             });
-            return sink;
         }
 
         public bool UnregisterHandler(string scenarioId)
@@ -126,6 +123,24 @@ namespace Raid.Toolkit.Extensibility.Notifications
             notificationManager.NotificationInvoked += OnNotificationInvoked;
 
             notificationManager.Register();
+            AppActivationArguments? appActivationArgs = AppInstance.GetCurrent()?.GetActivatedEventArgs();
+            if (appActivationArgs != null)
+            {
+                if (appActivationArgs.Kind == ExtendedActivationKind.ToastNotification && appActivationArgs.Data is IToastNotificationActivatedEventArgs toastNotificationActivatedEventArgs)
+                {
+                    if (!HandleNotificationActivated(ConvertArgs(toastNotificationActivatedEventArgs)))
+                    {
+                        Logger.LogError(HostError.NotificationHandlerNotFound.EventId(), "Notification handler not found");
+                    }
+                }
+                else if (appActivationArgs.Kind == ExtendedActivationKind.AppNotification && appActivationArgs.Data is AppNotificationActivatedEventArgs appNotificationActivatedEventArgs)
+                {
+                    if (!HandleNotificationActivated(ConvertArgs(appNotificationActivatedEventArgs)))
+                    {
+                        Logger.LogError(HostError.NotificationHandlerNotFound.EventId(), "Notification handler not found");
+                    }
+                }
+            }
             IsRegistered = true;
         }
 
@@ -138,19 +153,14 @@ namespace Raid.Toolkit.Extensibility.Notifications
             }
         }
 
-        private static void DispatchNotificationArgs(NotificationSink sink, AppNotificationActivatedEventArgs notificationActivatedEventArgs)
+        private static void DispatchNotificationArgs(INotificationSink sink, NotificationActivationEventArgs eventArgs)
         {
-            string arg = notificationActivatedEventArgs.Argument;
-            IReadOnlyDictionary<string, string> args = ParseArgs(ref arg);
-            Dictionary<string, string> inputs = new(notificationActivatedEventArgs.UserInput);
-            sink.Handle(args, inputs);
+            sink.Handle(eventArgs);
         }
 
-        public bool HandleNotificationActivated(AppNotificationActivatedEventArgs notificationActivatedEventArgs)
+        public bool HandleNotificationActivated(NotificationActivationEventArgs eventArgs)
         {
-            string arg = notificationActivatedEventArgs.Argument;
-            IReadOnlyDictionary<string, string> args = ParseArgs(ref arg);
-            if (!args.TryGetValue(NotificationConstants.ScenarioId, out string? scenarioId) || string.IsNullOrEmpty(scenarioId))
+            if (!eventArgs.Arguments.TryGetValue(NotificationConstants.ScenarioId, out string? scenarioId) || string.IsNullOrEmpty(scenarioId))
             {
                 return false;
             }
@@ -158,14 +168,14 @@ namespace Raid.Toolkit.Extensibility.Notifications
             {
                 if (!NotificationHandlers.TryGetValue(scenarioId, out object? entry))
                 {
-                    if (!NotificationHandlers.TryAdd(scenarioId, notificationActivatedEventArgs))
+                    if (!NotificationHandlers.TryAdd(scenarioId, eventArgs))
                     {
                         throw new ApplicationException("Duplicate NotificationActivatedEvent is unexpected");
                     }
                 }
                 else if (entry is NotificationSink sink)
                 {
-                    DispatchNotificationArgs(sink, notificationActivatedEventArgs);
+                    DispatchNotificationArgs(sink, eventArgs);
                 }
                 else if (entry is AppNotificationActivatedEventArgs)
                 {
@@ -186,12 +196,29 @@ namespace Raid.Toolkit.Extensibility.Notifications
 
         private void OnNotificationInvoked(object sender, AppNotificationActivatedEventArgs notificationActivatedEventArgs)
         {
-            if (!HandleNotificationActivated(notificationActivatedEventArgs))
+            if (!HandleNotificationActivated(ConvertArgs(notificationActivatedEventArgs)))
             {
                 Logger.LogError(HostError.NotificationHandlerNotFound.EventId(), "Notification handler not found");
             }
         }
 
+        private static NotificationActivationEventArgs ConvertArgs(AppNotificationActivatedEventArgs notificationActivatedEventArgs)
+        {
+            string arg = notificationActivatedEventArgs.Argument;
+            IReadOnlyDictionary<string, string> args = ParseArgs(ref arg);
+            IReadOnlyDictionary<string, string> inputs = new Dictionary<string, string>(notificationActivatedEventArgs.UserInput);
+            NotificationActivationEventArgs eventArgs = new(args, inputs);
+            return eventArgs;
+        }
+
+        private static NotificationActivationEventArgs ConvertArgs(IToastNotificationActivatedEventArgs toastNotificationActivatedEventArgs)
+        {
+            string arg = toastNotificationActivatedEventArgs.Argument;
+            IReadOnlyDictionary<string, string> args = ParseArgs(ref arg);
+            IReadOnlyDictionary<string, string> inputs = toastNotificationActivatedEventArgs.UserInput.ToDictionary(k => k.Key, v => v.Value.ToString()!);
+            NotificationActivationEventArgs eventArgs = new(args, inputs);
+            return eventArgs;
+        }
         private static IReadOnlyDictionary<string, string> ParseArgs(ref string arg)
         {
             if (!arg.Contains('=')) // not kvp?

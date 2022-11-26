@@ -61,8 +61,9 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             Enabled = RegistrySettings.AutomaticallyCheckForUpdates;
             _PollInterval = settings.Value.PollIntervalMs > 0 ? TimeSpan.FromMilliseconds(settings.Value.PollIntervalMs) : new TimeSpan(0, 15, 0);
 
-            Notify = notificationManager.RegisterHandler("update");
+            Notify = new NotificationSink("update");
             Notify.Activated += Notify_Activated;
+            notificationManager.RegisterHandler(Notify);
         }
 
         private void Notify_Activated(object? sender, NotificationActivationEventArgs e)
@@ -80,9 +81,11 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             }
         }
 
-        public Task InstallUpdate()
+        public async Task InstallUpdate()
         {
-            return PendingRelease == null ? Task.CompletedTask : InstallRelease(PendingRelease);
+            PendingRelease ??= await Updater.GetLatestRelease();
+            if (PendingRelease != null)
+                InstallRelease(PendingRelease);
         }
 
         public async Task InstallRelease(Release release)

@@ -9,6 +9,8 @@ using Raid.Toolkit.UI.Forms;
 using Raid.Toolkit.UI.WinUI;
 using GitHub;
 using System.Linq;
+using Raid.Toolkit.Common;
+using System.Diagnostics;
 
 namespace Raid.Toolkit
 {
@@ -23,6 +25,10 @@ namespace Raid.Toolkit
         [STAThread]
         private static async Task<int> Main(string[] args)
         {
+            if (RegistrySettings.DebugStartup && !Debugger.IsAttached)
+            {
+                Debugger.Launch();
+            }
             args = args.Select(CleanArgument).ToArray();
 
             CommonOptions.Parse(args);

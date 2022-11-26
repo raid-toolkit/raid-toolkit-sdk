@@ -94,8 +94,9 @@ namespace Raid.Toolkit.UI.WinUI
                 UpdateService = updateService;
                 MenuManager = menuManager;
                 AppUI = appUI;
-                Notify = notificationManager.RegisterHandler("apptray");
+                Notify = new NotificationSink("apptray");
                 Notify.Activated += Notify_Activated;
+                notificationManager.RegisterHandler(Notify);
 
                 // 
                 // this

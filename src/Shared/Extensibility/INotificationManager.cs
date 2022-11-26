@@ -28,15 +28,17 @@ namespace Raid.Toolkit.Extensibility
 
     public interface INotificationSink : IDisposable
     {
+        public string ScenarioId { get; }
         public event EventHandler<NotificationActivationEventArgs> Activated;
         public string GetArguments(string action);
         public string GetArguments(string action, IReadOnlyDictionary<string,string> args);
         AppNotification SendNotification(ToastContent notification);
+        void Handle(NotificationActivationEventArgs eventArgs);
     }
     public interface INotificationManager
     {
         void Initialize();
-        INotificationSink RegisterHandler(string scenarioId);
+        void RegisterHandler(INotificationSink sink);
     }
     public static class NotificationConstants
     {
