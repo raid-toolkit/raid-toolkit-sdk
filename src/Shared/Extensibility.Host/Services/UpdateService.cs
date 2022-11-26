@@ -85,7 +85,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
         {
             PendingRelease ??= await Updater.GetLatestRelease();
             if (PendingRelease != null)
-                InstallRelease(PendingRelease);
+                await InstallRelease(PendingRelease);
         }
 
         public async Task InstallRelease(Release release)
