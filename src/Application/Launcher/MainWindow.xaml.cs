@@ -127,9 +127,9 @@ namespace Launcher
 
         private void OperatingSystem_Check(object sender, InstallCheckEventArgs e)
         {
-            if (Environment.OSVersion.Version < new Version(10, 0, 19041))
+            if (Environment.OSVersion.Version < new Version(10, 0, 18362))
             {
-                e.Fail("Update to Windows 10 build 19041 or newer");
+                e.Fail("Update to Windows 10 build 18362 or newer");
                 return;
             }
             else

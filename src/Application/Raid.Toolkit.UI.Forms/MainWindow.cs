@@ -11,18 +11,16 @@ using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Model;
-using Raid.Toolkit.UI.Forms;
 
 using ErrorEventArgs = Raid.Toolkit.Extensibility.Host.Services.ErrorEventArgs;
+using Raid.Toolkit.Extensibility.Interfaces;
 
 namespace Raid.Toolkit.UI.Forms
 {
     internal partial class MainWindow : Form
     {
-        private const int kDefaultBalloonTipTimeout = 10000;
-        private GitHub.Schema.Release? LatestRelease;
         private readonly UpdateService UpdateService;
-        private readonly AppService AppService;
+        private readonly IAppService AppService;
         private readonly ILogger<MainWindow> Logger;
         private readonly RunOptions RunOptions;
         private readonly IOptions<ProcessManagerSettings> Settings;
@@ -38,7 +36,7 @@ namespace Raid.Toolkit.UI.Forms
             IOptions<ProcessManagerSettings> settings,
             ILogger<MainWindow> logger,
             UpdateService updateService,
-            AppService mainService,
+            IAppService mainService,
             RunOptions runOptions,
             ErrorService errorService,
             IMenuManager menuManager,
@@ -56,9 +54,6 @@ namespace Raid.Toolkit.UI.Forms
             SettingsStorage = settingsStorage;
             MenuManager = menuManager;
             ErrorsWindow = ActivatorUtilities.CreateInstance<ErrorsWindow>(ServiceProvider);
-
-            // must trigger load here
-            UpdateService.UpdateAvailable += OnUpdateAvailable;
 
             // subscribe to error events
             ErrorService.OnErrorAdded += OnErrorAdded;
@@ -191,30 +186,9 @@ namespace Raid.Toolkit.UI.Forms
             return true;
         }
 
-        private void OnUpdateAvailable(object? sender, UpdateService.UpdateAvailbleEventArgs e)
-        {
-            InvokeIfNeeded(() =>
-            {
-                if (LatestRelease?.TagName == e.Release.TagName)
-                    return; // already notified for this update
-
-                LatestRelease = e.Release;
-                //ShowBalloonTip(
-                //    kDefaultBalloonTipTimeout,
-                //    "Update available",
-                //    $"A new version has been released!\n{e.Release.TagName} is now available for install. Click here to install and update!",
-                //    ToolTipIcon.Info,
-                //    InstallUpdate);
-                //installUpdateMenuItem.Visible = true;
-            });
-        }
-
         private void InstallUpdate()
         {
-            if (LatestRelease == null)
-                return;
-
-            AppService.InstallUpdate(LatestRelease);
+            UpdateService.InstallUpdate();
         }
 
         private void closeMenuItem_Click(object sender, EventArgs e)
@@ -239,7 +213,7 @@ namespace Raid.Toolkit.UI.Forms
 
         private async void checkUpdatesMenuItem_Click(object sender, EventArgs e)
         {
-            bool hasUpdate = await UpdateService.CheckForUpdates(force: true);
+            bool hasUpdate = await UpdateService.CheckForUpdates(userRequested: true, force: true);
             if (!hasUpdate)
             {
                 //ShowBalloonTip(

@@ -60,20 +60,21 @@ jobs:
       # Publish RTK
       - name: Build App
         run: |
-          msbuild $env:Solution_Name -m -t:"Build;Pack" -p:Configuration=Release -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
-          msbuild $env:Launcher_csproj -m -t:Publish -p:TargetFramework=net5.0-windows -p:Configuration=Release -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
+          msbuild $env:Solution_Name -m -t:"Build;Pack" -p:Configuration=Debug -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
+          msbuild $env:Launcher_csproj -m -t:Publish -p:TargetFramework=net5.0-windows -p:Configuration=Debug -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
 
       - name: Build Setup
         run: |
           $env:Path += ";C:\Program Files (x86)\WiX Toolset v3.11\bin"
-          candle.exe -nologo -o out\ RaidToolkitBinaries.wxs Product.wxs Bundle.wxs -ext WixBalExtension
+          heat.exe dir $env:BuildOutputDirectory -cg RaidToolkitBinaries -out out\RaidToolkitBinaries.wxs -dr INSTALLDIR -srd -suid -sreg -g1 -var env.BuildOutputDirectory -ag
+          candle.exe -nologo -o out\ out\RaidToolkitBinaries.wxs Product.wxs Bundle.wxs -ext WixBalExtension
           light.exe -nologo -o out\RaidToolkit.msi out\Product.wixobj out\RaidToolkitBinaries.wixobj -ext WixBalExtension
           light.exe -nologo -o out\RaidToolkitSetup.exe out\Bundle.wixobj -ext WixBalExtension
         working-directory: ./src/Setup
         env:
           AppVersion: ${{ steps.rtk_version.outputs.Version }}
           Prerelease: ${{ env.PRERELEASEN }}
-          BuildOutputDirectory: ..\Application\Raid.Toolkit\bin\x64\Release\net6.0-windows10.0.19041.0\win10-x64
+          BuildOutputDirectory: ..\Application\Raid.Toolkit\bin\x64\Debug\net6.0-windows10.0.19041.0\win10-x64
 
       - name: Release to staging
         uses: softprops/action-gh-release@v1

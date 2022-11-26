@@ -2,6 +2,7 @@ using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host.Services;
+using Raid.Toolkit.Extensibility.Interfaces;
 
 namespace Raid.Toolkit.UI.Forms
 {
@@ -31,21 +32,13 @@ namespace Raid.Toolkit.UI.Forms
 
         private void installUpdateMenuItem_Click(object? sender, EventArgs e)
         {
-            AppService.InstallUpdate();
+            UpdateService.InstallUpdate();
+            AppService.Exit();
         }
 
         private async void checkUpdatesMenuItem_Click(object? sender, EventArgs e)
         {
-            bool hasUpdate = await UpdateService.CheckForUpdates(force: true);
-            if (!hasUpdate)
-            {
-                AppUI.ShowNotification(
-                    "No updates",
-                    $"You are already running the latest version!",
-                    ToolTipIcon.None,
-                    kDefaultBalloonTipTimeout
-                );
-            }
+            _ = await UpdateService.CheckForUpdates(userRequested: true, force: true);
         }
 
         private void closeMenuItem_Click(object? sender, EventArgs e)
@@ -67,11 +60,11 @@ namespace Raid.Toolkit.UI.Forms
         private readonly ToolStripMenuItem manageExtensionsToolStripMenuItem = new();
         private readonly IMenuManager MenuManager;
         private readonly IAppUI AppUI;
-        private readonly AppService AppService;
+        private readonly IAppService AppService;
         private readonly UpdateService UpdateService;
 
         public AppTrayMenu(
-            AppService appService,
+            IAppService appService,
             UpdateService updateService,
             IMenuManager menuManager,
             IAppUI appUI)

@@ -4,23 +4,15 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.Extensibility.Host.Services;
+using Raid.Toolkit.Extensibility.Interfaces;
 
 namespace Raid.Toolkit.Application.Core.Host
 {
-    public class AppService
+    public class AppService : IAppService
     {
         private readonly IHostApplicationLifetime Lifetime;
-        private readonly UpdateService? UpdateService;
         private readonly TaskCompletionSource StopSignal;
         public GitHub.Schema.Release? LatestRelease { get; private set; }
-
-        public AppService(IHostApplicationLifetime lifetime, UpdateService updateService)
-        {
-            Lifetime = lifetime;
-            UpdateService = updateService;
-            UpdateService.UpdateAvailable += OnUpdateAvailable;
-            StopSignal = new();
-        }
 
         public AppService(IHostApplicationLifetime lifetime)
         {
@@ -36,26 +28,6 @@ namespace Raid.Toolkit.Application.Core.Host
         public Task WaitForStop()
         {
             return StopSignal.Task;
-        }
-
-        public void InstallUpdate()
-        {
-            if (LatestRelease == null)
-                return; // TODO: Show error message?
-
-            InstallUpdate(LatestRelease);
-        }
-
-        public async void InstallUpdate(GitHub.Schema.Release release)
-        {
-            if (UpdateService == null)
-                return;
-            try
-            {
-                await UpdateService.InstallRelease(release);
-                Exit();
-            }
-            catch { }
         }
 
         public void Restart(bool postUpdate, bool asAdmin = false, IWin32Window? owner = null)

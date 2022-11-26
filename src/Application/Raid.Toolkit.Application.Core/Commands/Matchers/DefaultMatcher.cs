@@ -31,8 +31,11 @@ namespace Raid.Toolkit.Application.Core.Commands.Matchers
         [Option('m', "no-default-packages", Hidden = true)]
         public bool NoDefaultPackages { get; set; }
 
-        [Option('i', "--interop-dir", Hidden = true)]
+        [Option('i', "interop-dir", Hidden = true)]
         public string? InteropDirectory { get; set; }
+
+        [Option(longName: "--AppNotificationActivated")]
+        public bool AppNotificationActivated { get; set; }
     }
 
     internal class DefaultMatcher : CommandTaskMatcher<RunOptions>

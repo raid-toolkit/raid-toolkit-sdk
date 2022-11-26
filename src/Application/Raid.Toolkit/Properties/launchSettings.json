@@ -11,7 +11,7 @@
     },
     "Standalone": {
       "commandName": "Project",
-      "commandLineArgs": "--standalone --force-rebuild",
+      "commandLineArgs": "--standalone",
       "hotReloadEnabled": true
     },
     "Install Extension": {
@@ -22,6 +22,11 @@
     "WinForms": {
       "commandName": "Project",
       "commandLineArgs": "--standalone --render-engine WinForms"
+    },
+    "ToastActivation": {
+      "commandName": "Project",
+      "commandLineArgs": "--AppNotificationActivated: -Embedding --standalone",
+      "hotReloadEnabled": true
     }
   }
 }

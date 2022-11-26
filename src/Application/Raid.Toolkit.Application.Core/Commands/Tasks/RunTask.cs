@@ -6,6 +6,7 @@ using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Commands.Matchers;
 using Raid.Toolkit.Common;
+using Raid.Toolkit.Extensibility;
 
 namespace Raid.Toolkit.Application.Core.Commands.Tasks
 {
@@ -24,7 +25,10 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
 
         public async Task<int> Invoke()
         {
-            await SingletonProcess.TryAcquireSingletonWithTimeout(Options.Wait ?? 0);
+            if (!Options.Standalone)
+            {
+                await SingletonProcess.TryAcquireSingletonWithTimeout(Options.Wait ?? 0);
+            }
 
             AppHostBuilder
                 .AddExtensibility()
@@ -32,6 +36,7 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
                 .AddUI()
                 .AddAppServices()
                 .AddWebSockets(AppHost.HandleMessage);
+            AppHostBuilder.ConfigureServices(services => ProgramHost.ConfigureServices(services));
 
             IHost host = AppHostBuilder.Build();
             ConfigureHost(host);
@@ -41,9 +46,15 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
             // must allow AppUI to initialize any process hooks before
             // the synchronization context is requested
 
+            INotificationManager? notificationManager = host.Services.GetService<INotificationManager>();
+            notificationManager?.Initialize();
+
             await ProgramHost.Start(host, () =>
             {
-                _ = Task.Run(() => host.StartAsync());
+                _ = Task.Run(() =>
+                {
+                    host.StartAsync();
+                });
             });
 
             return 0;

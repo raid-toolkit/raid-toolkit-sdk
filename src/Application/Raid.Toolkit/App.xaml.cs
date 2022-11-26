@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Dispatching;
 
 using Raid.Toolkit.Application.Core.Host;
+using Raid.Toolkit.Extensibility.Interfaces;
 
 using System;
 using System.Threading;
@@ -55,7 +56,7 @@ namespace Raid.Toolkit.UI.WinUI
 
         public async Task WaitForExit()
         {
-            await Host.Services.GetRequiredService<AppService>().WaitForStop().ConfigureAwait(false);
+            await Host.Services.GetRequiredService<IAppService>().WaitForStop().ConfigureAwait(false);
         }
 
         /// <summary>

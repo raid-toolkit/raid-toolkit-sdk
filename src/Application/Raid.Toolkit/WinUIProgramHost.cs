@@ -1,3 +1,5 @@
+using Client.Model.Network.GameServer;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.UI.Dispatching;
@@ -5,6 +7,7 @@ using Microsoft.UI.Dispatching;
 using Raid.Toolkit.Application.Core;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Host;
+using Raid.Toolkit.Extensibility;
 
 using System;
 using System.Runtime.InteropServices;
@@ -20,6 +23,10 @@ namespace Raid.Toolkit.UI.WinUI
         [DllImport("Microsoft.ui.xaml.dll")]
         private static extern void XamlCheckProcessRequirements();
 
+        public void ConfigureServices(IServiceCollection services)
+        {
+        }
+
         public Task Start(IHost host, Action startupFunction)
         {
             XamlCheckProcessRequirements();
@@ -27,6 +34,7 @@ namespace Raid.Toolkit.UI.WinUI
 
             AppHost.Start(host);
 
+            TaskCompletionSource endTask = new();
             XamlApplication.Start(async (p) =>
             {
                 try
@@ -44,16 +52,29 @@ namespace Raid.Toolkit.UI.WinUI
                 finally
                 {
                     IHostApplicationLifetime lifetimeService = host.Services.GetRequiredService<IHostApplicationLifetime>();
-                    try
+                    CancellationTokenSource tokenSource = new(5000);
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                    Task.Run(async () =>
                     {
-                        lifetimeService.StopApplication();
-                        await host.StopAsync();
-                    }
-                    catch { }
-                    XamlApplication.Current.Exit();
+                        try
+                        {
+                            lifetimeService.StopApplication();
+                            await host.StopAsync(tokenSource.Token);
+                        }
+                        catch (Exception e)
+                        {
+                            endTask.SetException(e);
+                        }
+                        finally
+                        {
+                            XamlApplication.Current.Exit();
+                            endTask.TrySetResult();
+                        }
+                    });
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
                 }
             });
-            return Task.CompletedTask;
+            return endTask.Task;
         }
     }
 }

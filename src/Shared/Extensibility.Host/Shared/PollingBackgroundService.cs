@@ -12,8 +12,8 @@ namespace Raid.Toolkit.Extensibility.Host
         private static readonly TimeSpan DefaultPollInterval = new(0, 1, 0);
         private protected virtual TimeSpan PollInterval => DefaultPollInterval;
 
-        private Task CurrentTask;
-        private CancellationTokenSource CurrentTaskCanellationTokenSource;
+        private Task? CurrentTask;
+        private CancellationTokenSource? CurrentTaskCanellationTokenSource;
         private bool IsDisposed;
 
         public PollingBackgroundService(ILogger logger)
@@ -26,7 +26,7 @@ namespace Raid.Toolkit.Extensibility.Host
         public Task StartAsync(CancellationToken cancellationToken)
         {
             CurrentTaskCanellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-            CurrentTask = Task.Run(() => ExecuteAsync(cancellationToken), cancellationToken);
+            CurrentTask = Task.Run(ExecuteAsync, cancellationToken);
             return Task.CompletedTask;
         }
 
@@ -37,42 +37,30 @@ namespace Raid.Toolkit.Extensibility.Host
 
             try
             {
-                CurrentTaskCanellationTokenSource.Cancel();
+                CurrentTaskCanellationTokenSource?.Cancel();
+                // switch to new stop token
+                CurrentTaskCanellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
             }
             finally
             {
-                await Task.WhenAny(CurrentTask, Task.Delay(Timeout.Infinite, cancellationToken)).ConfigureAwait(false);
+                try
+                {
+                    await Task.WhenAny(CurrentTask, Task.Delay(Timeout.Infinite, cancellationToken)).ConfigureAwait(false);
+                }
+                catch(Exception ex)
+                {
+                    Logger.LogError(ex, "Failed to cancel service");
+                }
             }
         }
 
-        private async Task ExecuteAsync(CancellationToken stoppingToken)
+        private async Task ExecuteAsync()
         {
-            while (!stoppingToken.IsCancellationRequested)
-            {
-                try
-                {
-                    await ExecuteOnceAsync(stoppingToken);
-                }
-                catch (OperationCanceledException)
-                {
-                    if (stoppingToken.IsCancellationRequested)
-                    {
-                        break;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogError(ex, "Exception thrown from polling service");
-                }
+            if (CurrentTaskCanellationTokenSource == null)
+                throw new ApplicationException("Cannot run background service without a cancellation source");
 
-                // ensure delay is included if an exception is thrown above
-                try
-                {
-                    await Task.Delay((int)PollInterval.TotalMilliseconds, stoppingToken);
-                }
-                catch (OperationCanceledException) // expected if the service is shutting down
-                { }
-            }
+            await ExecuteOnceAsync(CurrentTaskCanellationTokenSource.Token);
+            CurrentTask = Task.Delay((int)PollInterval.TotalMilliseconds, CurrentTaskCanellationTokenSource.Token).ContinueWith(_ => ExecuteAsync());
         }
 
         protected virtual void Dispose(bool disposing)

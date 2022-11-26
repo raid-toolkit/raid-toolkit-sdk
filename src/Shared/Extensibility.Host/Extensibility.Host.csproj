@@ -1,28 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFrameworks>net6.0-windows</TargetFrameworks>
-        <LangVersion>10.0</LangVersion>
         <AssemblyName>Raid.Toolkit.Extensibility.Host</AssemblyName>
         <RootNamespace>Raid.Toolkit.Extensibility</RootNamespace>
-        <Platforms>x64</Platforms>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
+	<Import Project="$(BuildTargetProps)" />
 
-    <ItemGroup>
-        <PackageReference Include="il2cpptoolkit.common"
-            Version="2.0.101-alpha" />
-        <PackageReference Include="il2cpptoolkit.metadata"
-            Version="2.0.101-alpha" />
-        <PackageReference Include="il2cpptoolkit.reversecompiler"
-            Version="2.0.101-alpha" />
-        <PackageReference Include="il2cpptoolkit.runtime"
-            Version="2.0.101-alpha" />
-        <PackageReference Include="il2cpptoolkit.target.netcore"
-            Version="2.0.101-alpha" />
-        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions"
-            Version="6.0.0" />
-        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"
-            Version="6.0.0" />
+	<ItemGroup>
+        <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
+        <PackageReference Include="il2cpptoolkit.common" Version="2.0.101-alpha" />
+        <PackageReference Include="il2cpptoolkit.metadata" Version="2.0.101-alpha" />
+        <PackageReference Include="il2cpptoolkit.reversecompiler" Version="2.0.101-alpha" />
+        <PackageReference Include="il2cpptoolkit.runtime" Version="2.0.101-alpha" />
+        <PackageReference Include="il2cpptoolkit.target.netcore" Version="2.0.101-alpha" />
+        <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
         <Reference Include="Raid.Interop">
             <HintPath>$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
             <Private>False</Private>

@@ -78,19 +78,6 @@ namespace Raid.Toolkit.UI.WinUI
             }
         }
 
-        internal void ShowNotification(string title, string description, ToolTipIcon icon, int timeoutMs, Action? onActivate)
-        {
-            OnClickCallback = onActivate;
-            var notifyIcon = NotifyIcon;
-            if (notifyIcon == null)
-                return;
-
-            AppUI.Dispatch(() =>
-            {
-                notifyIcon.ShowBalloonTip(timeoutMs, title, description, icon);
-            });
-        }
-
         private void OnBaloonTipClosed(object? sender, EventArgs e)
         {
             OnClickCallback = null;

@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
+    xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+    xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" IgnorableNamespaces="uap rescap com desktop">
+
+    <Identity Name="4890c5ca-14c9-4dd3-a1c3-4a489733f5e1" Publisher="CN=Daniel Chattan" Version="1.0.0.0" />
+
+    <Properties>
+        <DisplayName>Raid Toolkit</DisplayName>
+        <PublisherDisplayName>Daniel Chattan</PublisherDisplayName>
+        <Logo>Assets\logo.png</Logo>
+    </Properties>
+
+    <Dependencies>
+        <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+        <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
+    </Dependencies>
+
+    <Resources>
+        <Resource Language="x-generate"/>
+    </Resources>
+
+    <Applications>
+        <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="$targetentrypoint$">
+            <uap:VisualElements DisplayName="Raid Toolkit" Description="Raid Toolkit" BackgroundColor="transparent" />
+            <Extensions>
+                <!--Specify which CLSID to activate when toast clicked-->
+                <desktop:Extension Category="windows.toastNotificationActivation">
+                    <desktop:ToastNotificationActivation ToastActivatorCLSID="9635cee2-f266-429d-b013-c7175bfaefb7" />
+                </desktop:Extension>
+
+                <!--Register COM CLSID LocalServer32 registry key-->
+                <com:Extension Category="windows.comServer">
+                    <com:ComServer>
+                        <com:ExeServer Executable="Raid.Toolkit.exe" Arguments="----AppNotificationActivated:" DisplayName="Raid Toolkit Toast activator">
+                            <com:Class Id="9635cee2-f266-429d-b013-c7175bfaefb7" DisplayName="Toast activator"/>
+                        </com:ExeServer>
+                    </com:ComServer>
+                </com:Extension>
+
+            </Extensions>
+        </Application>
+    </Applications>
+
+    <Capabilities>
+        <rescap:Capability Name="runFullTrust" />
+    </Capabilities>
+</Package>

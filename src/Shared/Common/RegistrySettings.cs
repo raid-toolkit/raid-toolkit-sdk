@@ -17,12 +17,14 @@ namespace Raid.Toolkit.Common
     public static class RegistrySettings
     {
         public const string RTKHive = @"SOFTWARE\RaidToolkit";
+        public const string DebugHive = @"SOFTWARE\RaidToolkit\Debug";
         public const string InstallFolderKey = @"InstallFolder";
         public const string ActivationPortKey = @"ActivationPort";
         public const string AutoUpdateKey = @"AutoUpdate";
         public const string IsInstalledKey = "IsInstalled";
         public const string FirstRunKey = "FirstRun";
         public const string ClickToStartKey = "ClickToStart";
+        public const string DebugStartupKey = "DebugStartup";
         public const string RepositoryKey = "Repository";
         public const string InstallPrereleasesKey = "InstallPrereleases";
         public const string StartupName = "RaidToolkitService";
@@ -51,8 +53,14 @@ namespace Raid.Toolkit.Common
             }
             set
             {
-                Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.ActivationPortKey, value, RegistryValueKind.DWord);
+                Registry.CurrentUser.CreateSubKey(RTKHive).SetValue(ActivationPortKey, value, RegistryValueKind.DWord);
             }
+        }
+
+        public static bool DebugStartup
+        {
+            get => IsSettingEnabled(DebugHive, DebugStartupKey, defaultValue: false);
+            set => Registry.CurrentUser.CreateSubKey(DebugHive).SetValue(DebugStartupKey, value ? 1 : 0, RegistryValueKind.DWord);
         }
 
         public static bool RunOnStartup
@@ -61,30 +69,30 @@ namespace Raid.Toolkit.Common
             set
             {
                 if (value)
-                    Registry.CurrentUser.CreateSubKey(RegistrySettings.StartupHive).SetValue(RegistrySettings.StartupName, InstalledExecutablePath, RegistryValueKind.String);
+                    Registry.CurrentUser.CreateSubKey(StartupHive).SetValue(StartupName, InstalledExecutablePath, RegistryValueKind.String);
                 else
-                    Registry.CurrentUser.CreateSubKey(RegistrySettings.StartupHive).DeleteValue(RegistrySettings.StartupName, false);
+                    Registry.CurrentUser.CreateSubKey(StartupHive).DeleteValue(StartupName, false);
             }
         }
         public static bool IsInstalled
         {
             get => IsSettingEnabled(RTKHive, IsInstalledKey);
-            set => Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.IsInstalledKey, 1, RegistryValueKind.DWord);
+            set => Registry.CurrentUser.CreateSubKey(RTKHive).SetValue(IsInstalledKey, 1, RegistryValueKind.DWord);
         }
         public static bool ClickToStart
         {
             get => IsSettingEnabled(RTKHive, ClickToStartKey, defaultValue: true);
-            set => Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.ClickToStartKey, value ? 1 : 0, RegistryValueKind.DWord);
+            set => Registry.CurrentUser.CreateSubKey(RTKHive).SetValue(ClickToStartKey, value ? 1 : 0, RegistryValueKind.DWord);
         }
         public static bool InstallPrereleases
         {
             get => IsSettingEnabled(RTKHive, InstallPrereleasesKey);
-            set => Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.InstallPrereleasesKey, value ? 1 : 0, RegistryValueKind.DWord);
+            set => Registry.CurrentUser.CreateSubKey(RTKHive).SetValue(InstallPrereleasesKey, value ? 1 : 0, RegistryValueKind.DWord);
         }
         public static bool FirstRun
         {
             get => IsSettingEnabled(RTKHive, FirstRunKey, defaultValue: true);
-            set => Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive).SetValue(RegistrySettings.FirstRunKey, value ? 1 : 0, RegistryValueKind.DWord);
+            set => Registry.CurrentUser.CreateSubKey(RTKHive).SetValue(FirstRunKey, value ? 1 : 0, RegistryValueKind.DWord);
         }
 
         public static bool AutomaticallyCheckForUpdates
@@ -92,8 +100,8 @@ namespace Raid.Toolkit.Common
             get => IsSettingEnabled(RTKHive, AutoUpdateKey);
             set
             {
-                var hive = Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive);
-                hive.SetValue(RegistrySettings.AutoUpdateKey, value ? 1 : 0, RegistryValueKind.DWord);
+                var hive = Registry.CurrentUser.CreateSubKey(RTKHive);
+                hive.SetValue(AutoUpdateKey, value ? 1 : 0, RegistryValueKind.DWord);
             }
         }
 
@@ -106,8 +114,8 @@ namespace Raid.Toolkit.Common
             }
             set
             {
-                var hive = Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive);
-                hive.SetValue(RegistrySettings.InstallFolderKey, value, RegistryValueKind.String);
+                var hive = Registry.CurrentUser.CreateSubKey(RTKHive);
+                hive.SetValue(InstallFolderKey, value, RegistryValueKind.String);
             }
         }
 
@@ -120,8 +128,8 @@ namespace Raid.Toolkit.Common
             }
             set
             {
-                var hive = Registry.CurrentUser.CreateSubKey(RegistrySettings.RTKHive);
-                hive.SetValue(RegistrySettings.RepositoryKey, value, RegistryValueKind.String);
+                var hive = Registry.CurrentUser.CreateSubKey(RTKHive);
+                hive.SetValue(RepositoryKey, value, RegistryValueKind.String);
             }
         }
 

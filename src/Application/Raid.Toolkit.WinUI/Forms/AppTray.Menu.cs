@@ -2,10 +2,14 @@ using System;
 using System.Linq;
 using System.Windows.Forms;
 
+using Client.ViewModel.Notifications;
+
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host.Services;
+using Raid.Toolkit.Extensibility.Interfaces;
+using Raid.Toolkit.Extensibility.Notifications;
 using Raid.Toolkit.UI.WinUI.Forms;
 
 namespace Raid.Toolkit.UI.WinUI
@@ -38,21 +42,13 @@ namespace Raid.Toolkit.UI.WinUI
 
             private void installUpdateMenuItem_Click(object? sender, EventArgs e)
             {
-                AppService.InstallUpdate();
+                UpdateService.InstallUpdate();
+                AppService.Exit();
             }
 
             private async void checkUpdatesMenuItem_Click(object? sender, EventArgs e)
             {
-                bool hasUpdate = await UpdateService.CheckForUpdates(force: true);
-                if (!hasUpdate)
-                {
-                    AppUI.ShowNotification(
-                        "No updates",
-                        $"You are already running the latest version!",
-                        ToolTipIcon.None,
-                        kDefaultBalloonTipTimeout
-                    );
-                }
+                _ = await UpdateService.CheckForUpdates(userRequested: true, force: true);
             }
 
             private void closeMenuItem_Click(object? sender, EventArgs e)
@@ -74,19 +70,33 @@ namespace Raid.Toolkit.UI.WinUI
             private readonly ToolStripMenuItem manageExtensionsToolStripMenuItem = new();
             private readonly IMenuManager MenuManager;
             private readonly IAppUI AppUI;
-            private readonly AppService AppService;
+            private readonly IAppService AppService;
             private readonly UpdateService UpdateService;
+            private readonly INotificationSink Notify;
+
+            protected override void Dispose(bool disposing)
+            {
+                base.Dispose(disposing);
+                if (disposing)
+                {
+                    Notify?.Dispose();
+                }
+            }
 
             public AppTrayMenu(
-                AppService appService,
+                IAppService appService,
                 UpdateService updateService,
                 IMenuManager menuManager,
-                IAppUI appUI)
+                IAppUI appUI,
+                INotificationManager notificationManager)
             {
                 AppService = appService;
                 UpdateService = updateService;
                 MenuManager = menuManager;
                 AppUI = appUI;
+                Notify = new NotificationSink("apptray");
+                Notify.Activated += Notify_Activated;
+                notificationManager.RegisterHandler(Notify);
 
                 // 
                 // this
@@ -155,6 +165,11 @@ namespace Raid.Toolkit.UI.WinUI
                 this.closeMenuItem.Size = new System.Drawing.Size(170, 22);
                 this.closeMenuItem.Text = "Close";
                 this.closeMenuItem.Click += new System.EventHandler(this.closeMenuItem_Click);
+            }
+
+            private void Notify_Activated(object? sender, NotificationActivationEventArgs e)
+            {
+                // TODO:
             }
         }
     }

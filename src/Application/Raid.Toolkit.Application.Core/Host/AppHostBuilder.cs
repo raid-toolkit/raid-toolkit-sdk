@@ -13,6 +13,7 @@ using Raid.Toolkit.Extensibility.Host;
 using Raid.Toolkit.Extensibility.Host.Services;
 using SuperSocket.WebSocket;
 using SuperSocket.WebSocket.Server;
+using Raid.Toolkit.Extensibility.Interfaces;
 
 namespace Raid.Toolkit.Application.Core.Host
 {
@@ -80,8 +81,8 @@ namespace Raid.Toolkit.Application.Core.Host
             if (TryAddFeature(Feature.AppServices))
             {
                 ConfigureServices((context, services) => services
-                    .AddSingleton<AppService>()
-                    .AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)
+                    .AddSingleton<IAppService, AppService>()
+                    //.AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)
                     .Configure<AppSettings>(opts => context.Configuration.GetSection("app").Bind(opts))
                     .Configure<ProcessManagerSettings>(opts => context.Configuration.GetSection("app:ProcessManager").Bind(opts))
                     .Configure<DataUpdateSettings>(opts => context.Configuration.GetSection("app:DataSettings").Bind(opts))
@@ -106,10 +107,10 @@ namespace Raid.Toolkit.Application.Core.Host
         {
             if (TryAddFeature(Feature.Logging))
             {
-                ConfigureServices((context, services) => services
-                    .AddSingleton<IOptionsMonitor<FileLoggerOptions>>(AppHostBuilderSettings.FileLoggerOptions)
-                    .AddLogging(builder => builder.AddFile())
-                    );
+                //ConfigureServices((context, services) => services
+                //    .AddSingleton<IOptionsMonitor<FileLoggerOptions>>(AppHostBuilderSettings.FileLoggerOptions)
+                //    .AddLogging(builder => builder.AddFile())
+                //    );
             }
             return this;
         }
@@ -121,7 +122,7 @@ namespace Raid.Toolkit.Application.Core.Host
                 AddAppServices()
                 .ConfigureServices((context, services) => services
                     .AddHostedServiceSingleton<IAppUI, TAppUI>()
-                );
+                    );
             }
             return this;
         }
@@ -130,13 +131,13 @@ namespace Raid.Toolkit.Application.Core.Host
         {
             if (TryAddFeature(Feature.WebSocket))
             {
-                Wrap(HostBuilder.AsWebSocketHostBuilder()
-                    .UseSessionFactory<SessionFactory>()
-                    .UseWebSocketMessageHandler(messageHandler)
-                    .ConfigureAppConfiguration(config => config
-                        .AddJsonStream(AppHost.GetEmbeddedSettings())
-                        .AddJsonFile(Path.Combine(AppHost.ExecutableDirectory, "appsettings.json"), true)
-                    ));
+                //Wrap(HostBuilder.AsWebSocketHostBuilder()
+                //    .UseSessionFactory<SessionFactory>()
+                //    .UseWebSocketMessageHandler(messageHandler)
+                //    .ConfigureAppConfiguration(config => config
+                //        .AddJsonStream(AppHost.GetEmbeddedSettings())
+                //        .AddJsonFile(Path.Combine(AppHost.ExecutableDirectory, "appsettings.json"), true)
+                //    ));
             }
             return this;
         }

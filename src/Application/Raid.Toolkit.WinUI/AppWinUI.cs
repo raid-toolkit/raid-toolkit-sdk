@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Windows.AppNotifications;
 
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Extensibility;
@@ -120,15 +121,6 @@ namespace Raid.Toolkit.UI.WinUI
             return false;
         }
 
-        public void ShowNotification(string title, string description, System.Windows.Forms.ToolTipIcon icon, int timeoutMs, Action? onActivate = null)
-        {
-            Post(() =>
-            {
-                AppTray tray = ServiceProvider.GetRequiredService<AppTray>();
-                tray.ShowNotification(title, description, icon, timeoutMs, onActivate);
-            });
-        }
-
         protected virtual void Dispose(bool disposing)
         {
             if (!IsDisposed)
@@ -191,8 +183,6 @@ namespace Raid.Toolkit.UI.WinUI
         public void Run()
         {
             MainWindow ??= ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider);
-            MainWindow.Activate();
-            _ = MainWindow.BringToFront();
         }
     }
 }
