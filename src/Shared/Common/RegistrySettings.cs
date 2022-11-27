@@ -17,7 +17,10 @@ namespace Raid.Toolkit.Common
     public static class RegistrySettings
     {
         public const string RTKHive = @"SOFTWARE\RaidToolkit";
-        public const string DebugHive = @"SOFTWARE\RaidToolkit\Debug";
+        public const string DebugHive = $@"{RTKHive}\Debug";
+        // early access flags
+        public const string FlagsHive = $@"{RTKHive}\Flags";
+
         public const string InstallFolderKey = @"InstallFolder";
         public const string ActivationPortKey = @"ActivationPort";
         public const string AutoUpdateKey = @"AutoUpdate";
@@ -31,13 +34,12 @@ namespace Raid.Toolkit.Common
         public const string Protocol = "rtk";
         public const string StartupHive = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
         public const string ExecutableName = "Raid.Toolkit.exe";
-        // early access flags
-        public const string FlagsHive = $"{RTKHive}\\Flags";
+        public const string BinDir = "bin";
 
         public static readonly string DefaultRepository = "raid-toolkit/raid-toolkit-sdk";
         public static readonly string DefaultInstallationPath;
         public static readonly uint DefaultActivationPort = 9998;
-        public static string InstalledExecutablePath => Path.Combine(InstallationPath, ExecutableName);
+        public static string InstalledExecutablePath => Path.Combine(InstallationPath, BinDir, ExecutableName);
 
         public static bool IsFlagEnabled(FeatureFlags flag, bool defaultValue = false)
         {

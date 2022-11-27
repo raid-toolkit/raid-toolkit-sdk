@@ -11,7 +11,7 @@ set AppVersion=2.12.9
 set BuildConfiguration=Debug
 set BuildOutputDirectory=..\Application\Raid.Toolkit\bin\x64\%BuildConfiguration%\net6.0-windows10.0.19041.0\win10-x64
 
-heat.exe dir %BuildOutputDirectory% -cg RaidToolkitBinaries -out out\RaidToolkitBinaries.wxs -dr INSTALLDIR -srd -suid -sreg -g1 -var env.BuildOutputDirectory -ag
+heat.exe dir %BuildOutputDirectory% -cg RaidToolkitBinaries -out out\RaidToolkitBinaries.wxs -dr BINDIR -srd -suid -sreg -g1 -var env.BuildOutputDirectory -ag
 
 candle.exe -nologo -o %~dp0out\ %~dp0out\RaidToolkitBinaries.wxs %~dp0Product.wxs %~dp0Bundle.wxs -ext WixBalExtension
 light.exe -nologo -o %~dp0out\RaidToolkit.msi %~dp0out\Product.wixobj %~dp0out\RaidToolkitBinaries.wixobj -ext WixBalExtension

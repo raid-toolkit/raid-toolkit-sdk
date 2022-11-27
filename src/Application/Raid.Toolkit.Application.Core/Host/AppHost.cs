@@ -1,15 +1,13 @@
 using Karambolo.Extensions.Logging.File;
-
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-
-using Raid.Toolkit.Application.Core.DependencyInjection;
 using Raid.Toolkit.Application.Core.Commands;
 using Raid.Toolkit.Application.Core.Commands.Base;
+using Raid.Toolkit.Application.Core.DependencyInjection;
 using Raid.Toolkit.Application.Core.Utility;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
@@ -18,8 +16,6 @@ using Raid.Toolkit.Extensibility.Host;
 using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Services;
 using Raid.Toolkit.Extensibility.Shared;
-
-
 using SuperSocket.WebSocket;
 using SuperSocket.WebSocket.Server;
 
@@ -72,12 +68,13 @@ namespace Raid.Toolkit.Application.Core.Host
                 }
                 if (Directory.Exists(RegistrySettings.InstallationPath))
                 {
-                    Directory.CreateDirectory(Path.Combine(RegistrySettings.InstallationPath, LogDir));
+                    string logDir = Path.Combine(RegistrySettings.InstallationPath, LogDir);
+                    Directory.CreateDirectory(logDir);
                     PhysicalFileProvider fileProvider = new(RegistrySettings.InstallationPath);
                     FileLoggerOptions options = new()
                     {
                         FileAppender = new PhysicalFileAppender(fileProvider),
-                        BasePath = LogDir,
+                        BasePath = logDir,
                         FileAccessMode = LogFileAccessMode.KeepOpenAndAutoFlush,
                         FileEncodingName = "utf-8",
                         DateFormat = "yyyyMMdd",
