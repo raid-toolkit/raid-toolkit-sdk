@@ -10,7 +10,7 @@
     xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
     <Bundle Name="Raid Toolkit" Version="$(env.AppVersion)" Manufacturer="Raid Toolkit" UpgradeCode="CFCBC4D3-CF5A-4DAC-BA0C-67867A4E1EDF" IconSourceFile="$(var.Icon)">
         <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.HyperlinkSidebarLicense">
-            <bal:WixStandardBootstrapperApplication LaunchTarget="[LocalAppDataFolder]\RaidToolkit\Raid.Toolkit.exe" LaunchArguments="--post-setup" ShowFilesInUse="yes" ShowVersion="yes" LicenseUrl="https://raw.githubusercontent.com/raid-toolkit/raid-toolkit-sdk/main/LICENSE" LogoSideFile="$(var.SideLogo)" LogoFile="$(var.Logo)" SuppressOptionsUI="yes"/>
+            <bal:WixStandardBootstrapperApplication LaunchTarget="[LocalAppDataFolder]\RaidToolkit\Bin\Raid.Toolkit.exe" LaunchArguments="--post-setup" ShowFilesInUse="yes" ShowVersion="yes" LicenseUrl="https://raw.githubusercontent.com/raid-toolkit/raid-toolkit-sdk/main/LICENSE" LogoSideFile="$(var.SideLogo)" LogoFile="$(var.Logo)" SuppressOptionsUI="yes"/>
         </BootstrapperApplicationRef>
 
         <Variable Name="LaunchAfterInstallation" bal:Overridable="yes" Type="numeric" Value="0" />

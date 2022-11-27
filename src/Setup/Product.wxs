@@ -24,9 +24,11 @@
         <Directory Id="TARGETDIR" Name="SourceDir">
             <Directory Id="LocalAppDataFolder" Name="AppData">
                 <Directory Id="INSTALLDIR" Name="RaidToolkit">
-                    <Component Id="RaidToolkitDir" Guid="61C46BC9-3C11-494B-9A46-63932DF551A7">
-                        <RemoveFolder Id="RaidToolkit" On="uninstall" />
-                    </Component>
+                    <Directory Id="BINDIR" Name="bin">
+                        <Component Id="RaidToolkitDir" Guid="61C46BC9-3C11-494B-9A46-63932DF551A7">
+                            <RemoveFolder Id="RaidToolkit" On="uninstall" />
+                        </Component>
+                    </Directory>
                 </Directory>
             </Directory>
 
