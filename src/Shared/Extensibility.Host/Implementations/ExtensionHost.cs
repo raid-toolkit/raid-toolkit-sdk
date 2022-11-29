@@ -153,16 +153,16 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public bool CanShowUI => WindowManager.CanShowUI;
 
-        public bool HandleRequest(Uri requestUri)
+        public int HandleRequest(Uri requestUri)
         {
             try
             {
-                return ExtensionPackage.HandleRequest(requestUri);
+                return ExtensionPackage.HandleRequest(requestUri) ? 1 : 0;
             }
             catch(Exception ex)
             {
                 Logger.LogError(ExtensionError.HandleRequestFailed.EventId(), ex, "Failed to uninstall extension");
-                return false;
+                return -2;
             }
         }
 

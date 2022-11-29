@@ -44,8 +44,6 @@ namespace Raid.Toolkit.Application.Core.Commands.Matchers
         { }
         public override ICommandTask? Match(RunOptions options)
         {
-            if (SetupMatcher.ShouldRunSetup(options))
-                return null;
             return ActivatorUtilities.CreateInstance<RunTask>(ServiceProvider, options);
         }
     }

@@ -32,7 +32,7 @@ namespace Raid.Toolkit.Extensibility
         public event EventHandler<NotificationActivationEventArgs> Activated;
         public string GetArguments(string action);
         public string GetArguments(string action, IReadOnlyDictionary<string,string> args);
-        AppNotification SendNotification(ToastContent notification);
+        AppNotification SendNotification(ToastContent notification, string tag = null);
         void Handle(NotificationActivationEventArgs eventArgs);
     }
     public interface INotificationManager

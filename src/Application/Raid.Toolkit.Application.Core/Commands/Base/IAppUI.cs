@@ -10,7 +10,7 @@ namespace Raid.Toolkit.Application.Core.Commands.Base
         void Run();
         void Dispatch(Action task);
 
-        bool? ShowExtensionInstaller(ExtensionBundle bundleToInstall);
+        Task<bool> ShowExtensionInstaller(ExtensionBundle bundleToInstall);
         void ShowInstallUI();
         void ShowMain();
         void ShowSettings();

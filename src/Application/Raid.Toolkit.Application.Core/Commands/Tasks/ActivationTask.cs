@@ -1,15 +1,15 @@
+using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Commands.Matchers;
 using Raid.Toolkit.Application.Core.Host;
-using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.DataModel;
 
 namespace Raid.Toolkit.Application.Core.Commands.Tasks
 {
-    internal class InstallExtensionTask : ICommandTask
+    internal class ActivationTask : ICommandTask
     {
-        private readonly InstallExtensionOptions Options;
+        private readonly ActivationOptions Options;
 
-        public InstallExtensionTask(InstallExtensionOptions options)
+        public ActivationTask(ActivationOptions options)
         {
             Options = options;
         }
@@ -20,7 +20,7 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
 
             RaidToolkitClientBase client = new();
             client.Connect();
-            return await client.MakeApi<ActivationApi>().Activate(new Uri("rtk://install-extension"), new string[] { Options.PackagePath });
+            return await client.MakeApi<ActivationApi>().Activate(new Uri(Options.Uri), (Options.Arguments ?? Array.Empty<string>()).ToArray());
         }
     }
 }

@@ -66,7 +66,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             notificationManager.RegisterHandler(Notify);
         }
 
-        private void Notify_Activated(object? sender, NotificationActivationEventArgs e)
+        private async void Notify_Activated(object? sender, NotificationActivationEventArgs e)
         {
             if (e.Arguments.TryGetValue(NotificationConstants.Action, out string? action))
             {
@@ -74,7 +74,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
                 {
                     case "install-update":
                         {
-                            InstallUpdate();
+                            await InstallUpdate();
                             break;
                         }
                 }

@@ -10,6 +10,7 @@ using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.DependencyInjection;
 using Raid.Toolkit.Application.Core.Utility;
 using Raid.Toolkit.Common;
+using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host;
@@ -19,10 +20,15 @@ using Raid.Toolkit.Extensibility.Shared;
 using SuperSocket.WebSocket;
 using SuperSocket.WebSocket.Server;
 
+using System.Diagnostics;
+
 namespace Raid.Toolkit.Application.Core.Host
 {
     public class AppHost
     {
+        private const int ActivationPollMs = 500;
+        private const int ActivationTimeoutMs = 30000;
+
         private const string LogDir = "Logs";
         public static readonly string ExecutablePath;
         public static readonly string ExecutableName = "Raid.Toolkit.exe";
@@ -106,6 +112,34 @@ namespace Raid.Toolkit.Application.Core.Host
         public static void Start(IHost host)
         {
             Host = host;
+        }
+
+        public static async Task EnsureProcess()
+        {
+            if (SingletonProcess.IsRunning)
+            {
+                return;
+            }
+            ProcessStartInfo psi = new()
+            {
+                FileName = ExecutablePath
+            };
+            _ = Process.Start(psi);
+            DateTime timeout = DateTime.UtcNow.AddMilliseconds(ActivationTimeoutMs);
+            while (DateTime.UtcNow < timeout)
+            {
+                try
+                {
+                    RaidToolkitClientBase client = new();
+                    client.Connect();
+                    return;
+                }
+                catch
+                {
+                    await Task.Delay(ActivationPollMs);
+                }
+            }
+            throw new TimeoutException();
         }
 
         /**
