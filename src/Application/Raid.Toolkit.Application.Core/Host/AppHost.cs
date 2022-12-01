@@ -1,10 +1,12 @@
 using Karambolo.Extensions.Logging.File;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
 using Raid.Toolkit.Application.Core.Commands;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.DependencyInjection;
@@ -17,6 +19,7 @@ using Raid.Toolkit.Extensibility.Host;
 using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Services;
 using Raid.Toolkit.Extensibility.Shared;
+
 using SuperSocket.WebSocket;
 using SuperSocket.WebSocket.Server;
 
@@ -114,16 +117,27 @@ namespace Raid.Toolkit.Application.Core.Host
             Host = host;
         }
 
-        public static async Task EnsureProcess()
+        public static async Task<int> Activate(Uri activationRequestUri, params string[] arguments)
         {
+            await EnsureProcess(new() { NoLogo = true });
+            RaidToolkitClientBase client = new();
+            client.Connect();
+            return await client.MakeApi<ActivationApi>().Activate(activationRequestUri, arguments);
+        }
+
+        private static async Task EnsureProcess(CommonOptions? options = null)
+        {
+            options ??= new();
             if (SingletonProcess.IsRunning)
             {
                 return;
             }
             ProcessStartInfo psi = new()
             {
-                FileName = ExecutablePath
+                FileName = ExecutablePath,
             };
+            if (options.NoLogo) psi.ArgumentList.Add("--nologo");
+
             _ = Process.Start(psi);
             DateTime timeout = DateTime.UtcNow.AddMilliseconds(ActivationTimeoutMs);
             while (DateTime.UtcNow < timeout)

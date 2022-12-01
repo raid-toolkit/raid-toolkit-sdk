@@ -33,6 +33,9 @@ namespace Raid.Toolkit.Application.Core.Commands
         [Option("force-rebuild")]
         public bool ForceRebuild { get; set; }
 
+        [Option("nologo")]
+        public bool NoLogo { get; set; }
+
         [Option("render-engine")]
         public RenderingEngine RenderEngine { get; set; } = RenderingEngine.WinUI;
     }
