@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -20,6 +21,11 @@ namespace Raid.Toolkit.UI.WinUI
         {
             private const int kDefaultBalloonTipTimeout = 10000;
 
+            private void aboutMenuItem_Click(object? sender, EventArgs e)
+            {
+                AppUI.ShowMain();
+            }
+
             private void settingsMenuItem_Click(object? sender, EventArgs e)
             {
                 AppUI.ShowSettings();
@@ -40,9 +46,9 @@ namespace Raid.Toolkit.UI.WinUI
                 extensionsToolStripMenuItem.Enabled = extensionsToolStripMenuItem.DropDownItems.Count > 0;
             }
 
-            private void installUpdateMenuItem_Click(object? sender, EventArgs e)
+            private async void installUpdateMenuItem_Click(object? sender, EventArgs e)
             {
-                UpdateService.InstallUpdate();
+                await UpdateService.InstallUpdate();
                 AppService.Exit();
             }
 
@@ -61,6 +67,7 @@ namespace Raid.Toolkit.UI.WinUI
                 AppUI.ShowExtensionManager();
             }
 
+            private readonly ToolStripMenuItem aboutMenuItem = new();
             private readonly ToolStripMenuItem installUpdateMenuItem = new();
             private readonly ToolStripMenuItem checkUpdatesMenuItem = new();
             private readonly ToolStripMenuItem closeMenuItem = new();
@@ -102,16 +109,27 @@ namespace Raid.Toolkit.UI.WinUI
                 // this
                 // 
                 this.Items.AddRange(new ToolStripItem[] {
+                    this.aboutMenuItem,
+                    new ToolStripSeparator(),
                     this.installUpdateMenuItem,
                     this.checkUpdatesMenuItem,
                     this.viewErrorsToolStripMenuItem,
                     this.extensionsToolStripMenuItem,
                     this.settingsMenuItem,
+                    new ToolStripSeparator(),
                     this.closeMenuItem
                 });
                 this.Name = "appTrayMenu";
                 this.Opening += new System.ComponentModel.CancelEventHandler(this.appTrayMenu_Opening);
 
+                // 
+                // aboutMenuItem
+                // 
+                this.aboutMenuItem.Name = "aboutMenuItem";
+                this.aboutMenuItem.Size = new System.Drawing.Size(170, 22);
+                this.aboutMenuItem.Text = "About";
+                this.aboutMenuItem.Font = new(this.aboutMenuItem.Font, FontStyle.Bold);
+                this.aboutMenuItem.Click += new System.EventHandler(this.aboutMenuItem_Click);
                 // 
                 // installUpdateMenuItem
                 // 
