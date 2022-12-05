@@ -19,8 +19,6 @@ namespace Raid.Toolkit.UI.WinUI
     {
         public class AppTrayMenu : ContextMenuStrip
         {
-            private const int kDefaultBalloonTipTimeout = 10000;
-
             private void aboutMenuItem_Click(object? sender, EventArgs e)
             {
                 AppUI.ShowMain();
