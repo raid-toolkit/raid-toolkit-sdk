@@ -78,12 +78,17 @@ namespace Raid.Toolkit.Application.Core.Host
                 if (Directory.Exists(RegistrySettings.InstallationPath))
                 {
                     string logDir = Path.Combine(RegistrySettings.InstallationPath, LogDir);
-                    Directory.CreateDirectory(logDir);
+                    DirectoryInfo dir = Directory.CreateDirectory(logDir);
+
+                    IEnumerable<FileInfo> existingFiles = dir.GetFiles().Where(file => file.CreationTimeUtc < DateTime.UtcNow.AddDays(-2));
+                    foreach (FileInfo file in existingFiles)
+                        file.Delete();
+
                     PhysicalFileProvider fileProvider = new(RegistrySettings.InstallationPath);
                     FileLoggerOptions options = new()
                     {
                         FileAppender = new PhysicalFileAppender(fileProvider),
-                        BasePath = logDir,
+                        BasePath = LogDir,
                         FileAccessMode = LogFileAccessMode.KeepOpenAndAutoFlush,
                         FileEncodingName = "utf-8",
                         DateFormat = "yyyyMMdd",
@@ -93,11 +98,11 @@ namespace Raid.Toolkit.Application.Core.Host
                         TextBuilder = new SingleLineLogEntryTextBuilder(),
                         Files = new[]
                         {
-                        new LogFileOptions
-                        {
-                            Path = "<date:yyyyMMdd>-<counter>.log",
+                            new LogFileOptions
+                            {
+                                Path = "<date:yyyyMMdd>-<counter>.log",
+                            },
                         },
-                    },
                     };
                     FileLoggerOptions.Set(options);
                 }
