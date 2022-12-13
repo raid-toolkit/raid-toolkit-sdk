@@ -10,6 +10,7 @@
         <IsPackable>false</IsPackable>
     </PropertyGroup>
     <ItemGroup>
+        <None Remove="AccountsWindow.xaml" />
         <None Remove="SettingsPanel.xaml" />
     </ItemGroup>
 
@@ -84,6 +85,11 @@
             <Generator>ResXFileCodeGenerator</Generator>
             <LastGenOutput>FormsResources.Designer.cs</LastGenOutput>
         </EmbeddedResource>
+    </ItemGroup>
+    <ItemGroup>
+      <Page Update="AccountsWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
     </ItemGroup>
     <ItemGroup>
         <Page Update="SettingsPanel.xaml">
