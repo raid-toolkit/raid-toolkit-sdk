@@ -27,6 +27,9 @@ namespace Raid.Toolkit.Model
 
         private Version CurrentInteropVersion;
         private Regex[] IncludeTypes;
+        private readonly Regex[] ExcludeTypes = new Regex[] {
+            new Regex(@"^Client\.ViewModel\.Selections.*"),
+        };
 
         private EventHandler<IModelLoader.ModelLoaderEventArgs> OnStateUpdatedInternal;
         public event EventHandler<IModelLoader.ModelLoaderEventArgs> OnStateUpdated
@@ -100,7 +103,7 @@ namespace Raid.Toolkit.Model
             try
             {
                 IncludeTypes = DefaultIncludeTypes.Concat(regices).ToArray();
-                var durableTypePatternList = IncludeTypes.Select(rex => rex.ToString()).Distinct().OrderBy(str => str);
+                var durableTypePatternList = ExcludeTypes.Concat(IncludeTypes).Select(rex => rex.ToString()).Distinct().OrderBy(str => str);
                 int hashCode = string.Join(";", durableTypePatternList).GetStableHashCode();
 
                 // force a rebuild for every major.minor version bump
@@ -189,8 +192,9 @@ namespace Raid.Toolkit.Model
             Compiler compiler = new(model);
             compiler.AddTarget(new NetCoreTarget());
             compiler.AddConfiguration(
-                ArtifactSpecs.TypeSelectors.MakeValue(new List<Func<TypeDescriptor, bool>>{
-                    {td => IncludeTypes.Any(rex => rex.IsMatch(td.Name)) }
+                ArtifactSpecs.TypeSelectors.MakeValue(new List<Func<TypeDescriptor, ArtifactSpecs.TypeSelectorResult>>{
+                    {td => IncludeTypes.Any(rex => rex.IsMatch(td.Name)) ? ArtifactSpecs.TypeSelectorResult.Include : ArtifactSpecs.TypeSelectorResult.Default },
+                    {td => ExcludeTypes.Any(rex => rex.IsMatch(td.Name)) ? ArtifactSpecs.TypeSelectorResult.Exclude : ArtifactSpecs.TypeSelectorResult.Default },
                 }),
                 ArtifactSpecs.AssemblyName.MakeValue(OutputAssemblyName),
                 ArtifactSpecs.AssemblyVersion.MakeValue(CurrentInteropVersion),
