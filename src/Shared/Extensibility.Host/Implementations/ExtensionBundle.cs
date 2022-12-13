@@ -74,7 +74,7 @@ namespace Raid.Toolkit.Extensibility
         public static ExtensionBundle FromFile(string filename)
         {
             using ZipArchive arch = ZipFile.OpenRead(filename);
-            ZipArchiveEntry manifestEntry = arch.GetEntry(".rtk.extension.json");
+            ZipArchiveEntry? manifestEntry = arch.GetEntry(".rtk.extension.json");
             if (manifestEntry == null)
             {
                 throw new ApplicationException($"Extension package '{filename}' does not contain a valid manifest");

@@ -32,9 +32,13 @@ namespace Raid.Toolkit.Extensibility.Notifications
             ScenarioId = scenarioId;
         }
 
-        public AppNotification SendNotification(ToastContent content)
+        public AppNotification SendNotification(ToastContent content, string tag = "")
         {
             AppNotification toast = new(content.GetContent());
+            if (!string.IsNullOrEmpty(tag))
+            {
+                toast.Tag = tag;
+            }
             AppNotificationManager.Default.Show(toast);
             return toast;
         }

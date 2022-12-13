@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -8,7 +10,7 @@ namespace Raid.Toolkit.DataModel
     public interface IActivationApi
     {
         [PublicApi("activate")]
-        Task<bool> Activate(Uri activationRequestUri);
+        Task<int> Activate(Uri activationRequestUri, string[] arguments);
     }
 
     public class ActivationApi : ApiBase<IActivationApi>, IActivationApi
@@ -17,9 +19,9 @@ namespace Raid.Toolkit.DataModel
         {
         }
 
-        public Task<bool> Activate(Uri activationRequestUri)
+        public Task<int> Activate(Uri activationRequestUri, string[] arguments)
         {
-            return CallMethod<bool>(MethodBase.GetCurrentMethod(), activationRequestUri);
+            return CallMethod<int>(MethodBase.GetCurrentMethod(), activationRequestUri, arguments);
         }
     }
 }

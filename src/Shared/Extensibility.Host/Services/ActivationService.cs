@@ -1,6 +1,8 @@
 using System;
 using System.Threading.Tasks;
+
 using Microsoft.Extensions.Logging;
+
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility.Services;
 
@@ -8,27 +10,37 @@ namespace Raid.Toolkit.Extensibility.Host.Services
 {
     public class ActivationServiceApi : ApiHandler<IActivationApi>, IActivationApi
     {
+        private readonly IPackageManager PackageManager;
         private readonly IExtensionHostController ExtensionHostController;
-        public ActivationServiceApi(IExtensionHostController extensionHostController, ILogger<ApiHandler<IActivationApi>> logger) : base(logger)
+        public ActivationServiceApi(IExtensionHostController extensionHostController, IPackageManager packageManager, ILogger<ApiHandler<IActivationApi>> logger) : base(logger)
         {
             ExtensionHostController = extensionHostController;
+            PackageManager = packageManager;
         }
 
-        public Task<bool> Activate(Uri activationRequestUri)
+        public async Task<int> Activate(Uri activationRequestUri, string[] arguments)
         {
             switch (activationRequestUri.Host)
             {
+                case "install-extension":
+                    {
+                        ExtensionBundle bundle = ExtensionBundle.FromFile(arguments[0]);
+                        await PackageManager.RequestPackageInstall(bundle);
+                        return 0;
+                    }
                 case "extension":
-                    string extensionId = activationRequestUri.LocalPath.TrimStart('/').Split('/')[0];
-                    ExtensionHost extensionHost = ExtensionHostController.GetExtensionPackageHost(extensionId);
-                    if (extensionHost == null)
-                        return Task.FromException<bool>(new ApplicationException($"Extension '{extensionId}' not found."));
+                    {
+                        string extensionId = activationRequestUri.LocalPath.TrimStart('/').Split('/')[0];
+                        ExtensionHost extensionHost = ExtensionHostController.GetExtensionPackageHost(extensionId);
+                        if (extensionHost == null)
+                            throw new ApplicationException($"Extension '{extensionId}' not found.");
 
-                    return Task.FromResult(extensionHost.HandleRequest(activationRequestUri));
+                        return extensionHost.HandleRequest(activationRequestUri);
+                    }
                 default:
                     break;
             }
-            return Task.FromResult(false);
+            return -1;
         }
     }
 }

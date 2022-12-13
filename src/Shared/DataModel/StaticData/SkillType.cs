@@ -487,7 +487,7 @@ namespace Raid.Toolkit.DataModel
         public int Duration;
 
         [JsonProperty("ignoreEffectsLimit")]
-        public bool IgnoreEffectsLimit;
+        public bool? IgnoreEffectsLimit;
 
         [JsonProperty("applyMode")]
         public ApplyMode? ApplyMode;

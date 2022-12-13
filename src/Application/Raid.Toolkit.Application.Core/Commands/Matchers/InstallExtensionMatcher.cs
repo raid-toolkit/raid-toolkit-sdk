@@ -17,12 +17,9 @@ namespace Raid.Toolkit.Application.Core.Commands.Matchers
     public class InstallExtensionOptions : CommonOptions
     {
         [Value(0, MetaName = "rtkx", HelpText = "Path to RTKX package to install")]
-        public string? PackagePath { get; set; }
-
-        [Option('y', "accept")]
-        public bool Accept { get; set; }
-
+        public string PackagePath { get; set; } = string.Empty;
     }
+
     internal class InstallExtensionMatcher : CommandTaskMatcher<InstallExtensionOptions>
     {
         public InstallExtensionMatcher(IServiceProvider serviceProvider) : base(serviceProvider)

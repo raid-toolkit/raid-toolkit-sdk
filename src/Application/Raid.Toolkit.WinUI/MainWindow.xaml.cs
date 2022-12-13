@@ -92,7 +92,7 @@ namespace Raid.Toolkit.UI.WinUI
             ContentElements.Add(LoadProgressGrid);
             ContentElements.Add(LinksGrid);
 
-            if (!CommonOptions.Value.Embedding)
+            if (!CommonOptions.Value.Embedding && !CommonOptions.Value.NoLogo)
             {
                 Activate();
                 BringToFront();

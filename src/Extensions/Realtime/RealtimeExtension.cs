@@ -15,7 +15,6 @@ namespace Raid.Toolkit.Extension.Realtime
         {
             Disposables.Add(host.RegisterMessageScopeHandler<RealtimeApi>());
             Disposables.Add(host.RegisterBackgroundService<RealtimeService>());
-            Disposables.Add(host.CreateInstance<ArtifactUpgradeWatcher>());
         }
     }
 }

@@ -1,11 +1,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-
-using Raid.Toolkit.Application.Core.DependencyInjection;
-using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Commands.Matchers;
+using Raid.Toolkit.Application.Core.DependencyInjection;
+using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Common;
+using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility;
 
 namespace Raid.Toolkit.Application.Core.Commands.Tasks
@@ -23,12 +23,31 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
             Options = options;
         }
 
+        private static Task<int> ActivateCurrentProcess()
+        {
+            RaidToolkitClientBase client = new();
+            client.Connect();
+            return client.MakeApi<ActivationApi>().Activate(new Uri("rtk://default"), Array.Empty<string>());
+        }
+
         public async Task<int> Invoke()
         {
             if (!Options.Standalone)
             {
-                await SingletonProcess.TryAcquireSingletonWithTimeout(Options.Wait ?? 0);
+                if (Options.Wait.HasValue)
+                {
+                    await SingletonProcess.TryAcquireSingletonWithTimeout(Options.Wait.Value);
+                }
+                else
+                {
+                    // already running?
+                    if (!SingletonProcess.TryAcquireSingleton())
+                    {
+                        return await ActivateCurrentProcess();
+                    }
+                }
             }
+            RegistrySettings.RegisterProtocol(true);
 
             AppHostBuilder
                 .AddExtensibility()
