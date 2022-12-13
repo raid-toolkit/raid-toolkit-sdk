@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
@@ -18,7 +19,10 @@ namespace Raid.Toolkit.UI.WinUI
     {
         public class AppTrayMenu : ContextMenuStrip
         {
-            private const int kDefaultBalloonTipTimeout = 10000;
+            private void aboutMenuItem_Click(object? sender, EventArgs e)
+            {
+                AppUI.ShowMain();
+            }
 
             private void settingsMenuItem_Click(object? sender, EventArgs e)
             {
@@ -40,9 +44,9 @@ namespace Raid.Toolkit.UI.WinUI
                 extensionsToolStripMenuItem.Enabled = extensionsToolStripMenuItem.DropDownItems.Count > 0;
             }
 
-            private void installUpdateMenuItem_Click(object? sender, EventArgs e)
+            private async void installUpdateMenuItem_Click(object? sender, EventArgs e)
             {
-                UpdateService.InstallUpdate();
+                await UpdateService.InstallUpdate();
                 AppService.Exit();
             }
 
@@ -61,6 +65,7 @@ namespace Raid.Toolkit.UI.WinUI
                 AppUI.ShowExtensionManager();
             }
 
+            private readonly ToolStripMenuItem aboutMenuItem = new();
             private readonly ToolStripMenuItem installUpdateMenuItem = new();
             private readonly ToolStripMenuItem checkUpdatesMenuItem = new();
             private readonly ToolStripMenuItem closeMenuItem = new();
@@ -102,21 +107,32 @@ namespace Raid.Toolkit.UI.WinUI
                 // this
                 // 
                 this.Items.AddRange(new ToolStripItem[] {
+                    this.aboutMenuItem,
+                    new ToolStripSeparator(),
                     this.installUpdateMenuItem,
                     this.checkUpdatesMenuItem,
                     this.viewErrorsToolStripMenuItem,
                     this.extensionsToolStripMenuItem,
                     this.settingsMenuItem,
+                    new ToolStripSeparator(),
                     this.closeMenuItem
                 });
                 this.Name = "appTrayMenu";
                 this.Opening += new System.ComponentModel.CancelEventHandler(this.appTrayMenu_Opening);
 
                 // 
+                // aboutMenuItem
+                // 
+                this.aboutMenuItem.Name = "aboutMenuItem";
+                this.aboutMenuItem.Size = new(170, 22);
+                this.aboutMenuItem.Text = "About";
+                this.aboutMenuItem.Font = new(this.aboutMenuItem.Font, FontStyle.Bold);
+                this.aboutMenuItem.Click += new System.EventHandler(this.aboutMenuItem_Click);
+                // 
                 // installUpdateMenuItem
                 // 
                 this.installUpdateMenuItem.Name = "installUpdateMenuItem";
-                this.installUpdateMenuItem.Size = new System.Drawing.Size(170, 22);
+                this.installUpdateMenuItem.Size = new(170, 22);
                 this.installUpdateMenuItem.Text = "Install update";
                 this.installUpdateMenuItem.Visible = false;
                 this.installUpdateMenuItem.Click += new System.EventHandler(this.installUpdateMenuItem_Click);
@@ -124,14 +140,14 @@ namespace Raid.Toolkit.UI.WinUI
                 // checkUpdatesMenuItem
                 // 
                 this.checkUpdatesMenuItem.Name = "checkUpdatesMenuItem";
-                this.checkUpdatesMenuItem.Size = new System.Drawing.Size(170, 22);
+                this.checkUpdatesMenuItem.Size = new(170, 22);
                 this.checkUpdatesMenuItem.Text = "Check for updates";
                 this.checkUpdatesMenuItem.Click += new System.EventHandler(this.checkUpdatesMenuItem_Click);
                 // 
                 // viewErrorsToolStripMenuItem
                 // 
                 this.viewErrorsToolStripMenuItem.Name = "viewErrorsToolStripMenuItem";
-                this.viewErrorsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+                this.viewErrorsToolStripMenuItem.Size = new(170, 22);
                 this.viewErrorsToolStripMenuItem.Text = "View errors";
                 this.viewErrorsToolStripMenuItem.Click += new System.EventHandler(this.viewErrorsToolStripMenuItem_Click);
                 // 
@@ -141,28 +157,28 @@ namespace Raid.Toolkit.UI.WinUI
                     this.manageExtensionsToolStripMenuItem
                 });
                 this.extensionsToolStripMenuItem.Name = "extensionsToolStripMenuItem";
-                this.extensionsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+                this.extensionsToolStripMenuItem.Size = new(170, 22);
                 this.extensionsToolStripMenuItem.Text = "Extensions";
                 // 
                 // manageExtensionsToolStripMenuItem
                 // 
                 this.manageExtensionsToolStripMenuItem.Image = FormsResources.Settings_16x;
                 this.manageExtensionsToolStripMenuItem.Name = "manageExtensionsToolStripMenuItem";
-                this.manageExtensionsToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+                this.manageExtensionsToolStripMenuItem.Size = new(185, 22);
                 this.manageExtensionsToolStripMenuItem.Text = "&Manage Extensions...";
                 this.manageExtensionsToolStripMenuItem.Click += new System.EventHandler(this.manageExtensionsToolStripMenuItem_Click);
                 // 
                 // settingsMenuItem
                 // 
                 this.settingsMenuItem.Name = "settingsMenuItem";
-                this.settingsMenuItem.Size = new System.Drawing.Size(170, 22);
+                this.settingsMenuItem.Size = new(170, 22);
                 this.settingsMenuItem.Text = "Settings";
                 this.settingsMenuItem.Click += new System.EventHandler(this.settingsMenuItem_Click);
                 // 
                 // closeMenuItem
                 // 
                 this.closeMenuItem.Name = "closeMenuItem";
-                this.closeMenuItem.Size = new System.Drawing.Size(170, 22);
+                this.closeMenuItem.Size = new(170, 22);
                 this.closeMenuItem.Text = "Close";
                 this.closeMenuItem.Click += new System.EventHandler(this.closeMenuItem_Click);
             }

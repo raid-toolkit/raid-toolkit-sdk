@@ -82,6 +82,24 @@ namespace Raid.Toolkit.UI.WinUI
             return signal.Task;
         }
 
+        public Task<T> Post<T>(Func<Task<T>> action)
+        {
+            TaskCompletionSource<T> signal = new();
+            Dispatch(async () =>
+            {
+                try
+                {
+                    T result = await action();
+                    signal.SetResult(result);
+                }
+                catch (Exception ex)
+                {
+                    signal.SetException(ex);
+                }
+            });
+            return signal.Task;
+        }
+
         public Task<T> Post<T, U>(Func<U, T> action, U state)
         {
             TaskCompletionSource<T> signal = new();
@@ -115,10 +133,13 @@ namespace Raid.Toolkit.UI.WinUI
             //throw new NotImplementedException();
         }
 
-        public bool? ShowExtensionInstaller(ExtensionBundle bundleToInstall)
+        public Task<bool> ShowExtensionInstaller(ExtensionBundle bundleToInstall)
         {
-            //throw new NotImplementedException();
-            return false;
+            return Post(() =>
+            {
+                InstallExtensionWindow extensionWindow = ActivatorUtilities.CreateInstance<InstallExtensionWindow>(ServiceProvider, bundleToInstall);
+                return extensionWindow.RequestPermission();
+            });
         }
 
         protected virtual void Dispose(bool disposing)
@@ -129,6 +150,7 @@ namespace Raid.Toolkit.UI.WinUI
                 {
                     if (disposing)
                     {
+                        AppTray?.Dispose();
                         MainWindow?.Close();
                         System.Windows.Forms.Application.Exit();
                     }

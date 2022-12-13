@@ -71,20 +71,6 @@ namespace Raid.Toolkit.Extension.Realtime
                 ViewChanged?.Raise(this, new(instance, topView));
                 return;
             }
-
-            bool isUpgrading = (topView.Key == ViewKey.ArtifactPowerUpOverlay &&
-                topView.View is OverlayView view &&
-                view.Context is ArtifactUpgradeOverlay overlay &&
-                overlay._activeTab._value == 0 && // upgrade tab
-                overlay._upgradeContext._progress._status._value == ProgressStatus.InProgress // actively upgrading
-                );
-            bool wasUpgrading = instance.Properties.GetValue<bool>("IsUpgradingArtifact");
-
-            if (wasUpgrading != isUpgrading)
-            {
-                instance.Properties.SetValue<bool>("IsUpgradingArtifact", isUpgrading);
-                ViewChanged?.Raise(this, new(instance, topView));
-            }
         }
 
         private void UpdateLastBattleState(IGameInstance instance, ModelScope scope)

@@ -2,9 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
+
+using CommunityToolkit.WinUI.Notifications;
+
+using Raid.Toolkit.Application.Core.Commands.Base;
+using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host;
+using Raid.Toolkit.Extensibility.Interfaces;
+using Raid.Toolkit.Extensibility.Notifications;
 
 namespace Raid.Toolkit.Application.Core.DependencyInjection
 {
@@ -14,12 +22,48 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
         private static string ExtensionsDirectory => Path.Combine(RegistrySettings.InstallationPath, "extensions");
 
         private readonly List<ExtensionBundle> Descriptors = new();
+        private readonly IAppUI AppUI;
+        private readonly INotificationManager NotificationManager;
+        private readonly IAppService AppService;
+        private readonly NotificationSink PackageUpdateNotify;
         private bool IsLoaded = false;
         public static string? DebugPackage { get; set; }
         public static bool NoDefaultPackages = false;
 
-        public PackageManager()
+        public PackageManager(IAppUI appUI, INotificationManager notificationManager, IAppService appService)
         {
+            AppUI = appUI;
+            NotificationManager = notificationManager;
+            AppService = appService;
+            PackageUpdateNotify = new("packageManager");
+            PackageUpdateNotify.Activated += Sink_Activated;
+            NotificationManager.RegisterHandler(PackageUpdateNotify);
+        }
+
+        private void Sink_Activated(object? sender, NotificationActivationEventArgs e)
+        {
+            if (e.Arguments.TryGetValue(NotificationConstants.Action, out string? action))
+            {
+                switch (action)
+                {
+                    case "restart":
+                        {
+                            AppService.Restart(false);
+                            break;
+                        }
+                }
+            }
+        }
+
+        public async Task<ExtensionBundle> RequestPackageInstall(ExtensionBundle package)
+        {
+            bool result = await AppUI.ShowExtensionInstaller(package);
+            if (!result)
+            {
+                throw new OperationCanceledException();
+            }
+            ExtensionBundle installedPackage = AddPackage(package);
+            return installedPackage;
         }
 
         private void EnsureLoaded()
@@ -89,10 +133,21 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
             Descriptors.AddRange(descriptors.Values);
         }
 
+        private void RequestRestart()
+        {
+            ToastContentBuilder tcb = new ToastContentBuilder()
+                .AddText("Restart required")
+                .AddText($"Raid Toolkit needs to be restarted to apply extension changes.")
+                .AddButton(new ToastButton("Restart", PackageUpdateNotify.GetArguments("restart")))
+                .AddButton(new ToastButtonDismiss());
+            PackageUpdateNotify.SendNotification(tcb.Content, "extensions-updated");
+        }
+
         public ExtensionBundle AddPackage(ExtensionBundle packageToInstall)
         {
             Directory.CreateDirectory(ExtensionsDirectory);
             packageToInstall.Install(ExtensionsDirectory);
+            RequestRestart();
             return ExtensionBundle.FromDirectory(packageToInstall.GetInstallDir(ExtensionsDirectory));
         }
 
@@ -121,6 +176,7 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
                 {
                     File.WriteAllText(Path.Combine(packageDir, DeleteMeFile), "");
                 }
+                RequestRestart();
             }
         }
     }

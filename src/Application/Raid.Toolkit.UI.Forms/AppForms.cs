@@ -159,13 +159,13 @@ namespace Raid.Toolkit.UI.Forms
             form.FormClosed += (_, _) => AppService.Exit();
         }
 
-        public bool? ShowExtensionInstaller(ExtensionBundle bundleToInstall)
+        public Task<bool> ShowExtensionInstaller(ExtensionBundle bundleToInstall)
         {
             InstallExtensionDialog form = ActivatorUtilities.CreateInstance<InstallExtensionDialog>(ServiceProvider, bundleToInstall);
             TrackForm(form);
             DialogResult result = form.ShowDialog();
             AppService.Exit();
-            return result == DialogResult.OK;
+            return Task.FromResult(result == DialogResult.OK);
         }
 
         public void ShowSettings()
