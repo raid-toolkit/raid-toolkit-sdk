@@ -28,8 +28,8 @@ The mission of RTK is twofold:
 
 In order to take advantage of RTK-powered applications, you need to install the latest RTK Service application. This application will run in the background on your system and watch for Raid processes, and when it finds them it will keep scanning and updating your account data, storing it on your computer. This means your data will always be up to date, **_and it will be available even when the game isn't running!_**
 
-1. Head on over to [Releases](https://github.com/raid-toolkit/raid-toolkit-sdk/releases) and download the `Raid.Toolkit.exe` artifact from the most recent release.
-2. Run `Raid.Toolkit.exe` and it will copy itself to your user directory (under `%USERPROFILE%\AppData\RaidToolkit`), and start itself. You can find it in your system tray while it is running. Magical!
+1. Head on over to [Releases](https://github.com/raid-toolkit/raid-toolkit-sdk/releases) and download the `RaidToolkitSetup.exe` artifact from the most recent release.
+2. Run `RaidToolkitSetup.exe` and it will guide you through the installation process.
 
 ### Building from source
 
