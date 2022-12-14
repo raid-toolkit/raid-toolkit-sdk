@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,6 +10,9 @@ using Microsoft.Windows.AppNotifications;
 
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Extensibility;
+using Raid.Toolkit.UI.WinUI.Base;
+
+using WinUIEx;
 
 namespace Raid.Toolkit.UI.WinUI
 {
@@ -17,6 +21,7 @@ namespace Raid.Toolkit.UI.WinUI
         private MainWindow? MainWindow;
         private readonly IServiceProvider ServiceProvider;
         private MainWindow MainWindowUnsafe => MainWindow ??= ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider);
+        private Dictionary<Type, RTKWindow> WindowSingletons = new();
 
         private bool IsDisposed;
         private AppTray? AppTray;
@@ -128,16 +133,56 @@ namespace Raid.Toolkit.UI.WinUI
             });
         }
 
-        public void ShowInstallUI()
+        private T EnsureWindow<T>(params object[] args) where T : RTKWindow
         {
-            //throw new NotImplementedException();
+            if (WindowSingletons.TryGetValue(typeof(T), out RTKWindow? window))
+            {
+                if (window.Visible)
+                {
+                    return (T)window;
+                }
+
+                // cleanup old window
+                window.Close();
+                WindowSingletons.Remove(typeof(T));
+            }
+
+            T newWindow = ActivatorUtilities.CreateInstance<T>(ServiceProvider, args);
+            WindowSingletons.Add(typeof(T), newWindow);
+            newWindow.Closed += Window_Closed;
+            return newWindow;
+        }
+
+        private void Window_Closed(object sender, Microsoft.UI.Xaml.WindowEventArgs args)
+        {
+            if (sender is not RTKWindow)
+                return;
+            WindowSingletons.Remove(sender.GetType());
+        }
+
+        public void ShowExtensionManager()
+        {
+            Dispatch(() =>
+            {
+                ExtensionsWindow extensionWindow = EnsureWindow<ExtensionsWindow>();
+                extensionWindow.Show();
+            });
+        }
+
+        public void ShowAccounts()
+        {
+            Dispatch(() =>
+            {
+                AccountsWindow accountsWindow = EnsureWindow<AccountsWindow>();
+                accountsWindow.Show();
+            });
         }
 
         public Task<bool> ShowExtensionInstaller(ExtensionBundle bundleToInstall)
         {
             return Post(() =>
             {
-                InstallExtensionWindow extensionWindow = ActivatorUtilities.CreateInstance<InstallExtensionWindow>(ServiceProvider, bundleToInstall);
+                InstallExtensionWindow extensionWindow = EnsureWindow<InstallExtensionWindow>(bundleToInstall);
                 return extensionWindow.RequestPermission();
             });
         }
@@ -152,6 +197,10 @@ namespace Raid.Toolkit.UI.WinUI
                     {
                         AppTray?.Dispose();
                         MainWindow?.Close();
+                        foreach (RTKWindow window in WindowSingletons.Values)
+                        {
+                            window.Close();
+                        }
                         System.Windows.Forms.Application.Exit();
                     }
 
@@ -190,16 +239,6 @@ namespace Raid.Toolkit.UI.WinUI
         public Task StopAsync(CancellationToken cancellationToken)
         {
             return Task.CompletedTask;
-        }
-
-        public void ShowErrors()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void ShowExtensionManager()
-        {
-            throw new NotImplementedException();
         }
 
         public void Run()

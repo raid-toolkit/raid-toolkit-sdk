@@ -9,6 +9,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 
+using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.UI.WinUI.Base;
 
 using System;
@@ -30,9 +31,11 @@ namespace Raid.Toolkit.UI.WinUI
     /// </summary>
     public sealed partial class AccountsWindow : RTKWindow
     {
-        public AccountsWindow()
+        public AccountsWindow(IGameInstanceManager gameInstanceManager)
         {
-            this.InitializeComponent();
+            InitializeComponent();
+
+            AccountList.ItemsSource = gameInstanceManager.Instances;
 
             CenterWindowInMonitor();
         }

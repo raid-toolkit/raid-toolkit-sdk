@@ -17,7 +17,7 @@ namespace Raid.Toolkit.UI.Forms
 
         private void viewErrorsToolStripMenuItem_Click(object? sender, EventArgs e)
         {
-            AppUI.ShowErrors();
+            // AppUI.ShowErrors();
         }
 
         private void appTrayMenu_Opening(object? sender, System.ComponentModel.CancelEventArgs e)

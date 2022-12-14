@@ -34,6 +34,7 @@ namespace Raid.Toolkit.Extension.Account
             {
                 Id = string.Join("_", globalId, socialId).Sha256(),
                 Avatar = gameSettings.Avatar.ToString(),
+                AvatarId = ((int)gameSettings.Avatar).ToString(),
                 Name = gameSettings.Name,
                 Level = accountData.Level,
                 Power = (int)Math.Round(accountData.TotalPower, 0)

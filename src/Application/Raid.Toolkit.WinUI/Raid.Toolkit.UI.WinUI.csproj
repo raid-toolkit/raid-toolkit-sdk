@@ -11,6 +11,7 @@
     </PropertyGroup>
     <ItemGroup>
         <None Remove="AccountsWindow.xaml" />
+        <None Remove="ExtensionsWindow.xaml" />
         <None Remove="SettingsPanel.xaml" />
     </ItemGroup>
 
@@ -87,6 +88,9 @@
         </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
+      <Page Update="ExtensionsWindow.xaml">
+        <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      </Page>
       <Page Update="AccountsWindow.xaml">
         <Generator>MSBuild:Compile</Generator>
       </Page>

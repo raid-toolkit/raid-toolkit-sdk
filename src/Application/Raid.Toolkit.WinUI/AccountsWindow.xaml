@@ -8,12 +8,32 @@
 	xmlns:rtkuibase="using:Raid.Toolkit.UI.WinUI.Base"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Raid.Toolkit.UI.WinUI"
+    xmlns:rtkExtHost="using:Raid.Toolkit.Extensibility.Host"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
 	MinHeight="400"
+	Title="Accounts"
 	Height="400" Width="475">
     <Grid>
-
+		<ListBox x:Name="AccountList" HorizontalContentAlignment="Stretch">
+			<ListBox.ItemTemplate>
+				<DataTemplate x:DataType="rtkExtHost:GameInstance">
+					<Grid>
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="35" />
+							<ColumnDefinition Width="*" />
+						</Grid.ColumnDefinitions>
+						<Image Grid.Column="0" Source="{Binding AvatarUrl}" Width="35" Height="45" Stretch="UniformToFill" />
+						<TextBlock Grid.Column="1" Margin="10,0" VerticalAlignment="Center" Text="{Binding AccountName}" />
+					</Grid>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+			<ListBox.ItemContainerStyle>
+				<Style TargetType="ListBoxItem">
+					<Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+				</Style>
+			</ListBox.ItemContainerStyle>
+		</ListBox>
     </Grid>
 </rtkuibase:RTKWindow>
