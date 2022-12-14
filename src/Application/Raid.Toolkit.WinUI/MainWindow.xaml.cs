@@ -34,26 +34,22 @@ namespace Raid.Toolkit.UI.WinUI
         private readonly List<FrameworkElement> ContentElements = new();
         private readonly FrameworkElement DefaultContentElement;
         private WindowLayout _windowLayout = WindowLayout.Small;
-
-        private WindowLayout Layout
+        
+        private void SetLayout(WindowLayout layout)
         {
-            get { return _windowLayout; }
-            set
-            {
-                if (value == _windowLayout)
-                    return;
+            if (layout == _windowLayout)
+                return;
 
-                _windowLayout = value;
-                switch (_windowLayout)
-                {
-                    case WindowLayout.Small:
-                        Height = 550;
-                        GrowLogoAnimation.Begin();
-                        break;
-                    case WindowLayout.Large:
-                        ShrinkLogoAnimation.Begin();
-                        break;
-                }
+            _windowLayout = layout;
+            switch (_windowLayout)
+            {
+                case WindowLayout.Small:
+                    Height = 550;
+                    GrowLogoAnimation.Begin();
+                    break;
+                case WindowLayout.Large:
+                    ShrinkLogoAnimation.Begin();
+                    break;
             }
         }
 
@@ -208,11 +204,11 @@ namespace Raid.Toolkit.UI.WinUI
             double targetHeight = Math.Max(control.ActualHeight, control.MinHeight);
             if (targetHeight <= 150)
             {
-                Layout = WindowLayout.Small;
+                SetLayout(WindowLayout.Small);
             }
             else
             {
-                Layout = WindowLayout.Large;
+                SetLayout(WindowLayout.Large);
                 Height = Math.Max(550, targetHeight + 248);
             }
         }

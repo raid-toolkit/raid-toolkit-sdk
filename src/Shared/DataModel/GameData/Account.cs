@@ -11,6 +11,12 @@ namespace Raid.Toolkit.DataModel
         [JsonProperty("avatar")]
         public string Avatar;
 
+        [JsonProperty("avatarId")]
+        public string AvatarId;
+
+        [JsonProperty("avatarUrl")]
+        public string AvatarUrl => $"https://raid-toolkit.github.io/img/avatars/{Avatar}.png";
+
         [JsonProperty("name")]
         public string Name;
 
@@ -33,6 +39,7 @@ namespace Raid.Toolkit.DataModel
                 Name = accountBase.Name,
                 Level = accountBase.Level,
                 Avatar = accountBase.Avatar,
+                AvatarId = accountBase.AvatarId,
                 Power = accountBase.Power,
                 LastUpdated = lastUpdated
             };

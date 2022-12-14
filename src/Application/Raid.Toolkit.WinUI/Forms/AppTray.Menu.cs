@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -29,9 +30,14 @@ namespace Raid.Toolkit.UI.WinUI
                 AppUI.ShowSettings();
             }
 
-            private void viewErrorsToolStripMenuItem_Click(object? sender, EventArgs e)
+            private void openLogFolderToolStripMenuItem_Click(object? sender, EventArgs e)
             {
-                AppUI.ShowErrors();
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = AppHost.LogsDirectory,
+                    UseShellExecute = true,
+                    Verb = "open"
+                });
             }
 
             private void appTrayMenu_Opening(object? sender, System.ComponentModel.CancelEventArgs e)
@@ -70,7 +76,7 @@ namespace Raid.Toolkit.UI.WinUI
             private readonly ToolStripMenuItem checkUpdatesMenuItem = new();
             private readonly ToolStripMenuItem closeMenuItem = new();
             private readonly ToolStripMenuItem settingsMenuItem = new();
-            private readonly ToolStripMenuItem viewErrorsToolStripMenuItem = new();
+            private readonly ToolStripMenuItem openLogFolderToolStripMenuItem = new();
             private readonly ToolStripMenuItem extensionsToolStripMenuItem = new();
             private readonly ToolStripMenuItem manageExtensionsToolStripMenuItem = new();
             private readonly IMenuManager MenuManager;
@@ -103,6 +109,8 @@ namespace Raid.Toolkit.UI.WinUI
                 Notify.Activated += Notify_Activated;
                 notificationManager.RegisterHandler(Notify);
 
+                this.openLogFolderToolStripMenuItem.Visible = AppHost.EnableLogging;
+
                 // 
                 // this
                 // 
@@ -111,7 +119,7 @@ namespace Raid.Toolkit.UI.WinUI
                     new ToolStripSeparator(),
                     this.installUpdateMenuItem,
                     this.checkUpdatesMenuItem,
-                    this.viewErrorsToolStripMenuItem,
+                    this.openLogFolderToolStripMenuItem,
                     this.extensionsToolStripMenuItem,
                     this.settingsMenuItem,
                     new ToolStripSeparator(),
@@ -144,12 +152,12 @@ namespace Raid.Toolkit.UI.WinUI
                 this.checkUpdatesMenuItem.Text = "Check for updates";
                 this.checkUpdatesMenuItem.Click += new System.EventHandler(this.checkUpdatesMenuItem_Click);
                 // 
-                // viewErrorsToolStripMenuItem
+                // openLogFolderToolStripMenuItem
                 // 
-                this.viewErrorsToolStripMenuItem.Name = "viewErrorsToolStripMenuItem";
-                this.viewErrorsToolStripMenuItem.Size = new(170, 22);
-                this.viewErrorsToolStripMenuItem.Text = "View errors";
-                this.viewErrorsToolStripMenuItem.Click += new System.EventHandler(this.viewErrorsToolStripMenuItem_Click);
+                this.openLogFolderToolStripMenuItem.Name = "openLogFolderToolStripMenuItem";
+                this.openLogFolderToolStripMenuItem.Size = new(170, 22);
+                this.openLogFolderToolStripMenuItem.Text = "Open log folder";
+                this.openLogFolderToolStripMenuItem.Click += new System.EventHandler(this.openLogFolderToolStripMenuItem_Click);
                 // 
                 // extensionsToolStripMenuItem
                 // 

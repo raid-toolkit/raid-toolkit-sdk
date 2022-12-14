@@ -11,10 +11,9 @@ namespace Raid.Toolkit.Application.Core.Commands.Base
         void Dispatch(Action task);
 
         Task<bool> ShowExtensionInstaller(ExtensionBundle bundleToInstall);
-        void ShowInstallUI();
         void ShowMain();
+        void ShowAccounts();
         void ShowSettings();
-        void ShowErrors();
         void ShowExtensionManager();
     }
 }

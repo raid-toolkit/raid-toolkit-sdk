@@ -151,6 +151,8 @@ namespace Raid.Toolkit.UI.Forms
             //});
         }
 
+        public void ShowAccounts() => throw new NotImplementedException();
+
         public void ShowInstallUI()
         {
             InstallWindow form = ActivatorUtilities.CreateInstance<InstallWindow>(ServiceProvider);

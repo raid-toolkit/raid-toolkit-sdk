@@ -60,6 +60,8 @@ namespace Raid.Toolkit.Application.Core.Host
 
         public static bool ForceRebuild { get; set; }
 
+        public static string LogsDirectory => Path.Combine(RegistrySettings.InstallationPath, LogDir);
+
         private static bool _EnableLogging = false;
         public static bool EnableLogging
         {
