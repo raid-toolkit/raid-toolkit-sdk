@@ -122,6 +122,15 @@ namespace Raid.Toolkit.Application.Core.Host
         public static void Start(IHost host)
         {
             Host = host;
+            try
+            {
+                string oldInstallationPath = Path.Combine(RegistrySettings.InstallationPath, "Raid.Toolkit.exe");
+                if (File.Exists(oldInstallationPath))
+                {
+                    File.Delete(oldInstallationPath);
+                }
+            }
+            catch { }
         }
 
         public static async Task<int> Activate(Uri activationRequestUri, params string[] arguments)
