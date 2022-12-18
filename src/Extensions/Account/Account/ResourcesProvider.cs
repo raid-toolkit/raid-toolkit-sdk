@@ -1,10 +1,10 @@
 using System;
 using System.Linq;
+using Il2CppToolkit.Runtime;
 using Raid.Toolkit.DataModel;
-using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
-using Il2CppToolkit.Runtime;
+using Raid.Toolkit.Extensibility.Providers;
 
 namespace Raid.Toolkit.Extension.Account
 {
@@ -32,7 +32,7 @@ namespace Raid.Toolkit.Extension.Account
             {
                 BlackMarket = blackMarketItems.ToDictionary(bmi => bmi.Key.ToString(), bmi => bmi.Value.Count),
                 Shards = shards.ToDictionary(shard => shard.TypeId.ToString(), shard => shard.Count),
-                Account = accountResources.ToDictionary(kvp => kvp.Key.ToString(), kvp => Math.Round(kvp.Value, 0))
+                Account = accountResources.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value)
             });
         }
     }
