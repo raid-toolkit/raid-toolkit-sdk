@@ -82,7 +82,10 @@ namespace Raid.Toolkit.Extensibility.Host
             };
             Owner.ResizeEnd += (_, e) =>
             {
-                Resized?.Invoke(this, new(TypeName, Owner.Bounds));
+                Resized?.Invoke(this, new(TypeName, new(
+                        Owner.Bounds.X, Owner.Bounds.Y,
+                        Owner.Bounds.Width, Owner.Bounds.Height)
+                    ));
             };
         }
 
@@ -133,10 +136,7 @@ namespace Raid.Toolkit.Extensibility.Host
             };
             Owner.SizeChanged += (_, e) =>
             {
-                Resized?.Invoke(this, new(TypeName, new(
-                        (int)Owner.Bounds.X, (int)Owner.Bounds.Y,
-                        (int)Owner.Bounds.Width, (int)Owner.Bounds.Height)
-                    ));
+                Resized?.Invoke(this, new(TypeName, Owner.Bounds));
             };
         }
 
