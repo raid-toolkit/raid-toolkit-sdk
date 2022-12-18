@@ -10,7 +10,6 @@ using Raid.Toolkit.Extensibility.DataServices;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-
     public class WindowManager : IWindowManager
     {
         public class WindowState
@@ -97,15 +96,13 @@ namespace Raid.Toolkit.Extensibility.Host
             }
             if (options.RememberPosition)
             {
-                string? senderType = window?.GetType().FullName;
+                string? senderType = window.GetType().FullName;
                 if (!string.IsNullOrEmpty(senderType) && States.TryGetValue(senderType, out WindowState? state) && state != null)
                 {
                     window.Location = state.Location;
-                    window.StartPosition = FormStartPosition.Manual;
                 }
 
-                window.ResizeEnd += SetFormVisibleState;
-                window.Move += SetFormVisibleState;
+                window.Resized += SetFormVisibleState;
             }
         }
 
@@ -119,7 +116,7 @@ namespace Raid.Toolkit.Extensibility.Host
             _ = Storage.Write(AppStateDataContext.Default, "windows", States);
         }
 
-        private void SetFormClosedState(object? sender, WindowCloseEventArgs e)
+        private void SetFormClosedState(object? sender, WindowAdapterCloseEventArgs e)
         {
             if (sender == null)
                 return;

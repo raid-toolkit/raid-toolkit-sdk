@@ -4,7 +4,6 @@ using System.Windows.Forms;
 
 using Microsoft.UI.Xaml;
 
-
 namespace Raid.Toolkit.Extensibility.Host
 {
     public interface IWindowAdapter
@@ -14,8 +13,9 @@ namespace Raid.Toolkit.Extensibility.Host
         public Point Location { get; set; }
         public Size Size { get; set; }
         public void Show();
-        public event EventHandler<WindowCloseEventArgs> Closing;
+        public event EventHandler<WindowAdapterCloseEventArgs> Closing;
         public event EventHandler<WindowAdapterEventArgs> Shown;
+        public event EventHandler<WindowAdapterSizeChangedEventArgs> Resized;
 
         public static IWindowAdapter Create(object target)
         {
@@ -39,13 +39,22 @@ namespace Raid.Toolkit.Extensibility.Host
             OwnerType = ownerType;
         }
     }
-    public class WindowCloseEventArgs : WindowAdapterEventArgs
+    public class WindowAdapterCloseEventArgs : WindowAdapterEventArgs
     {
         public bool IsUserClose { get; }
-        public WindowCloseEventArgs(string ownerType, bool isUserClose)
+        public WindowAdapterCloseEventArgs(string ownerType, bool isUserClose)
             : base(ownerType)
         {
             IsUserClose = isUserClose;
+        }
+    }
+    public class WindowAdapterSizeChangedEventArgs : WindowAdapterEventArgs
+    {
+        public Windows.Foundation.Rect Bounds { get; }
+        public WindowAdapterSizeChangedEventArgs(string ownerType, Windows.Foundation.Rect bounds)
+            : base(ownerType)
+        {
+            Bounds = bounds;
         }
     }
     public class FormAdapter : IWindowAdapter
@@ -53,8 +62,9 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly Form Owner;
         public string TypeName => Owner.GetType().Name;
         public T GetOwner<T>() where T : class => Owner is T value ? value : throw new InvalidCastException();
-        public event EventHandler<WindowCloseEventArgs>? Closing;
+        public event EventHandler<WindowAdapterCloseEventArgs>? Closing;
         public event EventHandler<WindowAdapterEventArgs>? Shown;
+        public event EventHandler<WindowAdapterSizeChangedEventArgs>? Resized;
 
         public FormAdapter(Form form)
         {
@@ -70,6 +80,10 @@ namespace Raid.Toolkit.Extensibility.Host
 
                 Closing?.Invoke(this, new(TypeName, isUserClose));
             };
+            Owner.ResizeEnd += (_, e) =>
+            {
+                Resized?.Invoke(this, new(TypeName, Owner.Bounds));
+            };
         }
 
         public void Show()
@@ -77,16 +91,33 @@ namespace Raid.Toolkit.Extensibility.Host
             Owner.Show();
         }
 
-        public Point Location { get => Owner.Location; set => Owner.Location = value; }
-        public Size Size { get => Owner.Size; set => Owner.Size = value; }
+        public Point Location
+        {
+            get => Owner.Location;
+            set
+            {
+                Owner.StartPosition = FormStartPosition.Manual;
+                Owner.Location = value;
+            }
+        }
+        public Size Size
+        {
+            get => Owner.Size;
+            set
+            {
+                Owner.StartPosition = FormStartPosition.Manual;
+                Owner.Size = value;
+            }
+        }
     }
     public class WinUIAdapter : IWindowAdapter
     {
         private readonly Window Owner;
         public string TypeName => Owner.GetType().Name;
         public T GetOwner<T>() where T : class => Owner is T value ? value : throw new InvalidCastException();
-        public event EventHandler<WindowCloseEventArgs>? Closing;
+        public event EventHandler<WindowAdapterCloseEventArgs>? Closing;
         public event EventHandler<WindowAdapterEventArgs>? Shown;
+        public event EventHandler<WindowAdapterSizeChangedEventArgs>? Resized;
 
         public WinUIAdapter(Window wnd)
         {
@@ -99,6 +130,13 @@ namespace Raid.Toolkit.Extensibility.Host
             Owner.Closed += (_, e) =>
             {
                 Closing?.Invoke(this, new(TypeName, true));
+            };
+            Owner.SizeChanged += (_, e) =>
+            {
+                Resized?.Invoke(this, new(TypeName, new(
+                        (int)Owner.Bounds.X, (int)Owner.Bounds.Y,
+                        (int)Owner.Bounds.Width, (int)Owner.Bounds.Height)
+                    ));
             };
         }
 
