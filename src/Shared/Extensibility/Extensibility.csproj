@@ -3,9 +3,10 @@
     <PropertyGroup>
         <RootNamespace>Raid.Toolkit.Extensibility</RootNamespace>
         <AssemblyName>Raid.Toolkit.Extensibility</AssemblyName>
-		<UseWindowsForms>true</UseWindowsForms>
+        <Nullable>enable</Nullable>
+        <UseWindowsForms>true</UseWindowsForms>
     </PropertyGroup>
-	<Import Project="$(BuildTargetProps)"/>
+    <Import Project="$(BuildTargetProps)"/>
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />

@@ -2,23 +2,27 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
 using Raid.Toolkit.Extensibility.DataServices;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
+
     public class WindowManager : IWindowManager
     {
         public class WindowState
         {
             public WindowState()
             { }
-            public WindowState(Form form, bool isVisible)
+            public WindowState(object owner, bool isVisible)
             {
+                IWindowAdapter window = IWindowAdapter.Create(owner);
                 Visible = isVisible;
-                Location = form.Location;
-                Size = form.Size;
+                Location = window.Location;
+                Size = window.Size;
             }
             public bool Visible { get; set; }
             public Point Location;
@@ -50,84 +54,91 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             foreach (var (type, options) in Options)
             {
+                if (string.IsNullOrEmpty(type.FullName)) continue;
+
                 if (options.RememberVisibility
-                    && States.TryGetValue(type.FullName, out WindowState state)
+                    && States.TryGetValue(type.FullName, out WindowState? state)
                     && state.Visible)
                 {
-                    Form window = CreateWindow(type);
+                    IWindowAdapter window = CreateWindow(type);
                     window.Show();
                 }
             }
         }
-
-        public T CreateWindow<T>() where T : Form
+        
+        public T CreateWindow<T>() where T : class
         {
-            return CreateWindow(typeof(T)) as T;
+            return CreateWindow(typeof(T)).GetOwner<T>();
         }
 
-        public Form CreateWindow(Type type)
+        public IWindowAdapter CreateWindow(Type type)
         {
-            Logger.LogInformation($"Creating window {type.FullName}");
-            if (!Options.TryGetValue(type, out WindowOptions options))
+            Logger.LogInformation("Creating window {type}", type.FullName);
+            if (!Options.TryGetValue(type, out WindowOptions? options))
                 throw new InvalidOperationException($"Type '{type.FullName}' is not registered.");
 
-            Form form = options.CreateInstance != null
+            object instance = options.CreateInstance != null
                 ? options.CreateInstance()
-                : ActivatorUtilities.CreateInstance(ServiceProvider, type) as Form;
+                : ActivatorUtilities.CreateInstance(ServiceProvider, type);
 
-            AttachEvents(options, form);
-            return form;
+            IWindowAdapter adapter = IWindowAdapter.Create(instance);
+            AttachEvents(options, adapter);
+
+            return adapter;
         }
 
-        private void AttachEvents(WindowOptions options, Form form)
+        private void AttachEvents(WindowOptions options, IWindowAdapter window)
         {
+            if (window == null) return;
             if (options.RememberVisibility)
             {
-                form.FormClosing += SetFormClosedState;
-                form.Shown += SetFormVisibleState;
+                window.Closing += SetFormClosedState;
+                window.Shown += SetFormVisibleState;
             }
             if (options.RememberPosition)
             {
-                if (States.TryGetValue(form.GetType().FullName, out WindowState state))
+                string? senderType = window?.GetType().FullName;
+                if (!string.IsNullOrEmpty(senderType) && States.TryGetValue(senderType, out WindowState? state) && state != null)
                 {
-                    form.Location = state.Location;
-                    form.StartPosition = FormStartPosition.Manual;
+                    window.Location = state.Location;
+                    window.StartPosition = FormStartPosition.Manual;
                 }
 
-                form.ResizeEnd += SetFormVisibleState;
-                form.Move += SetFormVisibleState;
+                window.ResizeEnd += SetFormVisibleState;
+                window.Move += SetFormVisibleState;
             }
         }
 
-        private void SetFormVisibleState(object sender, EventArgs e)
+        private void SetFormVisibleState(object? sender, WindowAdapterEventArgs e)
         {
-            string senderType = sender.GetType().FullName;
-            Logger.LogInformation($"Updating window {senderType} (open)");
-            States[senderType] = new(sender as Form, true);
+            if (sender == null)
+                return;
+
+            Logger.LogInformation("Updating window {senderType} (open)", e.OwnerType);
+            States[e.OwnerType] = new(sender, true);
             _ = Storage.Write(AppStateDataContext.Default, "windows", States);
         }
 
-        private void SetFormClosedState(object sender, FormClosingEventArgs e)
+        private void SetFormClosedState(object? sender, WindowCloseEventArgs e)
         {
-            bool isUserClose = e.CloseReason is CloseReason.UserClosing
-                or CloseReason.FormOwnerClosing;
+            if (sender == null)
+                return;
 
-            string senderType = sender.GetType().FullName;
-            Logger.LogInformation($"Updating window {senderType} (closed)");
+            Logger.LogInformation("Updating window {senderType} (closed)", e.OwnerType);
             // if closing for application exit/shutdown, then consider it still open so it will re-open on next launch
-            States[senderType] = new(sender as Form, !isUserClose);
+            States[e.OwnerType] = new(sender, !e.IsUserClose);
             _ = Storage.Write(AppStateDataContext.Default, "windows", States);
         }
 
-        public void RegisterWindow<T>(WindowOptions options) where T : Form
+        public void RegisterWindow<T>(WindowOptions options) where T : class
         {
-            Logger.LogInformation($"Registered window {typeof(T).FullName}");
+            Logger.LogInformation("Registered window {type}", typeof(T).FullName);
             Options.Add(typeof(T), options);
         }
 
-        public void UnregisterWindow<T>() where T : Form
+        public void UnregisterWindow<T>() where T : class
         {
-            Logger.LogInformation($"Unregistered window {typeof(T).FullName}");
+            Logger.LogInformation("Unregistered window {type}", typeof(T).FullName);
             _ = Options.Remove(typeof(T));
         }
     }
