@@ -90,3 +90,18 @@ jobs:
             src/Setup/out/RaidToolkit.msi
             src/Setup/out/RaidToolkitSetup.exe
             ThirdPartyNotice.txt
+
+      # NuGet Push
+      - name: Push client package to PR registry
+        run: |
+          dotnet nuget push publish/nuget/Raid.Common.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Client.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Model.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.DataModel.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Injection.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.Host.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.Tasks.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+        env:
+          STAGING_NUGET_TOKEN: ${{ secrets.STAGING_NUGET_TOKEN }}
+          STAGING_NUGET_URL: https://nuget.pkg.github.com/raid-toolkit/index.json
