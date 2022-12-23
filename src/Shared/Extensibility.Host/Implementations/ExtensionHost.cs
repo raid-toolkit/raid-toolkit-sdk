@@ -186,13 +186,13 @@ namespace Raid.Toolkit.Extensibility.Host
         }
 
 
-        public IDisposable RegisterWindow<T>(WindowOptions options) where T : Form
+        public IDisposable RegisterWindow<T>(WindowOptions options) where T : class
         {
             WindowManager.RegisterWindow<T>(options);
             return new HostResourceHandle(() => WindowManager.UnregisterWindow<T>());
         }
 
-        public T CreateWindow<T>() where T : Form
+        public T CreateWindow<T>() where T : class
         {
             return WindowManager.CreateWindow<T>();
         }
