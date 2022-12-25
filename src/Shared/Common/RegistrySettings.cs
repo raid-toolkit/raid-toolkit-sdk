@@ -148,26 +148,6 @@ namespace Raid.Toolkit.Common
                 Shortcut.Create(startMenuItem, InstalledExecutablePath, "Raid Toolkit");
         }
 
-        public static void RegisterProtocol(bool registerProtocolHandler)
-        {
-            try
-            {
-                RegistryKey classesKey = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\Classes", true);
-                classesKey?.DeleteSubKeyTree(Protocol, false);
-
-                if (registerProtocolHandler && classesKey != null)
-                {
-                    RegistryKey classKey = classesKey.CreateSubKey(Protocol);
-                    classKey.SetValue(null, "URL:Raid Toolkit");
-                    classKey.SetValue("URL Protocol", "");
-                    var cmdKey = classKey.CreateSubKey("shell").CreateSubKey("open").CreateSubKey("command");
-                    cmdKey.SetValue(null, $"\"{InstalledExecutablePath}\" activate \"%1\"");
-                }
-            }
-            catch (Exception)
-            { }
-        }
-
         private static bool IsSettingEnabled(string path, string key, bool defaultValue = false)
         {
             var value = Registry.CurrentUser.OpenSubKey(path)?.GetValue(key, defaultValue ? 1 : 0);

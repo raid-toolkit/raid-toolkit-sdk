@@ -37,7 +37,6 @@ namespace Raid.Toolkit
 
             IEntrypoint entrypoint = CommonOptions.Value.RenderEngine switch
             {
-                RenderingEngine.WinForms => new Entrypoint<AppForms, FormsProgramHost>(),
                 RenderingEngine.WinUI => new Entrypoint<AppWinUI, WinUIProgramHost>(),
                 _ => new Entrypoint<AppWinUI, WinUIProgramHost>(),
             };

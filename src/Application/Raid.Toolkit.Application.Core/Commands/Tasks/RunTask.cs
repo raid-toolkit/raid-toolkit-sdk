@@ -47,7 +47,6 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
                     }
                 }
             }
-            RegistrySettings.RegisterProtocol(true);
 
             AppHostBuilder
                 .AddExtensibility()

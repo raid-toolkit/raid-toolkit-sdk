@@ -20,7 +20,7 @@ namespace Raid.Toolkit.Extensibility
 
         IDisposable RegisterMenuEntry(IMenuEntry entry);
         IDisposable RegisterWindow<T>(WindowOptions options) where T : class;
-        T CreateWindow<T>() where T : class;
+        IWindowAdapter<T> CreateWindow<T>() where T : class;
 
         bool CanShowUI { get; }
 

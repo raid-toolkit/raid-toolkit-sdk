@@ -53,6 +53,7 @@
         <Feature Id="Complete" Title="Raid Toolkit" Display="expand" Level="1" ConfigurableDirectory="INSTALLDIR">
             <Feature Id="MainProgram" Title="Program" Description="Raid Toolkit Application" Level="1">
                 <ComponentGroupRef Id="RaidToolkitBinaries" />
+                <ComponentGroupRef Id="RaidToolkitRegistry" />
                 <ComponentRef Id="RaidToolkitDir" />
                 <ComponentRef Id="RegInstallLocation" />
                 <ComponentRef Id="ApplicationShortcut" />

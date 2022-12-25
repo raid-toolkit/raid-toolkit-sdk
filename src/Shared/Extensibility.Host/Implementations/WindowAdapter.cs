@@ -6,150 +6,101 @@ using Microsoft.UI.Xaml;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public interface IWindowAdapter
+    public class FormAdapter<T> : IWindowAdapter<T> where T : class
     {
-        public T GetOwner<T>() where T : class;
-        public string TypeName { get; }
-        public Point Location { get; set; }
-        public Size Size { get; set; }
-        public void Show();
-        public event EventHandler<WindowAdapterCloseEventArgs> Closing;
-        public event EventHandler<WindowAdapterEventArgs> Shown;
-        public event EventHandler<WindowAdapterSizeChangedEventArgs> Resized;
-
-        public static IWindowAdapter Create(object target)
-        {
-            if (target is IWindowAdapter adapter)
-                return adapter;
-
-            if (target is Form form)
-                return new FormAdapter(form);
-
-            if (target is Window wnd)
-                return new WinUIAdapter(wnd);
-
-            throw new NotSupportedException();
-        }
-    }
-    public class WindowAdapterEventArgs : EventArgs
-    {
-        public string OwnerType { get; }
-        public WindowAdapterEventArgs(string ownerType)
-        {
-            OwnerType = ownerType;
-        }
-    }
-    public class WindowAdapterCloseEventArgs : WindowAdapterEventArgs
-    {
-        public bool IsUserClose { get; }
-        public WindowAdapterCloseEventArgs(string ownerType, bool isUserClose)
-            : base(ownerType)
-        {
-            IsUserClose = isUserClose;
-        }
-    }
-    public class WindowAdapterSizeChangedEventArgs : WindowAdapterEventArgs
-    {
-        public Windows.Foundation.Rect Bounds { get; }
-        public WindowAdapterSizeChangedEventArgs(string ownerType, Windows.Foundation.Rect bounds)
-            : base(ownerType)
-        {
-            Bounds = bounds;
-        }
-    }
-    public class FormAdapter : IWindowAdapter
-    {
-        private readonly Form Owner;
-        public string TypeName => Owner.GetType().Name;
-        public T GetOwner<T>() where T : class => Owner is T value ? value : throw new InvalidCastException();
+        object IWindowAdapter.Owner => Form;
+        private readonly Form Form;
+        public string TypeName => Form.GetType().Name;
+        public T GetOwner() => Form is T value ? value : throw new InvalidCastException();
         public event EventHandler<WindowAdapterCloseEventArgs>? Closing;
         public event EventHandler<WindowAdapterEventArgs>? Shown;
         public event EventHandler<WindowAdapterSizeChangedEventArgs>? Resized;
 
         public FormAdapter(Form form)
         {
-            Owner = form;
-            Owner.Shown += (_, e) =>
+            Form = form;
+            Form.Shown += (_, e) =>
             {
                 Shown?.Invoke(this, new(TypeName));
             };
-            Owner.FormClosing += (_, e) =>
+            Form.FormClosing += (_, e) =>
             {
                 bool isUserClose = e.CloseReason is CloseReason.UserClosing
                     or CloseReason.FormOwnerClosing;
 
                 Closing?.Invoke(this, new(TypeName, isUserClose));
             };
-            Owner.ResizeEnd += (_, e) =>
+            Form.ResizeEnd += (_, e) =>
             {
                 Resized?.Invoke(this, new(TypeName, new(
-                        Owner.Bounds.X, Owner.Bounds.Y,
-                        Owner.Bounds.Width, Owner.Bounds.Height)
+                        Form.Bounds.X, Form.Bounds.Y,
+                        Form.Bounds.Width, Form.Bounds.Height)
                     ));
             };
         }
 
         public void Show()
         {
-            Owner.Show();
+            Form.Show();
         }
 
         public Point Location
         {
-            get => Owner.Location;
+            get => Form.Location;
             set
             {
-                Owner.StartPosition = FormStartPosition.Manual;
-                Owner.Location = value;
+                Form.StartPosition = FormStartPosition.Manual;
+                Form.Location = value;
             }
         }
         public Size Size
         {
-            get => Owner.Size;
+            get => Form.Size;
             set
             {
-                Owner.StartPosition = FormStartPosition.Manual;
-                Owner.Size = value;
+                Form.StartPosition = FormStartPosition.Manual;
+                Form.Size = value;
             }
         }
     }
-    public class WinUIAdapter : IWindowAdapter
+    public class WinUIAdapter<T> : IWindowAdapter<T> where T : class
     {
-        private readonly Window Owner;
-        public string TypeName => Owner.GetType().Name;
-        public T GetOwner<T>() where T : class => Owner is T value ? value : throw new InvalidCastException();
+        object IWindowAdapter.Owner => Window;
+        private readonly Window Window;
+        public string TypeName => Window.GetType().Name;
+        public T GetOwner() => Window is T value ? value : throw new InvalidCastException();
         public event EventHandler<WindowAdapterCloseEventArgs>? Closing;
         public event EventHandler<WindowAdapterEventArgs>? Shown;
         public event EventHandler<WindowAdapterSizeChangedEventArgs>? Resized;
 
         public WinUIAdapter(Window wnd)
         {
-            Owner = wnd;
-            Owner.VisibilityChanged += (_, e) =>
+            Window = wnd;
+            Window.VisibilityChanged += (_, e) =>
             {
                 if (e.Visible)
                     Shown?.Invoke(this, new(TypeName));
             };
-            Owner.Closed += (_, e) =>
+            Window.Closed += (_, e) =>
             {
                 Closing?.Invoke(this, new(TypeName, true));
             };
-            Owner.SizeChanged += (_, e) =>
+            Window.SizeChanged += (_, e) =>
             {
-                Resized?.Invoke(this, new(TypeName, Owner.Bounds));
+                Resized?.Invoke(this, new(TypeName, Window.Bounds));
             };
         }
 
         public void Show()
         {
-            Owner.Activate();
+            Window.Activate();
         }
 
         public Point Location
         {
             get
             {
-                return new((int)Owner.Bounds.X, (int)Owner.Bounds.Y);
+                return new((int)Window.Bounds.X, (int)Window.Bounds.Y);
             }
             set { } // TODO
         }
@@ -157,7 +108,7 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             get
             {
-                return new((int)Owner.Bounds.Width, (int)Owner.Bounds.Height);
+                return new((int)Window.Bounds.Width, (int)Window.Bounds.Height);
             }
             set { } // TODO
         }

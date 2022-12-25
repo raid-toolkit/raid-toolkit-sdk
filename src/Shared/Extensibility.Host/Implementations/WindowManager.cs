@@ -5,6 +5,7 @@ using System.Windows.Forms;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Xaml;
 
 using Raid.Toolkit.Extensibility.DataServices;
 
@@ -18,7 +19,7 @@ namespace Raid.Toolkit.Extensibility.Host
             { }
             public WindowState(object owner, bool isVisible)
             {
-                IWindowAdapter window = IWindowAdapter.Create(owner);
+                IWindowAdapter window = WrapWindow(owner);
                 Visible = isVisible;
                 Location = window.Location;
                 Size = window.Size;
@@ -59,30 +60,50 @@ namespace Raid.Toolkit.Extensibility.Host
                     && States.TryGetValue(type.FullName, out WindowState? state)
                     && state.Visible)
                 {
+#pragma warning disable CS0618 // Type or member is obsolete
                     IWindowAdapter window = CreateWindow(type);
+#pragma warning restore CS0618 // Type or member is obsolete
                     window.Show();
                 }
             }
         }
-        
-        public T CreateWindow<T>() where T : class
+
+        private static IWindowAdapter<T> WrapWindow<T>(T instance) where T : class
         {
-            return CreateWindow(typeof(T)).GetOwner<T>();
+            if (instance is IWindowAdapter adapter)
+                return (IWindowAdapter<T>)adapter;
+
+            if (instance is Form form)
+                return new FormAdapter<T>(form);
+
+            if (instance is Window wnd)
+                return new WinUIAdapter<T>(wnd);
+
+            throw new NotSupportedException();
         }
 
-        public IWindowAdapter CreateWindow(Type type)
+        public IWindowAdapter<T> CreateWindow<T>() where T : class
         {
-            Logger.LogInformation("Creating window {type}", type.FullName);
-            if (!Options.TryGetValue(type, out WindowOptions? options))
-                throw new InvalidOperationException($"Type '{type.FullName}' is not registered.");
+            Logger.LogInformation("Creating window {type}", typeof(T).FullName);
+            if (!Options.TryGetValue(typeof(T), out WindowOptions? options))
+                throw new InvalidOperationException($"Type '{typeof(T).FullName}' is not registered.");
 
-            object instance = options.CreateInstance != null
+            T instance = (T)(options.CreateInstance != null
                 ? options.CreateInstance()
-                : ActivatorUtilities.CreateInstance(ServiceProvider, type);
+                : ActivatorUtilities.CreateInstance(ServiceProvider, typeof(T)));
 
-            IWindowAdapter adapter = IWindowAdapter.Create(instance);
+            IWindowAdapter<T> adapter = WrapWindow(instance);
             AttachEvents(options, adapter);
 
+            return adapter;
+        }
+
+        static readonly System.Reflection.MethodInfo? createWindowMethod = typeof(WindowManager).GetMethod("CreateWindow", 1, Array.Empty<Type>());
+        [Obsolete("Use CreateWindow<T> instead")]
+        public IWindowAdapter CreateWindow(Type type)
+        {
+            if (createWindowMethod?.MakeGenericMethod(type).Invoke(this, null) is not IWindowAdapter adapter)
+                throw new InvalidCastException();
             return adapter;
         }
 

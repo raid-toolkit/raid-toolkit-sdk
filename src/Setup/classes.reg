@@ -1,0 +1,15 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Classes\.rtkx]
+@="RTK.Extension"
+
+[HKEY_CURRENT_USER\Software\Classes\RTK.Extension]
+@="Raid Toolkit Extension"
+
+[HKEY_CURRENT_USER\Software\Classes\RTK.Extension\shell]
+
+[HKEY_CURRENT_USER\Software\Classes\RTK.Extension\shell\open]
+
+[HKEY_CURRENT_USER\Software\Classes\RTK.Extension\shell\open\command]
+@="\"[#Raid.Toolkit.exe]\" install \"%1\""
+
