@@ -14,6 +14,8 @@
             </Custom>
         </InstallExecuteSequence>
 
+        <Property Id="REINSTALLMODE" Value="amus" />
+
         <Property Id="INSTALLDIR">
             <RegistrySearch Id="DetermineInstallLocation" Type="raw" Root="HKCU" Key="Software\RaidToolkit" Name="InstallLocation" />
         </Property>
