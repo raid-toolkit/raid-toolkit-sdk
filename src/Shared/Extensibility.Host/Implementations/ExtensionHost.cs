@@ -186,18 +186,18 @@ namespace Raid.Toolkit.Extensibility.Host
         }
 
 
-        public IDisposable RegisterWindow<T>(WindowOptions options) where T : Form
+        public IDisposable RegisterWindow<T>(WindowOptions options) where T : class
         {
             WindowManager.RegisterWindow<T>(options);
             return new HostResourceHandle(() => WindowManager.UnregisterWindow<T>());
         }
 
-        public T CreateWindow<T>() where T : Form
+        public IWindowAdapter<T> CreateWindow<T>() where T : class
         {
             return WindowManager.CreateWindow<T>();
         }
 
-        [Obsolete]
+        [Obsolete("Will be removed in future release")]
         public T GetInstance<T>() where T : IDisposable
         {
             return (T)Instances[typeof(T)];
@@ -210,7 +210,7 @@ namespace Raid.Toolkit.Extensibility.Host
             return new HostResourceHandle(() => ScopedServices.RemoveMessageScopeHandler(handler));
         }
 
-        [Obsolete]
+        [Obsolete("Use RegisterMessageScopeHandler<T>(T handler)")]
         public IDisposable RegisterMessageScopeHandler<T>() where T : IMessageScopeHandler
         {
             IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
@@ -225,7 +225,7 @@ namespace Raid.Toolkit.Extensibility.Host
             return DataManager.AddProvider(instance);
         }
 
-        [Obsolete]
+        [Obsolete("Use RegisterDataProvider<T>(T provider)")]
         public IDisposable RegisterDataProvider<T>() where T : IDataProvider
         {
             return DataManager.AddProvider<T>();
@@ -236,7 +236,7 @@ namespace Raid.Toolkit.Extensibility.Host
             return ServiceManager.AddService(service);
         }
 
-        [Obsolete]
+        [Obsolete("Use RegisterBackgroundService<T>(T service)")]
         public IDisposable RegisterBackgroundService<T>() where T : IBackgroundService
         {
             IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;

@@ -38,20 +38,6 @@ namespace Raid.Toolkit.Application.Core.Host
         public static readonly string ExecutableDirectory;
         public static DeferredOptions<FileLoggerOptions> FileLoggerOptions => AppHostBuilderSettings.FileLoggerOptions;
 
-        public static void EnsureFileAssociations(string? exePath = null)
-        {
-            if (string.IsNullOrEmpty(exePath))
-                exePath = ExecutablePath;
-            FileAssociations.EnsureAssociationsSet(new FileAssociation()
-            {
-                Extension = ".rtkx",
-                FileTypeDescription = "Raid Toolkit Extension",
-                ExecutableFilePath = exePath,
-                ExecutableArguments = "install",
-                ProgId = "RTK.Extension"
-            });
-        }
-
         internal static Stream? GetEmbeddedSettings()
         {
             var assembly = typeof(AppHost).Assembly;

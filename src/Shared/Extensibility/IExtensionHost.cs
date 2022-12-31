@@ -19,8 +19,8 @@ namespace Raid.Toolkit.Extensibility
         IDisposable RegisterBackgroundService<T>(T service) where T : IBackgroundService;
 
         IDisposable RegisterMenuEntry(IMenuEntry entry);
-        IDisposable RegisterWindow<T>(WindowOptions options) where T : Form;
-        T CreateWindow<T>() where T : Form;
+        IDisposable RegisterWindow<T>(WindowOptions options) where T : class;
+        IWindowAdapter<T> CreateWindow<T>() where T : class;
 
         bool CanShowUI { get; }
 

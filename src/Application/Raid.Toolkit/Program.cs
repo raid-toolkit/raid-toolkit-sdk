@@ -5,7 +5,6 @@ using Raid.Toolkit.Application.Core;
 using System.Threading.Tasks;
 using Raid.Toolkit.Application.Core.Commands;
 using Raid.Toolkit.Application.Core.Commands.Base;
-using Raid.Toolkit.UI.Forms;
 using Raid.Toolkit.UI.WinUI;
 using GitHub;
 using System.Linq;
@@ -37,7 +36,6 @@ namespace Raid.Toolkit
 
             IEntrypoint entrypoint = CommonOptions.Value.RenderEngine switch
             {
-                RenderingEngine.WinForms => new Entrypoint<AppForms, FormsProgramHost>(),
                 RenderingEngine.WinUI => new Entrypoint<AppWinUI, WinUIProgramHost>(),
                 _ => new Entrypoint<AppWinUI, WinUIProgramHost>(),
             };

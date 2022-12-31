@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+    <Fragment>
+        <DirectoryRef Id="TARGETDIR" />
+    </Fragment>
+    <Fragment>
+        <ComponentGroup Id="RaidToolkitRegistry">
+            <Component Id="cmp4F2745F120626B4ACA84F33428C0B8E3" Directory="TARGETDIR" Guid="2af56990bb6442ec9c132ad28176a07e" KeyPath="yes">
+                <RegistryKey Key="Software\Classes\RTK.Extension\shell\open\command" Root="HKCU">
+                    <RegistryValue Value="&quot;[#Raid.Toolkit.exe]&quot; install &quot;%1&quot;" Type="string" />
+                </RegistryKey>
+            </Component>
+            <Component Id="cmp7978469059617F21827B78904A9B1D45" Directory="TARGETDIR" Guid="1a3ed4a163314f6e8162f9af9b0b940c" KeyPath="yes">
+                <RegistryKey ForceCreateOnInstall="yes" Key="Software\Classes\RTK.Extension\shell\open" Root="HKCU" />
+            </Component>
+            <Component Id="cmp9D85F0B0155AD9C5BC7200264B17B7DD" Directory="TARGETDIR" Guid="f5f08bd992ea4e9c96bcc44e2261db43" KeyPath="yes">
+                <RegistryKey ForceCreateOnInstall="yes" Key="Software\Classes\RTK.Extension\shell" Root="HKCU" />
+            </Component>
+            <Component Id="cmpAB313532682E606FD6D919A50DAADC70" Directory="TARGETDIR" Guid="2587889ff9984ca0bb82e662faa26ebf" KeyPath="yes">
+                <RegistryKey Key="Software\Classes\.rtkx" Root="HKCU">
+                    <RegistryValue Value="RTK.Extension" Type="string" />
+                </RegistryKey>
+            </Component>
+            <Component Id="cmpF0A14698A63A80C1B9FB1169A97EC8A9" Directory="TARGETDIR" Guid="21ab794d7a89434faf91d295f3a81fa3" KeyPath="yes">
+                <RegistryKey Key="Software\Classes\RTK.Extension" Root="HKCU">
+                    <RegistryValue Value="Raid Toolkit Extension" Type="string" />
+                </RegistryKey>
+            </Component>
+
+            <Component Id="cmpD6774C0BD115426FAB866851E5610ECC" Directory="TARGETDIR" Guid="a85d7c496c554433b79987c1e75f7401" KeyPath="yes">
+                <RegistryKey Key="Software\Classes\rtk" Root="HKCU">
+                    <RegistryValue Value="URL:Raid Toolkit" Type="string" />
+                    <RegistryValue Name="URL Protocol" Value="" Type="string" />
+                </RegistryKey>
+            </Component>
+            <Component Id="cmpBBAD18A2E3864E3EAD0F90FF47EB0362" Directory="TARGETDIR" Guid="f3a73b642e184211bb87a3e81ff30876" KeyPath="yes">
+                <RegistryKey Key="Software\Classes\rtk\shell\open\command" Root="HKCU">
+                    <RegistryValue Value="&quot;[#Raid.Toolkit.exe]&quot; activate &quot;%1&quot;" Type="string" />
+                </RegistryKey>
+            </Component>
+        </ComponentGroup>
+    </Fragment>
+</Wix>

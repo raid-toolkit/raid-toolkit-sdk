@@ -55,20 +55,21 @@ jobs:
 
       # Restore the application to populate the obj folder with RuntimeIdentifiers
       - name: Restore the application
-        run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Release
+        run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Debug
 
       # Publish RTK
       - name: Build App
-        run: |
-          msbuild $env:Solution_Name -m -t:"Build;Pack" -p:Configuration=Debug -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
-          msbuild $env:Launcher_csproj -m -t:Publish -p:TargetFramework=net5.0-windows -p:Configuration=Debug -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
+        run: msbuild $env:Solution_Name -m -t:"Build;Pack" -p:Configuration=Debug -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
+
+      - name: Build Launcher
+        run: msbuild $env:Launcher_csproj -m -t:Publish -p:TargetFramework=net5.0-windows -p:Configuration=Debug -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
 
       - name: Build Setup
         run: |
           $env:Path += ";C:\Program Files (x86)\WiX Toolset v3.11\bin"
           heat.exe dir $env:BuildOutputDirectory -cg RaidToolkitBinaries -out out\RaidToolkitBinaries.wxs -dr BINDIR -srd -suid -sreg -g1 -var env.BuildOutputDirectory -ag
-          candle.exe -nologo -o out\ out\RaidToolkitBinaries.wxs Product.wxs Bundle.wxs -ext WixBalExtension
-          light.exe -nologo -o out\RaidToolkit.msi out\Product.wixobj out\RaidToolkitBinaries.wixobj -ext WixBalExtension
+          candle.exe -nologo -o out\ out\RaidToolkitBinaries.wxs Product.wxs Registry.wxs Bundle.wxs -ext WixBalExtension
+          light.exe -nologo -o out\RaidToolkit.msi out\Product.wixobj out\Registry.wixobj out\RaidToolkitBinaries.wixobj -ext WixBalExtension
           light.exe -nologo -o out\RaidToolkitSetup.exe out\Bundle.wixobj -ext WixBalExtension
         working-directory: ./src/Setup
         env:
@@ -89,3 +90,18 @@ jobs:
             src/Setup/out/RaidToolkit.msi
             src/Setup/out/RaidToolkitSetup.exe
             ThirdPartyNotice.txt
+
+      # NuGet Push
+      - name: Push client package to PR registry
+        run: |
+          dotnet nuget push publish/nuget/Raid.Common.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Client.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Model.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.DataModel.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Injection.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.Host.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.Tasks.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+        env:
+          STAGING_NUGET_TOKEN: ${{ secrets.STAGING_NUGET_TOKEN }}
+          STAGING_NUGET_URL: https://nuget.pkg.github.com/raid-toolkit/index.json

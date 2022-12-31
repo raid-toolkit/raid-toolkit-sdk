@@ -2,8 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Xaml;
+
 using Raid.Toolkit.Extensibility.DataServices;
 
 namespace Raid.Toolkit.Extensibility.Host
@@ -14,11 +17,12 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             public WindowState()
             { }
-            public WindowState(Form form, bool isVisible)
+            public WindowState(object owner, bool isVisible)
             {
+                IWindowAdapter window = WrapWindow(owner);
                 Visible = isVisible;
-                Location = form.Location;
-                Size = form.Size;
+                Location = window.Location;
+                Size = window.Size;
             }
             public bool Visible { get; set; }
             public Point Location;
@@ -50,84 +54,109 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             foreach (var (type, options) in Options)
             {
+                if (string.IsNullOrEmpty(type.FullName)) continue;
+
                 if (options.RememberVisibility
-                    && States.TryGetValue(type.FullName, out WindowState state)
+                    && States.TryGetValue(type.FullName, out WindowState? state)
                     && state.Visible)
                 {
-                    Form window = CreateWindow(type);
+#pragma warning disable CS0618 // Type or member is obsolete
+                    IWindowAdapter window = CreateWindow(type);
+#pragma warning restore CS0618 // Type or member is obsolete
                     window.Show();
                 }
             }
         }
 
-        public T CreateWindow<T>() where T : Form
+        private static IWindowAdapter<T> WrapWindow<T>(T instance) where T : class
         {
-            return CreateWindow(typeof(T)) as T;
+            if (instance is IWindowAdapter adapter)
+                return (IWindowAdapter<T>)adapter;
+
+            if (instance is Form form)
+                return new FormAdapter<T>(form);
+
+            if (instance is Window wnd)
+                return new WinUIAdapter<T>(wnd);
+
+            throw new NotSupportedException();
         }
 
-        public Form CreateWindow(Type type)
+        public IWindowAdapter<T> CreateWindow<T>() where T : class
         {
-            Logger.LogInformation($"Creating window {type.FullName}");
-            if (!Options.TryGetValue(type, out WindowOptions options))
-                throw new InvalidOperationException($"Type '{type.FullName}' is not registered.");
+            Logger.LogInformation("Creating window {type}", typeof(T).FullName);
+            if (!Options.TryGetValue(typeof(T), out WindowOptions? options))
+                throw new InvalidOperationException($"Type '{typeof(T).FullName}' is not registered.");
 
-            Form form = options.CreateInstance != null
+            T instance = (T)(options.CreateInstance != null
                 ? options.CreateInstance()
-                : ActivatorUtilities.CreateInstance(ServiceProvider, type) as Form;
+                : ActivatorUtilities.CreateInstance(ServiceProvider, typeof(T)));
 
-            AttachEvents(options, form);
-            return form;
+            IWindowAdapter<T> adapter = WrapWindow(instance);
+            AttachEvents(options, adapter);
+
+            return adapter;
         }
 
-        private void AttachEvents(WindowOptions options, Form form)
+        static readonly System.Reflection.MethodInfo? createWindowMethod = typeof(WindowManager).GetMethod("CreateWindow", 1, Array.Empty<Type>());
+        [Obsolete("Use CreateWindow<T> instead")]
+        public IWindowAdapter CreateWindow(Type type)
         {
+            if (createWindowMethod?.MakeGenericMethod(type).Invoke(this, null) is not IWindowAdapter adapter)
+                throw new InvalidCastException();
+            return adapter;
+        }
+
+        private void AttachEvents(WindowOptions options, IWindowAdapter window)
+        {
+            if (window == null) return;
             if (options.RememberVisibility)
             {
-                form.FormClosing += SetFormClosedState;
-                form.Shown += SetFormVisibleState;
+                window.Closing += SetFormClosedState;
+                window.Shown += SetFormVisibleState;
             }
             if (options.RememberPosition)
             {
-                if (States.TryGetValue(form.GetType().FullName, out WindowState state))
+                string? senderType = window.GetType().FullName;
+                if (!string.IsNullOrEmpty(senderType) && States.TryGetValue(senderType, out WindowState? state) && state != null)
                 {
-                    form.Location = state.Location;
-                    form.StartPosition = FormStartPosition.Manual;
+                    window.Location = state.Location;
                 }
 
-                form.ResizeEnd += SetFormVisibleState;
-                form.Move += SetFormVisibleState;
+                window.Resized += SetFormVisibleState;
             }
         }
 
-        private void SetFormVisibleState(object sender, EventArgs e)
+        private void SetFormVisibleState(object? sender, WindowAdapterEventArgs e)
         {
-            string senderType = sender.GetType().FullName;
-            Logger.LogInformation($"Updating window {senderType} (open)");
-            States[senderType] = new(sender as Form, true);
+            if (sender == null)
+                return;
+
+            Logger.LogInformation("Updating window {senderType} (open)", e.OwnerType);
+            States[e.OwnerType] = new(sender, true);
             _ = Storage.Write(AppStateDataContext.Default, "windows", States);
         }
 
-        private void SetFormClosedState(object sender, FormClosingEventArgs e)
+        private void SetFormClosedState(object? sender, WindowAdapterCloseEventArgs e)
         {
-            bool isUserClose = e.CloseReason is CloseReason.UserClosing
-                or CloseReason.FormOwnerClosing;
+            if (sender == null)
+                return;
 
-            string senderType = sender.GetType().FullName;
-            Logger.LogInformation($"Updating window {senderType} (closed)");
+            Logger.LogInformation("Updating window {senderType} (closed)", e.OwnerType);
             // if closing for application exit/shutdown, then consider it still open so it will re-open on next launch
-            States[senderType] = new(sender as Form, !isUserClose);
+            States[e.OwnerType] = new(sender, !e.IsUserClose);
             _ = Storage.Write(AppStateDataContext.Default, "windows", States);
         }
 
-        public void RegisterWindow<T>(WindowOptions options) where T : Form
+        public void RegisterWindow<T>(WindowOptions options) where T : class
         {
-            Logger.LogInformation($"Registered window {typeof(T).FullName}");
+            Logger.LogInformation("Registered window {type}", typeof(T).FullName);
             Options.Add(typeof(T), options);
         }
 
-        public void UnregisterWindow<T>() where T : Form
+        public void UnregisterWindow<T>() where T : class
         {
-            Logger.LogInformation($"Unregistered window {typeof(T).FullName}");
+            Logger.LogInformation("Unregistered window {type}", typeof(T).FullName);
             _ = Options.Remove(typeof(T));
         }
     }

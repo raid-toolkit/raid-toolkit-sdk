@@ -14,6 +14,8 @@
             </Custom>
         </InstallExecuteSequence>
 
+        <Property Id="REINSTALLMODE" Value="amus" />
+
         <Property Id="INSTALLDIR">
             <RegistrySearch Id="DetermineInstallLocation" Type="raw" Root="HKCU" Key="Software\RaidToolkit" Name="InstallLocation" />
         </Property>
@@ -53,6 +55,7 @@
         <Feature Id="Complete" Title="Raid Toolkit" Display="expand" Level="1" ConfigurableDirectory="INSTALLDIR">
             <Feature Id="MainProgram" Title="Program" Description="Raid Toolkit Application" Level="1">
                 <ComponentGroupRef Id="RaidToolkitBinaries" />
+                <ComponentGroupRef Id="RaidToolkitRegistry" />
                 <ComponentRef Id="RaidToolkitDir" />
                 <ComponentRef Id="RegInstallLocation" />
                 <ComponentRef Id="ApplicationShortcut" />

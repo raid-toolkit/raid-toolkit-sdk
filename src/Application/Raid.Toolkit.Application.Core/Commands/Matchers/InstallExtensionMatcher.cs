@@ -1,15 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using CommandLine.Text;
 using CommandLine;
-using Raid.Toolkit.Application.Core.Commands;
+using Microsoft.Extensions.DependencyInjection;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Commands.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace Raid.Toolkit.Application.Core.Commands.Matchers
 {
@@ -18,6 +10,9 @@ namespace Raid.Toolkit.Application.Core.Commands.Matchers
     {
         [Value(0, MetaName = "rtkx", HelpText = "Path to RTKX package to install")]
         public string PackagePath { get; set; } = string.Empty;
+
+        [Option('a', "accept", Hidden = true)]
+        public bool Accept { get; set; } = false;
     }
 
     internal class InstallExtensionMatcher : CommandTaskMatcher<InstallExtensionOptions>
