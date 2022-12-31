@@ -48,13 +48,15 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
                 }
             }
 
-            AppHostBuilder
+            var builder = AppHostBuilder
                 .AddExtensibility()
                 .AddLogging()
                 .AddUI()
-                .AddAppServices()
-                .AddWebSockets(AppHost.HandleMessage);
-            AppHostBuilder.ConfigureServices(services => ProgramHost.ConfigureServices(services));
+                .AddAppServices();
+            if (!Options.NoWebService)
+                builder = builder.AddWebSockets(AppHost.HandleMessage);
+
+            _ = AppHostBuilder.ConfigureServices(services => ProgramHost.ConfigureServices(services));
 
             IHost host = AppHostBuilder.Build();
             ConfigureHost(host);
@@ -71,7 +73,7 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
             {
                 _ = Task.Run(() =>
                 {
-                    host.StartAsync();
+                    _ = host.StartAsync();
                 });
             });
 

@@ -31,6 +31,9 @@ namespace Raid.Toolkit.Application.Core.Commands.Matchers
         [Option('m', "no-default-packages", Hidden = true)]
         public bool NoDefaultPackages { get; set; }
 
+        [Option('z', "no-webservice", Hidden = true)]
+        public bool NoWebService { get; set; }
+
         [Option('i', "interop-dir", Hidden = true)]
         public string? InteropDirectory { get; set; }
 
