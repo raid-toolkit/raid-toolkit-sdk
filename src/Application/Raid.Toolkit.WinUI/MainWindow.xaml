@@ -7,113 +7,123 @@
     xmlns:xaml="using:Raid.Toolkit.UI.WinUI.Xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" Title="Raid Toolkit">
-	<Grid>
-		<Grid.Resources>
-			<xaml:GridLengthConverter x:Key="GridLengthConverter"/>
-			<Storyboard x:Name="ShrinkLogoAnimation">
-				<DoubleAnimation Storyboard.TargetName="iconImage" Storyboard.TargetProperty="Height" To="150" Duration="0:0:0.5" EnableDependentAnimation="True">
-					<DoubleAnimation.EasingFunction>
-						<CubicEase />
-					</DoubleAnimation.EasingFunction>
-				</DoubleAnimation>
-				<DoubleAnimation Storyboard.TargetName="logoImage" Storyboard.TargetProperty="Height" To="50" Duration="0:0:0.5" EnableDependentAnimation="True">
-					<DoubleAnimation.EasingFunction>
-						<CubicEase />
-					</DoubleAnimation.EasingFunction>
-				</DoubleAnimation>
-			</Storyboard>
-			<Storyboard x:Name="GrowLogoAnimation">
-				<DoubleAnimation Storyboard.TargetName="iconImage" Storyboard.TargetProperty="Height" To="300" Duration="0:0:0.5" EnableDependentAnimation="True">
-					<DoubleAnimation.EasingFunction>
-						<CubicEase />
-					</DoubleAnimation.EasingFunction>
-				</DoubleAnimation>
-				<DoubleAnimation Storyboard.TargetName="logoImage" Storyboard.TargetProperty="Height" To="100" Duration="0:0:0.5" EnableDependentAnimation="True">
-					<DoubleAnimation.EasingFunction>
-						<CubicEase />
-					</DoubleAnimation.EasingFunction>
-				</DoubleAnimation>
-			</Storyboard>
-		</Grid.Resources>
-		<Grid.RowDefinitions>
-			<RowDefinition Height="28" />
-			<RowDefinition x:Name="iconRow" Height="Auto" />
-			<RowDefinition x:Name="logoRow" Height="Auto" />
-			<RowDefinition Height="20" />
-			<RowDefinition Height="150*" />
-		</Grid.RowDefinitions>
-		<Grid x:Name="TitleBar" Grid.Row="0">
-			<Grid.Shadow>
-				<ThemeShadow />
-			</Grid.Shadow>
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="28" />
-				<ColumnDefinition Width="*" />
-			</Grid.ColumnDefinitions>
-			<Image Grid.Column="0" Source="ms-appx:///Raid.Toolkit.UI.WinUI/Assets/Square150x150Logo.scale-200.png" VerticalAlignment="Center" HorizontalAlignment="Center" Width="22" />
-			<TextBlock Grid.Column="1" FontSize="12" VerticalAlignment="Center" Margin="5,0,0,0">Raid Toolkit</TextBlock>
-		</Grid>
-		<Image Grid.Row="1" x:Name="iconImage" Source="ms-appx:///Raid.Toolkit.UI.WinUI/Assets/Square150x150Logo.scale-200.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="300" />
-		<Image Grid.Row="2" x:Name="logoImage" Source="ms-appx:///Raid.Toolkit.UI.WinUI/Assets/RaidToolkitLarge.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" />
-		
-		<StackPanel Grid.Row="4" x:Name="LinksGrid" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="22" Visibility="Collapsed">
-			<Button Content="Website" HorizontalAlignment="Center" Click="Website_Click" />
-			<Button Content="Discord" HorizontalAlignment="Center" Click="Discord_Click" />
-			<Button Content="Settings" HorizontalAlignment="Center" Click="Settings_Click" />
-		</StackPanel>
-		
-		<local:SettingsPanel Grid.Row="4" x:Name="Settings" Visibility="Collapsed" SettingsSaved="Settings_SettingsSaved" SettingsDiscarded="Settings_SettingsDiscarded" />
-		
-		<Grid x:Name="LoadProgressGrid" Grid.Row="4" Margin="15,10,15,0">
-			<Grid.RowDefinitions>
-				<RowDefinition Height="40*" />
-				<RowDefinition Height="20" />
-				<RowDefinition Height="20" />
-			</Grid.RowDefinitions>
-			<TextBlock x:Name="LoadMessage" Grid.Row="0" Foreground="Gray" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-			</TextBlock>
-			<TextBlock x:Name="LoadStatus" TextAlignment="Center" Grid.Row="1">
-                Processing
-			</TextBlock>
-			<ProgressBar Grid.Row="2" x:Name="LoadProgress" Minimum="0" Maximum="100" Value="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
-		</Grid>
+    <Grid>
+        <Grid.Resources>
+            <xaml:GridLengthConverter x:Key="GridLengthConverter"/>
+            <Storyboard x:Name="ShrinkLogoAnimation">
+                <DoubleAnimation Storyboard.TargetName="iconImage" Storyboard.TargetProperty="Height" To="150" Duration="0:0:0.5" EnableDependentAnimation="True">
+                    <DoubleAnimation.EasingFunction>
+                        <CubicEase />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+                <DoubleAnimation Storyboard.TargetName="iconImage" Storyboard.TargetProperty="Width" To="128" Duration="0:0:0.5" EnableDependentAnimation="True">
+                    <DoubleAnimation.EasingFunction>
+                        <CubicEase />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+                <DoubleAnimation Storyboard.TargetName="logoImage" Storyboard.TargetProperty="Height" To="50" Duration="0:0:0.5" EnableDependentAnimation="True">
+                    <DoubleAnimation.EasingFunction>
+                        <CubicEase />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+            <Storyboard x:Name="GrowLogoAnimation">
+                <DoubleAnimation Storyboard.TargetName="iconImage" Storyboard.TargetProperty="Height" To="300" Duration="0:0:0.5" EnableDependentAnimation="True">
+                    <DoubleAnimation.EasingFunction>
+                        <CubicEase />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+                <DoubleAnimation Storyboard.TargetName="iconImage" Storyboard.TargetProperty="Width" To="256" Duration="0:0:0.5" EnableDependentAnimation="True">
+                    <DoubleAnimation.EasingFunction>
+                        <CubicEase />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+                <DoubleAnimation Storyboard.TargetName="logoImage" Storyboard.TargetProperty="Height" To="100" Duration="0:0:0.5" EnableDependentAnimation="True">
+                    <DoubleAnimation.EasingFunction>
+                        <CubicEase />
+                    </DoubleAnimation.EasingFunction>
+                </DoubleAnimation>
+            </Storyboard>
+        </Grid.Resources>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28" />
+            <RowDefinition x:Name="iconRow" Height="Auto" />
+            <RowDefinition x:Name="logoRow" Height="Auto" />
+            <RowDefinition Height="20" />
+            <RowDefinition Height="150*" />
+        </Grid.RowDefinitions>
+        <Grid x:Name="TitleBar" Grid.Row="0">
+            <Grid.Shadow>
+                <ThemeShadow />
+            </Grid.Shadow>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="28" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="ms-appx:///Raid.Toolkit.UI.WinUI/Assets/Icon_22.png" VerticalAlignment="Center" HorizontalAlignment="Center" Width="22" />
+            <TextBlock Grid.Column="1" FontSize="12" VerticalAlignment="Center" Margin="5,0,0,0">Raid Toolkit</TextBlock>
+        </Grid>
+        <Image Grid.Row="1" x:Name="iconImage" Source="ms-appx:///Raid.Toolkit.UI.WinUI/Assets/Icon_256.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="300" Width="256" Stretch="Uniform" />
+        <Image Grid.Row="2" x:Name="logoImage" Source="ms-appx:///Raid.Toolkit.UI.WinUI/Assets/RaidToolkitLarge.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" />
 
-		<!--Version numbers -->
-		<Grid Grid.Row="1" VerticalAlignment="Top">
-			<Grid.ColumnDefinitions>
-				<ColumnDefinition Width="150*" />
-				<ColumnDefinition Width="150*" />
-			</Grid.ColumnDefinitions>
-			<Viewbox Margin="1,1,1,0" Grid.Column="0" Height="18" HorizontalAlignment="Left">
-				<Grid>
-					<Rectangle Fill="Black" Opacity="0.5"  Translation="0,0,10">
-						<Rectangle.Shadow>
-							<ThemeShadow />
-						</Rectangle.Shadow>
-					</Rectangle>
-					<TextBlock Padding="10,2,10,2" VerticalAlignment="Top" Foreground="Purple" FontFamily="Consolas" IsTextSelectionEnabled="True">
+        <StackPanel Grid.Row="4" x:Name="LinksGrid" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="22" Visibility="Collapsed">
+            <Button Content="Website" HorizontalAlignment="Center" Click="Website_Click" />
+            <Button Content="Discord" HorizontalAlignment="Center" Click="Discord_Click" />
+            <Button Content="Settings" HorizontalAlignment="Center" Click="Settings_Click" />
+        </StackPanel>
+
+        <local:SettingsPanel Grid.Row="4" x:Name="Settings" Visibility="Collapsed" SettingsSaved="Settings_SettingsSaved" SettingsDiscarded="Settings_SettingsDiscarded" />
+
+        <Grid x:Name="LoadProgressGrid" Grid.Row="4" Margin="15,10,15,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40*" />
+                <RowDefinition Height="20" />
+                <RowDefinition Height="20" />
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="LoadMessage" Grid.Row="0" Foreground="Gray" TextAlignment="Center" TextWrapping="Wrap" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+            </TextBlock>
+            <TextBlock x:Name="LoadStatus" TextAlignment="Center" Grid.Row="1">
+                Processing
+            </TextBlock>
+            <ProgressBar Grid.Row="2" x:Name="LoadProgress" Minimum="0" Maximum="100" Value="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+        </Grid>
+
+        <!--Version numbers -->
+        <Grid Grid.Row="1" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150*" />
+                <ColumnDefinition Width="150*" />
+            </Grid.ColumnDefinitions>
+            <Viewbox Margin="1,1,1,0" Grid.Column="0" Height="18" HorizontalAlignment="Left">
+                <Grid>
+                    <Rectangle Fill="Black" Opacity="0.5" Translation="0,0,10">
+                        <Rectangle.Shadow>
+                            <ThemeShadow />
+                        </Rectangle.Shadow>
+                    </Rectangle>
+                    <TextBlock Padding="10,2,10,2" VerticalAlignment="Top" Foreground="Purple" FontFamily="Consolas" IsTextSelectionEnabled="True">
                         RSL: 
                         <Underline>
                             v<Run x:Name="VersionRaid" Text="??" />
                         </Underline>
-					</TextBlock>
-				</Grid>
-			</Viewbox>
-			<Viewbox Margin="1,1,1,0" Grid.Column="1" Height="18" HorizontalAlignment="Right">
-				<Grid>
-					<Rectangle Fill="Black" Opacity="0.5" Translation="0,0,10">
-						<Rectangle.Shadow>
-							<ThemeShadow />
-						</Rectangle.Shadow>
-					</Rectangle>
-					<TextBlock Padding="10,2,10,2" VerticalAlignment="Top" Foreground="Purple" FontFamily="Consolas" IsTextSelectionEnabled="True">
+                    </TextBlock>
+                </Grid>
+            </Viewbox>
+            <Viewbox Margin="1,1,1,0" Grid.Column="1" Height="18" HorizontalAlignment="Right">
+                <Grid>
+                    <Rectangle Fill="Black" Opacity="0.5" Translation="0,0,10">
+                        <Rectangle.Shadow>
+                            <ThemeShadow />
+                        </Rectangle.Shadow>
+                    </Rectangle>
+                    <TextBlock Padding="10,2,10,2" VerticalAlignment="Top" Foreground="Purple" FontFamily="Consolas" IsTextSelectionEnabled="True">
                     RTK: 
                         <Underline>
                             v<Run x:Name="VersionRTK" Text="??" />
                         </Underline>
-					</TextBlock>
-				</Grid>
-			</Viewbox>
-		</Grid>
-	</Grid>
+                    </TextBlock>
+                </Grid>
+            </Viewbox>
+        </Grid>
+    </Grid>
 </rtkuibase:RTKWindow>
