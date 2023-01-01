@@ -14,7 +14,7 @@ namespace Raid.Toolkit.Extensibility
         public event EventHandler<WindowAdapterEventArgs> Shown;
         public event EventHandler<WindowAdapterSizeChangedEventArgs> Resized;
     }
-    public interface IWindowAdapter<T> : IWindowAdapter where T : class
+    public interface IWindowAdapter<out T> : IWindowAdapter where T : class
     {
         public T GetOwner();
     }

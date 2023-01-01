@@ -6,6 +6,8 @@ using System.Reflection.Metadata;
 
 using CommunityToolkit.WinUI.Notifications;
 
+using Microsoft.Extensions.Logging;
+
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Common;
@@ -19,6 +21,7 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
     public class PackageManager : IPackageManager
     {
         private const string DeleteMeFile = ".delete-me";
+        private const string InstallMeFile = ".install-me";
         private static string ExtensionsDirectory => Path.Combine(RegistrySettings.InstallationPath, "extensions");
 
         private readonly List<ExtensionBundle> Descriptors = new();
@@ -26,18 +29,25 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
         private readonly INotificationManager NotificationManager;
         private readonly IAppService AppService;
         private readonly NotificationSink PackageUpdateNotify;
+        private readonly ILogger<PackageManager> Logger;
         private bool IsLoaded = false;
         public static string? DebugPackage { get; set; }
         public static bool NoDefaultPackages = false;
 
-        public PackageManager(IAppUI appUI, INotificationManager notificationManager, IAppService appService)
+        public PackageManager(ILogger<PackageManager> logger, IAppUI appUI, INotificationManager notificationManager, IAppService appService)
         {
+            Logger = logger;
             AppUI = appUI;
             NotificationManager = notificationManager;
             AppService = appService;
             PackageUpdateNotify = new("packageManager");
             PackageUpdateNotify.Activated += Sink_Activated;
             NotificationManager.RegisterHandler(PackageUpdateNotify);
+        }
+
+        private bool IsPackageLoaded(string id)
+        {
+            return Descriptors.Any(desc => desc.Id == id);
         }
 
         private void Sink_Activated(object? sender, NotificationActivationEventArgs e)
@@ -55,14 +65,14 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
             }
         }
 
-        public async Task<ExtensionBundle> RequestPackageInstall(ExtensionBundle package)
+        public async Task<ExtensionBundle?> RequestPackageInstall(ExtensionBundle package)
         {
             bool result = await AppUI.ShowExtensionInstaller(package);
             if (!result)
             {
                 throw new OperationCanceledException();
             }
-            ExtensionBundle installedPackage = AddPackage(package);
+            ExtensionBundle? installedPackage = AddPackage(package);
             return installedPackage;
         }
 
@@ -115,6 +125,39 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
                                 }
                                 continue;
                             }
+                            else if (File.Exists(Path.Combine(dir, InstallMeFile)))
+                            {
+                                string installMeFilePath = Path.Combine(dir, InstallMeFile);
+                                string targetPackage = File.ReadAllText(installMeFilePath);
+                                if (string.IsNullOrEmpty(targetPackage))
+                                {
+                                    Logger.LogWarning("{installMeFilePath} does not contain a extension path", installMeFilePath);
+                                    File.Delete(installMeFilePath);
+                                }
+                                else if (!Path.GetDirectoryName(installMeFilePath)!.Equals(dir, StringComparison.InvariantCultureIgnoreCase))
+                                {
+                                    Logger.LogError("{installMeFilePath} refers to a file outside of the extension directory! '{targetPackage}'", installMeFilePath, targetPackage);
+                                    File.Delete(installMeFilePath);
+                                }
+                                else if (!File.Exists(targetPackage))
+                                {
+                                    Logger.LogError("{targetPackage} does not exist!", targetPackage);
+                                    File.Delete(installMeFilePath);
+                                }
+                                try
+                                {
+                                    ExtensionBundle.FromFile(targetPackage).Install(dir);
+                                }
+                                catch (Exception ex)
+                                {
+                                    Logger.LogError(ex,"{targetPackage} could not be installed", targetPackage);
+                                }
+                                finally
+                                {
+                                    File.Delete(installMeFilePath);
+                                    File.Delete(targetPackage);
+                                }
+                            }
                             ExtensionBundle bundle = ExtensionBundle.FromDirectory(dir);
                             descriptors[bundle.Id] = bundle;
                         }
@@ -143,12 +186,24 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
             PackageUpdateNotify.SendNotification(tcb.Content, "extensions-updated");
         }
 
-        public ExtensionBundle AddPackage(ExtensionBundle packageToInstall)
+        public ExtensionBundle? AddPackage(ExtensionBundle packageToInstall)
         {
-            Directory.CreateDirectory(ExtensionsDirectory);
-            packageToInstall.Install(ExtensionsDirectory);
-            RequestRestart();
-            return ExtensionBundle.FromDirectory(packageToInstall.GetInstallDir(ExtensionsDirectory));
+            if (IsPackageLoaded(packageToInstall.Id))
+            {
+                string targetDir = packageToInstall.GetInstallDir(ExtensionsDirectory);
+                string targetFile = Path.Combine(targetDir, Path.GetFileName(packageToInstall.BundleLocation));
+                File.Copy(packageToInstall.BundleLocation, targetFile, true);
+                File.WriteAllText(Path.Combine(targetDir, InstallMeFile), targetFile);
+                RequestRestart();
+                return null;
+            }
+            else
+            {
+                Directory.CreateDirectory(ExtensionsDirectory);
+                packageToInstall.Install(ExtensionsDirectory);
+                RequestRestart();
+                return ExtensionBundle.FromDirectory(packageToInstall.GetInstallDir(ExtensionsDirectory));
+            }
         }
 
         public IEnumerable<ExtensionBundle> GetAllPackages()
