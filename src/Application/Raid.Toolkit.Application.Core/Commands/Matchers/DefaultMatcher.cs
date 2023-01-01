@@ -10,6 +10,9 @@ namespace Raid.Toolkit.Application.Core.Commands.Matchers
     [Verb("run", isDefault: true, HelpText = "Runs the service")]
     public class RunOptions : CommonOptions
     {
+        [Value(0, MetaName = "rtkx", HelpText = "Path to rtkx package to install", Hidden = true)]
+        public string PackagePath { get; set; } = string.Empty;
+
         [Option('s', "standalone", HelpText = "Runs in standalone mode")]
         public bool Standalone { get; set; }
 
@@ -47,6 +50,10 @@ namespace Raid.Toolkit.Application.Core.Commands.Matchers
         { }
         public override ICommandTask? Match(RunOptions options)
         {
+            if (!string.IsNullOrEmpty(options.PackagePath))
+            {
+                return ActivatorUtilities.CreateInstance<InstallExtensionTask>(ServiceProvider, new InstallExtensionOptions() { PackagePath = options.PackagePath });
+            }
             return ActivatorUtilities.CreateInstance<RunTask>(ServiceProvider, options);
         }
     }

@@ -37,7 +37,12 @@ namespace Raid.Toolkit.DataModel
             if (Promises.TryGetValue(id, out var source))
             {
                 object value = await source.Task;
-                return ((JToken)value).ToObject<T>();
+                
+                if (value is T tval)
+                    return tval;
+                else if (value is JToken token)
+                    return token.ToObject<T>();
+                return JToken.FromObject(value).ToObject<T>();
             }
             throw new KeyNotFoundException();
         }

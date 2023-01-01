@@ -107,7 +107,7 @@ namespace Raid.Toolkit.Extensibility.Tasks
             }
 
             _ = Directory.CreateDirectory(OutDir);
-            string outputManifest = Path.Combine(OutDir, ".rtk.extension.json");
+            string outputManifest = Path.Combine(OutDir, Constants.ExtensionManifestFileName);
             if (File.Exists(outputManifest))
                 File.Delete(outputManifest);
             manifest.RequireVersion ??= "2.0.0";

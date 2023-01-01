@@ -8,12 +8,11 @@ namespace Raid.Toolkit.Extensibility
 {
     public sealed class ExtensionBundle
     {
-        public Assembly Assembly { get; private set; }
+        public Assembly? Assembly { get; private set; }
         public ExtensionManifest Manifest { get; }
-        public string Location { get; private set; }
+        public string? Location { get; private set; }
+        public string? BundleLocation { get; private set; }
         public string Id => Manifest.Id;
-
-        private string ZipPath;
 
         public ExtensionBundle(ExtensionManifest manifest)
         {
@@ -22,9 +21,11 @@ namespace Raid.Toolkit.Extensibility
 
         public string GetExtensionEntrypointDll()
         {
-            return string.IsNullOrEmpty(Location)
-                ? throw new ApplicationException("Cannot load this extension, as it is not installed")
-                : Path.Combine(Location, Manifest.Assembly);
+            if (!string.IsNullOrEmpty(BundleLocation))
+                throw new ApplicationException("Cannot load this extension. It is not installed");
+            if (string.IsNullOrEmpty(Location))
+                throw new ApplicationException("Cannot load an extension without a location");
+            return Path.Combine(Location, Manifest.Assembly);
         }
 
         public string GetInstallDir(string rootDir)
@@ -46,9 +47,9 @@ namespace Raid.Toolkit.Extensibility
             {
                 CopyDirectory(Location, installationPath, true);
             }
-            else if (!string.IsNullOrEmpty(ZipPath))
+            else if (!string.IsNullOrEmpty(BundleLocation))
             {
-                ZipFile.ExtractToDirectory(ZipPath, installationPath);
+                ZipFile.ExtractToDirectory(BundleLocation, installationPath);
             }
         }
 
@@ -74,7 +75,7 @@ namespace Raid.Toolkit.Extensibility
         public static ExtensionBundle FromFile(string filename)
         {
             using ZipArchive arch = ZipFile.OpenRead(filename);
-            ZipArchiveEntry? manifestEntry = arch.GetEntry(".rtk.extension.json");
+            ZipArchiveEntry? manifestEntry = arch.GetEntry(Constants.ExtensionManifestFileName);
             if (manifestEntry == null)
             {
                 throw new ApplicationException($"Extension package '{filename}' does not contain a valid manifest");
@@ -83,13 +84,14 @@ namespace Raid.Toolkit.Extensibility
             ExtensionManifest manifest = ReadManifest(manifestStream);
             return new(manifest)
             {
-                ZipPath = filename
+                Location = Path.GetDirectoryName(filename),
+                BundleLocation = filename
             };
         }
 
         public static ExtensionBundle FromDirectory(string dirname)
         {
-            string manifestFile = Path.Combine(dirname, ".rtk.extension.json");
+            string manifestFile = Path.Combine(dirname, Constants.ExtensionManifestFileName);
             if (!File.Exists(manifestFile))
             {
                 throw new ApplicationException($"Extension package '{dirname}' does not contain a valid manifest");
@@ -107,7 +109,11 @@ namespace Raid.Toolkit.Extensibility
             JsonSerializer serializer = new();
             using StreamReader reader = new(manifestStream);
             using JsonTextReader textReader = new(reader);
-            ExtensionManifest manifest = serializer.Deserialize<ExtensionManifest>(textReader);
+            ExtensionManifest? manifest = serializer.Deserialize<ExtensionManifest>(textReader);
+            if (manifest == null)
+            {
+                throw new ApplicationException("Could not deserialize ExtensionManifest");
+            }
             return manifest;
         }
 

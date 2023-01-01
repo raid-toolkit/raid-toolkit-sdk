@@ -13,6 +13,7 @@ using GitHub.Schema;
 
 using Newtonsoft.Json;
 
+using Raid.Toolkit;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
 
@@ -154,7 +155,7 @@ namespace Launcher
             string[] directories = Directory.GetDirectories(extensionsDir);
             foreach (string dir in directories)
             {
-                string manifestPath = Path.Combine(dir, ".rtk.extension.json");
+                string manifestPath = Path.Combine(dir, Constants.ExtensionManifestFileName);
                 if (!File.Exists(manifestPath))
                     continue;
                 ExtensionManifest? manifest = JsonConvert.DeserializeObject<ExtensionManifest>(await File.ReadAllTextAsync(manifestPath));

@@ -97,14 +97,6 @@ namespace Raid.Toolkit.Extensibility.Host
             Instances.Clear();
         }
 
-        public void InstallPackage(ExtensionBundle descriptor, bool activate)
-        {
-            ExtensionBundle installedPkg = PackageManager.AddPackage(descriptor);
-            ExtensionHost host = ExtensionHost.CreateHost(ServiceProvider, installedPkg);
-            host.Install();
-            ExtensionPackages.Add(installedPkg.Id, host);
-        }
-
         public void EnablePackage(string packageId)
         {
             if (ExtensionPackages.Remove(packageId, out var pkg))
