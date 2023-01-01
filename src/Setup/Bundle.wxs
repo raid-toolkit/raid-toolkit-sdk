@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Bundle logo-->
-<?define Logo = "..\\..\\assets\\AppIcon_64.png" ?>
+<?define Logo = "..\\..\\assets\\Icon_64.png" ?>
 <!-- Bundle side logo-->
 <?define SideLogo = "..\\..\\assets\\sidebar.png" ?>
 <!-- Bundle icon-->
