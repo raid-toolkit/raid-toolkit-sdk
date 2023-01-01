@@ -19,16 +19,10 @@
         <Content Update="Assets\RaidToolkitLarge.png">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="Assets\Splashscreen.scale-200.png" />
-        <Content Include="Assets\LockScreenLogo.scale-200.png" />
-        <Content Include="Assets\Square150x150Logo.scale-200.png">
+        <Content Include="Assets\Icon_300.png">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="Assets\Square44x44Logo.scale-200.png" />
-        <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-        <Content Include="Assets\StoreLogo.png" />
-        <Content Include="Assets\Wide310x150Logo.scale-200.png" />
-        <Content Include="Resources\Square150x150Logo.scale-200.png">
+        <Content Include="Assets\Icon_22.png">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
     </ItemGroup>
@@ -88,12 +82,12 @@
         </EmbeddedResource>
     </ItemGroup>
     <ItemGroup>
-      <Page Update="ExtensionsWindow.xaml">
-        <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-      </Page>
-      <Page Update="AccountsWindow.xaml">
-        <Generator>MSBuild:Compile</Generator>
-      </Page>
+        <Page Update="ExtensionsWindow.xaml">
+            <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+        </Page>
+        <Page Update="AccountsWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
     <ItemGroup>
         <Page Update="SettingsPanel.xaml">
