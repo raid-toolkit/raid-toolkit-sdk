@@ -70,8 +70,8 @@ namespace Raid.Toolkit.Extensibility.Host
 
         private static IWindowAdapter<T> WrapWindow<T>(T instance) where T : class
         {
-            if (instance is IWindowAdapter adapter)
-                return (IWindowAdapter<T>)adapter;
+            if (instance is IWindowAdapter<T> adapter)
+                return adapter;
 
             if (instance is Form form)
                 return new FormAdapter<T>(form);
