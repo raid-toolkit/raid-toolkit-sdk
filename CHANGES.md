@@ -1,7 +1,8 @@
 # Release Notes
 
 ## 2.2.x
-* #109, #111 - Updated window APIs to allow for both WinForms and WinUI windows to be managed by RTK and provide lighter weight usage patterns.
+* #109, #112 - Updated window APIs to allow for both WinForms and WinUI windows to be managed by RTK and provide lighter weight usage patterns.
+* #111 - Handle extension re-installation
 * #110 - Update logo graphics
 
 **Full Changelog**: https://github.com/raid-toolkit/raid-toolkit-sdk/compare/1919fd4852dc060d671eda83a49cacd6c2ce29ba...v2.2.4.61376
