@@ -70,41 +70,39 @@ namespace Raid.Toolkit.Extensibility.Host
 
         private static IWindowAdapter<T> WrapWindow<T>(T instance) where T : class
         {
-            if (instance is IWindowAdapter<T> adapter)
-                return adapter;
-
-            if (instance is Form form)
-                return new FormAdapter<T>(form);
-
-            if (instance is Window wnd)
-                return new WinUIAdapter<T>(wnd);
-
-            throw new NotSupportedException();
+            return instance is IWindowAdapter<T> adapter
+                ? adapter
+                : (global::Raid.Toolkit.Extensibility.IWindowAdapter<T>)(instance is Form form
+                ? new FormAdapter<T>(form)
+                : instance is Window wnd ? new WinUIAdapter<T>(wnd) : throw new NotSupportedException());
         }
 
         public IWindowAdapter<T> CreateWindow<T>() where T : class
         {
             Logger.LogInformation("Creating window {type}", typeof(T).FullName);
             if (!Options.TryGetValue(typeof(T), out WindowOptions? options))
-                throw new InvalidOperationException($"Type '{typeof(T).FullName}' is not registered.");
+            {
+                Logger.LogWarning("Type '{typeName}' is not registered, window preferences won't be persisted", typeof(T).FullName);
+            }
 
-            T instance = (T)(options.CreateInstance != null
+            T instance = (T)(options?.CreateInstance != null
                 ? options.CreateInstance()
                 : ActivatorUtilities.CreateInstance(ServiceProvider, typeof(T)));
 
             IWindowAdapter<T> adapter = WrapWindow(instance);
-            AttachEvents(options, adapter);
+            if (options != null)
+                AttachEvents(options, adapter);
 
             return adapter;
         }
 
-        static readonly System.Reflection.MethodInfo? createWindowMethod = typeof(WindowManager).GetMethod("CreateWindow", 1, Array.Empty<Type>());
+        private static readonly System.Reflection.MethodInfo? createWindowMethod = typeof(WindowManager).GetMethod("CreateWindow", 1, Array.Empty<Type>());
         [Obsolete("Use CreateWindow<T> instead")]
         public IWindowAdapter CreateWindow(Type type)
         {
-            if (createWindowMethod?.MakeGenericMethod(type).Invoke(this, null) is not IWindowAdapter adapter)
-                throw new InvalidCastException();
-            return adapter;
+            return createWindowMethod?.MakeGenericMethod(type).Invoke(this, null) is not IWindowAdapter adapter
+                ? throw new InvalidCastException()
+                : adapter;
         }
 
         private void AttachEvents(WindowOptions options, IWindowAdapter window)
