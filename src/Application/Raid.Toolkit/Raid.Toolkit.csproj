@@ -18,8 +18,8 @@
     </PropertyGroup>
 
 	<ItemGroup>
-        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.1.4" GeneratePathProperty="true" />
-        <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.22000.194" />
+        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221209.1" GeneratePathProperty="true" />
+        <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.25267-preview" />
         <Manifest Include="$(ApplicationManifest)" />
     </ItemGroup>
 
