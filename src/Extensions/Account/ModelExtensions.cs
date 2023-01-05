@@ -686,7 +686,7 @@ namespace Raid.Toolkit.DataModel
                 Chance = type.Chance.AsDouble(),
                 RepeatChance = type.RepeatChance.AsDouble(),
                 StatusParams = type.StatusParams?.ToModel(),
-                ValueCap = type.ValueCap,
+                //ValueCap = type.ValueCap,
                 ApplyInstantEffectMode = (ApplyMode?)type.ApplyInstantEffectMode,
                 PersistsThroughRounds = type.PersistsThroughRounds,
                 SnapshotRequired = type.SnapshotRequired,
