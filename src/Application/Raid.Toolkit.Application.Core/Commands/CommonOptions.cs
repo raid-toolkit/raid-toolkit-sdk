@@ -36,6 +36,9 @@ namespace Raid.Toolkit.Application.Core.Commands
         [Option("nologo")]
         public bool NoLogo { get; set; }
 
+        [Option('d', "debug", Hidden = true)]
+        public bool Debug { get; set; }
+
         [Option("render-engine")]
         public RenderingEngine RenderEngine { get; set; } = RenderingEngine.WinUI;
     }

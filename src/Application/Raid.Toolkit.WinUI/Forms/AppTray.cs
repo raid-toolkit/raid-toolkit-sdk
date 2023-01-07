@@ -3,6 +3,7 @@ using Google.Protobuf.WellKnownTypes;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
+using Raid.Toolkit.Application.Core.Commands;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
@@ -44,7 +45,7 @@ namespace Raid.Toolkit.UI.WinUI
             NotifyIcon = new()
             {
                 Text = $"Raid Toolkit {ThisAssembly.AssemblyFileVersion}",
-                Icon = FormsResources.AppIcon,
+                Icon = CommonOptions.Value.Debug ? FormsResources.DevIcon : FormsResources.AppIcon,
                 Visible = true,
                 ContextMenuStrip = appTrayMenu
             };

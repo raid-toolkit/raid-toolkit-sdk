@@ -92,7 +92,7 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
             PackageManager.NoDefaultPackages = Options.NoDefaultPackages;
             if (!string.IsNullOrEmpty(PackageManager.DebugPackage))
             {
-                Options.Debug = true;
+                Options.Debug = CommonOptions.Value.Debug = true;
                 string debugInteropDirectory = Path.Combine(PackageManager.DebugPackage, @"temp~interop");
                 modelLoader.OutputDirectory = debugInteropDirectory;
             }

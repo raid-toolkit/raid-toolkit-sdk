@@ -25,9 +25,6 @@ namespace Raid.Toolkit.Application.Core.Commands.Matchers
         [Option('u', "post-update")]
         public bool Update { get; set; }
 
-        [Option('d', "debug", Hidden = true)]
-        public bool Debug { get; set; }
-
         [Option('p', "debug-package", Hidden = true)]
         public string? DebugPackage { get; set; }
 
