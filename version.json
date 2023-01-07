@@ -6,10 +6,11 @@
   },
   "publicReleaseRefSpec": [
     "^refs/heads/main$",
-    "^refs/heads/v\\d+(?:\\.\\d+)?$"
+    "^refs/heads/release/v\\d+(?:\\.\\d+)?$"
   ],
   "release": {
-    "branchName": "release/v{version}"
+    "branchName": "release/v{version}",
+    "versionIncrement": "minor"
   },
   "pathFilters": [
     "/src",
