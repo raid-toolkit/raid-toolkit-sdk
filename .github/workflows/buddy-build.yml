@@ -53,6 +53,13 @@ jobs:
         with:
           setAllVars: true
 
+      - uses: actions/cache/restore@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
       # Restore the application to populate the obj folder with RuntimeIdentifiers
       - name: Restore the application
         run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Debug
