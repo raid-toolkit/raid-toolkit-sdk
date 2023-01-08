@@ -9,8 +9,8 @@ namespace Raid.Toolkit.Extensibility
 {
     public class ProcessManagerSettings
     {
-        public string ProcessName { get; set; }
-        public int PollIntervalMs { get; set; }
+        public string ProcessName { get; set; } = "Raid";
+        public int PollIntervalMs { get; set; } = 1000;
     }
     public class ProcessManager : IProcessManager
     {
