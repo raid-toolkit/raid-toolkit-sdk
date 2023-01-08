@@ -1,9 +1,11 @@
 using Karambolo.Extensions.Logging.File;
+
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Commands.Matchers;
 using Raid.Toolkit.Application.Core.DependencyInjection;
@@ -12,6 +14,7 @@ using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host;
 using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Interfaces;
+
 using SuperSocket.WebSocket;
 using SuperSocket.WebSocket.Server;
 
@@ -73,7 +76,11 @@ namespace Raid.Toolkit.Application.Core.Host
         private void InitializeComponent()
         {
             // default to always include logging, since it is only enabled once configured
-            _ = AddLogging();
+            _ = AddLogging()
+                   .ConfigureAppConfiguration(config => config
+                       .AddJsonStream(AppHost.GetEmbeddedSettings())
+                       .AddJsonFile(Path.Combine(AppHost.ExecutableDirectory, "appsettings.json"), true)
+                   );
         }
 
         public IAppHostBuilder AddAppServices()
@@ -133,11 +140,7 @@ namespace Raid.Toolkit.Application.Core.Host
             {
                 Wrap(HostBuilder.AsWebSocketHostBuilder()
                    .UseSessionFactory<SessionFactory>()
-                   .UseWebSocketMessageHandler(messageHandler)
-                   .ConfigureAppConfiguration(config => config
-                       .AddJsonStream(AppHost.GetEmbeddedSettings())
-                       .AddJsonFile(Path.Combine(AppHost.ExecutableDirectory, "appsettings.json"), true)
-                   ));
+                   .UseWebSocketMessageHandler(messageHandler));
             }
             return this;
         }
