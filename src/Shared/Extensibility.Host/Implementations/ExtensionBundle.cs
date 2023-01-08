@@ -43,11 +43,7 @@ namespace Raid.Toolkit.Extensibility
             }
             _ = Directory.CreateDirectory(installationPath);
 
-            if (!string.IsNullOrEmpty(Location))
-            {
-                CopyDirectory(Location, installationPath, true);
-            }
-            else if (!string.IsNullOrEmpty(BundleLocation))
+            if (!string.IsNullOrEmpty(BundleLocation))
             {
                 ZipFile.ExtractToDirectory(BundleLocation, installationPath);
             }
