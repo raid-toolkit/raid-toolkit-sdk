@@ -53,7 +53,6 @@ namespace Raid.Toolkit.UI.WinUI
 
         private void InstallButton_Click(object _, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            PackageManager.AddPackage(Bundle);
             DialogCompletionSource.TrySetResult(true);
             Close();
         }
