@@ -7,7 +7,7 @@ namespace Raid.Client
 {
     public class AccountApi : ApiBase<IAccountApi>, IAccountApi
     {
-        internal AccountApi(RaidToolkitClient client) : base(client) { }
+        internal AccountApi(RaidToolkitClientBase client) : base(client) { }
 
 #pragma warning disable 0067
         public event EventHandler<SerializableEventArgs> Updated;

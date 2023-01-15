@@ -7,7 +7,7 @@ namespace Raid.Client
 {
     public class StaticDataApi : ApiBase<IStaticDataApi>, IStaticDataApi
     {
-        internal StaticDataApi(RaidToolkitClient client) : base(client) { }
+        internal StaticDataApi(RaidToolkitClientBase client) : base(client) { }
 
         public Task<StaticData> GetAllData()
         {

@@ -41,6 +41,7 @@
                 <RegistryKey Root="HKCU" Key="Software\RaidToolkit">
                     <RegistryValue Name="InstallFolder" Value="[INSTALLDIR]" KeyPath="yes" Type="string" />
                     <RegistryValue Name="InstallPrereleases" Value="$(env.Prerelease)" Type="integer" />
+                    <RegistryValue Name="IsInstalled" Value="1" Type="integer" />
                 </RegistryKey>
             </Component>
         </Directory>

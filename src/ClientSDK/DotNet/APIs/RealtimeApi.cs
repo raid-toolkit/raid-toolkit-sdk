@@ -7,7 +7,7 @@ namespace Raid.Client
 {
     public class RealtimeApi : ApiBase<IRealtimeApi>, IRealtimeApi
     {
-        internal RealtimeApi(RaidToolkitClient client) : base(client) { }
+        internal RealtimeApi(RaidToolkitClientBase client) : base(client) { }
 
 #pragma warning disable 0067
         public event EventHandler<SerializableEventArgs> AccountListUpdated;
