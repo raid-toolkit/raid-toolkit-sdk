@@ -54,6 +54,7 @@ namespace Raid.Client
             using (var stream = await updater.DownloadSetup(release, null))
             {
                 using Stream newFile = File.Create(tempFile);
+                stream.Seek(0, SeekOrigin.Begin);
                 stream.CopyTo(newFile);
             }
             Process proc = Process.Start(tempFile);
