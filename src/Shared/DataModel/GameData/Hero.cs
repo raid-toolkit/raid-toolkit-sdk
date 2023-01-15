@@ -10,25 +10,34 @@ namespace Raid.Toolkit.DataModel
         public int TypeId;
 
         [JsonProperty("type")]
-        public HeroType Type;
+        public HeroType? Type;
 
         [JsonProperty("name")]
-        public string Name;
+        public string Name = string.Empty;
 
         [JsonProperty("id")]
-        public int Id;
+        public int Id = -1;
 
         [JsonProperty("idOrigin")]
-        public int OriginalId;
+        public int? OriginalId;
 
         [JsonProperty("level")]
-        public int Level;
+        public int Level = 0;
 
         [JsonProperty("empowerLevel")]
-        public int EmpowerLevel;
+        public int EmpowerLevel = 0;
 
         [JsonProperty("rank")]
-        public string Rank;
+        public string? Rank;
+
+        [JsonProperty("awakenRank")]
+        public string? AwakenRank;
+
+        [JsonProperty("blessing")]
+        public string? Blessing;
+
+        [JsonProperty("blessingResetUsed")]
+        public bool? FreeBlessingResetUsed = null;
 
         [JsonProperty("exp")]
         public int Experience;
@@ -40,34 +49,37 @@ namespace Raid.Toolkit.DataModel
         public bool Deleted;
 
         [JsonProperty("locked")]
-        public bool Locked;
+        public bool Locked = false;
 
         [JsonProperty("inVault")]
-        public bool InVault;
+        public bool InVault = false;
+
+        [JsonProperty("inDeepVault")]
+        public bool InDeepVault = false;
 
         [JsonProperty("marker")]
-        public string Marker;
+        public string? Marker;
 
         [JsonProperty("masteries")]
-        public MasteryKindId[] Masteries;
+        public MasteryKindId[]? Masteries;
 
         [JsonProperty("assignedMasteryScrolls")]
-        public IReadOnlyDictionary<string, int> AssignedMasteryScrolls;
+        public IReadOnlyDictionary<string, int>? AssignedMasteryScrolls;
 
         [JsonProperty("unassignedMasteryScrolls")]
-        public IReadOnlyDictionary<string, int> UnassignedMasteryScrolls;
+        public IReadOnlyDictionary<string, int>? UnassignedMasteryScrolls;
 
         [JsonProperty("totalMasteryScrolls")]
-        public IReadOnlyDictionary<string, int> TotalMasteryScrolls;
+        public IReadOnlyDictionary<string, int>? TotalMasteryScrolls;
 
         [JsonProperty("equippedArtifactIds")]
-        public IReadOnlyDictionary<string, int> EquippedArtifactIds;
+        public IReadOnlyDictionary<string, int>? EquippedArtifactIds;
 
         [JsonProperty("skillLevelsByTypeId")]
         [Obsolete("Use Skills instead")]
-        public IReadOnlyDictionary<int, int> SkillLevelsByTypeId;
+        public IReadOnlyDictionary<int, int>? SkillLevelsByTypeId;
 
         [JsonProperty("SkillsById")]
-        public IReadOnlyDictionary<int, Skill> SkillsById;
+        public IReadOnlyDictionary<int, Skill>? SkillsById;
     }
 }
