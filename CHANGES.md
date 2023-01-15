@@ -1,6 +1,22 @@
 # Release Notes
 
 ## 2.3.x
+* #116 - Add missing fields:
+
+    > `Raid.Toolkit.DataModel.Hero`:
+    >
+    > * `AwakenRank` (`awakenRank`)
+    > * `Blessing` (`blessing`)
+    > * `FreeBlessingResetUsed` (`blessingResetUsed`)
+    >
+    > `Raid.Toolkit.DataModel.HeroType`:
+    > * `ShortName`
+    >
+    > `Raid.Toolkit.DataModel.Artifact`:
+    > * `AscendLevel` (`ascendLevel`)
+    > * `AscendBonus` (`ascendBonus`)
+    >
+
 * #115 - Settings were not loaded if `--no-webservice` specified, which prevented background services from running in debug process
 * `--debug` switch will now use an alternative gold icon in the taskbar to differentiate from other normal RTK processes.
 
