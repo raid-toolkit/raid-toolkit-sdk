@@ -7,42 +7,45 @@ namespace Raid.Toolkit.DataModel
     public class HeroType
     {
         [JsonProperty("typeId")]
-        public int TypeId;
+        public int TypeId = - 1;
 
         [JsonProperty("name")]
-        public LocalizedText Name;
+        public LocalizedText? Name;
+
+        [JsonProperty("shortName")]
+        public LocalizedText? ShortName;
 
         [JsonProperty("affinity"), JsonConverter(typeof(StringEnumConverter))]
-        public Element Affinity;
+        public Element? Affinity;
 
         [JsonProperty("faction"), JsonConverter(typeof(StringEnumConverter))]
-        public HeroFraction Faction;
+        public HeroFraction? Faction;
 
         [JsonProperty("role"), JsonConverter(typeof(StringEnumConverter))]
-        public HeroRole Role;
+        public HeroRole? Role;
 
         [JsonProperty("rarity"), JsonConverter(typeof(StringEnumConverter))]
-        public HeroRarity Rarity;
+        public HeroRarity? Rarity;
 
         [JsonProperty("ascended")]
-        public int Ascended;
+        public int Ascended = 0;
 
         [JsonProperty("modelName")]
-        public string ModelName;
+        public string? ModelName;
 
         [JsonProperty("avatarKey")]
-        public string AvatarKey;
+        public string? AvatarKey;
 
         [JsonProperty("leaderSkill")]
-        public LeaderStatBonus LeaderSkill;
+        public LeaderStatBonus? LeaderSkill;
 
         [JsonProperty("skillTypeIds")]
-        public int[] SkillTypeIds;
+        public int[]? SkillTypeIds;
 
         [JsonProperty("unscaledStats")]
-        public Stats UnscaledStats;
+        public Stats? UnscaledStats;
 
         [JsonProperty("brain")]
-        public string Brain;
+        public string? Brain;
     }
 }

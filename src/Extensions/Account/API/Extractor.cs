@@ -24,9 +24,9 @@ namespace RaidExtractor.Core
         private static bool IsFactionGuardian(Raid.Toolkit.DataModel.Hero hero, AcademyData academy)
         {
             var guardiansByFaction = academy?.Guardians;
-            return guardiansByFaction != null
-                && guardiansByFaction.TryGetValue(hero.Type.Faction, out var guardiansByRarity)
-                && guardiansByRarity.TryGetValue(hero.Type.Rarity, out var data)
+            return guardiansByFaction != null && hero.Type.Faction != null && hero.Type.Rarity != null
+                && guardiansByFaction.TryGetValue(hero.Type.Faction.GetValueOrDefault(), out var guardiansByRarity)
+                && guardiansByRarity.TryGetValue(hero.Type.Rarity.GetValueOrDefault(), out var data)
                 && data.AssignedHeroes.Any(slot => slot.FirstHero == hero.Id || slot.SecondHero == hero.Id);
         }
 
@@ -103,10 +103,10 @@ namespace RaidExtractor.Core
                         Skills = hero.SkillsById?.Values.Select(skill => new Skill() { TypeId = skill.TypeId, Id = skill.Id, Level = skill.Level, }).ToList() ?? new(),
                         // type fields
                         Name = heroType.Name.DefaultValue,
-                        Fraction = heroType.Faction,
-                        Element = heroType.Affinity,
-                        Rarity = heroType.Rarity,
-                        Role = heroType.Role,
+                        Fraction = heroType.Faction.GetValueOrDefault(),
+                        Element = heroType.Affinity.GetValueOrDefault(),
+                        Rarity = heroType.Rarity.GetValueOrDefault(),
+                        Role = heroType.Role.GetValueOrDefault(),
                         AwakenLevel = heroType.TypeId % 10,
                         Accuracy = heroType.UnscaledStats.Accuracy,
                         Attack = (int)Math.Round(heroType.UnscaledStats.Attack * multiplier.multiplier),

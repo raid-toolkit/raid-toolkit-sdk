@@ -25,18 +25,22 @@ namespace Raid.Toolkit.Extension.Account
         {
             ModelScope scope = new(runtime);
             var hash = scope.StaticDataManager._hash;
-            if (Storage.TryRead(context, Key, out StaticSkillData previous))
+            if (Storage.TryRead(context, Key, out StaticSkillData? staticSkillData))
             {
-                if (previous?.Hash == hash)
+                if (staticSkillData?.Hash == hash)
                     return false;
             }
-            var staticData = scope.StaticDataManager.StaticData;
-            var skillTypes = staticData.SkillData._skillTypeById.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ToModel());
-            return Storage.Write(context, Key, new StaticSkillData
+            try
             {
-                Hash = hash,
-                SkillTypes = skillTypes
-            });
+                var staticData = scope.StaticDataManager.StaticData;
+                staticSkillData = new()
+                {
+                    Hash = hash,
+                    SkillTypes = staticData.SkillData._skillTypeById.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ToModel())
+                };
+            }
+            catch { }
+            return Storage.Write(context, Key, staticSkillData);
         }
     }
 }
