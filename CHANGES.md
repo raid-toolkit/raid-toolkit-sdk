@@ -1,5 +1,8 @@
 # Release Notes
 
+## 2.4.x
+* #117 - Add account management UX for exporting/importing account information
+
 ## 2.3.x
 * #116 - Add missing fields:
 
