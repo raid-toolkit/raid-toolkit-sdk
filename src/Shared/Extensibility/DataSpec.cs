@@ -17,5 +17,10 @@ namespace Raid.Toolkit.Extension
 
             return Value;
         }
+        public void Set(CachedDataStorage<PersistedDataStorage> storage, IDataContext context, T value)
+        {
+            if (!storage.Write<T>(context, Key, value))
+                throw new System.NullReferenceException("Could not write value");
+        }
     }
 }

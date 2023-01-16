@@ -22,7 +22,16 @@ namespace Raid.Toolkit
             _ => arg,
         };
         [STAThread]
-        private static async Task<int> Main(string[] args)
+        private static int Main(string[] args)
+        {
+            int resultCode = 0;
+            SingleThreadedSynchronizationContext.Await(async () =>
+            {
+                resultCode = await Main2(args);
+            });
+            return resultCode;
+        }
+        private static async Task<int> Main2(string[] args)
         {
             if (RegistrySettings.DebugStartup && !Debugger.IsAttached)
             {

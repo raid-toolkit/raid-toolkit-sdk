@@ -33,7 +33,7 @@ namespace Raid.Toolkit.Extensibility.Host
             var socialWrapper = userWrapper.Social.SocialData;
             var globalId = socialWrapper.PlariumGlobalId;
             var socialId = socialWrapper.SocialId;
-            AvatarUrl = $"https://raid-toolkit.github.io/img/avatars/{(int)userWrapper.UserGameSettings.GameSettings.Avatar}.png";
+            AvatarUrl = $"https://raidtoolkit.com/img/avatars/{(int)userWrapper.UserGameSettings.GameSettings.Avatar}.png";
             Id = string.Join('_', globalId, socialId).Sha256();
             AccountName = userWrapper.UserGameSettings.GameSettings.Name;
         }
