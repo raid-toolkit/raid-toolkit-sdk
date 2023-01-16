@@ -71,6 +71,11 @@ namespace Raid.Toolkit.UI.WinUI
                 AppUI.ShowExtensionManager();
             }
 
+            private void manageAccountsToolStripMenuItem_Click(object? sender, EventArgs e)
+            {
+                AppUI.ShowAccounts();
+            }
+
             private readonly ToolStripMenuItem aboutMenuItem = new();
             private readonly ToolStripMenuItem installUpdateMenuItem = new();
             private readonly ToolStripMenuItem checkUpdatesMenuItem = new();
@@ -79,6 +84,7 @@ namespace Raid.Toolkit.UI.WinUI
             private readonly ToolStripMenuItem openLogFolderToolStripMenuItem = new();
             private readonly ToolStripMenuItem extensionsToolStripMenuItem = new();
             private readonly ToolStripMenuItem manageExtensionsToolStripMenuItem = new();
+            private readonly ToolStripMenuItem manageAccountsStripMenuItem = new();
             private readonly IMenuManager MenuManager;
             private readonly IAppUI AppUI;
             private readonly IAppService AppService;
@@ -122,6 +128,7 @@ namespace Raid.Toolkit.UI.WinUI
                     this.openLogFolderToolStripMenuItem,
                     this.extensionsToolStripMenuItem,
                     this.settingsMenuItem,
+                    this.manageAccountsStripMenuItem,
                     new ToolStripSeparator(),
                     this.closeMenuItem
                 });
@@ -175,6 +182,13 @@ namespace Raid.Toolkit.UI.WinUI
                 this.manageExtensionsToolStripMenuItem.Size = new(185, 22);
                 this.manageExtensionsToolStripMenuItem.Text = "&Manage Extensions...";
                 this.manageExtensionsToolStripMenuItem.Click += new System.EventHandler(this.manageExtensionsToolStripMenuItem_Click);
+                //
+                // manageAccountsStripMenuItem
+                //
+                this.manageAccountsStripMenuItem.Name = "manageAccountsStripMenuItem";
+                this.manageAccountsStripMenuItem.Size = new(170, 22);
+                this.manageAccountsStripMenuItem.Text = "Manage Accounts";
+                this.manageAccountsStripMenuItem.Click += new System.EventHandler(this.manageAccountsToolStripMenuItem_Click);
                 // 
                 // settingsMenuItem
                 // 

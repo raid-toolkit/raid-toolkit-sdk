@@ -6,25 +6,25 @@ namespace Raid.Toolkit.DataModel
     public class AccountBase
     {
         [JsonProperty("id")]
-        public string Id;
+        public string Id { get; set; }
 
         [JsonProperty("avatar")]
-        public string Avatar;
+        public string Avatar { get; set; }
 
         [JsonProperty("avatarId")]
-        public string AvatarId;
+        public string AvatarId { get; set; }
 
         [JsonProperty("avatarUrl")]
-        public string AvatarUrl => $"https://raid-toolkit.github.io/img/avatars/{Avatar}.png";
+        public string AvatarUrl => $"https://raidtoolkit.com/img/avatars/{AvatarId}.png";
 
         [JsonProperty("name")]
-        public string Name;
+        public string Name { get; set; }
 
         [JsonProperty("level")]
-        public int Level;
+        public int Level { get; set; }
 
         [JsonProperty("power")]
-        public int Power;
+        public int Power { get; set; }
     }
     public class Account : AccountBase
     {

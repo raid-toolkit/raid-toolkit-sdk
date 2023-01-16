@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+
 using Microsoft.Extensions.Options;
+
 using Raid.Toolkit.Common;
 
 namespace Raid.Toolkit.Extensibility.DataServices
@@ -31,7 +33,11 @@ namespace Raid.Toolkit.Extensibility.DataServices
 
         public event EventHandler<DataStorageUpdatedEventArgs> Updated;
 
-        public IEnumerable<string> Keys => throw new NotSupportedException();
+        public IEnumerable<string> GetKeys(IDataContext context)
+        {
+            string filePath = Path.Combine(StoragePath, Path.Combine(context.Parts));
+            return Storage.GetKeys(filePath);
+        }
 
         public bool TryRead<T>(IDataContext context, string key, out T value) where T : class
         {

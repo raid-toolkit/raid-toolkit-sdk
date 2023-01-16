@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -31,6 +32,11 @@ namespace Raid.Toolkit.Extensibility.Host.Services
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
                 await File.WriteAllTextAsync(filePath, data, token);
             }
+        }
+
+        public IEnumerable<string> GetKeys(string filePath)
+        {
+            return Directory.GetDirectories(filePath).Select(entry => Path.GetFileName(entry));
         }
 
         public bool TryRead<T>(string filePath, out T value) where T : class

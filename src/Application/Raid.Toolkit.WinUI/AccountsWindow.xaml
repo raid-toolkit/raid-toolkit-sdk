@@ -8,32 +8,44 @@
 	xmlns:rtkuibase="using:Raid.Toolkit.UI.WinUI.Base"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Raid.Toolkit.UI.WinUI"
-    xmlns:rtkExtHost="using:Raid.Toolkit.Extensibility.Host"
+    xmlns:account="using:Raid.Toolkit.Extension.Account"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
 	MinHeight="400"
 	Title="Accounts"
 	Height="400" Width="475">
-    <Grid>
-		<ListBox x:Name="AccountList" HorizontalContentAlignment="Stretch">
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<AppBar Grid.Row="0">
+			<AppBarButton Icon="Import" Label="Import" ToolTipService.ToolTip="Import RTK Account JSON" Click="ImportButton_Click" />
+		</AppBar>
+		<ListBox Grid.Row="1" x:Name="AccountList" HorizontalContentAlignment="Stretch">
 			<ListBox.ItemTemplate>
-				<DataTemplate x:DataType="rtkExtHost:GameInstance">
+				<DataTemplate x:DataType="account:AccountData">
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="35" />
 							<ColumnDefinition Width="*" />
+							<ColumnDefinition Width="Auto" />
 						</Grid.ColumnDefinitions>
-						<Image Grid.Column="0" Source="{Binding AvatarUrl}" Width="35" Height="45" Stretch="UniformToFill" />
-						<TextBlock Grid.Column="1" Margin="10,0" VerticalAlignment="Center" Text="{Binding AccountName}" />
+						<Image Grid.Column="0" Source="{Binding Account.AvatarUrl}" Width="35" Height="45" Stretch="UniformToFill" />
+						<TextBlock Grid.Column="1" Margin="10,0" VerticalAlignment="Center" Text="{Binding Account.Name}" />
+						<StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center" Spacing="5">
+							<AppBarButton VerticalAlignment="Center" Tag="{Binding Account.Id}" Icon="Share" Label="Export" ToolTipService.ToolTip="Export as RTK Account JSON" Click="ExportButton_Click" />
+							<AppBarButton VerticalAlignment="Center" Tag="{Binding Account.Id}" Icon="Download" Label="Dump" ToolTipService.ToolTip="Export as Legacy RaidExtractor dump" Click="DumpButton_Click" />
+						</StackPanel>
 					</Grid>
 				</DataTemplate>
 			</ListBox.ItemTemplate>
 			<ListBox.ItemContainerStyle>
 				<Style TargetType="ListBoxItem">
-					<Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+					<Setter Property="HorizontalContentAlignment" Value="Stretch" />
 				</Style>
 			</ListBox.ItemContainerStyle>
 		</ListBox>
-    </Grid>
+	</Grid>
 </rtkuibase:RTKWindow>
