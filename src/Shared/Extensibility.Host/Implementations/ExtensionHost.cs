@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Xaml.Markup;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Providers;
@@ -12,7 +13,7 @@ using Raid.Toolkit.Extensibility.Services;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public class ExtensionHost : IExtensionManagement, IXamlExtensionHost
+    public class ExtensionHost : IExtensionManagement
     {
         private IExtensionPackage? _ExtensionPackage;
         public ExtensionBundle Bundle { get; }
@@ -216,16 +217,6 @@ namespace Raid.Toolkit.Extensibility.Host
             return WindowManager.CreateWindow<T>();
         }
 
-        public static IXamlExtensionHost? AppXamlExtensionHost;
-        public IDisposable RegisterXamlTypeMetadataProvider(Microsoft.UI.Xaml.Markup.IXamlMetadataProvider provider)
-        {
-            if (AppXamlExtensionHost == null)
-                throw new InvalidOperationException();
-
-            return AppXamlExtensionHost.RegisterXamlTypeMetadataProvider(provider);
-        }
-
-
         [Obsolete("Will be removed in future release")]
         public T GetInstance<T>() where T : IDisposable
         {
@@ -277,6 +268,11 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             MenuManager.AddEntry(entry);
             return new HostResourceHandle(() => MenuManager.RemoveEntry(entry));
+        }
+
+        public IDisposable RegisterXamlTypeMetadataProvider(IXamlMetadataProvider provider)
+        {
+            throw new NotImplementedException();
         }
         #endregion
     }
