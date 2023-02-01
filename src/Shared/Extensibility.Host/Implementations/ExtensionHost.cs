@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.Common;
@@ -12,9 +12,9 @@ using Raid.Toolkit.Extensibility.Services;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public class ExtensionHost : IExtensionManagement
+    public class ExtensionHost : IExtensionManagement, IXamlExtensionHost
     {
-        private IExtensionPackage _ExtensionPackage;
+        private IExtensionPackage? _ExtensionPackage;
         public ExtensionBundle Bundle { get; }
         private readonly IServiceProvider ServiceProvider;
         private readonly IMenuManager MenuManager;
@@ -59,7 +59,7 @@ namespace Raid.Toolkit.Extensibility.Host
             get
             {
                 if (State == ExtensionState.Error)
-                    return null;
+                    throw new InvalidOperationException("Extension is in error state");
 
                 if (_ExtensionPackage == null)
                 {
@@ -72,10 +72,12 @@ namespace Raid.Toolkit.Extensibility.Host
                     {
                         State = ExtensionState.Error;
                         Logger.LogError(ExtensionError.TypeLoadFailure.EventId(), ex, "Failed to load extension");
+                        throw new FileLoadException("Failed to load extension");
                     }
                     catch (Exception ex)
                     {
                         Logger.LogError(ExtensionError.FailedToLoad.EventId(), ex, "Failed to load extension");
+                        throw new FileLoadException("Failed to load extension");
                     }
                 }
                 return _ExtensionPackage;
@@ -105,10 +107,13 @@ namespace Raid.Toolkit.Extensibility.Host
                 if (State == ExtensionState.Activated)
                     return;
 
+                if (ExtensionPackage == null)
+                    throw new InvalidOperationException("ExtensionPackage is not set");
+
                 ExtensionPackage.OnActivate(this);
                 State = ExtensionState.Activated;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.LogError(ExtensionError.FailedToActivate.EventId(), ex, "Failed to load extension");
                 State = ExtensionState.Error;
@@ -117,8 +122,11 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public void Deactivate()
         {
-            if (State != ExtensionState.Activated && State != ExtensionState.Error)
+            if (State is not ExtensionState.Activated and not ExtensionState.Error)
                 return;
+
+            if (ExtensionPackage == null)
+                throw new InvalidOperationException("ExtensionPackage is not set");
 
             ExtensionPackage.OnDeactivate(this);
             State = ExtensionState.Disabled;
@@ -126,6 +134,9 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public void Install()
         {
+            if (ExtensionPackage == null)
+                throw new InvalidOperationException("ExtensionPackage is not set");
+
             ExtensionPackage.OnInstall(this);
         }
 
@@ -133,10 +144,13 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             try
             {
+                if (ExtensionPackage == null)
+                    throw new InvalidOperationException("ExtensionPackage is not set");
+
                 ExtensionPackage.OnUninstall(this);
                 State = ExtensionState.PendingUninstall;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.LogError(ExtensionError.FailedToActivate.EventId(), ex, "Failed to uninstall extension");
                 State = ExtensionState.Error;
@@ -148,6 +162,9 @@ namespace Raid.Toolkit.Extensibility.Host
             if (!CanShowUI)
                 throw new ApplicationException("Cannot show user interface");
 
+            if (ExtensionPackage == null)
+                throw new InvalidOperationException("ExtensionPackage is not set");
+
             ExtensionPackage.ShowUI();
         }
 
@@ -157,9 +174,11 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             try
             {
-                return ExtensionPackage.HandleRequest(requestUri) ? 1 : 0;
+                return ExtensionPackage == null
+                    ? throw new InvalidOperationException("ExtensionPackage is not set")
+                    : ExtensionPackage.HandleRequest(requestUri) ? 1 : 0;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.LogError(ExtensionError.HandleRequestFailed.EventId(), ex, "Failed to uninstall extension");
                 return -2;
@@ -196,6 +215,16 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             return WindowManager.CreateWindow<T>();
         }
+
+        public static IXamlExtensionHost? AppXamlExtensionHost;
+        public IDisposable RegisterXamlTypeMetadataProvider(Microsoft.UI.Xaml.Markup.IXamlMetadataProvider provider)
+        {
+            if (AppXamlExtensionHost == null)
+                throw new InvalidOperationException();
+
+            return AppXamlExtensionHost.RegisterXamlTypeMetadataProvider(provider);
+        }
+
 
         [Obsolete("Will be removed in future release")]
         public T GetInstance<T>() where T : IDisposable

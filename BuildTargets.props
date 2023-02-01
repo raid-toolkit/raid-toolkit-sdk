@@ -6,6 +6,7 @@
         <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
         <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
         <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+        <Platform>x64</Platform>
         <Platforms>x64</Platforms>
         <LangVersion>10.0</LangVersion>
 
