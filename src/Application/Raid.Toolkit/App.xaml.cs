@@ -22,7 +22,7 @@ namespace Raid.Toolkit.UI.WinUI
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
-    public partial class RTKApplication : Microsoft.UI.Xaml.Application, IXamlExtensionHost
+    public partial class RTKApplication : Microsoft.UI.Xaml.Application
     {
         private static RTKApplication? _Current = null;
         private readonly IHost Host;
