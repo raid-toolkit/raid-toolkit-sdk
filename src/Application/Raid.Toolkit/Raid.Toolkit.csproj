@@ -18,8 +18,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <AdditionalFiles Include="NativeMethods.txt" />
+    </ItemGroup>
+
+    <ItemGroup>
+		<FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
+		<PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221209.1" GeneratePathProperty="true" />
         <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.25267-preview" />
+		<PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.138-beta" PrivateAssets="all" />
+		<PackageReference Include="WinUIEx" Version="2.0.0" />
         <Manifest Include="$(ApplicationManifest)" />
     </ItemGroup>
 
@@ -54,6 +62,38 @@
         <Content Include="$(PkgIl2CppToolkit_Injection_Client)\runtimes\win10-x64\native\Il2CppToolkit.Injection.Host.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
+        <Content Include="UI.WinUI\Assets\AppIcon.ico" />
+        <Content Include="UI.WinUI\Assets\DevIcon.ico" />
+        <Content Include="UI.WinUI\Assets\Icon_128.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="UI.WinUI\Assets\Icon_22.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="UI.WinUI\Assets\Icon_256.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="UI.WinUI\Assets\Icon_300.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="UI.WinUI\Assets\Icon_32.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="UI.WinUI\Assets\Icon_48.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="UI.WinUI\Assets\Icon_512.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="UI.WinUI\Assets\Icon_64.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="UI.WinUI\Assets\Icon_88.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Include="UI.WinUI\Assets\RaidToolkitLarge.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
         <!--<Content Include="$(ProjectPriFullPath)" Link="$(ProjectPriFileName)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>-->
@@ -65,9 +105,45 @@
         <ProjectReference Include="$(SourceDir)Shared\Extensibility\Extensibility.csproj" />
         <ProjectReference Include="$(SourceDir)Shared\Extensibility.Host\Extensibility.Host.csproj" />
         <ProjectReference Include="..\Raid.Toolkit.Application.Core\Raid.Toolkit.Application.Core.csproj" />
-        <ProjectReference Include="..\Raid.Toolkit.WinUI\Raid.Toolkit.UI.WinUI.csproj">
-            <IncludeAssets>all</IncludeAssets>
-            <Private>True</Private>
-        </ProjectReference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="UI.WinUI\Forms\FormsResources.Designer.cs">
+        <DependentUpon>FormsResources.resx</DependentUpon>
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="UI.WinUI\Forms\FormsResources.resx">
+        <SubType>Designer</SubType>
+        <LastGenOutput>FormsResources.Designer.cs</LastGenOutput>
+        <Generator>ResXFileCodeGenerator</Generator>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="UI.WinUI\AccountsWindow.xaml">
+        <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      </Page>
+      <Page Update="UI.WinUI\ExtensionsWindow.xaml">
+        <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="UI.WinUI\InstallExtensionWindow.xaml">
+        <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      </Page>
+      <Page Update="UI.WinUI\MainWindow.xaml">
+        <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+      </Page>
+      <Page Update="UI.WinUI\SettingsPanel.xaml">
+        <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="UI.WinUI\Themes\Generic.xaml">
+        <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
     </ItemGroup>
 </Project>
