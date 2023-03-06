@@ -60,11 +60,11 @@
                 <ColumnDefinition Width="28" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="ms-appx:///Raid.Toolkit.UI.WinUI/Assets/Icon_22.png" VerticalAlignment="Center" HorizontalAlignment="Center" Width="22" />
+            <Image Grid.Column="0" Source="ms-appx:///UI.WinUI/Assets/Icon_22.png" VerticalAlignment="Center" HorizontalAlignment="Center" Width="22" />
             <TextBlock Grid.Column="1" FontSize="12" VerticalAlignment="Center" Margin="5,0,0,0">Raid Toolkit</TextBlock>
         </Grid>
-        <Image Grid.Row="1" x:Name="iconImage" Source="ms-appx:///Raid.Toolkit.UI.WinUI/Assets/Icon_256.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="300" Width="256" Stretch="Uniform" />
-        <Image Grid.Row="2" x:Name="logoImage" Source="ms-appx:///Raid.Toolkit.UI.WinUI/Assets/RaidToolkitLarge.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" />
+        <Image Grid.Row="1" x:Name="iconImage" Source="ms-appx:///UI.WinUI/Assets/Icon_256.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="300" Width="256" Stretch="Uniform" />
+        <Image Grid.Row="2" x:Name="logoImage" Source="ms-appx:///UI.WinUI/Assets/RaidToolkitLarge.png" VerticalAlignment="Center" HorizontalAlignment="Center" Height="100" />
 
         <StackPanel Grid.Row="4" x:Name="LinksGrid" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="22" Visibility="Collapsed">
             <Button Content="Website" HorizontalAlignment="Center" Click="Website_Click" />

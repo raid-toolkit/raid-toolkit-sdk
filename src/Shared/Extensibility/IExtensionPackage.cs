@@ -1,10 +1,13 @@
 using System;
+using System.Threading.Tasks;
+
 using Raid.Toolkit.Common;
 
 namespace Raid.Toolkit.Extensibility
 {
     public interface IExtensionPackage : IDisposable
     {
+        Task Load();
         void OnActivate(IExtensionHost host);
         void OnDeactivate(IExtensionHost host);
         void OnInstall(IExtensionHost host);
@@ -17,6 +20,8 @@ namespace Raid.Toolkit.Extensibility
     {
         protected readonly DisposableCollection Disposables = new();
         protected bool IsDisposed;
+
+        public virtual Task Load() => Task.FromResult(0);
 
         public abstract void OnActivate(IExtensionHost host);
         public virtual void OnDeactivate(IExtensionHost host)

@@ -23,10 +23,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<PackageReference Include="CommandLineParser" Version="2.9.0-preview1" />
-		<PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.2.1" />
+		<PackageReference Include="CommandLineParser" Version="2.9.1" />
+		<PackageReference Include="CustomExtensions.WinUI" Version="0.1.9-beta" />
+		<PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.4.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 		<PackageReference Include="SuperSocket.WebSocket.Server" Version="2.0.0-beta.10" />
 		<PackageReference Include="Il2CppToolkit.Injection.Client" Version="2.0.115-alpha" GeneratePathProperty="true" />
 		<Reference Include="Raid.Interop">

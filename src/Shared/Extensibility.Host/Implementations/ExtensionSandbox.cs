@@ -1,5 +1,11 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
+using System.Reflection.Metadata;
+using System.Threading.Tasks;
+
+using CustomExtensions.WinUI;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -10,12 +16,12 @@ namespace Raid.Toolkit.Extensibility.Host
         private bool IsDisposed;
         private readonly ExtensionBundle Bundle;
         private readonly IPackageInstanceFactory InstanceFactory;
-        private ExtensionLoadContext LoadContext;
-        private IExtensionPackage Instance;
+        private ExtensionLoadContext? LoadContext;
+        private IExtensionPackage? Instance;
         private readonly ILogger<ExtensionSandbox> Logger;
+        private IExtensionAssembly? ExtensionAsm;
 
         public ExtensionManifest Manifest => Bundle.Manifest;
-        public Assembly ExtensionAsm { get; private set; }
 
         [ActivatorUtilitiesConstructor]
         public ExtensionSandbox(
@@ -26,33 +32,32 @@ namespace Raid.Toolkit.Extensibility.Host
             Logger = logger;
             InstanceFactory = instanceFactory;
             Bundle = bundle;
-            if (bundle.Assembly != null)
+            if (!bundle.IsLinkedAssembly)
             {
-                ExtensionAsm = bundle.Assembly;
-            }
-            else
-            {
+                if (string.IsNullOrEmpty(bundle.Location))
+                    throw new EntryPointNotFoundException("Bundle location not set");
                 LoadContext = new(bundle.Location);
-                ExtensionAsm = LoadContext.LoadFromAssemblyPath(bundle.GetExtensionEntrypointDll());
             }
         }
 
         private Type GetPackageType()
         {
-            Type packageType = ExtensionAsm.GetType(Manifest.Type);
+            Assembly? assembly = (ExtensionAsm?.ForeignAssembly ?? Bundle.Assembly) ?? throw new InvalidOperationException("Extension must be loaded first");
+            Type? packageType = assembly.GetType(Manifest.Type);
             return packageType ?? throw new EntryPointNotFoundException($"Could not load type {Manifest.Type} from the package");
         }
 
-        public void Load()
+        public async Task Load()
         {
-            Logger.LogInformation($"Loading extension {Manifest.Id}");
-            if (ExtensionAsm.ReflectionOnly)
+            Logger.LogInformation("Loading extension {ManifestId}", Manifest.Id);
+            if (!Bundle.IsLinkedAssembly)
             {
-                ExtensionAsm = Assembly.LoadFrom(Bundle.GetExtensionEntrypointDll());
+                ExtensionAsm ??= await ApplicationExtensionHost.Current.LoadExtensionAsync(Bundle.GetExtensionEntrypointDll());
             }
-            _ = EnsureInstance();
+            await EnsureInstance().Load();
         }
 
+        [MemberNotNull("Instance")]
         private IExtensionPackage EnsureInstance()
         {
             return Instance ??= InstanceFactory.CreateInstance(GetPackageType());
@@ -61,10 +66,9 @@ namespace Raid.Toolkit.Extensibility.Host
         public void OnActivate(IExtensionHost host)
         {
             Logger.LogInformation($"Activating extension {Manifest.Id}");
-            _ = EnsureInstance();
             try
             {
-                Instance.OnActivate(host);
+                EnsureInstance().OnActivate(host);
             }
             catch (Exception e)
             {
@@ -81,7 +85,7 @@ namespace Raid.Toolkit.Extensibility.Host
             Logger.LogInformation($"Deactivating extension {Manifest.Id}");
             try
             {
-                Instance?.OnDeactivate(host);
+                EnsureInstance().OnDeactivate(host);
             }
             catch (Exception e)
             {
@@ -110,7 +114,7 @@ namespace Raid.Toolkit.Extensibility.Host
             if (IsDisposed)
                 return;
             Logger.LogInformation($"Showing extension UI {Manifest.Id}");
-            Instance?.ShowUI();
+            EnsureInstance().ShowUI();
         }
 
         public bool HandleRequest(Uri requestUri)
@@ -131,11 +135,13 @@ namespace Raid.Toolkit.Extensibility.Host
                 Logger.LogInformation($"Disposing extension {Manifest.Id}");
                 Instance?.Dispose();
                 LoadContext?.Unload();
+                ExtensionAsm?.Dispose();
             }
 
             Instance = null;
             ExtensionAsm = null;
             LoadContext = null;
+            ExtensionAsm = null;
             IsDisposed = true;
         }
 

@@ -1,7 +1,9 @@
+using System.Threading.Tasks;
+
 namespace Raid.Toolkit.Extensibility.Host
 {
     public interface IPackageLoader
     {
-        public IExtensionPackage LoadPackage(ExtensionBundle bundle);
+        public Task<IExtensionPackage> LoadPackage(ExtensionBundle bundle);
     }
 }

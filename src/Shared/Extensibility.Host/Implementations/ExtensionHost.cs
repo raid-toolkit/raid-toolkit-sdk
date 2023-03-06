@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Providers;
@@ -12,9 +15,8 @@ using Raid.Toolkit.Extensibility.Services;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public class ExtensionHost : IExtensionManagement, IXamlExtensionHost
+    public class ExtensionHost : IExtensionManagement
     {
-        private IExtensionPackage? _ExtensionPackage;
         public ExtensionBundle Bundle { get; }
         private readonly IServiceProvider ServiceProvider;
         private readonly IMenuManager MenuManager;
@@ -25,6 +27,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IPackageLoader Loader;
         private readonly ILogger<ExtensionHost> Logger;
         private readonly Dictionary<Type, IDisposable> Instances = new();
+        private IExtensionPackage? ExtensionPackage;
         public ExtensionState State { get; private set; }
 
         public ExtensionHost(
@@ -54,36 +57,6 @@ namespace Raid.Toolkit.Extensibility.Host
             Logger = logger;
         }
 
-        private IExtensionPackage ExtensionPackage
-        {
-            get
-            {
-                if (State == ExtensionState.Error)
-                    throw new InvalidOperationException("Extension is in error state");
-
-                if (_ExtensionPackage == null)
-                {
-                    try
-                    {
-                        _ExtensionPackage = Loader.LoadPackage(Bundle);
-                        State = ExtensionState.Loaded;
-                    }
-                    catch (TypeLoadException ex)
-                    {
-                        State = ExtensionState.Error;
-                        Logger.LogError(ExtensionError.TypeLoadFailure.EventId(), ex, "Failed to load extension");
-                        throw new FileLoadException("Failed to load extension");
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.LogError(ExtensionError.FailedToLoad.EventId(), ex, "Failed to load extension");
-                        throw new FileLoadException("Failed to load extension");
-                    }
-                }
-                return _ExtensionPackage;
-            }
-        }
-
         public static ExtensionHost CreateHost(IServiceProvider serviceProvider, ExtensionBundle bundle)
         {
             return ActivatorUtilities.CreateInstance<ExtensionHost>(serviceProvider, bundle);
@@ -98,6 +71,32 @@ namespace Raid.Toolkit.Extensibility.Host
                 .Select(pattern => new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled))
                 .ToArray();
             return typePatterns;
+        }
+
+        public async Task Load()
+        {
+            if (State != ExtensionState.None || ExtensionPackage != null)
+            {
+                Logger.LogError("The extension {ExtensionId} is in invalid state {State}", Bundle.Id, State);
+                return;
+            }
+
+            try
+            {
+                ExtensionPackage = await Loader.LoadPackage(Bundle);
+                State = ExtensionState.Loaded;
+            }
+            catch (TypeLoadException ex)
+            {
+                State = ExtensionState.Error;
+                Logger.LogError(ExtensionError.TypeLoadFailure.EventId(), ex, "Failed to load extension");
+                throw new FileLoadException("Failed to load extension");
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ExtensionError.FailedToLoad.EventId(), ex, "Failed to load extension");
+                throw new FileLoadException("Failed to load extension");
+            }
         }
 
         public void Activate()
@@ -174,9 +173,7 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             try
             {
-                return ExtensionPackage == null
-                    ? throw new InvalidOperationException("ExtensionPackage is not set")
-                    : ExtensionPackage.HandleRequest(requestUri) ? 1 : 0;
+                return ExtensionPackage?.HandleRequest(requestUri) == true ? 1 : 0;
             }
             catch (Exception ex)
             {
@@ -215,23 +212,6 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             return WindowManager.CreateWindow<T>();
         }
-
-        public static IXamlExtensionHost? AppXamlExtensionHost;
-        public IDisposable RegisterXamlTypeMetadataProvider(Microsoft.UI.Xaml.Markup.IXamlMetadataProvider provider)
-        {
-            if (AppXamlExtensionHost == null)
-                throw new InvalidOperationException();
-
-            return AppXamlExtensionHost.RegisterXamlTypeMetadataProvider(provider);
-        }
-
-
-        [Obsolete("Will be removed in future release")]
-        public T GetInstance<T>() where T : IDisposable
-        {
-            return (T)Instances[typeof(T)];
-        }
-
 
         public IDisposable RegisterMessageScopeHandler<T>(T handler) where T : IMessageScopeHandler
         {

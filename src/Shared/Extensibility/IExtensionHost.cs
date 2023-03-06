@@ -5,16 +5,9 @@ using Raid.Toolkit.Extensibility.Services;
 
 namespace Raid.Toolkit.Extensibility
 {
-    public interface IXamlExtensionHost
-    {
-        IDisposable RegisterXamlTypeMetadataProvider(Microsoft.UI.Xaml.Markup.IXamlMetadataProvider provider);
-    }
     public interface IExtensionHost
     {
         T CreateInstance<T>(params object[] args) where T : IDisposable;
-
-        [Obsolete]
-        T GetInstance<T>() where T : IDisposable;
 
         IExtensionStorage GetStorage(bool enableCache);
 

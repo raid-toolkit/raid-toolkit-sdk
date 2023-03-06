@@ -4,9 +4,19 @@
     "net6.0-windows10.0.19041": {
       "CommandLineParser": {
         "type": "Direct",
-        "requested": "[2.9.0-preview1, )",
-        "resolved": "2.9.0-preview1",
-        "contentHash": "/cv6pigvbhmN1b3Y3FRf6EPHNFRtZhlScqQNrzVkTfR7DoDKdvpdbmPL7HhpNEJaTl7JMwvwojJMFjGGAr5wPg=="
+        "requested": "[2.9.1, )",
+        "resolved": "2.9.1",
+        "contentHash": "OE0sl1/sQ37bjVsPKKtwQlWDgqaxWgtme3xZz7JssWUzg5JpMIyHgCTY9MVMxOg48fJ1AgGT3tgdH5m/kQ5xhA=="
+      },
+      "CustomExtensions.WinUI": {
+        "type": "Direct",
+        "requested": "[0.1.9-beta, )",
+        "resolved": "0.1.9-beta",
+        "contentHash": "K9AOSqxpbXE2F2kWe/icWq0joDhnW1TukXsSHJfFgr/HbfCo/aOUnKI+FqGIwsipAjZVyNqcvYlIfGqq8vQkAQ==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.755",
+          "Microsoft.WindowsAppSDK": "1.2.230118.102"
+        }
       },
       "Il2CppToolkit.Injection.Client": {
         "type": "Direct",
@@ -20,14 +30,14 @@
       },
       "Karambolo.Extensions.Logging.File": {
         "type": "Direct",
-        "requested": "[3.2.1, )",
-        "resolved": "3.2.1",
-        "contentHash": "+jWcz78yeZw7RgXO73c5QPNja/Bt6i7s9h2W5GrSTuWyd9N/45nfCtd3fATwv556PihcYTFJO62yOgMTkZzbBw==",
+        "requested": "[3.4.0, )",
+        "resolved": "3.4.0",
+        "contentHash": "ZhDYGgEv792s754DXn5xGidn1CbDnk1fTNcXDeUVr3suL/FH1faA4R5S2pDimS61wD8t0J+CBmG9qY9YmqV9Kw==",
         "dependencies": {
-          "Microsoft.Extensions.FileProviders.Physical": "3.0.0",
-          "Microsoft.Extensions.Logging.Configuration": "3.0.0",
-          "Microsoft.Extensions.Options.ConfigurationExtensions": "3.0.0",
-          "System.Threading.Channels": "4.7.1"
+          "Microsoft.Extensions.FileProviders.Physical": "6.0.0",
+          "Microsoft.Extensions.Logging.Configuration": "6.0.0",
+          "Microsoft.Extensions.Options.ConfigurationExtensions": "6.0.0",
+          "System.Threading.Channels": "6.0.0"
         }
       },
       "Microsoft.Extensions.Hosting": {
@@ -67,9 +77,9 @@
       },
       "Newtonsoft.Json": {
         "type": "Direct",
-        "requested": "[13.0.1, )",
-        "resolved": "13.0.1",
-        "contentHash": "ppPFpBcvxdsfUonNcvITKqLl3bqxWbDCZIzDWHzjpdAHRFfZe0Dw9HmA0+za13IdyrgJwpkDTDA9fHaxOrt20A=="
+        "requested": "[13.0.2, )",
+        "resolved": "13.0.2",
+        "contentHash": "R2pZ3B0UjeyHShm9vG+Tu0EBb2lC8b0dFzV9gVn50ofHXh9Smjk6kTn7A/FdAsC8B5cKib1OnGYOXxRBz5XQDg=="
       },
       "SuperSocket.WebSocket.Server": {
         "type": "Direct",
@@ -434,13 +444,13 @@
       },
       "Microsoft.Windows.SDK.BuildTools": {
         "type": "Transitive",
-        "resolved": "10.0.22621.1",
-        "contentHash": "Sp1DkYvg7yxuhamwxv+qFC66KC3paKQpwK8Q1J6XuAh6nzXIInmsDcpJ3szr0XGud4ysXojqwTfGdW01gvZ/0g=="
+        "resolved": "10.0.22621.755",
+        "contentHash": "zGXDCZc2/slVjpNtopNETCjnOqH9KiEdo9dPCcjtNWwK5W+EmOcEn7X5Ftj3tOE9kLvroga1s7WwLh2a5jQEEg=="
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Transitive",
-        "resolved": "1.2.221209.1",
-        "contentHash": "1Y8KDCmUqytdduubaQhRz6aqaP7YhVSPE/fHeqLMsK3DrV+eBThrqkM6R/8N2lu0mwkNfKSTSAhixrTR72nyWA==",
+        "resolved": "1.2.230217.4",
+        "contentHash": "mGFBn5UKpH569iYAUZq7dS2ALG9vzxe25n/xGRBK3sdfm96BgyIiL1GZ/vb3M8BFwMj65GbcgFxseNZeajJXOg==",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
         }
@@ -598,8 +608,8 @@
       },
       "System.Threading.Channels": {
         "type": "Transitive",
-        "resolved": "4.7.1",
-        "contentHash": "6akRtHK/wab3246t4p5v3HQrtQk8LboOt5T4dtpNgsp3zvDeM4/Gx8V12t0h+c/W9/enUrilk8n6EQqdQorZAA=="
+        "resolved": "6.0.0",
+        "contentHash": "TY8/9+tI0mNaUMgntOxxaq2ndTkdXqLSxvPmas7XEqOlv9lQtB7wLjYGd756lOaO7Dvb5r/WXhluM+0Xe87v5Q=="
       },
       "System.ValueTuple": {
         "type": "Transitive",
@@ -621,14 +631,14 @@
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
           "Microsoft.Extensions.Options": "[6.0.0, )",
           "Microsoft.Win32.Registry": "[5.0.0, )",
-          "Newtonsoft.Json": "[13.0.1, )"
+          "Newtonsoft.Json": "[13.0.2, )"
         }
       },
       "Raid.Model": {
         "type": "Project",
         "dependencies": {
           "Microsoft.Win32.Registry": "[5.0.0, )",
-          "Newtonsoft.Json": "[13.0.1, )",
+          "Newtonsoft.Json": "[13.0.2, )",
           "Raid.Common": "[1.0.0, )",
           "il2cpptoolkit.common": "[2.0.104-alpha, )",
           "il2cpptoolkit.metadata": "[2.0.104-alpha, )",
@@ -640,7 +650,7 @@
       "Raid.Toolkit.DataModel": {
         "type": "Project",
         "dependencies": {
-          "Newtonsoft.Json": "[13.0.1, )",
+          "Newtonsoft.Json": "[13.0.2, )",
           "Raid.Common": "[1.0.0, )"
         }
       },
@@ -649,7 +659,7 @@
         "dependencies": {
           "CommunityToolkit.WinUI.Notifications": "[7.1.2, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
-          "Microsoft.WindowsAppSDK": "[1.2.221209.1, )",
+          "Microsoft.WindowsAppSDK": "[1.2.230217.4, )",
           "Raid.Common": "[1.0.0, )",
           "Raid.Toolkit.DataModel": "[1.0.0, )",
           "il2cpptoolkit.common": "[2.0.104-alpha, )",
@@ -661,6 +671,7 @@
         "type": "Project",
         "dependencies": {
           "CommunityToolkit.WinUI.Notifications": "[7.1.2, )",
+          "CustomExtensions.WinUI": "[0.1.9-beta, )",
           "Microsoft.Extensions.Hosting.Abstractions": "[6.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
           "Raid.Model": "[1.0.0, )",
@@ -717,8 +728,8 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Transitive",
-        "resolved": "1.2.221209.1",
-        "contentHash": "1Y8KDCmUqytdduubaQhRz6aqaP7YhVSPE/fHeqLMsK3DrV+eBThrqkM6R/8N2lu0mwkNfKSTSAhixrTR72nyWA==",
+        "resolved": "1.2.230217.4",
+        "contentHash": "mGFBn5UKpH569iYAUZq7dS2ALG9vzxe25n/xGRBK3sdfm96BgyIiL1GZ/vb3M8BFwMj65GbcgFxseNZeajJXOg==",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
         }

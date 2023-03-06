@@ -13,6 +13,7 @@ namespace Raid.Toolkit.Extensibility
         public string? Location { get; private set; }
         public string? BundleLocation { get; private set; }
         public string Id => Manifest.Id;
+        public bool IsLinkedAssembly { get; private set; }
 
         public ExtensionBundle(ExtensionManifest manifest)
         {
@@ -54,17 +55,18 @@ namespace Raid.Toolkit.Extensibility
             return FromAssembly(typeof(T).Assembly);
         }
 
-        public static ExtensionBundle FromAssembly(string assemblyPath)
-        {
-            return FromAssembly(Assembly.LoadFrom(assemblyPath));
-        }
+        //public static ExtensionBundle FromAssembly(string assemblyPath)
+        //{
+        //    return FromAssembly(Assembly.LoadFrom(assemblyPath));
+        //}
 
         public static ExtensionBundle FromAssembly(Assembly assembly)
         {
             ExtensionManifest manifest = ExtensionManifest.FromAssembly(assembly);
             return new(manifest)
             {
-                Assembly = assembly
+                Assembly = assembly,
+                IsLinkedAssembly = true
             };
         }
 

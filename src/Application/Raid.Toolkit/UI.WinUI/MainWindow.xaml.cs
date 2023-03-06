@@ -34,7 +34,7 @@ namespace Raid.Toolkit.UI.WinUI
         private readonly List<FrameworkElement> ContentElements = new();
         private readonly FrameworkElement DefaultContentElement;
         private WindowLayout _windowLayout = WindowLayout.Small;
-        
+
         private void SetLayout(WindowLayout layout)
         {
             if (layout == _windowLayout)
@@ -88,14 +88,10 @@ namespace Raid.Toolkit.UI.WinUI
             ContentElements.Add(LoadProgressGrid);
             ContentElements.Add(LinksGrid);
 
-            if (!CommonOptions.Value.Embedding && !CommonOptions.Value.NoLogo && !CommonOptions.Value.Debug)
+            if (!CommonOptions.Value.Embedding && !CommonOptions.Value.NoLogo)
             {
                 Activate();
                 BringToFront();
-            }
-            else
-            {
-                this.Hide();
             }
         }
 

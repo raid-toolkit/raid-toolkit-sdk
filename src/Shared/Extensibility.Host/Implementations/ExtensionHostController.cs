@@ -2,6 +2,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using Raid.Toolkit.Common;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,7 +52,7 @@ namespace Raid.Toolkit.Extensibility.Host
             return ExtensionPackages.Values.ToList();
         }
 
-        public Task LoadExtensions()
+        public async Task LoadExtensions()
         {
             foreach (var pkg in PackageManager.GetAllPackages())
             {
@@ -71,7 +72,20 @@ namespace Raid.Toolkit.Extensibility.Host
             }
 
             var typePatterns = ExtensionPackages.Values.SelectMany(host => host.GetIncludeTypes());
-            return Task.Run(() => ModelLoader.BuildAndLoad(typePatterns, Options.Value.ForceRebuild));
+            await Task.Run(() => ModelLoader.BuildAndLoad(typePatterns, Options.Value.ForceRebuild));
+
+
+            foreach (var pkg in ExtensionPackages.Values)
+            {
+                try
+                {
+                    await pkg.Load();
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogError(ExtensionError.FailedToLoad.EventId(), ex, "Failed to load extension");
+                }
+            }
         }
 
         public void ActivateExtensions()

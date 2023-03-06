@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Concurrent;
+using System.Threading.Tasks;
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
     public class SandboxedPackageLoader : IPackageLoader, IDisposable
     {
-        private readonly ConcurrentDictionary<string, IExtensionPackage> LoadedPackages = new();
+        private readonly ConcurrentDictionary<string, ExtensionSandbox> LoadedPackages = new();
         private bool IsDisposed;
 
         private IServiceProvider ServiceProvider;
@@ -15,12 +17,14 @@ namespace Raid.Toolkit.Extensibility.Host
             ServiceProvider = serviceProvider;
         }
 
-        public IExtensionPackage LoadPackage(ExtensionBundle bundle)
+        public async Task<IExtensionPackage> LoadPackage(ExtensionBundle bundle)
         {
-            return LoadedPackages.GetOrAdd(
+            IExtensionPackage package = LoadedPackages.GetOrAdd(
                 bundle.Manifest.Id,
                 (id) => ActivatorUtilities.CreateInstance<ExtensionSandbox>(ServiceProvider, bundle)
             );
+            await package.Load();
+            return package;
         }
 
         protected virtual void Dispose(bool disposing)
