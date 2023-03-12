@@ -133,9 +133,9 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.2.230217.4, )",
-        "resolved": "1.2.230217.4",
-        "contentHash": "mGFBn5UKpH569iYAUZq7dS2ALG9vzxe25n/xGRBK3sdfm96BgyIiL1GZ/vb3M8BFwMj65GbcgFxseNZeajJXOg==",
+        "requested": "[1.2.221209.1, )",
+        "resolved": "1.2.221209.1",
+        "contentHash": "1Y8KDCmUqytdduubaQhRz6aqaP7YhVSPE/fHeqLMsK3DrV+eBThrqkM6R/8N2lu0mwkNfKSTSAhixrTR72nyWA==",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
         }
@@ -166,9 +166,9 @@
       },
       "WinUIEx": {
         "type": "Direct",
-        "requested": "[2.1.0, )",
-        "resolved": "2.1.0",
-        "contentHash": "4tiyOThWn2J4ps6mvo8tWQlx/oFLM02Sm7Jj7Awt/ODFzJT7fOYMxDfGfMJmqd8F7LyiIy5JnjmOMZdXQFYtHA==",
+        "requested": "[2.0.0, )",
+        "resolved": "2.0.0",
+        "contentHash": "VNBA9QuCvL58QRdnUcPcSb5ELTvdvNMCyXXq1ibhrw0CifpULErnv6DDIlp4/sNE61g1QNQGQ7uPccy4HOVkeg==",
         "dependencies": {
           "Microsoft.WindowsAppSDK": "1.2.221109.1"
         }
@@ -259,11 +259,11 @@
       },
       "CustomExtensions.WinUI": {
         "type": "Transitive",
-        "resolved": "0.1.9-beta",
-        "contentHash": "K9AOSqxpbXE2F2kWe/icWq0joDhnW1TukXsSHJfFgr/HbfCo/aOUnKI+FqGIwsipAjZVyNqcvYlIfGqq8vQkAQ==",
+        "resolved": "0.1.10-beta",
+        "contentHash": "ygsTaDzf9uJ2oJlN8kBPSnvpDaxlq+Kv6/0Nb7EglT/CPzlyi738duEpg+uyZ/PUgGZilxGH2NBSnNG5MOYqKQ==",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.755",
-          "Microsoft.WindowsAppSDK": "1.2.230118.102"
+          "Microsoft.WindowsAppSDK": "1.2.221209.1"
         }
       },
       "Google.Protobuf": {
@@ -1684,7 +1684,7 @@
         "type": "Project",
         "dependencies": {
           "CommandLineParser": "[2.9.1, )",
-          "CustomExtensions.WinUI": "[0.1.9-beta, )",
+          "CustomExtensions.WinUI": "[0.1.10-beta, )",
           "Il2CppToolkit.Injection.Client": "[2.0.115-alpha, )",
           "Karambolo.Extensions.Logging.File": "[3.4.0, )",
           "Microsoft.Extensions.Hosting": "[6.0.1, )",
@@ -1708,7 +1708,7 @@
         "dependencies": {
           "CommunityToolkit.WinUI.Notifications": "[7.1.2, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
-          "Microsoft.WindowsAppSDK": "[1.2.230217.4, )",
+          "Microsoft.WindowsAppSDK": "[1.2.221209.1, )",
           "Raid.Common": "[1.0.0, )",
           "Raid.Toolkit.DataModel": "[1.0.0, )",
           "il2cpptoolkit.common": "[2.0.104-alpha, )",
@@ -1720,7 +1720,7 @@
         "type": "Project",
         "dependencies": {
           "CommunityToolkit.WinUI.Notifications": "[7.1.2, )",
-          "CustomExtensions.WinUI": "[0.1.9-beta, )",
+          "CustomExtensions.WinUI": "[0.1.10-beta, )",
           "Microsoft.Extensions.Hosting.Abstractions": "[6.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
           "Raid.Model": "[1.0.0, )",
@@ -1760,9 +1760,9 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.2.230217.4, )",
-        "resolved": "1.2.230217.4",
-        "contentHash": "mGFBn5UKpH569iYAUZq7dS2ALG9vzxe25n/xGRBK3sdfm96BgyIiL1GZ/vb3M8BFwMj65GbcgFxseNZeajJXOg==",
+        "requested": "[1.2.221209.1, )",
+        "resolved": "1.2.221209.1",
+        "contentHash": "1Y8KDCmUqytdduubaQhRz6aqaP7YhVSPE/fHeqLMsK3DrV+eBThrqkM6R/8N2lu0mwkNfKSTSAhixrTR72nyWA==",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
         }

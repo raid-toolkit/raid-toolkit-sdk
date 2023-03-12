@@ -9,7 +9,7 @@
 
 	<ItemGroup>
         <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
-		<PackageReference Include="CustomExtensions.WinUI" Version="0.1.9-beta" />
+		<PackageReference Include="CustomExtensions.WinUI" Version="0.1.10-beta" />
 		<PackageReference Include="il2cpptoolkit.common" Version="2.0.104-alpha" />
         <PackageReference Include="il2cpptoolkit.metadata" Version="2.0.104-alpha" />
         <PackageReference Include="il2cpptoolkit.reversecompiler" Version="2.0.104-alpha" />

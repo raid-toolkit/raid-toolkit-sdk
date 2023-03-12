@@ -10,12 +10,12 @@
       },
       "CustomExtensions.WinUI": {
         "type": "Direct",
-        "requested": "[0.1.9-beta, )",
-        "resolved": "0.1.9-beta",
-        "contentHash": "K9AOSqxpbXE2F2kWe/icWq0joDhnW1TukXsSHJfFgr/HbfCo/aOUnKI+FqGIwsipAjZVyNqcvYlIfGqq8vQkAQ==",
+        "requested": "[0.1.10-beta, )",
+        "resolved": "0.1.10-beta",
+        "contentHash": "ygsTaDzf9uJ2oJlN8kBPSnvpDaxlq+Kv6/0Nb7EglT/CPzlyi738duEpg+uyZ/PUgGZilxGH2NBSnNG5MOYqKQ==",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.755",
-          "Microsoft.WindowsAppSDK": "1.2.230118.102"
+          "Microsoft.WindowsAppSDK": "1.2.221209.1"
         }
       },
       "Il2CppToolkit.Injection.Client": {
@@ -449,8 +449,8 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Transitive",
-        "resolved": "1.2.230217.4",
-        "contentHash": "mGFBn5UKpH569iYAUZq7dS2ALG9vzxe25n/xGRBK3sdfm96BgyIiL1GZ/vb3M8BFwMj65GbcgFxseNZeajJXOg==",
+        "resolved": "1.2.221209.1",
+        "contentHash": "1Y8KDCmUqytdduubaQhRz6aqaP7YhVSPE/fHeqLMsK3DrV+eBThrqkM6R/8N2lu0mwkNfKSTSAhixrTR72nyWA==",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
         }
@@ -659,7 +659,7 @@
         "dependencies": {
           "CommunityToolkit.WinUI.Notifications": "[7.1.2, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
-          "Microsoft.WindowsAppSDK": "[1.2.230217.4, )",
+          "Microsoft.WindowsAppSDK": "[1.2.221209.1, )",
           "Raid.Common": "[1.0.0, )",
           "Raid.Toolkit.DataModel": "[1.0.0, )",
           "il2cpptoolkit.common": "[2.0.104-alpha, )",
@@ -671,7 +671,7 @@
         "type": "Project",
         "dependencies": {
           "CommunityToolkit.WinUI.Notifications": "[7.1.2, )",
-          "CustomExtensions.WinUI": "[0.1.9-beta, )",
+          "CustomExtensions.WinUI": "[0.1.10-beta, )",
           "Microsoft.Extensions.Hosting.Abstractions": "[6.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
           "Raid.Model": "[1.0.0, )",
@@ -728,8 +728,8 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Transitive",
-        "resolved": "1.2.230217.4",
-        "contentHash": "mGFBn5UKpH569iYAUZq7dS2ALG9vzxe25n/xGRBK3sdfm96BgyIiL1GZ/vb3M8BFwMj65GbcgFxseNZeajJXOg==",
+        "resolved": "1.2.221209.1",
+        "contentHash": "1Y8KDCmUqytdduubaQhRz6aqaP7YhVSPE/fHeqLMsK3DrV+eBThrqkM6R/8N2lu0mwkNfKSTSAhixrTR72nyWA==",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
         }

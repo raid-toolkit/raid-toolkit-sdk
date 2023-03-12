@@ -24,7 +24,7 @@
 
 	<ItemGroup>
 		<PackageReference Include="CommandLineParser" Version="2.9.1" />
-		<PackageReference Include="CustomExtensions.WinUI" Version="0.1.9-beta" />
+		<PackageReference Include="CustomExtensions.WinUI" Version="0.1.10-beta" />
 		<PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.4.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />

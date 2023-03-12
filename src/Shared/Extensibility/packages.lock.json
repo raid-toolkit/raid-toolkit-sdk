@@ -53,9 +53,9 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.2.230217.4, )",
-        "resolved": "1.2.230217.4",
-        "contentHash": "mGFBn5UKpH569iYAUZq7dS2ALG9vzxe25n/xGRBK3sdfm96BgyIiL1GZ/vb3M8BFwMj65GbcgFxseNZeajJXOg==",
+        "requested": "[1.2.221209.1, )",
+        "resolved": "1.2.221209.1",
+        "contentHash": "1Y8KDCmUqytdduubaQhRz6aqaP7YhVSPE/fHeqLMsK3DrV+eBThrqkM6R/8N2lu0mwkNfKSTSAhixrTR72nyWA==",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
         }
@@ -236,9 +236,9 @@
     "net6.0-windows10.0.19041/win10-x64": {
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.2.230217.4, )",
-        "resolved": "1.2.230217.4",
-        "contentHash": "mGFBn5UKpH569iYAUZq7dS2ALG9vzxe25n/xGRBK3sdfm96BgyIiL1GZ/vb3M8BFwMj65GbcgFxseNZeajJXOg==",
+        "requested": "[1.2.221209.1, )",
+        "resolved": "1.2.221209.1",
+        "contentHash": "1Y8KDCmUqytdduubaQhRz6aqaP7YhVSPE/fHeqLMsK3DrV+eBThrqkM6R/8N2lu0mwkNfKSTSAhixrTR72nyWA==",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
         }
