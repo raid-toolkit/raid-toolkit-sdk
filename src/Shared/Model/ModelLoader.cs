@@ -11,6 +11,7 @@ using Il2CppToolkit.Common.Errors;
 using Il2CppToolkit.Model;
 using Il2CppToolkit.ReverseCompiler;
 using Il2CppToolkit.ReverseCompiler.Target.NetCore;
+using Microsoft.Extensions.Logging;
 
 namespace Raid.Toolkit.Model
 {
@@ -34,16 +35,8 @@ namespace Raid.Toolkit.Model
         private EventHandler<IModelLoader.ModelLoaderEventArgs> OnStateUpdatedInternal;
         public event EventHandler<IModelLoader.ModelLoaderEventArgs> OnStateUpdated
         {
-            add
-            {
-                OnStateUpdatedInternal += value;
-                //if (LastEvent != null)
-                //    value(this, LastEvent);
-            }
-            remove
-            {
-                OnStateUpdatedInternal -= value;
-            }
+            add => OnStateUpdatedInternal += value;//if (LastEvent != null)//    value(this, LastEvent);
+            remove => OnStateUpdatedInternal -= value;
         }
 
 #nullable enable
@@ -61,9 +54,11 @@ namespace Raid.Toolkit.Model
         public string OutputAssemblyName { get; set; } = "Raid.Interop";
         public string OutputFilename { get; set; } = "Raid.Interop.dll";
         private Assembly InteropAsm;
+        private readonly ILogger<ModelLoader> Logger;
 
-        public ModelLoader()
+        public ModelLoader(ILogger<ModelLoader> logger)
         {
+            Logger = logger;
             AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
         }
 
@@ -77,7 +72,10 @@ namespace Raid.Toolkit.Model
                     return InteropAsm;
                 }
             }
-            catch (Exception) { }
+            catch (Exception ex)
+            {
+                Logger.LogError(ex, "Failed to load interop assembly");
+            }
             return null;
         }
 
@@ -91,8 +89,9 @@ namespace Raid.Toolkit.Model
                 Raise(new(IModelLoader.LoadState.Loaded));
                 return InteropAsm;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Logger.LogError(ex, "Failed to load interop assembly");
                 Raise(new(IModelLoader.LoadState.Error));
                 throw;
             }
@@ -135,8 +134,9 @@ namespace Raid.Toolkit.Model
                         shouldGenerate = true;
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Logger.LogError(ex, "Failed to load interop assembly");
                     shouldGenerate = true;
                 }
 
@@ -152,8 +152,9 @@ namespace Raid.Toolkit.Model
                 Raise(new(IModelLoader.LoadState.Ready));
                 return dllPath;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Logger.LogError(ex, "Failed to load interop assembly");
                 Raise(new(IModelLoader.LoadState.Error));
                 throw;
             }
