@@ -5,11 +5,6 @@ from raidtoolkit import RaidToolkitClient
 from pygments import highlight, lexers, formatters
 from termcolor import colored
 
-def print_json(data):
-    formatted_json = json.dumps(data, sort_keys=True, indent=2)
-    colorful_json = highlight(formatted_json, lexers.JsonLexer(), formatters.TerminalFormatter())
-    print(colorful_json)
-
 async def main():
     client = RaidToolkitClient()
     client.connect()
