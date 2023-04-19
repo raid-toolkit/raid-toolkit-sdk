@@ -7,7 +7,6 @@ using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Services;
-using SharedModel.Meta.Skills;
 using Extractor = RaidExtractor.Core.Extractor;
 
 namespace Raid.Toolkit.Extension.Account

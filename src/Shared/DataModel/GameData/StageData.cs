@@ -24,5 +24,17 @@ namespace Raid.Toolkit.DataModel
 
         [JsonProperty("bossName")]
         public LocalizedText BossName;
+
+        [JsonProperty("modifiers")]
+        public StatsModifier[] Modifiers;
+    }
+
+    public class StatsModifier : StatBonus
+    {
+        [JsonProperty("round")]
+        public int Round;
+
+        [JsonProperty("bossOnly")]
+        public bool BossOnly;
     }
 }

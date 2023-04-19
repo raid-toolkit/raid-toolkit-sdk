@@ -25,6 +25,7 @@ namespace Model.PreBuild
             new Regex(@"^ECS\.(Components|ViewModel)\.", RegexOptions.Singleline | RegexOptions.Compiled),
             new Regex(@"^Entitas\.", RegexOptions.Singleline | RegexOptions.Compiled),
             new Regex(@"^SharedModel\.Meta\.Artifacts\.ArtifactStorage\.ArtifactStorageResolver$", RegexOptions.Singleline | RegexOptions.Compiled),
+            new Regex(@"^SharedModel\.Meta\.CvcTournament\.StaticData\.CvcActivityTypeId$", RegexOptions.Singleline | RegexOptions.Compiled),
         };
 
         private static async Task Main(string[] args)

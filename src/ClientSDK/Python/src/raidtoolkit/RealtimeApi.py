@@ -8,8 +8,8 @@ class RealtimeApi:
     def get_connected_accounts(self):
         return self.client.call("realtime-api", "getConnectedAccounts")
 
-    def get_last_battle_response(self):
-        return self.client.call("realtime-api", "getLastBattleResponse")
+    def get_last_battle_response(self, accountId: str):
+        return self.client.call("realtime-api", "getLastBattleResponse", [accountId])
 
-    def get_current_view_info(self):
-        return self.client.call("realtime-api", "getCurrentViewInfo")
+    def get_current_view_info(self, accountId: str):
+        return self.client.call("realtime-api", "getCurrentViewInfo", [accountId])

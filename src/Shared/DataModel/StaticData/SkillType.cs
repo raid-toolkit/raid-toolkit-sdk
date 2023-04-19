@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Newtonsoft.Json;
+
 using Raid.Toolkit.DataModel.Enums;
 
 namespace Raid.Toolkit.DataModel
@@ -32,13 +35,28 @@ namespace Raid.Toolkit.DataModel
         public bool? Unblockable;
 
         [JsonProperty("effects")]
-        public EffectType[] Effects;
+        public EffectType[]? Effects;
 
-        [JsonProperty("upgrades")]
-        public SkillUpgrade[] Upgrades;
+        [JsonProperty("upgrades"), Obsolete("Use SkillBonuses instead")]
+        public SkillUpgrade[]? Upgrades;
+
+        [JsonProperty("skillBonuses")]
+        public SkillBonus[]? SkillBonuses;
 
         [JsonProperty("doesDamage")]
         public bool DoesDamage => Effects?.Any(effect => effect.KindId == EffectKindId.Damage) ?? false;
+
+        [JsonProperty("targets")]
+        public SkillTargets? Targets;
+
+        [JsonProperty("group")]
+        public SkillGroup? Group;
+
+        [JsonProperty("useInTeamAttack")]
+        public bool? UseInTeamAttack;
+
+        [JsonProperty("useInCounterAttack")]
+        public bool? UseInCounterAttack;
         // TODO: there's a lot more data here we could extract
     }
 
@@ -72,6 +90,11 @@ namespace Raid.Toolkit.DataModel
             Unblockable = skill.Unblockable;
             Effects = skill.Effects;
             Upgrades = skill.Upgrades;
+            SkillBonuses = skill.SkillBonuses;
+            Targets = skill.Targets;
+            Group = skill.Group;
+            UseInCounterAttack = skill.UseInCounterAttack;
+            UseInTeamAttack = skill.UseInTeamAttack;
         }
     }
 
@@ -81,124 +104,201 @@ namespace Raid.Toolkit.DataModel
         Passive,
     }
 
+    public enum EffectKindGroup
+    {
+        Undefined = 1,
+        StatusDebuff = 2,
+        ResistibleInstantDebuff = 3,
+        EffectThatApplyStatusDebuffs = 4,
+        EffectsThatBlockStatusDebuffs = 5,
+        StatusBuff = 6,
+        InstantBuff = 7,
+        ControlEffects = 8,
+    }
+
     public enum EffectKindId
     {
         Revive = 0,
-        Heal = 1000, // 0x000003E8
-        StartOfStatusBuff = 2000, // 0x000007D0
-        BlockDamage = 2001, // 0x000007D1
-        BlockDebuff = 2002, // 0x000007D2
-        ContinuousHeal = 2003, // 0x000007D3
-        Shield = 2004, // 0x000007D4
-        StatusCounterattack = 2005, // 0x000007D5
-        ReviveOnDeath = 2006, // 0x000007D6
-        ShareDamage = 2007, // 0x000007D7
-        Unkillable = 2008, // 0x000007D8
-        DamageCounter = 2009, // 0x000007D9
-        ReflectDamage = 2010, // 0x000007DA
-        HitCounterShield = 2012, // 0x000007DC
-        Invisible = 2013, // 0x000007DD
-        ReduceDamageTaken = 2014, // 0x000007DE
-        CrabShell = 2015, // 0x000007DF
-        CritShield = 2016, // 0x000007E0
-        SkyWrath = 2017, // 0x000007E1
-        Enrage = 2018, // 0x000007E2
-        VoidAbyss = 2019, // 0x000007E3
-        StatusIncreaseAttack = 2101, // 0x00000835
-        StatusIncreaseDefence = 2102, // 0x00000836
-        StatusIncreaseSpeed = 2103, // 0x00000837
-        StatusIncreaseCriticalChance = 2104, // 0x00000838
-        StatusChangeDamageMultiplier = 2105, // 0x00000839
-        StatusIncreaseAccuracy = 2106, // 0x0000083A
-        StatusIncreaseCriticalDamage = 2107, // 0x0000083B
-        EndOfStatusBuff = 2999, // 0x00000BB7
-        StartOfStatusDebuff = 3000, // 0x00000BB8
-        Freeze = 3001, // 0x00000BB9
-        Provoke = 3002, // 0x00000BBA
-        Sleep = 3003, // 0x00000BBB
-        Stun = 3004, // 0x00000BBC
-        BlockHeal = 3005, // 0x00000BBD
-        BlockActiveSkills = 3006, // 0x00000BBE
-        ContinuousDamage = 3007, // 0x00000BBF
-        BlockBuffs = 3008, // 0x00000BC0
-        TimeBomb = 3009, // 0x00000BC1
-        IncreaseDamageTaken = 3010, // 0x00000BC2
-        BlockRevive = 3011, // 0x00000BC3
-        Mark = 3012, // 0x00000BC4
-        LifeDrainOnDamage = 3013, // 0x00000BC5
-        AoEContinuousDamage = 3014, // 0x00000BC6
-        Fear = 3015, // 0x00000BC7
-        IncreasePoisoning = 3016, // 0x00000BC8
-        BlockPassiveSkills = 3017, // 0x00000BC9
-        StatusReduceAttack = 3101, // 0x00000C1D
-        StatusReduceDefence = 3102, // 0x00000C1E
-        StatusReduceSpeed = 3103, // 0x00000C1F
-        StatusReduceCriticalChance = 3104, // 0x00000C20
-        StatusReduceAccuracy = 3105, // 0x00000C21
-        StatusReduceCriticalDamage = 3106, // 0x00000C22
-        EndOfStatusDebuff = 3999, // 0x00000F9F
-        ApplyBuff = 4000, // 0x00000FA0
-        IncreaseStamina = 4001, // 0x00000FA1
-        RemoveDebuff = 4003, // 0x00000FA3
-        ActivateSkill = 4004, // 0x00000FA4
-        ShowHiddenSkill = 4005, // 0x00000FA5
-        TeamAttack = 4006, // 0x00000FA6
-        ExtraTurn = 4007, // 0x00000FA7
-        LifeShare = 4008, // 0x00000FA8
-        ReduceCooldown = 4009, // 0x00000FA9
-        ReduceDebuffLifetime = 4010, // 0x00000FAA
-        IncreaseBuffLifetime = 4011, // 0x00000FAB
-        PassiveCounterattack = 4012, // 0x00000FAC
-        PassiveChangeStats = 4013, // 0x00000FAD
-        PassiveBlockDebuff = 4014, // 0x00000FAE
-        PassiveBonus = 4015, // 0x00000FAF
-        MultiplyBuff = 4016, // 0x00000FB0
-        PassiveReflectDamage = 4017, // 0x00000FB1
-        PassiveShareDamage = 4018, // 0x00000FB2
-        IncreaseShield = 4020, // 0x00000FB4
-        ReturnDebuffs = 4021, // 0x00000FB5
-        TransferDebuff = 4022, // 0x00000FB6
-        EndOfInstantBuff = 4999, // 0x00001387
-        ApplyDebuff = 5000, // 0x00001388
-        ReduceStamina = 5001, // 0x00001389
-        StealBuff = 5002, // 0x0000138A
-        RemoveBuff = 5003, // 0x0000138B
-        IncreaseCooldown = 5004, // 0x0000138C
-        ReduceBuffLifetime = 5005, // 0x0000138D
-        PassiveDebuffLifetime = 5006, // 0x0000138E
-        SwapHealth = 5007, // 0x0000138F
-        IncreaseDebuffLifetime = 5008, // 0x00001390
-        DestroyHp = 5009, // 0x00001391
-        Detonate = 5010, // 0x00001392
-        MultiplyDebuff = 5011, // 0x00001393
-        ReduceShield = 5012, // 0x00001394
-        EndOfInstantDebuff = 5999, // 0x0000176F
-        Damage = 6000, // 0x00001770
-        HitTypeModifier = 7000, // 0x00001B58
-        ChangeDefenceModifier = 7001, // 0x00001B59
-        ChangeEffectAccuracy = 7002, // 0x00001B5A
-        MultiplyEffectChance = 7003, // 0x00001B5B
-        ChangeDamageMultiplier = 7004, // 0x00001B5C
-        IgnoreProtectionEffects = 7005, // 0x00001B5D
-        ChangeCalculatedDamage = 7006, // 0x00001B5E
-        ChangeEffectRepeatCount = 7007, // 0x00001B5F
-        ChangeDestroyHpAmount = 7008, // 0x00001B60
-        ChangeHealMultiplier = 7009, // 0x00001B61
-        ChangeStaminaModifier = 7010, // 0x00001B62
-        Summon = 8000, // 0x00001F40
-        CopyHero = 8001, // 0x00001F41
-        ChangeEffectTarget = 9000, // 0x00002328
-        CancelEffect = 9001, // 0x00002329
-        ForceStatusEffectTick = 9002, // 0x0000232A
-        ChangeSkyWrathCounter = 9005, // 0x0000232D
-        UpdateCombo = 9006, // 0x0000232E
-        SetVoidAbyssCounter = 9007, // 0x0000232F
-        StatusBanish = 9010, // 0x00002332
-        Banish = 9011, // 0x00002333
-        EffectDurationModifier = 10000, // 0x00002710
-        CheckTargetForCondition = 11000, // 0x00002AF8
-        EffectContainer = 11001, // 0x00002AF9
+        Heal = 1000,
+        StartOfStatusBuff = 2000,
+        BlockDamage = 2001,
+        BlockDebuff = 2002,
+        ContinuousHeal = 2003,
+        Shield = 2004,
+        StatusCounterattack = 2005,
+        ReviveOnDeath = 2006,
+        ShareDamage = 2007,
+        Unkillable = 2008,
+        DamageCounter = 2009,
+        ReflectDamage = 2010,
+        HitCounterShield = 2012,
+        Invisible = 2013,
+        ReduceDamageTaken = 2014,
+        CrabShell = 2015,
+        CritShield = 2016,
+        Enrage = 2018,
+        PoisonCloud = 2020,
+        BoneShield = 2025,
+        Cocoon = 2021,
+        StoneSkin = 2022,
+        NewbieDefence = 2024,
+        LightOrbs = 2026,
+        Taunt = 2027,
+        StatusIncreaseAttack = 2101,
+        StatusIncreaseDefence = 2102,
+        StatusIncreaseSpeed = 2103,
+        StatusIncreaseCriticalChance = 2104,
+        StatusChangeDamageMultiplier = 2105,
+        StatusIncreaseAccuracy = 2106,
+        StatusIncreaseCriticalDamage = 2107,
+        StatusIncreaseResistance = 2108,
+        EndOfStatusBuff = 2999,
+        StartOfStatusDebuff = 3000,
+        Freeze = 3001,
+        Provoke = 3002,
+        Sleep = 3003,
+        Stun = 3004,
+        BlockHeal = 3005,
+        BlockActiveSkills = 3006,
+        ContinuousDamage = 3007,
+        BlockBuffs = 3008,
+        TimeBomb = 3009,
+        IncreaseDamageTaken = 3010,
+        BlockRevive = 3011,
+        Mark = 3012,
+        LifeDrainOnDamage = 3013,
+        AoEContinuousDamage = 3014,
+        Fear = 3015,
+        IncreasePoisoning = 3016,
+        BlockPassiveSkills = 3017,
+        ElectricMark = 3018,
+        Petrification = 3019,
+        MirrorDamage = 3020,
+        FireMark = 3021,
+        MarkOfMadness = 3022,
+        Polymorph = 3024,
+        StatusReduceAttack = 3101,
+        StatusReduceDefence = 3102,
+        StatusReduceSpeed = 3103,
+        StatusReduceCriticalChance = 3104,
+        StatusReduceAccuracy = 3105,
+        StatusReduceCriticalDamage = 3106,
+        StatusReduceResistance = 3107,
+        EndOfStatusDebuff = 3999,
+        ApplyBuff = 4000,
+        IncreaseStamina = 4001,
+        RemoveDebuff = 4003,
+        ActivateSkill = 4004,
+        ShowSecretSkill = 4005,
+        TeamAttack = 4006,
+        ExtraTurn = 4007,
+        LifeShare = 4008,
+        ReduceCooldown = 4009,
+        ReduceDebuffLifetime = 4010,
+        IncreaseBuffLifetime = 4011,
+        PassiveCounterattack = 4012,
+        PassiveChangeStats = 4013,
+        PassiveBlockDebuff = 4014,
+        PassiveBonus = 4015,
+        MultiplyBuff = 4016,
+        PassiveReflectDamage = 4017,
+        PassiveShareDamage = 4018,
+        IncreaseShield = 4020,
+        ReturnDebuffs = 4021,
+        TransferDebuff = 4022,
+        RestoreDestroyedHp = 4023,
+        PassiveUnkillable = 4024,
+        EndOfInstantBuff = 4999,
+        ApplyDebuff = 5000,
+        ReduceStamina = 5001,
+        StealBuff = 5002,
+        RemoveBuff = 5003,
+        IncreaseCooldown = 5004,
+        ReduceBuffLifetime = 5005,
+        SwapHealth = 5007,
+        IncreaseDebuffLifetime = 5008,
+        DestroyHp = 5009,
+        Detonate = 5010,
+        MultiplyDebuff = 5011,
+        ReduceShield = 5012,
+        PassiveBlockBuff = 5013,
+        DestroyStats = 5014,
+        ApplyOrProlongDebuff = 5015,
+        EndOfInstantDebuff = 5999,
+        Damage = 6000,
+        HitTypeModifier = 7000,
+        ChangeDefenceModifier = 7001,
+        ChangeEffectAccuracy = 7002,
+        MultiplyEffectChance = 7003,
+        ChangeDamageMultiplier = 7004,
+        IgnoreProtectionEffects = 7005,
+        ChangeCalculatedDamage = 7006,
+        ChangeEffectRepeatCount = 7007,
+        ChangeDestroyHpAmount = 7008,
+        ChangeHealMultiplier = 7009,
+        ChangeStaminaModifier = 7010,
+        ChangeShieldMultiplier = 7011,
+        ChangeEffectResistance = 7012,
+        IgnoreDefenceModifier = 7013,
+        ExcludeHitType = 7014,
+        Summon = 8000,
+        CopyHero = 8001,
+        GrowHydraHead = 8002,
+        ChangeEffectTarget = 9000,
+        CancelEffect = 9001,
+        ForceStatusEffectTick = 9002,
+        ChangeSkyWrathCounter = 9005,
+        UpdateCombo = 9006,
+        SetVoidAbyssCounter = 9007,
+        SetHydraHitCounter = 9008,
+        SetHeroCounter = 9009,
+        StatusBanish = 9010,
+        Banish = 9011,
+        ChangeSkillTarget = 9013,
+        SetShieldHitCounter = 9012,
+        SetLightOrbsStackCount = 9014,
+        HungerCounter = 9020,
+        SetHungerCounter = 9021,
+        PlaceHungerCounter = 9022,
+        Devour = 9023,
+        Devoured = 9024,
+        Digestion = 9025,
+        SetSleepCounter = 9026,
+        ApplyCounter = 9027,
+        PassiveBlockEffect = 9030,
+        Transformation = 9050,
+        CancelTransformation = 9051,
+        EffectDurationModifier = 10000,
+        ChangeEffectProtection = 10001,
+        CheckTargetForCondition = 11000,
+        EffectContainer = 11001,
+        ActionForVisualization = 11010,
+        SleepCounter = 12000,
+        SkyWrath = 12001,
+        VoidAbyss = 12002,
+        HydraHitCounter = 12003,
+
     }
+
+    public enum SkillTargets
+    {
+        Producer = 0,
+        AliveAllies = 1,
+        AliveEnemies = 2,
+        DeadAllies = 3,
+        DeadEnemies = 4,
+        AllAllies = 5,
+        AllEnemies = 6,
+        AliveAlliesExceptProducer = 7,
+        AliveEnemiesIncludeInvisible = 8
+    }
+
+    public enum SkillGroup
+    {
+        Active = 0,
+        Passive = 1
+    }
+
     public enum EffectTargetType
     {
         Target = 0,
@@ -211,24 +311,27 @@ namespace Raid.Toolkit.DataModel
         AllAllies = 7,
         AllEnemies = 8,
         AllDeadAllies = 9,
-        RandomDeadAlly = 13, // 0x0000000D
-        RandomDeadEnemy = 14, // 0x0000000E
-        MostInjuredAlly = 19, // 0x00000013
-        MostInjuredEnemy = 20, // 0x00000014
-        Boss = 22, // 0x00000016
-        RandomRevivableAlly = 25, // 0x00000019
-        OwnerAllies = 26, // 0x0000001A
-        AllHeroes = 29, // 0x0000001D
-        ActiveHero = 31, // 0x0000001F
-        AllyWithLowestMaxHp = 32, // 0x00000020
-        HeroCausedRelationUnapply = 33, // 0x00000021
-        HeroThatKilledProducer = 34, // 0x00000022
-        RelationTargetDuplicates = 35, // 0x00000023
-        AllyWithLowestStamina = 36, // 0x00000024
-        AllyWithHighestStamina = 37, // 0x00000025
-        EnemyWithLowestStamina = 38, // 0x00000026
-        EnemyWithHighestStamina = 39, // 0x00000027
-        RelationProducerOrTeamAttackInitiator = 40, // 0x00000028
+        RandomDeadAlly = 13,
+        RandomDeadEnemy = 14,
+        MostInjuredAlly = 19,
+        MostInjuredEnemy = 20,
+        Boss = 22,
+        RandomRevivableAlly = 25,
+        OwnerAllies = 26,
+        AllHeroes = 29,
+        ActiveHero = 31,
+        AllyWithLowestMaxHp = 32,
+        HeroCausedRelationUnapply = 33,
+        HeroThatKilledProducer = 34,
+        RelationTargetDuplicates = 35,
+        AllyWithLowestStamina = 36,
+        AllyWithHighestStamina = 37,
+        EnemyWithLowestStamina = 38,
+        EnemyWithHighestStamina = 39,
+        RelationProducerOrTeamAttackInitiator = 40,
+        RandomEnemyWithMaxBuffsCount = 41,
+        RandomEnemyWithMarkAppliedByProducer = 42,
+        RandomEnemyWithNotProtectedBuff = 43,
     }
 
     public enum TargetExclusion
@@ -241,90 +344,108 @@ namespace Raid.Toolkit.DataModel
 
     public enum StatusEffectTypeId
     {
-        Stun = 10, // 0x0000000A
-        Freeze = 20, // 0x00000014
-        Sleep = 30, // 0x0000001E
-        Provoke = 40, // 0x00000028
-        Counterattack = 50, // 0x00000032
-        BlockDamage = 60, // 0x0000003C
-        BlockHeal100p = 70, // 0x00000046
-        BlockHeal50p = 71, // 0x00000047
-        ContinuousDamage5p = 80, // 0x00000050
-        ContinuousDamage025p = 81, // 0x00000051
-        ContinuousHeal075p = 90, // 0x0000005A
-        ContinuousHeal15p = 91, // 0x0000005B
-        BlockDebuff = 100, // 0x00000064
-        BlockBuffs = 110, // 0x0000006E
-        IncreaseAttack25 = 120, // 0x00000078
-        IncreaseAttack50 = 121, // 0x00000079
-        DecreaseAttack25 = 130, // 0x00000082
-        DecreaseAttack50 = 131, // 0x00000083
-        IncreaseDefence30 = 140, // 0x0000008C
-        IncreaseDefence60 = 141, // 0x0000008D
-        DecreaseDefence30 = 150, // 0x00000096
-        DecreaseDefence60 = 151, // 0x00000097
-        IncreaseSpeed15 = 160, // 0x000000A0
-        IncreaseSpeed30 = 161, // 0x000000A1
-        DecreaseSpeed15 = 170, // 0x000000AA
-        DecreaseSpeed30 = 171, // 0x000000AB
-        IncreaseAccuracy25 = 220, // 0x000000DC
-        IncreaseAccuracy50 = 221, // 0x000000DD
-        DecreaseAccuracy25 = 230, // 0x000000E6
-        DecreaseAccuracy50 = 231, // 0x000000E7
-        IncreaseCriticalChance15 = 240, // 0x000000F0
-        IncreaseCriticalChance30 = 241, // 0x000000F1
-        DecreaseCriticalChance15 = 250, // 0x000000FA
-        DecreaseCriticalChance30 = 251, // 0x000000FB
-        IncreaseCriticalDamage15 = 260, // 0x00000104
-        IncreaseCriticalDamage30 = 261, // 0x00000105
-        DecreaseCriticalDamage15p = 270, // 0x0000010E
-        DecreaseCriticalDamage25p = 271, // 0x0000010F
-        Shield = 280, // 0x00000118
-        BlockActiveSkills = 290, // 0x00000122
-        ReviveOnDeath = 300, // 0x0000012C
-        ShareDamage50 = 310, // 0x00000136
-        ShareDamage25 = 311, // 0x00000137
-        Unkillable = 320, // 0x00000140
-        TimeBomb = 330, // 0x0000014A
-        DamageCounter = 340, // 0x00000154
-        IncreaseDamageTaken25 = 350, // 0x0000015E
-        IncreaseDamageTaken15 = 351, // 0x0000015F
-        BlockRevive = 360, // 0x00000168
-        ArtifactSetShield = 370, // 0x00000172
-        ReflectDamage15 = 410, // 0x0000019A
-        ReflectDamage30 = 411, // 0x0000019B
-        MinotaurIncreaseDamage = 420, // 0x000001A4
-        MinotaurIncreaseDamageTaken = 430, // 0x000001AE
-        Mark = 440, // 0x000001B8
-        HitCounterShield = 450, // 0x000001C2
-        LifeDrainOnDamage10p = 460, // 0x000001CC
-        Burn = 470, // 0x000001D6
-        Invisible1 = 480, // 0x000001E0
-        Invisible2 = 481, // 0x000001E1
-        Fear1 = 490, // 0x000001EA
-        Fear2 = 491, // 0x000001EB
-        IncreasePoisoning25 = 500, // 0x000001F4
-        IncreasePoisoning50 = 501, // 0x000001F5
-        ReduceDamageTaken15 = 510, // 0x000001FE
-        ReduceDamageTaken25 = 511, // 0x000001FF
-        CrabShell = 520, // 0x00000208
-        CritShield25 = 530, // 0x00000212
-        CritShield50 = 531, // 0x00000213
-        CritShield75 = 532, // 0x00000214
-        CritShield100 = 533, // 0x00000215
-        SkyWrath = 540, // 0x0000021C
-        Enrage = 550, // 0x00000226
-        BlockPassiveSkills = 560, // 0x00000230
-        StatusBanish = 570, // 0x0000023A
-        VoidAbyss = 580, // 0x00000244
-    }
-
-    public enum EffectKindGroup
-    {
-        Undefined = 1,
-        StatusDebuff = 2,
-        ResistibleInstantDebuff = 3,
-        EffectThatApplyStatusDebuffs = 4,
+        Stun = 10,
+        Freeze = 20,
+        Sleep = 30,
+        Provoke = 40,
+        Counterattack = 50,
+        BlockDamage = 60,
+        BlockHeal100p = 70,
+        BlockHeal50p = 71,
+        ContinuousDamage5p = 80,
+        ContinuousDamage025p = 81,
+        ContinuousHeal075p = 90,
+        ContinuousHeal15p = 91,
+        BlockDebuff = 100,
+        BlockBuffs = 110,
+        IncreaseAttack25 = 120,
+        IncreaseAttack50 = 121,
+        DecreaseAttack25 = 130,
+        DecreaseAttack50 = 131,
+        IncreaseDefence30 = 140,
+        IncreaseDefence60 = 141,
+        DecreaseDefence30 = 150,
+        DecreaseDefence60 = 151,
+        IncreaseSpeed15 = 160,
+        IncreaseSpeed30 = 161,
+        DecreaseSpeed15 = 170,
+        DecreaseSpeed30 = 171,
+        IncreaseAccuracy25 = 220,
+        IncreaseAccuracy50 = 221,
+        DecreaseAccuracy25 = 230,
+        DecreaseAccuracy50 = 231,
+        IncreaseCriticalChance15 = 240,
+        IncreaseCriticalChance30 = 241,
+        DecreaseCriticalChance15 = 250,
+        DecreaseCriticalChance30 = 251,
+        IncreaseCriticalDamage15 = 260,
+        IncreaseCriticalDamage30 = 261,
+        DecreaseCriticalDamage15p = 270,
+        DecreaseCriticalDamage25p = 271,
+        Shield = 280,
+        BlockActiveSkills = 290,
+        ReviveOnDeath = 300,
+        ShareDamage50 = 310,
+        ShareDamage25 = 311,
+        Unkillable = 320,
+        TimeBomb = 330,
+        DamageCounter = 340,
+        IncreaseDamageTaken25 = 350,
+        IncreaseDamageTaken15 = 351,
+        BlockRevive = 360,
+        ArtifactSet_Shield = 370,
+        ReflectDamage15 = 410,
+        ReflectDamage30 = 411,
+        MinotaurIncreaseDamage = 420,
+        MinotaurIncreaseDamageTaken = 430,
+        HydraNeckIncreaseDamageTaken = 431,
+        Mark = 440,
+        HitCounterShield = 450,
+        LifeDrainOnDamage10p = 460,
+        Burn = 470,
+        Invisible1 = 480,
+        Invisible2 = 481,
+        Fear1 = 490,
+        Fear2 = 491,
+        IncreasePoisoning25 = 500,
+        IncreasePoisoning50 = 501,
+        ReduceDamageTaken15 = 510,
+        ReduceDamageTaken25 = 511,
+        CrabShell = 520,
+        CritShield25 = 530,
+        CritShield50 = 531,
+        CritShield75 = 532,
+        CritShield100 = 533,
+        SkyWrath = 540,
+        Enrage = 550,
+        BlockPassiveSkills = 560,
+        StatusBanish = 570,
+        VoidAbyss = 580,
+        ElectricMark = 590,
+        Cocoon = 600,
+        PoisonCloud = 610,
+        SimpleStoneSkin = 620,
+        ReflectiveStoneSkin = 621,
+        Petrification = 630,
+        MirrorDamage = 640,
+        BloodRage = 650,
+        HydraHitCounter = 660,
+        NewbieDefence = 670,
+        HungerCounter = 680,
+        Devoured = 690,
+        Digestion = 700,
+        IncreaseResistance25 = 710,
+        IncreaseResistance50 = 711,
+        DecreaseResistance25 = 720,
+        DecreaseResistance50 = 721,
+        BoneShield20 = 730,
+        BoneShield30 = 731,
+        FireMark = 740,
+        MarkOfMadness = 750,
+        LightOrbs = 760,
+        Polymorph = 770,
+        Taunt = 780,
+        SleepCounter = 790,
     }
 
     public enum LifetimeUpdateType
@@ -350,6 +471,7 @@ namespace Raid.Toolkit.DataModel
     {
         Target = 1,
         Producer = 2,
+        RandomAllyExcludingProducer = 3,
     }
 
     public enum UnapplyEffectMode
@@ -413,6 +535,7 @@ namespace Raid.Toolkit.DataModel
         ShieldCreation = 2,
         StaminaRecovery = 3,
         ArtifactSetStats = 4,
+        AuraEfficiency = 5,
     }
 
     public enum Visibility
@@ -424,13 +547,10 @@ namespace Raid.Toolkit.DataModel
         HiddenOnHudWithVisualisationVisibleForAI = 4
     }
 
-    public class EffectGroupStub
-    { }
-
-    public class TargetParamsStub
+    public class TargetParams
     {
         [JsonProperty("targetType")]
-        public EffectTargetType TargetType;
+        public EffectTargetType? TargetType;
 
         [JsonProperty("exclusion")]
         public TargetExclusion? Exclusion;
@@ -442,28 +562,28 @@ namespace Raid.Toolkit.DataModel
         public bool FirstHitInSelected;
 
         [JsonProperty("condition")]
-        public string Condition;
+        public string? Condition;
     }
 
-    public class EffectRelationStub
+    public class EffectRelation
     {
         [JsonProperty("effectTypeId")]
         public int? EffectTypeId;
 
         [JsonProperty("effectKindIds")]
-        public IReadOnlyList<EffectKindId> EffectKindIds;
+        public IReadOnlyList<EffectKindId>? EffectKindIds;
 
         [JsonProperty("effectKindGroups")]
-        public IReadOnlyList<EffectKindGroup> EffectKindGroups;
+        public IReadOnlyList<EffectKindGroup>? EffectKindGroups;
 
         [JsonProperty("phase")]
-        public IReadOnlyList<BattlePhaseId> Phases;
+        public IReadOnlyList<BattlePhaseId>? Phases;
 
         [JsonProperty("activateOnGlancingHit")]
         public bool ActivateOnGlancingHit;
     }
 
-    public class StatusEffectParamsStub
+    public class StatusEffectParams
     {
         [JsonProperty("strengthInFamily")]
         public int StrengthInFamily;
@@ -476,9 +596,12 @@ namespace Raid.Toolkit.DataModel
 
         [JsonProperty("unapplyWhenProducerDied")]
         public bool? UnapplyWhenProducerDied;
+
+        [JsonProperty("skipProcessingWhenJustApplied")]
+        public bool? SkipProcessingWhenJustApplied;
     }
 
-    public class StatusEffectInfoStub
+    public class StatusEffectInfo
     {
         [JsonProperty("typeId")]
         public int TypeId;
@@ -493,7 +616,10 @@ namespace Raid.Toolkit.DataModel
         public ApplyMode? ApplyMode;
 
         [JsonProperty("protection")]
-        public Protection Protection;
+        public Protection? Protection;
+
+        [JsonProperty("durationFormula")]
+        public string? DurationFormula;
     }
 
     public class Protection
@@ -505,19 +631,22 @@ namespace Raid.Toolkit.DataModel
         public double? Chance;
     }
 
-    public class ApplyStatusEffectParamsStub
+    public class ApplyStatusEffectParams
     {
         [JsonProperty("statusEffectInfos")]
-        public IReadOnlyList<StatusEffectInfoStub> StatusEffectInfos;
+        public IReadOnlyList<StatusEffectInfo>? StatusEffectInfos;
     }
 
-    public class UnapplyStatusEffectParamsStub
+    public class UnapplyStatusEffectParams
     {
         [JsonProperty("count")]
         public int Count;
 
         [JsonProperty("statusEffectTypeIds")]
-        public IReadOnlyList<StatusEffectTypeId> StatusEffectTypeIds;
+        public IReadOnlyList<StatusEffectTypeId>? StatusEffectTypeIds;
+
+        [JsonProperty("effectKindGroups")]
+        public IReadOnlyList<StatusEffectTypeId>? EffectKindGroups;
 
         [JsonProperty("unapplyMode")]
         public UnapplyEffectMode UnapplyMode;
@@ -527,15 +656,16 @@ namespace Raid.Toolkit.DataModel
 
         [JsonProperty("applyTo")]
         public UnapplyEffectTarget? ApplyTo;
+
     }
 
-    public class TransferDebuffParamsStub
+    public class TransferDebuffParams
     {
         [JsonProperty("count")]
         public int Count;
 
         [JsonProperty("statusEffectTypeIds")]
-        public IReadOnlyList<StatusEffectTypeId> StatusEffectTypeIds;
+        public IReadOnlyList<StatusEffectTypeId>? StatusEffectTypeIds;
 
         [JsonProperty("unapplyMode")]
         public UnapplyEffectMode UnapplyMode;
@@ -553,7 +683,7 @@ namespace Raid.Toolkit.DataModel
         public EffectTargetType ApplyTo;
     }
 
-    public class DamageParamsStub
+    public class DamageParams
     {
         [JsonProperty("hitType")]
         public HitType? HitType;
@@ -573,29 +703,41 @@ namespace Raid.Toolkit.DataModel
         [JsonProperty("increaseCriticalHitChance")]
         public double? IncreaseCriticalHitChance;
 
+        [JsonProperty("ignoreStatusEffectReduction")]
+        public bool? IgnoreStatusEffectReduction;
+
         [JsonProperty("valueCapExpression")]
-        public string ValueCapExpression;
+        public string? ValueCapExpression;
+
+        [JsonProperty("specificDamageType")]
+        public SpecificDamageType? SpecificDamageType;
     }
 
-    public class HealParamsStub
+    public enum SpecificDamageType
+    {
+        Skeletons = 0,
+        LightOrbs = 1
+    }
+
+    public class HealParams
     {
         [JsonProperty("canBeCritical")]
         public bool CanBeCritical;
     }
 
-    public class EvenParamsStub
+    public class EvenParams
     {
         [JsonProperty("evenMode")]
         public EvenMode EvenMode;
     }
 
-    public class ChangeStatParamsStub
+    public class ChangeStatParams
     {
         [JsonProperty("statKindId")]
         public StatKindId Param;
     }
 
-    public class ActivateSkillParamsStub
+    public class ActivateSkillParams
     {
         [JsonProperty("skillIndex")]
         public int SkillIndex;
@@ -607,7 +749,7 @@ namespace Raid.Toolkit.DataModel
         public string TargetExpression;
     }
 
-    public class ShowHiddenSkillParamsStub
+    public class ShowHiddenSkillParams
     {
         [JsonProperty("skillTypeId")]
         public int SkillTypeId;
@@ -616,7 +758,7 @@ namespace Raid.Toolkit.DataModel
         public bool ShouldHide;
     }
 
-    public class ChangeSkillCooldownParamsStub
+    public class ChangeSkillCooldownParams
     {
         [JsonProperty("turns")]
         public int Turns;
@@ -631,7 +773,7 @@ namespace Raid.Toolkit.DataModel
         public SkillToChange SkillToChange;
     }
 
-    public class ChangeEffectLifetimeParamsStub
+    public class ChangeEffectLifetimeParams
     {
         [JsonProperty("type")]
         public AppliedEffectType Type;
@@ -643,10 +785,10 @@ namespace Raid.Toolkit.DataModel
         public int Count;
 
         [JsonProperty("effectTypeIds")]
-        public IReadOnlyList<StatusEffectTypeId> EffectTypeIds;
+        public IReadOnlyList<StatusEffectTypeId>? EffectTypeIds;
     }
 
-    public class ShareDamageParamsStub
+    public class ShareDamageParams
     {
         [JsonProperty("targetDamageCutPerc")]
         public double TargetDamageCutPerc;
@@ -658,32 +800,35 @@ namespace Raid.Toolkit.DataModel
         public double? DefenceModifier;
     }
 
-    public class BlockEffectParamsStub
+    public class BlockEffectParams
     {
         [JsonProperty("effectTypeIds")]
-        public IReadOnlyList<int> EffectTypeIds;
+        public IReadOnlyList<int>? EffectTypeIds;
 
         [JsonProperty("effectKindIds")]
-        public IReadOnlyList<int> EffectKindIds;
+        public IReadOnlyList<int>? EffectKindIds;
 
         [JsonProperty("blockGuaranteed")]
         public bool? BlockGuaranteed;
+
+        [JsonProperty("blockAllExcludeSelected")]
+        public bool? BlockAllExcludeSelected { get; set; }
     }
 
-    public class TeamAttackParamsStub
+    public class TeamAttackParams
     {
         public int TeammatesCount;
 
         public bool ExcludeProducerFromAttack;
 
-        public IReadOnlyList<int> PreferredHeroTypes;
+        public IReadOnlyList<int>? PreferredHeroTypes;
 
         public bool? AlwaysUsePreferredWhenPossible;
 
-        public string AllySelectorExpression;
+        public string? AllySelectorExpression;
     }
 
-    public class SummonParamsStub
+    public class SummonParams
     {
         [JsonProperty("baseTypeId")]
         public int BaseTypeId;
@@ -704,13 +849,13 @@ namespace Raid.Toolkit.DataModel
         public int SlotsLimit;
     }
 
-    public class DestroyHpParamsStub
+    public class DestroyHpParams
     {
         [JsonProperty("ignoreShield")]
         public bool IgnoreShield;
     }
 
-    public class ReviveParamsStub
+    public class ReviveParams
     {
         [JsonProperty("healPercent")]
         public double HealPercent;
@@ -719,7 +864,7 @@ namespace Raid.Toolkit.DataModel
         public bool IgnoreBlockRevive;
     }
 
-    public class CounterattackParamsStub
+    public class CounterattackParams
     {
         [JsonProperty("skillIndex")]
         public int SkillIndex;
@@ -728,43 +873,43 @@ namespace Raid.Toolkit.DataModel
         public bool NoPenalty;
     }
 
-    public class ForceStatusEffectTickParamsStub
+    public class ForceStatusEffectTickParams
     {
         [JsonProperty("ticks")]
         public int Ticks;
 
         [JsonProperty("effectTypeIds")]
-        public IReadOnlyList<StatusEffectTypeId> EffectTypeIds;
+        public IReadOnlyList<StatusEffectTypeId>? EffectTypeIds;
 
         [JsonProperty("effectCount")]
         public int EffectCount;
     }
 
-    public class CrabShellLayerStub
+    public class CrabShellLayer
     {
         [JsonProperty("type")]
         public CrabShellLayerType Type;
 
         [JsonProperty("multiplierFormula")]
-        public string MultiplierFormula;
+        public string? MultiplierFormula;
 
         [JsonProperty("conditionFormula")]
-        public string ConditionFormula;
+        public string? ConditionFormula;
     }
 
-    public class CrabShellParamsStub
+    public class CrabShellParams
     {
         [JsonProperty("layers")]
-        public IReadOnlyList<CrabShellLayerStub> Layers;
+        public IReadOnlyList<CrabShellLayer>? Layers;
     }
 
-    public class ReturnDebuffsParamsStub
+    public class ReturnDebuffsParams
     {
         [JsonProperty("applyMode")]
         public ApplyMode? ApplyMode;
     }
 
-    public class HitTypeParamsStub
+    public class HitTypeParams
     {
         [JsonProperty("hitTypeToChange")]
         public HitType? HitTypeToChange;
@@ -773,13 +918,13 @@ namespace Raid.Toolkit.DataModel
         public HitType HitType;
     }
 
-    public class PassiveBonusParamsStub
+    public class PassiveBonusParams
     {
         [JsonProperty("bonus")]
         public PassiveBonus Bonus;
     }
 
-    public class MultiplyStatusEffectParamsStub
+    public class MultiplyStatusEffectParams
     {
         [JsonProperty("count")]
         public int Count;
@@ -788,13 +933,22 @@ namespace Raid.Toolkit.DataModel
         public int TurnsModifier;
 
         [JsonProperty("effectKindIds")]
-        public IReadOnlyList<EffectKindId> EffectKindIds;
+        public IReadOnlyList<EffectKindId>? EffectKindIds;
 
         [JsonProperty("targetSelectorExpression")]
-        public string TargetSelectorExpression;
+        public string? TargetSelectorExpression;
+
+        [JsonProperty("turnsChangeMode")]
+        public TurnsChangeMode? TurnsChangeMode;
     }
 
-    public class IgnoreProtectionEffectsParamsStub
+    public enum TurnsChangeMode
+    {
+        Modify = 0,
+        Replace = 1
+    }
+
+    public class IgnoreProtectionEffectsParams
     {
         [JsonProperty("ignoreBlockDamage")]
         public bool IgnoreBlockDamage;
@@ -806,13 +960,126 @@ namespace Raid.Toolkit.DataModel
         public bool IgnoreUnkillable;
     }
 
-    public class ChangeEffectTargetParamsStub
+    public class ChangeEffectTargetParams
     {
         [JsonProperty("overrideApplyMode")]
         public bool OverrideApplyMode;
 
         [JsonProperty("applyMode")]
         public ApplyMode? ApplyMode;
+    }
+
+    public class PlaceHungerCounterParams
+    {
+        [JsonProperty("iterationsBetweenDevouring")]
+        public int IterationsBetweenDevouring;
+    }
+
+    public class NewbieDefenceParams
+    {
+        [JsonProperty("changeDamageFactor")]
+        public double ChangeDamageFactor;
+    }
+
+    public class CocoonParams
+    {
+        [JsonProperty("stunTurns")]
+        public int StunTurns;
+    }
+
+    public class PetrificationParams
+    {
+        [JsonProperty("generalChangeDamageFactor")]
+        public double GeneralChangeDamageFactor;
+
+        [JsonProperty("timeBombChangeDamageFactor")]
+        public double TimeBombChangeDamageFactor;
+    }
+
+    public class StoneSkinParams
+    {
+        [JsonProperty("reflectChance")]
+        public double? ReflectChance;
+
+        [JsonProperty("timeBombChangeDamageFactor")]
+        public double TimeBombChangeDamageFactor;
+
+        [JsonProperty("generalChangeDamageFactor")]
+        public double GeneralChangeDamageFactor;
+
+        [JsonProperty("petrificationTurns")]
+        public int? PetrificationTurns;
+    }
+
+    public class DestroyStatsParams
+    {
+        [JsonProperty("statKindId")]
+        public StatKindId StatKindId;
+
+        [JsonProperty("maxDestructionPercentFormula")]
+        public string? MaxDestructionPercentFormula;
+    }
+
+    public class GrowHydraHeadParams
+    {
+        [JsonProperty("growSelfProbability")]
+        public double GrowSelfProbability;
+    }
+
+    public class DevourParams
+    {
+        [JsonProperty("digestionLifetimeFormula")]
+        public string DigestionLifetimeFormula;
+
+        [JsonProperty("digestionStrengthFormula")]
+        public string DigestionStrengthFormula;
+    }
+
+    public class TransformationParams
+    {
+        [JsonProperty("variantId")]
+        public int VariantId;
+    }
+
+    public class CancelTransformationParams
+    {
+        [JsonProperty("stamina")]
+        public double Stamina;
+        [JsonProperty("healthPercent")]
+        public double HealthPercent;
+    }
+
+    public class EffectContainerParams
+    {
+        [JsonProperty("effect")]
+        public EffectType? Effect;
+    }
+
+    public class ExcludeHitTypeParams
+    {
+        [JsonProperty("excludeGlancingHit")]
+        public bool ExcludeGlancingHit;
+
+        [JsonProperty("excludeCriticalHit")]
+        public bool ExcludeCriticalHit;
+
+        [JsonProperty("excludeCrushingHit")]
+        public bool ExcludeCrushingHit;
+    }
+
+    public class ChangeShieldParams
+    {
+        [JsonProperty("shieldTypes")]
+        public StatusEffectTypeId[]? ShieldTypes;
+    }
+
+    public class ChangeProtectionParams
+    {
+        [JsonProperty("protection")]
+        public Protection? Protection;
+
+        [JsonProperty("canReplaceStronger")]
+        public bool CanReplaceStronger;
     }
 
     public class EffectType
@@ -823,8 +1090,8 @@ namespace Raid.Toolkit.DataModel
         [JsonProperty("count")]
         public int Count;
 
-        [JsonProperty("multiplier")]
-        public string Multiplier;
+        [JsonProperty("multiplier"), Obsolete("Use multiplierFormula")]
+        public string? Multiplier => MultiplierFormula;
 
         [JsonProperty("stack")]
         public int StackCount;
@@ -838,7 +1105,7 @@ namespace Raid.Toolkit.DataModel
         public EffectGroup Group;
 
         [JsonProperty("targetParams")]
-        public TargetParamsStub TargetParams;
+        public TargetParams? TargetParams;
 
         [JsonProperty("isEffectDescription")]
         public bool IsEffectDescription;
@@ -862,10 +1129,10 @@ namespace Raid.Toolkit.DataModel
         public bool IterationChanceRolling;
 
         [JsonProperty("relation")]
-        public EffectRelationStub Relation;
+        public EffectRelation? Relation;
 
         [JsonProperty("condition")]
-        public string Condition;
+        public string? Condition;
 
         [JsonProperty("chance")]
         public double? Chance;
@@ -874,10 +1141,10 @@ namespace Raid.Toolkit.DataModel
         public double? RepeatChance;
 
         [JsonProperty("statusEffectParams")]
-        public StatusEffectParamsStub StatusParams;
+        public StatusEffectParams? StatusParams;
 
         [JsonProperty("valueCap")]
-        public string ValueCap;
+        public string? ValueCap;
 
         [JsonProperty("applyInstantEffectMode")]
         public ApplyMode? ApplyInstantEffectMode;
@@ -889,102 +1156,165 @@ namespace Raid.Toolkit.DataModel
         public bool SnapshotRequired;
 
         [JsonProperty("ignoredEffects")]
-        public IReadOnlyList<EffectKindId> IgnoredEffects;
+        public IReadOnlyList<EffectKindId>? IgnoredEffects;
 
         [JsonProperty("applyStatusEffectParams")]
-        public ApplyStatusEffectParamsStub ApplyStatusEffectParams;
+        public ApplyStatusEffectParams? ApplyStatusEffectParams;
 
         [JsonProperty("unapplyStatusEffectParams")]
-        public UnapplyStatusEffectParamsStub UnapplyStatusEffectParams;
+        public UnapplyStatusEffectParams? UnapplyStatusEffectParams;
 
         [JsonProperty("transferDebuffParams")]
-        public TransferDebuffParamsStub TransferDebuffParams;
+        public TransferDebuffParams? TransferDebuffParams;
 
         [JsonProperty("damageParams")]
-        public DamageParamsStub DamageParams;
+        public DamageParams? DamageParams;
 
         [JsonProperty("healParams")]
-        public HealParamsStub HealParams;
+        public HealParams? HealParams;
 
         [JsonProperty("evenParams")]
-        public EvenParamsStub EvenParams;
+        public EvenParams? EvenParams;
 
         [JsonProperty("changeStatParams")]
-        public ChangeStatParamsStub ChangeStatParams;
+        public ChangeStatParams? ChangeStatParams;
 
         [JsonProperty("activateSkillParams")]
-        public ActivateSkillParamsStub ActivateSkillParams;
+        public ActivateSkillParams? ActivateSkillParams;
 
         [JsonProperty("showHiddenSkillParams")]
-        public ShowHiddenSkillParamsStub ShowHiddenSkillParams;
+        public ShowHiddenSkillParams? ShowHiddenSkillParams;
 
         [JsonProperty("changeSkillCooldownParams")]
-        public ChangeSkillCooldownParamsStub ChangeSkillCooldownParams;
+        public ChangeSkillCooldownParams? ChangeSkillCooldownParams;
 
         [JsonProperty("changeEffectLifetimeParams")]
-        public ChangeEffectLifetimeParamsStub ChangeEffectLifetimeParams;
+        public ChangeEffectLifetimeParams? ChangeEffectLifetimeParams;
 
         [JsonProperty("shareDamageParams")]
-        public ShareDamageParamsStub ShareDamageParams;
+        public ShareDamageParams? ShareDamageParams;
 
         [JsonProperty("blockEffectParams")]
-        public BlockEffectParamsStub BlockEffectParams;
+        public BlockEffectParams? BlockEffectParams;
 
         [JsonProperty("summonParams")]
-        public SummonParamsStub SummonParams;
+        public SummonParams? SummonParams;
 
         [JsonProperty("teamAttackParams")]
-        public TeamAttackParamsStub TeamAttackParams;
+        public TeamAttackParams? TeamAttackParams;
 
         [JsonProperty("destroyHpParams")]
-        public DestroyHpParamsStub DestroyHpParams;
+        public DestroyHpParams? DestroyHpParams;
 
         [JsonProperty("reviveParams")]
-        public ReviveParamsStub ReviveParams;
+        public ReviveParams? ReviveParams;
 
         [JsonProperty("counterattackParams")]
-        public CounterattackParamsStub CounterattackParams;
+        public CounterattackParams? CounterattackParams;
 
         [JsonProperty("forceTickParams")]
-        public ForceStatusEffectTickParamsStub ForceTickParams;
+        public ForceStatusEffectTickParams? ForceTickParams;
 
         [JsonProperty("crabShellParams")]
-        public CrabShellParamsStub CrabShellParams;
+        public CrabShellParams? CrabShellParams;
 
         [JsonProperty("returnDebuffsParams")]
-        public ReturnDebuffsParamsStub ReturnDebuffsParams;
+        public ReturnDebuffsParams? ReturnDebuffsParams;
 
         [JsonProperty("hitTypeParams")]
-        public HitTypeParamsStub HitTypeParams;
+        public HitTypeParams? HitTypeParams;
 
         [JsonProperty("passiveBonusParams")]
-        public PassiveBonusParamsStub PassiveBonusParams;
+        public PassiveBonusParams? PassiveBonusParams;
 
         [JsonProperty("multiplyStatusEffectParams")]
-        public MultiplyStatusEffectParamsStub MultiplyStatusEffectParams;
+        public MultiplyStatusEffectParams? MultiplyStatusEffectParams;
 
         [JsonProperty("ignoreProtectionEffectsParams")]
-        public IgnoreProtectionEffectsParamsStub IgnoreProtectionEffectsParams;
+        public IgnoreProtectionEffectsParams? IgnoreProtectionEffectsParams;
 
         [JsonProperty("changeEffectTargetParams")]
-        public ChangeEffectTargetParamsStub ChangeEffectTargetParams;
+        public ChangeEffectTargetParams? ChangeEffectTargetParams;
 
         [JsonProperty("multiplierFormula")]
-        public string MultiplierFormula;
+        public string? MultiplierFormula;
 
         [JsonProperty("multiplierNotEvaluatedByAI")]
         public bool MultiplierNotEvaluatedByAI;
+
+        [JsonProperty("isContainer")]
+        public bool IsContainer;
+
+        [JsonProperty("placeHungerCounterParams")]
+        public PlaceHungerCounterParams? PlaceHungerCounterParams;
+
+        [JsonProperty("newbieDefenceParams")]
+        public NewbieDefenceParams? NewbieDefenceParams;
+
+        [JsonProperty("cocoonParams")]
+        public CocoonParams? CocoonParams;
+
+        [JsonProperty("petrificationParams")]
+        public PetrificationParams? PetrificationParams;
+
+        [JsonProperty("stoneSkinParams")]
+        public StoneSkinParams? StoneSkinParams;
+
+        [JsonProperty("destroyStatsParams")]
+        public DestroyStatsParams? DestroyStatsParams;
+
+        [JsonProperty("growHydraHeadParams")]
+        public GrowHydraHeadParams? GrowHydraHeadParams;
+
+        [JsonProperty("devourParams")]
+        public DevourParams? DevourParams;
+
+        [JsonProperty("transformationParams")]
+        public TransformationParams? TransformationParams;
+
+        [JsonProperty("cancelTransformationParams")]
+        public CancelTransformationParams? CancelTransformationParams;
+
+        [JsonProperty("effectContainerParams")]
+        public EffectContainerParams? EffectContainerParams;
+
+        [JsonProperty("excludeHitTypeParams")]
+        public ExcludeHitTypeParams? ExcludeHitTypeParams;
+
+        [JsonProperty("changeShieldParams")]
+        public ChangeShieldParams? ChangeShieldParams;
+
+        [JsonProperty("changeProtectionParams")]
+        public ChangeProtectionParams? ChangeProtectionParams;
     }
 
+    [Obsolete("Use SkillBonus")]
     public class SkillUpgrade
     {
         [JsonProperty("type")]
-        public string SkillBonusType;
+        public string? SkillBonusType;
 
         [JsonProperty("value")]
         public double Value;
     }
 
+    public class SkillBonus
+    {
+        [JsonProperty("type")]
+        public SkillBonusType SkillBonusType;
+
+        [JsonProperty("value")]
+        public double Value;
+    }
+
+    public enum SkillBonusType
+    {
+        Attack = 0,
+        Health = 1,
+        EffectChance = 2,
+        CooltimeTurn = 3,
+        ShieldCreation = 4
+    }
 
     public enum BattlePhaseId
     {
@@ -994,41 +1324,45 @@ namespace Raid.Toolkit.DataModel
         BeforeTurnStarted = 20,
         AfterTurnStarted = 21,
         TurnFinished = 22,
+        ImmunitiesProcessing = 32,
         RoundStarted = 30,
         RoundFinished = 31,
-        ImmunitiesProcessing = 32,
         BeforeEffectProcessed = 40,
         BeforeEffectProcessedOnTarget = 41,
         BeforeEffectAppliedOnTarget = 42,
         AfterEffectAppliedOnTarget = 43,
         AfterEffectProcessedOnTarget = 44,
         AfterEffectProcessed = 45,
+        BeforeStatusEffectAppliedOnTarget = 250,
+        EffectBlocked = 190,
         EffectExpired = 46,
         BeforeEffectChanceRolling = 47,
         AfterEffectChanceRolling = 48,
         TargetContextHasJustBeenCreated = 49,
+        AfterHitTypeCalculated = 57,
         BeforeDamageCalculated = 50,
         AfterDamageCalculated = 51,
+        StoneSkinAbsorptionProcessing = 200,
         BeforeDamageDealt = 52,
+        AfterHealthReduced = 56,
+        UnkillableProcessing = 58,
         AfterDamageDealt = 53,
         BlockDamageProcessing = 54,
         AfterDamageContextCreated = 55,
-        AfterHealthReduced = 56,
-        AfterHitTypeCalculated = 57,
-        UnkillableProcessing = 58,
         CocoonProcessing = 59,
+        IgnoreDefenceModifierProcessing = 240,
+        BeforeHealCalculated = 62,
         BeforeHealDealt = 60,
         AfterHealDealt = 61,
-        BeforeHealCalculated = 62,
         AllHeroesDeathProcessed = 70,
         HeroDead = 71,
         AfterSkillEffectsProcessed = 72,
         AfterHeroSummoned = 80,
         BeforeAppliedEffectsUpdate = 100,
         FearProcessing = 111,
+        BeforeSkillProcessed = 114,
         AfterSkillUsed = 112,
         AfterAllSkillsUsed = 113,
-        BeforeSkillProcessed = 114,
         AfterStatusEffectToApplySelected = 120,
         CancelEffectProcessing = 130,
         BeforeEffectUnappliedFromHero = 140,
@@ -1038,10 +1372,8 @@ namespace Raid.Toolkit.DataModel
         BeforeStaminaChanged = 170,
         StatusReviveOnDeathProcessing = 180,
         PassiveReviveOnDeathProcessing = 181,
-        EffectBlocked = 190,
-        StoneSkinAbsorptionProcessing = 200,
         AfterHeroDevoured = 210,
         DigestionAbsorptionProcessing = 220,
-        HydraHeadGrown = 230
+        HydraHeadGrown = 230,
     }
 }

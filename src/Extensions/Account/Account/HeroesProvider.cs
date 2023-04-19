@@ -6,7 +6,7 @@ using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Il2CppToolkit.Runtime;
-using SharedModel.Meta.Artifacts;
+using Raid.Toolkit.DataModel.Enums;
 
 namespace Raid.Toolkit.Extension.Account
 {
@@ -66,9 +66,11 @@ namespace Raid.Toolkit.Extension.Account
 
                 var heroType = heroTypes[hero.TypeId];
                 Dictionary<ArtifactKindId, int> equippedArtifacts = null;
-                if (artifactsByHeroId.TryGetValue(id, out HeroArtifactData artifactData))
+                if (artifactsByHeroId.TryGetValue(id, out SharedModel.Meta.Artifacts.HeroArtifactData artifactData))
                 {
-                    equippedArtifacts = artifactData.ArtifactIdByKind.UnderlyingDictionary.Filter(kvp => kvp.Value != 0);
+                    equippedArtifacts = artifactData.ArtifactIdByKind.UnderlyingDictionary
+                        .Filter(kvp => kvp.Value != 0)
+                        .ToDictionary(kvp => (ArtifactKindId)kvp.Key, kvp => kvp.Value);
                 }
 
                 IReadOnlyDictionary<int, int> skillLevels = hero.Skills.ToDictionary(skill => skill.TypeId, skill => skill.Level);

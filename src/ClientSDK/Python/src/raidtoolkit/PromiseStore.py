@@ -24,7 +24,7 @@ class PromiseStore:
         self.Promises[id].set_result(value)
 
     def fail(self, id: str, error: any):
-        self.Promises[id].set_exception(error)
+        self.Promises[id].set_exception(ValueError(error))
 
     def get(self, id: str):
         return self.Promises[id].promise
