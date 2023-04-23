@@ -11,7 +11,7 @@ namespace Raid.Toolkit.Extension.Account
 {
     public class StaticStageProvider : DataProvider<StaticDataContext, StaticStageData>
     {
-        private static Version kVersion = new(2, 0);
+        private static Version kVersion = new(2, 3);
 
         public override string Key => "stages";
         public override Version Version => kVersion;
@@ -22,15 +22,16 @@ namespace Raid.Toolkit.Extension.Account
         }
 
         private readonly CachedDataStorage<PersistedDataStorage> Storage;
-        public override bool Update(Il2CsRuntimeContext runtime, StaticDataContext context)
+        public override bool Update(Il2CsRuntimeContext runtime, StaticDataContext context, SerializedDataInfo info)
         {
             ModelScope scope = new(runtime);
             var hash = scope.StaticDataManager._hash;
             if (Storage.TryRead(context, Key, out StaticStageData previous))
             {
-                if (previous?.Hash == hash)
+                if (previous?.Hash == hash && info.CurrentVersion >= Version)
                     return false;
             }
+
             var staticData = scope.StaticDataManager.StaticData;
             var areas = new Dictionary<SharedModel.Meta.Stages.AreaTypeId, AreaData>();
             var regions = new Dictionary<SharedModel.Meta.Stages.RegionTypeId, RegionData>();

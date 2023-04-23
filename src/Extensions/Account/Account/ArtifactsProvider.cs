@@ -63,7 +63,7 @@ namespace Raid.Toolkit.Extension.Account
             Logger = logger;
         }
 
-        public override bool Update(Il2CsRuntimeContext runtime, AccountDataContext context)
+        public override bool Update(Il2CsRuntimeContext runtime, AccountDataContext context, SerializedDataInfo info)
         {
             ModelScope scope = new(runtime);
             var artifactData = scope.AppModel._userWrapper.Artifacts.ArtifactData;

@@ -22,7 +22,7 @@ namespace Raid.Toolkit.Extension.Account
             Storage = storage;
         }
 
-        public override bool Update(Il2CsRuntimeContext runtime, StaticDataContext context)
+        public override bool Update(Il2CsRuntimeContext runtime, StaticDataContext context, SerializedDataInfo info)
         {
             ModelScope scope = new(runtime);
             var hash = scope.StaticDataManager._hash;

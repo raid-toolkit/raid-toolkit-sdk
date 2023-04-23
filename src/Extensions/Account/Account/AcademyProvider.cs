@@ -23,7 +23,7 @@ namespace Raid.Toolkit.Extension.Account
             Storage = storage;
         }
 
-        public override bool Update(Il2CsRuntimeContext runtime, AccountDataContext context)
+        public override bool Update(Il2CsRuntimeContext runtime, AccountDataContext context, SerializedDataInfo info)
         {
             if (!Storage.TryRead(StaticDataContext.Default, Key, out StaticAcademyData academyBonuses))
                 return false;

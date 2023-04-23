@@ -10,7 +10,7 @@ namespace Raid.Toolkit.Extension.Account
 {
     public class StaticSkillProvider : DataProvider<StaticDataContext, StaticSkillData>
     {
-        private static Version kVersion = new(2, 0);
+        private static Version kVersion = new(2, 1);
 
         public override string Key => "skills";
         public override Version Version => kVersion;
@@ -21,7 +21,7 @@ namespace Raid.Toolkit.Extension.Account
             Storage = storage;
         }
 
-        public override bool Update(Il2CsRuntimeContext runtime, StaticDataContext context)
+        public override bool Update(Il2CsRuntimeContext runtime, StaticDataContext context, SerializedDataInfo info)
         {
             ModelScope scope = new(runtime);
             var hash = scope.StaticDataManager._hash;

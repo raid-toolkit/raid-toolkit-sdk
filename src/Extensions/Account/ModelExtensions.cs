@@ -957,7 +957,8 @@ namespace Raid.Toolkit.DataModel
                 RegionId = (int)regionTypeId,
                 Difficulty = stage._difficulty.ToString(),
                 StageId = stage.Id,
-                Modifiers = stage.Modifiers.Select(ToModel).ToArray()
+                Modifiers = stage.Modifiers.Select(ToModel).ToArray(),
+                Formations = stage.Formations.Select(ToModel).ToArray()
             };
         }
 
@@ -970,6 +971,54 @@ namespace Raid.Toolkit.DataModel
                 Value = battleStatsMod.Value,
                 Absolute = battleStatsMod.IsAbsolute,
                 KindId = battleStatsMod.KindId.ToModel()
+            };
+        }
+
+        public static StageFormation ToModel(this SharedModel.Meta.Stages.StageHeroesFormation formation)
+        {
+            return new()
+            {
+                Id = formation.Id,
+                HeroSetups = formation.HeroSlotsSetup?.Select(ToModel).ToArray()
+            };
+        }
+
+        public static HeroSlotSetup ToModel(this SharedModel.Meta.Stages.ShortHeroSlotSetup heroSlotSetup)
+        {
+            return new()
+            {
+                TypeId = heroSlotSetup.HeroTypeId,
+                Round = heroSlotSetup.Round,
+                Slot = heroSlotSetup.Slot,
+                Level = heroSlotSetup.Level,
+                Grade = (HeroGrade)heroSlotSetup.Grade,
+                Awaken = ((int?)heroSlotSetup.DoubleAscendGrade ?? 0),
+                MaxSkillsLevel = heroSlotSetup.MaxSkillsLevel,
+                Modifiers = heroSlotSetup.Modifiers?.ToModel(),
+            };
+        }
+
+        public static StatsInitialState? ToModel(this SharedModel.Battle.Core.Setup.InitialState? initialState)
+        {
+            if (initialState == null)
+                return null;
+
+            return new()
+            {
+                DamageTaken = initialState.DamageTaken.AsDouble(),
+                HealthModifier = initialState.HealthModifier.AsDouble()
+            };
+        }
+        public static StatsModifierSetup ToModel(this SharedModel.Meta.Stages.BattleStatsModifierSetup? statsModifierSetup)
+        {
+            if (statsModifierSetup == null)
+                return null;
+
+            return new()
+            {
+                FlatBonus = statsModifierSetup.FlatBonus?.ToModel(),
+                PercentBonus = statsModifierSetup.PercentBonus?.ToModel(),
+                InitialState = statsModifierSetup.InitialState.ToModel()
             };
         }
     }

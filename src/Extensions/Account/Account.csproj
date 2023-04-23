@@ -6,6 +6,7 @@
         <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
         <PackageRTKExtension>false</PackageRTKExtension>
         <RTKInteropCache>false</RTKInteropCache>
+		<Nullable>enable</Nullable>
         <RTKTasks Condition=" '$(RTKTasks)' == '' ">false</RTKTasks>
     </PropertyGroup>
 

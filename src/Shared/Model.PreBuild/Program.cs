@@ -34,7 +34,7 @@ namespace Model.PreBuild
             {
                 return;
             }
-            ModelLoader loader = new();
+            ModelLoader loader = new(null);
             string outputFile = await loader.Build(SharedTypePatterns, force: Environment.GetEnvironmentVariable("FORCE") == "true");
             string targetFile = Path.Combine(args[0], Path.GetFileName(outputFile));
             Console.WriteLine($"Copying [{outputFile}] to [{targetFile}]");

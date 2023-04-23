@@ -37,7 +37,7 @@ namespace Raid.Toolkit.Extension.Account
             Storage = storage;
         }
 
-        public override bool Update(Il2CsRuntimeContext runtime, AccountDataContext context)
+        public override bool Update(Il2CsRuntimeContext runtime, AccountDataContext context, SerializedDataInfo info)
         {
             ModelScope scope = new(runtime);
             var staticBonusData = StaticBonusData.GetValue(scope);

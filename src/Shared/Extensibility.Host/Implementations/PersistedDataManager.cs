@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
+
 using Il2CppToolkit.Runtime;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.Extensibility.DataServices;
@@ -89,6 +91,10 @@ namespace Raid.Toolkit.Extensibility.Providers
             Logger.LogInformation($"Starting update");
 
             Stopwatch sw = Stopwatch.StartNew();
+            if (!Storage.TryRead(context, "_index", out SerializedDataIndex initialIndex))
+            {
+                initialIndex = new();
+            }
             var results = Providers.AsParallel().Select(provider =>
             {
                 var dataType = provider.DataType;
@@ -96,8 +102,11 @@ namespace Raid.Toolkit.Extensibility.Providers
                 {
                     using var loggerScope = Logger.BeginScope(provider);
 
+                    if (!initialIndex.Facets.TryGetValue(provider.Key, out SerializedDataInfo? dataInfo))
+                        dataInfo = new();
+
                     Stopwatch swScoped = Stopwatch.StartNew();
-                    bool didUpdate = provider.Update(runtime, context);
+                    bool didUpdate = provider.Update(runtime, context, dataInfo);
                     Logger.LogInformation($"Provider '{provider.Key}' update completed in {swScoped.ElapsedMilliseconds}ms");
 
                     if (didUpdate)
@@ -116,7 +125,7 @@ namespace Raid.Toolkit.Extensibility.Providers
                         });
                         return UpdateResult.Updated;
                     }
-                    return provider.Update(runtime, context) ? UpdateResult.Updated : UpdateResult.NotUpdated;
+                    return UpdateResult.NotUpdated;
                 }
                 catch (Exception ex)
                 {

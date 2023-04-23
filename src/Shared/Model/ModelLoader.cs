@@ -74,7 +74,7 @@ namespace Raid.Toolkit.Model
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "Failed to load interop assembly");
+                Logger?.LogError(ex, "Failed to load interop assembly");
             }
             return null;
         }
@@ -91,7 +91,7 @@ namespace Raid.Toolkit.Model
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "Failed to load interop assembly");
+                Logger?.LogError(ex, "Failed to load interop assembly");
                 Raise(new(IModelLoader.LoadState.Error));
                 throw;
             }
@@ -136,7 +136,7 @@ namespace Raid.Toolkit.Model
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex, "Failed to load interop assembly");
+                    Logger?.LogError(ex, "Failed to load interop assembly");
                     shouldGenerate = true;
                 }
 
@@ -154,7 +154,7 @@ namespace Raid.Toolkit.Model
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "Failed to load interop assembly");
+                Logger?.LogError(ex, "Failed to load interop assembly");
                 Raise(new(IModelLoader.LoadState.Error));
                 throw;
             }

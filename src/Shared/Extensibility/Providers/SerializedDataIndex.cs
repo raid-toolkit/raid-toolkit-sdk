@@ -8,10 +8,12 @@ namespace Raid.Toolkit.Extensibility.Providers
     public class SerializedDataInfo
     {
         [JsonProperty("lastUpdated")]
-        public DateTime LastUpdated;
+        public DateTime LastUpdated = DateTime.MinValue;
 
         [JsonProperty("version")]
-        public string Version;
+        public string Version = "0.0";
+
+        [JsonIgnore] public Version CurrentVersion => new(Version);
     }
 
     public class SerializedDataIndex

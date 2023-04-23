@@ -40,7 +40,7 @@ namespace Raid.Toolkit.Extension.Account
             return false;
         }
 
-        public override bool Update(Il2CsRuntimeContext runtime, AccountDataContext context)
+        public override bool Update(Il2CsRuntimeContext runtime, AccountDataContext context, SerializedDataInfo info)
         {
             if (!Storage.TryRead<StaticHeroTypeData>(StaticDataContext.Default, "heroTypes", out StaticHeroTypeData staticHeroTypes))
                 return false;
