@@ -37,6 +37,9 @@ namespace Raid.Toolkit.UI.WinUI
             TaskCompletionSource endTask = new();
             XamlApplication.Start(async (p) =>
             {
+                // force loading of WinUIEx
+                typeof(WinUIEx.WindowEx).FullName?.ToString();
+
                 try
                 {
                     DispatcherQueueSynchronizationContext context = new(DispatcherQueue.GetForCurrentThread());

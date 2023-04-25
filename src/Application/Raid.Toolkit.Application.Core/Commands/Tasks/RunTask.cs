@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Commands.Matchers;
 using Raid.Toolkit.Application.Core.DependencyInjection;
@@ -7,6 +8,7 @@ using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility;
+using Raid.Toolkit.Extensibility.Host;
 
 namespace Raid.Toolkit.Application.Core.Commands.Tasks
 {
@@ -48,11 +50,15 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
                 }
             }
 
+            HostFeatures hostFeatures = HostFeatures.RefreshData | HostFeatures.ProcessWatcher;
+            if (!Options.Debug)
+                hostFeatures |= HostFeatures.AutoUpdate;
+
             var builder = AppHostBuilder
                 .AddExtensibility()
                 .AddLogging()
-                .AddUI()
-                .AddAppServices();
+                .AddAppServices(hostFeatures)
+                .AddUI();
             if (!Options.NoWebService)
                 builder = builder.AddWebSockets(AppHost.HandleMessage);
 

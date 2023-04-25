@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using Client.ViewModel.Notifications;
@@ -52,13 +53,23 @@ namespace Raid.Toolkit.UI.WinUI
 
             private async void installUpdateMenuItem_Click(object? sender, EventArgs e)
             {
-                await UpdateService.InstallUpdate();
-                AppService.Exit();
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                Task.Run(async () =>
+                {
+                    await UpdateService.InstallUpdate();
+                    AppService.Exit();
+                });
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
 
             private async void checkUpdatesMenuItem_Click(object? sender, EventArgs e)
             {
-                _ = await UpdateService.CheckForUpdates(userRequested: true, force: true);
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+                Task.Run(() =>
+                {
+                    UpdateService.CheckForUpdates(userRequested: true, force: true);
+                });
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
             }
 
             private void closeMenuItem_Click(object? sender, EventArgs e)
@@ -88,7 +99,7 @@ namespace Raid.Toolkit.UI.WinUI
             private readonly IMenuManager MenuManager;
             private readonly IAppUI AppUI;
             private readonly IAppService AppService;
-            private readonly UpdateService UpdateService;
+            private readonly IUpdateService UpdateService;
             private readonly INotificationSink Notify;
 
             protected override void Dispose(bool disposing)
@@ -102,10 +113,10 @@ namespace Raid.Toolkit.UI.WinUI
 
             public AppTrayMenu(
                 IAppService appService,
-                UpdateService updateService,
                 IMenuManager menuManager,
                 IAppUI appUI,
-                INotificationManager notificationManager)
+                INotificationManager notificationManager,
+                IUpdateService updateService)
             {
                 AppService = appService;
                 UpdateService = updateService;
@@ -123,8 +134,17 @@ namespace Raid.Toolkit.UI.WinUI
                 this.Items.AddRange(new ToolStripItem[] {
                     this.aboutMenuItem,
                     new ToolStripSeparator(),
-                    this.installUpdateMenuItem,
-                    this.checkUpdatesMenuItem,
+                });
+
+                if (UpdateService.IsEnabled)
+                {
+                    this.Items.AddRange(new ToolStripItem[] {
+                        this.installUpdateMenuItem,
+                        this.checkUpdatesMenuItem,
+                    });
+                }
+
+                this.Items.AddRange(new ToolStripItem[] {
                     this.openLogFolderToolStripMenuItem,
                     this.extensionsToolStripMenuItem,
                     this.settingsMenuItem,
@@ -132,6 +152,7 @@ namespace Raid.Toolkit.UI.WinUI
                     new ToolStripSeparator(),
                     this.closeMenuItem
                 });
+
                 this.Name = "appTrayMenu";
                 this.Opening += new System.ComponentModel.CancelEventHandler(this.appTrayMenu_Opening);
 
@@ -145,7 +166,7 @@ namespace Raid.Toolkit.UI.WinUI
                 this.aboutMenuItem.Click += new System.EventHandler(this.aboutMenuItem_Click);
                 // 
                 // installUpdateMenuItem
-                // 
+                //
                 this.installUpdateMenuItem.Name = "installUpdateMenuItem";
                 this.installUpdateMenuItem.Size = new(170, 22);
                 this.installUpdateMenuItem.Text = "Install update";

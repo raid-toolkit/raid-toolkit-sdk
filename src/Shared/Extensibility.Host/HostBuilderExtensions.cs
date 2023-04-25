@@ -1,5 +1,7 @@
 using System;
+
 using Microsoft.Extensions.DependencyInjection;
+
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Notifications;
@@ -14,6 +16,7 @@ namespace Raid.Toolkit.Extensibility.Host
     {
         ProcessWatcher = 1 << 0,
         RefreshData = 1 << 1,
+        AutoUpdate = 1 << 2
     }
 
     public static class HostBuilderExtensions
@@ -24,6 +27,9 @@ namespace Raid.Toolkit.Extensibility.Host
                 services = services.AddHostedService<ProcessWatcherService>();
             if (features.HasFlag(HostFeatures.RefreshData))
                 services = services.AddHostedService<RefreshDataService>();
+            services = features.HasFlag(HostFeatures.AutoUpdate)
+                ? services.AddHostedServiceSingleton<IUpdateService, UpdateService>()
+                : services.AddHostedServiceSingleton<IUpdateService, UpdateServiceStub>();
 
             return services;
         }
@@ -51,7 +57,6 @@ namespace Raid.Toolkit.Extensibility.Host
                 .AddSingleton<PersistedDataStorage>()
                 .AddSingleton<ErrorService>()
                 .AddSingleton<GitHub.Updater>()
-                .AddHostedServiceSingleton<UpdateService>()
                 .AddHostedService<ApplicationHost>()
                 .AddHostedService<ServiceExecutor>()
                 .AddHostedServiceSingleton<INotificationManager, NotificationManager>()

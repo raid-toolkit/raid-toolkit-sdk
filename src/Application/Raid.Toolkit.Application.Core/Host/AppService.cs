@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.Extensibility.Host.Services;
@@ -20,7 +18,7 @@ namespace Raid.Toolkit.Application.Core.Host
             StopSignal = new();
         }
 
-        private void OnUpdateAvailable(object? sender, UpdateService.UpdateAvailbleEventArgs e)
+        private void OnUpdateAvailable(object? sender, UpdateAvailableEventArgs e)
         {
             LatestRelease = e.Release;
         }

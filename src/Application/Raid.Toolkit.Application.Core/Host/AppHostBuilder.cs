@@ -22,7 +22,7 @@ namespace Raid.Toolkit.Application.Core.Host
 {
     internal interface IAppHostBuilder : IHostBuilder
     {
-        IAppHostBuilder AddAppServices();
+        IAppHostBuilder AddAppServices(HostFeatures hostFeatures = HostFeatures.ProcessWatcher | HostFeatures.RefreshData | HostFeatures.AutoUpdate);
         IAppHostBuilder AddExtensibility();
         IAppHostBuilder AddLogging();
         IAppHostBuilder AddUI();
@@ -83,13 +83,13 @@ namespace Raid.Toolkit.Application.Core.Host
                    );
         }
 
-        public IAppHostBuilder AddAppServices()
+        public IAppHostBuilder AddAppServices(HostFeatures hostFeatures = HostFeatures.ProcessWatcher | HostFeatures.RefreshData | HostFeatures.AutoUpdate)
         {
             if (TryAddFeature(Feature.AppServices))
             {
                 ConfigureServices((context, services) => services
                     .AddSingleton<IAppService, AppService>()
-                    .AddFeatures(HostFeatures.ProcessWatcher | HostFeatures.RefreshData)
+                    .AddFeatures(hostFeatures)
                     .Configure<AppSettings>(opts => context.Configuration.GetSection("app").Bind(opts))
                     .Configure<ProcessManagerSettings>(opts => context.Configuration.GetSection("app:ProcessManager").Bind(opts))
                     .Configure<DataUpdateSettings>(opts => context.Configuration.GetSection("app:DataSettings").Bind(opts))
@@ -126,8 +126,7 @@ namespace Raid.Toolkit.Application.Core.Host
         {
             if (TryAddFeature(Feature.UI))
             {
-                AddAppServices()
-                .ConfigureServices((context, services) => services
+                ConfigureServices((context, services) => services
                     .AddHostedServiceSingleton<IAppUI, TAppUI>()
                     );
             }

@@ -1,7 +1,6 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Net.Http.Headers;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,12 +22,14 @@ namespace Raid.Toolkit.Extensibility.Host.Services
     {
         public int PollIntervalMs { get; set; }
     }
-    public class UpdateService : PollingBackgroundService
+    public class UpdateService : PollingBackgroundService, IUpdateService
     {
-        public class UpdateAvailbleEventArgs : EventArgs
+        public bool IsEnabled => true;
+
+        public class UpdateAvailableEventArgs : EventArgs
         {
             public Release Release { get; private set; }
-            public UpdateAvailbleEventArgs(Release release)
+            public UpdateAvailableEventArgs(Release release)
             {
                 Release = release;
             }
@@ -43,7 +44,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
         private readonly TimeSpan _PollInterval;
         private protected override TimeSpan PollInterval => _PollInterval;
 
-        public event EventHandler<UpdateAvailbleEventArgs>? UpdateAvailable;
+        public event EventHandler<UpdateAvailableEventArgs>? UpdateAvailable;
 
         public UpdateService(
             ILogger<UpdateService> logger,
@@ -66,6 +67,19 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             notificationManager.RegisterHandler(Notify);
         }
 
+        event EventHandler<Services.UpdateAvailableEventArgs>? IUpdateService.UpdateAvailable
+        {
+            add
+            {
+                throw new NotImplementedException();
+            }
+
+            remove
+            {
+                throw new NotImplementedException();
+            }
+        }
+
         private async void Notify_Activated(object? sender, NotificationActivationEventArgs e)
         {
             if (e.Arguments.TryGetValue(NotificationConstants.Action, out string? action))
@@ -77,6 +91,9 @@ namespace Raid.Toolkit.Extensibility.Host.Services
                             await InstallUpdate();
                             break;
                         }
+
+                    default:
+                        break;
                 }
             }
         }
@@ -99,7 +116,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
 
                 using (Stream newFile = File.Create(tempDownload))
                 {
-                    newRelease.Seek(0, SeekOrigin.Begin);
+                    _ = newRelease.Seek(0, SeekOrigin.Begin);
                     newRelease.CopyTo(newFile);
                 }
 
@@ -146,7 +163,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
                         .AddButton(new ToastButton("Update now", Notify.GetArguments("install-update")))
                         .AddButton(new ToastButtonSnooze("Update later"))
                         .AddButton(new ToastButtonDismiss());
-                    Notify.SendNotification(tcb.Content);
+                    _ = Notify.SendNotification(tcb.Content);
                     return true;
                 }
             }
@@ -155,7 +172,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
                 ToastContentBuilder tcb = new ToastContentBuilder()
                     .AddText("No updates")
                     .AddText("You are already running the latest version!");
-                Notify.SendNotification(tcb.Content);
+                _ = Notify.SendNotification(tcb.Content);
             }
             return false;
         }
