@@ -74,11 +74,11 @@ jobs:
       - name: Restore the application
         run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Release
 
-      # Publish RTK
-      - name: Build App
-        run: |
-          msbuild $env:Solution_Name -m -t:"Build;Pack" -p:Configuration=Release -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
-          msbuild $env:Launcher_csproj -m -t:Publish -p:TargetFramework=net5.0-windows -p:Configuration=Release -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
+      - name: Build Project
+        run: msbuild $env:Solution_Name -m -t:"Build;Pack" -p:Configuration=Release -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
+
+      - name: Build Launcher
+        run: msbuild $env:Launcher_csproj -m -t:Publish -p:TargetFramework=net5.0-windows -p:Configuration=Release -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
 
       - name: Build Setup
         run: |
