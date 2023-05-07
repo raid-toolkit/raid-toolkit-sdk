@@ -957,8 +957,9 @@ namespace Raid.Toolkit.DataModel
                 RegionId = (int)regionTypeId,
                 Difficulty = stage._difficulty.ToString(),
                 StageId = stage.Id,
-                Modifiers = stage.Modifiers.Select(ToModel).ToArray(),
-                Formations = stage.Formations.Select(ToModel).ToArray()
+                // too slow
+                //Modifiers = stage.Modifiers.Select(ToModel).ToArray(),
+                //Formations = stage.Formations.Select(ToModel).ToArray()
             };
         }
 

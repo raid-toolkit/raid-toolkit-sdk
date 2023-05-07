@@ -13,6 +13,7 @@ namespace Raid.Toolkit.Extension.Account
 
         public override void OnActivate(IExtensionHost host)
         {
+#pragma warning disable CS0612 // Type or member is obsolete
             Disposables.Add(host.RegisterDataProvider<StaticAcademyProvider>());
             Disposables.Add(host.RegisterDataProvider<StaticArenaProvider>());
             Disposables.Add(host.RegisterDataProvider<StaticArtifactProvider>());
@@ -29,6 +30,7 @@ namespace Raid.Toolkit.Extension.Account
             Disposables.Add(host.RegisterDataProvider<HeroesProvider>());
             Disposables.Add(host.RegisterDataProvider<ResourcesProvider>());
             Disposables.Add(host.RegisterMessageScopeHandler<AccountApi>());
+#pragma warning restore CS0612 // Type or member is obsolete
         }
     }
 }
