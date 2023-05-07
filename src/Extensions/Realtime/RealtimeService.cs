@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Client.RaidApp;
-using Client.View.Views;
-using Client.ViewModel.Contextes.ArtifactsUpgrade;
-using Client.ViewModel.Contextes.Base;
 using Client.ViewModel.DTO;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.DataModel;
@@ -34,20 +31,20 @@ namespace Raid.Toolkit.Extension.Realtime
     internal class RealtimeService : IBackgroundService
     {
         private static readonly TimeSpan kPollInterval = new(0, 0, 0, 0, 100);
-        private readonly ILogger<RealtimeService> Logger;
         public TimeSpan PollInterval => kPollInterval;
+        public static bool Enabled { get; set; }
 
         public static event EventHandler<ViewChangedEventArgs> ViewChanged;
         public static event EventHandler<BattleResultsChangedEventArgs> BattleResultChanged;
 
         public RealtimeService(ILogger<RealtimeService> logger)
         {
-            Logger = logger;
         }
 
         public Task Tick(IGameInstance instance)
         {
-            var process = instance.Runtime.TargetProcess;
+            if (!Enabled)
+                return Task.CompletedTask;
 
             ModelScope scope = new(instance.Runtime);
 

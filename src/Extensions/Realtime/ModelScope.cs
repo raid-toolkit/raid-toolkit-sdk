@@ -1,7 +1,6 @@
 using Client.Model;
 using Client.RaidApp;
 using Il2CppToolkit.Runtime;
-using Raid.Toolkit.Extensibility;
 
 namespace Raid.Toolkit.Extension.Realtime
 {
@@ -14,8 +13,7 @@ namespace Raid.Toolkit.Extension.Realtime
         {
             get
             {
-                if (_AppModel == null)
-                    _AppModel = Client.App.SingleInstance<AppModel>._instance.GetValue(Context);
+                _AppModel ??= Client.App.SingleInstance<AppModel>._instance.GetValue(Context);
                 return _AppModel;
             }
         }
@@ -25,8 +23,7 @@ namespace Raid.Toolkit.Extension.Realtime
         {
             get
             {
-                if (_RaidApplication == null)
-                    _RaidApplication = Client.App.Application._instance.GetValue(Context) as RaidApplication;
+                _RaidApplication ??= Client.App.Application._instance.GetValue(Context) as RaidApplication;
                 return _RaidApplication;
             }
         }

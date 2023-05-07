@@ -25,6 +25,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <RTKExtensionManifest Include=".rtk.extension.json" />
+		<RTKExtensionManifest Include=".rtk.extension.json" />
     </ItemGroup>
 </Project>

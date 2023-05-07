@@ -27,7 +27,7 @@
 
     <ItemGroup>
         <RTKExtensionManifest Include=".rtk.extension.json">
-            <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </RTKExtensionManifest>
     </ItemGroup>
 </Project>

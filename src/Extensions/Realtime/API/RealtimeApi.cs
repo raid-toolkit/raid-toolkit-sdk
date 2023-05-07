@@ -33,6 +33,7 @@ namespace Raid.Toolkit.Extension.Realtime
             InstanceManager.OnRemoved += HandleInstanceManagerUpdateEvent;
             RealtimeService.BattleResultChanged += OnBattleResultChanged;
             RealtimeService.ViewChanged += OnViewChanged;
+            RealtimeService.Enabled = true; // enable on first use
         }
 
         private void OnViewChanged(object sender, ViewChangedEventArgs e)

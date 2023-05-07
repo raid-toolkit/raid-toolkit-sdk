@@ -1,6 +1,5 @@
 using System;
 using Microsoft.Extensions.Logging;
-using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
 
 namespace Raid.Toolkit.Extension.Realtime
