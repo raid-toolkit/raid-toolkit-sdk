@@ -30,6 +30,7 @@ namespace Raid.Toolkit.Model
         private Regex[] IncludeTypes;
         private readonly Regex[] ExcludeTypes = new Regex[] {
             new Regex(@"^Client\.ViewModel\.Selections.*"),
+            new Regex(@"^XmlNodeIdentety.*"),
         };
 
         private EventHandler<IModelLoader.ModelLoaderEventArgs> OnStateUpdatedInternal;
