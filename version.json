@@ -4,6 +4,7 @@
   "assemblyVersion": {
     "precision": "revision"
   },
+  "versionHeightOffset": 100,
   "publicReleaseRefSpec": [
     "^refs/heads/main$",
     "^refs/heads/release/v\\d+(?:\\.\\d+)?$"
