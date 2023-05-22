@@ -16,30 +16,30 @@
       },
       "Il2CppToolkit.Common": {
         "type": "Direct",
-        "requested": "[2.0.105-alpha, )",
-        "resolved": "2.0.105-alpha",
-        "contentHash": "UpxSOUdCb+KBCRegzHWTbLPw0xIBk1xPgquDOGZ0jQ+7kFDr8/32JM31xAAtVUTQ26tkhOAjLwL4ciufeVTJ0A==",
+        "requested": "[2.0.107-alpha, )",
+        "resolved": "2.0.107-alpha",
+        "contentHash": "gapC/lWb42QYSzZ/lpbMrs+exGGxe0wRBdfc3bOwhrrJR817Snne7j65/oVXwjssLgcZWndsJTNCC+tJY5U5/w==",
         "dependencies": {
           "System.Memory": "4.5.5"
         }
       },
       "Il2CppToolkit.Metadata": {
         "type": "Direct",
-        "requested": "[2.0.105-alpha, )",
-        "resolved": "2.0.105-alpha",
-        "contentHash": "VebWeeRLnpMuivC75Vcnct4DJMyiZ1fWQRRe1AewFM5Ye4qEJGuGaYZ0+EZfi0WhUELQj6iLrZyQswaCpG0Ctw==",
+        "requested": "[2.0.107-alpha, )",
+        "resolved": "2.0.107-alpha",
+        "contentHash": "Bgy9e9/WD2pY6p4wfOJUqinjE4lnAjkk13yzRkcjDv3mbLjhtj5jSAN5qCmD0onauUvsyZOdYdtTMKy4yvwJ6Q==",
         "dependencies": {
-          "Il2CppToolkit.Common": "2.0.105-alpha"
+          "Il2CppToolkit.Common": "2.0.107-alpha"
         }
       },
       "Il2CppToolkit.Runtime": {
         "type": "Direct",
-        "requested": "[2.0.105-alpha, )",
-        "resolved": "2.0.105-alpha",
-        "contentHash": "DN2W0RXbpjsg3C8T6C+r9Kxdg8ZEMyAAnDx4aYhkJNEjq1OMBsRKJuAqqJRGeoJiDEIXwH9W5mFVYJq29rWkKw==",
+        "requested": "[2.0.107-alpha, )",
+        "resolved": "2.0.107-alpha",
+        "contentHash": "cxcMmzw5eaRdKXPyM5jVuABbdTJBlmetrRL/oMAf++fkRyuAKXgaKXR3iwrtJlDW4HEGiGX376JAhBjAdp11Zw==",
         "dependencies": {
-          "Il2CppToolkit.Common": "2.0.105-alpha",
-          "Il2CppToolkit.Injection.Client": "2.0.116-alpha",
+          "Il2CppToolkit.Common": "2.0.107-alpha",
+          "Il2CppToolkit.Injection.Client": "2.0.118-alpha",
           "ProcessMemoryUtilities.Net": "1.3.4",
           "System.Memory": "4.5.5",
           "Vestris.ResourceLib": "2.1.0"
@@ -98,8 +98,8 @@
       },
       "Il2CppToolkit.Injection.Client": {
         "type": "Transitive",
-        "resolved": "2.0.116-alpha",
-        "contentHash": "clGF0KBGHrZ3phaMCCd51tMDLcv6Rq1y7AsOJqeYBMqMmnm7e9yJJ3HulEqaJUt8SfLEpcAUGeISjHwzuKkjbw==",
+        "resolved": "2.0.118-alpha",
+        "contentHash": "Z6b281ZfJ3GJZMxphw7FagIw/ZRjJjlZmufcHp+8Sizn0G2pbisJMJvzXOJlsAlPmazVYIf4BFZIjffk1XMNoQ==",
         "dependencies": {
           "Google.Protobuf": "3.21.1",
           "Grpc.Net.Client": "2.46.0"
@@ -245,8 +245,8 @@
       },
       "Il2CppToolkit.Injection.Client": {
         "type": "Transitive",
-        "resolved": "2.0.116-alpha",
-        "contentHash": "clGF0KBGHrZ3phaMCCd51tMDLcv6Rq1y7AsOJqeYBMqMmnm7e9yJJ3HulEqaJUt8SfLEpcAUGeISjHwzuKkjbw==",
+        "resolved": "2.0.118-alpha",
+        "contentHash": "Z6b281ZfJ3GJZMxphw7FagIw/ZRjJjlZmufcHp+8Sizn0G2pbisJMJvzXOJlsAlPmazVYIf4BFZIjffk1XMNoQ==",
         "dependencies": {
           "Google.Protobuf": "3.21.1",
           "Grpc.Net.Client": "2.46.0"

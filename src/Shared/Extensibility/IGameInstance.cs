@@ -8,6 +8,7 @@ namespace Raid.Toolkit.Extensibility
     {
         int Token { get; }
         string Id { get; }
+        string AvatarUrl { get; }
         Il2CsRuntimeContext Runtime { get; }
         PropertyBag Properties { get; }
         void InitializeOrThrow(Process proc);
