@@ -31,6 +31,11 @@ namespace Raid.Toolkit.Model
         private readonly Regex[] ExcludeTypes = new Regex[] {
             new Regex(@"^Client\.ViewModel\.Selections.*"),
             new Regex(@"^XmlNodeIdentety.*"),
+            new Regex(@"^Unity\.Collections\.NativeArray`1$"),
+            new Regex(@"^UnityEngine\.UIElements\.CustomStyleProperty`1$"),
+            new Regex(@"^UnityEngine\.UIElements\.StyleDataRef`1$"),
+            new Regex(@"^UnityEngine\.UIElements\.StyleEnum`1$"),
+            new Regex(@"^Unity\.Collections\.NativeSlice`1$"),
         };
 
         private EventHandler<IModelLoader.ModelLoaderEventArgs> OnStateUpdatedInternal;
