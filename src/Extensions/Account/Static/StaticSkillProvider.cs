@@ -1,10 +1,12 @@
 using System;
 using System.Linq;
+using Il2CppToolkit.Runtime;
+using Microsoft.Extensions.Logging;
+using Raid.Toolkit.Common;
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Providers;
-using Il2CppToolkit.Runtime;
 
 namespace Raid.Toolkit.Extension.Account
 {
@@ -16,7 +18,8 @@ namespace Raid.Toolkit.Extension.Account
         public override Version Version => kVersion;
 
         private readonly CachedDataStorage<PersistedDataStorage> Storage;
-        public StaticSkillProvider(CachedDataStorage<PersistedDataStorage> storage)
+        private readonly ILogger<StaticSkillProvider> Logger;
+        public StaticSkillProvider(ILogger<StaticSkillProvider> logger, CachedDataStorage<PersistedDataStorage> storage)
         {
             Storage = storage;
         }
@@ -39,7 +42,11 @@ namespace Raid.Toolkit.Extension.Account
                     SkillTypes = staticData.SkillData._skillTypeById.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ToModel())
                 };
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Logger.LogError(ServiceError.StaticDataReadError.EventId(), ex, "Failed to read static data");
+                return false;
+            }
             return Storage.Write(context, Key, staticSkillData);
         }
     }

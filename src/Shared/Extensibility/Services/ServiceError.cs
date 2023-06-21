@@ -15,5 +15,6 @@ namespace Raid.Toolkit.Extensibility
         AccountReadError,
         ProcessAccessDenied,
         MethodCalledBeforeInitialization,
+        StaticDataReadError,
     }
 }
