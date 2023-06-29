@@ -27,7 +27,7 @@ namespace Raid.Toolkit.Extensibility.Host
             Runtime ??= new(proc);
 
             ErrorHandler.VerifyElseThrow(Runtime != null, ServiceError.MethodCalledBeforeInitialization, "Method cannot be called before intialization");
-            var appModel = Client.App.SingleInstance<AppModel>._instance.GetValue(Runtime);
+            var appModel = AppModel._instance.GetValue(Runtime);
 
             var userWrapper = appModel._userWrapper;
             var socialWrapper = userWrapper.Social.SocialData;
