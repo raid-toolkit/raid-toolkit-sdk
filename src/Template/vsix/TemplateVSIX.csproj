@@ -68,4 +68,5 @@
     <Target Name="BeforeBuild">
         <ZipDirectory Overwrite="true" SourceDirectory="..\src" DestinationFile="ProjectTemplates\RTKExtensionTemplate.zip" />
     </Target>
+    <Target Name="Pack"></Target>
 </Project>
