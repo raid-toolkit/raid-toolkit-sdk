@@ -1,5 +1,9 @@
 # Release Notes
 
+## 2.5.x
+* Added VSIX extension template to SDK build
+* Updated to Il2CppToolkit 2.0.115-alpha, which adds "(Hooked)" to the window title for hooked processes
+
 ## 2.4.x
 * #117 - Add account management UX for exporting/importing account information
 
