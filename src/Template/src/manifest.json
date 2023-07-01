@@ -1,0 +1,13 @@
+{
+    "id": "$safeprojectname$",
+    "type": "$safeprojectname$.Extension",
+    "asm": "$safeprojectname$.dll",
+    "displayName": "$projectname$",
+    "description": "Extracts account data",
+    "codegen": {
+        "types": [
+            "^Client\\.Model\\.AppModel$",
+            "^Client\\.Model\\.Gameplay\\.StaticData\\.ClientStaticDataManager$"
+        ]
+    }
+}

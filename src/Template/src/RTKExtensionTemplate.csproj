@@ -1,0 +1,29 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+        <TargetPlatformMinVersion>10.0.18362.0</TargetPlatformMinVersion>
+        <AssemblyName>$safeprojectname$</AssemblyName>
+        <RootNamespace>$safeprojectname$</RootNamespace>
+        <Platform>x64</Platform>
+        <Platforms>x64</Platforms>
+        <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+        <RuntimeIdentifiers>win10-x64</RuntimeIdentifiers>
+        <!-- https://github.com/dotnet/maui/issues/5886#issuecomment-1123106200 -->
+        <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
+        <InstallRTKExtensionAfterBuild>false</InstallRTKExtensionAfterBuild>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Raid.Toolkit.Extensibility" Version="2.5.9-alpha" />
+        <PackageReference Include="Raid.Toolkit.Extensibility.Tasks" Version="2.5.9-alpha">
+            <PrivateAssets>none</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <RTKExtensionManifest Include="manifest.json" />
+    </ItemGroup>
+
+</Project>

@@ -103,6 +103,7 @@ jobs:
             UPGRADE_2.0.md
             publish/RTK/Raid.Toolkit.exe
             src/Setup/out/RaidToolkitSetup.exe
+            src/Template/vsix/bin/release/RTKExtensionTemplate.vsix
             ThirdPartyNotice.txt
 
       # NuGet Push
