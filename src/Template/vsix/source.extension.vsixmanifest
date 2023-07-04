@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011"
     xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="RTKTemplateVSIX.ad0e331d-adf7-42ba-8466-dcfcb5689af6" Version="1.0" Language="en-US" Publisher="dnchattan" />
+        <Identity Id="RTKTemplateVSIX.ad0e331d-adf7-42ba-8466-dcfcb5689af6" Version="1.1" Language="en-US" Publisher="dnchattan" />
         <DisplayName>Raid Toolkit Extension Template</DisplayName>
         <Description xml:space="preserve">Contains a template for creating a new Raid Toolkit extension.</Description>
     </Metadata>

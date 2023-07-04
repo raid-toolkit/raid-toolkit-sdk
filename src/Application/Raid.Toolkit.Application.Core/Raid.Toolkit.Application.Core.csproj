@@ -29,7 +29,7 @@
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
 		<PackageReference Include="SuperSocket.WebSocket.Server" Version="2.0.0-beta.10" />
-		<PackageReference Include="Il2CppToolkit.Injection.Client" Version="2.0.127-alpha" GeneratePathProperty="true" />
+		<PackageReference Include="Il2CppToolkit.Injection.Client" Version="2.0.128-alpha" GeneratePathProperty="true" />
 		<Reference Include="Raid.Interop">
 			<HintPath>$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
 			<Private>False</Private>
