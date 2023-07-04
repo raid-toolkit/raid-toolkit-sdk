@@ -341,10 +341,6 @@
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Runtime.dll">
-            <Pack>true</Pack>
-            <PackagePath>build\MSBuildCore\</PackagePath>
-        </None>
         <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Configuration.ConfigurationManager.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
