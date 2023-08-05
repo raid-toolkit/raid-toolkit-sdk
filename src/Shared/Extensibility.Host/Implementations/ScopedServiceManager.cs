@@ -83,11 +83,5 @@ namespace Raid.Toolkit.Extensibility.Services
                     _ = SupportedApiList.Remove(attr.Name);
             }
         }
-
-        public T? GetScopeHandler<T>() where T : class, IMessageScopeHandler
-        {
-            return ScopeHandlers.FirstOrDefault(handler => handler is T) as T;
-        }
-
     }
 }

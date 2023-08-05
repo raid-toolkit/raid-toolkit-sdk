@@ -1,5 +1,7 @@
 using Newtonsoft.Json;
 
+using System;
+
 namespace Raid.Toolkit.DataModel
 {
     public class NamedValue

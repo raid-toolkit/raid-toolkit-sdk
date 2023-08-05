@@ -8,6 +8,5 @@ namespace Raid.Toolkit.Extensibility.Services
         ValueTask ProcessMessage(ISocketSession session, string message);
         void AddMessageScopeHandler(IMessageScopeHandler handler);
         void RemoveMessageScopeHandler(IMessageScopeHandler handler);
-        T GetScopeHandler<T>() where T : IMessageScopeHandler;
     }
 }

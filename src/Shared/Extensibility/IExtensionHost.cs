@@ -14,7 +14,6 @@ namespace Raid.Toolkit.Extensibility
         IDisposable RegisterMessageScopeHandler<T>(T handler) where T : IMessageScopeHandler;
         IDisposable RegisterDataProvider<T>(T provider) where T : IDataProvider;
         IDisposable RegisterBackgroundService<T>(T service) where T : IBackgroundService;
-        T? GetScopeHandler<T>() where T : IMessageScopeHandler;
 
         IDisposable RegisterMenuEntry(IMenuEntry entry);
         IDisposable RegisterWindow<T>(WindowOptions options) where T : class;

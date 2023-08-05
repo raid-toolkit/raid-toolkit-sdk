@@ -952,10 +952,9 @@ namespace Raid.Toolkit.DataModel
         {
             return new()
             {
-                Name = stage.Name.ToModel(),
                 AreaId = (int)areaTypeId,
                 RegionId = (int)regionTypeId,
-                Difficulty = stage._difficulty.ToString(),
+                Difficulty = stage._difficulty?.ToString(),
                 StageId = stage.Id,
                 // too slow
                 //Modifiers = stage.Modifiers.Select(ToModel).ToArray(),
