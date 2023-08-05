@@ -11,7 +11,7 @@
     },
     "Standalone": {
       "commandName": "Project",
-      "commandLineArgs": "--standalone --nologo",
+      "commandLineArgs": "--standalone",
       "hotReloadEnabled": true
     },
     "Install Extension": {

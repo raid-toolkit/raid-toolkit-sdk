@@ -28,8 +28,6 @@
     }
   },
   "omnisharp.useModernNet": true,
-  "omnisharp.defaultLaunchSolution": "SDK.sln",
-  "omnisharp.enableImportCompletion": true,
   "omnisharp.enableEditorConfigSupport": true,
   "omnisharp.organizeImportsOnFormat": true,
   "omnisharp.enableRoslynAnalyzers": true,
@@ -150,5 +148,7 @@
     "*/**/bin": true,
     "**/obj": true,
     "**/*.csproj.user": true
-  }
+  },
+  "dotnet.defaultSolution": "SDK.sln",
+  "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true
 }

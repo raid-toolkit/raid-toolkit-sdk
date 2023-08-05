@@ -227,6 +227,12 @@ namespace Raid.Toolkit.Extensibility.Host
             return RegisterMessageScopeHandler(instance);
         }
 
+        public T GetScopeHandler<T>() where T : IMessageScopeHandler
+        {
+            return ScopedServices.GetScopeHandler<T>();
+        }
+
+
         public IDisposable RegisterDataProvider<T>(T provider) where T : IDataProvider
         {
             IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
