@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.IO;
+
 using Microsoft.Win32;
+
 using Newtonsoft.Json;
 
 #if NET5_0_OR_GREATER
@@ -23,6 +25,7 @@ namespace Raid.Toolkit.Model
         {
             public int Id { get; set; }
             public int IntegrationType { get; set; }
+            public string InstallationPath { get; set; }
             [JsonProperty("InsalledGames")]
             public IDictionary<string, string> InstalledGames { get; set; }
         }
@@ -59,9 +62,10 @@ namespace Raid.Toolkit.Model
                 return false;
             }
 
+            string defaultInstallDir = Path.Combine(m_installDir, kGameSubpath);
             gameInfo = new GameInfo
             {
-                InstallPath = Path.Combine(m_installDir, kGameSubpath, gameName),
+                InstallPath = Path.Combine(entry.InstallationPath ?? defaultInstallDir, gameName),
                 Name = gameName,
                 Version = version,
                 PlariumPlayPath = Path.Combine(m_installDir, kPlariumPlayExeSubPath)

@@ -11,6 +11,7 @@ using Il2CppToolkit.Common.Errors;
 using Il2CppToolkit.Model;
 using Il2CppToolkit.ReverseCompiler;
 using Il2CppToolkit.ReverseCompiler.Target.NetCore;
+
 using Microsoft.Extensions.Logging;
 
 namespace Raid.Toolkit.Model
@@ -169,9 +170,10 @@ namespace Raid.Toolkit.Model
         public static PlariumPlayAdapter.GameInfo GetGameInfo()
         {
             PlariumPlayAdapter pp = new();
-            return !pp.TryGetGameVersion(101, "raid", out PlariumPlayAdapter.GameInfo gameInfo)
-                ? throw new InvalidOperationException("Game is not installed")
-                : gameInfo;
+            return (pp.TryGetGameVersion(101, "raid-shadow-legends", out PlariumPlayAdapter.GameInfo gameInfo)
+                || pp.TryGetGameVersion(101, "raid", out gameInfo))
+                ? gameInfo
+                : throw new InvalidOperationException("Game is not installed");
         }
 
         private void GenerateAssembly(PlariumPlayAdapter.GameInfo gameInfo, string dllPath)
