@@ -20,6 +20,7 @@ namespace Raid.Toolkit.Extensibility.Host
         public ExtensionBundle Bundle { get; }
         private readonly IServiceProvider ServiceProvider;
         private readonly IMenuManager MenuManager;
+        private readonly IAccountManager AccountManager;
         private readonly IWindowManager WindowManager;
         private readonly IScopedServiceManager ScopedServices;
         private readonly IServiceManager ServiceManager;
@@ -38,6 +39,7 @@ namespace Raid.Toolkit.Extensibility.Host
             IContextDataManager dataManager,
             IServiceManager serviceManager,
             IServiceProvider serviceProvider,
+            IAccountManager accountManager,
             IMenuManager menuManager,
             IWindowManager windowManager,
             IPackageLoader loader,
@@ -52,6 +54,7 @@ namespace Raid.Toolkit.Extensibility.Host
             DataManager = dataManager;
             ServiceManager = serviceManager;
             ServiceProvider = serviceProvider;
+            AccountManager = accountManager;
             MenuManager = menuManager;
             WindowManager = windowManager;
             Logger = logger;
@@ -251,6 +254,12 @@ namespace Raid.Toolkit.Extensibility.Host
             IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
             T instance = ActivatorUtilities.CreateInstance<T>(scope);
             return RegisterBackgroundService(instance);
+        }
+
+        public IDisposable RegisterAccountExtension<T>(T factory) where T : IAccountExtensionFactory
+        {
+            AccountManager.RegisterAccountExtension(factory);
+            return new HostResourceHandle(() => AccountManager.UnregisterAccountExtension(factory));
         }
 
         public IDisposable RegisterMenuEntry(IMenuEntry entry)

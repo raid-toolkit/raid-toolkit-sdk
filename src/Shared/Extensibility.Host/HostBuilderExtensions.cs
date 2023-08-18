@@ -54,6 +54,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 .AddSingleton(typeof(CachedDataStorage))
                 .AddSingleton(typeof(CachedDataStorage<>))
                 .AddSingleton(typeof(PersistedDataManager<>))
+                .AddSingleton<IAccountManager, AccountManager>()
                 .AddSingleton<PersistedDataStorage>()
                 .AddSingleton<ErrorService>()
                 .AddSingleton<GitHub.Updater>()

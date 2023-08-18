@@ -11,9 +11,9 @@ namespace Raid.Toolkit.Extensibility.DataServices
         private static readonly object EmptyObject = new();
         private static readonly ConcurrentDictionary<string, object> Cache = new();
 
-        private readonly IDataStorage UnderlyingStorage;
+        private readonly IDataStorage? UnderlyingStorage;
 
-        public event EventHandler<DataStorageUpdatedEventArgs> Updated;
+        public event EventHandler<DataStorageUpdatedEventArgs>? Updated;
 
         public static IEnumerable<string> GetKeys(IDataContext withinContext)
         {

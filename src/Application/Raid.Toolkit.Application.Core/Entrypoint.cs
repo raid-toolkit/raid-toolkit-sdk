@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Application.Core.Commands;
 using Raid.Toolkit.Application.Core.Commands.Base;
+using Raid.Toolkit.Extensibility;
 
 namespace Raid.Toolkit.Application.Core
 {
