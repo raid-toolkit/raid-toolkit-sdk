@@ -15,14 +15,15 @@ namespace Raid.Toolkit.Extensibility.Host
     public class AccountManager : IAccountManager
     {
         private readonly object _syncRoot = new();
-
-        private readonly Dictionary<string, AccountInstance> Accounts = new();
+        private readonly Dictionary<string, AccountInstance> AccountMap = new();
         private readonly List<IAccountExtensionFactory> Factories = new();
 
         private readonly IServiceProvider ServiceProvider;
         private readonly CachedDataStorage<PersistedDataStorage> Storage;
         private readonly ILogger<AccountManager> Logger;
         private readonly IGameInstanceManager GameInstanceManager;
+
+        public IEnumerable<IAccount> Accounts => AccountMap.Values;
 
         public AccountManager(
             IServiceProvider serviceProvider,
@@ -43,7 +44,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private bool TryGetAccount(string accountId, [NotNullWhen(true)] out AccountInstance? account)
         {
             lock (_syncRoot)
-                return Accounts.TryGetValue(accountId, out account);
+                return AccountMap.TryGetValue(accountId, out account);
         }
 
         private void GameInstanceManager_OnAdded(object? sender, IGameInstanceManager.GameInstancesUpdatedEventArgs e)
@@ -95,9 +96,9 @@ namespace Raid.Toolkit.Extensibility.Host
             {
                 foreach (IAccountExtensionFactory factory in Factories)
                 {
-                    Accounts[accountId].AddExtension(factory);
+                    AccountMap[accountId].AddExtension(factory);
                 }
-                Accounts.TryAdd(accountId, account);
+                AccountMap.TryAdd(accountId, account);
             }
         }
 
@@ -106,7 +107,7 @@ namespace Raid.Toolkit.Extensibility.Host
             lock (_syncRoot)
             {
                 Factories.Add(factory);
-                foreach (AccountInstance account in Accounts.Values)
+                foreach (AccountInstance account in AccountMap.Values)
                 {
                     account.AddExtension(factory);
                 }
@@ -119,7 +120,7 @@ namespace Raid.Toolkit.Extensibility.Host
             {
                 Factories.Remove(factory);
 
-                foreach (AccountInstance account in Accounts.Values)
+                foreach (AccountInstance account in AccountMap.Values)
                 {
                     account.RemoveExtension(factory);
                 }
