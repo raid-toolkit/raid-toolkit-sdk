@@ -7,6 +7,11 @@ using Il2CppToolkit.Runtime;
 
 namespace Raid.Toolkit.Extensibility
 {
+    public interface IAccountPublicApi<T> where T : class
+    {
+        T GetApi();
+    }
+
     public interface IAccountExtensionService
     {
         Task OnTick();

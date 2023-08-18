@@ -1,10 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using Il2CppToolkit.Runtime;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.DataModel;
+using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 
 namespace Raid.Toolkit.Extensibility.Host
@@ -44,6 +46,25 @@ namespace Raid.Toolkit.Extensibility.Host
             {
                 throw new KeyNotFoundException("Account info not found");
             }
+        }
+
+        public bool TryGetApi<T>([NotNullWhen(true)] out T? api) where T : class
+        {
+            IAccountExtension[] extensions = GetExtensionsSnapshot();
+            foreach (IAccountExtension extension in extensions)
+            {
+                lock (_syncRoot)
+                    if (!Extensions.ContainsValue(extension))
+                        continue; // extension was since removed
+
+                if (extension is IAccountPublicApi<T> publicApi)
+                {
+                    api = publicApi.GetApi();
+                    return true;
+                }
+            }
+            api = null;
+            return false;
         }
 
         public async Task Tick()

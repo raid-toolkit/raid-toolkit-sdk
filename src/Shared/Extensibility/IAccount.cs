@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using Il2CppToolkit.Runtime;
 
 namespace Raid.Toolkit.Extensibility
@@ -15,5 +16,7 @@ namespace Raid.Toolkit.Extensibility
 
         bool IsOnline { get; }
         Il2CsRuntimeContext? Runtime { get; }
+
+        bool TryGetApi<T>([NotNullWhen(true)] out T? api) where T : class;
     }
 }
