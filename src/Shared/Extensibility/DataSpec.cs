@@ -10,17 +10,16 @@ namespace Raid.Toolkit.Extension
         {
             Key = key;
         }
-        public T Get(CachedDataStorage<PersistedDataStorage> storage, IDataContext context)
+        public T Get(IExtensionStorage storage)
         {
-            if (!storage.TryRead<T>(context, Key, out T Value))
+            if (!storage.TryRead<T>(Key, out T Value))
                 throw new System.NullReferenceException("Could not obtain value");
 
             return Value;
         }
-        public void Set(CachedDataStorage<PersistedDataStorage> storage, IDataContext context, T value)
+        public void Set(IExtensionStorage storage, T value)
         {
-            if (!storage.Write<T>(context, Key, value))
-                throw new System.NullReferenceException("Could not write value");
+            storage.Write<T>(Key, value);
         }
     }
 }

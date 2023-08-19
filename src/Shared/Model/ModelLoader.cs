@@ -25,6 +25,7 @@ namespace Raid.Toolkit.Model
 
         private static readonly Regex[] DefaultIncludeTypes = new[] {
             new Regex(@"^Client\.Model\.AppModel$", RegexOptions.Singleline | RegexOptions.Compiled),
+            new Regex(@"^Plarium\.Common\.Serialization\.JsonMain", RegexOptions.Singleline | RegexOptions.Compiled),
         };
 
         private Version CurrentInteropVersion;

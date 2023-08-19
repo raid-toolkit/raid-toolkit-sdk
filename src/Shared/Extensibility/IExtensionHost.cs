@@ -10,6 +10,7 @@ namespace Raid.Toolkit.Extensibility
         T CreateInstance<T>(params object[] args) where T : IDisposable;
 
         IExtensionStorage GetStorage(bool enableCache);
+        IExtensionStorage GetStorage(IAccount account, bool enableCache);
 
         IDisposable RegisterMessageScopeHandler<T>(T handler) where T : IMessageScopeHandler;
         IDisposable RegisterDataProvider<T>(T provider) where T : IDataProvider;

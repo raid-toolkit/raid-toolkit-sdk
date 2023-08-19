@@ -195,6 +195,14 @@ namespace Raid.Toolkit.Extensibility.Host
             return new ExtensionStorage(storage, new(Bundle.Id));
         }
 
+        public IExtensionStorage GetStorage(IAccount account, bool enableCache)
+        {
+            IDataStorage storage = enableCache
+                ? ServiceProvider.GetRequiredService<CachedDataStorage<PersistedDataStorage>>()
+                : ServiceProvider.GetRequiredService<PersistedDataStorage>();
+
+            return new ExtensionStorage(storage, new(account.Id, Bundle.Id));
+        }
 
         public T CreateInstance<T>(params object[] args) where T : IDisposable
         {

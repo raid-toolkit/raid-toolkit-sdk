@@ -46,23 +46,6 @@ namespace Raid.Toolkit.Extensibility.Host
             });
         }
 
-        public void Update()
-        {
-            foreach (var instance in _Instances.Values)
-            {
-                if (!HasCheckedStaticData)
-                {
-                    var result = StaticDataManager.Update(instance.Runtime, StaticDataContext.Default);
-                    if (result == UpdateResult.Failed)
-                        continue;
-
-                    HasCheckedStaticData = true;
-                }
-
-                _ = AccountDataManager.Update(instance.Runtime, instance.Id);
-            }
-        }
-
         public IGameInstance GetById(string id)
         {
             return Instances.FirstOrDefault(instance => instance.Id == id);

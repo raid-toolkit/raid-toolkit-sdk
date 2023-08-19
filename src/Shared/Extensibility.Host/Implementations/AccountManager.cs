@@ -2,25 +2,27 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+
 using Client.Model;
-using Il2CppToolkit.Runtime;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility.DataServices;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public class AccountManager : IAccountManager
+    public class AccountManager : PollingBackgroundService, IAccountManager
     {
         private readonly object _syncRoot = new();
         private readonly Dictionary<string, AccountInstance> AccountMap = new();
         private readonly List<IAccountExtensionFactory> Factories = new();
 
         private readonly IServiceProvider ServiceProvider;
-        private readonly CachedDataStorage<PersistedDataStorage> Storage;
-        private readonly ILogger<AccountManager> Logger;
+        private readonly PersistedDataStorage Storage;
         private readonly IGameInstanceManager GameInstanceManager;
 
         public IEnumerable<IAccount> Accounts => AccountMap.Values;
@@ -29,10 +31,10 @@ namespace Raid.Toolkit.Extensibility.Host
             IServiceProvider serviceProvider,
             ILogger<AccountManager> logger,
             IGameInstanceManager gameInstanceManager,
-            CachedDataStorage<PersistedDataStorage> storage)
+            PersistedDataStorage storage)
+            : base(logger)
         {
             ServiceProvider = serviceProvider;
-            Logger = logger;
             GameInstanceManager = gameInstanceManager;
             Storage = storage;
 
@@ -83,7 +85,7 @@ namespace Raid.Toolkit.Extensibility.Host
 
         private void InitializeFromStorage()
         {
-            foreach (string accountId in CachedDataStorage.GetKeys(new AccountDirectoryContext()))
+            foreach (string accountId in Storage.GetKeys(new AccountDirectoryContext()))
             {
                 LoadAccount(accountId);
             }
@@ -91,7 +93,17 @@ namespace Raid.Toolkit.Extensibility.Host
 
         private void LoadAccount(string accountId)
         {
-            AccountInstance account = ActivatorUtilities.CreateInstance<AccountInstance>(ServiceProvider, accountId);
+            AccountInstance account;
+            try
+            {
+                account = ActivatorUtilities.CreateInstance<AccountInstance>(ServiceProvider, accountId);
+            }
+            catch
+            {
+                // account not fully populated?
+                return;
+            }
+
             lock (_syncRoot)
             {
                 foreach (IAccountExtensionFactory factory in Factories)
@@ -99,6 +111,22 @@ namespace Raid.Toolkit.Extensibility.Host
                     AccountMap[accountId].AddExtension(factory);
                 }
                 AccountMap.TryAdd(accountId, account);
+            }
+        }
+
+        protected override async Task ExecuteOnceAsync(CancellationToken token)
+        {
+            AccountInstance[] accounts;
+            lock (_syncRoot)
+            {
+                accounts = AccountMap.Values.ToArray();
+            }
+            foreach (AccountInstance account in accounts)
+            {
+                if (!AccountMap.ContainsValue(account))
+                    continue;
+
+                await account.Tick();
             }
         }
 
@@ -126,5 +154,6 @@ namespace Raid.Toolkit.Extensibility.Host
                 }
             }
         }
+
     }
 }

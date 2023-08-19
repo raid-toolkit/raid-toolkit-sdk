@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace Raid.Toolkit.Extensibility
 {
     public class ExtensionDataContext : IDataContext
@@ -7,12 +9,27 @@ namespace Raid.Toolkit.Extensibility
             ExtensionId = extensionId;
             Parts = new string[] { "extensions", extensionId };
         }
+
+        public ExtensionDataContext(AccountDataContext account, string extensionId)
+            : this(extensionId)
+        {
+            Parts = account.Parts.Concat(Parts).ToArray();
+        }
+
         public string[] Parts { get; }
         public string ExtensionId { get; }
+        public AccountDataContext? Account { get; }
 
         public override string ToString()
         {
-            return $"account:{ExtensionId[..16]}";
+            if (Account == null)
+            {
+                return $"extension:{ExtensionId[..16]}";
+            }
+            else
+            {
+                return $"{Account};extension:{ExtensionId[..16]}";
+            }
         }
     }
 }

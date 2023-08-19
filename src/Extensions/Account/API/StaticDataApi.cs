@@ -1,22 +1,25 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.DataModel;
+using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Services;
 
 namespace Raid.Toolkit.Extension.Account
 {
     [PublicApi("static-data")]
-    internal class StaticDataApi : ApiHandler<IStaticDataApi>, IStaticDataApi
+    internal class StaticDataApi : ApiHandler<IStaticDataApi>, IStaticDataApi, IDisposable
     {
         private readonly StaticDataWrapper StaticData;
         public StaticDataApi(
+            IExtensionHost host,
             ILogger<StaticDataApi> logger,
             CachedDataStorage<PersistedDataStorage> storage)
             : base(logger)
         {
-            StaticData = new(storage);
+            StaticData = new(host.GetStorage(true));
         }
 
         [PublicApi("getAllData")]
@@ -68,5 +71,7 @@ namespace Raid.Toolkit.Extension.Account
         {
             return Task.FromResult(StaticData.Stages);
         }
+
+        public void Dispose() { }
     }
 }

@@ -6,9 +6,10 @@ namespace Raid.Toolkit.Extensibility
         public string[] Parts => kParts;
         public override string ToString()
         {
-            return $"account";
+            return $"accounts";
         }
     }
+
     public class AccountDataContext : IDataContext
     {
         public AccountDataContext(string accountId)
@@ -16,6 +17,7 @@ namespace Raid.Toolkit.Extensibility
             AccountId = accountId;
             Parts = new string[] { "accounts", accountId };
         }
+
         public string[] Parts { get; }
         public string AccountId { get; }
 
