@@ -15,8 +15,7 @@ namespace Raid.Toolkit.Extension.Account
         private readonly StaticDataWrapper StaticData;
         public StaticDataApi(
             IExtensionHost host,
-            ILogger<StaticDataApi> logger,
-            CachedDataStorage<PersistedDataStorage> storage)
+            ILogger<StaticDataApi> logger)
             : base(logger)
         {
             StaticData = new(host.GetStorage(true));
