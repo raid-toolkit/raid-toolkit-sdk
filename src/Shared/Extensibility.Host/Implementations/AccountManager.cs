@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Markup;
 
 using Client.Model;
 
@@ -17,6 +19,9 @@ namespace Raid.Toolkit.Extensibility.Host
 {
     public class AccountManager : PollingBackgroundService, IAccountManager
     {
+        private readonly static TimeSpan kPollInterval = new(0, 0, 0, 0, 50);
+        private protected override TimeSpan PollInterval => kPollInterval;
+
         private readonly object _syncRoot = new();
         private readonly Dictionary<string, AccountInstance> AccountMap = new();
         private readonly List<IAccountExtensionFactory> Factories = new();
@@ -43,15 +48,27 @@ namespace Raid.Toolkit.Extensibility.Host
             InitializeFromStorage();
         }
 
-        private bool TryGetAccount(string accountId, [NotNullWhen(true)] out AccountInstance? account)
+        public bool TryGetAccount(string accountId, [NotNullWhen(true)] out AccountInstance? account)
         {
             lock (_syncRoot)
                 return AccountMap.TryGetValue(accountId, out account);
         }
 
+        public bool TryGetAccount(string accountId, [NotNullWhen(true)] out IAccount? account)
+        {
+            AccountInstance? result;
+            bool found = false;
+            lock (_syncRoot)
+            {
+                found = AccountMap.TryGetValue(accountId, out result);
+            }
+            account = result;
+            return found;
+        }
+
         private void GameInstanceManager_OnAdded(object? sender, IGameInstanceManager.GameInstancesUpdatedEventArgs e)
         {
-            if (TryGetAccount(e.Instance.Id, out AccountInstance? account))
+            if (TryGetAccount(e.Instance.Id, out IAccount? value) && value is AccountInstance account)
             {
                 account.OnConnected(e.Instance);
             }
@@ -79,7 +96,7 @@ namespace Raid.Toolkit.Extensibility.Host
 
         private void GameInstanceManager_OnRemoved(object? sender, IGameInstanceManager.GameInstancesUpdatedEventArgs e)
         {
-            if (TryGetAccount(e.Instance.Id, out AccountInstance? account))
+            if (TryGetAccount(e.Instance.Id, out IAccount? value) && value is AccountInstance account)
                 account.OnDisconnected();
         }
 
@@ -108,7 +125,7 @@ namespace Raid.Toolkit.Extensibility.Host
             {
                 foreach (IAccountExtensionFactory factory in Factories)
                 {
-                    AccountMap[accountId].AddExtension(factory);
+                    account.AddExtension(factory);
                 }
                 AccountMap.TryAdd(accountId, account);
             }
@@ -126,7 +143,17 @@ namespace Raid.Toolkit.Extensibility.Host
                 if (!AccountMap.ContainsValue(account))
                     continue;
 
-                await account.Tick();
+                Stopwatch swScoped = Stopwatch.StartNew();
+                Logger.LogInformation("Background processing for account {account}", account.Id);
+                try
+                {
+                    await account.Tick();
+                }
+                catch (Exception e)
+                {
+                    Logger.LogError(e, "Failed background processing for account {account}", account.Id);
+                }
+                Logger.LogInformation("Background processing for account {account} completed in {ms}ms", account.Id, swScoped.ElapsedMilliseconds);
             }
         }
 

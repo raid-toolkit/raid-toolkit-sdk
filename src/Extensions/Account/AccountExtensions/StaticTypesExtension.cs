@@ -11,20 +11,20 @@ namespace Raid.Toolkit.Extension.Account;
 
 public class StaticTypesExtension :
     AccountDataExtensionBase,
-    IAccountPublicApi<GetAccountDataApi<StaticArtifactData>>,
-    GetAccountDataApi<StaticArtifactData>,
-    IAccountPublicApi<GetAccountDataApi<StaticHeroTypeData>>,
-    GetAccountDataApi<StaticHeroTypeData>,
-    IAccountPublicApi<GetAccountDataApi<StaticSkillData>>,
-    GetAccountDataApi<StaticSkillData>,
-    IAccountPublicApi<GetAccountDataApi<StaticLocalizationData>>,
-    GetAccountDataApi<StaticLocalizationData>,
-    IAccountPublicApi<GetAccountDataApi<StaticArenaData>>,
-    GetAccountDataApi<StaticArenaData>,
-    IAccountPublicApi<GetAccountDataApi<StaticAcademyData>>,
-    GetAccountDataApi<StaticAcademyData>,
-    IAccountPublicApi<GetAccountDataApi<StaticStageData>>,
-    GetAccountDataApi<StaticStageData>
+    IAccountPublicApi<IGetAccountDataApi<StaticArtifactData>>,
+    IGetAccountDataApi<StaticArtifactData>,
+    IAccountPublicApi<IGetAccountDataApi<StaticHeroTypeData>>,
+    IGetAccountDataApi<StaticHeroTypeData>,
+    IAccountPublicApi<IGetAccountDataApi<StaticSkillData>>,
+    IGetAccountDataApi<StaticSkillData>,
+    IAccountPublicApi<IGetAccountDataApi<StaticLocalizationData>>,
+    IGetAccountDataApi<StaticLocalizationData>,
+    IAccountPublicApi<IGetAccountDataApi<StaticArenaData>>,
+    IGetAccountDataApi<StaticArenaData>,
+    IAccountPublicApi<IGetAccountDataApi<StaticAcademyData>>,
+    IGetAccountDataApi<StaticAcademyData>,
+    IAccountPublicApi<IGetAccountDataApi<StaticStageData>>,
+    IGetAccountDataApi<StaticStageData>
 {
     private const string ArtifactTypesKey = "artifact-types.static.json";
     private const string HeroTypesKey = "hero-types.static.json";
@@ -35,32 +35,32 @@ public class StaticTypesExtension :
     private const string StringsKey = "strings.static.json";
     private static string? StaticDataHash;
 
-    GetAccountDataApi<StaticArtifactData> IAccountPublicApi<GetAccountDataApi<StaticArtifactData>>.GetApi() => this;
-    bool GetAccountDataApi<StaticArtifactData>.TryGetData(out StaticArtifactData data)
+    IGetAccountDataApi<StaticArtifactData> IAccountPublicApi<IGetAccountDataApi<StaticArtifactData>>.GetApi() => this;
+    bool IGetAccountDataApi<StaticArtifactData>.TryGetData(out StaticArtifactData data)
         => Storage.TryRead(ArtifactTypesKey, out data);
 
-    GetAccountDataApi<StaticHeroTypeData> IAccountPublicApi<GetAccountDataApi<StaticHeroTypeData>>.GetApi() => this;
-    bool GetAccountDataApi<StaticHeroTypeData>.TryGetData(out StaticHeroTypeData data)
+    IGetAccountDataApi<StaticHeroTypeData> IAccountPublicApi<IGetAccountDataApi<StaticHeroTypeData>>.GetApi() => this;
+    bool IGetAccountDataApi<StaticHeroTypeData>.TryGetData(out StaticHeroTypeData data)
         => Storage.TryRead(HeroTypesKey, out data);
 
-    GetAccountDataApi<StaticSkillData> IAccountPublicApi<GetAccountDataApi<StaticSkillData>>.GetApi() => this;
-    bool GetAccountDataApi<StaticSkillData>.TryGetData(out StaticSkillData data)
+    IGetAccountDataApi<StaticSkillData> IAccountPublicApi<IGetAccountDataApi<StaticSkillData>>.GetApi() => this;
+    bool IGetAccountDataApi<StaticSkillData>.TryGetData(out StaticSkillData data)
         => Storage.TryRead(SkillTypesKey, out data);
 
-    GetAccountDataApi<StaticLocalizationData> IAccountPublicApi<GetAccountDataApi<StaticLocalizationData>>.GetApi() => this;
-    bool GetAccountDataApi<StaticLocalizationData>.TryGetData(out StaticLocalizationData data)
+    IGetAccountDataApi<StaticLocalizationData> IAccountPublicApi<IGetAccountDataApi<StaticLocalizationData>>.GetApi() => this;
+    bool IGetAccountDataApi<StaticLocalizationData>.TryGetData(out StaticLocalizationData data)
         => Storage.TryRead(StringsKey, out data);
 
-    GetAccountDataApi<StaticArenaData> IAccountPublicApi<GetAccountDataApi<StaticArenaData>>.GetApi() => this;
-    bool GetAccountDataApi<StaticArenaData>.TryGetData(out StaticArenaData data)
+    IGetAccountDataApi<StaticArenaData> IAccountPublicApi<IGetAccountDataApi<StaticArenaData>>.GetApi() => this;
+    bool IGetAccountDataApi<StaticArenaData>.TryGetData(out StaticArenaData data)
         => Storage.TryRead(ArenaKey, out data);
 
-    GetAccountDataApi<StaticAcademyData> IAccountPublicApi<GetAccountDataApi<StaticAcademyData>>.GetApi() => this;
-    bool GetAccountDataApi<StaticAcademyData>.TryGetData(out StaticAcademyData data)
+    IGetAccountDataApi<StaticAcademyData> IAccountPublicApi<IGetAccountDataApi<StaticAcademyData>>.GetApi() => this;
+    bool IGetAccountDataApi<StaticAcademyData>.TryGetData(out StaticAcademyData data)
         => Storage.TryRead(AcademyKey, out data);
 
-    GetAccountDataApi<StaticStageData> IAccountPublicApi<GetAccountDataApi<StaticStageData>>.GetApi() => this;
-    bool GetAccountDataApi<StaticStageData>.TryGetData(out StaticStageData data)
+    IGetAccountDataApi<StaticStageData> IAccountPublicApi<IGetAccountDataApi<StaticStageData>>.GetApi() => this;
+    bool IGetAccountDataApi<StaticStageData>.TryGetData(out StaticStageData data)
         => Storage.TryRead(StagesKey, out data);
 
     public StaticTypesExtension(IAccount account, IExtensionStorage storage, ILogger<HeroesExtension> logger)

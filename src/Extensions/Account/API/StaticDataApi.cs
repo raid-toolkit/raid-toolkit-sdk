@@ -18,7 +18,7 @@ namespace Raid.Toolkit.Extension.Account
             ILogger<StaticDataApi> logger)
             : base(logger)
         {
-            StaticData = new(host.GetStorage(true));
+            StaticData = new(host);
         }
 
         [PublicApi("getAllData")]

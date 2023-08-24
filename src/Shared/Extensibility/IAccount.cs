@@ -1,18 +1,17 @@
 using System.Diagnostics.CodeAnalysis;
 using Il2CppToolkit.Runtime;
 
+using Raid.Toolkit.DataModel;
+
 namespace Raid.Toolkit.Extensibility
 {
-    public struct AccountInfo
-    {
-        public string AccountName { get; }
-        public string AvatarUrl { get; }
-    }
     public interface IAccount
     {
         string Id { get; }
         string AccountName { get; }
         string AvatarUrl { get; }
+
+        AccountBase AccountInfo { get; }
 
         bool IsOnline { get; }
         Il2CsRuntimeContext? Runtime { get; }

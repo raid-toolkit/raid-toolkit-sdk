@@ -24,54 +24,27 @@ namespace Raid.Toolkit.Extension.Account
     }
     public class AccountData : IAccountData
     {
-        private readonly CachedDataStorage<PersistedDataStorage> Storage;
-        private readonly AccountDataContext Context;
-        public AccountData(CachedDataStorage<PersistedDataStorage> storage, string accountId)
+        private readonly IAccount Owner;
+        public AccountData(IAccount account)
         {
-            Storage = storage;
-            Context = accountId;
+            Owner = account;
         }
 
-        private static readonly DataSpec<AccountBase> _Account = new("account");
-        public AccountBase Account
-        {
-            get => _Account.Get(Storage, Context);
-            set => _Account.Set(Storage, Context, value);
-        }
+        public AccountBase Account => Owner.AccountInfo;
 
-        private static readonly DataSpec<ArenaData> _Arena = new("arena");
-        public ArenaData Arena
-        {
-            get => _Arena.Get(Storage, Context);
-            set => _Arena.Set(Storage, Context, value);
-        }
+        private static readonly AccountDataSpec<ArenaData> _Arena = new();
+        public ArenaData Arena => _Arena.Get(Owner);
 
-        private static readonly DataSpec<AcademyData> _Academy = new("academy");
-        public AcademyData Academy
-        {
-            get => _Academy.Get(Storage, Context);
-            set => _Academy.Set(Storage, Context, value);
-        }
+        private static readonly AccountDataSpec<AcademyData> _Academy = new();
+        public AcademyData Academy => _Academy.Get(Owner);
 
-        private static readonly DataSpec<ArtifactsDataObject> _Artifacts = new("artifacts");
-        public ArtifactsDataObject Artifacts
-        {
-            get => _Artifacts.Get(Storage, Context);
-            set => _Artifacts.Set(Storage, Context, value);
-        }
+        private static readonly AccountDataSpec<ArtifactsDataObject> _Artifacts = new();
+        public ArtifactsDataObject Artifacts => _Artifacts.Get(Owner);
 
-        private static readonly DataSpec<HeroData> _HeroData = new("heroes");
-        public HeroData Heroes
-        {
-            get => _HeroData.Get(Storage, Context);
-            set => _HeroData.Set(Storage, Context, value);
-        }
+        private static readonly AccountDataSpec<HeroData> _HeroData = new();
+        public HeroData Heroes => _HeroData.Get(Owner);
 
-        private static readonly DataSpec<Resources> _Resources = new("resources");
-        public Resources Resources
-        {
-            get => _Resources.Get(Storage, Context);
-            set => _Resources.Set(Storage, Context, value);
-        }
+        private static readonly AccountDataSpec<Resources> _Resources = new();
+        public Resources Resources => _Resources.Get(Owner);
     }
 }

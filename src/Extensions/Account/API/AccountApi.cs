@@ -11,20 +11,20 @@ using Extractor = RaidExtractor.Core.Extractor;
 
 namespace Raid.Toolkit.Extension.Account
 {
-    internal class AccountApi : ApiHandler<IAccountApi>, IAccountApi
+    internal class AccountApi : ApiHandler<IAccountApi>, IAccountApi, IDisposable
     {
-        private readonly Extractor Extractor;
-        private readonly CachedDataStorage<PersistedDataStorage> Storage;
+        private readonly Extractor Extractor = new();
+        private readonly IExtensionHost Host;
 
         public AccountApi(
-            ILogger<AccountApi> logger,
-            CachedDataStorage<PersistedDataStorage> storage
+            IExtensionHost host,
+            ILogger<AccountApi> logger
             )
             : base(logger)
         {
-            Storage = storage;
-            Extractor = new Extractor();
-            Storage.Updated += OnStorageUpdated;
+            Host = host;
+            // TODO:
+            // Storage.Updated += OnStorageUpdated;
         }
 
         private void OnStorageUpdated(object sender, DataStorageUpdatedEventArgs e)
@@ -39,17 +39,25 @@ namespace Raid.Toolkit.Extension.Account
         }
 
         [PublicApi("updated")]
-        public event EventHandler<SerializableEventArgs> Updated;
+        public event EventHandler<SerializableEventArgs>? Updated;
 
         public Task<RaidExtractor.Core.AccountDump> GetAccountDump(string accountId)
         {
+            if (!Host.TryGetAccount(accountId, out IAccount? account))
+                throw new ArgumentException($"Account {accountId} not found", nameof(accountId));
             // TODO: Get LastUpdated
-            return Task.FromResult(Extractor.DumpAccount(new AccountData(Storage, accountId), new StaticDataWrapper(Storage), accountId, DateTime.UtcNow));
+            return Task.FromResult(Extractor.DumpAccount(
+                new AccountData(account),
+                new StaticDataWrapper(Host),
+                DateTime.UtcNow
+            ));
         }
 
         public Task<Resources> GetAllResources(string accountId)
         {
-            return Task.FromResult(new AccountData(Storage, accountId).Resources);
+            if (!Host.TryGetAccount(accountId, out IAccount? account))
+                throw new ArgumentException($"Account {accountId} not found", nameof(accountId));
+            return Task.FromResult(new AccountData(account).Resources);
         }
 
         public Task<DataModel.Account[]> GetAccounts()
@@ -59,8 +67,10 @@ namespace Raid.Toolkit.Extension.Account
 
         private DataModel.Account AccountFromUserAccount(string accountId)
         {
+            if (!Host.TryGetAccount(accountId, out IAccount? account))
+                throw new ArgumentException($"Account {accountId} not found", nameof(accountId));
             // TODO: Get LastUpdated
-            return DataModel.Account.FromBase(new AccountData(Storage, accountId).Account, DateTime.UtcNow);
+            return DataModel.Account.FromBase(new AccountData(account).Account, DateTime.UtcNow);
         }
 
         public Task<DataModel.Account> GetAccount(string accountId)
@@ -70,27 +80,37 @@ namespace Raid.Toolkit.Extension.Account
 
         public Task<ArenaData> GetArena(string accountId)
         {
-            return Task.FromResult(new AccountData(Storage, accountId).Arena);
+            if (!Host.TryGetAccount(accountId, out IAccount? account))
+                throw new ArgumentException($"Account {accountId} not found", nameof(accountId));
+            return Task.FromResult(new AccountData(account).Arena);
         }
 
         public Task<AcademyData> GetAcademy(string accountId)
         {
-            return Task.FromResult(new AccountData(Storage, accountId).Academy);
+            if (!Host.TryGetAccount(accountId, out IAccount? account))
+                throw new ArgumentException($"Account {accountId} not found", nameof(accountId));
+            return Task.FromResult(new AccountData(account).Academy);
         }
 
         public Task<Artifact[]> GetArtifacts(string accountId)
         {
-            return Task.FromResult(new AccountData(Storage, accountId).Artifacts.Values.ToArray());
+            if (!Host.TryGetAccount(accountId, out IAccount? account))
+                throw new ArgumentException($"Account {accountId} not found", nameof(accountId));
+            return Task.FromResult(new AccountData(account).Artifacts.Values.ToArray());
         }
 
         public Task<Artifact> GetArtifactById(string accountId, int artifactId)
         {
-            return Task.FromResult(new AccountData(Storage, accountId).Artifacts[artifactId]);
+            if (!Host.TryGetAccount(accountId, out IAccount? account))
+                throw new ArgumentException($"Account {accountId} not found", nameof(accountId));
+            return Task.FromResult(new AccountData(account).Artifacts[artifactId]);
         }
 
         public Task<Hero[]> GetHeroes(string accountId, bool snapshot = false)
         {
-            var heroes = new AccountData(Storage, accountId).Heroes.Heroes.Values;
+            if (!Host.TryGetAccount(accountId, out IAccount? account))
+                throw new ArgumentException($"Account {accountId} not found", nameof(accountId));
+            var heroes = new AccountData(account).Heroes.Heroes.Values;
             return !snapshot
                 ? Task.FromResult(heroes.ToArray())
                 : Task.FromResult<Hero[]>(heroes.Select(hero => GetSnapshot(accountId, hero)).ToArray());
@@ -98,7 +118,9 @@ namespace Raid.Toolkit.Extension.Account
 
         public Task<Hero> GetHeroById(string accountId, int heroId, bool snapshot = false)
         {
-            var hero = new AccountData(Storage, accountId).Heroes.Heroes[heroId];
+            if (!Host.TryGetAccount(accountId, out IAccount? account))
+                throw new ArgumentException($"Account {accountId} not found", nameof(accountId));
+            var hero = new AccountData(account).Heroes.Heroes[heroId];
             return !snapshot ? Task.FromResult(hero) : Task.FromResult<Hero>(GetSnapshot(accountId, hero));
         }
 
@@ -122,8 +144,10 @@ namespace Raid.Toolkit.Extension.Account
 
         private HeroSnapshot GetSnapshot(string accountId, Hero hero)
         {
-            StaticDataWrapper staticData = new(Storage);
-            AccountData accountData = new(Storage, accountId);
+            if (!Host.TryGetAccount(accountId, out IAccount? account))
+                throw new ArgumentException($"Account {accountId} not found", nameof(accountId));
+            StaticDataWrapper staticData = new(Host);
+            AccountData accountData = new(account);
             HeroType type = hero.Type;
             HeroStatsCalculator stats = new(type, (int)Enum.Parse(typeof(SharedModel.Meta.Heroes.HeroGrade), hero.Rank), hero.Level);
 
@@ -181,5 +205,7 @@ namespace Raid.Toolkit.Extension.Account
                 Teams = Array.Empty<string>()
             };
         }
+
+        public void Dispose() { }
     }
 }

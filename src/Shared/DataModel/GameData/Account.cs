@@ -30,7 +30,7 @@ namespace Raid.Toolkit.DataModel
     {
         [JsonProperty("lastUpdated")]
         public DateTime? LastUpdated;
-
+        
         public static Account FromBase(AccountBase accountBase, DateTime? lastUpdated)
         {
             return new Account()

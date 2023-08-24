@@ -19,9 +19,9 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly CachedDataStorage<PersistedDataStorage> Storage;
         private readonly ILogger<AccountInstance> Logger;
         private readonly AccountDataContext Context;
-        private readonly AccountBase AccountInfo;
 
         public string Id { get; }
+        public AccountBase AccountInfo { get; }
         public string AccountName => AccountInfo.Name;
         public string AvatarUrl => AccountInfo.AvatarUrl;
         public bool IsOnline => GameInstance != null;
@@ -42,10 +42,11 @@ namespace Raid.Toolkit.Extensibility.Host
             Storage = storage;
             Context = id;
 
-            if (!Storage.TryRead(Context, "info.json", out AccountInfo))
+            if (!Storage.TryRead(Context, "info.json", out AccountBase accountInfo))
             {
                 throw new KeyNotFoundException("Account info not found");
             }
+            AccountInfo = accountInfo;
         }
 
         public bool TryGetApi<T>([NotNullWhen(true)] out T? api) where T : class

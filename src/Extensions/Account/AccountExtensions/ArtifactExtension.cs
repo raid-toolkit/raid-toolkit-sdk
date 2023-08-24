@@ -14,10 +14,16 @@ using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Extension.Account;
 
-public class ArtifactExtension : AccountDataExtensionBase
+public class ArtifactExtension :
+    AccountDataExtensionBase,
+    IAccountPublicApi<IGetAccountDataApi<ArtifactsDataObject>>,
+    IGetAccountDataApi<ArtifactsDataObject>
 {
     private const string Key = "artifacts.json";
     private readonly ArtifactsProviderState State;
+
+    IGetAccountDataApi<ArtifactsDataObject> IAccountPublicApi<IGetAccountDataApi<ArtifactsDataObject>>.GetApi() => this;
+    bool IGetAccountDataApi<ArtifactsDataObject>.TryGetData(out ArtifactsDataObject data) => Storage.TryRead(Key, out data);
 
     public ArtifactExtension(IAccount account, IExtensionStorage storage, ILogger<ArtifactExtension> logger)
     : base(account, storage, logger)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -269,6 +270,17 @@ namespace Raid.Toolkit.Extensibility.Host
             AccountManager.RegisterAccountExtension(factory);
             return new HostResourceHandle(() => AccountManager.UnregisterAccountExtension(factory));
         }
+
+        public IEnumerable<IAccount> GetAccounts()
+        {
+            return AccountManager.Accounts;
+        }
+
+        public bool TryGetAccount(string accountId, [NotNullWhen(true)] out IAccount? account)
+        {
+            return AccountManager.TryGetAccount(accountId, out account);
+        }
+
 
         public IDisposable RegisterMenuEntry(IMenuEntry entry)
         {

@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows.Forms;
 using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
@@ -8,6 +10,9 @@ namespace Raid.Toolkit.Extensibility
     public interface IExtensionHost
     {
         T CreateInstance<T>(params object[] args) where T : IDisposable;
+
+        IEnumerable<IAccount> GetAccounts();
+        bool TryGetAccount(string accountId, [NotNullWhen(true)] out IAccount? account);
 
         IExtensionStorage GetStorage(bool enableCache);
         IExtensionStorage GetStorage(IAccount account, bool enableCache);

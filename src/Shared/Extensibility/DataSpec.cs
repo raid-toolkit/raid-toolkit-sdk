@@ -1,25 +1,54 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 
 namespace Raid.Toolkit.Extension
 {
-    public class DataSpec<T> where T : class
+    public class AccountDataSpec<T> where T : class
     {
-        private readonly string Key;
-        public DataSpec(string key)
+        public AccountDataSpec()
         {
-            Key = key;
         }
-        public T Get(IExtensionStorage storage)
+
+        public T Get(IAccount account)
         {
-            if (!storage.TryRead<T>(Key, out T Value))
+            if (!account.TryGetApi<IGetAccountDataApi<T>>(out var api)
+                || !api.TryGetData(out T data))
                 throw new System.NullReferenceException("Could not obtain value");
 
-            return Value;
+            return data;
         }
-        public void Set(IExtensionStorage storage, T value)
+    }
+    public class StaticDataSpec<T> where T : class
+    {
+        public StaticDataSpec()
         {
-            storage.Write<T>(Key, value);
+        }
+
+        public T Get(IExtensionHost host)
+        {
+            IAccount? account = host.GetAccounts().FirstOrDefault()
+                ?? throw new System.NullReferenceException("Static data not yet extracted. Start the game and allow extraction of an account to access this data.");
+
+            if (!account.TryGetApi<IGetAccountDataApi<T>>(out var api)
+                || !api.TryGetData(out T data))
+                throw new System.NullReferenceException("Could not obtain value");
+
+            return data;
+        }
+
+        public T Get(IEnumerable<IAccount> accounts)
+        {
+            IAccount? account = accounts.FirstOrDefault()
+                ?? throw new System.NullReferenceException("Static data not yet extracted. Start the game and allow extraction of an account to access this data.");
+
+            if (!account.TryGetApi<IGetAccountDataApi<T>>(out var api)
+                || !api.TryGetData(out T data))
+                throw new System.NullReferenceException("Could not obtain value");
+
+            return data;
         }
     }
 }

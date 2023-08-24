@@ -15,13 +15,13 @@ namespace Raid.Toolkit.Extension.Account;
 
 public class HeroesExtension :
     AccountDataExtensionBase,
-    IAccountPublicApi<GetAccountDataApi<HeroData>>,
-    GetAccountDataApi<HeroData>
+    IAccountPublicApi<IGetAccountDataApi<HeroData>>,
+    IGetAccountDataApi<HeroData>
 {
     private const string Key = "heroes.json";
 
-    GetAccountDataApi<HeroData> IAccountPublicApi<GetAccountDataApi<HeroData>>.GetApi() => this;
-    bool GetAccountDataApi<HeroData>.TryGetData(out HeroData data) => Storage.TryRead(Key, out data);
+    IGetAccountDataApi<HeroData> IAccountPublicApi<IGetAccountDataApi<HeroData>>.GetApi() => this;
+    bool IGetAccountDataApi<HeroData>.TryGetData(out HeroData data) => Storage.TryRead(Key, out data);
 
     public HeroesExtension(IAccount account, IExtensionStorage storage, ILogger<HeroesExtension> logger)
     : base(account, storage, logger)
@@ -30,7 +30,7 @@ public class HeroesExtension :
 
     protected override Task Update(ModelScope scope)
     {
-        if (!Account.TryGetApi<GetAccountDataApi<StaticHeroTypeData>>(out var heroTypesApi)
+        if (!Account.TryGetApi<IGetAccountDataApi<StaticHeroTypeData>>(out var heroTypesApi)
             || !heroTypesApi.TryGetData(out StaticHeroTypeData staticHeroTypes))
             return Task.CompletedTask;
 

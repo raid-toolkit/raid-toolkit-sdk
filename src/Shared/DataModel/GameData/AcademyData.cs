@@ -22,9 +22,9 @@ namespace Raid.Toolkit.DataModel
     public class GuardiansSlot
     {
         [JsonProperty("firstHero")]
-        public int FirstHero;
+        public int? FirstHero;
 
         [JsonProperty("secondHero")]
-        public int SecondHero;
+        public int? SecondHero;
     }
 }
