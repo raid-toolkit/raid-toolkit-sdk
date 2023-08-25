@@ -18,7 +18,7 @@ namespace Raid.Toolkit.Extensibility
         IExtensionStorage GetStorage(IAccount account, bool enableCache);
 
         IDisposable RegisterMessageScopeHandler<T>(T handler) where T : IMessageScopeHandler;
-        IDisposable RegisterDataProvider<T>(T provider) where T : IDataProvider;
+        [Obsolete] IDisposable RegisterDataProvider<T>(T provider) where T : IDataProvider;
         IDisposable RegisterBackgroundService<T>(T service) where T : IBackgroundService;
         IDisposable RegisterAccountExtension<T>(T factory) where T : IAccountExtensionFactory;
 
