@@ -13,7 +13,7 @@ namespace Raid.Toolkit.Extensibility
 
         AccountBase AccountInfo { get; }
 
-        bool IsOnline { get; }
+        [MemberNotNullWhen(true, nameof(Runtime))] bool IsOnline { get; }
         Il2CsRuntimeContext? Runtime { get; }
 
         bool TryGetApi<T>([NotNullWhen(true)] out T? api) where T : class;

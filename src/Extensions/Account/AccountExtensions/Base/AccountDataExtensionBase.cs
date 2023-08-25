@@ -35,7 +35,7 @@ public abstract class AccountDataExtensionBase : IAccountExtension, IAccountExte
 
     public virtual async Task OnTick()
     {
-        if (!Account.IsOnline || Account.Runtime == null)
+        if (!Account.IsOnline)
             return;
 
         ModelScope scope = new(Account.Runtime);
