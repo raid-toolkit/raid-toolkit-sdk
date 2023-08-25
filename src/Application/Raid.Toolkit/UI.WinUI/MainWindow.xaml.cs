@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml;
 using Raid.Toolkit.Application.Core.Commands;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Common;
+using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.UI.WinUI.Base;
 
 using WinUIEx;

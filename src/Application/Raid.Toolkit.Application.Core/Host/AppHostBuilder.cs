@@ -22,7 +22,7 @@ namespace Raid.Toolkit.Application.Core.Host
 {
     internal interface IAppHostBuilder : IHostBuilder
     {
-        IAppHostBuilder AddAppServices(HostFeatures hostFeatures = HostFeatures.ProcessWatcher | HostFeatures.RefreshData | HostFeatures.AutoUpdate);
+        IAppHostBuilder AddAppServices(HostFeatures hostFeatures = HostFeatures.ProcessWatcher | HostFeatures.AutoUpdate);
         IAppHostBuilder AddExtensibility();
         IAppHostBuilder AddLogging();
         IAppHostBuilder AddUI();
@@ -83,7 +83,7 @@ namespace Raid.Toolkit.Application.Core.Host
                    );
         }
 
-        public IAppHostBuilder AddAppServices(HostFeatures hostFeatures = HostFeatures.ProcessWatcher | HostFeatures.RefreshData | HostFeatures.AutoUpdate)
+        public IAppHostBuilder AddAppServices(HostFeatures hostFeatures = HostFeatures.ProcessWatcher | HostFeatures.AutoUpdate)
         {
             if (TryAddFeature(Feature.AppServices))
             {
@@ -92,7 +92,6 @@ namespace Raid.Toolkit.Application.Core.Host
                     .AddFeatures(hostFeatures)
                     .Configure<AppSettings>(opts => context.Configuration.GetSection("app").Bind(opts))
                     .Configure<ProcessManagerSettings>(opts => context.Configuration.GetSection("app:ProcessManager").Bind(opts))
-                    .Configure<DataUpdateSettings>(opts => context.Configuration.GetSection("app:DataSettings").Bind(opts))
                     .Configure<StorageSettings>(opts => context.Configuration.GetSection("app:StorageSettings").Bind(opts))
                     );
             }

@@ -21,7 +21,7 @@ namespace Raid.Toolkit.DataModel
     public class SharedArenaData
     {
         [JsonProperty("league"), JsonConverter(typeof(StringEnumConverter))]
-        public ArenaLeagueId LeagueId;
+        public ArenaLeagueId? LeagueId;
 
         [JsonProperty("points")]
         public long ArenaPoints;

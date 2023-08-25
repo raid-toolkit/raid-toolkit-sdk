@@ -30,7 +30,7 @@ namespace RaidExtractor.Core
                 && data.AssignedHeroes.Any(slot => slot.FirstHero == hero.Id || slot.SecondHero == hero.Id);
         }
 
-        public AccountDump DumpAccount(AccountData accountData, StaticDataWrapper staticData, string accountId, DateTime lastUpdated)
+        public AccountDump DumpAccount(AccountData accountData, StaticDataWrapper staticData, DateTime lastUpdated)
         {
             var accountFacet = accountData.Account;
             var artifacts = accountData.Artifacts;

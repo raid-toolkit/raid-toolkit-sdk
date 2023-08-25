@@ -31,7 +31,7 @@ namespace Raid.Toolkit.Extensibility.DataServices
             StoragePath = settings.Value.StoragePath;
         }
 
-        public event EventHandler<DataStorageUpdatedEventArgs> Updated;
+        public event EventHandler<DataStorageUpdatedEventArgs>? Updated;
 
         public IEnumerable<string> GetKeys(IDataContext context)
         {

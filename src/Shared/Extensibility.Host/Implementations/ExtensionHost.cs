@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -10,7 +12,6 @@ using Microsoft.Extensions.Logging;
 
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility.DataServices;
-using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
 
 namespace Raid.Toolkit.Extensibility.Host
@@ -20,10 +21,10 @@ namespace Raid.Toolkit.Extensibility.Host
         public ExtensionBundle Bundle { get; }
         private readonly IServiceProvider ServiceProvider;
         private readonly IMenuManager MenuManager;
+        private readonly IAccountManager AccountManager;
         private readonly IWindowManager WindowManager;
         private readonly IScopedServiceManager ScopedServices;
         private readonly IServiceManager ServiceManager;
-        private readonly IContextDataManager DataManager;
         private readonly IPackageLoader Loader;
         private readonly ILogger<ExtensionHost> Logger;
         private readonly Dictionary<Type, IDisposable> Instances = new();
@@ -35,9 +36,9 @@ namespace Raid.Toolkit.Extensibility.Host
             ExtensionBundle bundle,
             // injected
             IScopedServiceManager scopedServices,
-            IContextDataManager dataManager,
             IServiceManager serviceManager,
             IServiceProvider serviceProvider,
+            IAccountManager accountManager,
             IMenuManager menuManager,
             IWindowManager windowManager,
             IPackageLoader loader,
@@ -49,9 +50,9 @@ namespace Raid.Toolkit.Extensibility.Host
             Bundle = bundle;
 
             ScopedServices = scopedServices;
-            DataManager = dataManager;
             ServiceManager = serviceManager;
             ServiceProvider = serviceProvider;
+            AccountManager = accountManager;
             MenuManager = menuManager;
             WindowManager = windowManager;
             Logger = logger;
@@ -192,6 +193,14 @@ namespace Raid.Toolkit.Extensibility.Host
             return new ExtensionStorage(storage, new(Bundle.Id));
         }
 
+        public IExtensionStorage GetStorage(IAccount account, bool enableCache)
+        {
+            IDataStorage storage = enableCache
+                ? ServiceProvider.GetRequiredService<CachedDataStorage<PersistedDataStorage>>()
+                : ServiceProvider.GetRequiredService<PersistedDataStorage>();
+
+            return new ExtensionStorage(storage, new(account.Id, Bundle.Id));
+        }
 
         public T CreateInstance<T>(params object[] args) where T : IDisposable
         {
@@ -227,19 +236,6 @@ namespace Raid.Toolkit.Extensibility.Host
             return RegisterMessageScopeHandler(instance);
         }
 
-        public IDisposable RegisterDataProvider<T>(T provider) where T : IDataProvider
-        {
-            IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
-            T instance = ActivatorUtilities.CreateInstance<T>(scope);
-            return DataManager.AddProvider(instance);
-        }
-
-        [Obsolete("Use RegisterDataProvider<T>(T provider)")]
-        public IDisposable RegisterDataProvider<T>() where T : IDataProvider
-        {
-            return DataManager.AddProvider<T>();
-        }
-
         public IDisposable RegisterBackgroundService<T>(T service) where T : IBackgroundService
         {
             return ServiceManager.AddService(service);
@@ -252,6 +248,23 @@ namespace Raid.Toolkit.Extensibility.Host
             T instance = ActivatorUtilities.CreateInstance<T>(scope);
             return RegisterBackgroundService(instance);
         }
+
+        public IDisposable RegisterAccountExtension<T>(T factory) where T : IAccountExtensionFactory
+        {
+            AccountManager.RegisterAccountExtension(Bundle.Manifest, factory);
+            return new HostResourceHandle(() => AccountManager.UnregisterAccountExtension(Bundle.Manifest, factory));
+        }
+
+        public IEnumerable<IAccount> GetAccounts()
+        {
+            return AccountManager.Accounts;
+        }
+
+        public bool TryGetAccount(string accountId, [NotNullWhen(true)] out IAccount? account)
+        {
+            return AccountManager.TryGetAccount(accountId, out account);
+        }
+
 
         public IDisposable RegisterMenuEntry(IMenuEntry entry)
         {

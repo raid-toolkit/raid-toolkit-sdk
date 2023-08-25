@@ -49,14 +49,16 @@ namespace Raid.Toolkit.UI.WinUI
     {
         private readonly CachedDataStorage<PersistedDataStorage> Storage;
         private readonly PersistedDataStorage PersistedDataStorage;
+        private readonly IAccountManager AccountManager;
         private readonly Extractor Extractor;
         private List<AccountData> Accounts = new();
-        public AccountsWindow(CachedDataStorage<PersistedDataStorage> storage, PersistedDataStorage persistedDataStorage)
+        public AccountsWindow(CachedDataStorage<PersistedDataStorage> storage, PersistedDataStorage persistedDataStorage, IAccountManager accountManager)
         {
             InitializeComponent();
 
             Storage = storage;
             PersistedDataStorage = persistedDataStorage;
+            AccountManager = accountManager;
             Extractor = new();
             LoadAccountList();
 
@@ -65,7 +67,7 @@ namespace Raid.Toolkit.UI.WinUI
 
         private void LoadAccountList()
         {
-            Accounts = PersistedDataStorage.GetKeys(new AccountDirectoryContext()).Select(accountId => new AccountData(Storage, accountId)).ToList();
+            Accounts = AccountManager.Accounts.Select(account => new AccountData(account)).ToList();
             AccountList.ItemsSource = Accounts;
         }
 
@@ -74,16 +76,18 @@ namespace Raid.Toolkit.UI.WinUI
             if (sender is not AppBarButton button || button.Tag is not string accountId)
                 return;
 
-            AccountData data = new(Storage, accountId);
+            if (!AccountManager.TryGetAccount(accountId, out IAccount? account))
+                return;
             SaveFileDialog sfd = new()
             {
-                FileName = $"{data.Account.Name}.rtk.json",
+                FileName = $"{account.AccountName}.rtk.json",
                 DefaultExt = "json"
             };
             if (sfd.ShowDialog() != DialogResult.OK)
                 return;
 
-            File.WriteAllText(sfd.FileName, JsonConvert.SerializeObject(data));
+            string accountData = AccountManager.ExportAccountData(accountId);
+            File.WriteAllText(sfd.FileName, accountData);
         }
 
         private async void DumpButton_Click(object sender, RoutedEventArgs e)
@@ -104,8 +108,11 @@ namespace Raid.Toolkit.UI.WinUI
             if (result == ContentDialogResult.Primary)
                 return;
 
-            AccountData data = new(Storage, accountId);
-            AccountDump dump = Extractor.DumpAccount(data, new StaticDataWrapper(Storage), accountId, DateTime.UtcNow);
+            if (!AccountManager.TryGetAccount(accountId, out IAccount? account))
+                return;
+
+            AccountData data = new(account);
+            AccountDump dump = Extractor.DumpAccount(data, new StaticDataWrapper(account), DateTime.UtcNow);
             SaveFileDialog sfd = new()
             {
                 FileName = $"{data.Account.Name}_deprecated.json",
@@ -128,8 +135,11 @@ namespace Raid.Toolkit.UI.WinUI
                 return;
 
             string accountDataJson = File.ReadAllText(ofd.FileName);
-            IAccountData? account = JsonConvert.DeserializeObject<ImportedAccountData>(accountDataJson);
-            if (account == null)
+            try
+            {
+                AccountManager.ImportAccountData(accountDataJson);
+            }
+            catch
             {
                 ContentDialog dialog = new();
                 dialog.XamlRoot = this.Content.XamlRoot;
@@ -141,16 +151,6 @@ namespace Raid.Toolkit.UI.WinUI
                 await dialog.ShowAsync();
                 return;
             }
-
-            new AccountData(Storage, account.Account.Id)
-            {
-                Account = account.Account,
-                Academy = account.Academy,
-                Arena = account.Arena,
-                Artifacts = account.Artifacts,
-                Heroes = account.Heroes,
-                Resources = account.Resources,
-            };
             LoadAccountList();
         }
 

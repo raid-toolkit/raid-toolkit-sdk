@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Raid.Toolkit.Extensibility.Providers;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
@@ -14,9 +13,6 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly ConcurrentDictionary<int, IGameInstance> _Instances = new();
         private readonly ConcurrentDictionary<int, IGameInstance> _RawInstances = new();
         private readonly IServiceProvider ServiceProvider;
-        private readonly IContextDataManager ContextDataManager;
-        private readonly PersistedDataManager<StaticDataContext> StaticDataManager;
-        private readonly PersistedDataManager<AccountDataContext> AccountDataManager;
         private bool HasCheckedStaticData;
 
         public IReadOnlyList<IGameInstance> Instances => _Instances.Values.ToList();
@@ -25,15 +21,9 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public GameInstanceManager(
             IServiceProvider serviceProvider,
-            IContextDataManager contextDataManager,
-            PersistedDataManager<StaticDataContext> staticDataManager,
-            PersistedDataManager<AccountDataContext> accountDataManager,
             IHostApplicationLifetime lifetime)
         {
             ServiceProvider = serviceProvider;
-            ContextDataManager = contextDataManager;
-            AccountDataManager = accountDataManager;
-            StaticDataManager = staticDataManager;
             _ = lifetime.ApplicationStopped.Register(() =>
             {
                 int[] instanceKeys = _RawInstances.Keys.ToArray();
@@ -44,23 +34,6 @@ namespace Raid.Toolkit.Extensibility.Host
                     instance.Dispose();
                 }
             });
-        }
-
-        public void Update()
-        {
-            foreach (var instance in _Instances.Values)
-            {
-                if (!HasCheckedStaticData)
-                {
-                    var result = StaticDataManager.Update(instance.Runtime, StaticDataContext.Default);
-                    if (result == UpdateResult.Failed)
-                        continue;
-
-                    HasCheckedStaticData = true;
-                }
-
-                _ = AccountDataManager.Update(instance.Runtime, instance.Id);
-            }
         }
 
         public IGameInstance GetById(string id)

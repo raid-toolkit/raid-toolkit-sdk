@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Notifications;
-using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
 using Raid.Toolkit.Model;
 
@@ -15,7 +14,6 @@ namespace Raid.Toolkit.Extensibility.Host
     public enum HostFeatures
     {
         ProcessWatcher = 1 << 0,
-        RefreshData = 1 << 1,
         AutoUpdate = 1 << 2
     }
 
@@ -25,8 +23,6 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             if (features.HasFlag(HostFeatures.ProcessWatcher))
                 services = services.AddHostedService<ProcessWatcherService>();
-            if (features.HasFlag(HostFeatures.RefreshData))
-                services = services.AddHostedService<RefreshDataService>();
             services = features.HasFlag(HostFeatures.AutoUpdate)
                 ? services.AddHostedServiceSingleton<IUpdateService, UpdateService>()
                 : services.AddHostedServiceSingleton<IUpdateService, UpdateServiceStub>();
@@ -41,7 +37,6 @@ namespace Raid.Toolkit.Extensibility.Host
                 .AddSingleton<IModelLoader, ModelLoader>()
                 .AddSingleton<IPackageLoader, SandboxedPackageLoader>()
                 .AddSingleton<IPackageInstanceFactory, PackageFactory>()
-                .AddSingleton<IContextDataManager, ContextDataManager>()
                 .AddSingleton<IScopedServiceManager, ScopedServiceManager>()
                 .AddSingleton<ISessionManager, SessionManager>()
                 .AddSingleton<IServiceManager, ServiceManager>()
@@ -53,12 +48,12 @@ namespace Raid.Toolkit.Extensibility.Host
                 .AddSingleton<IExtensionHostController, ExtensionHostController>()
                 .AddSingleton(typeof(CachedDataStorage))
                 .AddSingleton(typeof(CachedDataStorage<>))
-                .AddSingleton(typeof(PersistedDataManager<>))
                 .AddSingleton<PersistedDataStorage>()
                 .AddSingleton<ErrorService>()
                 .AddSingleton<GitHub.Updater>()
                 .AddHostedService<ApplicationHost>()
                 .AddHostedService<ServiceExecutor>()
+                .AddHostedServiceSingleton<IAccountManager, AccountManager>()
                 .AddHostedServiceSingleton<INotificationManager, NotificationManager>()
                 .AddHostedServiceSingleton<IDataStorageReaderWriter, FileStorageService>()
             ;

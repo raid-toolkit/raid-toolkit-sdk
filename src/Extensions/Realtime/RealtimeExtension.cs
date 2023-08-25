@@ -12,7 +12,7 @@ namespace Raid.Toolkit.Extension.Realtime
 
         public override void OnActivate(IExtensionHost host)
         {
-            Disposables.Add(host.RegisterMessageScopeHandler<RealtimeApi>());
+            Disposables.Add(host.RegisterMessageScopeHandler<RealtimeApi>(host.CreateInstance<RealtimeApi>(host)));
             Disposables.Add(host.RegisterBackgroundService<RealtimeService>());
         }
     }
