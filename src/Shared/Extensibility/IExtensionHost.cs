@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Windows.Forms;
-using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
 
 namespace Raid.Toolkit.Extensibility
@@ -18,7 +16,6 @@ namespace Raid.Toolkit.Extensibility
         IExtensionStorage GetStorage(IAccount account, bool enableCache);
 
         IDisposable RegisterMessageScopeHandler<T>(T handler) where T : IMessageScopeHandler;
-        [Obsolete] IDisposable RegisterDataProvider<T>(T provider) where T : IDataProvider;
         IDisposable RegisterBackgroundService<T>(T service) where T : IBackgroundService;
         IDisposable RegisterAccountExtension<T>(T factory) where T : IAccountExtensionFactory;
 
@@ -29,7 +26,6 @@ namespace Raid.Toolkit.Extensibility
         bool CanShowUI { get; }
 
         [Obsolete] IDisposable RegisterMessageScopeHandler<T>() where T : IMessageScopeHandler;
-        [Obsolete] IDisposable RegisterDataProvider<T>() where T : IDataProvider;
         [Obsolete] IDisposable RegisterBackgroundService<T>() where T : IBackgroundService;
     }
 }

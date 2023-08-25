@@ -24,11 +24,11 @@ namespace Raid.Toolkit.Extensibility
         {
             if (Account == null)
             {
-                return $"extension:{ExtensionId[..16]}";
+                return $"extension:{ExtensionId}";
             }
             else
             {
-                return $"{Account};extension:{ExtensionId[..16]}";
+                return $"{Account};extension:{ExtensionId}";
             }
         }
     }

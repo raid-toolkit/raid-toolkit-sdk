@@ -8,6 +8,8 @@ public interface IAccountManager
 {
     IEnumerable<IAccount> Accounts { get; }
     bool TryGetAccount(string accountId, [NotNullWhen(true)] out IAccount? account);
-    void RegisterAccountExtension<T>(T factory) where T : IAccountExtensionFactory;
-    void UnregisterAccountExtension<T>(T factory) where T : IAccountExtensionFactory;
+    string ExportAccountData(string accountId);
+    void ImportAccountData(string accountData);
+    void RegisterAccountExtension<T>(ExtensionManifest manifest, T factory) where T : IAccountExtensionFactory;
+    void UnregisterAccountExtension<T>(ExtensionManifest manifest, T factory) where T : IAccountExtensionFactory;
 }

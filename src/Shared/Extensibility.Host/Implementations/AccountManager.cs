@@ -5,15 +5,17 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Markup;
 
 using Client.Model;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
+using Newtonsoft.Json;
+
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility.DataServices;
+using Raid.Toolkit.Extensibility.Implementations;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
@@ -24,7 +26,7 @@ namespace Raid.Toolkit.Extensibility.Host
 
         private readonly object _syncRoot = new();
         private readonly Dictionary<string, AccountInstance> AccountMap = new();
-        private readonly List<IAccountExtensionFactory> Factories = new();
+        private readonly List<ExtensionOwnedValue<IAccountExtensionFactory>> Factories = new();
 
         private readonly IServiceProvider ServiceProvider;
         private readonly PersistedDataStorage Storage;
@@ -108,27 +110,20 @@ namespace Raid.Toolkit.Extensibility.Host
             }
         }
 
-        private void LoadAccount(string accountId)
+        private AccountInstance LoadAccount(string accountId)
         {
-            AccountInstance account;
-            try
-            {
-                account = ActivatorUtilities.CreateInstance<AccountInstance>(ServiceProvider, accountId);
-            }
-            catch
-            {
-                // account not fully populated?
-                return;
-            }
+            AccountInstance account = ActivatorUtilities.CreateInstance<AccountInstance>(ServiceProvider, accountId);
 
             lock (_syncRoot)
             {
-                foreach (IAccountExtensionFactory factory in Factories)
+                foreach (ExtensionOwnedValue<IAccountExtensionFactory> factory in Factories)
                 {
-                    account.AddExtension(factory);
+                    account.AddExtension(factory.Manifest, factory.Value);
                 }
+                account.LoadFromStorage();
                 AccountMap.TryAdd(accountId, account);
             }
+            return account;
         }
 
         protected override async Task ExecuteOnceAsync(CancellationToken token)
@@ -157,23 +152,23 @@ namespace Raid.Toolkit.Extensibility.Host
             }
         }
 
-        public void RegisterAccountExtension<T>(T factory) where T : IAccountExtensionFactory
+        public void RegisterAccountExtension<T>(ExtensionManifest manifest, T factory) where T : IAccountExtensionFactory
         {
             lock (_syncRoot)
             {
-                Factories.Add(factory);
+                Factories.Add(new(manifest, factory));
                 foreach (AccountInstance account in AccountMap.Values)
                 {
-                    account.AddExtension(factory);
+                    account.AddExtension(manifest, factory);
                 }
             }
         }
 
-        public void UnregisterAccountExtension<T>(T factory) where T : IAccountExtensionFactory
+        public void UnregisterAccountExtension<T>(ExtensionManifest manifest, T factory) where T : IAccountExtensionFactory
         {
             lock (_syncRoot)
             {
-                Factories.Remove(factory);
+                Factories.RemoveAll(factory => factory.Value == factory);
 
                 foreach (AccountInstance account in AccountMap.Values)
                 {
@@ -182,5 +177,29 @@ namespace Raid.Toolkit.Extensibility.Host
             }
         }
 
+        public string ExportAccountData(string accountId)
+        {
+            if (!TryGetAccount(accountId, out AccountInstance? account))
+            {
+                throw new KeyNotFoundException($"Could not find account {accountId}");
+            }
+
+            return account.Serialize();
+        }
+
+        public void ImportAccountData(string accountData)
+        {
+            SerializedAccountData? data = JsonConvert.DeserializeObject<SerializedAccountData>(accountData);
+            if (data == null || data.Info == null)
+            {
+                throw new InvalidOperationException("Invalid account data");
+            }
+            if (!Storage.Write(new AccountDataContext(data.Info.Id), "info.json", data.Info))
+            {
+                throw new InvalidOperationException("Failed to write account info");
+            }
+            AccountInstance account = LoadAccount(data.Info.Id);
+            account.Deserialize(data);
+        }
     }
 }

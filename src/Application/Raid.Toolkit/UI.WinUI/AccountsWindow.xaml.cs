@@ -78,16 +78,16 @@ namespace Raid.Toolkit.UI.WinUI
 
             if (!AccountManager.TryGetAccount(accountId, out IAccount? account))
                 return;
-            AccountData data = new(account);
             SaveFileDialog sfd = new()
             {
-                FileName = $"{data.Account.Name}.rtk.json",
+                FileName = $"{account.AccountName}.rtk.json",
                 DefaultExt = "json"
             };
             if (sfd.ShowDialog() != DialogResult.OK)
                 return;
 
-            File.WriteAllText(sfd.FileName, JsonConvert.SerializeObject(data));
+            string accountData = AccountManager.ExportAccountData(accountId);
+            File.WriteAllText(sfd.FileName, accountData);
         }
 
         private async void DumpButton_Click(object sender, RoutedEventArgs e)
@@ -135,8 +135,11 @@ namespace Raid.Toolkit.UI.WinUI
                 return;
 
             string accountDataJson = File.ReadAllText(ofd.FileName);
-            IAccountData? account = JsonConvert.DeserializeObject<ImportedAccountData>(accountDataJson);
-            if (account == null)
+            try
+            {
+                AccountManager.ImportAccountData(accountDataJson);
+            }
+            catch
             {
                 ContentDialog dialog = new();
                 dialog.XamlRoot = this.Content.XamlRoot;
@@ -148,17 +151,6 @@ namespace Raid.Toolkit.UI.WinUI
                 await dialog.ShowAsync();
                 return;
             }
-
-            // TODO: Create a new AccountExtension interface for import/export
-            // new AccountData(Storage, account.Account.Id)
-            // {
-            //     Account = account.Account,
-            //     Academy = account.Academy,
-            //     Arena = account.Arena,
-            //     Artifacts = account.Artifacts,
-            //     Heroes = account.Heroes,
-            //     Resources = account.Resources,
-            // };
             LoadAccountList();
         }
 

@@ -16,7 +16,8 @@ namespace Raid.Toolkit.Extension.Account;
 public class AcademyExtension :
     AccountDataExtensionBase,
     IAccountPublicApi<IGetAccountDataApi<AcademyData>>,
-    IGetAccountDataApi<AcademyData>
+    IGetAccountDataApi<AcademyData>,
+    IAccountExportable
 {
     private const string Key = "academy.json";
 
@@ -61,5 +62,17 @@ public class AcademyExtension :
             Guardians = guardians
         });
         return Task.CompletedTask;
+    }
+
+    public void Export(IAccountReaderWriter account)
+    {
+        if (Storage.TryRead(Key, out AcademyData data))
+            account.Write(Key, data);
+    }
+
+    public void Import(IAccountReaderWriter account)
+    {
+        if (account.TryRead(Key, out AcademyData? data))
+            Storage.Write(Key, data);
     }
 }

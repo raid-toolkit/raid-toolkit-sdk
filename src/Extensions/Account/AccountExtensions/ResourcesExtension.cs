@@ -17,7 +17,8 @@ namespace Raid.Toolkit.Extension.Account;
 public class ResourcesExtension :
     AccountDataExtensionBase,
     IAccountPublicApi<IGetAccountDataApi<Resources>>,
-    IGetAccountDataApi<Resources>
+    IGetAccountDataApi<Resources>,
+    IAccountExportable
 {
     private const string Key = "resources.json";
 
@@ -42,5 +43,17 @@ public class ResourcesExtension :
             Account = accountResources.ToDictionary(kvp => kvp.Key.ToString(), kvp => kvp.Value)
         });
         return Task.CompletedTask;
+    }
+
+    public void Export(IAccountReaderWriter account)
+    {
+        if (Storage.TryRead(Key, out Resources data))
+            account.Write(Key, data);
+    }
+
+    public void Import(IAccountReaderWriter account)
+    {
+        if (account.TryRead(Key, out Resources? data))
+            Storage.Write(Key, data);
     }
 }

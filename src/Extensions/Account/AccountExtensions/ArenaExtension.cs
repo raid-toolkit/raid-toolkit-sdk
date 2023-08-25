@@ -17,7 +17,8 @@ namespace Raid.Toolkit.Extension.Account;
 public class ArenaExtension :
     AccountDataExtensionBase,
     IAccountPublicApi<IGetAccountDataApi<ArenaData>>,
-    IGetAccountDataApi<ArenaData>
+    IGetAccountDataApi<ArenaData>,
+    IAccountExportable
 {
     private const string Key = "arena.json";
 
@@ -116,6 +117,18 @@ public class ArenaExtension :
             ClassicArena = classicArena,
         });
         return Task.CompletedTask;
+    }
+
+    public void Export(IAccountReaderWriter account)
+    {
+        if (Storage.TryRead(Key, out ArenaData data))
+            account.Write(Key, data);
+    }
+
+    public void Import(IAccountReaderWriter account)
+    {
+        if (account.TryRead(Key, out ArenaData? data))
+            Storage.Write(Key, data);
     }
 
     private static readonly LazyInitializer<Dictionary<StatKindId, List<StatBonus>>, ModelScope> StaticBonusData = new(scope =>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -11,7 +12,6 @@ using Microsoft.Extensions.Logging;
 
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility.DataServices;
-using Raid.Toolkit.Extensibility.Providers;
 using Raid.Toolkit.Extensibility.Services;
 
 namespace Raid.Toolkit.Extensibility.Host
@@ -25,7 +25,6 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IWindowManager WindowManager;
         private readonly IScopedServiceManager ScopedServices;
         private readonly IServiceManager ServiceManager;
-        private readonly IContextDataManager DataManager;
         private readonly IPackageLoader Loader;
         private readonly ILogger<ExtensionHost> Logger;
         private readonly Dictionary<Type, IDisposable> Instances = new();
@@ -37,7 +36,6 @@ namespace Raid.Toolkit.Extensibility.Host
             ExtensionBundle bundle,
             // injected
             IScopedServiceManager scopedServices,
-            IContextDataManager dataManager,
             IServiceManager serviceManager,
             IServiceProvider serviceProvider,
             IAccountManager accountManager,
@@ -52,7 +50,6 @@ namespace Raid.Toolkit.Extensibility.Host
             Bundle = bundle;
 
             ScopedServices = scopedServices;
-            DataManager = dataManager;
             ServiceManager = serviceManager;
             ServiceProvider = serviceProvider;
             AccountManager = accountManager;
@@ -239,19 +236,6 @@ namespace Raid.Toolkit.Extensibility.Host
             return RegisterMessageScopeHandler(instance);
         }
 
-        public IDisposable RegisterDataProvider<T>(T provider) where T : IDataProvider
-        {
-            IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
-            T instance = ActivatorUtilities.CreateInstance<T>(scope);
-            return DataManager.AddProvider(instance);
-        }
-
-        [Obsolete("Use RegisterDataProvider<T>(T provider)")]
-        public IDisposable RegisterDataProvider<T>() where T : IDataProvider
-        {
-            return DataManager.AddProvider<T>();
-        }
-
         public IDisposable RegisterBackgroundService<T>(T service) where T : IBackgroundService
         {
             return ServiceManager.AddService(service);
@@ -267,8 +251,8 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public IDisposable RegisterAccountExtension<T>(T factory) where T : IAccountExtensionFactory
         {
-            AccountManager.RegisterAccountExtension(factory);
-            return new HostResourceHandle(() => AccountManager.UnregisterAccountExtension(factory));
+            AccountManager.RegisterAccountExtension(Bundle.Manifest, factory);
+            return new HostResourceHandle(() => AccountManager.UnregisterAccountExtension(Bundle.Manifest, factory));
         }
 
         public IEnumerable<IAccount> GetAccounts()

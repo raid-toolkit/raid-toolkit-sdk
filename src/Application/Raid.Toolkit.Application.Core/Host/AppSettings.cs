@@ -11,6 +11,5 @@ namespace Raid.Toolkit.Application.Core.Host
         public ProcessManagerSettings? ProcessManager { get; set; }
         public UpdateSettings? ApplicationUpdates { get; set; }
         public StorageSettings? StorageSettings { get; set; }
-        public DataUpdateSettings? DataSettings { get; set; }
     }
 }

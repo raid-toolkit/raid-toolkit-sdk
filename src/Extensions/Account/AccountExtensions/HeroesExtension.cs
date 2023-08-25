@@ -16,7 +16,8 @@ namespace Raid.Toolkit.Extension.Account;
 public class HeroesExtension :
     AccountDataExtensionBase,
     IAccountPublicApi<IGetAccountDataApi<HeroData>>,
-    IGetAccountDataApi<HeroData>
+    IGetAccountDataApi<HeroData>,
+    IAccountExportable
 {
     private const string Key = "heroes.json";
 
@@ -101,4 +102,17 @@ public class HeroesExtension :
         });
         return Task.CompletedTask;
     }
+
+    public void Export(IAccountReaderWriter account)
+    {
+        if (Storage.TryRead(Key, out HeroData data))
+            account.Write(Key, data);
+    }
+
+    public void Import(IAccountReaderWriter account)
+    {
+        if (account.TryRead(Key, out HeroData? data))
+            Storage.Write(Key, data);
+    }
+
 }

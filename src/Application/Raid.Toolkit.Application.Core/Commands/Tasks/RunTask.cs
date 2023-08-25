@@ -50,7 +50,7 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
                 }
             }
 
-            HostFeatures hostFeatures = HostFeatures.RefreshData | HostFeatures.ProcessWatcher;
+            HostFeatures hostFeatures = HostFeatures.ProcessWatcher;
             if (!Options.Debug)
                 hostFeatures |= HostFeatures.AutoUpdate;
 

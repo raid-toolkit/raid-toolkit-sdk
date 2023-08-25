@@ -3,31 +3,40 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+
+using Google.Protobuf.WellKnownTypes;
+
 using Il2CppToolkit.Runtime;
+
 using Microsoft.Extensions.Logging;
+
+using Newtonsoft.Json;
+
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
+using Raid.Toolkit.Extensibility.Implementations;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
     public class AccountInstance : IAccount
     {
         private readonly object _syncRoot = new();
-        private Dictionary<IAccountExtensionFactory, IAccountExtension> Extensions = new();
+        private Dictionary<IAccountExtensionFactory, ExtensionOwnedValue<IAccountExtension>> Extensions = new();
         private IGameInstance? GameInstance;
         private readonly CachedDataStorage<PersistedDataStorage> Storage;
         private readonly ILogger<AccountInstance> Logger;
         private readonly AccountDataContext Context;
+        private AccountBase? _AccountInfo;
 
         public string Id { get; }
-        public AccountBase AccountInfo { get; }
+        public AccountBase AccountInfo => _AccountInfo ?? throw new InvalidOperationException($"Account is not yet loaded.");
         public string AccountName => AccountInfo.Name;
         public string AvatarUrl => AccountInfo.AvatarUrl;
         public bool IsOnline => GameInstance != null;
         public Il2CsRuntimeContext? Runtime => GameInstance?.Runtime;
 
-        private IAccountExtension[] GetExtensionsSnapshot()
+        private ExtensionOwnedValue<IAccountExtension>[] GetExtensionsSnapshot()
         {
             lock (_syncRoot)
                 return Extensions.Values.ToArray();
@@ -41,24 +50,65 @@ namespace Raid.Toolkit.Extensibility.Host
             Logger = logger;
             Storage = storage;
             Context = id;
+            LoadFromStorage();
+        }
 
+        public void LoadFromStorage()
+        {
             if (!Storage.TryRead(Context, "info.json", out AccountBase accountInfo))
             {
                 throw new KeyNotFoundException("Account info not found");
             }
-            AccountInfo = accountInfo;
+            _AccountInfo = accountInfo;
         }
 
-        public bool TryGetApi<T>([NotNullWhen(true)] out T? api) where T : class
+        public string Serialize()
         {
-            IAccountExtension[] extensions = GetExtensionsSnapshot();
-            foreach (IAccountExtension extension in extensions)
+            SerializedAccountData data = new(AccountInfo);
+
+            ExtensionOwnedValue<IAccountExtension>[] extensions = GetExtensionsSnapshot();
+            foreach (ExtensionOwnedValue<IAccountExtension> extension in extensions)
             {
                 lock (_syncRoot)
                     if (!Extensions.ContainsValue(extension))
                         continue; // extension was since removed
 
-                if (extension is IAccountPublicApi<T> publicApi)
+                if (extension.Value is IAccountExportable exportable)
+                {
+                    IAccountReaderWriter readerWriter = data.CreateReaderWriter(new ExtensionDataContext(Context, extension.Manifest.Id));
+                    exportable.Export(readerWriter);
+                }
+            }
+            return JsonConvert.SerializeObject(data);
+        }
+
+        public void Deserialize(SerializedAccountData data)
+        {
+            ExtensionOwnedValue<IAccountExtension>[] extensions = GetExtensionsSnapshot();
+            foreach (ExtensionOwnedValue<IAccountExtension> extension in extensions)
+            {
+                lock (_syncRoot)
+                    if (!Extensions.ContainsValue(extension))
+                        continue; // extension was since removed
+
+                if (extension.Value is IAccountExportable exportable)
+                {
+                    IAccountReaderWriter readerWriter = data.CreateReaderWriter(new ExtensionDataContext(Context, extension.Manifest.Id));
+                    exportable.Import(readerWriter);
+                }
+            }
+        }
+
+        public bool TryGetApi<T>([NotNullWhen(true)] out T? api) where T : class
+        {
+            ExtensionOwnedValue<IAccountExtension>[] extensions = GetExtensionsSnapshot();
+            foreach (ExtensionOwnedValue<IAccountExtension> extension in extensions)
+            {
+                lock (_syncRoot)
+                    if (!Extensions.ContainsValue(extension))
+                        continue; // extension was since removed
+
+                if (extension.Value is IAccountPublicApi<T> publicApi)
                 {
                     api = publicApi.GetApi();
                     return true;
@@ -70,14 +120,14 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public async Task Tick()
         {
-            IAccountExtension[] extensions = GetExtensionsSnapshot();
-            foreach (IAccountExtension extension in extensions)
+            ExtensionOwnedValue<IAccountExtension>[] extensions = GetExtensionsSnapshot();
+            foreach (ExtensionOwnedValue<IAccountExtension> extension in extensions)
             {
                 lock (_syncRoot)
                     if (!Extensions.ContainsValue(extension))
                         continue; // extension was since removed
 
-                if (extension is IAccountExtensionService service)
+                if (extension.Value is IAccountExtensionService service)
                     await service.OnTick();
             }
         }
@@ -87,14 +137,14 @@ namespace Raid.Toolkit.Extensibility.Host
             lock (_syncRoot)
             {
                 GameInstance = gameInstance;
-                IAccountExtension[] extensions = GetExtensionsSnapshot();
-                foreach (IAccountExtension extension in extensions)
+                ExtensionOwnedValue<IAccountExtension>[] extensions = GetExtensionsSnapshot();
+                foreach (ExtensionOwnedValue<IAccountExtension> extension in extensions)
                 {
                     lock (_syncRoot)
                         if (!Extensions.ContainsValue(extension))
                             continue; // extension was since removed
 
-                    extension.OnConnected(gameInstance.Runtime);
+                    extension.Value.OnConnected(gameInstance.Runtime);
                 }
             }
         }
@@ -104,24 +154,24 @@ namespace Raid.Toolkit.Extensibility.Host
             lock (_syncRoot)
             {
                 GameInstance = null;
-                IAccountExtension[] extensions = GetExtensionsSnapshot();
-                foreach (IAccountExtension extension in extensions)
+                ExtensionOwnedValue<IAccountExtension>[] extensions = GetExtensionsSnapshot();
+                foreach (ExtensionOwnedValue<IAccountExtension> extension in extensions)
                 {
                     lock (_syncRoot)
                         if (!Extensions.ContainsValue(extension))
                             continue; // extension was since removed
 
-                    extension.OnDisconnected();
+                    extension.Value.OnDisconnected();
                 }
             }
         }
 
-        public void AddExtension(IAccountExtensionFactory factory)
+        public void AddExtension(ExtensionManifest manifest, IAccountExtensionFactory factory)
         {
             IAccountExtension extension = factory.Create(this);
             lock (_syncRoot)
             {
-                Extensions.Add(factory, extension);
+                Extensions.Add(factory, new(manifest, extension));
                 if (GameInstance != null)
                     extension.OnConnected(GameInstance.Runtime);
             }
@@ -130,7 +180,7 @@ namespace Raid.Toolkit.Extensibility.Host
         public void RemoveExtension(IAccountExtensionFactory factory)
         {
             bool removed = false;
-            IAccountExtension? extension;
+            ExtensionOwnedValue<IAccountExtension>? extension;
 
             lock (_syncRoot)
             {
@@ -140,9 +190,9 @@ namespace Raid.Toolkit.Extensibility.Host
             if (removed && extension != null)
             {
                 if (IsOnline)
-                    extension.OnDisconnected();
+                    extension.Value.OnDisconnected();
 
-                if (extension is IDisposable disposable)
+                if (extension.Value is IDisposable disposable)
                     disposable.Dispose();
             }
         }

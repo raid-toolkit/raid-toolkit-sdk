@@ -17,7 +17,8 @@ namespace Raid.Toolkit.Extension.Account;
 public class ArtifactExtension :
     AccountDataExtensionBase,
     IAccountPublicApi<IGetAccountDataApi<ArtifactsDataObject>>,
-    IGetAccountDataApi<ArtifactsDataObject>
+    IGetAccountDataApi<ArtifactsDataObject>,
+    IAccountExportable
 {
     private const string Key = "artifacts.json";
     private readonly ArtifactsProviderState State;
@@ -90,6 +91,18 @@ public class ArtifactExtension :
         }
 
         return Task.CompletedTask;
+    }
+
+    public void Export(IAccountReaderWriter account)
+    {
+        if (Storage.TryRead(Key, out ArtifactsDataObject data))
+            account.Write(Key, data);
+    }
+
+    public void Import(IAccountReaderWriter account)
+    {
+        if (account.TryRead(Key, out ArtifactsDataObject? data))
+            Storage.Write(Key, data);
     }
 
     private static IReadOnlyList<Artifact> GetArtifacts(ModelScope scope)
