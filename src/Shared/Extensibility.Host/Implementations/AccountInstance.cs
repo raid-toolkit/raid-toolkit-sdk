@@ -89,6 +89,9 @@ namespace Raid.Toolkit.Extensibility.Host
         public bool IsOnline => GameInstance != null;
         public Il2CsRuntimeContext? Runtime => GameInstance?.Runtime;
 
+        public event EventHandler<AccountEventArgs>? OnConnected;
+        public event EventHandler<AccountEventArgs>? OnDisconnected;
+
         private AccountExtensionState[] GetExtensionsSnapshot()
         {
             lock (_syncRoot)
@@ -184,7 +187,7 @@ namespace Raid.Toolkit.Extensibility.Host
             }
         }
 
-        public void OnConnected(IGameInstance gameInstance)
+        public void Connect(IGameInstance gameInstance)
         {
             lock (_syncRoot)
             {
@@ -198,13 +201,15 @@ namespace Raid.Toolkit.Extensibility.Host
 
                     extension.Extension.OnConnected(gameInstance.Runtime);
                 }
+                OnConnected?.Invoke(this, new AccountEventArgs());
             }
         }
 
-        public void OnDisconnected()
+        public void Disconnect()
         {
             lock (_syncRoot)
             {
+                OnDisconnected?.Invoke(this, new AccountEventArgs());
                 GameInstance = null;
                 AccountExtensionState[] extensions = GetExtensionsSnapshot();
                 foreach (AccountExtensionState extension in extensions)

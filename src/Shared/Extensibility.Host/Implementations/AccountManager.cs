@@ -34,6 +34,9 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public IEnumerable<IAccount> Accounts => AccountMap.Values;
 
+        public event EventHandler<AccountManagerEventArgs>? OnAdded;
+        public event EventHandler<AccountManagerEventArgs>? OnRemoved;
+
         public AccountManager(
             IServiceProvider serviceProvider,
             ILogger<AccountManager> logger,
@@ -72,7 +75,7 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             if (TryGetAccount(e.Instance.Id, out IAccount? value) && value is AccountInstance account)
             {
-                account.OnConnected(e.Instance);
+                account.Connect(e.Instance);
             }
             else
             {
@@ -99,7 +102,10 @@ namespace Raid.Toolkit.Extensibility.Host
         private void GameInstanceManager_OnRemoved(object? sender, IGameInstanceManager.GameInstancesUpdatedEventArgs e)
         {
             if (TryGetAccount(e.Instance.Id, out IAccount? value) && value is AccountInstance account)
-                account.OnDisconnected();
+            {
+                OnRemoved?.Invoke(this, new(account));
+                account.Disconnect();
+            }
         }
 
         private void InitializeFromStorage()
@@ -122,6 +128,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 }
                 account.LoadFromStorage();
                 AccountMap.TryAdd(accountId, account);
+                OnAdded?.Invoke(this, new(account));
             }
             return account;
         }
