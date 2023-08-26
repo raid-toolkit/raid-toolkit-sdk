@@ -126,7 +126,7 @@ namespace Raid.Toolkit.Extensibility.Host
             return account;
         }
 
-        protected override async Task ExecuteOnceAsync(CancellationToken token)
+        protected override Task ExecuteOnceAsync(CancellationToken token)
         {
             AccountInstance[] accounts;
             lock (_syncRoot)
@@ -142,7 +142,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 Logger.LogInformation("Background processing for account {account}", account.Id);
                 try
                 {
-                    await account.Tick();
+                    account.Tick();
                 }
                 catch (Exception e)
                 {
@@ -150,6 +150,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 }
                 Logger.LogInformation("Background processing for account {account} completed in {ms}ms", account.Id, swScoped.ElapsedMilliseconds);
             }
+            return Task.CompletedTask;
         }
 
         public void RegisterAccountExtension<T>(ExtensionManifest manifest, T factory) where T : IAccountExtensionFactory

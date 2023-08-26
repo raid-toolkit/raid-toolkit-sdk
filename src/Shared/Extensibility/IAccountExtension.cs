@@ -21,6 +21,7 @@ namespace Raid.Toolkit.Extensibility
 
     public interface IAccountExtensionService
     {
+        bool HasWork { get; }
         Task OnTick();
     }
 

@@ -1583,6 +1583,11 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "System.Threading.Tasks.Dataflow": {
+        "type": "Transitive",
+        "resolved": "7.0.0",
+        "contentHash": "BmSJ4b0e2nlplV/RdWVxvH7WECTHACofv06dx/JwOYc0n56eK1jIWdQKNYYsReSO4w8n1QA5stOzSQcfaVBkJg=="
+      },
       "System.Threading.Tasks.Extensions": {
         "type": "Transitive",
         "resolved": "4.3.0",
@@ -1725,6 +1730,7 @@
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
           "Raid.Model": "[1.0.0, )",
           "Raid.Toolkit.Extensibility": "[1.0.0, )",
+          "System.Threading.Tasks.Dataflow": "[7.0.0, )",
           "il2cpptoolkit.common": "[2.0.119-alpha, )",
           "il2cpptoolkit.metadata": "[2.0.119-alpha, )",
           "il2cpptoolkit.reversecompiler": "[2.0.119-alpha, )",

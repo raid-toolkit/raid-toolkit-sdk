@@ -33,6 +33,8 @@ public abstract class AccountDataExtensionBase : IAccountExtension, IAccountExte
 
     protected abstract Task Update(ModelScope scope);
 
+    public bool HasWork { get; protected set; } = true;
+
     public virtual async Task OnTick()
     {
         if (!Account.IsOnline)

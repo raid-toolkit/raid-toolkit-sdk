@@ -107,12 +107,6 @@ public class StaticTypesExtension :
             return new StaticHeroTypeData() { HeroTypes = heroTypes };
         });
 
-        EnsureTypesRead(SkillTypesKey, () =>
-        {
-            var skillTypes = scope.StaticDataManager.StaticData.SkillData._skillTypeById.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ToModel());
-            return new StaticSkillData() { SkillTypes = skillTypes };
-        });
-
         EnsureTypesRead(StringsKey, () =>
         {
             var staticData = scope.StaticDataManager.StaticData;
@@ -170,6 +164,13 @@ public class StaticTypesExtension :
             };
         });
 
+        EnsureTypesRead(SkillTypesKey, () =>
+        {
+            var skillTypes = scope.StaticDataManager.StaticData.SkillData._skillTypeById.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ToModel());
+            return new StaticSkillData() { SkillTypes = skillTypes };
+        });
+
+        HasWork = false;
         return Task.CompletedTask;
     }
 }
