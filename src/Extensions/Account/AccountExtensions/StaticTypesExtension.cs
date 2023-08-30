@@ -95,18 +95,6 @@ public class StaticTypesExtension :
     {
         StaticDataHash ??= scope.StaticDataManager._hash;
 
-        EnsureTypesRead(ArtifactTypesKey, () =>
-        {
-            var artifactTypes = scope.StaticDataManager.StaticData.ArtifactData._setInfoByKind.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ToModel());
-            return new StaticArtifactData { ArtifactSetKinds = artifactTypes.ToModel() };
-        });
-
-        EnsureTypesRead(HeroTypesKey, () =>
-        {
-            var heroTypes = scope.StaticDataManager.StaticData.HeroData.HeroTypeById.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ToModel());
-            return new StaticHeroTypeData() { HeroTypes = heroTypes };
-        });
-
         EnsureTypesRead(StringsKey, () =>
         {
             var staticData = scope.StaticDataManager.StaticData;
@@ -117,7 +105,20 @@ public class StaticTypesExtension :
             {
                 localizedStrings.Add(entry.Key, entry.Value);
             }
+            StaticResources.AddStrings(localizedStrings);
             return new StaticLocalizationData() { LocalizedStrings = localizedStrings };
+        });
+
+        EnsureTypesRead(HeroTypesKey, () =>
+        {
+            var heroTypes = scope.StaticDataManager.StaticData.HeroData.HeroTypeById.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ToModel());
+            return new StaticHeroTypeData() { HeroTypes = heroTypes };
+        });
+
+        EnsureTypesRead(ArtifactTypesKey, () =>
+        {
+            var artifactTypes = scope.StaticDataManager.StaticData.ArtifactData._setInfoByKind.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ToModel());
+            return new StaticArtifactData { ArtifactSetKinds = artifactTypes.ToModel() };
         });
 
         EnsureTypesRead(ArenaKey, () =>
