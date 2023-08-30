@@ -41,6 +41,13 @@ namespace Raid.Toolkit.Extensibility.Host
             return Instances.FirstOrDefault(instance => instance.Id == id);
         }
 
+        public bool TryGetById(string id, out IGameInstance? instance)
+        {
+            instance = Instances.FirstOrDefault(instance => instance.Id == id);
+            return instance != null;
+        }
+
+
         public void AddInstance(Process process)
         {
             IGameInstance instance = _RawInstances.GetOrAdd(process.Id, (token) => ActivatorUtilities.CreateInstance<GameInstance>(ServiceProvider, process));

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Raid.Toolkit.Extensibility
 {
@@ -18,7 +19,8 @@ namespace Raid.Toolkit.Extensibility
 
         void AddInstance(Process process);
         void RemoveInstance(int token);
-        IGameInstance GetById(string id);
+        [Obsolete("Use TryGetById instead.")] IGameInstance GetById(string id);
+        bool TryGetById(string id, [NotNullWhen(true)] out IGameInstance? instance);
         IReadOnlyList<IGameInstance> Instances { get; }
     }
 }

@@ -191,6 +191,9 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             lock (_syncRoot)
             {
+                if (GameInstance == gameInstance)
+                    return;
+
                 GameInstance = gameInstance;
                 AccountExtensionState[] extensions = GetExtensionsSnapshot();
                 foreach (AccountExtensionState extension in extensions)

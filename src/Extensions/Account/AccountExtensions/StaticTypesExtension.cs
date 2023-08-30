@@ -95,7 +95,7 @@ public class StaticTypesExtension :
     {
         StaticDataHash ??= scope.StaticDataManager._hash;
 
-        EnsureTypesRead(StringsKey, () =>
+        var localizationData = EnsureTypesRead(StringsKey, () =>
         {
             var staticData = scope.StaticDataManager.StaticData;
             Dictionary<string, string> localizedStrings = new();
@@ -105,9 +105,13 @@ public class StaticTypesExtension :
             {
                 localizedStrings.Add(entry.Key, entry.Value);
             }
-            StaticResources.AddStrings(localizedStrings);
             return new StaticLocalizationData() { LocalizedStrings = localizedStrings };
         });
+
+        if (localizationData != null)
+        {
+            StaticResources.AddStrings(localizationData.LocalizedStrings);
+        }
 
         EnsureTypesRead(HeroTypesKey, () =>
         {

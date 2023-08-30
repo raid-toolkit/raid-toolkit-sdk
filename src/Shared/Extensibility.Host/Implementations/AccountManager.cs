@@ -129,6 +129,8 @@ namespace Raid.Toolkit.Extensibility.Host
                 account.LoadFromStorage();
                 AccountMap.TryAdd(accountId, account);
                 OnAdded?.Invoke(this, new(account));
+                if (GameInstanceManager.TryGetById(accountId, out IGameInstance? instance))
+                    account.Connect(instance);
             }
             return account;
         }
