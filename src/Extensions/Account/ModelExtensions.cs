@@ -275,12 +275,11 @@ namespace Raid.Toolkit.DataModel
                 Name = type.Name.ToModel(),
                 ShortName = type.ShortName?.ToModel() ?? type.Name.ToModel(),
                 Rarity = (Enums.HeroRarity)type.Rarity,
-                Role = (Enums.HeroRole)type.Role,
+                Roles = type.AllRoles?.Cast<Enums.HeroRole>().ToArray(),
                 LeaderSkill = type.LeaderSkill?.ToModel(),
                 SkillTypeIds = type.SkillTypeIds?.ToArray(),
                 TypeId = type.Id,
                 UnscaledStats = type.BaseStats.ToModel(),
-                Brain = type.Brain.ToString(),
             };
         }
 

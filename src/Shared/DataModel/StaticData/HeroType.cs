@@ -2,6 +2,8 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using Raid.Toolkit.DataModel.Enums;
 
+using System;
+
 namespace Raid.Toolkit.DataModel
 {
     public class HeroType
@@ -21,8 +23,8 @@ namespace Raid.Toolkit.DataModel
         [JsonProperty("faction"), JsonConverter(typeof(StringEnumConverter))]
         public HeroFraction? Faction;
 
-        [JsonProperty("role"), JsonConverter(typeof(StringEnumConverter))]
-        public HeroRole? Role;
+        [JsonProperty("roles"), JsonConverter(typeof(StringEnumConverter))]
+        public HeroRole[]? Roles;
 
         [JsonProperty("rarity"), JsonConverter(typeof(StringEnumConverter))]
         public HeroRarity? Rarity;
@@ -45,7 +47,7 @@ namespace Raid.Toolkit.DataModel
         [JsonProperty("unscaledStats")]
         public Stats? UnscaledStats;
 
-        [JsonProperty("brain")]
+        [Obsolete("No longer used"), JsonProperty("brain")]
         public string? Brain;
     }
 }

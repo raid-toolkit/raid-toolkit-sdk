@@ -106,7 +106,6 @@ namespace RaidExtractor.Core
                         Fraction = heroType.Faction.GetValueOrDefault(),
                         Element = heroType.Affinity.GetValueOrDefault(),
                         Rarity = heroType.Rarity.GetValueOrDefault(),
-                        Role = heroType.Role.GetValueOrDefault(),
                         AwakenLevel = heroType.TypeId % 10,
                         Accuracy = heroType.UnscaledStats.Accuracy,
                         Attack = (int)Math.Round(heroType.UnscaledStats.Attack * multiplier.multiplier),
