@@ -36,6 +36,9 @@ namespace Raid.Toolkit.Extensibility.Host.Services
 
         public IEnumerable<string> GetKeys(string filePath)
         {
+            if (!Directory.Exists(filePath))
+                return Array.Empty<string>();
+
             return Directory.GetDirectories(filePath).Select(entry => Path.GetFileName(entry));
         }
 
