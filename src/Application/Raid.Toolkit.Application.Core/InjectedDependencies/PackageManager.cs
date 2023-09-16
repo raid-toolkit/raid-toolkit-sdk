@@ -83,7 +83,7 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
 
             // preload injection client type/asm before extensions get loaded
             typeof(Il2CppToolkit.Injection.Client.InjectionClient).FullName?.ToString();
-            // let's get fucky. 
+            // let's get fucky.
             Load();
             IsLoaded = true;
         }
@@ -146,11 +146,12 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
                                 }
                                 try
                                 {
-                                    ExtensionBundle.FromFile(targetPackage).Install(dir);
+                                    Directory.Delete(dir, true);
+                                    ExtensionBundle.FromFile(targetPackage).Install(ExtensionsDirectory);
                                 }
                                 catch (Exception ex)
                                 {
-                                    Logger.LogError(ex,"{targetPackage} could not be installed", targetPackage);
+                                    Logger.LogError(ex, "{targetPackage} could not be installed", targetPackage);
                                 }
                                 finally
                                 {
