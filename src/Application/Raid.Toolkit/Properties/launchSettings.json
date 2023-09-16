@@ -11,7 +11,7 @@
     },
     "Standalone": {
       "commandName": "Project",
-      "commandLineArgs": "--standalone --nologo --debug",
+      "commandLineArgs": "--debug",
       "hotReloadEnabled": true
     },
     "Install Extension": {

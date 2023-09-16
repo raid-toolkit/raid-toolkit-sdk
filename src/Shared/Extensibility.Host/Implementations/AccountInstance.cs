@@ -54,9 +54,9 @@ namespace Raid.Toolkit.Extensibility.Host
                         Stopwatch swScoped = Stopwatch.StartNew();
                         try
                         {
-                            Logger.LogInformation("Executing background work Account:{account} Extension:{extension}", Account.Id, ExtensionTypeName);
+                            //Logger.LogInformation("Executing background work Account:{account} Extension:{extension}", Account.Id, ExtensionTypeName);
                             await service.OnTick();
-                            Logger.LogInformation("End background processing for Account:{account} Extension:{extension} Elapsed:{ms}ms", Account.Id, ExtensionTypeName, swScoped.ElapsedMilliseconds);
+                            //Logger.LogInformation("End background processing for Account:{account} Extension:{extension} Elapsed:{ms}ms", Account.Id, ExtensionTypeName, swScoped.ElapsedMilliseconds);
                         }
                         catch (Exception ex)
                         {

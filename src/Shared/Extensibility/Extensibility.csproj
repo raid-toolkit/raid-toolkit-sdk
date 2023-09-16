@@ -10,9 +10,9 @@
 
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
-        <PackageReference Include="il2cpptoolkit.common" Version="2.0.120-alpha" />
-        <PackageReference Include="il2cpptoolkit.metadata" Version="2.0.120-alpha" />
-        <PackageReference Include="il2cpptoolkit.runtime" Version="2.0.120-alpha" />
+        <PackageReference Include="il2cpptoolkit.common" Version="2.0.122-alpha" />
+        <PackageReference Include="il2cpptoolkit.metadata" Version="2.0.122-alpha" />
+        <PackageReference Include="il2cpptoolkit.runtime" Version="2.0.122-alpha" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.2.221209.1" />
     </ItemGroup>
