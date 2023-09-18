@@ -146,7 +146,6 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
                                 }
                                 try
                                 {
-                                    Directory.Delete(dir, true);
                                     ExtensionBundle.FromFile(targetPackage).Install(ExtensionsDirectory);
                                 }
                                 catch (Exception ex)
