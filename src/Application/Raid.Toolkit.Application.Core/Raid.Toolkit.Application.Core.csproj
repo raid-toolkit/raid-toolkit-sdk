@@ -27,7 +27,7 @@
 		<PackageReference Include="CustomExtensions.WinUI" Version="0.1.10-beta" />
 		<PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.4.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="SuperSocket.WebSocket.Server" Version="2.0.0-beta.10" />
 		<PackageReference Include="Il2CppToolkit.Injection.Client" Version="2.0.133-alpha" GeneratePathProperty="true" />
 		<Reference Include="Raid.Interop">

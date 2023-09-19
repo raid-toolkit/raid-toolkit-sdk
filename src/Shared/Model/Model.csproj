@@ -7,8 +7,8 @@
         <PackageReference Include="il2cpptoolkit.runtime" Version="2.0.122-alpha" />
         <PackageReference Include="il2cpptoolkit.target.netcore" Version="2.0.122-alpha" />
         <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
-    </ItemGroup>
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Common\Common.csproj" />

@@ -77,9 +77,9 @@
       },
       "Newtonsoft.Json": {
         "type": "Direct",
-        "requested": "[13.0.2, )",
-        "resolved": "13.0.2",
-        "contentHash": "R2pZ3B0UjeyHShm9vG+Tu0EBb2lC8b0dFzV9gVn50ofHXh9Smjk6kTn7A/FdAsC8B5cKib1OnGYOXxRBz5XQDg=="
+        "requested": "[13.0.3, )",
+        "resolved": "13.0.3",
+        "contentHash": "HrC5BXdl00IP9zeV+0Z848QWPAoCr9P3bDEZguI+gkLcBKAOxix/tLEAAHC+UvDNPv4a2d18lOReHMOagPa+zQ=="
       },
       "SuperSocket.WebSocket.Server": {
         "type": "Direct",
@@ -449,8 +449,8 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Transitive",
-        "resolved": "1.2.221209.1",
-        "contentHash": "1Y8KDCmUqytdduubaQhRz6aqaP7YhVSPE/fHeqLMsK3DrV+eBThrqkM6R/8N2lu0mwkNfKSTSAhixrTR72nyWA==",
+        "resolved": "1.4.230822000",
+        "contentHash": "QeR+4u7j0z9RWhVzTbr/5izWmq7k3GkjxCFbXNuYtIHYDm2YcdIH5Kvn+9tpMLweFzDZO7YVzVvvyQGivUtNcw==",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
         }
@@ -636,14 +636,14 @@
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
           "Microsoft.Extensions.Options": "[6.0.0, )",
           "Microsoft.Win32.Registry": "[5.0.0, )",
-          "Newtonsoft.Json": "[13.0.2, )"
+          "Newtonsoft.Json": "[13.0.3, )"
         }
       },
       "Raid.Model": {
         "type": "Project",
         "dependencies": {
           "Microsoft.Win32.Registry": "[5.0.0, )",
-          "Newtonsoft.Json": "[13.0.2, )",
+          "Newtonsoft.Json": "[13.0.3, )",
           "Raid.Common": "[1.0.0, )",
           "il2cpptoolkit.common": "[2.0.122-alpha, )",
           "il2cpptoolkit.metadata": "[2.0.122-alpha, )",
@@ -655,7 +655,7 @@
       "Raid.Toolkit.DataModel": {
         "type": "Project",
         "dependencies": {
-          "Newtonsoft.Json": "[13.0.2, )",
+          "Newtonsoft.Json": "[13.0.3, )",
           "Raid.Common": "[1.0.0, )"
         }
       },
@@ -664,7 +664,7 @@
         "dependencies": {
           "CommunityToolkit.WinUI.Notifications": "[7.1.2, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
-          "Microsoft.WindowsAppSDK": "[1.2.221209.1, )",
+          "Microsoft.WindowsAppSDK": "[1.4.230822000, )",
           "Raid.Common": "[1.0.0, )",
           "Raid.Toolkit.DataModel": "[1.0.0, )",
           "il2cpptoolkit.common": "[2.0.122-alpha, )",
@@ -734,8 +734,8 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Transitive",
-        "resolved": "1.2.221209.1",
-        "contentHash": "1Y8KDCmUqytdduubaQhRz6aqaP7YhVSPE/fHeqLMsK3DrV+eBThrqkM6R/8N2lu0mwkNfKSTSAhixrTR72nyWA==",
+        "resolved": "1.4.230822000",
+        "contentHash": "QeR+4u7j0z9RWhVzTbr/5izWmq7k3GkjxCFbXNuYtIHYDm2YcdIH5Kvn+9tpMLweFzDZO7YVzVvvyQGivUtNcw==",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
         }
