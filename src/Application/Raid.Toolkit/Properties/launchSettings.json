@@ -1,32 +1,37 @@
 {
-  "profiles": {
-    "rtk://Activate": {
-      "commandName": "Project",
-      "commandLineArgs": "activate rtk://extension/OMG.RTK",
-      "nativeDebugging": true
-    },
-    "Setup": {
-      "commandName": "Project",
-      "nativeDebugging": true
-    },
-    "Standalone": {
-      "commandName": "Project",
-      "commandLineArgs": "--debug",
-      "hotReloadEnabled": true
-    },
-    "Install Extension": {
-      "commandName": "Project",
-      "commandLineArgs": "D:\\git\\github\\raid-toolkit\\private-tools\\ModelExplorer\\bin\\x64\\Debug\\net6.0-windows10.0.19041.0\\win10-x64\\ModelExplorer.rtkx",
-      "nativeDebugging": true
-    },
-    "WinForms": {
-      "commandName": "Project",
-      "commandLineArgs": "--standalone --render-engine WinForms"
-    },
-    "ToastActivation": {
-      "commandName": "Project",
-      "commandLineArgs": "--AppNotificationActivated: -Embedding --standalone",
-      "hotReloadEnabled": true
-    }
-  }
+	"profiles": {
+		"rtk://Activate": {
+			"commandName": "Project",
+			"commandLineArgs": "activate rtk://extension/OMG.RTK",
+			"nativeDebugging": true
+		},
+		"Setup": {
+			"commandName": "Project",
+			"nativeDebugging": true
+		},
+		"Installed": {
+			"commandName": "Project",
+			"commandLineArgs": "--debug",
+			"hotReloadEnabled": true
+		},
+		"Standalone": {
+			"commandName": "Project",
+			"commandLineArgs": "--debug --standalone",
+			"hotReloadEnabled": true
+		},
+		"Install Extension": {
+			"commandName": "Project",
+			"commandLineArgs": "D:\\git\\github\\raid-toolkit\\private-tools\\ModelExplorer\\bin\\x64\\Debug\\net6.0-windows10.0.19041.0\\win10-x64\\ModelExplorer.rtkx",
+			"nativeDebugging": true
+		},
+		"WinForms": {
+			"commandName": "Project",
+			"commandLineArgs": "--standalone --render-engine WinForms"
+		},
+		"ToastActivation": {
+			"commandName": "Project",
+			"commandLineArgs": "--AppNotificationActivated: -Embedding --standalone",
+			"hotReloadEnabled": true
+		}
+	}
 }

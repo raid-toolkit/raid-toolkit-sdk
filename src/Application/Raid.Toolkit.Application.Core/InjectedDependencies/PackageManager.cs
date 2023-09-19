@@ -23,6 +23,7 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
         private const string DeleteMeFile = ".delete-me";
         private const string InstallMeFile = ".install-me";
         private static string ExtensionsDirectory => Path.Combine(RegistrySettings.InstallationPath, "extensions");
+        private static string DownloadsDirectory => Path.Combine(RegistrySettings.InstallationPath, "downloads");
 
         private readonly List<ExtensionBundle> Descriptors = new();
         private readonly IAppUI AppUI;
@@ -154,8 +155,12 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
                                 }
                                 finally
                                 {
-                                    File.Delete(installMeFilePath);
-                                    File.Delete(targetPackage);
+                                    try
+                                    {
+                                        File.Delete(installMeFilePath);
+                                        File.Delete(targetPackage);
+                                    }
+                                    catch { }
                                 }
                             }
                             ExtensionBundle bundle = ExtensionBundle.FromDirectory(dir);
@@ -190,10 +195,18 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
         {
             if (IsPackageLoaded(packageToInstall.Id))
             {
+                if (!Directory.Exists(DownloadsDirectory))
+                    Directory.CreateDirectory(DownloadsDirectory);
+
+                string downloadedPackageBundleTargetPath = Path.Combine(DownloadsDirectory, Path.GetFileName(packageToInstall.BundleLocation!));
+                File.Copy(packageToInstall.BundleLocation!, downloadedPackageBundleTargetPath, true);
+
                 string targetDir = packageToInstall.GetInstallDir(ExtensionsDirectory);
-                string targetFile = Path.Combine(targetDir, Path.GetFileName(packageToInstall.BundleLocation));
-                File.Copy(packageToInstall.BundleLocation, targetFile, true);
-                File.WriteAllText(Path.Combine(targetDir, InstallMeFile), targetFile);
+                if (!Directory.Exists(targetDir))
+                    Directory.CreateDirectory(targetDir);
+
+                File.WriteAllText(Path.Combine(targetDir, InstallMeFile), downloadedPackageBundleTargetPath);
+
                 RequestRestart();
                 return null;
             }

@@ -70,7 +70,7 @@ namespace Raid.Toolkit.UI.WinUI
                         }
                         finally
                         {
-                            XamlApplication.Current.Exit();
+                            XamlApplication.Current?.Exit();
                             endTask.TrySetResult();
                         }
                     });
