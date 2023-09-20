@@ -25,7 +25,7 @@
 
     <Fragment>
         <PackageGroup Id="Net6">
-            <ExePackage InstallCommand="/q" DetectCondition="Installed" Name="windowsdesktop-runtime-6.0.22-win-x64.exe" Compressed="no" DownloadUrl="https://download.visualstudio.microsoft.com/download/pr/66a7c4c6-8401-4799-864f-9afddf5a7733/4052f458f0266e25ab1b9c7959ca245f/windowsdesktop-runtime-6.0.22-win-x64.exe" Permanent="true" Id="Net6Setup">
+            <ExePackage InstallCommand="/q" DetectCondition="Installed" Name="windowsdesktop-runtime-6.0.22-win-x64.exe" Compressed="no" DownloadUrl="https://download.visualstudio.microsoft.com/download/pr/66a7c4c6-8401-4799-864f-9afddf5a7733/4052f458f0266e25ab1b9c7959ca245f/windowsdesktop-runtime-6.0.22-win-x64.exe" Permanent="yes" Id="Net6Setup">
                 <RemotePayload Version="6.0.9.0" Size="57328120" Hash="71DD37FB8A5DF79F5EEE8983D472683F5A01F73C" ProductName="Runtime components" Description="Runtime components"/>
                 <ExitCode Behavior="success" Value="1638" />
             </ExePackage>
