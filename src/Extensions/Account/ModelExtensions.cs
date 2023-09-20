@@ -264,7 +264,7 @@ namespace Raid.Toolkit.DataModel
 
         public static HeroType ToModel(this SharedModel.Meta.Heroes.HeroType type)
         {
-            SharedModel.Meta.Heroes.HeroVisualInfo? firstAvatar = type.VisualInfosBySkinId?.First().Value;
+            SharedModel.Meta.Heroes.HeroVisualInfo? firstAvatar = type.VisualInfosBySkinId?.FirstOrDefault().Value;
             return new HeroType()
             {
                 Affinity = (Enums.Element)type.Element,
