@@ -148,7 +148,7 @@ namespace Raid.Toolkit.Extensibility.Host
                     continue;
 
                 Stopwatch swScoped = Stopwatch.StartNew();
-                Logger.LogInformation("Background processing for account {account}", account.Id);
+                Logger.LogDebug("Background processing for account {account}", account.Id);
                 try
                 {
                     account.Tick();
@@ -157,7 +157,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 {
                     Logger.LogError(e, "Failed background processing for account {account}", account.Id);
                 }
-                Logger.LogInformation("Background processing for account {account} completed in {ms}ms", account.Id, swScoped.ElapsedMilliseconds);
+                Logger.LogDebug("Background processing for account {account} completed in {ms}ms", account.Id, swScoped.ElapsedMilliseconds);
             }
             return Task.CompletedTask;
         }

@@ -56,7 +56,7 @@ public class ArtifactExtension :
         }
         else
         {
-            Logger.LogInformation("Skipping artifact update");
+            Logger.LogDebug("Skipping artifact update");
             return Task.CompletedTask;
         }
 

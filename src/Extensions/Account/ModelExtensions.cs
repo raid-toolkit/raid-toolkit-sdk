@@ -262,6 +262,27 @@ namespace Raid.Toolkit.DataModel
             };
         }
 
+        public static HeroVisualInfo ToModel(this SharedModel.Meta.Heroes.HeroVisualInfo visual)
+        {
+            return new()
+            {
+                AvatarName = visual.AvatarName,
+                ModelName = visual.ModelName,
+                ShowcaseSceneName = visual.ShowcaseSceneName,
+            };
+        }
+
+        public static HeroForm ToModel(this SharedModel.Meta.Heroes.HeroForm form)
+        {
+            return new HeroForm()
+            {
+                Role = (HeroRole)form.Role,
+                UnscaledStats = form.BaseStats.ToModel(),
+                SkillTypeIds = form.SkillTypeIds?.ToArray(),
+                VisualInfosBySkin = form.VisualInfosBySkinId?.ToDictionary(kvp => kvp.Key, kvp => kvp.Value.ToModel())
+            };
+        }
+
         public static HeroType ToModel(this SharedModel.Meta.Heroes.HeroType type)
         {
             SharedModel.Meta.Heroes.HeroVisualInfo? firstAvatar = type.VisualInfosBySkinId?.FirstOrDefault().Value;
@@ -275,11 +296,12 @@ namespace Raid.Toolkit.DataModel
                 Name = type.Name.ToModel(),
                 ShortName = type.ShortName?.ToModel() ?? type.Name.ToModel(),
                 Rarity = (Enums.HeroRarity)type.Rarity,
-                Roles = type.AllRoles?.Cast<Enums.HeroRole>().ToArray(),
+                Role = type._allRoles?.Cast<Enums.HeroRole>().FirstOrDefault(),
                 LeaderSkill = type.LeaderSkill?.ToModel(),
-                SkillTypeIds = type.SkillTypeIds?.ToArray(),
+                SkillTypeIds = type.AllSkillTypeIds?.ToArray(),
                 TypeId = type.Id,
-                UnscaledStats = type.BaseStats.ToModel(),
+                UnscaledStats = type.BaseStats?.ToModel(),
+                Forms = type.Forms.Select(ToModel).ToArray()
             };
         }
 

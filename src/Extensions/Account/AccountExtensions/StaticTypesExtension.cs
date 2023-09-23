@@ -75,6 +75,7 @@ public class StaticTypesExtension :
 
         try
         {
+            Logger.LogInformation("Reading static data for {key}", key);
             if (Storage.TryRead(key, out T data) && data?.Hash == StaticDataHash)
             {
                 return data;
@@ -82,6 +83,7 @@ public class StaticTypesExtension :
             data = readFn();
             data.Hash = StaticDataHash;
             Storage.Write(key, data);
+            Logger.LogInformation("Completed static data for {key}", key);
             return data;
         }
         catch (Exception e)
