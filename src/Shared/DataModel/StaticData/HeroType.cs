@@ -3,6 +3,7 @@ using Newtonsoft.Json.Converters;
 using Raid.Toolkit.DataModel.Enums;
 
 using System;
+using System.Linq;
 
 namespace Raid.Toolkit.DataModel;
 
@@ -45,7 +46,13 @@ public class HeroType
     public int[]? SkillTypeIds;
 
     [Obsolete("Use forms instead"), JsonProperty("unscaledStats")]
-    public Stats? UnscaledStats;
+    public Stats? UnscaledStats
+    {
+        get => _UnscaledStats ?? Forms?.First().UnscaledStats;
+        set => _UnscaledStats = value;
+    }
+    private Stats? _UnscaledStats;
+
 
     [Obsolete("No longer used"), JsonProperty("brain")]
     public string? Brain;
