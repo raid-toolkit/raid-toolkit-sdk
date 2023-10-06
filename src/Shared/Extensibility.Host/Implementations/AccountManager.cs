@@ -95,6 +95,7 @@ namespace Raid.Toolkit.Extensibility.Host
                     Level = accountData.Level,
                     Power = (int)Math.Round(accountData.TotalPower, 0)
                 });
+                Storage.Flush();
                 LoadAccount(e.Instance.Id);
             }
         }
@@ -112,7 +113,11 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             foreach (string accountId in Storage.GetKeys(new AccountDirectoryContext()))
             {
-                LoadAccount(accountId);
+                try
+                {
+                    LoadAccount(accountId);
+                }
+                catch { }
             }
         }
 

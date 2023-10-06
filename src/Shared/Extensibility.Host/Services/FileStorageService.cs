@@ -72,5 +72,19 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             _ = PendingWrites.AddOrUpdate(filePath, (_) => value, (_, _) => value);
             return true;
         }
+
+        public void Flush()
+        {
+            string[] filePaths = PendingWrites.Keys.ToArray();
+            foreach (string filePath in filePaths)
+            {
+                if (!PendingWrites.TryRemove(filePath, out object value))
+                    continue;
+
+                string data = JsonConvert.SerializeObject(value);
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                File.WriteAllText(filePath, data);
+            }
+        }
     }
 }
