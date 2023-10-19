@@ -7,5 +7,6 @@ namespace Raid.Toolkit.DataModel.Enums
         Rare = 3,
         Epic = 4,
         Legendary = 5,
+        Mythic = 6,
     }
 }
