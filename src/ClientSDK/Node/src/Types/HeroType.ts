@@ -32,6 +32,7 @@ export interface LeaderStatBonus extends StatBonus {
 export interface HeroType {
   typeId: number;
   name: LocalizedText;
+  shortName: LocalizedText;
   affinity: Affinity;
   faction: Faction;
   rarity: Rarity;
