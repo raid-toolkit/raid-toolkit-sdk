@@ -39,6 +39,7 @@ export interface HeroType {
   ascended: number;
   leaderSkill: LeaderStatBonus;
   brain: string;
+  forms: HeroForm[];
 }
 
 export interface HeroVisualInfo {
