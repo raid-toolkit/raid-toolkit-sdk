@@ -26,7 +26,8 @@ namespace Raid.Toolkit.Extension.Account
         }
         public void MarkRefresh(SharedModel.Meta.Artifacts.UserArtifactData artifactData)
         {
-            m_nextForcedRefresh = DateTime.UtcNow.AddMilliseconds(kForceRefreshInterval);
+            if (ShouldForceUpdate()) // if we're overtime
+                m_nextForcedRefresh = DateTime.UtcNow.AddMilliseconds(kForceRefreshInterval);
             m_nextId = artifactData.NextArtifactId;
             m_nextRevisionId = artifactData.NextArtifactRevisionId;
         }

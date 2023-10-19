@@ -45,8 +45,6 @@ public class ArtifactExtension :
             Logger.LogInformation("Performing full artifact update");
             artifacts = GetArtifacts(scope);
 
-            // TODO: Defer this until the end of update, so we will retry a full reload if the current read throws.
-            State.MarkRefresh(artifactData);
         }
         else if (previous != null && State.ShouldIncrementalUpdate(artifactData))
         {
@@ -88,6 +86,7 @@ public class ArtifactExtension :
         if (hasUpdates)
         {
             Storage.Write(Key, result);
+            State.MarkRefresh(artifactData);
         }
 
         return Task.CompletedTask;
