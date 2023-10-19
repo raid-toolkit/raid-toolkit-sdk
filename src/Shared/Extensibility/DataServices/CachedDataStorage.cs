@@ -36,7 +36,9 @@ namespace Raid.Toolkit.Extensibility.DataServices
         public bool TryRead<T>(IDataContext context, string key, out T value) where T : class
         {
             string cacheKey = string.Join(";", context.Parts.Concat(new[] { key }).ToArray());
-            object cacheEntry = Cache.GetOrAdd(cacheKey, cacheKey => ReadFromUnderlyingStorage<T>(context, key));
+            object cacheEntry = Cache.AddOrUpdate(cacheKey,
+                cacheKey => ReadFromUnderlyingStorage<T>(context, key),
+                (cacheKey, value) => value == EmptyObject ? ReadFromUnderlyingStorage<T>(context, key) : value);
             if (cacheEntry == EmptyObject)
             {
                 value = default;

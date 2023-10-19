@@ -33,6 +33,11 @@ namespace Raid.Toolkit.Extensibility.DataServices
 
         public event EventHandler<DataStorageUpdatedEventArgs>? Updated;
 
+        public void Flush()
+        {
+            Storage.Flush();
+        }
+
         public IEnumerable<string> GetKeys(IDataContext context)
         {
             string filePath = Path.Combine(StoragePath, Path.Combine(context.Parts));
