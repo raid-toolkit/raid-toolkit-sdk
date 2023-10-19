@@ -23,6 +23,19 @@ import {
   UnapplyEffectTarget,
 } from './SkillEnums';
 
+export enum SkillTargets {
+  Producer,
+  AliveAllies,
+  AliveEnemies,
+  DeadAllies,
+  DeadEnemies,
+  AllAllies,
+  AllEnemies,
+  AliveAlliesExceptProducer,
+  AliveEnemiesIncludeInvisible,
+  AllAlliesExceptProducer,
+}
+
 export interface Skill {
   typeId: number;
   id: number;
@@ -45,6 +58,7 @@ export interface BaseSkillData {
   effects: EffectType[];
   upgrades: SkillUpgrade[];
   doesDamage: boolean;
+  targets?: SkillTargets;
 }
 
 export interface SkillType extends BaseSkillData {
