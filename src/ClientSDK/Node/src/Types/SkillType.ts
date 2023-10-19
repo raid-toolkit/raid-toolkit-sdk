@@ -70,7 +70,7 @@ export interface EffectRelation {
   effectTypeId: StatusEffectTypeId;
   effectKindIds: EffectKindId[];
   effectKindGroups: EffectKindGroup[];
-  phase: string;
+  phase: number[];
   activateOnGlancingHit: boolean;
 }
 

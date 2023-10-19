@@ -34,13 +34,21 @@ export interface HeroType {
   name: LocalizedText;
   affinity: Affinity;
   faction: Faction;
-  role: HeroRole;
   rarity: Rarity;
   ascended: number;
-  modelName: string;
-  avatarKey: string;
   leaderSkill: LeaderStatBonus;
+  brain: string;
+}
+
+export interface HeroVisualInfo {
+  avatarName: string;
+  modelName: string;
+  showcaseSceneName: string;
+}
+
+export interface HeroForm {
+  role: HeroRole;
   skillTypeIds: number[];
   unscaledStats: Stats;
-  brain: string;
+  visualInfosBySkin: Record<number, HeroVisualInfo>;
 }

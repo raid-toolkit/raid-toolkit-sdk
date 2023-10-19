@@ -40,6 +40,7 @@ export enum Rarity {
   Rare = 'Rare',
   Epic = 'Epic',
   Legendary = 'Legendary',
+  Mythic = 'Mythic',
 }
 
 export enum StatKindId {
@@ -52,6 +53,7 @@ export enum StatKindId {
   CriticalChance = 'CriticalChance',
   CriticalDamage = 'CriticalDamage',
   CriticalHeal = 'CriticalHeal',
+  IgnoreDefense = 'IgnoreDefense',
 }
 
 export enum DifficultyId {
