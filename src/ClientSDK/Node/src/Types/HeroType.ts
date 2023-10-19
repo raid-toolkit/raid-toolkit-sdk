@@ -43,9 +43,9 @@ export interface HeroType {
 }
 
 export interface HeroVisualInfo {
-  avatarName: string;
-  modelName: string;
-  showcaseSceneName: string;
+  avatar: string;
+  model: string;
+  showcase: string;
 }
 
 export interface HeroForm {
