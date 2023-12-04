@@ -15,7 +15,6 @@ using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host;
-using Raid.Toolkit.Extension.Account;
 using Raid.Toolkit.UI.WinUI.Base;
 
 using RaidExtractor.Core;
@@ -50,8 +49,8 @@ namespace Raid.Toolkit.UI.WinUI
         private readonly CachedDataStorage<PersistedDataStorage> Storage;
         private readonly PersistedDataStorage PersistedDataStorage;
         private readonly IAccountManager AccountManager;
-        private readonly Extractor Extractor;
-        private List<AccountData> Accounts = new();
+        //private readonly Extractor Extractor;
+        //private List<AccountData> Accounts = new();
         public AccountsWindow(CachedDataStorage<PersistedDataStorage> storage, PersistedDataStorage persistedDataStorage, IAccountManager accountManager)
         {
             InitializeComponent();
@@ -59,7 +58,7 @@ namespace Raid.Toolkit.UI.WinUI
             Storage = storage;
             PersistedDataStorage = persistedDataStorage;
             AccountManager = accountManager;
-            Extractor = new();
+            //Extractor = new();
             LoadAccountList();
 
             CenterWindowInMonitor();
@@ -67,8 +66,8 @@ namespace Raid.Toolkit.UI.WinUI
 
         private void LoadAccountList()
         {
-            Accounts = AccountManager.Accounts.Select(account => new AccountData(account)).ToList();
-            AccountList.ItemsSource = Accounts;
+            //Accounts = AccountManager.Accounts.Select(account => new AccountData(account)).ToList();
+            //AccountList.ItemsSource = Accounts;
         }
 
         private void ExportButton_Click(object sender, RoutedEventArgs e)
@@ -111,17 +110,17 @@ namespace Raid.Toolkit.UI.WinUI
             if (!AccountManager.TryGetAccount(accountId, out IAccount? account))
                 return;
 
-            AccountData data = new(account);
-            AccountDump dump = Extractor.DumpAccount(data, new StaticDataWrapper(account), DateTime.UtcNow);
-            SaveFileDialog sfd = new()
-            {
-                FileName = $"{data.Account.Name}_deprecated.json",
-                DefaultExt = "json"
-            };
-            if (sfd.ShowDialog() != DialogResult.OK)
-                return;
+            //AccountData data = new(account);
+            //AccountDump dump = Extractor.DumpAccount(data, new StaticDataWrapper(account), DateTime.UtcNow);
+            //SaveFileDialog sfd = new()
+            //{
+            //    FileName = $"{data.Account.Name}_deprecated.json",
+            //    DefaultExt = "json"
+            //};
+            //if (sfd.ShowDialog() != DialogResult.OK)
+            //    return;
 
-            File.WriteAllText(sfd.FileName, JsonConvert.SerializeObject(dump));
+            //File.WriteAllText(sfd.FileName, JsonConvert.SerializeObject(dump));
         }
 
         private async void ImportButton_Click(object sender, RoutedEventArgs e)

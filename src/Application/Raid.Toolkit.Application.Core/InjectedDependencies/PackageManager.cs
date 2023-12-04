@@ -33,7 +33,6 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
         private readonly ILogger<PackageManager> Logger;
         private bool IsLoaded = false;
         public static string? DebugPackage { get; set; }
-        public static bool NoDefaultPackages = false;
 
         public PackageManager(ILogger<PackageManager> logger, IAppUI appUI, INotificationManager notificationManager, IAppService appService)
         {
@@ -92,13 +91,6 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
         private void Load()
         {
             if (Descriptors.Count > 0) return;
-
-            // add packaged extensions
-            if (!NoDefaultPackages)
-            {
-                Descriptors.Add(ExtensionBundle.FromType<Extension.Account.AccountExtension>());
-                Descriptors.Add(ExtensionBundle.FromType<Extension.Realtime.RealtimeExtension>());
-            }
 
             Dictionary<string, ExtensionBundle> descriptors = new();
             if (string.IsNullOrEmpty(DebugPackage))

@@ -8,7 +8,6 @@
 	xmlns:rtkuibase="using:Raid.Toolkit.UI.WinUI.Base"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Raid.Toolkit.UI.WinUI"
-    xmlns:account="using:Raid.Toolkit.Extension.Account"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -24,7 +23,7 @@
 			<AppBarButton Icon="Import" Label="Import" ToolTipService.ToolTip="Import RTK Account JSON" Click="ImportButton_Click" />
 		</AppBar>
 		<ListBox Grid.Row="1" x:Name="AccountList" HorizontalContentAlignment="Stretch">
-			<ListBox.ItemTemplate>
+			<!--<ListBox.ItemTemplate>
 				<DataTemplate x:DataType="account:AccountData">
 					<Grid>
 						<Grid.ColumnDefinitions>
@@ -40,7 +39,7 @@
 						</StackPanel>
 					</Grid>
 				</DataTemplate>
-			</ListBox.ItemTemplate>
+			</ListBox.ItemTemplate>-->
 			<ListBox.ItemContainerStyle>
 				<Style TargetType="ListBoxItem">
 					<Setter Property="HorizontalContentAlignment" Value="Stretch" />

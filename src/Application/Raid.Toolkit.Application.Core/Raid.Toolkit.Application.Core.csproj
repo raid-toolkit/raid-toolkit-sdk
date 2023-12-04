@@ -16,8 +16,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\Extensions\Account\Account.csproj" />
-		<ProjectReference Include="..\..\Extensions\Realtime\Realtime.csproj" />
 		<ProjectReference Include="..\..\Shared\Extensibility.Host\Extensibility.Host.csproj" />
 		<ProjectReference Include="..\..\Shared\Extensibility\Extensibility.csproj" />
 	</ItemGroup>

@@ -297,19 +297,6 @@
           "Newtonsoft.Json": "[13.0.3, )"
         }
       },
-      "Raid.Model": {
-        "type": "Project",
-        "dependencies": {
-          "Microsoft.Win32.Registry": "[5.0.0, )",
-          "Newtonsoft.Json": "[13.0.3, )",
-          "Raid.Common": "[1.0.0, )",
-          "il2cpptoolkit.common": "[2.0.129-alpha, )",
-          "il2cpptoolkit.metadata": "[2.0.129-alpha, )",
-          "il2cpptoolkit.reversecompiler": "[2.0.129-alpha, )",
-          "il2cpptoolkit.runtime": "[2.0.129-alpha, )",
-          "il2cpptoolkit.target.netcore": "[2.0.129-alpha, )"
-        }
-      },
       "Raid.Toolkit.DataModel": {
         "type": "Project",
         "dependencies": {
@@ -328,6 +315,19 @@
           "il2cpptoolkit.common": "[2.0.129-alpha, )",
           "il2cpptoolkit.metadata": "[2.0.129-alpha, )",
           "il2cpptoolkit.runtime": "[2.0.129-alpha, )"
+        }
+      },
+      "Raid.Toolkit.Loader": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.Win32.Registry": "[5.0.0, )",
+          "Newtonsoft.Json": "[13.0.3, )",
+          "Raid.Common": "[1.0.0, )",
+          "il2cpptoolkit.common": "[2.0.129-alpha, )",
+          "il2cpptoolkit.metadata": "[2.0.129-alpha, )",
+          "il2cpptoolkit.reversecompiler": "[2.0.129-alpha, )",
+          "il2cpptoolkit.runtime": "[2.0.129-alpha, )",
+          "il2cpptoolkit.target.netcore": "[2.0.129-alpha, )"
         }
       }
     },

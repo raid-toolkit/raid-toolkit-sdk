@@ -1,18 +1,17 @@
 using System;
 
-namespace Raid.Toolkit.Model
+namespace Raid.Toolkit.Loader;
+
+public enum ModelLoadState
 {
-    public enum ModelLoadState
-    {
-        Initialize,
-        Load,
-        Rebuild,
-        Ready,
-        Error,
-    }
-    public class ModelLoadStateEventArgs : EventArgs
-    {
-        public ModelLoadState LoadState { get; set; }
-        public ModelLoadStateEventArgs(ModelLoadState state) => LoadState = state;
-    }
+    Initialize,
+    Load,
+    Rebuild,
+    Ready,
+    Error,
+}
+public class ModelLoadStateEventArgs : EventArgs
+{
+    public ModelLoadState LoadState { get; set; }
+    public ModelLoadStateEventArgs(ModelLoadState state) => LoadState = state;
 }

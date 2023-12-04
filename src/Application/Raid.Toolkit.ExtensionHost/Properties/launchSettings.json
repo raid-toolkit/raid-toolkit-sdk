@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Raid.Toolkit.ExtensionHost (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Raid.Toolkit.ExtensionHost (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

@@ -28,9 +28,6 @@ namespace Raid.Toolkit.Application.Core.Commands.Matchers
         [Option('p', "debug-package", Hidden = true)]
         public string? DebugPackage { get; set; }
 
-        [Option('m', "no-default-packages", Hidden = true)]
-        public bool NoDefaultPackages { get; set; }
-
         [Option('z', "no-webservice", Hidden = true)]
         public bool NoWebService { get; set; }
 

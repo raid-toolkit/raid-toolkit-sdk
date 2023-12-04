@@ -3,7 +3,7 @@
     <Product Id="*" Name="Raid Toolkit" Manufacturer="Raid Toolkit" UpgradeCode="CFCBC4D3-CF5A-4DAC-BA0C-67867A4E1EDF" Language="1033" Codepage="932" Version="$(env.AppVersion)">
         <Package Id="*" Keywords="Installer" InstallScope="perUser" Description="Raid Toolkit Installer" Manufacturer="Raid Toolkit" InstallerVersion="100" Languages="1033" Compressed="yes" SummaryCodepage="932" />
         <Upgrade Id="CFCBC4D3-CF5A-4DAC-BA0C-67867A4E1EDF">
-            <UpgradeVersion OnlyDetect="no" Property="PREVIOUSFOUND" Minimum="2.0.0" IncludeMinimum="yes" Maximum="3.0.0" IncludeMaximum="no" />
+            <UpgradeVersion OnlyDetect="no" Property="PREVIOUSFOUND" Minimum="3.0.0" IncludeMinimum="yes" Maximum="4.0.0" IncludeMaximum="no" />
         </Upgrade>
 
         <InstallExecuteSequence>

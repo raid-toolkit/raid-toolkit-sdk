@@ -639,19 +639,6 @@
           "Newtonsoft.Json": "[13.0.3, )"
         }
       },
-      "Raid.Model": {
-        "type": "Project",
-        "dependencies": {
-          "Microsoft.Win32.Registry": "[5.0.0, )",
-          "Newtonsoft.Json": "[13.0.3, )",
-          "Raid.Common": "[1.0.0, )",
-          "il2cpptoolkit.common": "[2.0.129-alpha, )",
-          "il2cpptoolkit.metadata": "[2.0.129-alpha, )",
-          "il2cpptoolkit.reversecompiler": "[2.0.129-alpha, )",
-          "il2cpptoolkit.runtime": "[2.0.129-alpha, )",
-          "il2cpptoolkit.target.netcore": "[2.0.129-alpha, )"
-        }
-      },
       "Raid.Toolkit.DataModel": {
         "type": "Project",
         "dependencies": {
@@ -679,8 +666,8 @@
           "CustomExtensions.WinUI": "[0.1.10-beta, )",
           "Microsoft.Extensions.Hosting.Abstractions": "[6.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
-          "Raid.Model": "[1.0.0, )",
           "Raid.Toolkit.Extensibility": "[1.0.0, )",
+          "Raid.Toolkit.Loader": "[1.0.0, )",
           "System.Threading.Tasks.Dataflow": "[7.0.0, )",
           "il2cpptoolkit.common": "[2.0.129-alpha, )",
           "il2cpptoolkit.metadata": "[2.0.129-alpha, )",
@@ -689,18 +676,17 @@
           "il2cpptoolkit.target.netcore": "[2.0.129-alpha, )"
         }
       },
-      "Raid.Toolkit.Extension.Account": {
+      "Raid.Toolkit.Loader": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
-          "Raid.Toolkit.Extensibility": "[1.0.0, )"
-        }
-      },
-      "Raid.Toolkit.Extension.Realtime": {
-        "type": "Project",
-        "dependencies": {
-          "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
-          "Raid.Toolkit.Extensibility": "[1.0.0, )"
+          "Microsoft.Win32.Registry": "[5.0.0, )",
+          "Newtonsoft.Json": "[13.0.3, )",
+          "Raid.Common": "[1.0.0, )",
+          "il2cpptoolkit.common": "[2.0.129-alpha, )",
+          "il2cpptoolkit.metadata": "[2.0.129-alpha, )",
+          "il2cpptoolkit.reversecompiler": "[2.0.129-alpha, )",
+          "il2cpptoolkit.runtime": "[2.0.129-alpha, )",
+          "il2cpptoolkit.target.netcore": "[2.0.129-alpha, )"
         }
       }
     },

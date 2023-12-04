@@ -6,7 +6,7 @@ using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Notifications;
 using Raid.Toolkit.Extensibility.Services;
-using Raid.Toolkit.Model;
+using Raid.Toolkit.Loader;
 
 namespace Raid.Toolkit.Extensibility.Host
 {

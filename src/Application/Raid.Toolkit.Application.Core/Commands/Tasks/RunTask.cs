@@ -95,7 +95,6 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
                 Options.DebugPackage = Environment.GetEnvironmentVariable("DEBUG_PACKAGE_DIR") ?? ".";
             }
             PackageManager.DebugPackage = Options.DebugPackage;
-            PackageManager.NoDefaultPackages = Options.NoDefaultPackages;
             if (!string.IsNullOrEmpty(PackageManager.DebugPackage))
             {
                 Options.Debug = CommonOptions.Value.Debug = true;

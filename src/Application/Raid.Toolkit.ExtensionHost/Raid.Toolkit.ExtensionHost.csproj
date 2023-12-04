@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(BuildTargetProps)" />
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<RootNamespace>Raid.Toolkit.ExtensionHost</RootNamespace>
+		<ApplicationIcon>..\Assets\AppIcon.ico</ApplicationIcon>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<IsPackable>false</IsPackable>
+		<UseWinUI>true</UseWinUI>
+		<WindowsPackageType>None</WindowsPackageType>
+		<SelfContained>false</SelfContained>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230822000" GeneratePathProperty="true" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.25267-preview" />
+		<Manifest Include="$(ApplicationManifest)" />
+	</ItemGroup>
+	
+	<ItemGroup>
+		<PackageReference Include="Il2CppToolkit.Injection.Client" Version="2.0.140-alpha" GeneratePathProperty="true" />
+		<PackageReference Include="WinUIEx" Version="2.0.0" />
+		<PackageReference Include="CommandLineParser" Version="2.9.1" />
+		<PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.4.0" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Content Include="$(PkgIl2CppToolkit_Injection_Client)\runtimes\win10-x64\native\Il2CppToolkit.Injection.Host.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
+</Project>

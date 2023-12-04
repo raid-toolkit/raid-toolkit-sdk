@@ -7,7 +7,7 @@ using Raid.Toolkit.Application.Core.Commands;
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
-using Raid.Toolkit.Model;
+using Raid.Toolkit.Loader;
 using Raid.Toolkit.UI.WinUI.Forms;
 
 using System;
@@ -74,7 +74,7 @@ namespace Raid.Toolkit.UI.WinUI
             {
                 if (PPAdapter.TryGetGameVersion(101, "raid", out PlariumPlayAdapter.GameInfo gameInfo))
                 {
-                    _ = Process.Start(gameInfo.PlariumPlayPath, new string[] { "--args", $"-gameid=101", "-tray-start" });
+                    _ = Process.Start(gameInfo.PlariumPlayPath, new string[] { $"-gameid=101", "-tray-start" });
                 }
             }
         }

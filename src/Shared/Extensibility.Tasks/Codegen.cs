@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Build.Framework;
 using Newtonsoft.Json;
-using Raid.Toolkit.Model;
+using Raid.Toolkit.Loader;
 
 namespace Raid.Toolkit.Extensibility.Tasks
 {

@@ -28,10 +28,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Model\Model.csproj" />
-        <ProjectReference Include="..\Model.Prebuild\Model.Prebuild.csproj">
-            <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
-            <Private>False</Private>
-        </ProjectReference>
         <ProjectReference Include="..\Extensibility\Extensibility.csproj" />
     </ItemGroup>
 </Project>
