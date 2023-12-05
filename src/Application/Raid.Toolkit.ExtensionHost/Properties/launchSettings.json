@@ -1,10 +1,9 @@
 {
   "profiles": {
-    "Raid.Toolkit.ExtensionHost (Package)": {
-      "commandName": "MsixPackage"
-    },
     "Raid.Toolkit.ExtensionHost (Unpackaged)": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "run Raid.Toolkit.Extension.Account",
+      "hotReloadEnabled": true
     }
   }
 }

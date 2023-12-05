@@ -9,10 +9,8 @@
 
   <Identity
     Name="93c0acf9-bf49-4b4c-a1ca-792fb3ad545b"
-    Publisher="CN=PowerSpec"
+    Publisher="CN=Callous"
     Version="1.0.0.0" />
-
-  <mp:PhoneIdentity PhoneProductId="93c0acf9-bf49-4b4c-a1ca-792fb3ad545b" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Raid.Toolkit.ExtensionHost</DisplayName>
