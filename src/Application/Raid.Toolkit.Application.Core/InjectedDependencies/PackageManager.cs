@@ -156,6 +156,18 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
                                 }
                             }
                             ExtensionBundle bundle = ExtensionBundle.FromDirectory(dir);
+                            if (!string.IsNullOrEmpty(bundle.Manifest.RequireVersion))
+                            {
+                                if (Version.TryParse(bundle.Manifest.RequireVersion, out Version? requiredVersion) &&
+                                    Version.TryParse(bundle.Manifest.RequireVersion, out Version? currentVersion))
+                                {
+                                    if (currentVersion < requiredVersion)
+                                    {
+                                        Logger.LogWarning("Extension {bundle.Id} requires version {requiredVersion} but {currentVersion} is installed", bundle.Id, requiredVersion, currentVersion);
+                                        continue;
+                                    }
+                                }
+                            }
                             descriptors[bundle.Id] = bundle;
                         }
                         catch (Exception)
