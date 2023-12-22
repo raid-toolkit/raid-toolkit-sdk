@@ -21,6 +21,7 @@
         <AssemblyName>Raid.Toolkit.Loader</AssemblyName>
         <RootNamespace>Raid.Toolkit.Loader</RootNamespace>
         <Platforms>x64</Platforms>
-    </PropertyGroup>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
 </Project>

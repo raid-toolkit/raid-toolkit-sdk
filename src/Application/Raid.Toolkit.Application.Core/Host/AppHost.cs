@@ -17,6 +17,7 @@ using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host;
 using Raid.Toolkit.Extensibility.Host.Services;
+using Raid.Toolkit.Extensibility.Host.Utils;
 using Raid.Toolkit.Extensibility.Services;
 using Raid.Toolkit.Extensibility.Shared;
 

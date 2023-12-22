@@ -2,12 +2,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-using SuperSocket.WebSocket;
-using SuperSocket.WebSocket.Server;
+using System;
+using System.Collections.Generic;
 
-namespace Raid.Toolkit.Application.Core.Host
+namespace Raid.Toolkit.Extensibility.Host
 {
-    internal class HostBuilderAdapter : IHostBuilder
+    public class HostBuilderAdapter : IHostBuilder
     {
         protected IHostBuilder HostBuilder;
         public HostBuilderAdapter(IHostBuilder hostBuilder)

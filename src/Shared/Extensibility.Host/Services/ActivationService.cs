@@ -31,8 +31,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
                 case "extension":
                     {
                         string extensionId = activationRequestUri.LocalPath.TrimStart('/').Split('/')[0];
-                        ExtensionHost extensionHost = ExtensionHostController.GetExtensionPackageHost(extensionId);
-                        if (extensionHost == null)
+                        if (!ExtensionHostController.TryGetExtension(extensionId, out IExtensionManagement? extensionHost))
                             throw new ApplicationException($"Extension '{extensionId}' not found.");
 
                         return extensionHost.HandleRequest(activationRequestUri);

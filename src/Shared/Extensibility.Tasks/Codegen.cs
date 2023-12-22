@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.Build.Framework;
+using Microsoft.Extensions.Options;
+
 using Newtonsoft.Json;
 using Raid.Toolkit.Loader;
 
@@ -53,18 +55,15 @@ namespace Raid.Toolkit.Extensibility.Tasks
             string cacheDir = Path.Combine(Path.GetTempPath(), "_rtkBuildCache", manifest.Id);
             _ = Directory.CreateDirectory(cacheDir);
 
-            ModelLoader loader = new(null)
-            {
-                OutputDirectory = cacheDir
-            };
-            string tempOutputFileCache = Path.Combine(loader.OutputDirectory, loader.OutputFilename);
+            ModelLoader loader = new(null, Options.Create(new ModelLoaderOptions()));
+            string tempOutputFileCache = Path.Combine(cacheDir, loader.OutputFilename);
 
             try
             {
                 List<Regex> patternMatchers = manifest.Codegen?.Types?
                     .Select(pattern => new Regex(pattern, RegexOptions.Singleline | RegexOptions.Compiled)).ToList()
                     ?? new();
-                string dllPath = loader.Build(patternMatchers, false).GetResultSync();
+                string dllPath = loader.Build(patternMatchers, cacheDir).GetResultSync();
                 if (File.Exists(OutputFile))
                     File.Delete(OutputFile);
 

@@ -3,9 +3,9 @@ using System.Text;
 using Karambolo.Extensions.Logging.File;
 using Microsoft.Extensions.Logging;
 
-namespace Raid.Toolkit.Application.Core.Utility
+namespace Raid.Toolkit.Extensibility.Host.Utils
 {
-    internal class SingleLineLogEntryTextBuilder : FileLogEntryTextBuilder
+    public class SingleLineLogEntryTextBuilder : FileLogEntryTextBuilder
     {
         public static readonly SingleLineLogEntryTextBuilder Default = new();
 

@@ -98,12 +98,6 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
             if (!string.IsNullOrEmpty(PackageManager.DebugPackage))
             {
                 Options.Debug = CommonOptions.Value.Debug = true;
-                string debugInteropDirectory = Path.Combine(PackageManager.DebugPackage, @"temp~interop");
-                modelLoader.OutputDirectory = debugInteropDirectory;
-            }
-            if (!string.IsNullOrEmpty(Options.InteropDirectory))
-            {
-                modelLoader.OutputDirectory = Options.InteropDirectory;
             }
         }
     }

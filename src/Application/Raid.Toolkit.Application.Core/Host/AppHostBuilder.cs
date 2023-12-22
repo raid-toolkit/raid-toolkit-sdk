@@ -14,6 +14,7 @@ using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host;
 using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Interfaces;
+using Raid.Toolkit.Loader;
 
 using SuperSocket.WebSocket;
 using SuperSocket.WebSocket.Server;
@@ -103,7 +104,7 @@ namespace Raid.Toolkit.Application.Core.Host
             if (TryAddFeature(Feature.Extensibility))
             {
                 ConfigureServices((context, services) => services
-                    .Configure<ExtensionHostOptions>(config => config.ForceRebuild = AppHost.ForceRebuild)
+                    .Configure<ModelLoaderOptions>(config => config.ForceRebuild = AppHost.ForceRebuild)
                     .AddExtensibilityServices<PackageManager>());
             }
             return this;

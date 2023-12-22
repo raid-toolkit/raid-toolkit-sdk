@@ -2,21 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection.Metadata;
-
-using CommunityToolkit.WinUI.Notifications;
+using System.Threading.Tasks;
 
 using Microsoft.Extensions.Logging;
 
-using Raid.Toolkit.Application.Core.Commands.Base;
-using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Common;
-using Raid.Toolkit.Extensibility;
-using Raid.Toolkit.Extensibility.Host;
-using Raid.Toolkit.Extensibility.Interfaces;
-using Raid.Toolkit.Extensibility.Notifications;
 
-namespace Raid.Toolkit.Application.Core.DependencyInjection
+namespace Raid.Toolkit.Extensibility.Host
 {
     public class PackageManager : IPackageManager
     {
@@ -26,23 +18,13 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
         private static string DownloadsDirectory => Path.Combine(RegistrySettings.InstallationPath, "downloads");
 
         private readonly List<ExtensionBundle> Descriptors = new();
-        private readonly IAppUI AppUI;
-        private readonly INotificationManager NotificationManager;
-        private readonly IAppService AppService;
-        private readonly NotificationSink PackageUpdateNotify;
         private readonly ILogger<PackageManager> Logger;
         private bool IsLoaded = false;
         public static string? DebugPackage { get; set; }
 
-        public PackageManager(ILogger<PackageManager> logger, IAppUI appUI, INotificationManager notificationManager, IAppService appService)
+        public PackageManager(ILogger<PackageManager> logger)
         {
             Logger = logger;
-            AppUI = appUI;
-            NotificationManager = notificationManager;
-            AppService = appService;
-            PackageUpdateNotify = new("packageManager");
-            PackageUpdateNotify.Activated += Sink_Activated;
-            NotificationManager.RegisterHandler(PackageUpdateNotify);
         }
 
         private bool IsPackageLoaded(string id)
@@ -50,23 +32,10 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
             return Descriptors.Any(desc => desc.Id == id);
         }
 
-        private void Sink_Activated(object? sender, NotificationActivationEventArgs e)
+        public Task<ExtensionBundle?> RequestPackageInstall(ExtensionBundle package)
         {
-            if (e.Arguments.TryGetValue(NotificationConstants.Action, out string? action))
-            {
-                switch (action)
-                {
-                    case "restart":
-                        {
-                            AppService.Restart(false);
-                            break;
-                        }
-                }
-            }
-        }
-
-        public async Task<ExtensionBundle?> RequestPackageInstall(ExtensionBundle package)
-        {
+            throw new V3NotImplException();
+            /*
             bool result = await AppUI.ShowExtensionInstaller(package);
             if (!result)
             {
@@ -74,6 +43,7 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
             }
             ExtensionBundle? installedPackage = AddPackage(package);
             return installedPackage;
+            */
         }
 
         private void EnsureLoaded()
@@ -187,12 +157,7 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
 
         private void RequestRestart()
         {
-            ToastContentBuilder tcb = new ToastContentBuilder()
-                .AddText("Restart required")
-                .AddText($"Raid Toolkit needs to be restarted to apply extension changes.")
-                .AddButton(new ToastButton("Restart", PackageUpdateNotify.GetArguments("restart")))
-                .AddButton(new ToastButtonDismiss());
-            PackageUpdateNotify.SendNotification(tcb.Content, "extensions-updated");
+            // TODO
         }
 
         public ExtensionBundle? AddPackage(ExtensionBundle packageToInstall)

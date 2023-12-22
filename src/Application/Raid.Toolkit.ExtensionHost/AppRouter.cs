@@ -25,6 +25,18 @@ namespace Raid.Toolkit.ExtensionHost;
 abstract class BaseOptions
 {
     public abstract string GetExtensionId();
+
+    [Option('q', "quiet")]
+    public bool DisableLogging { get; set; }
+
+    [Option("Embedding")]
+    public bool Embedding { get; set; }
+
+    [Option("force-rebuild")]
+    public bool ForceRebuild { get; set; }
+
+    [Option('d', "debug", Hidden = true)]
+    public bool Debug { get; set; }
 }
 
 [Verb("install", HelpText = "Installs an extension")]

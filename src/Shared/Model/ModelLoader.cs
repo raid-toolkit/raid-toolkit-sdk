@@ -7,12 +7,15 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
+using Google.Protobuf.WellKnownTypes;
+
 using Il2CppToolkit.Common.Errors;
 using Il2CppToolkit.Model;
 using Il2CppToolkit.ReverseCompiler;
 using Il2CppToolkit.ReverseCompiler.Target.NetCore;
 
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Raid.Toolkit.Loader;
 
@@ -58,15 +61,16 @@ public class ModelLoader : IModelLoader
 
     public string GameVersion { get; private set; }
     public Version InteropVersion { get; private set; }
-    public string OutputDirectory { get; set; }
     public string OutputAssemblyName { get; set; } = "Raid.Interop";
     public string OutputFilename { get; set; } = "Raid.Interop.dll";
     private Assembly InteropAsm;
     private readonly ILogger<ModelLoader> Logger;
+    private readonly IOptions<ModelLoaderOptions> Options;
 
-    public ModelLoader(ILogger<ModelLoader> logger)
+    public ModelLoader(ILogger<ModelLoader> logger, IOptions<ModelLoaderOptions> options)
     {
         Logger = logger;
+        Options = options;
         AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
     }
 
@@ -87,11 +91,11 @@ public class ModelLoader : IModelLoader
         return null;
     }
 
-    public async Task<Assembly> BuildAndLoad(IEnumerable<Regex> regices, bool force)
+    public async Task<Assembly> BuildAndLoad(IEnumerable<Regex> regices, string outputDirectory)
     {
         try
         {
-            string dllPath = await Build(regices, force);
+            string dllPath = await Build(regices, outputDirectory);
             InteropAsm = Assembly.LoadFrom(dllPath);
             PostfixTypes(InteropAsm);
             Raise(new(IModelLoader.LoadState.Loaded));
@@ -105,7 +109,7 @@ public class ModelLoader : IModelLoader
         }
     }
 
-    public async Task<string> Build(IEnumerable<Regex> regices, bool force)
+    public async Task<string> Build(IEnumerable<Regex> regices, string outputDirectory)
     {
         try
         {
@@ -122,10 +126,9 @@ public class ModelLoader : IModelLoader
 
             Raise(new(IModelLoader.LoadState.Initialize));
 
-            string outDir = OutputDirectory ?? Path.GetDirectoryName(Process.GetCurrentProcess().MainModule.FileName);
-            string dllPath = Path.Combine(outDir, gameInfo.Version, OutputFilename);
+            string dllPath = Path.Combine(outputDirectory, gameInfo.Version, OutputFilename);
 
-            bool shouldGenerate = force;
+            bool shouldGenerate = Options.Value.ForceRebuild;
             try
             {
                 if (File.Exists(dllPath))
@@ -224,4 +227,8 @@ public class ModelLoader : IModelLoader
             Total = e.Total
         }));
     }
+}
+public class ModelLoaderOptions
+{
+    public bool ForceRebuild { get; set; } = false;
 }

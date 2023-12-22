@@ -51,7 +51,6 @@ namespace Raid.Toolkit.Extensibility.Host
                 .AddSingleton<PersistedDataStorage>()
                 .AddSingleton<ErrorService>()
                 .AddSingleton<GitHub.Updater>()
-                .AddHostedService<ApplicationHost>()
                 .AddHostedService<ServiceExecutor>()
                 .AddHostedServiceSingleton<IAccountManager, AccountManager>()
                 .AddHostedServiceSingleton<INotificationManager, NotificationManager>()

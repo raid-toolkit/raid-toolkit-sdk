@@ -30,9 +30,9 @@
       },
       "Karambolo.Extensions.Logging.File": {
         "type": "Direct",
-        "requested": "[3.4.0, )",
-        "resolved": "3.4.0",
-        "contentHash": "ZhDYGgEv792s754DXn5xGidn1CbDnk1fTNcXDeUVr3suL/FH1faA4R5S2pDimS61wD8t0J+CBmG9qY9YmqV9Kw==",
+        "requested": "[3.5.0, )",
+        "resolved": "3.5.0",
+        "contentHash": "ltOeYLgXoBdhlNp1NhCDCyRr7nk8y7KbBfaefS4H2rQ9pB0yNE07Z+TPHuTAxugr0nObeaBmRQgNIW1AwLBW0g==",
         "dependencies": {
           "Microsoft.Extensions.FileProviders.Physical": "6.0.0",
           "Microsoft.Extensions.Logging.Configuration": "6.0.0",
@@ -664,6 +664,8 @@
         "dependencies": {
           "CommunityToolkit.WinUI.Notifications": "[7.1.2, )",
           "CustomExtensions.WinUI": "[0.1.10-beta, )",
+          "Karambolo.Extensions.Logging.File": "[3.5.0, )",
+          "Microsoft.Extensions.Hosting": "[6.0.1, )",
           "Microsoft.Extensions.Hosting.Abstractions": "[6.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
           "Raid.Toolkit.Extensibility": "[1.0.0, )",

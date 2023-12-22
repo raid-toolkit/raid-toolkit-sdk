@@ -611,6 +611,8 @@
         "dependencies": {
           "CommunityToolkit.WinUI.Notifications": "[7.1.2, )",
           "CustomExtensions.WinUI": "[0.1.10-beta, )",
+          "Karambolo.Extensions.Logging.File": "[3.5.0, )",
+          "Microsoft.Extensions.Hosting": "[6.0.1, )",
           "Microsoft.Extensions.Hosting.Abstractions": "[6.0.0, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
           "Raid.Toolkit.Extensibility": "[1.0.0, )",

@@ -5,15 +5,12 @@ using Raid.Toolkit.Common;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public class ExtensionHostOptions
-    {
-        public bool ForceRebuild { get; set; } = false;
-    }
     public class ExtensionHostController : IExtensionHostController, IDisposable
     {
         private readonly IModelLoader ModelLoader;
@@ -22,8 +19,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IServiceProvider ServiceProvider;
         private readonly IWindowManager WindowManager;
         private readonly ILogger<ExtensionHostController> Logger;
-        private readonly IOptions<ExtensionHostOptions> Options;
-        private readonly Dictionary<string, ExtensionHost> ExtensionPackages = new();
+        private readonly Dictionary<string, IExtensionManagement> ExtensionPackages = new();
         private readonly Dictionary<Type, IDisposable> Instances = new();
         private bool IsDisposed;
 
@@ -33,7 +29,6 @@ namespace Raid.Toolkit.Extensibility.Host
             IModelLoader modelLoader,
             IServiceProvider serviceProvider,
             IWindowManager windowManager,
-            IOptions<ExtensionHostOptions> options,
             ILogger<ExtensionHostController> logger
             )
         {
@@ -42,7 +37,6 @@ namespace Raid.Toolkit.Extensibility.Host
             ModelLoader = modelLoader;
             ServiceProvider = serviceProvider;
             WindowManager = windowManager;
-            Options = options;
             Logger = logger;
         }
 
@@ -52,40 +46,65 @@ namespace Raid.Toolkit.Extensibility.Host
             return ExtensionPackages.Values.ToList();
         }
 
-        public async Task LoadExtensions()
+        public bool TryGetExtension(string packageId, [NotNullWhen(true)] out IExtensionManagement? extension)
         {
-            foreach (var pkg in PackageManager.GetAllPackages())
+            if (ExtensionPackages.TryGetValue(packageId, out extension))
             {
-                try
-                {
-                    ExtensionHost extensionHost = ExtensionHost.CreateHost(ServiceProvider, pkg);
-                    ExtensionPackages.Add(pkg.Id, extensionHost);
-                }
-                catch (TypeLoadException ex)
-                {
-                    Logger.LogError(ExtensionError.TypeLoadFailure.EventId(), ex, "Failed to load extension");
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogError(ExtensionError.FailedToLoad.EventId(), ex, "Failed to load extension");
-                }
+                return true;
             }
-
-            var typePatterns = ExtensionPackages.Values.SelectMany(host => host.GetIncludeTypes());
-            await Task.Run(() => ModelLoader.BuildAndLoad(typePatterns, Options.Value.ForceRebuild));
-
-
-            foreach (var pkg in ExtensionPackages.Values)
+            ExtensionBundle pkg = PackageManager.GetPackage(packageId);
+            try
             {
-                try
-                {
-                    await pkg.Load();
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogError(ExtensionError.FailedToLoad.EventId(), ex, "Failed to load extension");
-                }
+                extension = ExtensionHost.CreateHost(ServiceProvider, pkg);
+                ExtensionPackages.Add(pkg.Id, extension);
+                return true;
             }
+            catch (TypeLoadException ex)
+            {
+                Logger.LogError(ExtensionError.TypeLoadFailure.EventId(), ex, "Failed to load extension");
+            }
+            catch (Exception ex)
+            {
+                Logger.LogError(ExtensionError.FailedToLoad.EventId(), ex, "Failed to load extension");
+            }
+            return false;
+        }
+
+        public Task LoadExtensions()
+        {
+            throw new V3NotImplException();
+            //foreach (var pkg in PackageManager.GetAllPackages())
+            //{
+            //    try
+            //    {
+            //        ExtensionHost extensionHost = ExtensionHost.CreateHost(ServiceProvider, pkg);
+            //        ExtensionPackages.Add(pkg.Id, extensionHost);
+            //    }
+            //    catch (TypeLoadException ex)
+            //    {
+            //        Logger.LogError(ExtensionError.TypeLoadFailure.EventId(), ex, "Failed to load extension");
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Logger.LogError(ExtensionError.FailedToLoad.EventId(), ex, "Failed to load extension");
+            //    }
+            //}
+
+            //var typePatterns = ExtensionPackages.Values.SelectMany(host => host.GetIncludeTypes());
+            //await Task.Run(() => ModelLoader.BuildAndLoad(typePatterns, Options.Value.ForceRebuild));
+
+
+            //foreach (var pkg in ExtensionPackages.Values)
+            //{
+            //    try
+            //    {
+            //        await pkg.Load();
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Logger.LogError(ExtensionError.FailedToLoad.EventId(), ex, "Failed to load extension");
+            //    }
+            //}
         }
 
         public void ActivateExtensions()
@@ -139,7 +158,7 @@ namespace Raid.Toolkit.Extensibility.Host
             }
         }
 
-        public ExtensionHost GetExtensionPackageHost(string packageId)
+        public IExtensionHost GetExtensionPackageHost(string packageId)
         {
             return ExtensionPackages[packageId];
         }

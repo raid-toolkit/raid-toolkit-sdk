@@ -31,11 +31,9 @@ namespace Raid.Toolkit
             public ModelLoaderEventArgs(LoadState state, TaskProgress progress = null) => (LoadState, Progress) = (state, progress);
         }
 
-        public string OutputDirectory { get; set; }
-
         public string GameVersion { get; }
         public event EventHandler<ModelLoaderEventArgs> OnStateUpdated;
 
-        public Task<Assembly> BuildAndLoad(IEnumerable<Regex> regices, bool force = false);
+        public Task<Assembly> BuildAndLoad(IEnumerable<Regex> regices, string outputDirectory);
     }
 }

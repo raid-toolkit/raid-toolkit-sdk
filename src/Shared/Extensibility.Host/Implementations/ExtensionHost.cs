@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Services;
+using Raid.Toolkit.Loader;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
@@ -27,6 +28,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IServiceManager ServiceManager;
         private readonly IPackageLoader Loader;
         private readonly ILogger<ExtensionHost> Logger;
+        private readonly IModelLoader ModelLoader;
         private readonly Dictionary<Type, IDisposable> Instances = new();
         private IExtensionPackage? ExtensionPackage;
         public ExtensionState State { get; private set; }
@@ -42,6 +44,7 @@ namespace Raid.Toolkit.Extensibility.Host
             IMenuManager menuManager,
             IWindowManager windowManager,
             IPackageLoader loader,
+            IModelLoader modelLoader,
             ILogger<ExtensionHost> logger
             )
         {
@@ -55,6 +58,7 @@ namespace Raid.Toolkit.Extensibility.Host
             AccountManager = accountManager;
             MenuManager = menuManager;
             WindowManager = windowManager;
+            ModelLoader = modelLoader;
             Logger = logger;
         }
 
@@ -84,6 +88,7 @@ namespace Raid.Toolkit.Extensibility.Host
 
             try
             {
+                await ModelLoader.BuildAndLoad(GetIncludeTypes(), Bundle.Location);
                 ExtensionPackage = await Loader.LoadPackage(Bundle);
                 State = ExtensionState.Loaded;
             }
