@@ -44,7 +44,7 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             Assembly? assembly = (ExtensionAsm?.ForeignAssembly ?? Bundle.Assembly) ?? throw new InvalidOperationException("Extension must be loaded first");
             Type? packageType = assembly.GetType(Manifest.Type);
-            return packageType ?? throw new EntryPointNotFoundException($"Could not load type {Manifest.Type} from the package");
+            return packageType ?? throw new EntryPointNotFoundException( $"Could not load type {Manifest.Type} from the package");
         }
 
         public async Task Load()
@@ -65,14 +65,14 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public void OnActivate(IExtensionHost host)
         {
-            Logger.LogInformation($"Activating extension {Manifest.Id}");
+            Logger.LogInformation("Activating extension {Manifest.Id}", Manifest.Id);
             try
             {
                 EnsureInstance().OnActivate(host);
             }
             catch (Exception e)
             {
-                Logger.LogError($"Activation error {Manifest.Id}", e);
+                Logger.LogError(e, "Activation error {Manifest.Id}", Manifest.Id);
                 OnDeactivate(host);
                 Dispose();
             }
@@ -82,14 +82,14 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             if (IsDisposed)
                 return;
-            Logger.LogInformation($"Deactivating extension {Manifest.Id}");
+            Logger.LogInformation("Deactivating extension {Manifest.Id}", Manifest.Id);
             try
             {
                 EnsureInstance().OnDeactivate(host);
             }
             catch (Exception e)
             {
-                Logger.LogError($"Deactivation error {Manifest.Id}", e);
+                Logger.LogError(e, "Deactivation error {Manifest.Id}", Manifest.Id);
             }
         }
 
@@ -97,7 +97,7 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             if (IsDisposed)
                 return;
-            Logger.LogInformation($"Installing extension {Manifest.Id}");
+            Logger.LogInformation("Installing extension {Manifest.Id}", Manifest.Id);
             EnsureInstance().OnInstall(host);
         }
 
@@ -105,7 +105,7 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             if (IsDisposed)
                 return;
-            Logger.LogInformation($"Uninstalling extension {Manifest.Id}");
+            Logger.LogInformation("Uninstalling extension {Manifest.Id}", Manifest.Id);
             EnsureInstance().OnUninstall(host);
         }
 
@@ -113,7 +113,7 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             if (IsDisposed)
                 return;
-            Logger.LogInformation($"Showing extension UI {Manifest.Id}");
+            Logger.LogInformation("Showing extension UI {Manifest.Id}", Manifest.Id);
             EnsureInstance().ShowUI();
         }
 
@@ -121,7 +121,7 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             if (IsDisposed)
                 return false;
-            Logger.LogInformation($"Forwarding activation request {Manifest.Id} ({requestUri})");
+            Logger.LogInformation("Forwarding activation request {Manifest.Id} ({requestUri})", Manifest.Id, requestUri);
             return Instance?.HandleRequest(requestUri) ?? false;
         }
 
@@ -132,7 +132,7 @@ namespace Raid.Toolkit.Extensibility.Host
                 return;
             if (disposing)
             {
-                Logger.LogInformation($"Disposing extension {Manifest.Id}");
+                Logger.LogInformation("Disposing extension {Manifest.Id}", Manifest.Id);
                 Instance?.Dispose();
                 LoadContext?.Unload();
                 ExtensionAsm?.Dispose();
