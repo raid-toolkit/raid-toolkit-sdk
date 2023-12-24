@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility.Host;
 
 namespace Raid.Toolkit.Extensibility

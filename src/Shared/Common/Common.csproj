@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
         <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
@@ -11,8 +11,9 @@
         <TargetFrameworks>net472;net5.0-windows;net6.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <OutputType>Library</OutputType>
-        <AssemblyName>Raid.Common</AssemblyName>
+        <AssemblyName>Raid.Toolkit.Common</AssemblyName>
         <RootNamespace>Raid.Toolkit.Common</RootNamespace>
         <Platforms>x64</Platforms>
+		<Nullable>enable</Nullable>
     </PropertyGroup>
 </Project>

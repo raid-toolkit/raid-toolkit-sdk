@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Raid.Toolkit.Common;
 
 namespace Raid.Toolkit.Extensibility.Host.Services
 {

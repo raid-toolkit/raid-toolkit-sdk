@@ -545,7 +545,7 @@
           "System.Drawing.Common": "4.5.0"
         }
       },
-      "Raid.Common": {
+      "Raid.Toolkit.Common": {
         "type": "Project",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[6.0.0, )",
@@ -559,7 +559,7 @@
         "type": "Project",
         "dependencies": {
           "Newtonsoft.Json": "[13.0.3, )",
-          "Raid.Common": "[1.0.0, )"
+          "Raid.Toolkit.Common": "[1.0.0, )"
         }
       },
       "Raid.Toolkit.Extensibility": {
@@ -568,7 +568,7 @@
           "CommunityToolkit.WinUI.Notifications": "[7.1.2, )",
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
           "Microsoft.WindowsAppSDK": "[1.4.230822000, )",
-          "Raid.Common": "[1.0.0, )",
+          "Raid.Toolkit.Common": "[1.0.0, )",
           "Raid.Toolkit.DataModel": "[1.0.0, )",
           "il2cpptoolkit.common": "[2.0.129-alpha, )",
           "il2cpptoolkit.metadata": "[2.0.129-alpha, )",
@@ -580,7 +580,7 @@
         "dependencies": {
           "Microsoft.Win32.Registry": "[5.0.0, )",
           "Newtonsoft.Json": "[13.0.3, )",
-          "Raid.Common": "[1.0.0, )",
+          "Raid.Toolkit.Common": "[1.0.0, )",
           "il2cpptoolkit.common": "[2.0.129-alpha, )",
           "il2cpptoolkit.metadata": "[2.0.129-alpha, )",
           "il2cpptoolkit.reversecompiler": "[2.0.129-alpha, )",

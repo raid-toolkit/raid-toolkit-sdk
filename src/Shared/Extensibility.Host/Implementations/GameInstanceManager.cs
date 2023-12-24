@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Raid.Toolkit.Common;
 
 namespace Raid.Toolkit.Extensibility.Host
 {

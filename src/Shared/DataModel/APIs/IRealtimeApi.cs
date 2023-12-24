@@ -3,8 +3,12 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
+using Raid.Toolkit.Common;
+using Raid.Toolkit.Common.API;
+
 namespace Raid.Toolkit.DataModel
 {
+    [DeprecatedInV3]
     [PublicApi("realtime-api")]
     public interface IRealtimeApi
     {
@@ -27,6 +31,7 @@ namespace Raid.Toolkit.DataModel
         Task<ViewInfo> GetCurrentViewInfo(string accountId);
     }
 
+    [DeprecatedInV3]
     public class ViewInfo
     {
         [JsonProperty("viewId")]
@@ -36,6 +41,7 @@ namespace Raid.Toolkit.DataModel
         public string ViewKey;
     }
 
+    [DeprecatedInV3]
     public class GivenDamage
     {
         [JsonProperty("demonLord")]
@@ -44,6 +50,7 @@ namespace Raid.Toolkit.DataModel
         public long? Hydra;
     }
 
+    [DeprecatedInV3]
     public class LastBattleDataObject
     {
         [JsonProperty("battleKindId")]

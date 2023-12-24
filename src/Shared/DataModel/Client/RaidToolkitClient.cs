@@ -82,11 +82,11 @@ namespace Raid.Toolkit.DataModel
             var promiseMsg = message.ToObject<PromiseMessage>();
             if (promiseMsg.Success)
             {
-                Promises.Complete(promiseMsg.PromiseId, message.ToObject<PromiseSuccededMessage>().Value);
+                Promises.Complete(promiseMsg.PromiseId, message.ToObject<PromiseSuccededMessage>()!.Value);
             }
             else
             {
-                Promises.Fail(promiseMsg.PromiseId, message.ToObject<PromiseFailedMessage>().ErrorInfo);
+                Promises.Fail(promiseMsg.PromiseId, message.ToObject<PromiseFailedMessage>()!.ErrorInfo.Message);
             }
         }
 

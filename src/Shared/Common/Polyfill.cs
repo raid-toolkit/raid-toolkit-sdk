@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 #pragma warning restore IDE0005 // Using directive is unnecessary.
 
+#if NET5_0_OR_GREATER
+#else
+namespace System.Runtime.CompilerServices
+{
+    public sealed class IsExternalInit
+    {
+    }
+}
+#endif
+
 namespace System
 {
     public static class Net50Extensions

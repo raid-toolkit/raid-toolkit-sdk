@@ -72,7 +72,7 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public Task LoadExtensions()
         {
-            throw new V3NotImplException();
+            throw new V3NotImpl();
             //foreach (var pkg in PackageManager.GetAllPackages())
             //{
             //    try

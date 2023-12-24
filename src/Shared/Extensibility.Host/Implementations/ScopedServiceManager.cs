@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Raid.Toolkit.Common;
+using Raid.Toolkit.Common.API;
 using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility.Host.Services;
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Linq;
 using Raid.Toolkit.Common;
+using Raid.Toolkit.Common.API;
 using Raid.Toolkit.DataModel;
 
 namespace Raid.Toolkit.Extensibility.Services

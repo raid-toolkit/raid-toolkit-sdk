@@ -34,7 +34,7 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public Task<ExtensionBundle?> RequestPackageInstall(ExtensionBundle package)
         {
-            throw new V3NotImplException();
+            throw new V3NotImpl();
             /*
             bool result = await AppUI.ShowExtensionInstaller(package);
             if (!result)

@@ -1,8 +1,12 @@
+using Raid.Toolkit.Common;
+using Raid.Toolkit.Common.API;
+
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Raid.Toolkit.DataModel
 {
+    [DeprecatedInV3]
     [PublicApi("static-data")]
     public interface IStaticDataApi
     {

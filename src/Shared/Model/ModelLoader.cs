@@ -16,6 +16,7 @@ using Il2CppToolkit.ReverseCompiler.Target.NetCore;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Raid.Toolkit.Common;
 
 namespace Raid.Toolkit.Loader;
 
