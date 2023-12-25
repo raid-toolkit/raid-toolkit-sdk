@@ -14,7 +14,7 @@ namespace Raid.Toolkit.DataModel
             return true;
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
             var value = existingValue ?? Activator.CreateInstance(objectType);
             var fields = objectType.GetFields().Select(field => new { Attribute = field.GetCustomAttribute<JsonPropertyAttribute>(), Field = field }).OrderBy(entry => entry.Attribute.Order);
@@ -27,7 +27,7 @@ namespace Raid.Toolkit.DataModel
             return value;
         }
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             var properties = value.GetType().GetFields()
                 .Select(field => new { Attribute = field.GetCustomAttribute<JsonPropertyAttribute>(), Field = field })

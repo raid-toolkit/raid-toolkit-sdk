@@ -47,8 +47,8 @@ namespace System
 	{
 
 #if NET5_0_OR_GREATER
-        public static Dictionary<TKey, TValue> Filter<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> map, Func<KeyValuePair<TKey, TValue>, bool> predicate)
-        {
+        public static Dictionary<TKey, TValue> Filter<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> map, Func<KeyValuePair<TKey, TValue>, bool> predicate) where TKey : notnull
+		{
             return new(map.Where(predicate));
         }
 #else
@@ -74,7 +74,7 @@ namespace System
 			return true;
 		}
 
-		public static bool Remove<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, out TValue value)
+		public static bool Remove<TKey, TValue>(this Dictionary<TKey, TValue> dict, TKey key, out TValue? value)
 		{
 			if (dict.ContainsKey(key))
 			{

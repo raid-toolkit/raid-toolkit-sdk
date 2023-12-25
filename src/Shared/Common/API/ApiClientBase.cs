@@ -1,7 +1,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+
 using Newtonsoft.Json.Linq;
+
 using Raid.Toolkit.Common.API.Messages;
 
 namespace Raid.Toolkit.Common.API;
@@ -54,7 +56,7 @@ public abstract class ApiClientBase
 		var promiseMsg = message.ToObject<PromiseMessage>()!;
 		if (promiseMsg.Success)
 		{
-			Promises.Complete(promiseMsg.PromiseId, message.ToObject<PromiseSucceededMessage>()!.Value);
+			Promises.Complete(promiseMsg.PromiseId, message.ToObjectOrThrow<PromiseSucceededMessage>().Value);
 		}
 		else
 		{
@@ -64,44 +66,18 @@ public abstract class ApiClientBase
 
 	public async void Subscribe(string apiName, string eventName)
 	{
-		await SendAsync(new SocketMessage()
-		{
-			Scope = apiName,
-			Channel = "sub",
-			Message = JObject.FromObject(new SubscriptionMessage()
-			{
-				EventName = eventName
-			})
-		});
+		await SendAsync(new SocketMessage(apiName, "sub", JObject.FromObject(new SubscriptionMessage(eventName))));
 	}
 
 	public async void Unsubscribe(string apiName, string eventName)
 	{
-		await SendAsync(new SocketMessage()
-		{
-			Scope = apiName,
-			Channel = "unsub",
-			Message = JObject.FromObject(new SubscriptionMessage()
-			{
-				EventName = eventName
-			})
-		});
+		await SendAsync(new SocketMessage(apiName, "unsub", JObject.FromObject(new SubscriptionMessage(eventName))));
 	}
 
 	public async Task<T> Call<T>(string apiName, string methodName, params object[] args)
 	{
 		string promiseId = Promises.Create();
-		await SendAsync(new SocketMessage()
-		{
-			Scope = apiName,
-			Channel = "call",
-			Message = JObject.FromObject(new CallMethodMessage()
-			{
-				PromiseId = promiseId,
-				MethodName = methodName,
-				Parameters = JArray.FromObject(args)
-			})
-		});
+		await SendAsync(new SocketMessage(apiName, "call", JObject.FromObject(new CallMethodMessage(promiseId, methodName, JArray.FromObject(args)))));
 		return await Promises.GetTask<T>(promiseId);
 	}
 }

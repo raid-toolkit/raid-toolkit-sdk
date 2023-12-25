@@ -17,18 +17,21 @@ namespace Raid.Toolkit.Extensibility.Implementations;
 public class WorkerApplication : IWorkerApplication, IHostedService
 {
 	private static readonly ApiMessageSerializer Serializer = new();
-	public IPCApiClient? Client { get; private set; }
+	public IPCApiClient Client { get; }
+
+	public WorkerApplication()
+	{
+		Client = new(Constants.IPCPipeName);
+	}
 
 	public async Task StartAsync(CancellationToken cancellationToken)
 	{
-		Client = new(Constants.IPCPipeName);
 		await Client.ConnectAsync(cancellationToken);
 	}
 
 	public Task StopAsync(CancellationToken cancellationToken)
 	{
-		Client?.Disconnect();
-		Client = null;
+		Client.Disconnect();
 		return Task.CompletedTask;
 	}
 }

@@ -7,9 +7,9 @@ namespace Raid.Toolkit.Common;
 
 public sealed class SingleThreadedSynchronizationContext : SynchronizationContext
 {
-    private readonly BlockingCollection<(SendOrPostCallback d, object state)> queue = new();
+    private readonly BlockingCollection<(SendOrPostCallback d, object? state)> queue = new();
 
-    public override void Post(SendOrPostCallback d, object state)
+    public override void Post(SendOrPostCallback d, object? state)
     {
         queue.Add((d, state));
     }

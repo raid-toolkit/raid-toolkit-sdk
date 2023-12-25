@@ -7,7 +7,7 @@ namespace Raid.Toolkit.Common;
 
 public class PromiseStore
 {
-    private readonly Dictionary<string, TaskCompletionSource<object>> Promises = new();
+    private readonly Dictionary<string, TaskCompletionSource<object?>> Promises = new();
 
     public string Create()
     {
@@ -16,7 +16,7 @@ public class PromiseStore
         return id;
     }
 
-    public void Complete(string id, object value)
+    public void Complete(string id, object? value)
     {
         if (Promises.TryGetValue(id, out var source))
         {
@@ -36,9 +36,9 @@ public class PromiseStore
     {
         if (Promises.TryGetValue(id, out var source))
         {
-            object value = await source.Task;
-            
-            if (value is T tval)
+            object? value = await source.Task ?? throw new InvalidOperationException();
+
+			if (value is T tval)
                 return tval;
             else if (value is JToken token)
                 return token.ToObject<T>()!;

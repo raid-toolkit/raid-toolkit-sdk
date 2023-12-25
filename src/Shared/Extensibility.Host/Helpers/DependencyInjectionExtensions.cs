@@ -7,11 +7,11 @@ namespace Microsoft.Extensions.DependencyInjection
 {
     public interface IDependencyTypeFactory<T>
     {
-        T Create(IServiceProvider serviceProvider);
+        T? Create(IServiceProvider serviceProvider);
     }
     public class DependencyTypeFactory<T, U> : IDependencyTypeFactory<T> where U : T
     {
-        public T Create(IServiceProvider serviceProvider)
+        public T? Create(IServiceProvider serviceProvider)
         {
             return serviceProvider.GetService<U>();
         }
@@ -21,7 +21,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddTypesAssignableTo<T>(
             this IServiceCollection collection,
             Expression<Func<IServiceCollection, Func<Type, Type, IServiceCollection>>> expression,
-            Assembly assembly = null
+            Assembly? assembly = null
         )
         {
             Func<Type, Type, IServiceCollection> fn = expression.Compile().Invoke(collection);
@@ -35,7 +35,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddConcreteTypesAssignableTo<T>(
             this IServiceCollection collection,
             Expression<Func<IServiceCollection, Func<Type, Type, IServiceCollection>>> expression,
-            Assembly assembly = null
+            Assembly? assembly = null
         )
         {
             Func<Type, Type, IServiceCollection> fn = expression.Compile().Invoke(collection);
@@ -49,7 +49,7 @@ namespace Microsoft.Extensions.DependencyInjection
         public static IServiceCollection AddTypesAssignableToFactories<T>(
             this IServiceCollection collection,
             Expression<Func<IServiceCollection, Func<Type, Type, IServiceCollection>>> expression,
-            Assembly assembly = null
+            Assembly? assembly = null
         )
         {
             Func<Type, Type, IServiceCollection> fn = expression.Compile().Invoke(collection);
@@ -68,8 +68,10 @@ namespace Microsoft.Extensions.DependencyInjection
             this IServiceCollection collection) where T : class, IHostedService
         {
             collection.AddSingleton<T>();
-            collection.AddHostedService<T>(provider => provider.GetService<T>());
-            return collection;
+#pragma warning disable CS8603 // Possible null reference return.
+			collection.AddHostedService<T>(provider => provider.GetService<T>());
+#pragma warning restore CS8603 // Possible null reference return.
+			return collection;
         }
 
         public static IServiceCollection AddHostedServiceSingleton<U, T>(
@@ -78,8 +80,10 @@ namespace Microsoft.Extensions.DependencyInjection
             where T : class, IHostedService, U
         {
             collection.AddSingleton<U, T>();
+#pragma warning disable CS8603 // Possible null reference return.
             collection.AddHostedService<T>(provider => provider.GetService<U>() as T);
-            return collection;
+#pragma warning restore CS8603 // Possible null reference return.
+			return collection;
         }
     }
 }

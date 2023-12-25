@@ -16,7 +16,7 @@ namespace Raid.Toolkit.DataModel
         private readonly Uri EndpointUri;
         private readonly CancellationTokenSource CancellationTokenSource = new();
 
-        public RaidToolkitClientBase(Uri endpointUri = null)
+        public RaidToolkitClientBase(Uri? endpointUri = null)
         {
             EndpointUri = endpointUri ?? new Uri("ws://localhost:9090");
         }

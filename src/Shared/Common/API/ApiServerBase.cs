@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+
 using Microsoft.Extensions.Logging;
+
 using Newtonsoft.Json.Linq;
+
 using Raid.Toolkit.Common.API.Messages;
 
 namespace Raid.Toolkit.Common.API;
@@ -46,16 +49,16 @@ public abstract class ApiServer<T> : IApiServer<SocketMessage>
 		switch (message.Channel)
 		{
 			case "call":
-				CallMethod(message.Message.ToObject<CallMethodMessage>(), session);
+				CallMethod(message.Message.ToObjectOrThrow<CallMethodMessage>(), session);
 				break;
 			case "get":
-				GetProperty(message.Message.ToObject<GetPropertyMessage>(), session);
+				GetProperty(message.Message.ToObjectOrThrow<GetPropertyMessage>(), session);
 				break;
 			case "sub":
-				Subscribe(message.Message.ToObject<SubscriptionMessage>(), session);
+				Subscribe(message.Message.ToObjectOrThrow<SubscriptionMessage>(), session);
 				break;
 			case "unsub":
-				Unsubscribe(message.Message.ToObject<SubscriptionMessage>(), session);
+				Unsubscribe(message.Message.ToObjectOrThrow<SubscriptionMessage>(), session);
 				break;
 			default:
 				break;
@@ -102,24 +105,15 @@ public abstract class ApiServer<T> : IApiServer<SocketMessage>
 		{
 			if (!session.Connected)
 			{
-				if (EventHandlerDelegates.Remove($"{session.Id}:{scope}:{args.EventName}", out EventHandler<SerializableEventArgs> handler))
+				if (EventHandlerDelegates.Remove($"{session.Id}:{scope}:{args.EventName}", out EventHandler<SerializableEventArgs>? handler))
 				{
 					eventInfo.RemoveEventHandler(this, handler);
 				}
 				return;
 			}
 
-			SendEventMessage eventMsg = new()
-			{
-				EventName = args.EventName,
-				Payload = JArray.FromObject(args.EventArguments)
-			};
-			SocketMessage message = new()
-			{
-				Scope = scope,
-				Channel = "send-event",
-				Message = JToken.FromObject(eventMsg)
-			};
+			SendEventMessage eventMsg = new(args.EventName, JArray.FromObject(args.EventArguments));
+			SocketMessage message = new(scope, "send-event", JToken.FromObject(eventMsg));
 			await session.SendAsync(message);
 		}
 		catch (Exception ex)
@@ -155,13 +149,13 @@ public abstract class ApiServer<T> : IApiServer<SocketMessage>
 
 			object result = methodInfo.Invoke(this, args);
 			var returnValue = await message.Resolve(result);
-			var response = new SocketMessage() { Scope = scope, Channel = "set-promise", Message = returnValue };
+			var response = new SocketMessage(scope, "set-promise", returnValue);
 			await session.SendAsync(response);
 		}
 		catch (Exception ex)
 		{
 			Logger.LogError(ApiError.ApiProxyException.EventId(), ex, "Api call failed");
-			var response = new SocketMessage() { Scope = scope, Channel = "set-promise", Message = message.Reject(ex) };
+			var response = new SocketMessage(scope, "set-promise", message.Reject(ex));
 			await session.SendAsync(response);
 		}
 	}
@@ -174,13 +168,13 @@ public abstract class ApiServer<T> : IApiServer<SocketMessage>
 			PropertyInfo propertyInfo = Api.GetPublicApi<PropertyInfo>(message.PropertyName, out scope);
 			object result = propertyInfo.GetValue(this);
 			var returnValue = await message.Resolve(result);
-			var response = new SocketMessage() { Scope = scope, Channel = "set-promise", Message = returnValue };
+			var response = new SocketMessage(scope, "set-promise", returnValue);
 			await session.SendAsync(response);
 		}
 		catch (Exception ex)
 		{
 			Logger.LogError(ApiError.ApiProxyException.EventId(), ex, "Api property access failed");
-			var response = new SocketMessage() { Scope = scope, Channel = "set-promise", Message = message.Reject(ex) };
+			var response = new SocketMessage(scope, "set-promise", message.Reject(ex));
 			await session.SendAsync(response);
 		}
 	}

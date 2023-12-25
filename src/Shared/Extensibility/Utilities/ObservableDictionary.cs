@@ -619,16 +619,18 @@ public class ObservableDictionary<TKey, TValue> :
 
     protected virtual event PropertyChangedEventHandler PropertyChanged;
 
-    #endregion INotifyPropertyChanged
+	#endregion INotifyPropertyChanged
 
-    #endregion interfaces
+	#endregion interfaces
 
-    #region protected classes
+	#region protected classes
 
-    #region KeyedDictionaryEntryCollection<TKey>
+	#region KeyedDictionaryEntryCollection<TKey>
 
-    protected class KeyedDictionaryEntryCollection<TKey> : KeyedCollection<TKey, DictionaryEntry>
-    {
+#pragma warning disable CS0693 // Type parameter has the same name as the type parameter from outer type
+	protected class KeyedDictionaryEntryCollection<TKey> : KeyedCollection<TKey, DictionaryEntry>
+#pragma warning restore CS0693 // Type parameter has the same name as the type parameter from outer type
+	{
         #region constructors
 
         #region public
@@ -664,8 +666,10 @@ public class ObservableDictionary<TKey, TValue> :
     #region Enumerator
 
     [Serializable, StructLayout(LayoutKind.Sequential)]
-    public struct Enumerator<TKey, TValue> : IEnumerator<KeyValuePair<TKey, TValue>>, IDisposable, IDictionaryEnumerator, IEnumerator
-    {
+#pragma warning disable CS0693 // Type parameter has the same name as the type parameter from outer type
+	public struct Enumerator<TKey, TValue> : IEnumerator<KeyValuePair<TKey, TValue>>, IDisposable, IDictionaryEnumerator, IEnumerator
+#pragma warning restore CS0693 // Type parameter has the same name as the type parameter from outer type
+	{
         #region constructors
 
         internal Enumerator(ObservableDictionary<TKey, TValue> dictionary, bool isDictionaryEntryEnumerator)

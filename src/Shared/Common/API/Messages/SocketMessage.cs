@@ -1,6 +1,8 @@
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
@@ -29,10 +31,10 @@ public class SocketMessageConverter : JsonConverter
 
 	public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
 	{
-		var properties = value.GetType().GetFields()
+		var properties = value?.GetType().GetFields()
 			.Select(field => new { Attribute = field.GetCustomAttribute<JsonPropertyAttribute>(), Field = field })
 			.OrderBy(entry => entry.Attribute.Order)
-			.ToList();
+			.ToList() ?? new();
 		object[] array = new object[properties.Count];
 		foreach (var entry in properties)
 		{
@@ -47,6 +49,22 @@ public class SocketMessageConverter : JsonConverter
 [JsonConverter(typeof(SocketMessageConverter))]
 public class SocketMessage
 {
+	[EditorBrowsable(EditorBrowsableState.Never), Obsolete("Exists for serialization only")]
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+	public SocketMessage()
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+	{
+		Scope = string.Empty;
+		Channel = string.Empty;
+	}
+
+	public SocketMessage(string scope, string channel, JToken message)
+	{
+		Scope = scope;
+		Channel = channel;
+		Message = message;
+	}
+
 	[JsonProperty(Order = 0)]
 	public string Scope;
 
