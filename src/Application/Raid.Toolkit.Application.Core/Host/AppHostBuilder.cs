@@ -105,7 +105,7 @@ namespace Raid.Toolkit.Application.Core.Host
             {
                 ConfigureServices((context, services) => services
                     .Configure<ModelLoaderOptions>(config => config.ForceRebuild = AppHost.ForceRebuild)
-                    .AddExtensibilityServices<PackageManager>());
+                    .AddExtensibilityServices<PackageManager>(ServiceMode.Server));
             }
             return this;
         }

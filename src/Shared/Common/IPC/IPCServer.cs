@@ -28,6 +28,11 @@ public class IPCServer<T> : IDisposable
 		CreatePendingConnection();
 	}
 
+	public void Stop()
+	{
+		Dispose();
+	}
+
 	public void CreatePendingConnection(object? _state = null)
 	{
 		IPCServerConnection connection = new(PipeName, Serializer);

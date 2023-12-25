@@ -11,8 +11,8 @@ namespace Raid.Toolkit.Extensibility.Host.Services
     public class ActivationServiceApi : ApiHandler<IActivationApi>, IActivationApi
     {
         private readonly IPackageManager PackageManager;
-        private readonly IExtensionHostController ExtensionHostController;
-        public ActivationServiceApi(IExtensionHostController extensionHostController, IPackageManager packageManager, ILogger<ApiHandler<IActivationApi>> logger) : base(logger)
+        private readonly IExtensionManager ExtensionHostController;
+        public ActivationServiceApi(IExtensionManager extensionHostController, IPackageManager packageManager, ILogger<ApiHandler<IActivationApi>> logger) : base(logger)
         {
             ExtensionHostController = extensionHostController;
             PackageManager = packageManager;

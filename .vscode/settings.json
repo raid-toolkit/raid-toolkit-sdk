@@ -150,5 +150,6 @@
     "**/*.csproj.user": true
   },
   "dotnet.defaultSolution": "SDK.sln",
-  "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true
+  "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+  "dotnet.preferCSharpExtension": true
 }

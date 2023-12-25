@@ -28,15 +28,10 @@ namespace Raid.Toolkit.Extensibility.Host
         public void ShowUI();
         public int HandleRequest(Uri requestUri);
     }
-    public interface IExtensionHostController
+    public interface IExtensionManager
     {
-        IReadOnlyList<IExtensionManagement> GetExtensions();
         bool TryGetExtension(string packageId, [NotNullWhen(true)] out IExtensionManagement? extension);
         Task LoadExtensions();
-        void ActivateExtensions();
-        void ShowExtensionUI();
-        void DeactivateExtensions();
-        void UninstallPackage(string packageId);
         void DisablePackage(string packageId);
         void EnablePackage(string packageId);
     }

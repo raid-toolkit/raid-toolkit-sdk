@@ -13,7 +13,7 @@ public static class HttpClientExtensions
         return JsonConvert.DeserializeObject<T>(response)!;
     }
 
-    public static async Task DownloadAsync(this HttpClient client, string requestUri, Stream destination, IProgress<float> progress = null, CancellationToken cancellationToken = default)
+    public static async Task DownloadAsync(this HttpClient client, string requestUri, Stream destination, IProgress<float>? progress = null, CancellationToken cancellationToken = default)
     {
         // Get the http headers first to examine the content length
         using (var response = await client.GetAsync(requestUri, HttpCompletionOption.ResponseHeadersRead))
@@ -40,7 +40,7 @@ public static class HttpClientExtensions
         }
     }
 
-    public static async Task CopyToAsync(this Stream source, Stream destination, int bufferSize, IProgress<long> progress = null, CancellationToken cancellationToken = default)
+    public static async Task CopyToAsync(this Stream source, Stream destination, int bufferSize, IProgress<long>? progress = null, CancellationToken cancellationToken = default)
     {
         if (source == null)
             throw new ArgumentNullException(nameof(source));

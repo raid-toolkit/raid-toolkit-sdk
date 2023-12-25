@@ -67,9 +67,9 @@ public partial class App : Application
             .ConfigureServices((context, services) => services
                 .AddLogging(builder => builder.AddFile())
                 .Configure<ModelLoaderOptions>(config => config.ForceRebuild = options.ForceRebuild)
-                .AddExtensibilityServices<PackageManager>());
+                .AddExtensibilityServices<PackageManager>(ServiceMode.Worker));
         IHost host = hostBuilder.Start();
-        IExtensionHostController controller = host.Services.GetRequiredService<IExtensionHostController>();
+        IExtensionManager controller = host.Services.GetRequiredService<IExtensionManager>();
 
         if (!controller.TryGetExtension(options.GetExtensionId(), out IExtensionManagement? extension))
             throw new InvalidOperationException("Extension not found");

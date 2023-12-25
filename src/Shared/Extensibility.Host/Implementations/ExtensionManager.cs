@@ -11,30 +11,24 @@ using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-    public class ExtensionHostController : IExtensionHostController, IDisposable
+    public class ExtensionManager : IExtensionManager, IDisposable
     {
-        private readonly IModelLoader ModelLoader;
-        private readonly IPackageLoader PackageLoader;
         private readonly IPackageManager PackageManager;
         private readonly IServiceProvider ServiceProvider;
         private readonly IWindowManager WindowManager;
-        private readonly ILogger<ExtensionHostController> Logger;
+        private readonly ILogger<ExtensionManager> Logger;
         private readonly Dictionary<string, IExtensionManagement> ExtensionPackages = new();
         private readonly Dictionary<Type, IDisposable> Instances = new();
         private bool IsDisposed;
 
-        public ExtensionHostController(
+        public ExtensionManager(
             IPackageManager locator,
-            IPackageLoader loader,
-            IModelLoader modelLoader,
             IServiceProvider serviceProvider,
             IWindowManager windowManager,
-            ILogger<ExtensionHostController> logger
+            ILogger<ExtensionManager> logger
             )
         {
             PackageManager = locator;
-            PackageLoader = loader;
-            ModelLoader = modelLoader;
             ServiceProvider = serviceProvider;
             WindowManager = windowManager;
             Logger = logger;
