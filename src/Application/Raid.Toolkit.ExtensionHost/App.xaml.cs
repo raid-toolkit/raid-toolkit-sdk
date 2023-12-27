@@ -57,7 +57,7 @@ public partial class App : Application
         }
     }
 
-    private async Task RunExtension(RunExtensionOptions options)
+    private static async Task RunExtension(RunExtensionOptions options)
     {
         HostBuilder hostBuilder = new();
 

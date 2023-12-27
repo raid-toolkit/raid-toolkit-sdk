@@ -6,7 +6,7 @@ namespace Microsoft.Extensions.Options
 #nullable enable
     public class DeferredOptions<TOptions> : IOptionsMonitor<TOptions>
     {
-        protected static object _Lock = new();
+        private static readonly object _Lock = new();
         private readonly Dictionary<string, TOptions> Values = new();
         private Action<TOptions, string>? Listeners;
         private static string DefaultName => Options.DefaultName;

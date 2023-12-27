@@ -1,13 +1,12 @@
-using System;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Raid.Toolkit.DataModel;
-using Raid.Toolkit.Extensibility.Services;
+
+using Raid.Toolkit.Common.API;
+using Raid.Toolkit.Common.API.Messages;
 using SuperSocket.WebSocket.Server;
 
 namespace Raid.Toolkit.Application.Core.DependencyInjection
 {
-    public class SuperSocketAdapter : ISocketSession
+    public class SuperSocketAdapter : IApiSession<SocketMessage>
     {
         private readonly WebSocketSession Session;
         public SuperSocketAdapter(WebSocketSession session) => Session = session;
@@ -15,7 +14,7 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
         public string Id => Session.SessionID;
         public bool Connected => Session.State == SuperSocket.SessionState.Connected;
 
-        public async Task Send(SocketMessage message)
+        public async Task SendAsync(SocketMessage message)
         {
             try
             {
@@ -24,5 +23,5 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
             catch (Exception)
             { }
         }
-    }
+	}
 }

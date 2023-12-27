@@ -88,6 +88,8 @@ namespace Raid.Toolkit.Extensibility.Host
 
             try
             {
+				if (string.IsNullOrEmpty(Bundle.Location))
+					throw new DirectoryNotFoundException(Bundle.Location);
                 await ModelLoader.BuildAndLoad(GetIncludeTypes(), Bundle.Location);
                 ExtensionPackage = await Loader.LoadPackage(Bundle);
                 State = ExtensionState.Loaded;

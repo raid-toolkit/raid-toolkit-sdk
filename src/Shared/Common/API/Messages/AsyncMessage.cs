@@ -21,7 +21,7 @@ public class AsyncMessage
 		PromiseId = promiseId;
 	}
 
-	public async Task<JToken> Resolve(object result)
+	public async Task<JToken> Resolve(object? result)
 	{
 		object? value = null;
 		if (result is Task task)

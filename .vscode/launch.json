@@ -53,8 +53,7 @@
         "-v",
         "normal",
         "-m:1",
-        "-nodeReuse:false",
-        "-p:RTKTasks=true"
+        "-nodeReuse:false"
       ],
       "targetOutputLogPath": "${workspaceFolder}/output.log",
       "cwd": "${workspaceFolder}/src/Extensions/Account",

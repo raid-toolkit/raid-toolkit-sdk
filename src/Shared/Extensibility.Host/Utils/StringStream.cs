@@ -7,8 +7,8 @@ namespace Raid.Toolkit.Extensibility.Utils;
 
 public class StreamString
 {
-    private Stream ioStream;
-    private UnicodeEncoding streamEncoding;
+    private readonly Stream ioStream;
+    private readonly UnicodeEncoding streamEncoding;
 
     public StreamString(Stream ioStream)
     {

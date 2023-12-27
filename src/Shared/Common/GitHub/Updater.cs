@@ -33,29 +33,29 @@ public class Updater : IDisposable
     public Updater()
     {
         Client = new HttpClient();
-        Client.DefaultRequestHeaders.UserAgent.Add(new("RaidToolkit", Assembly.GetExecutingAssembly().GetName().Version.ToString(2)));
+        Client.DefaultRequestHeaders.UserAgent.Add(new("RaidToolkit", Assembly.GetExecutingAssembly().GetName().Version?.ToString(2)));
     }
 
-    public async Task<Release> GetLatestRelease()
+    public async Task<Release?> GetLatestRelease()
     {
         if (!InstallPrereleasesEffective)
         {
             return await Client.GetObjectAsync<Release>(UpdateUri);
         }
         Release[] allReleases = await Client.GetObjectAsync<Release[]>(ReleasesUri);
-        Release latestPrerelease = allReleases.FirstOrDefault(release => release.Prerelease);
+        Release? latestPrerelease = allReleases.FirstOrDefault(release => release.Prerelease);
         return latestPrerelease;
     }
 
-    public bool IsValidRelease(Release release)
+    public static bool IsValidRelease(Release release)
     {
         return release.Assets.Any(item => item.Name == "RaidToolkitSetup.exe");
     }
 
-    public async Task<Stream> DownloadSetup(Release release, IProgress<float> progress)
+    public async Task<Stream> DownloadSetup(Release release, IProgress<float>? progress)
     {
-        Asset asset = release.Assets.FirstOrDefault(item => item.Name == "RaidToolkitSetup.exe");
-        if (asset == null)
+        Asset? asset = release.Assets.FirstOrDefault(item => item.Name == "RaidToolkitSetup.exe");
+        if (asset == null || asset.BrowserDownloadUrl == null)
             throw new FileNotFoundException("Release is missing required assets");
 
         Stream memoryStream = new MemoryStream();

@@ -7,8 +7,11 @@
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="System.Net.Http" Version="4.3.4" Condition=" '$(TargetFramework)' == 'net472' " />
     </ItemGroup>
+    <ItemGroup>
+      <Reference Include="Microsoft.CSharp" Condition=" '$(TargetFramework)' == 'net472' " />
+    </ItemGroup>
     <PropertyGroup>
-        <TargetFrameworks>net472;net5.0-windows;net6.0-windows</TargetFrameworks>
+        <TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <OutputType>Library</OutputType>
         <AssemblyName>Raid.Toolkit.Common</AssemblyName>

@@ -8,7 +8,7 @@ namespace Raid.Toolkit.Extensibility.Host
         public class ProcessEventArgs : EventArgs
         {
             public int Id { get; }
-            public Process Process { get; }
+            public Process? Process { get; }
             public bool Retry { get; set; }
             public ProcessEventArgs(Process process)
             {
@@ -21,8 +21,8 @@ namespace Raid.Toolkit.Extensibility.Host
             }
         }
 
-        public event EventHandler<ProcessEventArgs> ProcessFound;
-        public event EventHandler<ProcessEventArgs> ProcessClosed;
+        public event EventHandler<ProcessEventArgs>? ProcessFound;
+        public event EventHandler<ProcessEventArgs>? ProcessClosed;
 
         public void Refresh();
     }

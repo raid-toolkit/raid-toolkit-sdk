@@ -158,6 +158,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private void RequestRestart()
         {
             // TODO
+			throw new V3NotImpl();
         }
 
         public ExtensionBundle? AddPackage(ExtensionBundle packageToInstall)

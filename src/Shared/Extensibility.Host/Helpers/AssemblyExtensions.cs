@@ -12,13 +12,13 @@ namespace System.Reflection
 
         public static IEnumerable<Type> GetTypesWithAttribute<T>(this Assembly assembly) where T : Attribute
         {
-            return assembly.GetTypes().Where(type => !type.IsAbstract).Select(type => new Tuple<Type, T>(type, type.GetCustomAttribute<T>())).Where(tuple => tuple.Item2 != null).Select(tuple => tuple.Item1);
+            return assembly.GetTypes().Where(type => !type.IsAbstract).Select(type => new Tuple<Type, T>(type, type.GetCustomAttribute<T>()!)).Where(tuple => tuple.Item2 != null).Select(tuple => tuple.Item1);
         }
 
         public static IEnumerable<U> GetAttributes<T, U>(this Assembly assembly, Func<T, Type, U> valueSelector) where T : Attribute
         {
             return assembly.GetTypes().Where(type => !type.IsAbstract)
-                .Select(type => new Tuple<Type, T>(type, type.GetCustomAttribute<T>()))
+                .Select(type => new Tuple<Type, T>(type, type.GetCustomAttribute<T>()!))
                 .Where(tuple => tuple.Item2 != null).Select(tuple => valueSelector(tuple.Item2, tuple.Item1));
         }
 
@@ -29,7 +29,7 @@ namespace System.Reflection
 
         public static IEnumerable<TBase> ConstructEach<TBase>(this IEnumerable<Type> types, params object[] arguments)
         {
-            return types.Select(type => (TBase)Activator.CreateInstance(type, arguments));
+            return types.Select(type => (TBase)Activator.CreateInstance(type, arguments)!);
         }
     }
 }

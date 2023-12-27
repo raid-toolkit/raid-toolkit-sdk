@@ -27,7 +27,7 @@ public abstract class ApiClientBase
 
 	public abstract void Disconnect();
 
-	public T MakeApi<T>() => (T)Activator.CreateInstance(typeof(T), this);
+	public T MakeApi<T>() => (T)Activator.CreateInstance(typeof(T), this)!;
 
 	protected abstract Task SendAsync(SocketMessage message, CancellationToken cancellation = default);
 

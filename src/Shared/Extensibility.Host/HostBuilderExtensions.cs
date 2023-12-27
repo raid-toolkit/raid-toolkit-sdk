@@ -56,7 +56,6 @@ namespace Raid.Toolkit.Extensibility.Host
 				.AddSingleton<IModelLoader, ModelLoader>()
 				.AddSingleton<IPackageLoader, SandboxedPackageLoader>()
 				.AddSingleton<IPackageInstanceFactory, PackageFactory>()
-				.AddSingleton<IScopedServiceManager, ScopedServiceManager>()
 				.AddSingleton<IServiceManager, ServiceManager>()
 				.AddSingleton<IProcessManager, ProcessManager>()
 				.AddSingleton<IWindowManager, WindowManager>()

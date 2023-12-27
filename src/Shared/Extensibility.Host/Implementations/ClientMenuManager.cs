@@ -9,11 +9,25 @@ namespace Raid.Toolkit.Extensibility.Host
 {
 	public class ClientMenuManager : MenuManager
 	{
-		private readonly IWorkerApplication WorkerApplication;
+		private readonly ClientMenuApi MenuClient;
 		public ClientMenuManager(IWorkerApplication workerApplication)
 		{
-			WorkerApplication = workerApplication;
+			MenuClient = new(workerApplication);
 		}
+
+		public override string AddEntry(IMenuEntry entry)
+		{
+			string id = base.AddEntry(entry);
+			MenuClient.AddEntry(id, entry.DisplayName);
+			return id;
+		}
+
+		public override void RemoveEntry(IMenuEntry entry)
+		{
+			base.RemoveEntry(entry);
+			MenuClient.RemoveEntry(Entries[entry]);
+		}
+
 		private class ClientMenuApi : ApiCallerBase<IMenuManagerApi>, IMenuManagerApi
 		{
 			public ClientMenuApi(IWorkerApplication workerApplication)
@@ -24,12 +38,12 @@ namespace Raid.Toolkit.Extensibility.Host
 
 			public Task<bool> AddEntry(string id, string displayName)
 			{
-				return CallMethod<bool>(MethodBase.GetCurrentMethod(), id, displayName);
+				return CallMethod<bool>(MethodBase.GetCurrentMethod()!, id, displayName);
 			}
 
 			public Task<bool> RemoveEntry(string id)
 			{
-				return CallMethod<bool>(MethodBase.GetCurrentMethod(), id);
+				return CallMethod<bool>(MethodBase.GetCurrentMethod()!, id);
 			}
 		}
 	}

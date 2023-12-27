@@ -19,6 +19,6 @@ public class IPCClient<T> : IPCSession<T>, IPipeSession<T>, IDisposable
 			throw new InvalidCastException(nameof(Pipe));
 
 		await client.ConnectAsync(token);
-		StartListening();
+		StartListening(CancellationToken.None);
 	}
 }

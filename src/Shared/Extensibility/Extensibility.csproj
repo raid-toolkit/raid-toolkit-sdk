@@ -19,6 +19,5 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Common\Common.csproj" />
-        <ProjectReference Include="..\DataModel\DataModel.csproj" />
     </ItemGroup>
 </Project>

@@ -51,7 +51,7 @@ public static class RegistrySettings
         get
         {
             var hive = Registry.CurrentUser.OpenSubKey(RTKHive);
-            return hive == null ? DefaultActivationPort : (uint)hive.GetValue(ActivationPortKey, DefaultActivationPort);
+            return hive == null ? DefaultActivationPort : (uint?)hive.GetValue(ActivationPortKey, DefaultActivationPort) ?? DefaultActivationPort;
         }
         set
         {

@@ -169,15 +169,6 @@ namespace Raid.Toolkit.UI.WinUI
             });
         }
 
-        public void ShowAccounts()
-        {
-            Dispatch(() =>
-            {
-                AccountsWindow accountsWindow = EnsureWindow<AccountsWindow>();
-                accountsWindow.Show();
-            });
-        }
-
         public Task<bool> ShowExtensionInstaller(ExtensionBundle bundleToInstall)
         {
             return Post(() =>

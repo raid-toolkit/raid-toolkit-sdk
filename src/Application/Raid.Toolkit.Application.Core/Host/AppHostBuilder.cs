@@ -6,18 +6,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Commands.Matchers;
-using Raid.Toolkit.Application.Core.DependencyInjection;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host;
-using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Interfaces;
 using Raid.Toolkit.Loader;
-
-using SuperSocket.WebSocket;
-using SuperSocket.WebSocket.Server;
 
 namespace Raid.Toolkit.Application.Core.Host
 {
@@ -27,7 +21,6 @@ namespace Raid.Toolkit.Application.Core.Host
         IAppHostBuilder AddExtensibility();
         IAppHostBuilder AddLogging();
         IAppHostBuilder AddUI();
-        IAppHostBuilder AddWebSockets(Func<WebSocketSession, WebSocketPackage, ValueTask> messageHandler);
     }
     internal class UIOptions
     {
@@ -46,7 +39,7 @@ namespace Raid.Toolkit.Application.Core.Host
         private enum Feature
         {
             None = 0,
-            WebSocket = 1 << 0,
+            // WebSocket = 1 << 0,
             UI = 1 << 1,
             Extensibility = 1 << 2,
             Logging = 1 << 3,
@@ -129,17 +122,6 @@ namespace Raid.Toolkit.Application.Core.Host
                 ConfigureServices((context, services) => services
                     .AddHostedServiceSingleton<IAppUI, TAppUI>()
                     );
-            }
-            return this;
-        }
-
-        public IAppHostBuilder AddWebSockets(Func<WebSocketSession, WebSocketPackage, ValueTask> messageHandler)
-        {
-            if (TryAddFeature(Feature.WebSocket))
-            {
-                Wrap(HostBuilder.AsWebSocketHostBuilder()
-                   .UseSessionFactory<SessionFactory>()
-                   .UseWebSocketMessageHandler(messageHandler));
             }
             return this;
         }

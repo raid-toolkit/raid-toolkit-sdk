@@ -7,14 +7,14 @@ namespace Raid.Toolkit.Common;
 
 public static class SingletonProcess
 {
-    private static EventWaitHandle GlobalHandle;
+    private static EventWaitHandle? GlobalHandle;
     public static readonly string Identifier = @"Global\4d5ed15b-cd8c-4fea-a086-e3675f18d34d";
 
     public static bool IsRunning
     {
         get
         {
-            EventWaitHandle tempHandle = null;
+            EventWaitHandle? tempHandle = null;
             try
             {
                 tempHandle = new(false, EventResetMode.ManualReset, Identifier, out bool created);
@@ -41,7 +41,7 @@ public static class SingletonProcess
         catch (Exception) { }
 
         // dispose immediately if we didn't aquire it
-        GlobalHandle.Dispose();
+        GlobalHandle?.Dispose();
         GlobalHandle = null;
         return false;
 

@@ -1,4 +1,6 @@
 using Raid.Client;
+using Raid.Toolkit.Common.API.Messages;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,7 +27,7 @@ namespace DotNetClientTest
             
         }
 
-        private void LogEventHandler(object? sender, Raid.Toolkit.DataModel.SerializableEventArgs e)
+        private void LogEventHandler(object? sender, SerializableEventArgs e)
         {
             eventsList.Items.Add(e.EventName);
         }

@@ -17,7 +17,7 @@ public class ApiCallerBase<T>
 		Client.EventReceived += Client_EventReceived;
 	}
 
-	private void Client_EventReceived(object sender, ApiClientEventArgs e)
+	private void Client_EventReceived(object? sender, ApiClientEventArgs e)
 	{
 		HandleEvent(e.Message);
 	}
@@ -27,7 +27,7 @@ public class ApiCallerBase<T>
 		var def = Api.GetMember<EventInfo>(message.EventName);
 		if (def.MemberInfo is not EventInfo eventInfo)
 			return;
-		eventInfo.RaiseMethod.Invoke(this, new object[] { this, EventArgs.Empty });
+		eventInfo.RaiseMethod?.Invoke(this, new object[] { this, EventArgs.Empty });
 	}
 
 	protected Task<U> CallMethod<U>(MethodBase method, params object[] args)

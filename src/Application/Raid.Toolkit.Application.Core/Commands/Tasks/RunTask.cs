@@ -3,10 +3,8 @@ using Microsoft.Extensions.Hosting;
 
 using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.Commands.Matchers;
-using Raid.Toolkit.Application.Core.DependencyInjection;
 using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Common;
-using Raid.Toolkit.DataModel;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host;
 
@@ -27,9 +25,7 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
 
         private static Task<int> ActivateCurrentProcess()
         {
-            RaidToolkitClientBase client = new();
-            client.Connect();
-            return client.MakeApi<ActivationApi>().Activate(new Uri("rtk://default"), Array.Empty<string>());
+			throw new V3NotImpl();
         }
 
         public async Task<int> Invoke()
@@ -59,15 +55,13 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
                 .AddLogging()
                 .AddAppServices(hostFeatures)
                 .AddUI();
-            if (!Options.NoWebService)
-                builder = builder.AddWebSockets(AppHost.HandleMessage);
 
             _ = AppHostBuilder.ConfigureServices(services => ProgramHost.ConfigureServices(services));
 
             IHost host = AppHostBuilder.Build();
-            ConfigureHost(host);
+            ConfigureHost();
 
-            AppHost.Start(host);
+            AppHost.Start();
 
             // must allow AppUI to initialize any process hooks before
             // the synchronization context is requested
@@ -86,10 +80,8 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
             return 0;
         }
 
-        private void ConfigureHost(IHost host)
+        private void ConfigureHost()
         {
-            IModelLoader modelLoader = host.Services.GetRequiredService<IModelLoader>();
-
             if (Options.DebugPackage == ".")
             {
                 Options.DebugPackage = Environment.GetEnvironmentVariable("DEBUG_PACKAGE_DIR") ?? ".";

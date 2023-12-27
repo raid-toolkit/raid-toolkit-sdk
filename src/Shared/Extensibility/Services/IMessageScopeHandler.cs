@@ -1,4 +1,4 @@
-using Raid.Toolkit.DataModel;
+using Raid.Toolkit.Common.API.Messages;
 
 namespace Raid.Toolkit.Extensibility.Services
 {

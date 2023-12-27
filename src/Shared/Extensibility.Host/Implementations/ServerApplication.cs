@@ -16,7 +16,7 @@ public class ServerApplication : IServerApplication, IHostedService
 {
 	private static readonly ApiMessageSerializer Serializer = new();
 	public IPCServer<SocketMessage>? Server { get; private set; }
-	private List<IApiServer<SocketMessage>> Servers = new();
+	private readonly List<IApiServer<SocketMessage>> Servers = new();
 
 	public void RegisterApiServer(IApiServer<SocketMessage> server)
 	{

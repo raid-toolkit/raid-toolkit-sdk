@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
 
 using Raid.Toolkit.Application.Core.Commands;
 using Raid.Toolkit.Application.Core.Commands.Base;
@@ -82,7 +83,7 @@ namespace Raid.Toolkit.UI.WinUI
 #pragma warning disable CS0436 // Type conflicts with imported type
             VersionRTK.Text = ThisAssembly.AssemblyFileVersion;
 #pragma warning restore CS0436 // Type conflicts with imported type
-            Backdrop = new MicaSystemBackdrop();
+            SystemBackdrop = new MicaBackdrop();
 
             DefaultContentElement = LinksGrid;
             ContentElements.Add(Settings);

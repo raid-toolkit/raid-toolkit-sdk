@@ -586,13 +586,6 @@
           "Newtonsoft.Json": "[13.0.3, )"
         }
       },
-      "Raid.Toolkit.DataModel": {
-        "type": "Project",
-        "dependencies": {
-          "Newtonsoft.Json": "[13.0.3, )",
-          "Raid.Toolkit.Common": "[1.0.0, )"
-        }
-      },
       "Raid.Toolkit.Extensibility": {
         "type": "Project",
         "dependencies": {
@@ -600,7 +593,6 @@
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
           "Microsoft.WindowsAppSDK": "[1.4.230822000, )",
           "Raid.Toolkit.Common": "[1.0.0, )",
-          "Raid.Toolkit.DataModel": "[1.0.0, )",
           "il2cpptoolkit.common": "[2.0.129-alpha, )",
           "il2cpptoolkit.metadata": "[2.0.129-alpha, )",
           "il2cpptoolkit.runtime": "[2.0.129-alpha, )"

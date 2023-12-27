@@ -9,10 +9,11 @@
       "type": "shell",
       "args": [
         "build",
+        "SDK-dotnet.sln",
+        "/binaryLogger",
         "--nologo",
         "-m:1",
         "-nodeReuse:false",
-        "-p:RTKTasks=true",
         "-p:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
@@ -39,7 +40,6 @@
         "--output",
         "publish/RTK",
         "-p:Configuration=Debug",
-        "-p:RTKTasks=true",
         "-p:Platform=x64",
         "-p:DeployOnBuild=true",
         "-p:GenerateFullPaths=true",
@@ -62,7 +62,6 @@
         "--nologo",
         "-m:1",
         "-nodeReuse:false",
-        "-p:RTKTasks=true",
         "-p:GenerateFullPaths=true",
         "-p:Configuration=Release",
         "/consoleloggerparameters:NoSummary"

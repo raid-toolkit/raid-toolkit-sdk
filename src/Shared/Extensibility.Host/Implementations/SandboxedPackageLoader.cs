@@ -9,9 +9,9 @@ namespace Raid.Toolkit.Extensibility.Host
     public class SandboxedPackageLoader : IPackageLoader, IDisposable
     {
         private readonly ConcurrentDictionary<string, ExtensionSandbox> LoadedPackages = new();
+        private readonly IServiceProvider ServiceProvider;
         private bool IsDisposed;
 
-        private IServiceProvider ServiceProvider;
         public SandboxedPackageLoader(IServiceProvider serviceProvider)
         {
             ServiceProvider = serviceProvider;

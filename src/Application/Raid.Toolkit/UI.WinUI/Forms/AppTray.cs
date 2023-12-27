@@ -72,9 +72,9 @@ namespace Raid.Toolkit.UI.WinUI
             }
             else
             {
-                if (PPAdapter.TryGetGameVersion(101, "raid", out PlariumPlayAdapter.GameInfo gameInfo))
+                if (PPAdapter.TryGetGameVersion(101, "raid", out PlariumPlayAdapter.GameInfo? gameInfo))
                 {
-                    _ = Process.Start(gameInfo.PlariumPlayPath, new string[] { $"-gameid=101", "-tray-start" });
+                    _ = Process.Start(gameInfo.PlariumPlayPath!, new string[] { $"-gameid=101", "-tray-start" });
                 }
             }
         }

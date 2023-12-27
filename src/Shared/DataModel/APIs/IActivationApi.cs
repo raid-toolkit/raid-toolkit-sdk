@@ -26,7 +26,7 @@ namespace Raid.Toolkit.DataModel
 
         public Task<int> Activate(Uri activationRequestUri, string[] arguments)
         {
-            return CallMethod<int>(MethodBase.GetCurrentMethod(), activationRequestUri, arguments);
+            return CallMethod<int>(MethodBase.GetCurrentMethod()!, activationRequestUri, arguments);
         }
     }
 }

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Common.API;
+using Raid.Toolkit.Common.API.Messages;
 
 namespace Raid.Toolkit.DataModel
 {
@@ -38,7 +39,7 @@ namespace Raid.Toolkit.DataModel
         public int? ViewId;
 
         [JsonProperty("viewKey")]
-        public string ViewKey;
+        public string? ViewKey;
     }
 
     [DeprecatedInV3]
@@ -54,7 +55,7 @@ namespace Raid.Toolkit.DataModel
     public class LastBattleDataObject
     {
         [JsonProperty("battleKindId")]
-        public string BattleKindId;
+        public string? BattleKindId;
 
         [JsonProperty("heroesExperience")]
         public int HeroesExperience;
@@ -66,13 +67,13 @@ namespace Raid.Toolkit.DataModel
         public int? Turns;
 
         [JsonProperty("givenDamage")]
-        public GivenDamage GivenDamage;
+        public GivenDamage? GivenDamage;
 
         [JsonProperty("tournamentPointsByStateId")]
-        public Dictionary<int, int> TournamentPointsByStateId;
+        public Dictionary<int, int>? TournamentPointsByStateId;
 
         [JsonProperty("masteryPointsByHeroId")]
-        public Dictionary<int, Dictionary<string, int>> MasteryPointsByHeroId;
+        public Dictionary<int, Dictionary<string, int>>? MasteryPointsByHeroId;
     }
 
 }

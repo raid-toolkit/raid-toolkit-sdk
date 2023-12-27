@@ -22,10 +22,11 @@ namespace Raid.Toolkit.Extensibility
         public ProcessManager(IOptions<ProcessManagerSettings> settings, ILogger<ProcessManager> logger)
         {
             Settings = settings;
+			Logger = logger;
         }
 
-        public event EventHandler<IProcessManager.ProcessEventArgs> ProcessFound;
-        public event EventHandler<IProcessManager.ProcessEventArgs> ProcessClosed;
+        public event EventHandler<IProcessManager.ProcessEventArgs>? ProcessFound;
+        public event EventHandler<IProcessManager.ProcessEventArgs>? ProcessClosed;
 
         public void Refresh()
         {
@@ -51,7 +52,7 @@ namespace Raid.Toolkit.Extensibility
             }
             foreach (int closedProcessId in currentIds)
             {
-                if (ActiveProcesses.Remove(closedProcessId, out Process closedProcess))
+                if (ActiveProcesses.Remove(closedProcessId, out Process? closedProcess))
                 {
                     try
                     {

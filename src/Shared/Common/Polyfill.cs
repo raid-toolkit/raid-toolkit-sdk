@@ -1,9 +1,28 @@
-#pragma warning disable IDE0005 // Using directive is unnecessary.
 using System.Collections.Generic;
 using System.Linq;
+#pragma warning disable IDE0005 // Using directive is unnecessary.
 using System.Threading.Tasks;
 using System.Threading;
 #pragma warning restore IDE0005 // Using directive is unnecessary.
+
+namespace System.Diagnostics.CodeAnalysis
+{
+#if NET5_0_OR_GREATER
+#else
+	[AttributeUsage(AttributeTargets.Parameter, Inherited = false)]
+    public sealed class NotNullWhenAttribute : Attribute
+	{
+		/// <summary>Initializes the attribute with the specified return value condition.</summary>
+		/// <param name="returnValue">
+		/// The return value condition. If the method returns this value, the associated parameter will not be null.
+		/// </param>
+		public NotNullWhenAttribute(bool returnValue) => ReturnValue = returnValue;
+
+		/// <summary>Gets the return value condition.</summary>
+		public bool ReturnValue { get; }
+	}
+#endif
+}
 
 #if NET5_0_OR_GREATER
 #else

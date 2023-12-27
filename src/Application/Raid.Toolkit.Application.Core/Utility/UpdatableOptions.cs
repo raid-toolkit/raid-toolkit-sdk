@@ -26,8 +26,7 @@ namespace Raid.Toolkit.Application.Core.Utility
 
         public void Reload(string? name = null)
         {
-            if (name == null)
-                name = Options.DefaultName;
+            name ??= Options.DefaultName;
 
             _listeners?.Invoke(_getCurrentValue(name), name);
         }

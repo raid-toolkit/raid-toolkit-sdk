@@ -2,7 +2,6 @@
 
     <ItemGroup>
         <ProjectReference Include="$(SourceDir)Shared\Common\Common.csproj" />
-        <ProjectReference Include="$(SourceDir)Shared\DataModel\DataModel.csproj" />
     </ItemGroup>
 
     <ItemGroup>

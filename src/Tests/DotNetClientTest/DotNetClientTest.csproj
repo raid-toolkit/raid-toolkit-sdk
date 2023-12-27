@@ -9,9 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\ClientSDK\DotNet\Raid.Client.csproj" />
         <ProjectReference Include="..\..\Shared\Common\Common.csproj" />
-        <ProjectReference Include="..\..\Shared\DataModel\DataModel.csproj" />
     </ItemGroup>
 
 </Project>

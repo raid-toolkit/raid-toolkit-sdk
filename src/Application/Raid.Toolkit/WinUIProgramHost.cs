@@ -32,7 +32,7 @@ namespace Raid.Toolkit.UI.WinUI
             XamlCheckProcessRequirements();
             WinRT.ComWrappersSupport.InitializeComWrappers();
 
-            AppHost.Start(host);
+            AppHost.Start();
 
             TaskCompletionSource endTask = new();
             XamlApplication.Start(async (p) =>

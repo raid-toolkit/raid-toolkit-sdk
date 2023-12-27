@@ -31,9 +31,9 @@ namespace Raid.Toolkit.Extensibility.Host
 
 			public Task<bool> AddEntry(string id, string displayName)
 			{
-				MenuEntry entry = new() { DisplayName = displayName };
+				MenuEntry entry = new(displayName);
 				entry.Activate += (sender, args) => EntryActivated?.Invoke(sender, id);
-				Menu.Entries.Add(new MenuEntry() { DisplayName = displayName }, id);
+				Menu.Entries.Add(new MenuEntry(displayName), id);
 				return Task.FromResult(true);
 			}
 

@@ -25,7 +25,7 @@ namespace Raid.Toolkit.Extensibility
 
         bool CanShowUI { get; }
 
-        [Obsolete] IDisposable RegisterMessageScopeHandler<T>() where T : IMessageScopeHandler;
-        [Obsolete] IDisposable RegisterBackgroundService<T>() where T : IBackgroundService;
+        [Obsolete("Provide an instance parameter")] IDisposable RegisterMessageScopeHandler<T>() where T : IMessageScopeHandler;
+        [Obsolete("Provide an instance parameter")] IDisposable RegisterBackgroundService<T>() where T : IBackgroundService;
     }
 }

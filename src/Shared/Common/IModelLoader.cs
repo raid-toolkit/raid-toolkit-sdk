@@ -31,8 +31,8 @@ public interface IModelLoader
 		public ModelLoaderEventArgs(LoadState state, TaskProgress? progress = null) => (LoadState, Progress) = (state, progress);
 	}
 
-	public string GameVersion { get; }
-	public event EventHandler<ModelLoaderEventArgs> OnStateUpdated;
+	public string? GameVersion { get; }
+	public event EventHandler<ModelLoaderEventArgs>? OnStateUpdated;
 
 	public Task<Assembly> BuildAndLoad(IEnumerable<Regex> regices, string outputDirectory);
 }

@@ -16,10 +16,10 @@ public class SocketMessageConverter : JsonConverter
 		return true;
 	}
 
-	public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
+	public override object? ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
 	{
 		var value = existingValue ?? Activator.CreateInstance(objectType);
-		var fields = objectType.GetFields().Select(field => new { Attribute = field.GetCustomAttribute<JsonPropertyAttribute>(), Field = field }).OrderBy(entry => entry.Attribute.Order);
+		var fields = objectType.GetFields().Select(field => new { Attribute = field.GetCustomAttribute<JsonPropertyAttribute>()!, Field = field }).OrderBy(entry => entry.Attribute.Order);
 		var array = JArray.Load(reader);
 		foreach (var entry in fields)
 		{
@@ -32,13 +32,13 @@ public class SocketMessageConverter : JsonConverter
 	public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
 	{
 		var properties = value?.GetType().GetFields()
-			.Select(field => new { Attribute = field.GetCustomAttribute<JsonPropertyAttribute>(), Field = field })
+			.Select(field => new { Attribute = field.GetCustomAttribute<JsonPropertyAttribute>()!, Field = field })
 			.OrderBy(entry => entry.Attribute.Order)
 			.ToList() ?? new();
 		object[] array = new object[properties.Count];
 		foreach (var entry in properties)
 		{
-			array[entry.Attribute.Order] = JToken.FromObject(entry.Field.GetValue(value), serializer);
+			array[entry.Attribute.Order] = JToken.FromObject(entry.Field.GetValue(value)!, serializer);
 		}
 
 		JArray jarray = new(array);

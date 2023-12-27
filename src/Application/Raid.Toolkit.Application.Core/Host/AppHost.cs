@@ -1,25 +1,15 @@
 using Karambolo.Extensions.Logging.File;
 
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using Raid.Toolkit.Application.Core.Commands;
-using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Application.Core.DependencyInjection;
-using Raid.Toolkit.Application.Core.Utility;
 using Raid.Toolkit.Common;
-using Raid.Toolkit.DataModel;
-using Raid.Toolkit.Extensibility;
-using Raid.Toolkit.Extensibility.DataServices;
-using Raid.Toolkit.Extensibility.Host;
-using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Host.Utils;
 using Raid.Toolkit.Extensibility.Services;
-using Raid.Toolkit.Extensibility.Shared;
 
 using SuperSocket.WebSocket;
 using SuperSocket.WebSocket.Server;
@@ -104,11 +94,8 @@ namespace Raid.Toolkit.Application.Core.Host
             ExecutableDirectory = Path.GetDirectoryName(ExecutablePath)!;
         }
 
-        private static IHost? Host;
-
-        public static void Start(IHost host)
+        public static void Start()
         {
-            Host = host;
             try
             {
                 string oldInstallationPath = Path.Combine(RegistrySettings.InstallationPath, "Raid.Toolkit.exe");
@@ -118,14 +105,6 @@ namespace Raid.Toolkit.Application.Core.Host
                 }
             }
             catch { }
-        }
-
-        public static async Task<int> Activate(Uri activationRequestUri, params string[] arguments)
-        {
-            await EnsureProcess(new() { NoLogo = true });
-            RaidToolkitClientBase client = new();
-            client.Connect();
-            return await client.MakeApi<ActivationApi>().Activate(activationRequestUri, arguments);
         }
 
         private static async Task EnsureProcess(CommonOptions? options = null)
@@ -147,8 +126,8 @@ namespace Raid.Toolkit.Application.Core.Host
             {
                 try
                 {
-                    RaidToolkitClientBase client = new();
-                    client.Connect();
+                    //RaidToolkitClientBase client = new();
+                    //client.Connect();
                     return;
                 }
                 catch
@@ -157,17 +136,6 @@ namespace Raid.Toolkit.Application.Core.Host
                 }
             }
             throw new TimeoutException();
-        }
-
-        /**
-         * Handles messages from the public socket API
-        **/
-        public static ValueTask HandleMessage(WebSocketSession session, WebSocketPackage message)
-        {
-            return Host == null
-                ? ValueTask.CompletedTask
-                : Host.Services.GetRequiredService<IScopedServiceManager>()
-                .ProcessMessage(new SuperSocketAdapter(session), message.Message);
         }
     }
 }

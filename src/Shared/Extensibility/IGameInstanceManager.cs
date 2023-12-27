@@ -6,21 +6,28 @@ using System.Diagnostics.CodeAnalysis;
 namespace Raid.Toolkit.Extensibility
 {
     public interface IGameInstanceManager
-    {
-        public class GameInstancesUpdatedEventArgs : EventArgs
-        {
-            public IGameInstance Instance { get; }
-            public GameInstancesUpdatedEventArgs(IGameInstance gameInstance)
-                => Instance = gameInstance;
-        }
+	{
+		public class GameInstanceAddedEventArgs : EventArgs
+		{
+			public ILoadedGameInstance Instance { get; }
+			public GameInstanceAddedEventArgs(ILoadedGameInstance gameInstance)
+				=> Instance = gameInstance;
+		}
 
-        event EventHandler<GameInstancesUpdatedEventArgs> OnAdded;
-        event EventHandler<GameInstancesUpdatedEventArgs> OnRemoved;
+		public class GameInstanceRemovedEventArgs : EventArgs
+		{
+			public string Id { get; }
+			public IGameInstance Instance { get; }
+			public GameInstanceRemovedEventArgs(IGameInstance gameInstance, string id)
+				=> (Instance, Id) = (gameInstance, id);
+		}
+
+		event EventHandler<GameInstanceAddedEventArgs> OnAdded;
+        event EventHandler<GameInstanceRemovedEventArgs> OnRemoved;
 
         void AddInstance(Process process);
         void RemoveInstance(int token);
-        [Obsolete("Use TryGetById instead.")] IGameInstance GetById(string id);
-        bool TryGetById(string id, [NotNullWhen(true)] out IGameInstance? instance);
-        IReadOnlyList<IGameInstance> Instances { get; }
+        bool TryGetById(string id, [NotNullWhen(true)] out ILoadedGameInstance? instance);
+        IReadOnlyList<ILoadedGameInstance> Instances { get; }
     }
 }

@@ -17,7 +17,6 @@ public interface IAppUI : IDisposable
 
     Task<bool> ShowExtensionInstaller(ExtensionBundle bundleToInstall);
     void ShowMain();
-    void ShowAccounts();
     void ShowSettings();
     void ShowExtensionManager();
 }

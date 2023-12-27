@@ -73,12 +73,9 @@ namespace Raid.Toolkit.Extensibility
         public static ExtensionBundle FromFile(string filename)
         {
             using ZipArchive arch = ZipFile.OpenRead(filename);
-            ZipArchiveEntry? manifestEntry = arch.GetEntry(Constants.ExtensionManifestFileName);
-            if (manifestEntry == null)
-            {
-                throw new ApplicationException($"Extension package '{filename}' does not contain a valid manifest");
-            }
-            using Stream manifestStream = manifestEntry.Open();
+            ZipArchiveEntry? manifestEntry = arch.GetEntry(Constants.ExtensionManifestFileName)
+				?? throw new ApplicationException($"Extension package '{filename}' does not contain a valid manifest");
+			using Stream manifestStream = manifestEntry.Open();
             ExtensionManifest manifest = ReadManifest(manifestStream);
             return new(manifest)
             {
@@ -107,12 +104,9 @@ namespace Raid.Toolkit.Extensibility
             JsonSerializer serializer = new();
             using StreamReader reader = new(manifestStream);
             using JsonTextReader textReader = new(reader);
-            ExtensionManifest? manifest = serializer.Deserialize<ExtensionManifest>(textReader);
-            if (manifest == null)
-            {
-                throw new ApplicationException("Could not deserialize ExtensionManifest");
-            }
-            return manifest;
+            ExtensionManifest? manifest = serializer.Deserialize<ExtensionManifest>(textReader)
+				?? throw new ApplicationException("Could not deserialize ExtensionManifest");
+			return manifest;
         }
 
         private static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)

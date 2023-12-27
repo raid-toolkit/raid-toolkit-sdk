@@ -7,8 +7,8 @@ namespace Raid.Toolkit.Extensibility
         public string Id { get; }
         public string Name { get; }
         public string Description { get; }
-        public string Location { get; }
-        public Assembly Assembly { get; }
+        public string? Location { get; }
+        public Assembly? Assembly { get; }
 
         public static PackageDescriptor FromAssembly(Assembly assembly)
         {

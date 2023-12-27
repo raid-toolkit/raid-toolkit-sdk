@@ -31,7 +31,7 @@ public abstract class ApiServer<T> : IApiServer<SocketMessage>
 		List<string> supportedScopes = new();
 		foreach (Type type in types)
 		{
-			PublicApiAttribute attr = type.GetCustomAttribute<PublicApiAttribute>(true);
+			PublicApiAttribute? attr = type.GetCustomAttribute<PublicApiAttribute>(true);
 			if (attr == null)
 				continue;
 			supportedScopes.Add(attr.Name);
@@ -72,7 +72,7 @@ public abstract class ApiServer<T> : IApiServer<SocketMessage>
 			EventInfo eventInfo = Api.GetPublicApi<EventInfo>(subscriptionMessage.EventName, out string scope);
 			if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{scope}:{subscriptionMessage.EventName}", out var handler))
 			{
-				handler = async (object sender, SerializableEventArgs args) => await SendEvent(eventInfo, session, args, scope);
+				handler = async (object? sender, SerializableEventArgs args) => await SendEvent(eventInfo, session, args, scope);
 				EventHandlerDelegates.Add($"{session.Id}:{scope}:{subscriptionMessage.EventName}", handler);
 			}
 			eventInfo.AddEventHandler(this, handler);
@@ -88,7 +88,7 @@ public abstract class ApiServer<T> : IApiServer<SocketMessage>
 		try
 		{
 			EventInfo eventInfo = Api.GetPublicApi<EventInfo>(subscriptionMessage.EventName, out string scope);
-			if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{scope}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs> handler))
+			if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{scope}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs>? handler))
 				return;
 
 			eventInfo.RemoveEventHandler(this, handler);
@@ -147,7 +147,7 @@ public abstract class ApiServer<T> : IApiServer<SocketMessage>
 				args[p] = message.Parameters[p]?.ToObject(methodParameters[p].ParameterType);
 			}
 
-			object result = methodInfo.Invoke(this, args);
+			object? result = methodInfo.Invoke(this, args);
 			var returnValue = await message.Resolve(result);
 			var response = new SocketMessage(scope, "set-promise", returnValue);
 			await session.SendAsync(response);
@@ -166,7 +166,7 @@ public abstract class ApiServer<T> : IApiServer<SocketMessage>
 		try
 		{
 			PropertyInfo propertyInfo = Api.GetPublicApi<PropertyInfo>(message.PropertyName, out scope);
-			object result = propertyInfo.GetValue(this);
+			object? result = propertyInfo.GetValue(this);
 			var returnValue = await message.Resolve(result);
 			var response = new SocketMessage(scope, "set-promise", returnValue);
 			await session.SendAsync(response);

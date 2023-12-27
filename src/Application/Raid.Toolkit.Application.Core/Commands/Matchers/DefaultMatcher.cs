@@ -41,10 +41,6 @@ namespace Raid.Toolkit.Application.Core.Commands.Matchers
         { }
         public override ICommandTask? Match(RunOptions options)
         {
-            if (!string.IsNullOrEmpty(options.PackagePath))
-            {
-                return ActivatorUtilities.CreateInstance<InstallExtensionTask>(ServiceProvider, new InstallExtensionOptions() { PackagePath = options.PackagePath });
-            }
             return ActivatorUtilities.CreateInstance<RunTask>(ServiceProvider, options);
         }
     }

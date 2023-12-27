@@ -10,9 +10,11 @@ namespace Raid.Toolkit.Extensibility.Host
 	{
 		protected readonly Dictionary<IMenuEntry, string> Entries = new();
 
-		public virtual void AddEntry(IMenuEntry entry)
+		public virtual string AddEntry(IMenuEntry entry)
 		{
-			Entries.Add(entry, Guid.NewGuid().ToString("n"));
+			string id = Guid.NewGuid().ToString("n");
+			Entries.Add(entry, id);
+			return id;
 		}
 
 		public IMenuEntry[] GetEntries()

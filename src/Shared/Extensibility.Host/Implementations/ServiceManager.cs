@@ -9,8 +9,13 @@ namespace Raid.Toolkit.Extensibility.Host
     {
         private class ServiceState
         {
-            public IBackgroundService service;
-            public Dictionary<int, DateTime> nextTickByInstanceToken;
+			public ServiceState(IBackgroundService service)
+			{
+				Service = service;
+				NextTickByInstanceToken = new();
+			}
+            public IBackgroundService Service;
+            public Dictionary<int, DateTime> NextTickByInstanceToken;
         }
         private readonly List<ServiceState> BackgroundServices = new();
         private readonly ILogger<ServiceManager> Logger;
@@ -21,12 +26,8 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public IDisposable AddService(IBackgroundService service)
         {
-            ServiceState serviceState = new()
-            {
-                service = service,
-                nextTickByInstanceToken = new()
-            };
-            BackgroundServices.Add(serviceState);
+			ServiceState serviceState = new(service);
+			BackgroundServices.Add(serviceState);
             return new HostResourceHandle(() => BackgroundServices.Remove(serviceState));
         }
 
@@ -34,19 +35,19 @@ namespace Raid.Toolkit.Extensibility.Host
         {
             foreach (var service in BackgroundServices)
             {
-                if (!service.nextTickByInstanceToken.TryGetValue(instance.Token, out DateTime nextTick) || nextTick < DateTime.UtcNow)
+                if (!service.NextTickByInstanceToken.TryGetValue(instance.Token, out DateTime nextTick) || nextTick < DateTime.UtcNow)
                 {
                     try
                     {
                         // don't run again until current tick finishes
-                        service.nextTickByInstanceToken[instance.Token] = DateTime.MaxValue;
-                        await service.service.Tick(instance);
+                        service.NextTickByInstanceToken[instance.Token] = DateTime.MaxValue;
+                        await service.Service.Tick(instance);
                     }
                     catch (Exception ex)
                     {
-                        Logger.LogError(ex, $"Failure in background service {service.GetType().FullName}");
+                        Logger.LogError(ex, "Failure in background service {typeName}", service.GetType().FullName);
                     }
-                    service.nextTickByInstanceToken[instance.Token] = DateTime.UtcNow.Add(service.service.PollInterval);
+                    service.NextTickByInstanceToken[instance.Token] = DateTime.UtcNow.Add(service.Service.PollInterval);
                 }
             }
         }
