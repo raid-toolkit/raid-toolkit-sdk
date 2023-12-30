@@ -29,27 +29,34 @@ namespace Raid.Toolkit.ExtensionHost;
 /// </summary>
 public partial class App : Application
 {
-    private const string LogDir = "Logs";
+	private const string LogDir = "Logs";
 
-    private Window? m_window;
+	private Window? m_window;
 	private readonly IHost Host;
 	private readonly BaseOptions InitialOptions;
 	private readonly Queue<BaseOptions> ActivationRequests = new();
 
 	public App(BaseOptions initialOptions)
-    {
+	{
 		InitialOptions = initialOptions;
 
 		this.InitializeComponent();
-        ApplicationExtensionHost.Initialize(this);
+		ApplicationExtensionHost.Initialize(this);
 
 		HostBuilder hostBuilder = new();
+
+		if (!initialOptions.DisableLogging)
+		{
+			hostBuilder
+				.ConfigureLogging((_) => GetLoggerOptions(initialOptions))
+				.ConfigureServices((context, services) => services.AddLogging(builder => builder.AddFile()));
+		}
 
 		// logging
 		hostBuilder
 			.ConfigureLogging((_) => GetLoggerOptions(initialOptions))
 			.ConfigureServices((context, services) => services
-			.AddLogging(builder => builder.AddFile())
+				.AddLogging(builder => builder.AddFile())
 				.Configure<ModelLoaderOptions>(config => config.ForceRebuild = initialOptions.ForceRebuild)
 				.AddSingleton<IPackageManager, PackageManager>()
 				.AddScoped<IModelLoader, ModelLoader>()
@@ -62,8 +69,8 @@ public partial class App : Application
 		Host = hostBuilder.Build();
 	}
 
-    protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
-    {
+	protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+	{
 		m_window = ActivatorUtilities.CreateInstance<MainWindow>(Host.Services);
 		m_window.Hide();
 
@@ -71,7 +78,7 @@ public partial class App : Application
 			DoActivation(options);
 	}
 
-    internal void OnActivated(BaseOptions options)
+	internal void OnActivated(BaseOptions options)
 	{
 		if (options.GetPackageId() != InitialOptions.GetPackageId())
 			throw new InvalidOperationException("One worker cannot serve multiple packages");
@@ -98,7 +105,7 @@ public partial class App : Application
 	}
 
 	private async Task RunPackage(RunPackageOptions options)
-    {
+	{
 		if (options.DebugPackage == ".")
 		{
 			options.DebugPackage = Environment.GetEnvironmentVariable("DEBUG_PACKAGE_DIR") ?? ".";
@@ -138,35 +145,35 @@ public partial class App : Application
 	}
 
 	private static FileLoggerOptions GetLoggerOptions(BaseOptions options)
-    {
-        if (!Directory.Exists(RegistrySettings.InstallationPath))
-        {
-            return new();
-        }
-        string logDir = Path.Combine(RegistrySettings.InstallationPath, LogDir);
-        DirectoryInfo dir = Directory.CreateDirectory(logDir);
+	{
+		if (!Directory.Exists(RegistrySettings.InstallationPath))
+		{
+			return new();
+		}
+		string logDir = Path.Combine(RegistrySettings.InstallationPath, LogDir);
+		DirectoryInfo dir = Directory.CreateDirectory(logDir);
 
-        IEnumerable<FileInfo> existingFiles = dir.GetFiles().Where(file => file.CreationTimeUtc < DateTime.UtcNow.AddDays(-2));
-        foreach (FileInfo file in existingFiles)
-            file.Delete();
+		IEnumerable<FileInfo> existingFiles = dir.GetFiles().Where(file => file.CreationTimeUtc < DateTime.UtcNow.AddDays(-2));
+		foreach (FileInfo file in existingFiles)
+			file.Delete();
 
-        string logFileNameFormat = $"Extension.{options.GetPackageId()}.<date:yyyyMMdd>-<counter>.log";
+		string logFileNameFormat = $"Extension.{options.GetPackageId()}.<date:yyyyMMdd>-<counter>.log";
 
-        PhysicalFileProvider fileProvider = new(RegistrySettings.InstallationPath);
-        FileLoggerOptions loggerOptions = new()
-        {
-            FileAppender = new PhysicalFileAppender(fileProvider),
-            BasePath = LogDir,
-            FileAccessMode = LogFileAccessMode.KeepOpenAndAutoFlush,
-            FileEncodingName = "utf-8",
-            DateFormat = "yyyyMMdd",
-            CounterFormat = "000",
-            MaxFileSize = 10485760,
-            IncludeScopes = true,
+		PhysicalFileProvider fileProvider = new(RegistrySettings.InstallationPath);
+		FileLoggerOptions loggerOptions = new()
+		{
+			FileAppender = new PhysicalFileAppender(fileProvider),
+			BasePath = LogDir,
+			FileAccessMode = LogFileAccessMode.KeepOpenAndAutoFlush,
+			FileEncodingName = "utf-8",
+			DateFormat = "yyyyMMdd",
+			CounterFormat = "000",
+			MaxFileSize = 10485760,
+			IncludeScopes = true,
 
-            TextBuilder = new SingleLineLogEntryTextBuilder(),
-            Files = new[] { new LogFileOptions { Path = logFileNameFormat } },
-        };
-        return loggerOptions;
-    }
+			TextBuilder = new SingleLineLogEntryTextBuilder(),
+			Files = new[] { new LogFileOptions { Path = logFileNameFormat } },
+		};
+		return loggerOptions;
+	}
 }
