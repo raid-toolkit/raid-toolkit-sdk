@@ -1,9 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-#pragma warning disable IDE0005 // Using directive is unnecessary.
+#if NET5_0_OR_GREATER
+#else
 using System.Threading.Tasks;
 using System.Threading;
-#pragma warning restore IDE0005 // Using directive is unnecessary.
+#endif
 
 namespace System.Diagnostics.CodeAnalysis
 {

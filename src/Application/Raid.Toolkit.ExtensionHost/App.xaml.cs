@@ -6,10 +6,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.UI.Xaml;
 
 using Raid.Toolkit.Common;
+using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host;
 using Raid.Toolkit.Extensibility.Host.Utils;
 using Raid.Toolkit.Loader;
@@ -22,10 +22,8 @@ using System.Threading.Tasks;
 
 using WinUIEx;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
-
 namespace Raid.Toolkit.ExtensionHost;
+
 /// <summary>
 /// Provides application-specific behavior to supplement the default Application class.
 /// </summary>
@@ -34,57 +32,112 @@ public partial class App : Application
     private const string LogDir = "Logs";
 
     private Window? m_window;
+	private readonly IHost Host;
+	private readonly BaseOptions InitialOptions;
+	private readonly Queue<BaseOptions> ActivationRequests = new();
 
-    public App()
+	public App(BaseOptions initialOptions)
     {
-        this.InitializeComponent();
+		InitialOptions = initialOptions;
+
+		this.InitializeComponent();
         ApplicationExtensionHost.Initialize(this);
-    }
+
+		HostBuilder hostBuilder = new();
+
+		// logging
+		hostBuilder
+			.ConfigureLogging((_) => GetLoggerOptions(initialOptions))
+			.ConfigureServices((context, services) => services
+			.AddLogging(builder => builder.AddFile())
+				.Configure<ModelLoaderOptions>(config => config.ForceRebuild = initialOptions.ForceRebuild)
+				.AddSingleton<IPackageManager, PackageManager>()
+				.AddScoped<IModelLoader, ModelLoader>()
+				.AddScoped<IMenuManager, ClientMenuManager>()
+				.AddScoped<IWindowManager, Extensibility.Host.WindowManager>()
+				.AddScoped<IManagedPackageFactory, ManagedPackageFactory>() // creates a scope for each IExtensionManagement
+				.AddScoped<IPackageLoader, SandboxedPackageLoader>()
+				.AddScoped(sp => CreateExtensionManagementScope(sp, initialOptions.GetPackageId()))
+			);
+		Host = hostBuilder.Build();
+	}
 
     protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
     {
-        m_window = new MainWindow();
-        m_window.Hide();
-    }
+		m_window = ActivatorUtilities.CreateInstance<MainWindow>(Host.Services);
+		m_window.Hide();
+
+		while (ActivationRequests.TryDequeue(out BaseOptions? options))
+			DoActivation(options);
+	}
 
     internal void OnActivated(BaseOptions options)
+	{
+		if (options.GetPackageId() != InitialOptions.GetPackageId())
+			throw new InvalidOperationException("One worker cannot serve multiple packages");
+
+		// defer activation processing until after the main window has been created
+		if (m_window != null)
+		{
+			DoActivation(options);
+		}
+		else
+		{
+			ActivationRequests.Enqueue(options);
+		}
+	}
+
+	private void DoActivation(BaseOptions options)
+	{
+		switch (options)
+		{
+			case RunPackageOptions runOptions:
+				Task.Run(() => RunPackage(runOptions));
+				break;
+		}
+	}
+
+	private async Task RunPackage(RunPackageOptions options)
     {
-        switch (options)
-        {
-            case RunExtensionOptions runOptions:
-                Task.Run(() => RunExtension(runOptions));
-                break;
-        }
-    }
+		if (options.DebugPackage == ".")
+		{
+			options.DebugPackage = Environment.GetEnvironmentVariable("DEBUG_PACKAGE_DIR") ?? ".";
+		}
+		PackageManager.DebugPackage = options.DebugPackage;
+		if (!string.IsNullOrEmpty(PackageManager.DebugPackage))
+		{
+			options.Debug = true;
+		}
 
-    private static async Task RunExtension(RunExtensionOptions options)
-    {
-        HostBuilder hostBuilder = new();
+		await Host.StartAsync();
+		IServiceScope packageScope = Host.Services.CreateScope();
+		IManagedPackage extension = packageScope.ServiceProvider.GetRequiredService<IManagedPackage>();
 
-        // logging
-        hostBuilder
-            .ConfigureLogging((_) => GetLoggerOptions(options))
-            .ConfigureServices((context, services) => services
-                .AddLogging(builder => builder.AddFile())
-                .Configure<ModelLoaderOptions>(config => config.ForceRebuild = options.ForceRebuild)
-                .AddExtensibilityServices<PackageManager>(ServiceMode.Worker));
-        IHost host = hostBuilder.Start();
-        IExtensionManager controller = host.Services.GetRequiredService<IExtensionManager>();
+		if (extension.State == ExtensionState.Disabled)
+			throw new InvalidOperationException("Extension is disabled");
+		if (extension.State == ExtensionState.Error)
+			throw new InvalidOperationException("Extension is in an error state");
+		if (extension.State == ExtensionState.PendingUninstall)
+			throw new InvalidOperationException("Extension is pending uninstallation");
 
-        if (!controller.TryGetExtension(options.GetExtensionId(), out IExtensionManagement? extension))
-            throw new InvalidOperationException("Extension not found");
+		if (extension.State == ExtensionState.None)
+		{
+			await extension.Load();
+		}
+		if (extension.State == ExtensionState.Loaded)
+		{
+			extension.Activate();
+		}
+	}
 
-        if (extension.State == ExtensionState.None)
-            await extension.Load();
+	private static IManagedPackage CreateExtensionManagementScope(IServiceProvider provider, string packageId)
+	{
+		IPackageManager packageManager = provider.GetRequiredService<IPackageManager>();
+		ExtensionBundle package = packageManager.GetPackage(packageId);
+		return ActivatorUtilities.CreateInstance<Extensibility.Host.ManagedPackage>(provider, package);
+	}
 
-        if (extension.State != ExtensionState.Loaded)
-            throw new InvalidOperationException("Extension was not loaded properly");
-
-        extension.Activate();
-        extension.ShowUI();
-    }
-
-    private static FileLoggerOptions GetLoggerOptions(BaseOptions options)
+	private static FileLoggerOptions GetLoggerOptions(BaseOptions options)
     {
         if (!Directory.Exists(RegistrySettings.InstallationPath))
         {
@@ -97,7 +150,7 @@ public partial class App : Application
         foreach (FileInfo file in existingFiles)
             file.Delete();
 
-        string logFileNameFormat = $"Extension.{options.GetExtensionId()}.<date:yyyyMMdd>-<counter>.log";
+        string logFileNameFormat = $"Extension.{options.GetPackageId()}.<date:yyyyMMdd>-<counter>.log";
 
         PhysicalFileProvider fileProvider = new(RegistrySettings.InstallationPath);
         FileLoggerOptions loggerOptions = new()

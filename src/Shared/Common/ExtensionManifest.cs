@@ -16,7 +16,6 @@ public class ExtensionManifest
 		Assembly = string.Empty;
 		DisplayName = string.Empty;
 		Description = string.Empty;
-		Codegen = new();
 		RequireVersion = string.Empty;
 	}
 
@@ -36,7 +35,7 @@ public class ExtensionManifest
 	public string Description { get; set; }
 
 	[JsonProperty("codegen")]
-	public ExtensionManifestCodegen Codegen { get; set; }
+	public ExtensionManifestCodegen? Codegen { get; set; }
 
 	[JsonProperty("requireVersion")]
 	public string RequireVersion { get; set; }

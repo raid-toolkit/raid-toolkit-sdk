@@ -22,9 +22,9 @@ using PInvoke = Windows.Win32.PInvoke;
 
 namespace Raid.Toolkit.ExtensionHost;
 
-abstract class BaseOptions
+public abstract class BaseOptions
 {
-    public abstract string GetExtensionId();
+    public abstract string GetPackageId();
 
     [Option('q', "quiet")]
     public bool DisableLogging { get; set; }
@@ -39,8 +39,8 @@ abstract class BaseOptions
     public bool Debug { get; set; }
 }
 
-[Verb("install", HelpText = "Installs an extension")]
-class InstallExtensionOptions : BaseOptions
+[Verb("install", HelpText = "Installs an extension package")]
+class InstallPackageOptions : BaseOptions
 {
     [Value(0, MetaName = "rtkx", HelpText = "Path to RTKX package to install")]
     public string PackagePath { get; set; } = string.Empty;
@@ -51,21 +51,24 @@ class InstallExtensionOptions : BaseOptions
     private ExtensionBundle? _bundle;
     public ExtensionBundle Bundle => _bundle ??= ExtensionBundle.FromFile(PackagePath);
 
-    public override string GetExtensionId()
+    public override string GetPackageId()
     {
         return Bundle.Manifest.Id;
     }
 }
 
-[Verb("run", HelpText = "Runs an installed extension")]
-class RunExtensionOptions : BaseOptions
+[Verb("run", HelpText = "Runs an installed extension package")]
+class RunPackageOptions : BaseOptions
 {
-    [Value(0, MetaName = "Extension id", HelpText = "Id of the extension to run")]
-    public string ExtensionId { get; set; } = string.Empty;
+    [Value(0, MetaName = "Package id", HelpText = "Id of the extension package to run")]
+    public string PackageId { get; set; } = string.Empty;
 
-    public override string GetExtensionId()
+	[Option('p', "debug-package", Hidden = true)]
+	public string? DebugPackage { get; set; }
+
+	public override string GetPackageId()
     {
-        return ExtensionId;
+        return PackageId;
     }
 }
 
@@ -78,11 +81,11 @@ class ActivateExtensionOptions : BaseOptions
     [Value(1, MetaName = "Arguments", HelpText = "Additional arguments")]
     public IEnumerable<string> Arguments { get; set; } = Array.Empty<string>();
 
-    public override string GetExtensionId()
+    public override string GetPackageId()
     {
         Uri activationUri = new(Uri);
-        string extensionId = activationUri.LocalPath.TrimStart('/').Split('/')[0];
-        return extensionId;
+        string packageId = activationUri.LocalPath.TrimStart('/').Split('/')[0];
+        return packageId;
     }
 }
 
@@ -102,7 +105,7 @@ internal class AppRouter
         AppActivationArguments args = AppInstance.GetCurrent().GetActivatedEventArgs();
         Options = ParseActivationArguments(args);
 
-        string instanceKey = GetInstanceKey(Options.GetExtensionId());
+        string instanceKey = GetInstanceKey(Options.GetPackageId());
         Instance = AppInstance.FindOrRegisterForKey(instanceKey);
         if (Instance.IsCurrent)
             Instance.Activated += OnActivated;
@@ -116,7 +119,7 @@ internal class AppRouter
         {
             ExtendedActivationKind.Launch => ParseArguments(args.Data.As<ILaunchActivatedEventArgs>().Arguments),
             ExtendedActivationKind.CommandLineLaunch => ParseArguments(args.Data.As<ICommandLineActivatedEventArgs>().Operation.Arguments),
-            ExtendedActivationKind.File => new InstallExtensionOptions() { PackagePath = args.Data.As<IFileActivatedEventArgs>().Files[0].Path, },
+            ExtendedActivationKind.File => new InstallPackageOptions() { PackagePath = args.Data.As<IFileActivatedEventArgs>().Files[0].Path, },
             ExtendedActivationKind.Protocol => new ActivateExtensionOptions() { Uri = args.Data.As<IProtocolActivatedEventArgs>().Uri.ToString() },
             _ => throw new InvalidOperationException()
         };
@@ -135,7 +138,7 @@ internal class AppRouter
                 .Skip(1)
                 .ToArray();
         BaseOptions? opts = null;
-        Parser.Default.ParseArguments<InstallExtensionOptions, RunExtensionOptions, ActivateExtensionOptions>(args)
+        Parser.Default.ParseArguments<InstallPackageOptions, RunPackageOptions, ActivateExtensionOptions>(args)
             .WithParsed<BaseOptions>(options => opts = options)
             .WithNotParsed(_ => throw new ArgumentException("Invalid arguments"));
         if (opts == null)

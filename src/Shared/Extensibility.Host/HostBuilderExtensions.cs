@@ -8,7 +8,6 @@ using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Implementations;
 using Raid.Toolkit.Extensibility.Interfaces;
 using Raid.Toolkit.Extensibility.Notifications;
-using Raid.Toolkit.Extensibility.Services;
 using Raid.Toolkit.Loader;
 
 namespace Raid.Toolkit.Extensibility.Host
@@ -52,10 +51,10 @@ namespace Raid.Toolkit.Extensibility.Host
 					break;
 			}
 			return services
-				.AddSingleton<ExtensionHost>()
+				.AddSingleton<ManagedPackage>()
 				.AddSingleton<IModelLoader, ModelLoader>()
 				.AddSingleton<IPackageLoader, SandboxedPackageLoader>()
-				.AddSingleton<IPackageInstanceFactory, PackageFactory>()
+				.AddSingleton<IManagedPackageFactory, ManagedPackageFactory>()
 				.AddSingleton<IServiceManager, ServiceManager>()
 				.AddSingleton<IProcessManager, ProcessManager>()
 				.AddSingleton<IWindowManager, WindowManager>()

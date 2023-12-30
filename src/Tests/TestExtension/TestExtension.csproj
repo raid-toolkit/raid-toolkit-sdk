@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<Import Project="$(BuildTargetProps)" />
+
+	<PropertyGroup>
+        <AssemblyName>TestExtension</AssemblyName>
+        <RootNamespace>TestExtension</RootNamespace>
+        <!-- https://github.com/dotnet/maui/issues/5886#issuecomment-1123106200 -->
+        <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
+        <InstallRTKExtensionAfterBuild>false</InstallRTKExtensionAfterBuild>
+		<GenerateInterop>false</GenerateInterop>
+		<Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+		<!-- Must be N-1 compatible. Using public nuget dependencies to avoid locking the built outputs by MSBuild -->
+        <PackageReference Include="Raid.Toolkit.Extensibility" Version="2.6.11" />
+        <PackageReference Include="Raid.Toolkit.Extensibility.Tasks" Version="2.6.11">
+            <PrivateAssets>none</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <RTKExtensionManifest Include="manifest.json" />
+    </ItemGroup>
+
+</Project>

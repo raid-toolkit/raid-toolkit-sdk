@@ -6,6 +6,8 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 
+using Raid.Toolkit.Extensibility.Host;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,9 +26,9 @@ namespace Raid.Toolkit.ExtensionHost;
 /// <summary>
 /// An empty window that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class MainWindow : Window
+public sealed partial class MainWindow : WindowEx
 {
-    public MainWindow()
+    public MainWindow(IPackageManager packageManager)
     {
         this.InitializeComponent();
         this.Hide();

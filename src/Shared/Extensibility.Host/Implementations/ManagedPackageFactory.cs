@@ -4,11 +4,11 @@ using Raid.Toolkit.Extensibility.Host;
 
 namespace Raid.Toolkit.Extensibility
 {
-    public class PackageFactory : IPackageInstanceFactory
+    public class ManagedPackageFactory : IManagedPackageFactory
     {
         private readonly IServiceProvider ServiceProvider;
 
-        public PackageFactory(IServiceProvider serviceProvider) => ServiceProvider = serviceProvider;
+        public ManagedPackageFactory(IServiceProvider serviceProvider) => ServiceProvider = serviceProvider;
 
         public IExtensionPackage CreateInstance(Type type)
         {

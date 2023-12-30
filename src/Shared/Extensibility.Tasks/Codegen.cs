@@ -52,6 +52,12 @@ namespace Raid.Toolkit.Extensibility.Tasks
 
             ExtensionManifest manifest = JsonConvert.DeserializeObject<ExtensionManifest>(File.ReadAllText(ManifestFiles[0]))!;
 
+			if (manifest.Codegen?.Types == null)
+			{
+				Log.LogWarning("No value supplied for Codegen.Types in extension manifest, interop generation will not be performed.");
+				return true;
+			}
+
             string cacheDir = Path.Combine(Path.GetTempPath(), "_rtkBuildCache", manifest.Id);
             _ = Directory.CreateDirectory(cacheDir);
 

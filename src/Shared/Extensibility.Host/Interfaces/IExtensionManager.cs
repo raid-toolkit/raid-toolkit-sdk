@@ -15,7 +15,7 @@ namespace Raid.Toolkit.Extensibility.Host
         Disabled,
         PendingUninstall,
     }
-    public interface IExtensionManagement : IExtensionHost
+    public interface IManagedPackage : IExtensionHost
     {
         public ExtensionState State { get; }
         public ExtensionBundle Bundle { get; }
@@ -30,7 +30,7 @@ namespace Raid.Toolkit.Extensibility.Host
     }
     public interface IExtensionManager
     {
-        bool TryGetExtension(string packageId, [NotNullWhen(true)] out IExtensionManagement? extension);
+        bool TryGetExtension(string packageId, [NotNullWhen(true)] out IManagedPackage? extension);
         Task LoadExtensions();
         void DisablePackage(string packageId);
         void EnablePackage(string packageId);

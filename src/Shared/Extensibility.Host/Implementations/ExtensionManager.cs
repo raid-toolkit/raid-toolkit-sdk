@@ -1,5 +1,4 @@
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 using Raid.Toolkit.Common;
 
@@ -17,7 +16,7 @@ namespace Raid.Toolkit.Extensibility.Host
         private readonly IServiceProvider ServiceProvider;
         private readonly IWindowManager WindowManager;
         private readonly ILogger<ExtensionManager> Logger;
-        private readonly Dictionary<string, IExtensionManagement> ExtensionPackages = new();
+        private readonly Dictionary<string, IManagedPackage> ExtensionPackages = new();
         private readonly Dictionary<Type, IDisposable> Instances = new();
         private bool IsDisposed;
 
@@ -35,12 +34,12 @@ namespace Raid.Toolkit.Extensibility.Host
         }
 
         #region IExtensionHostController
-        public IReadOnlyList<IExtensionManagement> GetExtensions()
+        public IReadOnlyList<IManagedPackage> GetExtensions()
         {
             return ExtensionPackages.Values.ToList();
         }
 
-        public bool TryGetExtension(string packageId, [NotNullWhen(true)] out IExtensionManagement? extension)
+        public bool TryGetExtension(string packageId, [NotNullWhen(true)] out IManagedPackage? extension)
         {
             if (ExtensionPackages.TryGetValue(packageId, out extension))
             {
@@ -49,7 +48,7 @@ namespace Raid.Toolkit.Extensibility.Host
             ExtensionBundle pkg = PackageManager.GetPackage(packageId);
             try
             {
-                extension = ExtensionHost.CreateHost(ServiceProvider, pkg);
+                extension = ManagedPackage.CreateHost(ServiceProvider, pkg);
                 ExtensionPackages.Add(pkg.Id, extension);
                 return true;
             }
@@ -126,23 +125,17 @@ namespace Raid.Toolkit.Extensibility.Host
 
         public void EnablePackage(string packageId)
         {
-            if (ExtensionPackages.Remove(packageId, out var pkg))
-            {
-                pkg.Activate();
-                // TODO: Persist that it should be enabled
-            }
+			throw new V3NotImpl();
+			// TODO: persist enabled status, start process
         }
 
         public void DisablePackage(string packageId)
         {
-            if (ExtensionPackages.Remove(packageId, out var pkg))
-            {
-                pkg.Deactivate();
-                // TODO: Persist that it should be disabled
-            }
-        }
+			throw new V3NotImpl();
+			// TODO: persist enabled status, stop process
+		}
 
-        public void UninstallPackage(string packageId)
+		public void UninstallPackage(string packageId)
         {
             if (ExtensionPackages.Remove(packageId, out var pkg))
             {

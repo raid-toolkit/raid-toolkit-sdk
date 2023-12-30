@@ -33,7 +33,7 @@ class Program
                 var context = new DispatcherQueueSynchronizationContext(
                     DispatcherQueue.GetForCurrentThread());
                 SynchronizationContext.SetSynchronizationContext(context);
-                App app = new();
+                App app = new(router.Options);
                 router.Activated += (_, args) => app.OnActivated(args);
                 app.OnActivated(router.Options);
             });

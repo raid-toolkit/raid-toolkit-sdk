@@ -1,0 +1,12 @@
+﻿using Raid.Toolkit.Extensibility;
+
+using System;
+
+namespace TestExtension;
+public class Extension : ExtensionPackage
+{
+	public override void OnActivate(IExtensionHost host)
+	{
+		// TODO: Initialize your extension here
+	}
+}

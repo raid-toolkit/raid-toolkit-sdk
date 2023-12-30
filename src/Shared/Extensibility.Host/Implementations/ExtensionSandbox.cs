@@ -15,7 +15,7 @@ namespace Raid.Toolkit.Extensibility.Host
     {
         private bool IsDisposed;
         private readonly ExtensionBundle Bundle;
-        private readonly IPackageInstanceFactory InstanceFactory;
+        private readonly IManagedPackageFactory InstanceFactory;
         private ExtensionLoadContext? LoadContext;
         private IExtensionPackage? Instance;
         private readonly ILogger<ExtensionSandbox> Logger;
@@ -25,7 +25,7 @@ namespace Raid.Toolkit.Extensibility.Host
 
         [ActivatorUtilitiesConstructor]
         public ExtensionSandbox(
-            IPackageInstanceFactory instanceFactory,
+            IManagedPackageFactory instanceFactory,
             ILogger<ExtensionSandbox> logger,
             ExtensionBundle bundle)
         {
