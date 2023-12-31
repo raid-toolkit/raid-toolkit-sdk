@@ -3,15 +3,7 @@ using CommandLine;
 using Microsoft.Win32.SafeHandles;
 using Microsoft.Windows.AppLifecycle;
 
-using Raid.Toolkit.Extensibility;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 using Windows.ApplicationModel.Activation;
 using Windows.Win32.Security;
@@ -37,6 +29,9 @@ public abstract class BaseOptions
 
     [Option('d', "debug", Hidden = true)]
     public bool Debug { get; set; }
+
+	[Option('p', "debug-package", Hidden = true)]
+	public string? DebugPackage { get; set; }
 }
 
 [Verb("install", HelpText = "Installs an extension package")]
@@ -62,9 +57,6 @@ class RunPackageOptions : BaseOptions
 {
     [Value(0, MetaName = "Package id", HelpText = "Id of the extension package to run")]
     public string PackageId { get; set; } = string.Empty;
-
-	[Option('p', "debug-package", Hidden = true)]
-	public string? DebugPackage { get; set; }
 
 	public override string GetPackageId()
     {

@@ -65,12 +65,26 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <None Remove="AboutUI.xaml" />
 	  <None Remove="MainPage.xaml" />
 	  <None Remove="ProgressUI.xaml" />
+	  <None Remove="UI\InstallationInfoUI.xaml" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <Resource Remove="MainPage.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Update="UI\InstallationInfoUI.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Page Update="AboutUI.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 
 	<ItemGroup>

@@ -9,10 +9,19 @@
                 "DEBUG_PACKAGE_DIR": "$(ProjectDir)$(OutDir)"
             }
         },
-        "Install with Worker": {
+        "Debug Install via Worker": {
             "commandName": "Executable",
             "executablePath": "$(SourceDir)\\Application\\Raid.Toolkit.ExtensionHost\\$(OutDir)\\Raid.Toolkit.ExtensionHost.exe",
             "commandLineArgs": "install $(ProjectDir)$(OutDir)\\TestExtension.rtkx --quiet",
+            "workingDirectory": "$(SourceDir)\\Application\\Raid.Toolkit\\$(OutDir)\\",
+            "environmentVariables": {
+                "DEBUG_PACKAGE_DIR": "$(ProjectDir)$(OutDir)"
+            }
+        },
+        "Debug Activation via Worker": {
+            "commandName": "Executable",
+            "executablePath": "$(SourceDir)\\Application\\Raid.Toolkit.ExtensionHost\\$(OutDir)\\Raid.Toolkit.ExtensionHost.exe",
+            "commandLineArgs": "activate rtk://extension/TestExtension/test-activation",
             "workingDirectory": "$(SourceDir)\\Application\\Raid.Toolkit\\$(OutDir)\\",
             "environmentVariables": {
                 "DEBUG_PACKAGE_DIR": "$(ProjectDir)$(OutDir)"

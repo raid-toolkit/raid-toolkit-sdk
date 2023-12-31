@@ -19,6 +19,9 @@
 			<controls:Case Value="Progress">
 				<local:ProgressUI Model="{x:Bind Model, Mode=OneWay}" />
 			</controls:Case>
+			<controls:Case Value="About">
+				<local:ProgressUI Model="{x:Bind Model, Mode=OneWay}" />
+			</controls:Case>
 		</controls:SwitchPresenter>
 	</Grid>
 </Page>

@@ -20,7 +20,7 @@ public class PackageManager : IPackageManager
 	private readonly ILogger<PackageManager> Logger;
 	private bool IsLoaded = false;
 
-	public static string? DebugPackage { get; set; }
+	public string? DebugPackage { get; set; }
 
 	public event EventHandler<PackageModifiedEventArgs>? PackageUpdated;
 

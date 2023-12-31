@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<winui:WindowEx
+    x:Class="Raid.Toolkit.ExtensionHost.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Raid.Toolkit.ExtensionHost"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:winui="using:WinUIEx"
+    mc:Ignorable="d"
+	MinHeight="200"
+	MinWidth="400">
+	<local:MainPage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+</winui:WindowEx>

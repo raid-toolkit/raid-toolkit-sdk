@@ -22,6 +22,7 @@ namespace Raid.Toolkit.Extensibility.Host
 	public interface IPackageManager
 	{
 		public event EventHandler<PackageModifiedEventArgs>? PackageUpdated;
+		public string? DebugPackage { get; set; }
 		public IEnumerable<ExtensionBundle> GetAllPackages();
 		public ExtensionBundle GetPackage(string packageId);
 		public ExtensionBundle? InstallPackage(ExtensionBundle package);

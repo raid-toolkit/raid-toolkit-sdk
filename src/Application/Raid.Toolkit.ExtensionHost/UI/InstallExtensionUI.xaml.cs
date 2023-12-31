@@ -25,6 +25,7 @@ public sealed partial class InstallExtensionUI : UserControl
 	private void TrustButton_Click(object _, Microsoft.UI.Xaml.RoutedEventArgs e)
 	{
 		InstallButton.IsEnabled = true;
+		Model.ReduceWindowHeight(SecurityWarningBar.ActualHeight);
 		SecurityWarningBar.IsOpen = false;
 	}
 

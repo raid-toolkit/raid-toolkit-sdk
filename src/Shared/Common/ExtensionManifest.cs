@@ -34,6 +34,9 @@ public class ExtensionManifest
 	[JsonProperty("description")]
 	public string Description { get; set; }
 
+	[JsonProperty("author")]
+	public string? Author { get; set; }
+
 	[JsonProperty("codegen")]
 	public ExtensionManifestCodegen? Codegen { get; set; }
 
