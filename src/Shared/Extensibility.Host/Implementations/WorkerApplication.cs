@@ -2,31 +2,38 @@ using Microsoft.Extensions.Hosting;
 
 using Raid.Toolkit.Extensibility.Interfaces;
 using Raid.Toolkit.Common.API;
-using Raid.Toolkit.Common.API.Messages;
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Raid.Toolkit.IPC;
+using Microsoft.Extensions.Logging;
 
 namespace Raid.Toolkit.Extensibility.Implementations;
 
 public class WorkerApplication : IWorkerApplication, IHostedService
 {
-	private static readonly ApiMessageSerializer Serializer = new();
+	private readonly ILogger Logger;
 	public IPCApiClient Client { get; }
 
-	public WorkerApplication()
+	public WorkerApplication(ILogger<IHostedService> logger)
 	{
 		Client = new(Constants.IPCPipeName);
+		Logger = logger;
 	}
 
 	public async Task StartAsync(CancellationToken cancellationToken)
 	{
-		await Client.ConnectAsync(cancellationToken);
+		CancellationTokenSource timedCancellation = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+		timedCancellation.CancelAfter(5000);
+		try
+		{
+			await Client.ConnectAsync(timedCancellation.Token);
+		}
+		catch (OperationCanceledException ex)
+		{
+			Logger.LogError(ex, "Timed out connecting to main process");
+			throw;
+		}
 	}
 
 	public Task StopAsync(CancellationToken cancellationToken)

@@ -3,13 +3,14 @@ using System;
 using System.IO;
 using System.Reflection;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Raid.Toolkit.Extensibility;
 
-public class ExtensionManifest
+public class PackageManifest
 {
 	[EditorBrowsable(EditorBrowsableState.Never), Obsolete("Exists for serialization only")]
-	public ExtensionManifest()
+	public PackageManifest()
 	{
 		Id = string.Empty;
 		Type = string.Empty;
@@ -43,16 +44,43 @@ public class ExtensionManifest
 	[JsonProperty("requireVersion")]
 	public string RequireVersion { get; set; }
 
-	public static ExtensionManifest FromAssembly(Assembly asm)
+	[JsonProperty("contributes")]
+	public List<ContributionBase>? Contributions;
+
+	public static PackageManifest FromAssembly(Assembly asm)
 	{
 		JsonSerializer serializer = new();
 		using Stream stream = asm.GetManifestResourceStream("PackageManifest") ?? throw new FileNotFoundException("PackageManifest");
 		using StreamReader reader = new(stream);
 		using JsonTextReader textReader = new(reader);
 		{
-			return serializer.Deserialize<ExtensionManifest>(textReader)!;
+			return serializer.Deserialize<PackageManifest>(textReader)!;
 		}
 	}
+}
+
+public class ContributionBase { }
+
+public class MenuContribution : ContributionBase
+{
+	[EditorBrowsable(EditorBrowsableState.Never), Obsolete("Exists for serialization only")]
+	public MenuContribution()
+	{
+		Name = string.Empty;
+		DisplayName = string.Empty;
+	}
+
+	public MenuContribution(string name, string displayName)
+	{
+		Name = name;
+		DisplayName = displayName;
+	}
+
+	[JsonProperty("name")]
+	public string Name { get; }
+
+	[JsonProperty("displayName")]
+	public string DisplayName { get; }
 }
 
 public class ExtensionManifestCodegen

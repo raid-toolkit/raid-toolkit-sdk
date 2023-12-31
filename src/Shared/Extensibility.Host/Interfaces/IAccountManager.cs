@@ -23,6 +23,6 @@ public interface IAccountManager
     bool TryGetAccount(string accountId, [NotNullWhen(true)] out IAccount? account);
     string ExportAccountData(string accountId);
     void ImportAccountData(string accountData);
-    void RegisterAccountExtension<T>(ExtensionManifest manifest, T factory) where T : IAccountExtensionFactory;
-    void UnregisterAccountExtension<T>(ExtensionManifest manifest, T factory) where T : IAccountExtensionFactory;
+    void RegisterAccountExtension<T>(PackageManifest manifest, T factory) where T : IAccountExtensionFactory;
+    void UnregisterAccountExtension<T>(PackageManifest manifest, T factory) where T : IAccountExtensionFactory;
 }

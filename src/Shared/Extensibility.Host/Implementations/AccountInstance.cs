@@ -23,7 +23,7 @@ namespace Raid.Toolkit.Extensibility.Host
 		private readonly IAccount Account;
 		private readonly ILogger Logger;
 		public IAccountExtension Extension => ExtensionValue.Value;
-		public ExtensionManifest Owner => ExtensionValue.Manifest;
+		public PackageManifest Owner => ExtensionValue.Manifest;
 		private readonly string ExtensionTypeName;
 
 		private Task? CurrentTick;
@@ -224,7 +224,7 @@ namespace Raid.Toolkit.Extensibility.Host
 			}
 		}
 
-		public void AddExtension(ExtensionManifest manifest, IAccountExtensionFactory factory)
+		public void AddExtension(PackageManifest manifest, IAccountExtensionFactory factory)
 		{
 			IAccountExtension extension = factory.Create(this);
 			lock (_syncRoot)

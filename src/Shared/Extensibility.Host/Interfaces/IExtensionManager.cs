@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -27,6 +26,7 @@ namespace Raid.Toolkit.Extensibility.Host
         public void Uninstall();
         public void ShowUI();
         public int HandleRequest(Uri requestUri);
+		public void SaveManifest(PackageManifest manifest);
     }
     public interface IExtensionManager
     {

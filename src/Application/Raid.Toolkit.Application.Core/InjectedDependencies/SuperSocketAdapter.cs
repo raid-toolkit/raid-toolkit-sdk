@@ -14,10 +14,11 @@ namespace Raid.Toolkit.Application.Core.DependencyInjection
         public string Id => Session.SessionID;
         public bool Connected => Session.State == SuperSocket.SessionState.Connected;
 
-        public async Task SendAsync(SocketMessage message)
+        public async Task SendAsync(SocketMessage message, CancellationToken token = default)
         {
             try
             {
+				// TODO: Use token
                 await Session.SendAsync(JsonConvert.SerializeObject(message));
             }
             catch (Exception)

@@ -50,7 +50,7 @@ namespace Raid.Toolkit.Extensibility.Tasks
                 return false;
             }
 
-            ExtensionManifest manifest = JsonConvert.DeserializeObject<ExtensionManifest>(File.ReadAllText(ManifestFiles[0]))!;
+            PackageManifest manifest = JsonConvert.DeserializeObject<PackageManifest>(File.ReadAllText(ManifestFiles[0]))!;
 
 			if (manifest.Codegen?.Types == null)
 			{

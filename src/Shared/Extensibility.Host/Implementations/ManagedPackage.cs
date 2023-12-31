@@ -274,6 +274,11 @@ namespace Raid.Toolkit.Extensibility.Host
 			return new HostResourceHandle(() => MenuManager.RemoveEntry(entry));
 		}
 
+		public void SaveManifest(PackageManifest manifest)
+		{
+			// throw new V3NotImpl();
+		}
+
 		protected virtual void Dispose(bool disposing)
 		{
 			if (!IsDisposed)
@@ -293,6 +298,7 @@ namespace Raid.Toolkit.Extensibility.Host
 			Dispose(disposing: true);
 			GC.SuppressFinalize(this);
 		}
+
 		#endregion
 	}
 }

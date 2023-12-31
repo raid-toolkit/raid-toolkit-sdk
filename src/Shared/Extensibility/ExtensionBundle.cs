@@ -9,13 +9,13 @@ namespace Raid.Toolkit.Extensibility
     public sealed class ExtensionBundle
     {
         public Assembly? Assembly { get; private set; }
-        public ExtensionManifest Manifest { get; }
+        public PackageManifest Manifest { get; }
         public string? Location { get; private set; }
         public string? BundleLocation { get; private set; }
         public string Id => Manifest.Id;
         public bool IsLinkedAssembly { get; private set; }
 
-        public ExtensionBundle(ExtensionManifest manifest)
+        public ExtensionBundle(PackageManifest manifest)
         {
             Manifest = manifest;
         }
@@ -62,7 +62,7 @@ namespace Raid.Toolkit.Extensibility
 
         public static ExtensionBundle FromAssembly(Assembly assembly)
         {
-            ExtensionManifest manifest = ExtensionManifest.FromAssembly(assembly);
+            PackageManifest manifest = PackageManifest.FromAssembly(assembly);
             return new(manifest)
             {
                 Assembly = assembly,
@@ -76,7 +76,7 @@ namespace Raid.Toolkit.Extensibility
             ZipArchiveEntry? manifestEntry = arch.GetEntry(Constants.ExtensionManifestFileName)
 				?? throw new ApplicationException($"Extension package '{filename}' does not contain a valid manifest");
 			using Stream manifestStream = manifestEntry.Open();
-            ExtensionManifest manifest = ReadManifest(manifestStream);
+            PackageManifest manifest = ReadManifest(manifestStream);
             return new(manifest)
             {
                 Location = Path.GetDirectoryName(filename),
@@ -92,19 +92,19 @@ namespace Raid.Toolkit.Extensibility
                 throw new ApplicationException($"Extension package '{dirname}' does not contain a valid manifest");
             }
             using Stream manifestStream = File.OpenRead(manifestFile);
-            ExtensionManifest manifest = ReadManifest(manifestStream);
+            PackageManifest manifest = ReadManifest(manifestStream);
             return new(manifest)
             {
                 Location = dirname
             };
         }
 
-        private static ExtensionManifest ReadManifest(Stream manifestStream)
+        private static PackageManifest ReadManifest(Stream manifestStream)
         {
             JsonSerializer serializer = new();
             using StreamReader reader = new(manifestStream);
             using JsonTextReader textReader = new(reader);
-            ExtensionManifest? manifest = serializer.Deserialize<ExtensionManifest>(textReader)
+            PackageManifest? manifest = serializer.Deserialize<PackageManifest>(textReader)
 				?? throw new ApplicationException("Could not deserialize ExtensionManifest");
 			return manifest;
         }

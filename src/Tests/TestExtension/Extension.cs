@@ -1,4 +1,4 @@
-﻿using Raid.Toolkit.Extensibility;
+using Raid.Toolkit.Extensibility;
 
 using System;
 
@@ -7,6 +7,6 @@ public class Extension : ExtensionPackage
 {
 	public override void OnActivate(IExtensionHost host)
 	{
-		// TODO: Initialize your extension here
+		host.RegisterMenuEntry(new MenuEntry() { DisplayName = "Foo" });
 	}
 }

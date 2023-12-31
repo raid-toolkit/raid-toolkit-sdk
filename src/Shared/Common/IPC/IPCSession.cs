@@ -1,3 +1,5 @@
+using Raid.Toolkit.Common.API;
+
 using System;
 using System.IO.Pipes;
 using System.Threading;
@@ -13,7 +15,7 @@ public interface IPipeSession<T> : IDisposable
 	Task SendAsync(T message, CancellationToken cancellationToken = default);
 }
 
-public class IPCSession<T> : IPipeSession<T>
+public class IPCSession<T> : IPipeSession<T>, IApiSession<T>
 {
 	protected PipeStream Pipe;
 	protected readonly IPCMessageSerializer<T> Serializer;
@@ -21,12 +23,15 @@ public class IPCSession<T> : IPipeSession<T>
 	protected bool IsDisposed;
 
 	public bool IsConnected => Pipe.IsConnected;
+	public string Id { get; }
+	public bool Connected => IsConnected;
 
 	public event EventHandler<T>? MessageReceived;
 	public event EventHandler? Closed;
 
 	public IPCSession(PipeStream pipe, IPCMessageSerializer<T> serializer)
 	{
+		Id = Guid.NewGuid().ToString("n");
 		Pipe = pipe;
 		Serializer = serializer;
 	}
@@ -78,4 +83,5 @@ public class IPCSession<T> : IPipeSession<T>
 		Dispose(disposing: true);
 		GC.SuppressFinalize(this);
 	}
+
 }

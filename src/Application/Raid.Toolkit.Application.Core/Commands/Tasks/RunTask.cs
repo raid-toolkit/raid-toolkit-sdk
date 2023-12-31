@@ -86,11 +86,11 @@ namespace Raid.Toolkit.Application.Core.Commands.Tasks
             {
                 Options.DebugPackage = Environment.GetEnvironmentVariable("DEBUG_PACKAGE_DIR") ?? ".";
             }
-            PackageManager.DebugPackage = Options.DebugPackage;
-            if (!string.IsNullOrEmpty(PackageManager.DebugPackage))
-            {
-                Options.Debug = CommonOptions.Value.Debug = true;
-            }
+            //PackageManager.DebugPackage = Options.DebugPackage;
+            //if (!string.IsNullOrEmpty(PackageManager.DebugPackage))
+            //{
+            //    Options.Debug = CommonOptions.Value.Debug = true;
+            //}
         }
     }
 }

@@ -1,5 +1,3 @@
-using Raid.Toolkit.Extensibility.Implementations;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,18 +6,16 @@ namespace Raid.Toolkit.Extensibility.Host
 {
 	public abstract class MenuManager : IMenuManager
 	{
-		protected readonly Dictionary<IMenuEntry, string> Entries = new();
+		protected readonly List<IMenuEntry> Entries = new();
 
-		public virtual string AddEntry(IMenuEntry entry)
+		public virtual void AddEntry(IMenuEntry entry)
 		{
-			string id = Guid.NewGuid().ToString("n");
-			Entries.Add(entry, id);
-			return id;
+			Entries.Add(entry);
 		}
 
 		public IMenuEntry[] GetEntries()
 		{
-			return Entries.Keys.ToArray();
+			return Entries.ToArray();
 		}
 
 		public virtual void RemoveEntry(IMenuEntry entry)

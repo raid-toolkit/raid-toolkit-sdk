@@ -43,11 +43,11 @@ namespace Raid.Toolkit.Extensibility.Host
 			{
 				case ServiceMode.Server:
 					services.AddHostedServiceSingleton<IServerApplication, ServerApplication>()
-						.AddSingleton<IMenuManager, ServerMenuManager>();
+						.AddSingleton<IMenuManager, MenuManager>();
 					break;
 				case ServiceMode.Worker:
 					services.AddHostedServiceSingleton<IWorkerApplication, WorkerApplication>()
-						.AddSingleton<IMenuManager, ClientMenuManager>();
+						.AddSingleton<IMenuManager, MenuManager>();
 					break;
 			}
 			return services

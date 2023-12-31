@@ -12,7 +12,7 @@ namespace Raid.Toolkit.Extensibility
 
         public static PackageDescriptor FromAssembly(Assembly assembly)
         {
-            ExtensionManifest manifest = ExtensionManifest.FromAssembly(assembly);
+            PackageManifest manifest = PackageManifest.FromAssembly(assembly);
             return new(manifest.Id, manifest.DisplayName, manifest.Description, assembly);
         }
 

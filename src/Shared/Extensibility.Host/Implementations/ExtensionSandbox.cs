@@ -16,12 +16,12 @@ namespace Raid.Toolkit.Extensibility.Host
         private bool IsDisposed;
         private readonly ExtensionBundle Bundle;
         private readonly IManagedPackageFactory InstanceFactory;
+        private readonly ILogger<ExtensionSandbox> Logger;
         private ExtensionLoadContext? LoadContext;
         private IExtensionPackage? Instance;
-        private readonly ILogger<ExtensionSandbox> Logger;
         private IExtensionAssembly? ExtensionAsm;
 
-        public ExtensionManifest Manifest => Bundle.Manifest;
+        public PackageManifest Manifest => Bundle.Manifest;
 
         [ActivatorUtilitiesConstructor]
         public ExtensionSandbox(

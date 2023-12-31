@@ -8,13 +8,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 
-using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility.Host.Utils;
+using Raid.Toolkit.Extensibility.Implementations;
 using Raid.Toolkit.Extensibility.Interfaces;
 using Raid.Toolkit.ExtensionHost.ViewModel;
 using Raid.Toolkit.Loader;
-
-using WinUIEx;
 
 namespace Raid.Toolkit.ExtensionHost;
 
@@ -44,19 +42,25 @@ public partial class App : Application
 				.ConfigureServices((context, services) => services.AddLogging(builder => builder.AddFile()));
 		}
 
+		if (initialOptions.Standalone)
+			hostBuilder.ConfigureServices((context, services) => services
+				.AddHostedServiceSingleton<IServerApplication, ServerApplication>());
+
 		// logging
 		hostBuilder
 			.ConfigureLogging((_) => GetLoggerOptions(initialOptions))
 			.ConfigureServices((context, services) => services
 				.AddLogging(builder => builder.AddFile())
 				.Configure<ModelLoaderOptions>(config => config.ForceRebuild = initialOptions.ForceRebuild)
+				.AddHostedServiceSingleton<IWorkerApplication, WorkerApplication>()
 				.AddSingleton<IPackageManager, PackageManager>()
 				.AddSingleton<IAppDispatcher, AppDispatcher>()
 				.AddScoped<IModelLoader, ModelLoader>()
 				.AddScoped<IMenuManager, ClientMenuManager>()
-				.AddScoped<IWindowManager, Extensibility.Host.WindowManager>()
+				.AddScoped<IWindowManager, WindowManager>()
 				.AddScoped<IManagedPackageFactory, ManagedPackageFactory>() // creates a scope for each IExtensionManagement
 				.AddScoped<IPackageLoader, SandboxedPackageLoader>()
+				.AddScoped<IExtensionHostChannel, ExtensionHostChannelClient>()
 				.AddScoped(sp => CreateExtensionManagementScope(sp, initialOptions.GetPackageId()))
 			);
 		Host = hostBuilder.Build();
@@ -77,7 +81,7 @@ public partial class App : Application
 	{
 		IPackageManager packageManager = provider.GetRequiredService<IPackageManager>();
 		ExtensionBundle package = packageManager.GetPackage(packageId);
-		return ActivatorUtilities.CreateInstance<Extensibility.Host.ManagedPackage>(provider, package);
+		return ActivatorUtilities.CreateInstance<ManagedPackage>(provider, package);
 	}
 
 	private static FileLoggerOptions GetLoggerOptions(BaseOptions options)

@@ -2,9 +2,9 @@
 {
     internal class ExtensionOwnedValue<T>
     {
-        public ExtensionManifest Manifest;
+        public PackageManifest Manifest;
         public T Value;
-        public ExtensionOwnedValue(ExtensionManifest manifest, T value)
+        public ExtensionOwnedValue(PackageManifest manifest, T value)
         {
             Manifest = manifest;
             Value = value;

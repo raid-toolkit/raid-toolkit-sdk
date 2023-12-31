@@ -27,8 +27,11 @@ public abstract class BaseOptions
     [Option("force-rebuild")]
     public bool ForceRebuild { get; set; }
 
-    [Option('d', "debug", Hidden = true)]
-    public bool Debug { get; set; }
+	[Option('d', "debug", Hidden = true)]
+	public bool Debug { get; set; }
+
+	[Option('s', "standalone", Hidden = true)]
+	public bool Standalone { get; set; }
 
 	[Option('p', "debug-package", Hidden = true)]
 	public string? DebugPackage { get; set; }
@@ -73,10 +76,13 @@ class ActivateExtensionOptions : BaseOptions
     [Value(1, MetaName = "Arguments", HelpText = "Additional arguments")]
     public IEnumerable<string> Arguments { get; set; } = Array.Empty<string>();
 
+
     public override string GetPackageId()
     {
         Uri activationUri = new(Uri);
-        string packageId = activationUri.LocalPath.TrimStart('/').Split('/')[0];
+		if (activationUri.Host != "extension")
+			throw new ArgumentOutOfRangeException(nameof(activationUri));
+		string packageId = activationUri.LocalPath.TrimStart('/').Split('/')[0];
         return packageId;
     }
 }

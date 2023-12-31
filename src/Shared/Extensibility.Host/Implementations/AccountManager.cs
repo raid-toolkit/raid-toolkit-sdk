@@ -163,7 +163,7 @@ namespace Raid.Toolkit.Extensibility.Host
 			return Task.CompletedTask;
 		}
 
-		public void RegisterAccountExtension<T>(ExtensionManifest manifest, T factory) where T : IAccountExtensionFactory
+		public void RegisterAccountExtension<T>(PackageManifest manifest, T factory) where T : IAccountExtensionFactory
 		{
 			lock (_syncRoot)
 			{
@@ -175,7 +175,7 @@ namespace Raid.Toolkit.Extensibility.Host
 			}
 		}
 
-		public void UnregisterAccountExtension<T>(ExtensionManifest manifest, T factory) where T : IAccountExtensionFactory
+		public void UnregisterAccountExtension<T>(PackageManifest manifest, T factory) where T : IAccountExtensionFactory
 		{
 			lock (_syncRoot)
 			{
