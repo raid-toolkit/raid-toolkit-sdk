@@ -7,10 +7,10 @@ namespace Raid.Toolkit.Extensibility.Utilities;
 
 public class AsyncObservableList<T> : ObservableCollection<T>
 {
-    private readonly IAppUI AppUI;
-    public AsyncObservableList(IAppUI appUI)
+    private readonly IAppDispatcher Dispatcher;
+    public AsyncObservableList(IAppDispatcher dispatcher)
     {
-        AppUI = appUI;
+        Dispatcher = dispatcher;
     }
     private readonly object _syncRoot = new();
     private ConcurrentQueue<NotifyCollectionChangedEventArgs>? eventQueue;
@@ -24,7 +24,7 @@ public class AsyncObservableList<T> : ObservableCollection<T>
             {
                 ConcurrentQueue<NotifyCollectionChangedEventArgs> newQueue = new();
                 newQueue.Enqueue(eventArgs);
-                AppUI.Dispatch(() =>
+                Dispatcher.Dispatch(() =>
                 {
                     lock (_syncRoot)
                     {
@@ -49,7 +49,7 @@ public class AsyncObservableList<T> : ObservableCollection<T>
             if (dirtyKeys == null)
             {
                 ConcurrentBag<string> newBag = new() { propertyName };
-                AppUI.Dispatch(() =>
+                Dispatcher.Dispatch(() =>
                 {
                     lock (_syncRoot)
                     {

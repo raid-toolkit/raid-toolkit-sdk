@@ -10,8 +10,5 @@
     mc:Ignorable="d"
 	MinHeight="400"
 	Height="400" Width="475">
-
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Button x:Name="myButton" Click="myButton_Click">Click Me</Button>
-    </StackPanel>
+	<local:MainPage HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
 </winui:WindowEx>

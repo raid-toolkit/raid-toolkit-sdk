@@ -6,7 +6,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 
-using Raid.Toolkit.Extensibility.Host;
+using Raid.Toolkit.ExtensionHost.ViewModel;
 
 using System;
 using System.Collections.Generic;
@@ -17,21 +17,27 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
-using WinUIEx;
-
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace Raid.Toolkit.ExtensionHost;
 /// <summary>
-/// An empty window that can be used on its own or navigated to within a Frame.
+/// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class MainWindow : WindowEx
+public sealed partial class MainPage : Page
 {
-    public MainWindow(IPackageManager packageManager)
-    {
-        this.InitializeComponent();
-		this.CenterOnScreen();
-        this.Hide();
-    }
+	public MainPage()
+	{
+		this.InitializeComponent();
+		Model = App.Current.Model;
+	}
+
+	public ExtensionHostModel Model
+	{
+		get { return (ExtensionHostModel)GetValue(ModelProperty); }
+		set { SetValue(ModelProperty, value); }
+	}
+
+	public static readonly DependencyProperty ModelProperty =
+		DependencyProperty.Register(nameof(Model), typeof(ExtensionHostModel), typeof(MainPage), new PropertyMetadata(default(ExtensionHostModel)));
 }

@@ -1953,6 +1953,10 @@
         "type": "Project",
         "dependencies": {
           "CommandLineParser": "[2.9.1, )",
+          "CommunityToolkit.Common": "[8.2.1, )",
+          "CommunityToolkit.WinUI": "[7.1.2, )",
+          "CommunityToolkit.WinUI.UI": "[7.1.2, )",
+          "CommunityToolkit.WinUI.UI.Controls": "[7.1.2, )",
           "Il2CppToolkit.Injection.Client": "[2.0.140-alpha, )",
           "Karambolo.Extensions.Logging.File": "[3.5.0, )",
           "Microsoft.Extensions.Hosting": "[6.0.1, )",
