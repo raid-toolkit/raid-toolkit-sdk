@@ -6,8 +6,6 @@ using System.Runtime.InteropServices;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 
-using Raid.Toolkit.Application.Core.Commands;
-using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.UI.WinUI.Base;
@@ -85,7 +83,7 @@ namespace Raid.Toolkit.UI.WinUI
 			ContentElements.Add(LoadProgressGrid);
 			ContentElements.Add(LinksGrid);
 
-			if (!CommonOptions.Value.Embedding && !CommonOptions.Value.NoLogo)
+			if (!RTKApplication.Current.Options.Embedding && !RTKApplication.Current.Options.NoLogo)
 			{
 				Activate();
 				BringToFront();

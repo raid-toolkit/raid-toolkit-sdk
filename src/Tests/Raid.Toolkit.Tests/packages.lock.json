@@ -1870,27 +1870,12 @@
           "Karambolo.Extensions.Logging.File": "[3.5.0, )",
           "Microsoft.Extensions.Hosting": "[6.0.1, )",
           "Microsoft.Windows.SDK.BuildTools": "[10.0.25267-preview, )",
-          "Microsoft.WindowsAppSDK": "[1.4.230822000, )",
+          "Microsoft.WindowsAppSDK": "[1.4.231115000, )",
           "Newtonsoft.Json": "[13.0.3, )",
-          "Raid.Toolkit.Application.Core": "[1.0.0, )",
           "Raid.Toolkit.Extensibility": "[1.0.0, )",
           "Raid.Toolkit.Extensibility.Host": "[1.0.0, )",
           "SuperSocket.WebSocket.Server": "[2.0.0-beta.10, )",
           "WinUIEx": "[2.3.3, )"
-        }
-      },
-      "raid.toolkit.application.core": {
-        "type": "Project",
-        "dependencies": {
-          "CommandLineParser": "[2.9.1, )",
-          "CustomExtensions.WinUI": "[0.1.10-beta, )",
-          "Il2CppToolkit.Injection.Client": "[2.0.140-alpha, )",
-          "Karambolo.Extensions.Logging.File": "[3.5.0, )",
-          "Microsoft.Extensions.Hosting": "[6.0.1, )",
-          "Newtonsoft.Json": "[13.0.3, )",
-          "Raid.Toolkit.Extensibility": "[1.0.0, )",
-          "Raid.Toolkit.Extensibility.Host": "[1.0.0, )",
-          "SuperSocket.WebSocket.Server": "[2.0.0-beta.10, )"
         }
       },
       "Raid.Toolkit.Common": {

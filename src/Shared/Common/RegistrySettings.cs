@@ -34,12 +34,14 @@ public static class RegistrySettings
     public const string Protocol = "rtk";
     public const string StartupHive = @"SOFTWARE\Microsoft\Windows\CurrentVersion\Run";
     public const string ExecutableName = "Raid.Toolkit.exe";
+    public const string WorkerExecutableName = "Raid.Toolkit.ExtensionHost.exe";
     public const string BinDir = "bin";
 
     public static readonly string DefaultRepository = "raid-toolkit/raid-toolkit-sdk";
     public static readonly string DefaultInstallationPath;
     public static readonly uint DefaultActivationPort = 9998;
     public static string InstalledExecutablePath => Path.Combine(InstallationPath, BinDir, ExecutableName);
+    public static string InstalledWorkerExecutablePath => Path.Combine(InstallationPath, BinDir, WorkerExecutableName);
 
     public static bool IsFlagEnabled(FeatureFlags flag, bool defaultValue = false)
     {

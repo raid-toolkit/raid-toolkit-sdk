@@ -1,42 +1,59 @@
-using CustomExtensions.WinUI;
-
+using System;
 using Karambolo.Extensions.Logging.File;
-
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
-
 using Raid.Toolkit.Extensibility.Host.Utils;
 using Raid.Toolkit.Extensibility.Implementations;
 using Raid.Toolkit.Extensibility.Interfaces;
-using Raid.Toolkit.ExtensionHost.ViewModel;
 using Raid.Toolkit.Loader;
+using Raid.Toolkit.Model;
+using Raid.Toolkit.UI.WinUI;
 
-namespace Raid.Toolkit.ExtensionHost;
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
+
+namespace Raid.Toolkit;
 
 /// <summary>
 /// Provides application-specific behavior to supplement the default Application class.
 /// </summary>
-public partial class App : Application
+partial class RTKApplication : Application
 {
 	private const string LogDir = "Logs";
+	public static readonly string ExecutablePath;
+	public static readonly string ExecutableName = "Raid.Toolkit.exe";
+	public static readonly string WorkerExecutableName = "Raid.Toolkit.ExtensionHost.exe";
+	public static readonly string ExecutableDirectory;
+	public static string LogsDirectory => Path.Combine(RegistrySettings.InstallationPath, LogDir);
 
-	public static new App Current => Application.Current as App ?? throw new NullReferenceException();
-
-	public ExtensionHostModel Model { get; }
-	public IHost Host { get; }
-
-	public App(BaseOptions initialOptions)
+	static RTKApplication()
 	{
-		this.InitializeComponent();
-		ApplicationExtensionHost.Initialize(this);
-		Host = BuildHost(initialOptions);
-		Model = new(initialOptions, Host.Services);
+		ExecutablePath = Environment.ProcessPath!;
+		ExecutableDirectory = Path.GetDirectoryName(ExecutablePath)!;
 	}
 
-	private IHost BuildHost(BaseOptions initialOptions)
+	public IHost Host { get; }
+	public ApplicationModel Model { get; }
+	public StartupOptions Options { get; }
+
+	public static new RTKApplication Current => Application.Current as RTKApplication ?? throw new NullReferenceException();
+
+	/// <summary>
+	/// Initializes the singleton application object.  This is the first line of authored code
+	/// executed, and as such is the logical equivalent of main() or WinMain().
+	/// </summary>
+	public RTKApplication(StartupOptions options)
+	{
+		this.InitializeComponent();
+		Options = options;
+		Host = BuildHost(options);
+		Model = new ApplicationModel(options, Host.Services);
+	}
+
+	private IHost BuildHost(StartupOptions initialOptions)
 	{
 		HostBuilder hostBuilder = new();
 
@@ -57,51 +74,43 @@ public partial class App : Application
 			.ConfigureServices((context, services) => services
 				.AddLogging(builder => builder.AddFile())
 				.Configure<ModelLoaderOptions>(config => config.ForceRebuild = initialOptions.ForceRebuild)
-				.AddHostedServiceSingleton<IWorkerApplication, WorkerApplication>()
+				.AddHostedServiceSingleton<IServerApplication, ServerApplication>()
 				.AddSingleton<IPackageManager, PackageManager>()
 				.AddSingleton<IAppDispatcher, AppDispatcher>()
-				.AddScoped<IModelLoader, ModelLoader>()
-				.AddScoped<IMenuManager, ClientMenuManager>()
-				.AddScoped<IWindowManager, WindowManager>()
-				.AddScoped<IManagedPackageFactory, ManagedPackageFactory>() // creates a scope for each IExtensionManagement
-				.AddScoped<IPackageLoader, SandboxedPackageLoader>()
-				.AddScoped<IExtensionHostChannel, ExtensionHostChannelClient>()
-				.AddScoped(sp => CreateExtensionManagementScope(sp, initialOptions.GetPackageId()))
+				.AddSingleton<IModelLoader, ModelLoader>()
+				.AddSingleton<IMenuManager, MenuManager>()
+				.AddSingleton<IPackageWorkerManager, PackageWorkerManager>()
+				.AddSingleton<IExtensionHostChannel, ExtensionHostChannelServer>()
+				.AddSingleton<IAppUI, AppWinUI>()
 			);
 		return hostBuilder.Build();
 	}
 
-	protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+
+	protected override void OnLaunched(LaunchActivatedEventArgs args)
 	{
+		Host.Start();
 		Model.OnLaunched();
 	}
 
-	internal void OnActivated(BaseOptions options)
+	internal void OnActivated(StartupOptions options)
 	{
 		Model.OnActivated(options);
 	}
 
-	private static IManagedPackage CreateExtensionManagementScope(IServiceProvider provider, string packageId)
-	{
-		IPackageManager packageManager = provider.GetRequiredService<IPackageManager>();
-		ExtensionBundle package = packageManager.GetPackage(packageId);
-		return ActivatorUtilities.CreateInstance<ManagedPackage>(provider, package);
-	}
-
-	private static FileLoggerOptions GetLoggerOptions(BaseOptions options)
+	private static FileLoggerOptions GetLoggerOptions(StartupOptions options)
 	{
 		if (!Directory.Exists(RegistrySettings.InstallationPath))
 		{
 			return new();
 		}
-		string logDir = Path.Combine(RegistrySettings.InstallationPath, LogDir);
-		DirectoryInfo dir = Directory.CreateDirectory(logDir);
+		DirectoryInfo dir = Directory.CreateDirectory(LogsDirectory);
 
 		IEnumerable<FileInfo> existingFiles = dir.GetFiles().Where(file => file.CreationTimeUtc < DateTime.UtcNow.AddDays(-2));
 		foreach (FileInfo file in existingFiles)
 			file.Delete();
 
-		string logFileNameFormat = $"Extension.{options.GetPackageId()}.<date:yyyyMMdd>-<counter>.log";
+		string logFileNameFormat = $"Raid.Toolkit.<date:yyyyMMdd>-<counter>.log";
 
 		PhysicalFileProvider fileProvider = new(RegistrySettings.InstallationPath);
 		FileLoggerOptions loggerOptions = new()

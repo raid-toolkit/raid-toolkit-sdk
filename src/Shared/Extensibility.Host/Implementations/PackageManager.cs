@@ -120,17 +120,19 @@ public class PackageManager : IPackageManager
 						}
 					}
 					ExtensionBundle bundle = ExtensionBundle.FromDirectory(dir);
-					if (!string.IsNullOrEmpty(bundle.Manifest.RequireVersion))
+					Version currentVersion = Version.Parse(ThisAssembly.AssemblyVersion);
+					if (!string.IsNullOrEmpty(bundle.Manifest.RequireVersion) && Version.TryParse(bundle.Manifest.RequireVersion, out Version? requiredVersion))
 					{
-						if (Version.TryParse(bundle.Manifest.RequireVersion, out Version? requiredVersion) &&
-							Version.TryParse(bundle.Manifest.RequireVersion, out Version? currentVersion))
+						if (currentVersion < requiredVersion)
 						{
-							if (currentVersion < requiredVersion)
-							{
-								Logger.LogWarning("Extension {bundle.Id} requires version {requiredVersion} but {currentVersion} is installed", bundle.Id, requiredVersion, currentVersion);
-								continue;
-							}
+							Logger.LogWarning("Extension {bundle.Id} requires version {requiredVersion} but {currentVersion} is installed", bundle.Id, requiredVersion, currentVersion);
+							continue;
 						}
+					}
+					if (bundle.Manifest.CompatibleVersion.Major < currentVersion.Major)
+					{
+						Logger.LogWarning("Extension {bundle.Id} is compatible up to major version {compatibleVersion} but {currentVersion} is installed.", bundle.Id, bundle.Manifest.CompatibleVersion.Major, currentVersion);
+						continue;
 					}
 					Descriptors.Add(bundle);
 				}

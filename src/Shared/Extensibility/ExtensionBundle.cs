@@ -55,12 +55,15 @@ namespace Raid.Toolkit.Extensibility
             return FromAssembly(typeof(T).Assembly);
         }
 
-        //public static ExtensionBundle FromAssembly(string assemblyPath)
-        //{
-        //    return FromAssembly(Assembly.LoadFrom(assemblyPath));
-        //}
+		public void WriteManifest(PackageManifest manifest)
+		{
+			JsonSerializer serializer = new();
+			using StreamWriter writer = new(Location!);
+			using JsonTextWriter textWriter = new(writer);
+			serializer.Serialize(textWriter, manifest);
+		}
 
-        public static ExtensionBundle FromAssembly(Assembly assembly)
+		public static ExtensionBundle FromAssembly(Assembly assembly)
         {
             PackageManifest manifest = PackageManifest.FromAssembly(assembly);
             return new(manifest)
@@ -109,7 +112,8 @@ namespace Raid.Toolkit.Extensibility
 			return manifest;
         }
 
-        private static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
+
+		private static void CopyDirectory(string sourceDir, string destinationDir, bool recursive)
         {
             // Get information about the source directory
             var dir = new DirectoryInfo(sourceDir);

@@ -145,11 +145,11 @@ public partial class ExtensionHostModel : AsyncObservable
 
 	private async Task RunPackage(IManagedPackage extension)
 	{
-		if (extension.State == ExtensionState.None)
+		if (extension.State == PackageState.None)
 		{
 			await extension.Load();
 		}
-		if (extension.State == ExtensionState.Loaded)
+		if (extension.State == PackageState.Loaded)
 		{
 			extension.Activate();
 		}
@@ -172,11 +172,11 @@ public partial class ExtensionHostModel : AsyncObservable
 		IServiceScope packageScope = ServiceProvider.CreateScope();
 		IManagedPackage extension = packageScope.ServiceProvider.GetRequiredService<IManagedPackage>();
 
-		if (extension.State == ExtensionState.Disabled)
+		if (extension.State == PackageState.Disabled)
 			throw new InvalidOperationException("Extension is disabled");
-		if (extension.State == ExtensionState.Error)
+		if (extension.State == PackageState.Error)
 			throw new InvalidOperationException("Extension is in an error state");
-		if (extension.State == ExtensionState.PendingUninstall)
+		if (extension.State == PackageState.PendingUninstall)
 			throw new InvalidOperationException("Extension is pending uninstallation");
 		return extension;
 	}

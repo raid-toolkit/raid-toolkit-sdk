@@ -116,8 +116,9 @@ namespace Raid.Toolkit.Extensibility.Tasks
             string outputManifest = Path.Combine(OutDir, Constants.ExtensionManifestFileName);
             if (File.Exists(outputManifest))
                 File.Delete(outputManifest);
-            manifest.RequireVersion ??= "2.0.0";
-            File.WriteAllText(outputManifest, JsonConvert.SerializeObject(manifest));
+            manifest.RequireVersion ??= "3.0.0";
+            manifest.CompatibleVersion ??= new Version(3,0,0);
+			File.WriteAllText(outputManifest, JsonConvert.SerializeObject(manifest));
 
             return true;
         }

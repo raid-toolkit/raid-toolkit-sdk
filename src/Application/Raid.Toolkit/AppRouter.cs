@@ -2,7 +2,6 @@ using CommandLine;
 
 using Microsoft.Win32.SafeHandles;
 using Microsoft.Windows.AppLifecycle;
-
 using System.Text.RegularExpressions;
 
 using Windows.ApplicationModel.Activation;
@@ -12,40 +11,36 @@ using WinRT;
 
 using PInvoke = Windows.Win32.PInvoke;
 
-namespace Raid.Toolkit.ExtensionHost;
+namespace Raid.Toolkit;
 
 internal class AppRouter
 {
-	private static string GetInstanceKey(string extensionId)
-	{
-		return $"RAID_TOOLKIT_WORKER_{extensionId.ToUpperInvariant()}";
-	}
+	private const string InstanceKey = "RAID_TOOLKIT_EXE";
 
 	public AppInstance Instance { get; set; }
-	public BaseOptions Options { get; }
-	public event EventHandler<BaseOptions>? Activated;
+	public StartupOptions Options { get; }
+	public event EventHandler<StartupOptions>? Activated;
 
 	public AppRouter()
 	{
 		AppActivationArguments args = AppInstance.GetCurrent().GetActivatedEventArgs();
 		Options = ParseActivationArguments(args);
 
-		string instanceKey = GetInstanceKey(Options.GetPackageId());
-		Instance = AppInstance.FindOrRegisterForKey(instanceKey);
+		Instance = AppInstance.FindOrRegisterForKey(InstanceKey);
 		if (Instance.IsCurrent)
 			Instance.Activated += OnActivated;
 		else
 			RedirectActivationTo(args, Instance);
 	}
 
-	private BaseOptions ParseActivationArguments(AppActivationArguments args)
+	private StartupOptions ParseActivationArguments(AppActivationArguments args)
 	{
 		return args.Kind switch
 		{
 			ExtendedActivationKind.Launch => ParseArguments(args.Data.As<ILaunchActivatedEventArgs>().Arguments),
 			ExtendedActivationKind.CommandLineLaunch => ParseArguments(args.Data.As<ICommandLineActivatedEventArgs>().Operation.Arguments),
-			ExtendedActivationKind.File => new InstallPackageOptions() { PackagePath = args.Data.As<IFileActivatedEventArgs>().Files[0].Path, },
-			ExtendedActivationKind.Protocol => new ActivateExtensionOptions() { Uri = args.Data.As<IProtocolActivatedEventArgs>().Uri.ToString() },
+			ExtendedActivationKind.File => new StartupOptions() { PackagePath = args.Data.As<IFileActivatedEventArgs>().Files[0].Path, },
+			ExtendedActivationKind.Protocol => throw new V3NotImpl(),
 			_ => throw new InvalidOperationException()
 		};
 	}
@@ -55,16 +50,16 @@ internal class AppRouter
 		Activated?.Invoke(this, ParseActivationArguments(args));
 	}
 
-	private static BaseOptions ParseArguments(string arguments)
+	private static StartupOptions ParseArguments(string arguments)
 	{
 		string[] args = Regex.Matches(arguments, @"[\""].+?[\""]|[^ ]+")
 				.Cast<Match>()
 				.Select(x => x.Value.Trim('"'))
 				.Skip(1)
 				.ToArray();
-		BaseOptions? opts = null;
-		Parser.Default.ParseArguments<InstallPackageOptions, RunPackageOptions, ActivateExtensionOptions>(args)
-			.WithParsed<BaseOptions>(options => opts = options)
+		StartupOptions? opts = null;
+		Parser.Default.ParseArguments<StartupOptions>(args)
+			.WithParsed(options => opts = options)
 			.WithNotParsed(_ => throw new ArgumentException("Invalid arguments"));
 		if (opts == null)
 			throw new ArgumentException("Invalid arguments");

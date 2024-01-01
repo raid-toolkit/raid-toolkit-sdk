@@ -1,59 +1,33 @@
-using System;
+using Microsoft.UI.Dispatching;
+using System.Threading;
 
-using Raid.Toolkit.Application.Core.Host;
-using Raid.Toolkit.Application.Core;
-using System.Threading.Tasks;
-using Raid.Toolkit.Application.Core.Commands;
-using Raid.Toolkit.Application.Core.Commands.Base;
-using Raid.Toolkit.UI.WinUI;
-using GitHub;
-using System.Linq;
-using Raid.Toolkit.Common;
-using System.Diagnostics;
+namespace Raid.Toolkit;
 
-namespace Raid.Toolkit
+internal static class Program
 {
-    internal static class Program
-    {
-        private static string CleanArgument(string arg) => arg switch
-        {
-            "-Embedding" => "--Embedding",
-            "----AppNotificationActivated:" => "----AppNotificationActivated",
-            _ => arg,
-        };
-        [STAThread]
-        private static int Main(string[] args)
-        {
-            int resultCode = 0;
-            SingleThreadedSynchronizationContext.Await(async () =>
-            {
-                resultCode = await Main2(args);
-            });
-            return resultCode;
-        }
-        private static async Task<int> Main2(string[] args)
-        {
-            if (RegistrySettings.DebugStartup && !Debugger.IsAttached)
-            {
-                Debugger.Launch();
-            }
-            args = args.Select(CleanArgument).ToArray();
-
-            CommonOptions.Parse(args);
-            AppHost.EnableLogging = !CommonOptions.Value.DisableLogging;
-            AppHost.ForceRebuild = CommonOptions.Value.ForceRebuild;
-
-            IEntrypoint entrypoint = CommonOptions.Value.RenderEngine switch
-            {
-                RenderingEngine.WinUI => new Entrypoint<AppWinUI, WinUIProgramHost>(),
-                _ => new Entrypoint<AppWinUI, WinUIProgramHost>(),
-            };
-            CommandTaskManager commandManager = entrypoint.CreateInstance<CommandTaskManager>();
-            ICommandTask? task = commandManager.Parse(args);
-            if (task == null)
-                return 255;
-
-            return await task.Invoke();
-        }
-    }
+	private static string CleanArgument(string arg) => arg switch
+	{
+		"-Embedding" => "--Embedding",
+		"----AppNotificationActivated:" => "----AppNotificationActivated",
+		_ => arg,
+	};
+	[STAThread]
+	private static int Main(string[] args)
+	{
+		WinRT.ComWrappersSupport.InitializeComWrappers();
+		AppRouter router = new();
+		if (router.Instance.IsCurrent)
+		{
+			Microsoft.UI.Xaml.Application.Start((p) =>
+			{
+				var context = new DispatcherQueueSynchronizationContext(
+					DispatcherQueue.GetForCurrentThread());
+				SynchronizationContext.SetSynchronizationContext(context);
+				RTKApplication app = new(router.Options);
+				router.Activated += (_, args) => app.OnActivated(args);
+				app.OnActivated(router.Options);
+			});
+		}
+		return 0;
+	}
 }

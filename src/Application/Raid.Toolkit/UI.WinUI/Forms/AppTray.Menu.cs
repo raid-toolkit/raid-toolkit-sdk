@@ -7,8 +7,6 @@ using System.Windows.Forms;
 
 using Client.ViewModel.Notifications;
 
-using Raid.Toolkit.Application.Core.Commands.Base;
-using Raid.Toolkit.Application.Core.Host;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Interfaces;
@@ -35,7 +33,7 @@ namespace Raid.Toolkit.UI.WinUI
 			{
 				Process.Start(new ProcessStartInfo
 				{
-					FileName = AppHost.LogsDirectory,
+					FileName = RTKApplication.LogsDirectory,
 					UseShellExecute = true,
 					Verb = "open"
 				});
@@ -116,11 +114,11 @@ namespace Raid.Toolkit.UI.WinUI
 				Notify.Activated += Notify_Activated;
 				notificationManager.RegisterHandler(Notify);
 
-				this.openLogFolderToolStripMenuItem.Visible = AppHost.EnableLogging;
+				this.openLogFolderToolStripMenuItem.Visible = !RTKApplication.Current.Options.DisableLogging;
 
-				// 
+				//
 				// this
-				// 
+				//
 				this.Items.AddRange(new ToolStripItem[] {
 					this.aboutMenuItem,
 					new ToolStripSeparator(),
@@ -145,15 +143,15 @@ namespace Raid.Toolkit.UI.WinUI
 				this.Name = "appTrayMenu";
 				this.Opening += new System.ComponentModel.CancelEventHandler(this.appTrayMenu_Opening);
 
-				// 
+				//
 				// aboutMenuItem
-				// 
+				//
 				this.aboutMenuItem.Name = "aboutMenuItem";
 				this.aboutMenuItem.Size = new(170, 22);
 				this.aboutMenuItem.Text = "About";
 				this.aboutMenuItem.Font = new(this.aboutMenuItem.Font, FontStyle.Bold);
 				this.aboutMenuItem.Click += new System.EventHandler(this.aboutMenuItem_Click);
-				// 
+				//
 				// installUpdateMenuItem
 				//
 				this.installUpdateMenuItem.Name = "installUpdateMenuItem";
@@ -161,47 +159,47 @@ namespace Raid.Toolkit.UI.WinUI
 				this.installUpdateMenuItem.Text = "Install update";
 				this.installUpdateMenuItem.Visible = false;
 				this.installUpdateMenuItem.Click += new System.EventHandler(this.installUpdateMenuItem_Click);
-				// 
+				//
 				// checkUpdatesMenuItem
-				// 
+				//
 				this.checkUpdatesMenuItem.Name = "checkUpdatesMenuItem";
 				this.checkUpdatesMenuItem.Size = new(170, 22);
 				this.checkUpdatesMenuItem.Text = "Check for updates";
 				this.checkUpdatesMenuItem.Click += new System.EventHandler(this.checkUpdatesMenuItem_Click);
-				// 
+				//
 				// openLogFolderToolStripMenuItem
-				// 
+				//
 				this.openLogFolderToolStripMenuItem.Name = "openLogFolderToolStripMenuItem";
 				this.openLogFolderToolStripMenuItem.Size = new(170, 22);
 				this.openLogFolderToolStripMenuItem.Text = "Open log folder";
 				this.openLogFolderToolStripMenuItem.Click += new System.EventHandler(this.openLogFolderToolStripMenuItem_Click);
-				// 
+				//
 				// extensionsToolStripMenuItem
-				// 
+				//
 				this.extensionsToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] {
 					this.manageExtensionsToolStripMenuItem
 				});
 				this.extensionsToolStripMenuItem.Name = "extensionsToolStripMenuItem";
 				this.extensionsToolStripMenuItem.Size = new(170, 22);
 				this.extensionsToolStripMenuItem.Text = "Extensions";
-				// 
+				//
 				// manageExtensionsToolStripMenuItem
-				// 
+				//
 				this.manageExtensionsToolStripMenuItem.Image = FormsResources.Settings_16x;
 				this.manageExtensionsToolStripMenuItem.Name = "manageExtensionsToolStripMenuItem";
 				this.manageExtensionsToolStripMenuItem.Size = new(185, 22);
 				this.manageExtensionsToolStripMenuItem.Text = "&Manage Extensions...";
 				this.manageExtensionsToolStripMenuItem.Click += new System.EventHandler(this.manageExtensionsToolStripMenuItem_Click);
-				// 
+				//
 				// settingsMenuItem
-				// 
+				//
 				this.settingsMenuItem.Name = "settingsMenuItem";
 				this.settingsMenuItem.Size = new(170, 22);
 				this.settingsMenuItem.Text = "Settings";
 				this.settingsMenuItem.Click += new System.EventHandler(this.settingsMenuItem_Click);
-				// 
+				//
 				// closeMenuItem
-				// 
+				//
 				this.closeMenuItem.Name = "closeMenuItem";
 				this.closeMenuItem.Size = new(170, 22);
 				this.closeMenuItem.Text = "Close";

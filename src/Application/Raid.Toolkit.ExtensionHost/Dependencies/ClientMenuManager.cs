@@ -1,10 +1,5 @@
 using Microsoft.Extensions.Logging;
 
-using Raid.Toolkit.Extensibility.Helpers;
-
-using System;
-using System.Linq;
-
 namespace Raid.Toolkit.Extensibility.Host
 {
 	public class ClientMenuManager : MenuManager
@@ -26,15 +21,17 @@ namespace Raid.Toolkit.Extensibility.Host
 			{
 				IManagedPackage package = Dependencies.GetRequiredService<IManagedPackage>();
 				var manifest = package.Bundle.Manifest;
-				var contributions = manifest.Contributions ??= new();
-				if (!contributions.Any(contribution => contribution is MenuContribution menuEntry && menuEntry.DisplayName == entry.DisplayName))
+				var contributions = manifest.Contributes ??= new();
+				var menuItems = contributions.MenuItems ??= new();
+				if (!menuItems.Any(contribution => contribution is MenuContribution menuEntry && menuEntry.DisplayName == entry.DisplayName))
 				{
-					contributions.Add(new MenuContribution($"__generated__menuEntry{contributions.Count}", entry.DisplayName));
+					menuItems.Add(new MenuContribution($"__generated__menuEntry{menuItems.Count}", entry.DisplayName));
 					var hostChannel = Dependencies.GetRequiredService<IExtensionHostChannel>();
-					package.SaveManifest(manifest);
+					package.Bundle.WriteManifest(manifest);
 					hostChannel.ReloadManifest(package.Bundle.Id);
 				}
-			}catch(Exception ex)
+			}
+			catch (Exception ex)
 			{
 				Logger.LogError(ex, "Backwards Compatibility: An error occured channelling menu entry back to main process. Menu entry will not be displayed (DisplayName='{displayName}')", entry.DisplayName);
 			}

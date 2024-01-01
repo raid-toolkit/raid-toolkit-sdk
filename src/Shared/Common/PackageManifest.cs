@@ -44,8 +44,14 @@ public class PackageManifest
 	[JsonProperty("requireVersion")]
 	public string RequireVersion { get; set; }
 
+	[JsonProperty("compatibleVersion")]
+	public string? CompatibleVersionString { get; set; }
+
+	[JsonIgnore]
+	public Version CompatibleVersion { get => Version.Parse(CompatibleVersionString ?? RequireVersion ?? "2.0.0"); set => CompatibleVersionString = value.ToString(); }
+
 	[JsonProperty("contributes")]
-	public List<ContributionBase>? Contributions;
+	public Contributes? Contributes;
 
 	public static PackageManifest FromAssembly(Assembly asm)
 	{
@@ -59,9 +65,12 @@ public class PackageManifest
 	}
 }
 
-public class ContributionBase { }
+public class Contributes
+{
+	public List<MenuContribution>? MenuItems { get; set; }
+}
 
-public class MenuContribution : ContributionBase
+public class MenuContribution
 {
 	[EditorBrowsable(EditorBrowsableState.Never), Obsolete("Exists for serialization only")]
 	public MenuContribution()

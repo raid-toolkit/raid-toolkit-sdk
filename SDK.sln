@@ -27,6 +27,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensibility.Host", "src\Shared\Extensibility.Host\Extensibility.Host.csproj", "{FD2B21ED-F09A-46C7-9F48-024A7F91380C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Toolkit", "src\Application\Raid.Toolkit\Raid.Toolkit.csproj", "{6AA30A42-2942-46D1-B576-74100C10B38F}"
+	ProjectSection(ProjectDependencies) = postProject
+		{4F095DD7-C8C7-4B3B-99C1-494FFC98CCC4} = {4F095DD7-C8C7-4B3B-99C1-494FFC98CCC4}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensibility.Tasks", "src\Shared\Extensibility.Tasks\Extensibility.Tasks.csproj", "{D8CE057A-F9D4-43B5-90A0-063F39489C38}"
 EndProject

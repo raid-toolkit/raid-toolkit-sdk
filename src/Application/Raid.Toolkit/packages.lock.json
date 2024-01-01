@@ -113,6 +113,18 @@
           "Microsoft.Extensions.Options": "6.0.0"
         }
       },
+      "Microsoft.Windows.CsWin32": {
+        "type": "Direct",
+        "requested": "[0.2.138-beta, )",
+        "resolved": "0.2.138-beta",
+        "contentHash": "iSiNx8/+rJ2MpwHTHcoCi+1JcBUY5Ue40+NwGMW7XQrU1nM03rK3djswfoLydQ5iL2ymc/KesEdPQFd0sXzx/g==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.Win32Docs": "0.1.7-alpha",
+          "Microsoft.Windows.SDK.Win32Metadata": "38.0.19-preview",
+          "System.Memory": "4.5.5",
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
+        }
+      },
       "Microsoft.Windows.SDK.BuildTools": {
         "type": "Direct",
         "requested": "[10.0.25267-preview, )",
@@ -121,9 +133,9 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.4.230822000, )",
-        "resolved": "1.4.230822000",
-        "contentHash": "QeR+4u7j0z9RWhVzTbr/5izWmq7k3GkjxCFbXNuYtIHYDm2YcdIH5Kvn+9tpMLweFzDZO7YVzVvvyQGivUtNcw==",
+        "requested": "[1.4.231115000, )",
+        "resolved": "1.4.231115000",
+        "contentHash": "7bVccsxoy60CwZJ/uiP45frH7BZgA/ToQnJcuzDpL6an6OeVXZiPN82MXd08uXlvzv5jMeAQLM7E7Dhw5FKtWg==",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
         }
@@ -611,6 +623,16 @@
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.1.0"
         }
+      },
+      "Microsoft.Windows.SDK.Win32Docs": {
+        "type": "Transitive",
+        "resolved": "0.1.7-alpha",
+        "contentHash": "+8ygOfBME88Sq75zMopFfqCdxBxZoKDlizPK6iYxzSGf6j51rd9ISNJ20UKfOSr746tgn9GNyVI+jc0JXfnuZA=="
+      },
+      "Microsoft.Windows.SDK.Win32Metadata": {
+        "type": "Transitive",
+        "resolved": "38.0.19-preview",
+        "contentHash": "QkkDVrRfuC1MX3ibSRxU1JNBMyPcoArOOBpCCauR2CZlpG4oDQ4DXBjxwfM/3ZtWSc2AjFE1Xnen9ecR5J+vZQ=="
       },
       "Mono.Cecil": {
         "type": "Transitive",
@@ -1640,20 +1662,6 @@
           "System.Drawing.Common": "4.5.0"
         }
       },
-      "raid.toolkit.application.core": {
-        "type": "Project",
-        "dependencies": {
-          "CommandLineParser": "[2.9.1, )",
-          "CustomExtensions.WinUI": "[0.1.10-beta, )",
-          "Il2CppToolkit.Injection.Client": "[2.0.140-alpha, )",
-          "Karambolo.Extensions.Logging.File": "[3.5.0, )",
-          "Microsoft.Extensions.Hosting": "[6.0.1, )",
-          "Newtonsoft.Json": "[13.0.3, )",
-          "Raid.Toolkit.Extensibility": "[1.0.0, )",
-          "Raid.Toolkit.Extensibility.Host": "[1.0.0, )",
-          "SuperSocket.WebSocket.Server": "[2.0.0-beta.10, )"
-        }
-      },
       "Raid.Toolkit.Common": {
         "type": "Project",
         "dependencies": {
@@ -1722,9 +1730,9 @@
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
-        "requested": "[1.4.230822000, )",
-        "resolved": "1.4.230822000",
-        "contentHash": "QeR+4u7j0z9RWhVzTbr/5izWmq7k3GkjxCFbXNuYtIHYDm2YcdIH5Kvn+9tpMLweFzDZO7YVzVvvyQGivUtNcw==",
+        "requested": "[1.4.231115000, )",
+        "resolved": "1.4.231115000",
+        "contentHash": "7bVccsxoy60CwZJ/uiP45frH7BZgA/ToQnJcuzDpL6an6OeVXZiPN82MXd08uXlvzv5jMeAQLM7E7Dhw5FKtWg==",
         "dependencies": {
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
         }

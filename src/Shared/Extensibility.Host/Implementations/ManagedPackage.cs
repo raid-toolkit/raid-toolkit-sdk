@@ -16,7 +16,7 @@ using Raid.Toolkit.Extensibility.Services;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-	public class ManagedPackage : IManagedPackage, IDisposable
+	public class ManagedPackage : IManagedPackage, IExtensionHost, IDisposable
 	{
 		public ExtensionBundle Bundle { get; }
 		private readonly IServiceProvider ServiceProvider;
@@ -35,7 +35,7 @@ namespace Raid.Toolkit.Extensibility.Host
 		private IExtensionPackage? ExtensionPackage;
 		private bool IsDisposed;
 
-		public ExtensionState State { get; private set; }
+		public PackageState State { get; private set; }
 
 		public ManagedPackage(
 			// args
@@ -45,7 +45,7 @@ namespace Raid.Toolkit.Extensibility.Host
 			ILogger<ManagedPackage> logger
 			)
 		{
-			State = ExtensionState.None;
+			State = PackageState.None;
 			Bundle = bundle;
 			ServiceProvider = serviceProvider;
 			Dependencies = new(serviceProvider, true);
@@ -70,7 +70,7 @@ namespace Raid.Toolkit.Extensibility.Host
 
 		public async Task Load()
 		{
-			if (State != ExtensionState.None || ExtensionPackage != null)
+			if (State != PackageState.None || ExtensionPackage != null)
 			{
 				Logger.LogError("The extension {ExtensionId} is in invalid state {State}", Bundle.Id, State);
 				return;
@@ -86,11 +86,11 @@ namespace Raid.Toolkit.Extensibility.Host
 					await ModelLoader.BuildAndLoad(includeTypes, Bundle.Location);
 				}
 				ExtensionPackage = await Loader.LoadPackage(Bundle);
-				State = ExtensionState.Loaded;
+				State = PackageState.Loaded;
 			}
 			catch (TypeLoadException ex)
 			{
-				State = ExtensionState.Error;
+				State = PackageState.Error;
 				Logger.LogError(ExtensionError.TypeLoadFailure.EventId(), ex, "Failed to load extension");
 				throw new FileLoadException("Failed to load extension");
 			}
@@ -105,33 +105,33 @@ namespace Raid.Toolkit.Extensibility.Host
 		{
 			try
 			{
-				if (State == ExtensionState.Activated)
+				if (State == PackageState.Activated)
 					return;
 
 				if (ExtensionPackage == null)
 					throw new InvalidOperationException("ExtensionPackage is not set");
 
 				ExtensionPackage.OnActivate(this);
-				State = ExtensionState.Activated;
+				State = PackageState.Activated;
 			}
 			catch (Exception ex)
 			{
 				Logger.LogError(ExtensionError.FailedToActivate.EventId(), ex, "Failed to load extension");
-				State = ExtensionState.Error;
+				State = PackageState.Error;
 				throw;
 			}
 		}
 
 		public void Deactivate()
 		{
-			if (State is not ExtensionState.Activated and not ExtensionState.Error)
+			if (State is not PackageState.Activated and not PackageState.Error)
 				return;
 
 			if (ExtensionPackage == null)
 				throw new InvalidOperationException("ExtensionPackage is not set");
 
 			ExtensionPackage.OnDeactivate(this);
-			State = ExtensionState.Disabled;
+			State = PackageState.Disabled;
 		}
 
 		public void Install()
@@ -142,7 +142,7 @@ namespace Raid.Toolkit.Extensibility.Host
 			ExtensionPackage.OnInstall(this);
 		}
 
-		public void Uninstall()
+		public Task Uninstall()
 		{
 			try
 			{
@@ -150,13 +150,14 @@ namespace Raid.Toolkit.Extensibility.Host
 					throw new InvalidOperationException("ExtensionPackage is not set");
 
 				ExtensionPackage.OnUninstall(this);
-				State = ExtensionState.PendingUninstall;
+				State = PackageState.PendingUninstall;
 			}
 			catch (Exception ex)
 			{
 				Logger.LogError(ExtensionError.FailedToActivate.EventId(), ex, "Failed to uninstall extension");
-				State = ExtensionState.Error;
+				State = PackageState.Error;
 			}
+			return Task.CompletedTask;
 		}
 
 		public void ShowUI()
@@ -274,11 +275,6 @@ namespace Raid.Toolkit.Extensibility.Host
 			return new HostResourceHandle(() => MenuManager.RemoveEntry(entry));
 		}
 
-		public void SaveManifest(PackageManifest manifest)
-		{
-			// throw new V3NotImpl();
-		}
-
 		protected virtual void Dispose(bool disposing)
 		{
 			if (!IsDisposed)
@@ -298,7 +294,6 @@ namespace Raid.Toolkit.Extensibility.Host
 			Dispose(disposing: true);
 			GC.SuppressFinalize(this);
 		}
-
 		#endregion
 	}
 }

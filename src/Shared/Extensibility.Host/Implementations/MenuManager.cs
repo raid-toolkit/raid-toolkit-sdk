@@ -1,10 +1,8 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Raid.Toolkit.Extensibility.Host
 {
-	public abstract class MenuManager : IMenuManager
+	public class MenuManager : IMenuManager
 	{
 		protected readonly List<IMenuEntry> Entries = new();
 
