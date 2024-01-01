@@ -58,38 +58,6 @@
         <Content Include="$(PkgIl2CppToolkit_Injection_Client)\runtimes\win10-x64\native\Il2CppToolkit.Injection.Host.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="UI.WinUI\Assets\AppIcon.ico" />
-        <Content Include="UI.WinUI\Assets\DevIcon.ico" />
-        <Content Include="UI.WinUI\Assets\Icon_128.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_22.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_256.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_300.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_32.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_48.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_512.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_64.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_88.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\RaidToolkitLarge.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
         <!--<Content Include="$(ProjectPriFullPath)" Link="$(ProjectPriFileName)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>-->
@@ -110,6 +78,39 @@
     </ItemGroup>
 
     <ItemGroup>
+      <Content Update="Assets\Icon_128.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Assets\Icon_22.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Assets\Icon_256.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Assets\Icon_300.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Assets\Icon_32.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Assets\Icon_48.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Assets\Icon_512.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Assets\Icon_64.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Assets\Icon_88.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Assets\RaidToolkitLarge.png">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
         <EmbeddedResource Update="UI.WinUI\Forms\FormsResources.resx">
             <SubType>Designer</SubType>
             <LastGenOutput>FormsResources.Designer.cs</LastGenOutput>
@@ -121,9 +122,6 @@
         <Page Update="UI.WinUI\ExtensionsWindow.xaml">
             <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
             <SubType>Designer</SubType>
-        </Page>
-        <Page Update="UI.WinUI\InstallExtensionWindow.xaml">
-            <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
         </Page>
         <Page Update="UI.WinUI\MainWindow.xaml">
             <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>

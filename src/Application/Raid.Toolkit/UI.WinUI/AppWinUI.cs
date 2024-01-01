@@ -169,15 +169,6 @@ namespace Raid.Toolkit.UI.WinUI
             });
         }
 
-        public Task<bool> ShowExtensionInstaller(ExtensionBundle bundleToInstall)
-        {
-            return Post(() =>
-            {
-                InstallExtensionWindow extensionWindow = EnsureWindow<InstallExtensionWindow>(bundleToInstall);
-                return extensionWindow.RequestPermission();
-            });
-        }
-
         protected virtual void Dispose(bool disposing)
         {
             if (!IsDisposed)

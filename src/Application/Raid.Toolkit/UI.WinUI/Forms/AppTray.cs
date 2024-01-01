@@ -1,10 +1,7 @@
-using Google.Protobuf.WellKnownTypes;
-
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
 using Raid.Toolkit.Application.Core.Commands;
-using Raid.Toolkit.Application.Core.Commands.Base;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Loader;
@@ -18,7 +15,7 @@ using System.Windows.Forms;
 
 namespace Raid.Toolkit.UI.WinUI
 {
-    public partial class AppTray : IDisposable
+	public partial class AppTray : IDisposable
     {
         private readonly IAppUI AppUI;
         private readonly IServiceProvider ServiceProvider;

@@ -39,9 +39,6 @@ public class PackageManager : IPackageManager
 		if (IsLoaded)
 			return;
 
-		// preload injection client type/asm before extensions get loaded
-		typeof(Il2CppToolkit.Injection.Client.InjectionClient).FullName?.ToString();
-		// let's get fucky.
 		Load();
 		IsLoaded = true;
 	}
