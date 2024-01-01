@@ -58,7 +58,7 @@ namespace Raid.Toolkit.Extensibility
 		public void WriteManifest(PackageManifest manifest)
 		{
 			JsonSerializer serializer = new();
-			using StreamWriter writer = new(Location!);
+			using StreamWriter writer = new(Path.Join(Location!, Constants.ExtensionManifestFileName));
 			using JsonTextWriter textWriter = new(writer);
 			serializer.Serialize(textWriter, manifest);
 		}

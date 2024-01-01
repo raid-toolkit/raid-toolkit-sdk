@@ -1,91 +1,59 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<Import Project="$(BuildTargetProps)" />
-	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
-		<RootNamespace>Raid.Toolkit.ExtensionHost</RootNamespace>
-		<ApplicationIcon>..\Assets\AppIcon.ico</ApplicationIcon>
-		<ApplicationManifest>app.manifest</ApplicationManifest>
-		<IsPackable>false</IsPackable>
-		<Nullable>enable</Nullable>
-		<UseWinUI>true</UseWinUI>
-		<WindowsPackageType>None</WindowsPackageType>
-		<SelfContained>false</SelfContained>
-	</PropertyGroup>
-	<ItemGroup>
-		<Manifest Include="$(ApplicationManifest)" />
-	</ItemGroup>
+    <Import Project="$(BuildTargetProps)" />
 
-	<ItemGroup>
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" GeneratePathProperty="true" />
-		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.25267-preview" />
-		<PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.138-beta" PrivateAssets="all" />
-		<PackageReference Include="CommunityToolkit.Common" Version="8.2.1" />
-		<PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2" />
-		<PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
-		<PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
-	</ItemGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <RootNamespace>Raid.Toolkit.ExtensionHost</RootNamespace>
+        <ApplicationIcon>..\Assets\AppIcon.ico</ApplicationIcon>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <IsPackable>false</IsPackable>
+        <Nullable>enable</Nullable>
+        <UseWinUI>true</UseWinUI>
+        <WindowsPackageType>None</WindowsPackageType>
+        <SelfContained>false</SelfContained>
+        <AssemblyTitle>Raid Toolkit</AssemblyTitle>
+        <ProductName>Raid Toolkit</ProductName>
+    </PropertyGroup>
 
-	<PropertyGroup>
-		<DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
-	</PropertyGroup>
+    <PropertyGroup>
+        <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<PackageReference Include="Il2CppToolkit.Injection.Client" Version="2.0.140-alpha" GeneratePathProperty="true" />
-		<PackageReference Include="WinUIEx" Version="2.3.3" />
-		<PackageReference Include="CommandLineParser" Version="2.9.1" />
-		<PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.5.0" />
-		<PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	</ItemGroup>
+    <ItemGroup>
+        <Manifest Include="$(ApplicationManifest)" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<Content Include="$(PkgIl2CppToolkit_Injection_Client)\runtimes\win10-x64\native\Il2CppToolkit.Injection.Host.dll">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" GeneratePathProperty="true" />
+        <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.25267-preview" />
+        <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.138-beta" PrivateAssets="all" />
+        <PackageReference Include="CommunityToolkit.Common" Version="8.2.1" />
+        <PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2" />
+        <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
+        <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
+    </ItemGroup>
 
-	<ItemGroup>
-		<ProjectReference Include="..\..\Shared\Extensibility.Host\Extensibility.Host.csproj" />
-		<ProjectReference Include="..\..\Shared\Extensibility\Extensibility.csproj" />
-	</ItemGroup>
+    <PropertyGroup>
+        <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+    </PropertyGroup>
 
-	<ItemGroup>
-		<Page Update="InstallExtensionUI.xaml">
-			<Generator>MSBuild:Compile</Generator>
-			<XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-		</Page>
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="WinUIEx" Version="2.3.3" />
+        <PackageReference Include="CommandLineParser" Version="2.9.1" />
+        <PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.5.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="Il2CppToolkit.Injection.Client" Version="2.0.140-alpha" GeneratePathProperty="true" />
+    </ItemGroup>
 
-	<ItemGroup>
-	  <CustomAdditionalCompileInputs Remove="MainPage.xaml" />
-	</ItemGroup>
+    <ItemGroup>
+        <Content Include="$(PkgIl2CppToolkit_Injection_Client)\runtimes\win10-x64\native\Il2CppToolkit.Injection.Host.dll">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 
-	<ItemGroup>
-	  <None Remove="AboutUI.xaml" />
-	  <None Remove="MainPage.xaml" />
-	  <None Remove="ProgressUI.xaml" />
-	  <None Remove="UI\InstallationInfoUI.xaml" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Resource Remove="MainPage.xaml" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Page Update="UI\InstallationInfoUI.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Page Update="AboutUI.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Page Update="ProgressUI.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\Shared\Extensibility.Host\Extensibility.Host.csproj" />
+        <ProjectReference Include="..\..\Shared\Extensibility\Extensibility.csproj" />
+    </ItemGroup>
 </Project>

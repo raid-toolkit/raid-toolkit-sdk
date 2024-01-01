@@ -3,12 +3,11 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <Nullable>enable</Nullable>
-        <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
-        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <RootNamespace>Raid.Toolkit</RootNamespace>
         <ApplicationIcon>..\Assets\AppIcon.ico</ApplicationIcon>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
         <IsPackable>false</IsPackable>
-
+        <Nullable>enable</Nullable>
         <UseWinUI>true</UseWinUI>
         <WindowsPackageType>None</WindowsPackageType>
         <SelfContained>false</SelfContained>
@@ -20,9 +19,6 @@
         <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     </PropertyGroup>
 
-    <ItemGroup>
-        <AdditionalFiles Include="NativeMethods.txt" />
-    </ItemGroup>
 
     <ItemGroup>
         <Manifest Include="$(ApplicationManifest)" />
@@ -32,16 +28,15 @@
         <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
         <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" GeneratePathProperty="true" />
-        <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.138-beta" PrivateAssets="all" />
         <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.25267-preview" />
-        <PackageReference Include="WinUIEx" Version="2.3.3" />
-
-        <PackageReference Include="CommandLineParser" Version="2.9.1" />
+        <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.138-beta" PrivateAssets="all" />
         <PackageReference Include="CommunityToolkit.Common" Version="8.2.1" />
         <PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2" />
         <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
         <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
 
+        <PackageReference Include="WinUIEx" Version="2.3.3" />
+        <PackageReference Include="CommandLineParser" Version="2.9.1" />
         <PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.5.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
@@ -122,37 +117,40 @@
         </EmbeddedResource>
     </ItemGroup>
     <PropertyGroup>
-        <RootDir>..\Raid.Toolkit.ExtensionHost\</RootDir>
+        <ExtensionHostProjectDir>$(SourceDir)Application\Raid.Toolkit.ExtensionHost\</ExtensionHostProjectDir>
     </PropertyGroup>
     <ItemGroup>
-        <ExtensionHostFiles Include="$(RootDir)$(OutputPath)App.xbf" />
-        <ExtensionHostFiles Include="$(RootDir)$(OutputPath)Raid.Toolkit.ExtensionHost.*" />
-        <ExtensionHostFiles Include="$(RootDir)$(OutputPath)UI\*" />
-        <ExtensionHostDirs Include="@(ExtensionHostFiles->'%(RootDir)%(Directory)'->Distinct())" />
+        <ExtensionHostRootFiles Include="$(ExtensionHostProjectDir)$(OutDir)App.xbf" />
+        <ExtensionHostRootFiles Include="$(ExtensionHostProjectDir)$(OutDir)Raid.Toolkit.ExtensionHost.*" />
+        <ExtensionHostUIFiles Include="$(ExtensionHostProjectDir)$(OutDir)UI\*" />
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Copy SourceFiles="@(ExtensionHostFiles)" DestinationFolder="$(OutputPath)%(ExtensionHostDirs.Directory)" />
-        <!--<Copy SourceFiles="..\Raid.Toolkit.ExtensionHost\$(OutDir)\Raid.Toolkit.ExtensionHost.exe" DestinationFolder="$(TargetDir)" />
-        <Copy SourceFiles="..\Raid.Toolkit.ExtensionHost\$(OutDir)\App.xbf" DestinationFolder="$(TargetDir)" />
-        <Copy SourceFiles="..\Raid.Toolkit.ExtensionHost\$(OutDir)\UI\*.*" DestinationFolder="$(TargetDir)" />-->
+        <Copy SourceFiles="@(ExtensionHostRootFiles)" DestinationFolder="$(TargetDir)" />
+        <Copy SourceFiles="@(ExtensionHostUIFiles)" DestinationFolder="$(TargetDir)UI" />
     </Target>
 
     <ItemGroup>
-        <Page Update="UI.WinUI\ExtensionsWindow.xaml">
+        <ApplicationDefinition Include="RTKApplication.xaml" Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And Exists('$(MSBuildProjectDirectory)/RTKApplication.xaml')">
+            <Generator>MSBuild:Compile</Generator>
             <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-            <SubType>Designer</SubType>
+        </ApplicationDefinition>
+        <Page Remove="RTKApplication.xaml" />
+        <None Remove="RTKApplication.xaml" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <Page Update="UI.WinUI\ExtensionsWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
         </Page>
         <Page Update="UI.WinUI\MainWindow.xaml">
-            <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+            <Generator>MSBuild:Compile</Generator>
         </Page>
         <Page Update="UI.WinUI\SettingsPanel.xaml">
-            <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
         </Page>
         <Page Update="UI.WinUI\Themes\Generic.xaml">
-            <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
         </Page>
     </ItemGroup>
 
