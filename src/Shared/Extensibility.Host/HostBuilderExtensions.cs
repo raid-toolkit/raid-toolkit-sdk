@@ -60,7 +60,6 @@ namespace Raid.Toolkit.Extensibility.Host
 				.AddSingleton<IWindowManager, WindowManager>()
 				.AddSingleton<IPackageManager, TPackageManager>()
 				.AddSingleton<IGameInstanceManager, GameInstanceManager>()
-				.AddSingleton<IPackageWorkerManager, PackageWorkerManager>()
 				.AddSingleton<IAppDispatcher, AppDispatcher>()
 				.AddSingleton(typeof(CachedDataStorage))
 				.AddSingleton(typeof(CachedDataStorage<>))

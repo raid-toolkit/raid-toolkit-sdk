@@ -35,10 +35,17 @@ public partial class ExtensionHostModel : AsyncObservable
 
 	public void OnLaunched()
 	{
-		MainWindow = ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider);
+		try
+		{
+			MainWindow = ActivatorUtilities.CreateInstance<MainWindow>(ServiceProvider);
 
-		while (ActivationRequests.TryDequeue(out BaseOptions? options))
-			DoActivation(options);
+			while (ActivationRequests.TryDequeue(out BaseOptions? options))
+				DoActivation(options);
+		}
+		catch
+		{
+			MainWindow?.Close();
+		}
 	}
 
 	internal void OnActivated(BaseOptions options)
@@ -57,24 +64,22 @@ public partial class ExtensionHostModel : AsyncObservable
 		}
 	}
 
-	private void DoActivation(BaseOptions options)
+	private Task DoActivation(BaseOptions options)
 	{
 		switch (options)
 		{
 			case RunPackageOptions runOptions:
-				Task.Run(async () =>
+				return Task.Run(async () =>
 				{
 					ExtensionInstance = await InitializePackage(runOptions);
 					await RunPackage(ExtensionInstance);
 				});
-				break;
 			case InstallPackageOptions installOptions:
-				Task.Run(() => InstallPackage(installOptions));
-				break;
+				return Task.Run(() => InstallPackage(installOptions));
 			case ActivateExtensionOptions activateOptions:
-				Task.Run(() => ActivatePackage(activateOptions));
-				break;
+				return Task.Run(() => ActivatePackage(activateOptions));
 		}
+		return Task.CompletedTask;
 	}
 
 	[MemberNotNull(nameof(ExtensionInstance))]

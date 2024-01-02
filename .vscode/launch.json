@@ -41,6 +41,12 @@
       }
     },
     {
+      "name": "Attach to ExtensionHost",
+      "type": "coreclr",
+      "request": "attach",
+      "processId": "${input:MatchExtensionHost}",
+    },
+    {
       "name": "Build Task",
       "type": "coreclr",
       "request": "launch",
@@ -97,6 +103,27 @@
         "--debug",
         "--standalone",
         "--quiet"
+      ],
+      "env": {
+        "RTK_DEBUG": "true",
+        "app:MemoryLogging": "Error"
+      },
+      "justMyCode": false,
+      "cwd": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net6.0-windows10.0.19041.0/win10-x64",
+      "console": "internalConsole",
+      "stopAtEntry": false
+    },
+    {
+      "name": "Launch Raid.Toolkit --dbg-break",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}/src/Application/Raid.Toolkit/bin/x64/Debug/net6.0-windows10.0.19041.0/win10-x64/Raid.Toolkit.exe",
+      "args": [
+        "--debug",
+        "--standalone",
+        "--quiet",
+        "--dbg-break"
       ],
       "env": {
         "RTK_DEBUG": "true",
@@ -168,6 +195,15 @@
       "command": "pick-process-ex.match",
       "args": {
         "program": "Raid.exe",
+        "select": "auto"
+      }
+    },
+    {
+      "id": "MatchExtensionHost",
+      "type": "command",
+      "command": "pick-process-ex.match",
+      "args": {
+        "program": "Raid.Toolkit.ExtensionHost.exe",
         "select": "auto"
       }
     }

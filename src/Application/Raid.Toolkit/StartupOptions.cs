@@ -4,7 +4,7 @@ namespace Raid.Toolkit;
 
 public class StartupOptions
 {
-	[Value(0, MetaName = "rtkx", HelpText = "Path to rtkx package to install", Hidden = true)]
+	[Option('p', "package", HelpText = "Path to rtkx package to install", Hidden = true)]
 	public string PackagePath { get; set; } = string.Empty;
 
 	[Option('q', "quiet")]
@@ -15,6 +15,9 @@ public class StartupOptions
 
 	[Option('d', "debug", Hidden = true)]
 	public bool Debug { get; set; }
+
+	[Option("dbg-break", Hidden = true)]
+	public bool DebugBreak { get; set; }
 
 	[Option('s', "standalone", Hidden = true)]
 	public bool Standalone { get; set; }

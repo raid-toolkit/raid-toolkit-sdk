@@ -75,21 +75,21 @@ partial class RTKApplication : Application
 				.AddLogging(builder => builder.AddFile())
 				.Configure<ModelLoaderOptions>(config => config.ForceRebuild = initialOptions.ForceRebuild)
 				.AddHostedServiceSingleton<IServerApplication, ServerApplication>()
+				.AddHostedServiceSingleton<IExtensionHostChannel, ExtensionHostChannelServer>()
 				.AddSingleton<IPackageManager, PackageManager>()
 				.AddSingleton<IAppDispatcher, AppDispatcher>()
 				.AddSingleton<IModelLoader, ModelLoader>()
 				.AddSingleton<IMenuManager, MenuManager>()
 				.AddSingleton<IPackageWorkerManager, PackageWorkerManager>()
-				.AddSingleton<IExtensionHostChannel, ExtensionHostChannelServer>()
 				.AddSingleton<IAppUI, AppWinUI>()
 			);
 		return hostBuilder.Build();
 	}
 
 
-	protected override void OnLaunched(LaunchActivatedEventArgs args)
+	protected override async void OnLaunched(LaunchActivatedEventArgs args)
 	{
-		Host.Start();
+		await Host.StartAsync();
 		Model.OnLaunched();
 	}
 

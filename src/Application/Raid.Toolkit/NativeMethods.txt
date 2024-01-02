@@ -1,3 +1,9 @@
 ﻿CreateEvent
 SetEvent
 CoWaitForMultipleObjects
+CreateJobObject
+SetInformationJobObject
+AssignProcessToJobObject
+CloseHandle
+JOBOBJECT_EXTENDED_LIMIT_INFORMATION
+JOBOBJECT_BASIC_LIMIT_INFORMATION

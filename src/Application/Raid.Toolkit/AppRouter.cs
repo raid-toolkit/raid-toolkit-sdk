@@ -2,8 +2,9 @@ using CommandLine;
 
 using Microsoft.Win32.SafeHandles;
 using Microsoft.Windows.AppLifecycle;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
-
+using System.Threading;
 using Windows.ApplicationModel.Activation;
 using Windows.Win32.Security;
 
@@ -25,6 +26,13 @@ internal class AppRouter
 	{
 		AppActivationArguments args = AppInstance.GetCurrent().GetActivatedEventArgs();
 		Options = ParseActivationArguments(args);
+		if (Options.DebugBreak)
+		{
+			while (!Debugger.IsAttached)
+				Thread.Sleep(100);
+			Debugger.Break();
+		}
+
 
 		Instance = AppInstance.FindOrRegisterForKey(InstanceKey);
 		if (Instance.IsCurrent)

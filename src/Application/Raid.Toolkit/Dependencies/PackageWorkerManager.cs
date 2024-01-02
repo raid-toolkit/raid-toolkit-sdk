@@ -1,35 +1,28 @@
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-
-using Raid.Toolkit.Common;
-using Raid.Toolkit.Extensibility.Helpers;
-
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Raid.Toolkit.Extensibility.Host
+namespace Raid.Toolkit
 {
-	public class ManagedPackageWorker : IManagedPackageWorker
+	public class ManagedPackageWorker : IManagedPackageWorker, IDisposable
 	{
 		private Process? WorkerProcess;
-		private readonly IServiceProvider ServiceProvider;
 		private readonly DependencySynthesizer Dependencies;
+		private bool IsDisposed;
+		private Job Job;
 
 		public ManagedPackageWorker(ExtensionBundle bundle, IServiceProvider serviceProvider)
 		{
 			State = PackageState.None;
 			Bundle = bundle;
-			ServiceProvider = serviceProvider;
 			Dependencies = new(serviceProvider);
+			Job = new();
 		}
 
-		private ProcessStartInfo CreateWorkerStartInfo(string arguments)
+		private static ProcessStartInfo CreateWorkerStartInfo(string arguments)
 		{
+			if (RTKApplication.Current.Options.DebugBreak)
+				arguments += " --dbg-break";
 			return new(Path.Join(Path.GetDirectoryName(Environment.ProcessPath)!, "Raid.Toolkit.ExtensionHost.exe"), arguments);
 		}
 
@@ -43,6 +36,9 @@ namespace Raid.Toolkit.Extensibility.Host
 				WorkerProcess = null;
 
 			Process? actionProcess = Process.Start(psi);
+			if (actionProcess != null)
+				Job.AddProcess(actionProcess.SafeHandle);
+
 			WorkerProcess ??= actionProcess;
 			return WorkerProcess;
 		}
@@ -94,6 +90,25 @@ namespace Raid.Toolkit.Extensibility.Host
 				await waitForProcess.WaitForExitAsync();
 
 			Dependencies.GetRequiredService<IPackageManager>().RemovePackage(Bundle.Id);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!IsDisposed)
+			{
+				if (disposing)
+				{
+					Job.Dispose();
+				}
+				IsDisposed = true;
+			}
+		}
+
+		public void Dispose()
+		{
+			// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+			Dispose(disposing: true);
+			GC.SuppressFinalize(this);
 		}
 	}
 	public class PackageWorkerManager : IPackageWorkerManager, IDisposable
