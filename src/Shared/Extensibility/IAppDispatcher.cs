@@ -1,5 +1,3 @@
-using Microsoft.UI.Dispatching;
-
 using System.Threading.Tasks;
 using System.Threading;
 using System;

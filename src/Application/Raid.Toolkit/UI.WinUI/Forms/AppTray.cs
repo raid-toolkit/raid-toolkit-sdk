@@ -11,6 +11,7 @@ namespace Raid.Toolkit.UI.WinUI
 	{
 		private readonly IAppUI AppUI;
 		private readonly IServiceProvider ServiceProvider;
+		private readonly IAppDispatcher AppDispatcher;
 		private readonly IOptions<ProcessManagerSettings> Settings;
 		private readonly PlariumPlayAdapter PPAdapter = new();
 
@@ -23,10 +24,12 @@ namespace Raid.Toolkit.UI.WinUI
 		public AppTray(
 			IServiceProvider serviceProvider,
 			IAppUI appUI,
+			IAppDispatcher appDispatcher,
 			IOptions<ProcessManagerSettings> settings)
 		{
 			ServiceProvider = serviceProvider;
 			AppUI = appUI;
+			AppDispatcher = appDispatcher;
 			Settings = settings;
 
 			appTrayMenu = ActivatorUtilities.CreateInstance<AppTrayMenu>(ServiceProvider);
@@ -40,8 +43,8 @@ namespace Raid.Toolkit.UI.WinUI
 			};
 #pragma warning restore CS0436 // Type conflicts with imported type
 			NotifyIcon.MouseClick += NotifyIcon_MouseClick;
-			NotifyIcon.BalloonTipClosed += OnBaloonTipClosed;
-			NotifyIcon.BalloonTipClicked += OnBaloonTipClicked;
+			NotifyIcon.BalloonTipClosed += OnBalloonTipClosed;
+			NotifyIcon.BalloonTipClicked += OnBalloonTipClicked;
 		}
 
 		[DllImport("user32.dll")]
@@ -68,12 +71,12 @@ namespace Raid.Toolkit.UI.WinUI
 			}
 		}
 
-		private void OnBaloonTipClosed(object? sender, EventArgs e)
+		private void OnBalloonTipClosed(object? sender, EventArgs e)
 		{
 			OnClickCallback = null;
 		}
 
-		private void OnBaloonTipClicked(object? sender, EventArgs e)
+		private void OnBalloonTipClicked(object? sender, EventArgs e)
 		{
 			OnClickCallback?.Invoke();
 			OnClickCallback = null;
@@ -93,7 +96,7 @@ namespace Raid.Toolkit.UI.WinUI
 			{
 				if (disposing)
 				{
-					AppUI.Dispatch(() =>
+					AppDispatcher.Dispatch(() =>
 					{
 						if (NotifyIcon != null)
 						{

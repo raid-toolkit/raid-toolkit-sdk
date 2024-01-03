@@ -7,12 +7,10 @@ namespace Raid.Toolkit.Extensibility.Host;
 public class AppDispatcher : IAppDispatcher, IDisposable
 {
 	private bool IsDisposed;
-	private readonly IServiceProvider ServiceProvider;
 	public SynchronizationContext? SynchronizationContext { get; }
 
 	public AppDispatcher(IServiceProvider serviceProvider)
 	{
-		ServiceProvider = serviceProvider;
 		SynchronizationContext = SynchronizationContext.Current;
 	}
 
@@ -121,13 +119,6 @@ public class AppDispatcher : IAppDispatcher, IDisposable
 			IsDisposed = true;
 		}
 	}
-
-	// // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-	// ~AppDispatcher()
-	// {
-	//     // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-	//     Dispose(disposing: false);
-	// }
 
 	public void Dispose()
 	{

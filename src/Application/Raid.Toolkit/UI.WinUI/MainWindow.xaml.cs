@@ -30,6 +30,7 @@ namespace Raid.Toolkit.UI.WinUI
 			Large,
 		}
 		private readonly IAppUI AppUI;
+		private readonly IAppDispatcher AppDispatcher;
 		private readonly IModelLoader Loader;
 		private readonly List<FrameworkElement> ContentElements = new();
 		private readonly FrameworkElement DefaultContentElement;
@@ -53,10 +54,11 @@ namespace Raid.Toolkit.UI.WinUI
 			}
 		}
 
-		public MainWindow(IModelLoader loader, IAppUI appUI)
+		public MainWindow(IModelLoader loader, IAppUI appUI, IAppDispatcher appDispatcher)
 		{
 			Loader = loader;
 			AppUI = appUI;
+			AppDispatcher = appDispatcher;
 			Loader.OnStateUpdated += Loader_OnStateUpdated;
 			InitializeComponent();
 
@@ -92,7 +94,7 @@ namespace Raid.Toolkit.UI.WinUI
 
 		private void Loader_OnStateUpdated(object? sender, IModelLoader.ModelLoaderEventArgs e)
 		{
-			AppUI.Dispatch(() =>
+			AppDispatcher.Dispatch(() =>
 			{
 				switch (e.LoadState)
 				{

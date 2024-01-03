@@ -1,22 +1,20 @@
 using System;
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 
 using Il2CppToolkit.Runtime;
 
-namespace Raid.Toolkit.Extensibility
+namespace Raid.Toolkit.Extensibility;
+
+public interface IGameInstance : IDisposable
 {
-    public interface IGameInstance : IDisposable
-    {
-        int Token { get; }
-        Il2CsRuntimeContext Runtime { get; }
+	int Token { get; }
+	Il2CsRuntimeContext Runtime { get; }
 
-		ILoadedGameInstance InitializeOrThrow(Process proc);
-    }
+	ILoadedGameInstance InitializeOrThrow(Process proc);
+}
 
-	public interface ILoadedGameInstance : IGameInstance
-	{
-		string Id { get; }
-		string AvatarUrl { get; }
-	}
+public interface ILoadedGameInstance : IGameInstance
+{
+	string Id { get; }
+	string AvatarUrl { get; }
 }

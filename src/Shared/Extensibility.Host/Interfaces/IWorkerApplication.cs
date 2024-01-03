@@ -4,5 +4,5 @@ namespace Raid.Toolkit.Extensibility.Host;
 
 public interface IWorkerApplication
 {
-    public IPCApiClient Client { get; }
+	IPCApiClient Client { get; }
 }

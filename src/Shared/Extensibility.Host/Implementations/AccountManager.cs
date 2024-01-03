@@ -69,7 +69,7 @@ public class AccountManager : PollingBackgroundService, IAccountManager
 		return found;
 	}
 
-	private void GameInstanceManager_OnAdded(object? sender, IGameInstanceManager.GameInstanceAddedEventArgs e)
+	private void GameInstanceManager_OnAdded(object? sender, GameInstanceAddedEventArgs e)
 	{
 		if (TryGetAccount(e.Instance.Id, out IAccount? value) && value is AccountInstance account)
 		{
@@ -95,7 +95,7 @@ public class AccountManager : PollingBackgroundService, IAccountManager
 		}
 	}
 
-	private void GameInstanceManager_OnRemoved(object? sender, IGameInstanceManager.GameInstanceRemovedEventArgs e)
+	private void GameInstanceManager_OnRemoved(object? sender, GameInstanceRemovedEventArgs e)
 	{
 		if (TryGetAccount(e.Id, out IAccount? value) && value is AccountInstance account)
 		{

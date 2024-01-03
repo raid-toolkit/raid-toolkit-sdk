@@ -2,37 +2,36 @@ using System;
 using System.ComponentModel;
 using System.Drawing;
 
-namespace Raid.Toolkit.Extensibility
+namespace Raid.Toolkit.Extensibility;
+
+public interface IMenuEntry
 {
-	public interface IMenuEntry
+	string DisplayName { get; }
+	Image? Image { get; }
+	bool IsEnabled { get; }
+	bool IsVisible { get; }
+	void OnActivate();
+}
+public class MenuEntry : IMenuEntry
+{
+	[EditorBrowsable(EditorBrowsableState.Never), Obsolete("Use parameterized constructor")]
+	public MenuEntry()
 	{
-		string DisplayName { get; }
-		Image? Image { get; }
-		bool IsEnabled { get; }
-		bool IsVisible { get; }
-		void OnActivate();
+		DisplayName = string.Empty;
 	}
-	public class MenuEntry : IMenuEntry
+
+	public MenuEntry(string displayName)
 	{
-		[EditorBrowsable(EditorBrowsableState.Never), Obsolete("Use parameterized constructor")]
-		public MenuEntry()
-		{
-			DisplayName = string.Empty;
-		}
+		DisplayName = displayName;
+	}
 
-		public MenuEntry(string displayName)
-		{
-			DisplayName = displayName;
-		}
-
-		public event EventHandler? Activate;
-		public string DisplayName { get; set; }
-		public Image? Image { get; set; }
-		public bool IsEnabled { get; set; }
-		public bool IsVisible { get; set; }
-		public void OnActivate()
-		{
-			Activate?.Invoke(this, new());
-		}
+	public event EventHandler? Activate;
+	public string DisplayName { get; set; }
+	public Image? Image { get; set; }
+	public bool IsEnabled { get; set; }
+	public bool IsVisible { get; set; }
+	public void OnActivate()
+	{
+		Activate?.Invoke(this, new());
 	}
 }

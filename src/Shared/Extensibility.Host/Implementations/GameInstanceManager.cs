@@ -19,8 +19,8 @@ public class GameInstanceManager : IGameInstanceManager
 	private readonly IServiceProvider ServiceProvider;
 
 	public IReadOnlyList<ILoadedGameInstance> Instances => _Instances.Values.ToList();
-	public event EventHandler<IGameInstanceManager.GameInstanceAddedEventArgs>? OnAdded;
-	public event EventHandler<IGameInstanceManager.GameInstanceRemovedEventArgs>? OnRemoved;
+	public event EventHandler<GameInstanceAddedEventArgs>? OnAdded;
+	public event EventHandler<GameInstanceRemovedEventArgs>? OnRemoved;
 
 	public GameInstanceManager(
 		IServiceProvider serviceProvider,
