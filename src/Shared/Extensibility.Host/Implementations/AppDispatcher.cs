@@ -2,7 +2,7 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Raid.Toolkit.Extensibility.Interfaces;
+namespace Raid.Toolkit.Extensibility.Host;
 
 public class AppDispatcher : IAppDispatcher, IDisposable
 {

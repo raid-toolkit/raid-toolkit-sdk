@@ -1,7 +1,6 @@
-namespace Raid.Toolkit.Extensibility
+namespace Raid.Toolkit.Extensibility;
+
+public interface IPackageContext
 {
-    public interface IPackageContext
-    {
-        public PackageDescriptor Descriptor { get; }
-    }
+	PackageDescriptor Descriptor { get; }
 }

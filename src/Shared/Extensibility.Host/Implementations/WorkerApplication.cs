@@ -1,6 +1,5 @@
 using Microsoft.Extensions.Hosting;
 
-using Raid.Toolkit.Extensibility.Interfaces;
 using Raid.Toolkit.Common.API;
 
 using System;
@@ -8,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace Raid.Toolkit.Extensibility.Implementations;
+namespace Raid.Toolkit.Extensibility.Host;
 
 public class WorkerApplication : IWorkerApplication, IHostedService
 {
