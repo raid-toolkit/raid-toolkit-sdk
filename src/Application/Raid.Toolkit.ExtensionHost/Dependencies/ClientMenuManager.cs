@@ -37,7 +37,7 @@ namespace Raid.Toolkit.Extensibility.Host
 			}
 			catch (Exception ex)
 			{
-				Logger.LogError(ex, "Backwards Compatibility: An error occured channelling menu entry back to main process. Menu entry will not be displayed (DisplayName='{displayName}')", entry.DisplayName);
+				Logger.LogError(ex, "Backwards Compatibility: An error occurred channelling menu entry back to main process. Menu entry will not be displayed (DisplayName='{displayName}')", entry.DisplayName);
 			}
 		}
 	}
