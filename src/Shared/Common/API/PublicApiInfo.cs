@@ -21,6 +21,7 @@ public class PublicApiInfo<T>
 	{
 		Name = typeof(T).GetCustomAttribute<PublicApiAttribute>()?.Name ?? throw new InvalidOperationException("Missing PublicApiAttribute");
 		var memberDefinitions = typeof(T).GetMembers()
+				.Where(member => member.GetCustomAttribute<PublicApiAttribute>() != null)
 				.Select(member =>
 					new ApiMemberDefinition(
 						Name,

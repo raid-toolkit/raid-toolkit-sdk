@@ -25,8 +25,8 @@ public class ProcessManager : IProcessManager
 		Logger = logger;
 	}
 
-	public event EventHandler<IProcessManager.ProcessEventArgs>? ProcessFound;
-	public event EventHandler<IProcessManager.ProcessEventArgs>? ProcessClosed;
+	public event EventHandler<ProcessEventArgs>? ProcessFound;
+	public event EventHandler<ProcessEventArgs>? ProcessClosed;
 
 	public void Refresh()
 	{
@@ -37,7 +37,7 @@ public class ProcessManager : IProcessManager
 			_ = currentIds.Remove(process.Id);
 			if (!ActiveProcesses.ContainsKey(process.Id))
 			{
-				IProcessManager.ProcessEventArgs args = new(process);
+				ProcessEventArgs args = new(process);
 				try
 				{
 					ProcessFound?.Raise(this, args);
@@ -56,7 +56,7 @@ public class ProcessManager : IProcessManager
 			{
 				try
 				{
-					ProcessClosed?.Raise(this, new IProcessManager.ProcessEventArgs(closedProcessId));
+					ProcessClosed?.Raise(this, new ProcessEventArgs(closedProcessId));
 					closedProcess.Dispose();
 				}
 				catch (Exception ex)

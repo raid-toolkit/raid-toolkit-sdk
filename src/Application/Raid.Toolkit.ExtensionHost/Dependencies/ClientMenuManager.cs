@@ -28,6 +28,10 @@ namespace Raid.Toolkit.Extensibility.Host
 					menuItems.Add(new MenuContribution($"__generated__menuEntry{menuItems.Count}", entry.DisplayName));
 					var hostChannel = Dependencies.GetRequiredService<IExtensionHostChannel>();
 					package.Bundle.WriteManifest(manifest);
+					hostChannel.ManifestLoaded += (sender, e) =>
+					{
+						throw new Exception();
+					};
 					hostChannel.ReloadManifest(package.Bundle.Id);
 				}
 			}

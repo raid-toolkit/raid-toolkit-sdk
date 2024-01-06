@@ -12,6 +12,8 @@ public class ExtensionHostChannelServer : ApiServer<IExtensionHostChannel>, IExt
 	private readonly IServiceProvider ServiceProvider;
 	private readonly IServerApplication ServerApplication;
 
+	public event EventHandler<ManifestLoadedEventArgs>? ManifestLoaded;
+
 	public ExtensionHostChannelServer(IServiceProvider serviceProvider, IServerApplication serverApplication, ILogger<ApiServer<IExtensionHostChannel>> logger)
 		: base(logger)
 	{
@@ -21,6 +23,7 @@ public class ExtensionHostChannelServer : ApiServer<IExtensionHostChannel>, IExt
 
 	public Task<bool> ReloadManifest(string packageId)
 	{
+		ManifestLoaded?.Invoke(this, new(packageId));
 		// TODO: Implement menu reload from updated manifest
 		return Task.FromResult(true);
 	}

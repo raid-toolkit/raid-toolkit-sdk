@@ -14,7 +14,7 @@ namespace Raid.Toolkit.Common.API;
 
 public abstract class ApiServer<T> : IApiServer<SocketMessage>
 {
-	private readonly Dictionary<string, EventHandler<SerializableEventArgs>> EventHandlerDelegates = new();
+	private readonly Dictionary<string, Delegate> EventHandlerDelegates = new();
 	protected ILogger<ApiServer<T>> Logger;
 	private readonly PublicApiInfo<T> Api = new();
 
@@ -65,15 +65,39 @@ public abstract class ApiServer<T> : IApiServer<SocketMessage>
 		}
 	}
 
+	private static EventHandler<E> CreateHandler<E>(Action<object?, SerializableEventArgs> action) where E : SerializableEventArgs
+	{
+		return (sender, args) => action(sender, args);
+	}
+
+	static readonly MethodInfo CreateHandlerMethod = typeof(ApiServer<T>).GetMethod(
+		nameof(CreateHandler),
+		BindingFlags.NonPublic | BindingFlags.Static,
+		null,
+		new Type[] { typeof(Action<object?, SerializableEventArgs>) },
+		null)!;
+
+	private static Delegate CreateHandler(Action<object?, SerializableEventArgs> action, Type eventArgsType)
+	{
+		var result = CreateHandlerMethod.MakeGenericMethod(eventArgsType).Invoke(
+			null,
+			new object[] { action });
+		return result as Delegate ?? throw new InvalidCastException();
+	}
+
 	private void Subscribe(SubscriptionMessage subscriptionMessage, IApiSession<SocketMessage> session)
 	{
 		try
 		{
-			EventInfo eventInfo = Api.GetPublicApi<EventInfo>(subscriptionMessage.EventName, out string scope);
-			if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{scope}:{subscriptionMessage.EventName}", out var handler))
+			ApiMemberDefinition eventMember = Api.GetMember<EventInfo>(subscriptionMessage.EventName);
+			if (eventMember.MemberInfo is not EventInfo eventInfo)
+				return;
+			if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{eventMember}:{subscriptionMessage.EventName}", out var handler))
 			{
-				handler = async (object? sender, SerializableEventArgs args) => await SendEvent(eventInfo, session, args, scope);
-				EventHandlerDelegates.Add($"{session.Id}:{scope}:{subscriptionMessage.EventName}", handler);
+				handler = CreateHandler(
+					async (object? sender, SerializableEventArgs args) => await SendEvent(eventMember, eventInfo, session, args),
+					eventInfo.EventHandlerType.GenericTypeArguments[0]);
+				EventHandlerDelegates.Add($"{session.Id}:{eventMember}:{subscriptionMessage.EventName}", handler);
 			}
 			eventInfo.AddEventHandler(this, handler);
 		}
@@ -88,7 +112,7 @@ public abstract class ApiServer<T> : IApiServer<SocketMessage>
 		try
 		{
 			EventInfo eventInfo = Api.GetPublicApi<EventInfo>(subscriptionMessage.EventName, out string scope);
-			if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{scope}:{subscriptionMessage.EventName}", out EventHandler<SerializableEventArgs>? handler))
+			if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{scope}:{subscriptionMessage.EventName}", out Delegate? handler))
 				return;
 
 			eventInfo.RemoveEventHandler(this, handler);
@@ -99,21 +123,21 @@ public abstract class ApiServer<T> : IApiServer<SocketMessage>
 		}
 	}
 
-	private async Task SendEvent(EventInfo eventInfo, IApiSession<SocketMessage> session, SerializableEventArgs args, string scope)
+	private async Task SendEvent(ApiMemberDefinition eventMember, EventInfo eventInfo, IApiSession<SocketMessage> session, SerializableEventArgs args)
 	{
 		try
 		{
 			if (!session.Connected)
 			{
-				if (EventHandlerDelegates.Remove($"{session.Id}:{scope}:{args.EventName}", out EventHandler<SerializableEventArgs>? handler))
+				if (EventHandlerDelegates.Remove($"{session.Id}:{eventMember.Scope}:{eventMember.PublicName}", out Delegate? handler))
 				{
 					eventInfo.RemoveEventHandler(this, handler);
 				}
 				return;
 			}
 
-			SendEventMessage eventMsg = new(args.EventName, JArray.FromObject(args.EventArguments));
-			SocketMessage message = new(scope, "send-event", JToken.FromObject(eventMsg));
+			SendEventMessage eventMsg = new(eventMember.PublicName, JArray.FromObject(args.EventArguments));
+			SocketMessage message = new(eventMember.Scope, "send-event", JToken.FromObject(eventMsg));
 			await session.SendAsync(message);
 		}
 		catch (Exception ex)

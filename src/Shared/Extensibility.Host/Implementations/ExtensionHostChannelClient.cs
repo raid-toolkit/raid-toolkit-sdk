@@ -1,5 +1,5 @@
 using Raid.Toolkit.Common.API;
-
+using System;
 using System.Reflection;
 using System.Threading.Tasks;
 
@@ -9,7 +9,14 @@ public class ExtensionHostChannelClient : ApiCallerBase<IExtensionHostChannel>, 
 {
 	public ExtensionHostChannelClient(IWorkerApplication workerApplication)
 		: base(workerApplication.Client)
-	{ }
+	{
+	}
+
+	public event EventHandler<ManifestLoadedEventArgs> ManifestLoaded
+	{
+		add => AddHandler(nameof(ManifestLoaded), value);
+		remove => RemoveHandler(nameof(ManifestLoaded), value);
+	}
 
 	public Task<bool> ReloadManifest(string packageId)
 	{

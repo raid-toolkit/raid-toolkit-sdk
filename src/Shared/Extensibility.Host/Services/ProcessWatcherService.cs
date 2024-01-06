@@ -36,7 +36,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
 			ProcessManager.ProcessClosed += OnProcessClosed;
 		}
 
-		private void OnProcessFound(object? sender, IProcessManager.ProcessEventArgs e)
+		private void OnProcessFound(object? sender, ProcessEventArgs e)
 		{
 			using TrackedOperation createInstanceOp = ErrorService.TrackOperation(
 				ServiceErrorCategory.Process,
@@ -76,7 +76,7 @@ namespace Raid.Toolkit.Extensibility.Host.Services
 			}
 		}
 
-		private void OnProcessClosed(object? sender, IProcessManager.ProcessEventArgs e)
+		private void OnProcessClosed(object? sender, ProcessEventArgs e)
 		{
 			try
 			{
