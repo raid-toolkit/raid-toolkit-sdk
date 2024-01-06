@@ -64,6 +64,7 @@ public partial class App : Application
 				.AddScoped<IManagedPackageFactory, ManagedPackageFactory>() // creates a scope for each IExtensionManagement
 				.AddScoped<IPackageLoader, SandboxedPackageLoader>()
 				.AddScoped<IExtensionHostChannel, ExtensionHostChannelClient>()
+				.AddScoped<IRuntimeManager, RuntimeManagerClient>()
 				.AddScoped(sp => CreateExtensionManagementScope(sp, initialOptions.GetPackageId()))
 			);
 		return hostBuilder.Build();

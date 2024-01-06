@@ -72,6 +72,7 @@ partial class RTKApplication : Application
 				.Configure<ModelLoaderOptions>(config => config.ForceRebuild = initialOptions.ForceRebuild)
 				.AddHostedServiceSingleton<IServerApplication, ServerApplication>()
 				.AddHostedServiceSingleton<IExtensionHostChannel, ExtensionHostChannelServer>()
+				.AddHostedServiceSingleton<IRuntimeManager, RuntimeManagerServer>()
 				.AddSingleton<IPackageManager, PackageManager>()
 				.AddSingleton<IAppDispatcher, AppDispatcher>()
 				.AddSingleton<IModelLoader, ModelLoader>()

@@ -2,22 +2,19 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.Common.API;
 
-using System;
 using System.Threading;
-using System.Threading.Tasks;
 
-namespace Raid.Toolkit.Extensibility.Host;
+namespace Raid.Toolkit;
+
 public class ExtensionHostChannelServer : ApiServer<IExtensionHostChannel>, IExtensionHostChannel, IHostedService
 {
-	private readonly IServiceProvider ServiceProvider;
 	private readonly IServerApplication ServerApplication;
 
 	public event EventHandler<ManifestLoadedEventArgs>? ManifestLoaded;
 
-	public ExtensionHostChannelServer(IServiceProvider serviceProvider, IServerApplication serverApplication, ILogger<ApiServer<IExtensionHostChannel>> logger)
+	public ExtensionHostChannelServer(IServerApplication serverApplication, ILogger<ApiServer<IExtensionHostChannel>> logger)
 		: base(logger)
 	{
-		ServiceProvider = serviceProvider;
 		ServerApplication = serverApplication;
 	}
 
