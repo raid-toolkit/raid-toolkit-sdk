@@ -159,10 +159,6 @@
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\$(Configuration)\net472\Raid.Model.dll">
-            <Pack>true</Pack>
-            <PackagePath>build\MSBuild\</PackagePath>
-        </None>
         <None Include="$(OutputPath)\..\$(Configuration)\net472\Raid.Toolkit.Extensibility.Tasks.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
@@ -326,10 +322,6 @@
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
         <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Raid.Toolkit.Common.dll">
-            <Pack>true</Pack>
-            <PackagePath>build\MSBuildCore\</PackagePath>
-        </None>
-        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Raid.Model.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
