@@ -11,7 +11,7 @@ jobs:
 
     env:
       IS_CI: true
-      Solution_Name: SDK.sln
+      Solution_Name: SDK-CI.sln
       Launcher_csproj: src\Application\Launcher\Launcher.csproj
       App_csproj: src\Application\Raid.Toolkit\Raid.Toolkit.csproj
       Client_csproj: src\ClientSDK\DotNet\Raid.Client.csproj
@@ -67,9 +67,6 @@ jobs:
       # Publish RTK
       - name: Build App
         run: msbuild $env:Solution_Name -m -t:"Build;Pack" -p:Configuration=Debug -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
-
-      - name: Build Launcher
-        run: msbuild $env:Launcher_csproj -m -t:Publish -p:TargetFramework=net5.0-windows -p:Configuration=Debug -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
 
       - name: Build Setup
         run: |
