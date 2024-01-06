@@ -98,7 +98,7 @@ jobs:
       # NuGet Push
       - name: Push client package to PR registry
         run: |
-          dotnet nuget push publish/nuget/Raid.Common.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Common.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Client.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Model.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Toolkit.DataModel.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate

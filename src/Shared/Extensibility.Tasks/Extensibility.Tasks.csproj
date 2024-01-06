@@ -25,8 +25,8 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	</ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Model\Model.csproj" />
@@ -155,7 +155,7 @@
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\$(Configuration)\net472\Raid.Common.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net472\Raid.Toolkit.Common.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuild\</PackagePath>
         </None>
@@ -325,7 +325,7 @@
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Raid.Common.dll">
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Raid.Toolkit.Common.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>

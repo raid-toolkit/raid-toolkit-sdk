@@ -111,7 +111,7 @@ jobs:
       # NuGet Push
       - name: Push client package to Nuget registry
         run: |
-          dotnet nuget push publish/nuget/Raid.Common.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:NUGET_PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Common.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:NUGET_PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Client.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:NUGET_PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Model.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:NUGET_PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Toolkit.DataModel.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:NUGET_PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
