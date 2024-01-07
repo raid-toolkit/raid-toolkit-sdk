@@ -53,9 +53,10 @@ public partial class App : Application
 		else
 			hostBuilder.ConfigureServices((context, services) => services
 				.AddHostedServiceSingleton<IWorkerApplication, WorkerApplication>()
-				.AddScoped<IExtensionHostChannel, ExtensionHostChannelClient>()
-				.AddScoped<IRuntimeManager, RuntimeManagerClient>()
-				.AddScoped<IMenuManager, ClientMenuManager>());
+				.AddSingleton<IExtensionHostChannel, ExtensionHostChannelClient>()
+				.AddSingleton<IRuntimeManager, RuntimeManagerClient>()
+				.AddSingleton<IMenuManager, ClientMenuManager>());
+
 		// logging
 		hostBuilder
 			.ConfigureLogging((_) => GetLoggerOptions(initialOptions))
@@ -65,11 +66,11 @@ public partial class App : Application
 				.AddHostedServiceSingleton<IGameInstanceManager, GameInstanceManager>()
 				.AddSingleton<IPackageManager, PackageManager>()
 				.AddSingleton<IAppDispatcher, AppDispatcher>()
-				.AddScoped<IModelLoader, ModelLoader>()
-				.AddScoped<IWindowManager, WindowManager>()
-				.AddScoped<IManagedPackageFactory, ManagedPackageFactory>() // creates a scope for each IExtensionManagement
-				.AddScoped<IPackageLoader, SandboxedPackageLoader>()
-				.AddScoped(sp => CreateExtensionManagementScope(sp, initialOptions.GetPackageId()))
+				.AddSingleton<IModelLoader, ModelLoader>()
+				.AddSingleton<IWindowManager, WindowManager>()
+				.AddSingleton<IManagedPackageFactory, ManagedPackageFactory>() // creates a scope for each IExtensionManagement
+				.AddSingleton<IPackageLoader, SandboxedPackageLoader>()
+				.AddSingleton(sp => CreateExtensionManagementScope(sp, initialOptions.GetPackageId()))
 			);
 		return hostBuilder.Build();
 	}
