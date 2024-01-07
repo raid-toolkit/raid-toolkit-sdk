@@ -62,7 +62,7 @@ public class GameInstanceManager : PollingBackgroundService, IGameInstanceManage
 
 	protected override Task ExecuteOnceAsync(CancellationToken token)
 	{
-		if (ModelLoader.IsLoaded)
+		if (!ModelLoader.IsLoaded)
 			return Task.CompletedTask;
 
 		foreach (var instance in _RawInstances.Values)
