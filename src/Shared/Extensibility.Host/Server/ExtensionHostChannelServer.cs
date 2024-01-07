@@ -1,21 +1,23 @@
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.Common.API;
 
-using System.Threading;
-
-namespace Raid.Toolkit;
+namespace Raid.Toolkit.Extensibility.Host.Server;
 
 public class ExtensionHostChannelServer : ApiServer<IExtensionHostChannel>, IExtensionHostChannel, IHostedService
 {
-	private readonly IServerApplication ServerApplication;
+	private readonly IServerApplication? ServerApplication;
 
 	public event EventHandler<ManifestLoadedEventArgs>? ManifestLoaded;
 
-	public ExtensionHostChannelServer(IServerApplication serverApplication, ILogger<ApiServer<IExtensionHostChannel>> logger)
+	public ExtensionHostChannelServer(IServiceProvider serviceProvider, ILogger<ApiServer<IExtensionHostChannel>> logger)
 		: base(logger)
 	{
-		ServerApplication = serverApplication;
+		ServerApplication = serviceProvider.GetService<IServerApplication>();
 	}
 
 	public Task<bool> ReloadManifest(string packageId)
@@ -27,7 +29,7 @@ public class ExtensionHostChannelServer : ApiServer<IExtensionHostChannel>, IExt
 
 	public Task StartAsync(CancellationToken cancellationToken)
 	{
-		ServerApplication.RegisterApiServer(this);
+		ServerApplication?.RegisterApiServer(this);
 		return Task.CompletedTask;
 	}
 

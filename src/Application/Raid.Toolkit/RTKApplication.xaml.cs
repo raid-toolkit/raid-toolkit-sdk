@@ -3,6 +3,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
+using Raid.Toolkit.Extensibility.Host.Server;
 using Raid.Toolkit.Extensibility.Host.Utils;
 using Raid.Toolkit.Loader;
 using Raid.Toolkit.Model;

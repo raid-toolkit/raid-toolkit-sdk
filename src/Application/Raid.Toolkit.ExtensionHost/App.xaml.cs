@@ -7,7 +7,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
-
+using Raid.Toolkit.Extensibility.Host.Server;
 using Raid.Toolkit.Extensibility.Host.Utils;
 using Raid.Toolkit.ExtensionHost.ViewModel;
 using Raid.Toolkit.Loader;
@@ -47,30 +47,34 @@ public partial class App : Application
 
 		if (initialOptions.Standalone)
 			hostBuilder.ConfigureServices((context, services) => services
-				.AddHostedServiceSingleton<IServerApplication, ServerApplication>());
-
+				.AddHostedServiceSingleton<IExtensionHostChannel, ExtensionHostChannelServer>()
+				.AddHostedServiceSingleton<IRuntimeManager, RuntimeManagerServer>()
+				.AddSingleton<IMenuManager, MenuManager>());
+		else
+			hostBuilder.ConfigureServices((context, services) => services
+				.AddHostedServiceSingleton<IWorkerApplication, WorkerApplication>()
+				.AddScoped<IExtensionHostChannel, ExtensionHostChannelClient>()
+				.AddScoped<IRuntimeManager, RuntimeManagerClient>()
+				.AddScoped<IMenuManager, ClientMenuManager>());
 		// logging
 		hostBuilder
 			.ConfigureLogging((_) => GetLoggerOptions(initialOptions))
 			.ConfigureServices((context, services) => services
 				.AddLogging(builder => builder.AddFile())
 				.Configure<ModelLoaderOptions>(config => config.ForceRebuild = initialOptions.ForceRebuild)
-				.AddHostedServiceSingleton<IWorkerApplication, WorkerApplication>()
+				.AddHostedServiceSingleton<IGameInstanceManager, GameInstanceManager>()
 				.AddSingleton<IPackageManager, PackageManager>()
 				.AddSingleton<IAppDispatcher, AppDispatcher>()
 				.AddScoped<IModelLoader, ModelLoader>()
-				.AddScoped<IMenuManager, ClientMenuManager>()
 				.AddScoped<IWindowManager, WindowManager>()
 				.AddScoped<IManagedPackageFactory, ManagedPackageFactory>() // creates a scope for each IExtensionManagement
 				.AddScoped<IPackageLoader, SandboxedPackageLoader>()
-				.AddScoped<IExtensionHostChannel, ExtensionHostChannelClient>()
-				.AddScoped<IRuntimeManager, RuntimeManagerClient>()
 				.AddScoped(sp => CreateExtensionManagementScope(sp, initialOptions.GetPackageId()))
 			);
 		return hostBuilder.Build();
 	}
 
-	protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
+	protected override void OnLaunched(LaunchActivatedEventArgs args)
 	{
 		Model.OnLaunched();
 	}

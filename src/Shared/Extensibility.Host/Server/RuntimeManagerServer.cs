@@ -1,12 +1,17 @@
+using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Il2CppToolkit.Runtime;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Raid.Toolkit.Common.API;
 
-namespace Raid.Toolkit;
+namespace Raid.Toolkit.Extensibility.Host.Server;
 
 public class RuntimeManagerServer : ApiServer<IRuntimeManager>, IRuntimeManager, IHostedService
 {
@@ -21,16 +26,16 @@ public class RuntimeManagerServer : ApiServer<IRuntimeManager>, IRuntimeManager,
 
 	private readonly Dictionary<int, ProcessState> ProcessStates = new();
 	private readonly Dictionary<string, InjectedRuntimeDescriptor> InjectedRuntimes = new();
-	private readonly IServerApplication ServerApplication;
+	private readonly IServerApplication? ServerApplication;
 	private bool IsRunning = false;
 
 	public event EventHandler<RuntimeAddedEventArgs>? OnAdded;
 	public event EventHandler<RuntimeRemovedEventArgs>? OnRemoved;
 
-	public RuntimeManagerServer(IServerApplication serverApplication, ILogger<ApiServer<IRuntimeManager>> logger)
+	public RuntimeManagerServer(IServiceProvider serviceProvider, ILogger<ApiServer<IRuntimeManager>> logger)
 		: base(logger)
 	{
-		ServerApplication = serverApplication;
+		ServerApplication = serviceProvider.GetService<IServerApplication>();
 	}
 
 	public Task<InjectedRuntimeDescriptor[]> GetRuntimes()
@@ -40,7 +45,7 @@ public class RuntimeManagerServer : ApiServer<IRuntimeManager>, IRuntimeManager,
 
 	public async Task StartAsync(CancellationToken cancellationToken)
 	{
-		ServerApplication.RegisterApiServer(this);
+		ServerApplication?.RegisterApiServer(this);
 		IsRunning = true;
 		await Task.Run(ServiceWorker, cancellationToken);
 	}
@@ -71,7 +76,7 @@ public class RuntimeManagerServer : ApiServer<IRuntimeManager>, IRuntimeManager,
 			if (processState.IsInjected && !processMap.ContainsKey(processState.ProcessId))
 			{
 				removedProcessIds.Add(processState.ProcessId);
-				OnRemoved?.Raise(this, new(processState.Descriptor));
+				OnRemoved?.Invoke(this, new(processState.Descriptor));
 			}
 		}
 
@@ -106,7 +111,7 @@ public class RuntimeManagerServer : ApiServer<IRuntimeManager>, IRuntimeManager,
 				state.Descriptor = descriptor;
 
 				InjectedRuntimes.Add(descriptor.Id, descriptor);
-				OnAdded?.Raise(this, new RuntimeAddedEventArgs(descriptor));
+				OnAdded?.Invoke(this, new RuntimeAddedEventArgs(descriptor));
 			}
 		}
 	}

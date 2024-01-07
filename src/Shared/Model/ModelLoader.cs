@@ -40,26 +40,23 @@ public class ModelLoader : IModelLoader
 		new Regex(@"^Unity\.Collections\.NativeSlice`1$"),
 	};
 
-	private EventHandler<IModelLoader.ModelLoaderEventArgs>? OnStateUpdatedInternal;
-	public event EventHandler<IModelLoader.ModelLoaderEventArgs>? OnStateUpdated
+	private EventHandler<ModelLoaderEventArgs>? OnStateUpdatedInternal;
+	public event EventHandler<ModelLoaderEventArgs>? OnStateUpdated
 	{
-		add => OnStateUpdatedInternal += value;//if (LastEvent != null)//    value(this, LastEvent);
+		add => OnStateUpdatedInternal += value;
 		remove => OnStateUpdatedInternal -= value;
 	}
 
-#nullable enable
-	private IModelLoader.ModelLoaderEventArgs? LastEvent;
-	private void Raise(IModelLoader.ModelLoaderEventArgs eventArgs)
+	private void Raise(ModelLoaderEventArgs eventArgs)
 	{
-		LastEvent = eventArgs;
 		OnStateUpdatedInternal?.Raise(this, eventArgs);
 	}
-#nullable restore
 
 	public string? GameVersion { get; private set; }
 	public Version? InteropVersion { get; private set; }
 	public string OutputAssemblyName { get; set; } = "Raid.Interop";
 	public string OutputFilename { get; set; } = "Raid.Interop.dll";
+	public bool IsLoaded { get; private set; }
 	private Assembly? InteropAsm;
 	private readonly ILogger<ModelLoader>? Logger;
 	private readonly IOptions<ModelLoaderOptions> Options;
@@ -70,6 +67,7 @@ public class ModelLoader : IModelLoader
 		Options = options;
 		AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
 	}
+
 
 	private Assembly? OnAssemblyResolve(object? sender, ResolveEventArgs args)
 	{
@@ -94,13 +92,14 @@ public class ModelLoader : IModelLoader
 		{
 			string dllPath = await Build(regices, outputDirectory);
 			InteropAsm = Assembly.LoadFrom(dllPath);
-			Raise(new(IModelLoader.LoadState.Loaded));
+			IsLoaded = true;
+			Raise(new(ModelLoaderState.Loaded));
 			return InteropAsm;
 		}
 		catch (Exception ex)
 		{
 			Logger?.LogError(ex, "Failed to load interop assembly");
-			Raise(new(IModelLoader.LoadState.Error));
+			Raise(new(ModelLoaderState.Error));
 			throw;
 		}
 	}
@@ -120,7 +119,7 @@ public class ModelLoader : IModelLoader
 			PlariumPlayAdapter.GameInfo gameInfo = GetGameInfo();
 			GameVersion = gameInfo.Version;
 
-			Raise(new(IModelLoader.LoadState.Initialize));
+			Raise(new(ModelLoaderState.Initialize));
 
 			string dllPath = Path.Combine(outputDirectory, gameInfo.Version!, OutputFilename);
 
@@ -149,20 +148,20 @@ public class ModelLoader : IModelLoader
 
 			if (shouldGenerate)
 			{
-				Raise(new(IModelLoader.LoadState.Rebuild));
+				Raise(new(ModelLoaderState.Rebuild));
 				await Task.Run(() =>
 				{
 					GenerateAssembly(gameInfo, dllPath);
 				});
 			}
 
-			Raise(new(IModelLoader.LoadState.Ready));
+			Raise(new(ModelLoaderState.Ready));
 			return dllPath;
 		}
 		catch (Exception ex)
 		{
 			Logger?.LogError(ex, "Failed to load interop assembly");
-			Raise(new(IModelLoader.LoadState.Error));
+			Raise(new(ModelLoaderState.Error));
 			throw;
 		}
 	}
@@ -217,15 +216,11 @@ public class ModelLoader : IModelLoader
 
 	private void Compiler_ProgressUpdated(object? sender, ProgressUpdatedEventArgs e)
 	{
-		Raise(new IModelLoader.ModelLoaderEventArgs(IModelLoader.LoadState.Rebuild, new IModelLoader.TaskProgress()
+		Raise(new ModelLoaderEventArgs(ModelLoaderState.Rebuild, new TaskProgress()
 		{
 			DisplayName = e.DisplayName,
 			Completed = e.Completed,
 			Total = e.Total
 		}));
 	}
-}
-public class ModelLoaderOptions
-{
-	public bool ForceRebuild { get; set; } = false;
 }

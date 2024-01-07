@@ -3,7 +3,6 @@ using System.Diagnostics;
 
 using Client.Model;
 
-using Il2CppToolkit.Common.Errors;
 using Il2CppToolkit.Runtime;
 
 namespace Raid.Toolkit.Extensibility.Host;
@@ -32,9 +31,7 @@ public class GameInstance : IGameInstance, ILoadedGameInstance, IDisposable
 	{
 		Runtime ??= new(proc);
 
-		ErrorHandler.VerifyElseThrow(Runtime != null, ServiceError.MethodCalledBeforeInitialization, "Method cannot be called before intialization");
 		var appModel = AppModel._instance.GetValue(Runtime);
-
 		var userWrapper = appModel._userWrapper;
 		var socialWrapper = userWrapper.Social.SocialData;
 		var globalId = socialWrapper.PlariumGlobalId;

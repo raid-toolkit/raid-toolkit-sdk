@@ -25,13 +25,10 @@ namespace Raid.Toolkit.Extensibility.Host
 				var menuItems = contributions.MenuItems ??= new();
 				if (!menuItems.Any(contribution => contribution is MenuContribution menuEntry && menuEntry.DisplayName == entry.DisplayName))
 				{
+					Logger.LogWarning("Migrating programmatic menu option to `contributions` property.");
 					menuItems.Add(new MenuContribution($"__generated__menuEntry{menuItems.Count}", entry.DisplayName));
 					var hostChannel = Dependencies.GetRequiredService<IExtensionHostChannel>();
 					package.Bundle.WriteManifest(manifest);
-					hostChannel.ManifestLoaded += (sender, e) =>
-					{
-						throw new Exception();
-					};
 					hostChannel.ReloadManifest(package.Bundle.Id);
 				}
 			}
