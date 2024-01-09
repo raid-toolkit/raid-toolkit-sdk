@@ -35,7 +35,7 @@ namespace Raid.Toolkit.UI.WinUI
 			{
 				extensionsToolStripMenuItem.DropDownItems.Clear();
 				extensionsToolStripMenuItem.DropDownItems.AddRange(MenuManager.GetEntries().Select(entry =>
-					new ToolStripMenuItem(entry.DisplayName, entry.Image, (sender, e) => entry.OnActivate())
+					new ToolStripMenuItem(entry.DisplayName, null /*V3 TODO use imageUrl*/, (sender, e) => entry.OnActivate())
 				).ToArray());
 				extensionsToolStripMenuItem.DropDownItems.Add(manageExtensionsToolStripMenuItem);
 				extensionsToolStripMenuItem.Enabled = extensionsToolStripMenuItem.DropDownItems.Count > 0;

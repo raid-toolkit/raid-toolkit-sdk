@@ -40,12 +40,10 @@ namespace Raid.Toolkit.Extensibility.Host
 			switch (mode)
 			{
 				case ServiceMode.Server:
-					services.AddHostedServiceSingleton<IServerApplication, ServerApplication>()
-						.AddSingleton<IMenuManager, MenuManager>();
+					services.AddHostedServiceSingleton<IServerApplication, ServerApplication>();
 					break;
 				case ServiceMode.Worker:
-					services.AddHostedServiceSingleton<IWorkerApplication, WorkerApplication>()
-						.AddSingleton<IMenuManager, MenuManager>();
+					services.AddHostedServiceSingleton<IWorkerApplication, WorkerApplication>();
 					break;
 			}
 			return services

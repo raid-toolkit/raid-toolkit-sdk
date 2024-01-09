@@ -75,6 +75,12 @@ public class ApiCallerBase<T>
 		return Client.Call<U>(def.Scope, def.Attribute.Name, args);
 	}
 
+	protected Task CallMethod(MethodBase method, params object[] args)
+	{
+		var def = Api.GetMember<MethodInfo>(method.Name);
+		return Client.Call(def.Scope, def.Attribute.Name, args);
+	}
+
 	protected void Subscribe(EventInfo eventInfo)
 	{
 		var def = Api.GetMember<EventInfo>(eventInfo.Name);

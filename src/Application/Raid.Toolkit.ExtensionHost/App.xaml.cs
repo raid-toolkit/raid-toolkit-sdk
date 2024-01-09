@@ -34,7 +34,7 @@ public partial class App : Application
 		Model = new(initialOptions, Host.Services);
 	}
 
-	private IHost BuildHost(BaseOptions initialOptions)
+	private static IHost BuildHost(BaseOptions initialOptions)
 	{
 		HostBuilder hostBuilder = new();
 
@@ -49,13 +49,13 @@ public partial class App : Application
 			hostBuilder.ConfigureServices((context, services) => services
 				.AddHostedServiceSingleton<IExtensionHostChannel, ExtensionHostChannelServer>()
 				.AddHostedServiceSingleton<IRuntimeManager, RuntimeManagerServer>()
-				.AddSingleton<IMenuManager, MenuManager>());
+				.AddHostedServiceSingleton<IMenuManager, MenuManagerServer>());
 		else
 			hostBuilder.ConfigureServices((context, services) => services
 				.AddHostedServiceSingleton<IWorkerApplication, WorkerApplication>()
 				.AddSingleton<IExtensionHostChannel, ExtensionHostChannelClient>()
 				.AddSingleton<IRuntimeManager, RuntimeManagerClient>()
-				.AddSingleton<IMenuManager, ClientMenuManager>());
+				.AddSingleton<IMenuManager, MenuManagerClient>());
 
 		// logging
 		hostBuilder

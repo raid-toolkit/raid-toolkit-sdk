@@ -74,10 +74,10 @@ partial class RTKApplication : Application
 				.AddHostedServiceSingleton<IServerApplication, ServerApplication>()
 				.AddHostedServiceSingleton<IExtensionHostChannel, ExtensionHostChannelServer>()
 				.AddHostedServiceSingleton<IRuntimeManager, RuntimeManagerServer>()
+				.AddHostedServiceSingleton<IMenuManager, MenuManagerServer>()
 				.AddSingleton<IPackageManager, PackageManager>()
 				.AddSingleton<IAppDispatcher, AppDispatcher>()
 				.AddSingleton<IModelLoader, ModelLoader>()
-				.AddSingleton<IMenuManager, MenuManager>()
 				.AddSingleton<IPackageWorkerManager, PackageWorkerManager>()
 				.AddSingleton<IAppUI, AppWinUI>()
 			);

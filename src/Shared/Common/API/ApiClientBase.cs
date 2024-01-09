@@ -80,4 +80,10 @@ public abstract class ApiClientBase
 		await SendAsync(new SocketMessage(apiName, "call", JObject.FromObject(new CallMethodMessage(promiseId, methodName, JArray.FromObject(args)))));
 		return await Promises.GetTask<T>(promiseId);
 	}
+	public async Task Call(string apiName, string methodName, params object[] args)
+	{
+		string promiseId = Promises.Create();
+		await SendAsync(new SocketMessage(apiName, "call", JObject.FromObject(new CallMethodMessage(promiseId, methodName, JArray.FromObject(args)))));
+		await Promises.GetTask(promiseId);
+	}
 }
