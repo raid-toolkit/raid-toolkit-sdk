@@ -203,8 +203,8 @@ namespace Raid.Toolkit.Model
             compiler.AddTarget(new NetCoreTarget());
             compiler.AddConfiguration(
                 ArtifactSpecs.TypeSelectors.MakeValue(new List<Func<TypeDescriptor, ArtifactSpecs.TypeSelectorResult>>{
-                    {td => IncludeTypes.Any(rex => rex.IsMatch(td.Name)) ? ArtifactSpecs.TypeSelectorResult.Include : ArtifactSpecs.TypeSelectorResult.Default },
-                    {td => ExcludeTypes.Any(rex => rex.IsMatch(td.Name)) ? ArtifactSpecs.TypeSelectorResult.Exclude : ArtifactSpecs.TypeSelectorResult.Default },
+                    {td => IncludeTypes.Any(rex => rex.IsMatch(td.Name)) ? ArtifactSpecs.TypeSelectorResult.Include : ArtifactSpecs.TypeSelectorResult.None },
+                    {td => ExcludeTypes.Any(rex => rex.IsMatch(td.Name)) ? ArtifactSpecs.TypeSelectorResult.Exclude : ArtifactSpecs.TypeSelectorResult.None },
                 }),
                 ArtifactSpecs.AssemblyName.MakeValue(OutputAssemblyName),
                 ArtifactSpecs.AssemblyVersion.MakeValue(CurrentInteropVersion),

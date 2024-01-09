@@ -24,7 +24,7 @@
     "editor.defaultFormatter": "ms-dotnettools.csharp",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
-      "source.fixAll": true
+      "source.fixAll": "explicit"
     }
   },
   "omnisharp.useModernNet": true,
@@ -150,5 +150,6 @@
     "**/*.csproj.user": true
   },
   "dotnet.defaultSolution": "SDK.sln",
-  "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true
+  "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+  "dotnet.preferCSharpExtension": true
 }
