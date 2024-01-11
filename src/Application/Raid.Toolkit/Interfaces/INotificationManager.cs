@@ -2,9 +2,6 @@ using CommunityToolkit.WinUI.Notifications;
 
 using Microsoft.Windows.AppNotifications;
 
-using System;
-using System.Collections.Generic;
-
 namespace Raid.Toolkit.Extensibility;
 
 public interface INotification
@@ -12,6 +9,7 @@ public interface INotification
 	string ScenarioId { get; set; }
 	string GetXml();
 }
+
 public class NotificationActivationEventArgs : EventArgs
 {
 	public NotificationActivationEventArgs(IReadOnlyDictionary<string, string> arguments, IReadOnlyDictionary<string, string> inputs)
@@ -33,11 +31,13 @@ public interface INotificationSink : IDisposable
 	AppNotification SendNotification(ToastContent notification, string? tag = null);
 	void Handle(NotificationActivationEventArgs eventArgs);
 }
+
 public interface INotificationManager
 {
 	void Initialize();
 	void RegisterHandler(INotificationSink sink);
 }
+
 public static class NotificationConstants
 {
 	public static string ScenarioId => "scenarioId";

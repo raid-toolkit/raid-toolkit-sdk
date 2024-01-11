@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Notifications;
+using Raid.Toolkit.Model;
 using Raid.Toolkit.UI.WinUI.Forms;
 
 namespace Raid.Toolkit.UI.WinUI
@@ -46,7 +47,7 @@ namespace Raid.Toolkit.UI.WinUI
 				Task.Run(async () =>
 				{
 					await UpdateService.InstallUpdate();
-					AppService.Exit();
+					ApplicationModel.Exit();
 				});
 			}
 
@@ -60,7 +61,7 @@ namespace Raid.Toolkit.UI.WinUI
 
 			private void closeMenuItem_Click(object? sender, EventArgs e)
 			{
-				AppService.Exit();
+				ApplicationModel.Exit();
 			}
 
 			private void manageExtensionsToolStripMenuItem_Click(object? sender, EventArgs e)
@@ -78,7 +79,7 @@ namespace Raid.Toolkit.UI.WinUI
 			private readonly ToolStripMenuItem manageExtensionsToolStripMenuItem = new();
 			private readonly IMenuManager MenuManager;
 			private readonly IAppUI AppUI;
-			private readonly IAppService AppService;
+			private readonly IApplicationModel ApplicationModel;
 			private readonly IUpdateService UpdateService;
 			private readonly INotificationSink Notify;
 
@@ -92,13 +93,13 @@ namespace Raid.Toolkit.UI.WinUI
 			}
 
 			public AppTrayMenu(
-				IAppService appService,
+				IApplicationModel appModel,
 				IMenuManager menuManager,
 				IAppUI appUI,
 				INotificationManager notificationManager,
 				IUpdateService updateService)
 			{
-				AppService = appService;
+				ApplicationModel = appModel;
 				UpdateService = updateService;
 				MenuManager = menuManager;
 				AppUI = appUI;

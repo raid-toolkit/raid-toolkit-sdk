@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Raid.Toolkit.Extensibility.Host.Server;
 using Raid.Toolkit.Extensibility.Host.Utils;
+using Raid.Toolkit.Extensibility.Notifications;
 using Raid.Toolkit.Loader;
 using Raid.Toolkit.Model;
 using Raid.Toolkit.UI.WinUI;
@@ -33,7 +34,7 @@ partial class RTKApplication : Application
 	}
 
 	public IHost Host { get; }
-	public ApplicationModel Model { get; }
+	public IApplicationModel Model { get; }
 	public StartupOptions Options { get; }
 
 	public static new RTKApplication Current => Application.Current as RTKApplication ?? throw new NullReferenceException();
@@ -47,7 +48,7 @@ partial class RTKApplication : Application
 		this.InitializeComponent();
 		Options = options;
 		Host = BuildHost(options);
-		Model = new ApplicationModel(options, Host.Services);
+		Model = Host.Services.GetRequiredService<IApplicationModel>();
 	}
 
 	private IHost BuildHost(StartupOptions initialOptions)
@@ -75,11 +76,15 @@ partial class RTKApplication : Application
 				.AddHostedServiceSingleton<IExtensionHostChannel, ExtensionHostChannelServer>()
 				.AddHostedServiceSingleton<IRuntimeManager, RuntimeManagerServer>()
 				.AddHostedServiceSingleton<IMenuManager, MenuManagerServer>()
+				.AddHostedServiceSingleton<IAppUI, AppWinUI>()
+				.AddHostedServiceSingleton<IUpdateService, UpdateService>()
+				.AddHostedServiceSingleton<INotificationManager, NotificationManager>()
+				.AddSingleton<GitHub.Updater>()
 				.AddSingleton<IPackageManager, PackageManager>()
 				.AddSingleton<IAppDispatcher, AppDispatcher>()
 				.AddSingleton<IModelLoader, ModelLoader>()
 				.AddSingleton<IPackageWorkerManager, PackageWorkerManager>()
-				.AddSingleton<IAppUI, AppWinUI>()
+				.AddSingleton<IApplicationModel, ApplicationModel>()
 			);
 		return hostBuilder.Build();
 	}

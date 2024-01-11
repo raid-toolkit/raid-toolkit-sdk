@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host.Services;
-using Raid.Toolkit.Extensibility.Notifications;
 using Raid.Toolkit.Loader;
 
 namespace Raid.Toolkit.Extensibility.Host
@@ -29,9 +28,6 @@ namespace Raid.Toolkit.Extensibility.Host
 		{
 			if (features.HasFlag(HostFeatures.ProcessWatcher))
 				services = services.AddHostedService<ProcessWatcherService>();
-			services = features.HasFlag(HostFeatures.AutoUpdate)
-				? services.AddHostedServiceSingleton<IUpdateService, UpdateService>()
-				: services.AddHostedServiceSingleton<IUpdateService, UpdateServiceStub>();
 
 			return services;
 		}
@@ -64,7 +60,6 @@ namespace Raid.Toolkit.Extensibility.Host
 				.AddSingleton<GitHub.Updater>()
 				.AddHostedService<ServiceExecutor>()
 				.AddHostedServiceSingleton<IAccountManager, AccountManager>()
-				.AddHostedServiceSingleton<INotificationManager, NotificationManager>()
 				.AddHostedServiceSingleton<IDataStorageReaderWriter, FileStorageService>();
 		}
 	}

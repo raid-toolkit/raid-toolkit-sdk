@@ -11,7 +11,7 @@ namespace System.Diagnostics.CodeAnalysis
 #if NET5_0_OR_GREATER
 #else
 	[AttributeUsage(AttributeTargets.Parameter, Inherited = false)]
-    public sealed class NotNullWhenAttribute : Attribute
+	internal sealed class NotNullWhenAttribute : Attribute
 	{
 		/// <summary>Initializes the attribute with the specified return value condition.</summary>
 		/// <param name="returnValue">

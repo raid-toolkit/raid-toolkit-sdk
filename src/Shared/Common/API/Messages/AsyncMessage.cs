@@ -35,7 +35,8 @@ public class AsyncMessage
 				return Reject(ex);
 			}
 
-			if (task.GetType().IsGenericType)
+			Type taskType = task.GetType();
+			if (taskType.IsGenericType && taskType.GenericTypeArguments[0].Name != "VoidTaskResult")
 			{
 				value = ((dynamic)task).Result;
 			}

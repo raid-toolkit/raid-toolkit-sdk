@@ -55,6 +55,7 @@ public class IPCSession<T> : IPipeSession<T>, IApiSession<T>
 	{
 		await Serializer.WriteMessageAsync(Pipe, message, cancellationToken);
 		await Pipe.FlushAsync(cancellationToken);
+		Pipe.WaitForPipeDrain();
 	}
 
 	public void Close()

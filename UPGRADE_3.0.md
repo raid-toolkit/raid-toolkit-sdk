@@ -20,3 +20,12 @@ The following methods which were intended for internal use only will no longer b
 #### Upgrade instructions
 
 To update code that is using `IAppUI`, you can simply do a find/replace of `IAppUI` with `IAppDispatcher` (and update your variable names accordingly.)
+
+### Interface Removals
+
+The following interfaces were not intended for use by extensions and have been removed from public libraries:
+
+* `IAppService`
+* `IAppUI`
+* `IUpdateService`
+* `INotificationManager`
