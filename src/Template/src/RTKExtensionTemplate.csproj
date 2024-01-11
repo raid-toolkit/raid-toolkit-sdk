@@ -15,8 +15,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Raid.Toolkit.Extensibility" Version="2.6.11" />
-        <PackageReference Include="Raid.Toolkit.Extensibility.Tasks" Version="2.6.11">
+        <PackageReference Include="Raid.Toolkit.Extensibility" Version="3.0.0" />
+        <PackageReference Include="Raid.Toolkit.Extensibility.Tasks" Version="3.0.0">
             <PrivateAssets>none</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>

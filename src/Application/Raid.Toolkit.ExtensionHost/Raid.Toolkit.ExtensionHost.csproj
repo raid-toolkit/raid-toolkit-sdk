@@ -43,7 +43,7 @@
         <PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.5.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-        <PackageReference Include="Il2CppToolkit.Injection.Client" Version="2.0.140-alpha" GeneratePathProperty="true" />
+        <PackageReference Include="Il2CppToolkit.Injection.Client" Version="2.0.145-alpha" GeneratePathProperty="true" />
     </ItemGroup>
 
     <ItemGroup>
