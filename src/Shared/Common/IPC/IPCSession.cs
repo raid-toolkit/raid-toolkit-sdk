@@ -1,6 +1,7 @@
 using Raid.Toolkit.Common.API;
 
 using System;
+using System.Diagnostics;
 using System.IO.Pipes;
 using System.Threading;
 using System.Threading.Tasks;

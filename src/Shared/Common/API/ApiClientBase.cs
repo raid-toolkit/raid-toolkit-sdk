@@ -10,10 +10,12 @@ namespace Raid.Toolkit.Common.API;
 
 public class ApiClientEventArgs : EventArgs
 {
+	public string ContractName { get; }
 	public SendEventMessage Message { get; }
-	public ApiClientEventArgs(SendEventMessage message)
+	public ApiClientEventArgs(string contractName, SendEventMessage message)
 	{
 		Message = message;
+		ContractName = contractName;
 	}
 }
 
@@ -39,16 +41,16 @@ public abstract class ApiClientBase
 				Resolve(socketMessage.Message);
 				return;
 			case "send-event":
-				Emit(socketMessage.Message);
+				Emit(socketMessage.Scope, socketMessage.Message);
 				return;
 			default:
 				break;
 		}
 	}
 
-	private void Emit(JToken message)
+	private void Emit(string contractName, JToken message)
 	{
-		EventReceived?.Invoke(this, new ApiClientEventArgs(message.ToObject<SendEventMessage>()!));
+		EventReceived?.Invoke(this, new ApiClientEventArgs(contractName, message.ToObject<SendEventMessage>()!));
 	}
 
 	protected void Resolve(JToken message)

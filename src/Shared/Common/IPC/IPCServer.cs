@@ -73,7 +73,7 @@ public class IPCServer<T> : IDisposable
 	internal class IPCServerConnection : IPCSession<T>
 	{
 		public IPCServerConnection(string pipeName, IPCMessageSerializer<T> serializer)
-			: base(new NamedPipeServerStream(pipeName, PipeDirection.InOut, NamedPipeServerStream.MaxAllowedServerInstances), serializer)
+			: base(new NamedPipeServerStream(pipeName, PipeDirection.InOut, NamedPipeServerStream.MaxAllowedServerInstances, PipeTransmissionMode.Message, PipeOptions.Asynchronous), serializer)
 		{ }
 
 		public async Task WaitForConnection()
