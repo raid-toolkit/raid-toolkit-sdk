@@ -33,7 +33,6 @@ public class ApiMessageSerializer : IPCMessageSerializer<SocketMessage>
 	public async Task<SocketMessage?> ReadMessageAsync(Stream stream, CancellationToken cancellation = default)
 	{
 		string? message = await StringSerializer.ReadMessageAsync(stream, cancellation);
-		Trace.TraceInformation($"Received message: {message}");
 		if (message == null)
 			return null;
 		return JsonConvert.DeserializeObject<SocketMessage>(message);
@@ -42,7 +41,6 @@ public class ApiMessageSerializer : IPCMessageSerializer<SocketMessage>
 	public Task<int> WriteMessageAsync(Stream stream, SocketMessage message, CancellationToken cancellation = default)
 	{
 		string serializedMessage = JsonConvert.SerializeObject(message);
-		Trace.TraceInformation($"Sending message: {serializedMessage}");
 		return StringSerializer.WriteMessageAsync(stream, serializedMessage, cancellation);
 	}
 }
