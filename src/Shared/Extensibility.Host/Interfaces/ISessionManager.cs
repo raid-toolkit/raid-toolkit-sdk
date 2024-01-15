@@ -1,12 +1,12 @@
 using System;
 
-namespace Raid.Toolkit.Extensibility.Host
+namespace Raid.Toolkit.Extensibility.Host;
+
+[Obsolete("Not supported after 3.0")]
+public interface ISessionManager
 {
-    public interface ISessionManager
-    {
-        int SessionCount { get; }
-        DateTime LastSessionActive { get; }
-        void OnConnected();
-        void OnClosed();
-    }
+	int SessionCount { get; }
+	DateTime LastSessionActive { get; }
+	void OnConnected();
+	void OnClosed();
 }

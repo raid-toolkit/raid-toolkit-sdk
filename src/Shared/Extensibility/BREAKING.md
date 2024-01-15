@@ -15,6 +15,7 @@ The `IWindowManager` interface provides a way to create and manage windows.  Thi
 ### TODO
 
 * Backport `IAppDispatcher` from 3.0
+* Implement usage of new `WindowOptions.Create` callback when used in place of deprecated `CreateInstance`
 
 ### `IExtensionHost` removed APIs
 
@@ -105,7 +106,17 @@ The following interfaces were not intended for use by extensions and have been r
 * `IAppUI` (see [IAppUI interface deprecated](#iappui-interface-deprecated))
 * `IUpdateService`
 * `INotificationManager`, `INotificationSink`, `INotification`
-* `IGameInstanceManager`
+* `IGameInstanceManager` - use `IAccountExtension` instead
+* `IModelConsumer`, `IRequireCodegen`, `IPackageContext` (not used)
+* `ISessionManager` - support removed
+
+### Class removals
+
+The following classes were not intended for use by extensions and have been removed from public libraries:
+
+* `PackageDescriptor` (not used)
+* `PropertyBag`
+* `SingleInstanceStaticFields<>`
 
 ### Namespace + Name changes
 
