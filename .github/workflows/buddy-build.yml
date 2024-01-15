@@ -89,9 +89,7 @@ jobs:
           token: ${{ secrets.RELEASE_STAGING_GITHUB }}
           repository: raid-toolkit/staged-release
           files: |
-            UPGRADE_2.0.md
-            publish/RTK/Raid.Toolkit.exe
-            src/Setup/out/RaidToolkit.msi
+            UPGRADE_3.0.md
             src/Setup/out/RaidToolkitSetup.exe
             ThirdPartyNotice.txt
 
