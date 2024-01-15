@@ -62,11 +62,11 @@ jobs:
 
       # Restore the application to populate the obj folder with RuntimeIdentifiers
       - name: Restore the application
-        run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Debug
+        run: dotnet $env:Solution_Name restore
 
       # Publish RTK
       - name: Build App
-        run: msbuild $env:Solution_Name -m -t:"Build;Pack" -p:Configuration=Debug -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
+        run: msbuild $env:Solution_Name pack -c Debug -p:PackageOutputPath="$(Get-Location)\publish\nuget"
 
       - name: Build Setup
         run: |

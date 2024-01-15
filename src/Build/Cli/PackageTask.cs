@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using System.IO.Compression;
+using System.Runtime.Versioning;
 using CommandLine;
 using Raid.Toolkit.Common;
 
@@ -7,8 +8,9 @@ namespace Raid.Toolkit.Build.Cli;
 
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
+
 [Verb("package", HelpText = "Packages an extension")]
-public class PackageTaskArgs
+public class PackageTaskArgs : ITaskArgs
 {
 	[Option('o', "out-dir", HelpText = "Project output directory to package", Required = true)]
 	public string OutputDir { get; set; }
@@ -26,6 +28,11 @@ public class PackageTask
 {
 	public static int Execute(PackageTaskArgs args)
 	{
+		if (!OperatingSystem.IsWindows())
+		{
+			Console.Error.WriteLine("This tool is only supported on Windows");
+			return -1;
+		}
 		Console.WriteLine($"Packaging extension {args.OutputFile}");
 
 		string[] packagesToClean = Directory.GetFiles(args.OutputFile, "*.rtkx");
@@ -45,6 +52,7 @@ public class PackageTask
 		return result;
 	}
 
+	[SupportedOSPlatform("windows")]
 	private static int InstallPackage(PackageTaskArgs args)
 	{
 		string? installFolder = RegistrySettings.InstallationPath;

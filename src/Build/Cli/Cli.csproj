@@ -5,13 +5,18 @@
         <OutputType>Exe</OutputType>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AssemblyName>Raid.Toolkit.Build.Cli</AssemblyName>
+        <PackageId>Raid.Toolkit.Build.Cli</PackageId>
+        <AssemblyName>rtkc</AssemblyName>
         <RootNamespace>Raid.Toolkit.Build.Cli</RootNamespace>
-        <PackageType>DotnetCliTool</PackageType>
-    </PropertyGroup>
-    <PropertyGroup>
+        <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+        <SelfContained>false</SelfContained>
+        <TargetFramework>net6.0</TargetFramework>
+        <Platform>x64</Platform>
+        <IsTool>true</IsTool>
         <PackAsTool>true</PackAsTool>
         <ToolCommandName>rtkc</ToolCommandName>
+        <PackAsToolShimRuntimeIdentifiers>win-x64</PackAsToolShimRuntimeIdentifiers>
+        <PackagedShimOutputRootDirectory>$(OutputPath)</PackagedShimOutputRootDirectory>
     </PropertyGroup>
 
     <ItemGroup>

@@ -1,3 +1,4 @@
+using System.Runtime.Versioning;
 using System.Text.RegularExpressions;
 using CommandLine;
 using Microsoft.Extensions.Options;
@@ -11,7 +12,7 @@ namespace Raid.Toolkit.Build.Cli;
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 
 [Verb("codegen", HelpText = "Generates an extension interop assembly")]
-public class CodegenTaskArgs
+public class CodegenTaskArgs : ITaskArgs
 {
 	[Value(0, HelpText = "Manifest file", Required = true)]
 	public string ManifestFile { get; set; }
@@ -32,6 +33,11 @@ public class CodegenTask
 {
 	public static int Execute(CodegenTaskArgs args)
 	{
+		if (!OperatingSystem.IsWindows())
+		{
+			Console.Error.WriteLine("This tool is only supported on Windows");
+			return -1;
+		}
 		PackageManifest manifest = JsonConvert.DeserializeObject<PackageManifest>(File.ReadAllText(args.ManifestFile))!;
 
 		if (manifest.Codegen?.Types == null)

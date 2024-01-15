@@ -19,6 +19,8 @@
         <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     </PropertyGroup>
 
+    <Target Name="Pack">
+    </Target>
 
     <ItemGroup>
         <Manifest Include="$(ApplicationManifest)" />
