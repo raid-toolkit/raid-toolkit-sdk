@@ -81,6 +81,22 @@ To update code that is using `IAppUI`, you can simply do a find/replace of `IApp
 
 </details>
 
+### `IGameInstance`
+
+The `IGameInstance` type was split into `IGameInstance` and `ILoadedGameInstance`. This was don't for nullable correctness of when certain properties are available and when they have yet to be initialized.
+
+Additionally, the `Properties` propertybag was removed in favor of extensions using `IExtensionStorage` for arbitrary global or per-account storage.
+
+### `IMenuEntry`
+
+`IMenuEntry` has deprecated `Image` in favor of a more portable `ImageUrl` property.
+
+## Backward compatible breaks
+
+### Constructor updates
+
+Many new constructors were added to types to provide stricter nullability usage. As part of this change, all default constructors are marked as obsolete intended for deserialization only. You should change to using the new parameterized constructors where possible.
+
 ### Interface Removals
 
 The following interfaces were not intended for use by extensions and have been removed from public libraries:
@@ -91,13 +107,14 @@ The following interfaces were not intended for use by extensions and have been r
 * `INotificationManager`, `INotificationSink`, `INotification`
 * `IGameInstanceManager`
 
-### Namespace changes
+### Namespace + Name changes
 
 The following namespaces have been changed:
 
-| Old namespace | New namespace |
+| Old type | New type |
 |:--------------|:--------------|
 |Raid.Toolkit.Extensibility.Host.IWindowManager | Raid.Toolkit.Extensibility.IWindowManager |
+|Raid.Toolkit.Extensibility.Host.ExtensionManifest | Raid.Toolkit.Extensibility.PackageManifest |
 
 ## Breaking changes in v2.4
 
