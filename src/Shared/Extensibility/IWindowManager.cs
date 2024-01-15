@@ -1,5 +1,5 @@
 
-namespace Raid.Toolkit.Extensibility.Host;
+namespace Raid.Toolkit.Extensibility;
 
 public interface IWindowManager
 {

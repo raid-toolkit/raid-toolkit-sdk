@@ -20,8 +20,8 @@ public interface IExtensionHost
 	IDisposable RegisterAccountExtension<T>(T factory) where T : IAccountExtensionFactory;
 
 	IDisposable RegisterMenuEntry(IMenuEntry entry);
-	IDisposable RegisterWindow<T>(WindowOptions options) where T : class;
-	IWindowAdapter<T> CreateWindow<T>() where T : class;
+	[Obsolete("Use IWindowManager instead")] IDisposable RegisterWindow<T>(WindowOptions options) where T : class;
+	[Obsolete("Use IWindowManager instead")] IWindowAdapter<T> CreateWindow<T>() where T : class;
 
 	bool CanShowUI { get; }
 }
