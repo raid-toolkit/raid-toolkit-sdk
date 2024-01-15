@@ -12,6 +12,7 @@ public class AccountManagerEventArgs
 		Account = account;
 	}
 }
+
 public interface IAccountManager
 {
 	event EventHandler<AccountManagerEventArgs> OnAdded;
