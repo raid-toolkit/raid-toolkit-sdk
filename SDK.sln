@@ -33,8 +33,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Toolkit", "src\Applica
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Extensibility.Tasks", "src\Shared\Extensibility.Tasks\Extensibility.Tasks.csproj", "{D8CE057A-F9D4-43B5-90A0-063F39489C38}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Template", "Template", "{AC6BBC8A-A38C-4BB3-92B2-0F36BC898880}"
-EndProject
+
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Raid.Toolkit.ExtensionHost", "src\Application\Raid.Toolkit.ExtensionHost\Raid.Toolkit.ExtensionHost.csproj", "{4F095DD7-C8C7-4B3B-99C1-494FFC98CCC4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{A01A2D63-5BEA-4E0C-991C-0BA8BCE11377}"
