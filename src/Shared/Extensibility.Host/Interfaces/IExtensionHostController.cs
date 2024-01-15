@@ -5,29 +5,29 @@ namespace Raid.Toolkit.Extensibility.Host;
 
 public enum ExtensionState
 {
-    None,
-    Loaded,
-    Activated,
-    Error,
-    Disabled,
-    PendingUninstall,
+	None,
+	Loaded,
+	Activated,
+	Error,
+	Disabled,
+	PendingUninstall,
 }
 
 public interface IExtensionManagement : IExtensionHost
 {
-    ExtensionState State { get; }
-    ExtensionBundle Bundle { get; }
+	ExtensionState State { get; }
+	ExtensionBundle Bundle { get; }
 }
 
 public interface IExtensionHostController
 {
-    IReadOnlyList<IExtensionManagement> GetExtensions();
-    Task LoadExtensions();
-    void ActivateExtensions();
-    void ShowExtensionUI();
-    void DeactivateExtensions();
-    void UninstallPackage(string packageId);
-    void DisablePackage(string packageId);
-    void EnablePackage(string packageId);
-    ExtensionHost GetExtensionPackageHost(string packageId);
+	IReadOnlyList<IExtensionManagement> GetExtensions();
+	Task LoadExtensions();
+	void ActivateExtensions();
+	void ShowExtensionUI();
+	void DeactivateExtensions();
+	void UninstallPackage(string packageId);
+	void DisablePackage(string packageId);
+	void EnablePackage(string packageId);
+	ExtensionHost GetExtensionPackageHost(string packageId);
 }
