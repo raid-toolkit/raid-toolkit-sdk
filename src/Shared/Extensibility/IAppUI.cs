@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Extensibility;
 
+[Obsolete("Not intended for public use")]
 public interface IAppUI : IDisposable
 {
     SynchronizationContext? SynchronizationContext { get; }

@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Raid.Toolkit.Extensibility.Host;
-
 
 public class AccountManagerEventArgs
 {
@@ -14,6 +12,7 @@ public class AccountManagerEventArgs
         Account = account;
     }
 }
+
 public interface IAccountManager
 {
     event EventHandler<AccountManagerEventArgs> OnAdded;
