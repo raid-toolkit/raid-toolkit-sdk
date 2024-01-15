@@ -5,18 +5,14 @@
         <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
         <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-        <PackageReference Include="System.Net.Http" Version="4.3.4" Condition=" '$(TargetFramework)' == 'net472' " />
-    </ItemGroup>
-    <ItemGroup>
-      <Reference Include="Microsoft.CSharp" Condition=" '$(TargetFramework)' == 'net472' " />
     </ItemGroup>
     <PropertyGroup>
-        <TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
+        <TargetFrameworks>net6.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <OutputType>Library</OutputType>
         <AssemblyName>Raid.Toolkit.Common</AssemblyName>
         <RootNamespace>Raid.Toolkit.Common</RootNamespace>
         <Platforms>x64</Platforms>
-		<Nullable>enable</Nullable>
+        <Nullable>enable</Nullable>
     </PropertyGroup>
 </Project>

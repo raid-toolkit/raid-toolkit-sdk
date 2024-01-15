@@ -59,7 +59,7 @@ public class ApiCallerBase<T>
 		var def = Api.GetMember<EventInfo>(message.EventName);
 		if (def.MemberInfo is not EventInfo eventInfo || !EventHandlers.TryGetValue(message.EventName, out List<Delegate>? handlers))
 			return;
-		Type eventArgsType = eventInfo!.EventHandlerType.GetMethod("Invoke").GetParameters()[1].ParameterType;
+		Type eventArgsType = eventInfo!.EventHandlerType!.GetMethod("Invoke")!.GetParameters()[1].ParameterType;
 		object[] eventArgsValues = eventArgsType.GetConstructors()
 			.First(ctor => ctor.GetParameters().Length == message.Payload.Count)
 			.GetParameters()

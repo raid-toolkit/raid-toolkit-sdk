@@ -1,0 +1,249 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
+        <LangVersion>10.0</LangVersion>
+        <developmentDependency>true</developmentDependency>
+        <NoPackageAnalysis>true</NoPackageAnalysis>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <AssemblyName>Raid.Toolkit.Build.Tasks</AssemblyName>
+        <RootNamespace>Raid.Toolkit.Build.Tasks</RootNamespace>
+        <Nullable>enable</Nullable>
+        <Platforms>x64</Platforms>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Build.Tasks.Core" Version="17.1.0" />
+        <PackageReference Include="il2cpptoolkit.common" Version="2.0.134-alpha" />
+        <PackageReference Include="il2cpptoolkit.metadata" Version="2.0.134-alpha" />
+        <PackageReference Include="il2cpptoolkit.reversecompiler" Version="2.0.134-alpha" />
+        <PackageReference Include="il2cpptoolkit.runtime" Version="2.0.134-alpha" />
+        <PackageReference Include="il2cpptoolkit.target.netcore" Version="2.0.134-alpha" />
+        <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+        <PackageReference Include="MSBuildTasks" Version="1.5.0.235">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Cli\Cli.csproj" GeneratePathProperty="true" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="build\**">
+            <Pack>true</Pack>
+            <PackagePath>build\</PackagePath>
+        </None>
+        <None Include="buildCrossTargeting\**">
+            <Pack>true</Pack>
+            <PackagePath>buildCrossTargeting\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Google.Protobuf.dll" />
+        <!-- required for tasks (net6.0) -->
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Google.Protobuf.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Grpc.Core.Api.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Grpc.Core.Api.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Grpc.Net.Client.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Grpc.Net.Client.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Grpc.Net.Common.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Grpc.Net.Common.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Il2CppToolkit.Common.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Il2CppToolkit.Common.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Il2CppToolkit.Injection.Client.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Il2CppToolkit.Injection.Client.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Il2CppToolkit.Metadata.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Il2CppToolkit.Metadata.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Il2CppToolkit.ReverseCompiler.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Il2CppToolkit.ReverseCompiler.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Il2CppToolkit.Runtime.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Il2CppToolkit.Runtime.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Il2CppToolkit.Target.NetCore.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Il2CppToolkit.Target.NetCore.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Microsoft.Build.Framework.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Build.Framework.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Microsoft.Build.Tasks.Core.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Build.Tasks.Core.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Microsoft.Build.Utilities.Core.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Build.Utilities.Core.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Extensions.DependencyInjection.Abstractions.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Microsoft.Extensions.Logging.Abstractions.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Extensions.Logging.Abstractions.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Microsoft.Extensions.Options.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Extensions.Options.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Microsoft.Extensions.Primitives.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Extensions.Primitives.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Microsoft.NET.StringTools.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.NET.StringTools.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Microsoft.Win32.SystemEvents.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Microsoft.Win32.SystemEvents.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Mono.Cecil.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Mono.Cecil.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Mono.Cecil.Mdb.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Mono.Cecil.Mdb.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Mono.Cecil.Pdb.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Mono.Cecil.Pdb.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Mono.Cecil.Rocks.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Mono.Cecil.Rocks.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Newtonsoft.Json.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Newtonsoft.Json.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\ProcessMemoryUtilities.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\ProcessMemoryUtilities.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Raid.Toolkit.Common.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Raid.Toolkit.Common.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Raid.Toolkit.Model.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Raid.Toolkit.Model.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Raid.Toolkit.Build.Cli.exe" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Raid.Toolkit.Build.Cli.exe">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\System.CodeDom.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.CodeDom.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\System.Configuration.ConfigurationManager.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Configuration.ConfigurationManager.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\System.Drawing.Common.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Drawing.Common.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\System.Resources.Extensions.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Resources.Extensions.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\System.Security.Cryptography.Pkcs.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Security.Cryptography.Pkcs.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\System.Security.Cryptography.ProtectedData.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Security.Cryptography.ProtectedData.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\System.Security.Cryptography.Xml.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Security.Cryptography.Xml.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\System.Security.Permissions.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Security.Permissions.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\System.Windows.Extensions.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\System.Windows.Extensions.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+        <None Remove="bin\x64\Release\net6.0-windows10.0.19041.0\\..\Release\net6.0-windows\Vestris.ResourceLib.dll" />
+        <None Include="$(OutputPath)\..\$(Configuration)\net6.0-windows\Vestris.ResourceLib.dll">
+            <Pack>true</Pack>
+            <PackagePath>build\MSBuildCore\</PackagePath>
+        </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Update="buildCrossTargeting\Raid.Toolkit.Build.Tasks.targets">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="build\Raid.Toolkit.Build.Tasks.Common.props">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+        <None Update="build\Raid.Toolkit.Build.Tasks.targets">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
+    </ItemGroup>
+
+</Project>

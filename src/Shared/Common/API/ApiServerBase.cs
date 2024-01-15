@@ -96,7 +96,7 @@ public abstract class ApiServer<T> : IApiServer<SocketMessage>
 			{
 				handler = CreateHandler(
 					async (object? sender, SerializableEventArgs args) => await SendEvent(eventMember, eventInfo, session, args),
-					eventInfo.EventHandlerType.GenericTypeArguments[0]);
+					eventInfo.EventHandlerType!.GenericTypeArguments[0]);
 				EventHandlerDelegates.Add($"{session.Id}:{eventMember}:{subscriptionMessage.EventName}", handler);
 			}
 			eventInfo.AddEventHandler(this, handler);

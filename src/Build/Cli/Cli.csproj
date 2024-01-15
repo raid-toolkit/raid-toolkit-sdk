@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="$(BuildTargetProps)" />
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AssemblyName>Raid.Toolkit.Build.Cli</AssemblyName>
+        <RootNamespace>Raid.Toolkit.Build.Cli</RootNamespace>
+        <PackageType>DotnetCliTool</PackageType>
+    </PropertyGroup>
+    <PropertyGroup>
+        <PackAsTool>true</PackAsTool>
+        <ToolCommandName>rtkc</ToolCommandName>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CommandLineParser" Version="2.9.1" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Shared\Common\Common.csproj" />
+        <ProjectReference Include="..\..\Shared\Model\Model.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <None Include="build\**">
+            <Pack>true</Pack>
+            <PackagePath>build\</PackagePath>
+        </None>
+        <None Include="buildCrossTargeting\**">
+            <Pack>true</Pack>
+            <PackagePath>buildCrossTargeting\</PackagePath>
+        </None>
+    </ItemGroup>
+
+</Project>

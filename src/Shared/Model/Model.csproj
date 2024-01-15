@@ -7,21 +7,21 @@
         <PackageReference Include="il2cpptoolkit.runtime" Version="2.0.134-alpha" />
         <PackageReference Include="il2cpptoolkit.target.netcore" Version="2.0.134-alpha" />
         <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	</ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Common\Common.csproj" />
     </ItemGroup>
 
     <PropertyGroup>
-        <TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
+        <TargetFrameworks>net6.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <OutputType>Library</OutputType>
         <AssemblyName>Raid.Toolkit.Loader</AssemblyName>
         <RootNamespace>Raid.Toolkit.Loader</RootNamespace>
         <Platforms>x64</Platforms>
-		<Nullable>enable</Nullable>
-	</PropertyGroup>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
 
 </Project>

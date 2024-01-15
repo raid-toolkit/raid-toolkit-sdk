@@ -2,8 +2,7 @@
 <Project ToolsVersion="Current"
     xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <ItemGroup>
-        <PackageReference Include="Nerdbank.GitVersioning"
-            Condition="!Exists('packages.config')">
+        <PackageReference Include="Nerdbank.GitVersioning" Condition="!Exists('packages.config')">
             <Version>3.5.108</Version>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
@@ -14,6 +13,6 @@
         <RootDirectory>$(MSBuildThisFileDirectory)</RootDirectory>
         <BinDir>$(RootDirectory)bin\</BinDir>
         <SourceDir>$(RootDirectory)src\</SourceDir>
-		<BuildTargetProps>$(RootDirectory)BuildTargets.Props</BuildTargetProps>
+        <BuildTargetProps>$(RootDirectory)BuildTargets.Props</BuildTargetProps>
     </PropertyGroup>
 </Project>
