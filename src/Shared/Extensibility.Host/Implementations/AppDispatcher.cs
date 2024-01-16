@@ -9,7 +9,7 @@ public class AppDispatcher : IAppDispatcher, IDisposable
 	private bool IsDisposed;
 	public SynchronizationContext? SynchronizationContext { get; }
 
-	public AppDispatcher(IServiceProvider serviceProvider)
+	public AppDispatcher()
 	{
 		SynchronizationContext = SynchronizationContext.Current;
 	}

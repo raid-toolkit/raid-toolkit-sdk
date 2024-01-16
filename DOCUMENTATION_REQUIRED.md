@@ -1,4 +1,8 @@
-# Interfaces
+# TODO
+
+* Re-introduce `StringKey`
+
+## Document Interfaces
 
 * IAccount
 * IAccountExtension
@@ -9,7 +13,7 @@
 * IBackgroundService
 
 * IExtensionHost
-* IWindowManager
+* IWindowManager, IWindowAdapter
 * IExtensionStorage
 
 * IGameInstance

@@ -231,25 +231,9 @@ public class ManagedPackage : IManagedPackage, IExtensionHost, IDisposable
 		return new HostResourceHandle(() => ScopedServices.RemoveMessageScopeHandler(handler));
 	}
 
-	[Obsolete("Use RegisterMessageScopeHandler<T>(T handler)")]
-	public IDisposable RegisterMessageScopeHandler<T>() where T : IMessageScopeHandler
-	{
-		IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
-		T instance = ActivatorUtilities.CreateInstance<T>(scope);
-		return RegisterMessageScopeHandler(instance);
-	}
-
 	public IDisposable RegisterBackgroundService<T>(T service) where T : IBackgroundService
 	{
 		return ServiceManager.AddService(service);
-	}
-
-	[Obsolete("Use RegisterBackgroundService<T>(T service)")]
-	public IDisposable RegisterBackgroundService<T>() where T : IBackgroundService
-	{
-		IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
-		T instance = ActivatorUtilities.CreateInstance<T>(scope);
-		return RegisterBackgroundService(instance);
 	}
 
 	public IDisposable RegisterAccountExtension<T>(T factory) where T : IAccountExtensionFactory

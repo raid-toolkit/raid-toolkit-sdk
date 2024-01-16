@@ -19,7 +19,7 @@ public class WindowManager : IWindowManager
 		{ }
 		public WindowState(object owner, bool isVisible)
 		{
-			IWindowAdapter window = WrapWindow(owner);
+			IWindowAdapter window = WrapWindow<object>(owner);
 			Visible = isVisible;
 			Location = window.Location;
 			Size = window.Size;
@@ -35,7 +35,7 @@ public class WindowManager : IWindowManager
 	private readonly PersistedDataStorage Storage;
 	private readonly ILogger Logger;
 
-	public bool CanShowUI { get; set; } = true;
+	public bool CanShowUI { get; private set; } = true;
 
 	public WindowManager(
 		IServiceProvider serviceProvider,
@@ -59,15 +59,13 @@ public class WindowManager : IWindowManager
 				&& States.TryGetValue(type.FullName, out WindowState? state)
 				&& state.Visible)
 			{
-#pragma warning disable CS0618 // Type or member is obsolete
 				IWindowAdapter window = CreateWindow(type);
-#pragma warning restore CS0618 // Type or member is obsolete
 				window.Show();
 			}
 		}
 	}
 
-	private static IWindowAdapter<T> WrapWindow<T>(T instance) where T : class
+	private static IWindowAdapter<T> WrapWindow<T>(object instance) where T : class
 	{
 		return instance is IWindowAdapter<T> adapter
 			? adapter
@@ -84,11 +82,11 @@ public class WindowManager : IWindowManager
 			Logger.LogWarning("Type '{typeName}' is not registered, window preferences won't be persisted", typeof(T).FullName);
 		}
 
-		T instance = (T)(options?.CreateInstance != null
-			? options.CreateInstance()
-			: ActivatorUtilities.CreateInstance(ServiceProvider, typeof(T)));
+		object instance = options?.Create != null
+			? options.Create()
+			: ActivatorUtilities.CreateInstance(ServiceProvider, typeof(T));
 
-		IWindowAdapter<T> adapter = WrapWindow(instance);
+		IWindowAdapter<T> adapter = WrapWindow<T>(instance);
 		if (options != null)
 			AttachEvents(options, adapter);
 
@@ -96,8 +94,7 @@ public class WindowManager : IWindowManager
 	}
 
 	private static readonly System.Reflection.MethodInfo? createWindowMethod = typeof(WindowManager).GetMethod("CreateWindow", 1, Array.Empty<Type>());
-	[Obsolete("Use CreateWindow<T> instead")]
-	public IWindowAdapter CreateWindow(Type type)
+	private IWindowAdapter CreateWindow(Type type)
 	{
 		return createWindowMethod?.MakeGenericMethod(type).Invoke(this, null) is not IWindowAdapter adapter
 			? throw new InvalidCastException()

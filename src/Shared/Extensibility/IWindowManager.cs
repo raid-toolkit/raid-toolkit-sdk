@@ -7,5 +7,5 @@ public interface IWindowManager
 	void UnregisterWindow<T>() where T : class;
 	IWindowAdapter<T> CreateWindow<T>() where T : class;
 	void RestoreWindows();
-	bool CanShowUI { get; internal set; }
+	bool CanShowUI { get; }
 }
