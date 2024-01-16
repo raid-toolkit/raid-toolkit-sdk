@@ -12,11 +12,6 @@ The `IWindowManager` interface provides a way to create and manage windows.  Thi
 
 ## Breaking changes in 3.0
 
-### TODO
-
-* Backport `IAppDispatcher` from 3.0
-* Implement usage of new `WindowOptions.Create` callback when used in place of deprecated `CreateInstance`
-
 ### `IExtensionHost` removed APIs
 
 #### Window APIs
