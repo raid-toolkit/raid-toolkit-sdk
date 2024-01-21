@@ -30,7 +30,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Cli\Cli.csproj">
-            <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+            <IncludeAssets>all</IncludeAssets>
         </ProjectReference>
     </ItemGroup>
 
