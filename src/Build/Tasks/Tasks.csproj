@@ -30,7 +30,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Cli\Cli.csproj">
-          <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+            <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
         </ProjectReference>
     </ItemGroup>
 
@@ -96,19 +96,7 @@
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
-        <None Include="$(OutputPath)\Microsoft.Extensions.DependencyInjection.Abstractions.dll">
-            <Pack>true</Pack>
-            <PackagePath>build\MSBuildCore\</PackagePath>
-        </None>
         <None Include="$(OutputPath)\Microsoft.Extensions.Logging.Abstractions.dll">
-            <Pack>true</Pack>
-            <PackagePath>build\MSBuildCore\</PackagePath>
-        </None>
-        <None Include="$(OutputPath)\Microsoft.Extensions.Options.dll">
-            <Pack>true</Pack>
-            <PackagePath>build\MSBuildCore\</PackagePath>
-        </None>
-        <None Include="$(OutputPath)\Microsoft.Extensions.Primitives.dll">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
@@ -141,18 +129,6 @@
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
         <None Include="$(OutputPath)\ProcessMemoryUtilities.dll">
-            <Pack>true</Pack>
-            <PackagePath>build\MSBuildCore\</PackagePath>
-        </None>
-        <None Include="$(OutputPath)\Raid.Toolkit.Common.dll">
-            <Pack>true</Pack>
-            <PackagePath>build\MSBuildCore\</PackagePath>
-        </None>
-        <None Include="$(OutputPath)\Raid.Toolkit.Loader.dll">
-            <Pack>true</Pack>
-            <PackagePath>build\MSBuildCore\</PackagePath>
-        </None>
-        <None Include="$(OutputPath)\rtkc.exe">
             <Pack>true</Pack>
             <PackagePath>build\MSBuildCore\</PackagePath>
         </None>
