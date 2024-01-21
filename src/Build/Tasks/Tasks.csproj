@@ -29,7 +29,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Cli\Cli.csproj" />
+        <ProjectReference Include="..\Cli\Cli.csproj">
+          <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+        </ProjectReference>
     </ItemGroup>
 
     <ItemGroup>
