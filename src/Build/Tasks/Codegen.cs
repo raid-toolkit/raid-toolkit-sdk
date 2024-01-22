@@ -8,6 +8,7 @@ using Microsoft.Build.Framework;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Raid.Toolkit.Common;
+using Raid.Toolkit.Extensibility;
 using Raid.Toolkit.Loader;
 
 namespace Raid.Toolkit.Build.Tasks;
