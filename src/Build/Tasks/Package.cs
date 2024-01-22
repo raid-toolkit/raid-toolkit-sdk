@@ -7,7 +7,7 @@ using Microsoft.Win32;
 using Newtonsoft.Json;
 using Raid.Toolkit.Common;
 
-namespace Raid.Toolkit.Extensibility.Tasks;
+namespace Raid.Toolkit.Build.Tasks;
 
 public class Package : Microsoft.Build.Utilities.Task
 {

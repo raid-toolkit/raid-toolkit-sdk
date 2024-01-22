@@ -20,6 +20,11 @@
         </AvailableItemName>
     </ItemGroup>
 
+    <UsingTask AssemblyFile="$(RaidToolkitSdkTasksPath)Raid.Toolkit.Build.Tasks.dll" TaskName="Raid.Toolkit.Build.Tasks.Codegen" Condition=" '$(RTKTasks)' != 'false' "/>
+
+    <UsingTask AssemblyFile="$(RaidToolkitSdkTasksPath)Raid.Toolkit.Build.Tasks.dll" TaskName="Raid.Toolkit.Build.Tasks.Package" Condition=" '$(RTKTasks)' != 'false' "/>
+
+
     <Target Name="RTK_SetDefaults">
         <PropertyGroup>
             <GenerateInterop Condition=" '$(GenerateInterop)' == '' and '$(TargetExt)' != '.dll' ">false</GenerateInterop>
@@ -37,13 +42,13 @@
     </Target>
 
     <Target Name="PackageExtension" AfterTargets="PostBuildEvent" Condition=" '$(PackageRTKExtension)' == 'true' ">
-        <Exec Condition=" '$(GenerateInterop)' != 'false' " Command="$(RaidToolkitSdkCliPath) package &quot;@(RTKExtensionManifest -> '%(FullPath)')&quot; --out-file &quot;$(OutDir)\$(AssemblyName).rtkx&quot; --out-dir &quot;$(OutDir)&quot; --cache-dir &quot;$(RTKInteropCacheDir)&quot;" />
+        <Package OutputFile="$(OutDir)\$(AssemblyName).rtkx" OutputDir="$(OutDir)" Install="$(InstallRTKExtensionAfterBuild)" />
     </Target>
 
     <Target Name="GenerateRTKInteropAssembly">
         <MakeDir Directories="$(IntermediateOutputPath)" />
 
-        <Exec Condition=" '$(GenerateInterop)' != 'false' " Command="$(RaidToolkitSdkCliPath) codegen &quot;@(RTKExtensionManifest -> '%(FullPath)')&quot; --out-asm &quot;$(IntermediateOutputPath)$(OutputAssemblyFile)&quot; --out-dir &quot;$(OutDir)&quot; --cache-dir &quot;$(RTKInteropCacheDir)&quot;" />
+        <Raid.Toolkit.Extensibility.Tasks.Codegen Condition=" '$(RTKTasks)' == 'true' and '$(GenerateInterop)' != 'false' " OutputFile="$(IntermediateOutputPath)$(OutputAssemblyFile)" ManifestFiles="@(RTKExtensionManifest -> '%(FullPath)')" CacheDir="$(RTKInteropCacheDir)" OutDir="$(OutDir)" />
 
         <ItemGroup>
             <EmbeddedResource Include="@(RTKExtensionManifest)" LogicalName="PackageManifest">

@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using Raid.Toolkit.Common;
 using Raid.Toolkit.Loader;
 
-namespace Raid.Toolkit.Extensibility.Tasks;
+namespace Raid.Toolkit.Build.Tasks;
 
 public class Codegen : Microsoft.Build.Utilities.Task
 {
