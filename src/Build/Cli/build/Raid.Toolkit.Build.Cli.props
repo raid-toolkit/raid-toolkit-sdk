@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <RaidToolkitSdkCliPath>$(MSBuildThisFileDirectory)\..\tools\net6.0\any\shims\win-x64\rtkc.exe</RaidToolkitSdkCliPath>
+        <RaidToolkitSdkCliPath>$(MSBuildThisFileDirectory)..\tools\net6.0-windows10.0.19041\any\shims\win-x64\rtkc.exe</RaidToolkitSdkCliPath>
     </PropertyGroup>
 </Project>

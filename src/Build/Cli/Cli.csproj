@@ -13,10 +13,32 @@
         <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
         <Platform>x64</Platform>
         <IsTool>true</IsTool>
+        <PackAsTool>true</PackAsTool>
         <ToolCommandName>rtkc</ToolCommandName>
         <PackAsToolShimRuntimeIdentifiers>win-x64</PackAsToolShimRuntimeIdentifiers>
         <PackagedShimOutputRootDirectory>$(OutputPath)</PackagedShimOutputRootDirectory>
     </PropertyGroup>
+
+    <!-- 
+        Workaround for error NETSDK1146: 
+        PackAsTool does not support TargetPlatformIdentifier being set. 
+        For example, TargetFramework cannot be net5.0-windows, only net5.0. PackAsTool 
+        also does not support UseWPF or UseWindowsForms when targeting .NET 5 and higher.
+
+        See:
+        https://github.com/dotnet-campus/dotnetCampus.FileDownloader/pull/50 
+    -->
+    <Target Name="HackBeforePackToolValidation" BeforeTargets="_PackToolValidation">
+        <PropertyGroup>
+            <TargetPlatformIdentifier></TargetPlatformIdentifier>
+        </PropertyGroup>
+    </Target>
+
+    <Target Name="HackAfterPackToolValidation" AfterTargets="_PackToolValidation">
+        <PropertyGroup>
+            <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+        </PropertyGroup>
+    </Target>
 
     <ItemGroup>
         <PackageReference Include="CommandLineParser" Version="2.9.1" />
