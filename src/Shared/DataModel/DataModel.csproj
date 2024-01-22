@@ -16,6 +16,7 @@
         <RootNamespace>Raid.Toolkit.DataModel</RootNamespace>
         <Platforms>x64</Platforms>
         <Nullable>enable</Nullable>
+        <NBGV_ThisAssemblyNamespace>$(RootNamespace)</NBGV_ThisAssemblyNamespace>
     </PropertyGroup>
 
 </Project>

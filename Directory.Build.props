@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <ItemGroup>
         <PackageReference Include="Nerdbank.GitVersioning" Condition="!Exists('packages.config')">
-            <Version>3.5.108</Version>
+            <Version>3.6.133</Version>
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
     </ItemGroup>

@@ -11,10 +11,11 @@
         <RootNamespace>Raid.Toolkit.Extensibility.Tasks</RootNamespace>
         <Nullable>enable</Nullable>
         <Platforms>x64</Platforms>
+        <NBGV_ThisAssemblyNamespace>$(RootNamespace)</NBGV_ThisAssemblyNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Build\Cli\Cli.csproj" />
+        <ProjectReference Include="..\..\Build\Tasks\Tasks.csproj" />
     </ItemGroup>
 
     <ItemGroup>

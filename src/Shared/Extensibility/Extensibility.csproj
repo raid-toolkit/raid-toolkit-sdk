@@ -5,7 +5,9 @@
         <AssemblyName>Raid.Toolkit.Extensibility</AssemblyName>
         <Nullable>enable</Nullable>
         <UseWindowsForms>true</UseWindowsForms>
+        <NBGV_ThisAssemblyNamespace>$(RootNamespace)</NBGV_ThisAssemblyNamespace>
     </PropertyGroup>
+
     <Import Project="$(BuildTargetProps)" />
 
     <ItemGroup>
@@ -14,8 +16,8 @@
         <PackageReference Include="il2cpptoolkit.metadata" Version="2.0.134-alpha" />
         <PackageReference Include="il2cpptoolkit.runtime" Version="2.0.134-alpha" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230822000" />
-	</ItemGroup>
+        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230822000" />
+    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Common\Common.csproj" />
