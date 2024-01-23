@@ -106,7 +106,6 @@ The following interfaces were not intended for use by extensions and have been r
 * `IAppUI` (see [IAppUI interface deprecated](#iappui-interface-deprecated))
 * `IUpdateService`
 * `INotificationManager`, `INotificationSink`, `INotification`
-* `IGameInstanceManager` - use `IAccountExtension` instead
 * `IModelConsumer`, `IRequireCodegen`, `IPackageContext` (not used)
 * `ISessionManager` - support removed
 

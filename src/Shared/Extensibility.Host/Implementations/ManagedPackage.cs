@@ -24,7 +24,8 @@ public class ManagedPackage : IManagedPackage, IExtensionHost, IDisposable
 	private readonly DependencySynthesizer Dependencies;
 
 	private IMenuManager MenuManager => Dependencies.GetRequiredService<IMenuManager>();
-	private IAccountManager AccountManager => Dependencies.GetRequiredService<IAccountManager>();
+	private IAccountManagerInternals AccountManager => Dependencies.GetRequiredService<IAccountManager>() as IAccountManagerInternals
+		?? throw new InvalidOperationException("AccountManager does not implement IAccountManagerInternals");
 	private IWindowManager WindowManager => Dependencies.GetRequiredService<IWindowManager>();
 	private IServiceManager ServiceManager => Dependencies.GetRequiredService<IServiceManager>();
 	private IPackageLoader Loader => Dependencies.GetRequiredService<IPackageLoader>();

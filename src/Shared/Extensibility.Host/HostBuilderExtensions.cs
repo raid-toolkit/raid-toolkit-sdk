@@ -26,9 +26,6 @@ namespace Raid.Toolkit.Extensibility.Host
 	{
 		public static IServiceCollection AddFeatures(this IServiceCollection services, HostFeatures features)
 		{
-			if (features.HasFlag(HostFeatures.ProcessWatcher))
-				services = services.AddHostedService<ProcessWatcherService>();
-
 			return services;
 		}
 		public static IServiceCollection AddExtensibilityServices<TPackageManager>(this IServiceCollection services, ServiceMode mode) where TPackageManager : class, IPackageManager

@@ -96,12 +96,12 @@ public class GameInstanceManager : PollingBackgroundService, IGameInstanceManage
 		return instance != null;
 	}
 
-	public void AddInstance(Process process)
+	private void AddInstance(Process process)
 	{
 		_RawInstances.GetOrAdd(process.Id, (token) => ActivatorUtilities.CreateInstance<GameInstance>(ServiceProvider, process));
 	}
 
-	public void RemoveInstance(int token)
+	private void RemoveInstance(int token)
 	{
 		if (_RawInstances.TryRemove(token, out IGameInstance? instance))
 		{

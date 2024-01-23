@@ -17,7 +17,7 @@ using Raid.Toolkit.Extensibility.DataServices;
 
 namespace Raid.Toolkit.Extensibility.Host;
 
-public class AccountManager : PollingBackgroundService, IAccountManager
+public class AccountManager : PollingBackgroundService, IAccountManagerInternals
 {
 	private readonly static TimeSpan kPollInterval = new(0, 0, 0, 0, 50);
 	private protected override TimeSpan PollInterval => kPollInterval;
