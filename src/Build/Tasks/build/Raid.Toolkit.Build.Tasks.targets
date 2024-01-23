@@ -8,13 +8,6 @@
     <Import Project="Raid.Toolkit.Build.Tasks.Common.props" />
 
     <ItemGroup>
-        <PackageReference Include="Raid.Toolkit.Build.Cli" Version="$(NuGetPackageVersion)">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-    </ItemGroup>
-
-    <ItemGroup>
         <AvailableItemName Include="RTKExtensionManifest">
             <Targets>GenerateRTKManifest</Targets>
         </AvailableItemName>
