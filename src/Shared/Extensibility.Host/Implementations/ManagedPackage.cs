@@ -32,7 +32,6 @@ public class ManagedPackage : IManagedPackage, IExtensionHost, IDisposable
 	private IModelLoader ModelLoader => Dependencies.GetRequiredService<IModelLoader>();
 	private IScopedServiceManager ScopedServices => Dependencies.GetRequiredService<IScopedServiceManager>();
 
-	private readonly Dictionary<Type, IDisposable> Instances = new();
 	private IExtensionPackage? ExtensionPackage;
 	private bool IsDisposed;
 
@@ -206,11 +205,10 @@ public class ManagedPackage : IManagedPackage, IExtensionHost, IDisposable
 		return new ExtensionStorage(storage, new(account.Id, Bundle.Id));
 	}
 
-	public T CreateInstance<T>(params object[] args) where T : IDisposable
+	public T CreateInstance<T>(params object[] args)
 	{
 		IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
 		T instance = ActivatorUtilities.CreateInstance<T>(scope, args);
-		_ = Instances.TryAdd(typeof(T), instance);
 		return instance;
 	}
 
