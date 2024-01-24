@@ -70,7 +70,7 @@ public partial class App : Application
 				.AddSingleton<IWindowManager, WindowManager>()
 				.AddSingleton<IManagedPackageFactory, ManagedPackageFactory>() // creates a scope for each IExtensionManagement
 				.AddSingleton<IPackageLoader, SandboxedPackageLoader>()
-				.AddSingleton(sp => CreateExtensionManagementScope(sp, initialOptions.GetPackageId()))
+				.AddSingleton<IManagedPackage>(sp => CreateExtensionManagementScope(sp, initialOptions.GetPackageId()))
 			);
 		return hostBuilder.Build();
 	}
