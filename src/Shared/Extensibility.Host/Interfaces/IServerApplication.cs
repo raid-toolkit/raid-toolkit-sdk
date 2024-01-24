@@ -5,5 +5,5 @@ namespace Raid.Toolkit.Extensibility.Host;
 
 public interface IServerApplication
 {
-    public void RegisterApiServer(IApiServer<SocketMessage> server);
+	void RegisterApiServer(IApiServer<SocketMessage> server);
 }
