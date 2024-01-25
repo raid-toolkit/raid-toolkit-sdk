@@ -47,6 +47,7 @@ public partial class App : Application
 
 		if (initialOptions.Standalone)
 			hostBuilder.ConfigureServices((context, services) => services
+				.AddHostedServiceSingleton<IServerApplication, ServerApplication>()
 				.AddHostedServiceSingleton<IExtensionHostChannel, ExtensionHostChannelServer>()
 				.AddHostedServiceSingleton<IRuntimeManager, RuntimeManagerServer>()
 				.AddHostedServiceSingleton<IMenuManager, MenuManagerServer>());
