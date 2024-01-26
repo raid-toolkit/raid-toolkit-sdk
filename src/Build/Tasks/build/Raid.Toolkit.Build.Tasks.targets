@@ -41,7 +41,7 @@
     <Target Name="GenerateRTKInteropAssembly">
         <MakeDir Directories="$(IntermediateOutputPath)" />
 
-        <Raid.Toolkit.Extensibility.Tasks.Codegen Condition=" '$(GenerateInterop)' != 'false' " OutputFile="$(IntermediateOutputPath)$(OutputAssemblyFile)" ManifestFiles="@(RTKExtensionManifest -> '%(FullPath)')" CacheDir="$(RTKInteropCacheDir)" OutDir="$(OutDir)" />
+        <Codegen Condition=" '$(GenerateInterop)' != 'false' " OutputFile="$(IntermediateOutputPath)$(OutputAssemblyFile)" ManifestFiles="@(RTKExtensionManifest -> '%(FullPath)')" CacheDir="$(RTKInteropCacheDir)" OutDir="$(OutDir)" />
 
         <ItemGroup>
             <EmbeddedResource Include="@(RTKExtensionManifest)" LogicalName="PackageManifest">
