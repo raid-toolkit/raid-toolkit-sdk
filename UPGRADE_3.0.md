@@ -125,6 +125,8 @@ The following namespaces have been changed:
 |:--------------|:--------------|
 |Raid.Toolkit.Extensibility.Host.IWindowManager | Raid.Toolkit.Extensibility.IWindowManager |
 |Raid.Toolkit.Extensibility.Host.ExtensionManifest | Raid.Toolkit.Extensibility.PackageManifest |
+|Raid.Toolkit.Extensibility.Host.IAccountManager | Raid.Toolkit.Extensibility.IAccountManager |
+|Raid.Toolkit.Extensibility.Host.IGameInstanceManager | Raid.Toolkit.Extensibility.IGameInstanceManager |
 
 ## Breaking changes in v2.4
 
