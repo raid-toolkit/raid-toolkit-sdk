@@ -7,7 +7,9 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
+using Raid.Toolkit.Extensibility.DataServices;
 using Raid.Toolkit.Extensibility.Host.Server;
+using Raid.Toolkit.Extensibility.Host.Services;
 using Raid.Toolkit.Extensibility.Host.Utils;
 using Raid.Toolkit.ExtensionHost.ViewModel;
 using Raid.Toolkit.Loader;
@@ -65,6 +67,11 @@ public partial class App : Application
 				.AddLogging(builder => builder.AddFile())
 				.Configure<ModelLoaderOptions>(config => config.ForceRebuild = initialOptions.ForceRebuild)
 				.AddHostedServiceSingleton<IGameInstanceManager, GameInstanceManager>()
+				.AddHostedServiceSingleton<IAccountManager, AccountManager>()
+				.AddHostedServiceSingleton<IDataStorageReaderWriter, FileStorageService>()
+				.AddSingleton(typeof(CachedDataStorage))
+				.AddSingleton(typeof(CachedDataStorage<>))
+				.AddSingleton<PersistedDataStorage>()
 				.AddSingleton<IPackageManager, PackageManager>()
 				.AddSingleton<IAppDispatcher, AppDispatcher>()
 				.AddSingleton<IModelLoader, ModelLoader>()
