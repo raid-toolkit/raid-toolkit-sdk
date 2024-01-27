@@ -111,7 +111,7 @@ public class Package : Microsoft.Build.Utilities.Task
 
 	public string GetRelativePath(string relativeTo, string path)
 	{
-		var uri = new Uri(relativeTo);
+		var uri = new Uri(Path.GetFullPath(relativeTo));
 		var rel = Uri.UnescapeDataString(uri.MakeRelativeUri(new Uri(path)).ToString()).Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
 		if (rel.Contains(Path.DirectorySeparatorChar.ToString()) == false)
 		{
