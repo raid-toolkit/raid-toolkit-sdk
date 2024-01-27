@@ -32,5 +32,9 @@ dotnet add package Raid.Toolkit.Build.Tasks
 Add the following to your projects `.csproj` file:
 
 ```xml
-<RTKExtensionManifest Include="manifest.json" />
+<ItemGroup>
+  <RTKExtensionManifest Include="manifest.json" />
+</ItemGroup>
 ```
+
+After building, the extension will be bundled as an installable `.rtkx` file in the build output directory.
