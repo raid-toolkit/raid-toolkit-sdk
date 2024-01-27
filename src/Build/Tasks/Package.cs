@@ -58,15 +58,16 @@ public class Package : Microsoft.Build.Utilities.Task
 			string[] files = Directory.GetFiles(OutputDir, "*", SearchOption.AllDirectories);
 			foreach (string filePath in files)
 			{
-				string filename = Path.GetFileName(filePath);
+				string relativePath = GetRelativePath(OutputDir!, filePath);
+				string filename = Path.GetFileName(relativePath);
 
 				if (SkipOutputFiles.Contains(filename))
 					continue;
 
-				if (SkipOutputExtensions.Contains(Path.GetExtension(filePath)))
+				if (SkipOutputExtensions.Contains(Path.GetExtension(relativePath)))
 					continue;
 
-				archive.CreateEntryFromFile(filePath, filePath);
+				archive.CreateEntryFromFile(filePath, relativePath);
 			}
 		}
 		File.Move(tempOutput, OutputFile);
@@ -106,5 +107,16 @@ public class Package : Microsoft.Build.Utilities.Task
 			Log.LogMessage(MessageImportance.High, $"Installing extension {OutputFile}");
 			Process.Start(new ProcessStartInfo(exePath, $"install \"{OutputFile!}\" --accept"))?.WaitForExit();
 		}
+	}
+
+	public string GetRelativePath(string relativeTo, string path)
+	{
+		var uri = new Uri(relativeTo);
+		var rel = Uri.UnescapeDataString(uri.MakeRelativeUri(new Uri(path)).ToString()).Replace(Path.AltDirectorySeparatorChar, Path.DirectorySeparatorChar);
+		if (rel.Contains(Path.DirectorySeparatorChar.ToString()) == false)
+		{
+			rel = $".{Path.DirectorySeparatorChar}{rel}";
+		}
+		return rel;
 	}
 }
