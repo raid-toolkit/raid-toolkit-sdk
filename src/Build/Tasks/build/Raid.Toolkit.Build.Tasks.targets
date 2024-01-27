@@ -3,6 +3,8 @@
         <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
         <OutputAssemblyName>Raid.Interop</OutputAssemblyName>
         <OutputAssemblyFile>$(OutputAssemblyName).dll</OutputAssemblyFile>
+        <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <Import Project="Raid.Toolkit.Build.Tasks.Common.props" />

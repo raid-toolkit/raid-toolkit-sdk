@@ -2,6 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
+using System.Linq;
 using Microsoft.Build.Framework;
 using Microsoft.Win32;
 using Newtonsoft.Json;
@@ -19,6 +20,17 @@ public class Package : Microsoft.Build.Utilities.Task
 
 	[Required]
 	public string? Install { get; set; }
+
+	private static readonly string[] SkipOutputFiles =
+		Constants.SDKAssemblies.Select(x => x + ".dll")
+		.Concat(Constants.SDKAssemblies.Select(x => x + ".pdb"))
+		.Concat(Constants.SDKAssemblies.Select(x => x + ".deps.json"))
+		.ToArray();
+
+	private static readonly string[] SkipOutputExtensions =
+		Constants.SDKAssemblies.Select(x => x + ".pdb")
+		.Concat(Constants.SDKAssemblies.Select(x => x + ".deps.json"))
+		.ToArray();
 
 	public override bool Execute()
 	{
@@ -41,7 +53,22 @@ public class Package : Microsoft.Build.Utilities.Task
 			File.Delete(filePath);
 
 		string tempOutput = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("d"));
-		ZipFile.CreateFromDirectory(OutputDir, tempOutput);
+		using (ZipArchive archive = ZipFile.Open(tempOutput, ZipArchiveMode.Create))
+		{
+			string[] files = Directory.GetFiles(OutputDir, "*", SearchOption.AllDirectories);
+			foreach (string filePath in files)
+			{
+				string filename = Path.GetFileName(filePath);
+
+				if (SkipOutputFiles.Contains(filename))
+					continue;
+
+				if (SkipOutputExtensions.Contains(Path.GetExtension(filePath)))
+					continue;
+
+				archive.CreateEntryFromFile(filePath, filePath);
+			}
+		}
 		File.Move(tempOutput, OutputFile);
 
 		if (bool.TryParse(Install, out bool value) && value)

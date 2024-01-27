@@ -112,7 +112,7 @@ public class Codegen : Microsoft.Build.Utilities.Task
 		if (File.Exists(outputManifest))
 			File.Delete(outputManifest);
 		manifest.RequireVersion ??= "3.0.0";
-		manifest.CompatibleVersion ??= new Version(3, 0, 0);
+		manifest.CompatibleVersion ??= Version.Parse(ThisAssembly.AssemblyVersion);
 		File.WriteAllText(outputManifest, JsonConvert.SerializeObject(manifest));
 
 		return true;
