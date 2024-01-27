@@ -59,7 +59,7 @@ public class Package : Microsoft.Build.Utilities.Task
 			string[] files = Directory.GetFiles(OutputDir, "*", SearchOption.AllDirectories);
 			foreach (string filePath in files)
 			{
-				string relativePath = filePath.Substring(OutputDir!.Length + 1);
+				string relativePath = filePath.Substring(OutputDir!.Length);
 				string filename = Path.GetFileName(relativePath);
 
 				if (SkipOutputFiles.Contains(filename))
