@@ -1,7 +1,9 @@
-namespace Raid.Toolkit.Extensibility
+using System;
+
+namespace Raid.Toolkit.Extensibility;
+
+[Obsolete("not used")]
+public interface IPackageContext
 {
-    public interface IPackageContext
-    {
-        public PackageDescriptor Descriptor { get; }
-    }
+	PackageDescriptor Descriptor { get; }
 }

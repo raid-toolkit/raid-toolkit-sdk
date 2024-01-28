@@ -1,7 +1,10 @@
-namespace Raid.Toolkit.Extensibility
+using System;
+
+namespace Raid.Toolkit.Extensibility;
+
+[Obsolete("not used")]
+public interface IRequireCodegen
 {
-    public interface IRequireCodegen
-    {
-        public CodegenTypeFilter TypeFilter { get; }
-    }
+	CodegenTypeFilter TypeFilter { get; }
 }
+

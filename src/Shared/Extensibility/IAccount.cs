@@ -4,26 +4,26 @@ using Il2CppToolkit.Runtime;
 
 using Raid.Toolkit.DataModel;
 
-namespace Raid.Toolkit.Extensibility
+namespace Raid.Toolkit.Extensibility;
+
+public class AccountEventArgs : EventArgs
 {
-    public class AccountEventArgs : EventArgs
-    {
-        public AccountEventArgs() { }
-    }
-    public interface IAccount
-    {
-        event EventHandler<AccountEventArgs> OnConnected;
-        event EventHandler<AccountEventArgs> OnDisconnected;
+	public AccountEventArgs() { }
+}
 
-        string Id { get; }
-        string AccountName { get; }
-        string AvatarUrl { get; }
+public interface IAccount
+{
+	event EventHandler<AccountEventArgs> OnConnected;
+	event EventHandler<AccountEventArgs> OnDisconnected;
 
-        AccountBase AccountInfo { get; }
+	string Id { get; }
+	string AccountName { get; }
+	string AvatarUrl { get; }
 
-        [MemberNotNullWhen(true, nameof(Runtime))] bool IsOnline { get; }
-        Il2CsRuntimeContext? Runtime { get; }
+	AccountBase AccountInfo { get; }
 
-        bool TryGetApi<T>([NotNullWhen(true)] out T? api) where T : class;
-    }
+	[MemberNotNullWhen(true, nameof(Runtime))] bool IsOnline { get; }
+	Il2CsRuntimeContext? Runtime { get; }
+
+	bool TryGetApi<T>([NotNullWhen(true)] out T? api) where T : class;
 }
