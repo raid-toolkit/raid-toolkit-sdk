@@ -10,15 +10,15 @@
   "terminal.integrated.fontWeight": "300",
   "[json]": {
     "editor.detectIndentation": false,
-    "editor.tabSize": 2,
+    "editor.tabSize": 2
   },
   "[jsonc]": {
     "editor.detectIndentation": false,
-    "editor.tabSize": 2,
+    "editor.tabSize": 2
   },
   "[typescript]": {
     "editor.detectIndentation": false,
-    "editor.tabSize": 2,
+    "editor.tabSize": 2
   },
   "[csharp]": {
     "editor.defaultFormatter": "ms-dotnettools.csharp",
@@ -46,7 +46,7 @@
           "keyword", //import, export, return…
           "constant", //String, Number, Boolean…, this, super
           "storage.modifier", //static keyword
-          "storage.type.class.js", //class keyword
+          "storage.type.class.js" //class keyword
         ],
         "settings": {
           "fontStyle": "italic"
@@ -150,5 +150,10 @@
     "**/*.csproj.user": true
   },
   "dotnet.defaultSolution": "SDK.sln",
-  "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true
+  "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+  "workbench.colorCustomizations": {
+      "activityBar.background": "#372C13",
+      "titleBar.activeBackground": "#4E3E1A",
+      "titleBar.activeForeground": "#FCFBF8"
+  }
 }

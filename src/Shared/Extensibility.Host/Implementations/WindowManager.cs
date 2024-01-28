@@ -19,7 +19,7 @@ namespace Raid.Toolkit.Extensibility.Host
 			{ }
 			public WindowState(object owner, bool isVisible)
 			{
-				IWindowAdapter window = WrapWindow(owner);
+				IWindowAdapter window = WrapWindow<object>(owner);
 				Visible = isVisible;
 				Location = window.Location;
 				Size = window.Size;
@@ -35,7 +35,7 @@ namespace Raid.Toolkit.Extensibility.Host
 		private readonly PersistedDataStorage Storage;
 		private readonly ILogger Logger;
 
-		public bool CanShowUI { get; set; } = true;
+		public bool CanShowUI { get; internal set; } = true;
 
 		public WindowManager(
 			IServiceProvider serviceProvider,

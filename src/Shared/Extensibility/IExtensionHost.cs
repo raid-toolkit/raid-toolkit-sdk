@@ -7,7 +7,7 @@ namespace Raid.Toolkit.Extensibility;
 
 public interface IExtensionHost
 {
-	T CreateInstance<T>(params object[] args) where T : IDisposable;
+	T CreateInstance<T>(params object[] args);
 
 	IEnumerable<IAccount> GetAccounts();
 	bool TryGetAccount(string accountId, [NotNullWhen(true)] out IAccount? account);
