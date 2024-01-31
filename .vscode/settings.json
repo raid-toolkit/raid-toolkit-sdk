@@ -151,9 +151,10 @@
   },
   "dotnet.defaultSolution": "SDK.sln",
   "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+  "dotnet.preferCSharpExtension": true,
   "workbench.colorCustomizations": {
-      "activityBar.background": "#372C13",
-      "titleBar.activeBackground": "#4E3E1A",
-      "titleBar.activeForeground": "#FCFBF8"
+    "activityBar.background": "#1C2E48",
+    "titleBar.activeBackground": "#274065",
+    "titleBar.activeForeground": "#F9FAFD"
   }
 }

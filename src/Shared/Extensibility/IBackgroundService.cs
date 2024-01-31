@@ -1,11 +1,10 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Raid.Toolkit.Extensibility
+namespace Raid.Toolkit.Extensibility;
+
+public interface IBackgroundService
 {
-    public interface IBackgroundService
-    {
-        TimeSpan PollInterval { get; }
-        Task Tick(IGameInstance instance);
-    }
+	TimeSpan PollInterval { get; }
+	Task Tick(IGameInstance instance);
 }

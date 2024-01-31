@@ -4,8 +4,8 @@ namespace Raid.Toolkit.Extensibility
 {
     public class HostResourceHandle : IDisposable
     {
+        private readonly Action Callback;
         private bool IsDisposed;
-        private Action Callback;
 
         public HostResourceHandle(Action callback) => Callback = callback;
 

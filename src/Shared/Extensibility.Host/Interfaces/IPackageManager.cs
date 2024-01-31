@@ -1,14 +1,30 @@
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace Raid.Toolkit.Extensibility.Host
+namespace Raid.Toolkit.Extensibility.Host;
+
+public enum ExtensionRestartReason
 {
-    public interface IPackageManager
-    {
-        public IEnumerable<ExtensionBundle> GetAllPackages();
-        public ExtensionBundle GetPackage(string packageId);
-        public ExtensionBundle? AddPackage(ExtensionBundle package);
-        public Task<ExtensionBundle?> RequestPackageInstall(ExtensionBundle package);
-        public void RemovePackage(string packageId);
-    }
+	Installed,
+	Updated,
+	Removed
+}
+public class PackageModifiedEventArgs : EventArgs
+{
+	public string PackageId { get; }
+	public ExtensionRestartReason Reason { get; }
+	public PackageModifiedEventArgs(string packageId, ExtensionRestartReason reason)
+	{
+		PackageId = packageId;
+		Reason = reason;
+	}
+}
+public interface IPackageManager
+{
+	event EventHandler<PackageModifiedEventArgs>? PackageUpdated;
+	string? DebugPackage { get; set; }
+	IEnumerable<ExtensionBundle> GetAllPackages();
+	ExtensionBundle GetPackage(string packageId);
+	ExtensionBundle? InstallPackage(ExtensionBundle package);
+	void RemovePackage(string packageId);
 }

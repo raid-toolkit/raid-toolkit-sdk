@@ -6,6 +6,7 @@
         <LangVersion>10.0</LangVersion>
         <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
         <Platforms>x64</Platforms>
+        <NBGV_ThisAssemblyNamespace>$(RootNamespace)</NBGV_ThisAssemblyNamespace>
     </PropertyGroup>
 
     <ItemGroup>

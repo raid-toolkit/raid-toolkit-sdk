@@ -2,69 +2,112 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Raid.Toolkit.Common;
 
-namespace Raid.Toolkit.Extensibility.Host
+namespace Raid.Toolkit.Extensibility.Host;
+
+public class GameInstanceManager : PollingBackgroundService, IGameInstanceManager
 {
-    public class GameInstanceManager : IGameInstanceManager
-    {
-        private readonly ConcurrentDictionary<int, IGameInstance> _Instances = new();
-        private readonly ConcurrentDictionary<int, IGameInstance> _RawInstances = new();
-        private readonly IServiceProvider ServiceProvider;
-        private bool HasCheckedStaticData;
+	private readonly ConcurrentDictionary<int, ILoadedGameInstance> _Instances = new();
+	private readonly ConcurrentDictionary<int, IGameInstance> _RawInstances = new();
+	private readonly IServiceProvider ServiceProvider;
+	private readonly IRuntimeManager RuntimeManager;
+	private readonly IModelLoader ModelLoader;
 
-        public IReadOnlyList<IGameInstance> Instances => _Instances.Values.ToList();
-        public event EventHandler<IGameInstanceManager.GameInstancesUpdatedEventArgs> OnAdded;
-        public event EventHandler<IGameInstanceManager.GameInstancesUpdatedEventArgs> OnRemoved;
+	public IReadOnlyList<ILoadedGameInstance> Instances => _Instances.Values.ToList();
+	public event EventHandler<GameInstanceAddedEventArgs>? OnAdded;
+	public event EventHandler<GameInstanceRemovedEventArgs>? OnRemoved;
 
-        public GameInstanceManager(
-            IServiceProvider serviceProvider,
-            IHostApplicationLifetime lifetime)
-        {
-            ServiceProvider = serviceProvider;
-            _ = lifetime.ApplicationStopped.Register(() =>
-            {
-                int[] instanceKeys = _RawInstances.Keys.ToArray();
-                foreach (int key in instanceKeys)
-                {
-                    _ = _RawInstances.Remove(key, out IGameInstance instance);
-                    _ = _Instances.Remove(key, out _);
-                    instance.Dispose();
-                }
-            });
-        }
+	public GameInstanceManager(
+		IServiceProvider serviceProvider,
+		IModelLoader modelLoader,
+		ILogger<IGameInstanceManager> logger,
+		IRuntimeManager runtimeManager)
+		: base(logger)
+	{
+		ServiceProvider = serviceProvider;
+		RuntimeManager = runtimeManager;
+		ModelLoader = modelLoader;
+	}
 
-        public IGameInstance GetById(string id)
-        {
-            return Instances.FirstOrDefault(instance => instance.Id == id);
-        }
+	private void RuntimeManager_OnAdded(object? sender, RuntimeAddedEventArgs e)
+	{
+		Process proc = Process.GetProcessById(e.Descriptor.ProcessId);
+		AddInstance(proc);
+	}
 
-        public bool TryGetById(string id, out IGameInstance? instance)
-        {
-            instance = Instances.FirstOrDefault(instance => instance.Id == id);
-            return instance != null;
-        }
+	private void RuntimeManager_OnRemoved(object? sender, RuntimeRemovedEventArgs e)
+	{
+		RemoveInstance(e.Descriptor.ProcessId);
+	}
 
+	public override async Task StartAsync(CancellationToken cancellationToken)
+	{
+		var runtimes = await RuntimeManager.GetRuntimes();
+		RuntimeManager.OnAdded += RuntimeManager_OnAdded;
+		RuntimeManager.OnRemoved += RuntimeManager_OnRemoved;
+		foreach (var runtime in runtimes)
+		{
+			Process proc = Process.GetProcessById(runtime.ProcessId);
+			AddInstance(proc);
+		}
+		await base.StartAsync(cancellationToken);
+	}
 
-        public void AddInstance(Process process)
-        {
-            IGameInstance instance = _RawInstances.GetOrAdd(process.Id, (token) => ActivatorUtilities.CreateInstance<GameInstance>(ServiceProvider, process));
-            instance.InitializeOrThrow(process);
+	protected override Task ExecuteOnceAsync(CancellationToken token)
+	{
+		if (!ModelLoader.IsLoaded)
+			return Task.CompletedTask;
 
-            _ = _Instances.TryAdd(instance.Token, instance);
-            OnAdded?.Raise(this, new(instance));
-        }
+		foreach (var instance in _RawInstances.Values)
+		{
+			if (_Instances.ContainsKey(instance.Token))
+				continue;
+			try
+			{
+				Process process = Process.GetProcessById(instance.Token); // TODO: don't assume token == ProcessId
+				ILoadedGameInstance loadedInstance = instance.InitializeOrThrow(process);
 
-        public void RemoveInstance(int token)
-        {
-            if (_RawInstances.TryRemove(token, out IGameInstance instance))
-            {
-                _ = _Instances.TryRemove(token, out _);
-                OnRemoved?.Raise(this, new(instance));
-                instance.Dispose();
-            }
-        }
-    }
+				_ = _Instances.TryAdd(instance.Token, loadedInstance);
+				OnAdded?.Raise(this, new(loadedInstance));
+			}
+			catch (Exception ex)
+			{
+				Logger.LogError(ex, "Failed to initialize instance {instanceId}", instance.Token);
+			}
+		}
+		return Task.CompletedTask;
+	}
+
+	public IGameInstance? GetById(string id)
+	{
+		return Instances.FirstOrDefault(instance => instance.Id == id);
+	}
+
+	public bool TryGetById(string id, [NotNullWhen(true)] out ILoadedGameInstance? instance)
+	{
+		instance = Instances.FirstOrDefault(instance => instance.Id == id);
+		return instance != null;
+	}
+
+	private void AddInstance(Process process)
+	{
+		_RawInstances.GetOrAdd(process.Id, (token) => ActivatorUtilities.CreateInstance<GameInstance>(ServiceProvider, process));
+	}
+
+	private void RemoveInstance(int token)
+	{
+		if (_RawInstances.TryRemove(token, out IGameInstance? instance))
+		{
+			if (_Instances.TryRemove(token, out ILoadedGameInstance? loadedInstance))
+				OnRemoved?.Raise(this, new(instance, loadedInstance.Id));
+			instance.Dispose();
+		}
+	}
 }

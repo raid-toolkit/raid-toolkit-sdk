@@ -1,0 +1,63 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" InitialTargets="RTK_SetDefaults">
+    <PropertyGroup>
+        <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+        <OutputAssemblyName>Raid.Interop</OutputAssemblyName>
+        <OutputAssemblyFile>$(OutputAssemblyName).dll</OutputAssemblyFile>
+    </PropertyGroup>
+
+    <Import Project="Raid.Toolkit.Build.Tasks.Common.props" />
+
+    <ItemGroup>
+        <AvailableItemName Include="RTKExtensionManifest">
+            <Targets>GenerateRTKManifest</Targets>
+        </AvailableItemName>
+    </ItemGroup>
+
+    <UsingTask AssemblyFile="$(RaidToolkitSdkTasksPath)Raid.Toolkit.Build.Tasks.dll" TaskName="Raid.Toolkit.Build.Tasks.Codegen"/>
+
+    <UsingTask AssemblyFile="$(RaidToolkitSdkTasksPath)Raid.Toolkit.Build.Tasks.dll" TaskName="Raid.Toolkit.Build.Tasks.Package"/>
+
+
+    <Target Name="RTK_SetDefaults">
+        <PropertyGroup>
+            <GenerateInterop Condition=" '$(GenerateInterop)' == '' and '$(TargetExt)' != '.dll' ">false</GenerateInterop>
+            <!-- 
+            <CoreCompileDependsOn>
+                GenerateRTKInteropAssembly;
+                $(CoreCompileDependsOn)
+            </CoreCompileDependsOn> -->
+
+            <ResolveAssemblyReferencesDependsOn>
+                GenerateRTKInteropAssembly;
+                $(ResolveAssemblyReferencesDependsOn)
+            </ResolveAssemblyReferencesDependsOn>
+        </PropertyGroup>
+    </Target>
+
+    <Target Name="PackageExtension" AfterTargets="PostBuildEvent" Condition=" '$(PackageRTKExtension)' == 'true' ">
+        <Package OutputFile="$(OutDir)\$(AssemblyName).rtkx" OutputDir="$(OutDir)" Install="$(InstallRTKExtensionAfterBuild)" />
+    </Target>
+
+    <Target Name="GenerateRTKInteropAssembly">
+        <MakeDir Directories="$(IntermediateOutputPath)" />
+
+        <Codegen Condition=" '$(GenerateInterop)' != 'false' " OutputFile="$(IntermediateOutputPath)$(OutputAssemblyFile)" ManifestFiles="@(RTKExtensionManifest -> '%(FullPath)')" CacheDir="$(RTKInteropCacheDir)" OutDir="$(OutDir)" />
+
+        <ItemGroup>
+            <EmbeddedResource Include="@(RTKExtensionManifest)" LogicalName="PackageManifest">
+                <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+            </EmbeddedResource>
+        </ItemGroup>
+    </Target>
+
+    <ItemGroup>
+        <Reference Include="$(OutputAssemblyName)">
+            <HintPath Condition=" '$(UseCachedRTKInterop)' == 'true' ">$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
+            <HintPath Condition=" '$(UseCachedRTKInterop)' != 'true' ">$(IntermediateOutputPath)$(OutputAssemblyFile)</HintPath>
+            <Private>False</Private>
+            <SpecificVersion>False</SpecificVersion>
+            <CopyLocal>False</CopyLocal>
+        </Reference>
+    </ItemGroup>
+
+</Project>

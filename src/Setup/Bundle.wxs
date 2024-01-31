@@ -17,6 +17,7 @@
 
         <Chain>
             <PackageGroupRef Id="Net6"/>
+            <PackageGroupRef Id="WinApp"/>
             <MsiPackage SourceFile="out\RaidToolkit.msi" DisplayInternalUI="no">
                 <MsiProperty Name="LAUNCHAFTERINSTALLATION" Value="[LaunchAfterInstallation]" />
             </MsiPackage>
@@ -27,6 +28,12 @@
         <PackageGroup Id="Net6">
             <ExePackage InstallCommand="/q" DetectCondition="Installed" Name="windowsdesktop-runtime-6.0.22-win-x64.exe" Compressed="no" DownloadUrl="https://download.visualstudio.microsoft.com/download/pr/66a7c4c6-8401-4799-864f-9afddf5a7733/4052f458f0266e25ab1b9c7959ca245f/windowsdesktop-runtime-6.0.22-win-x64.exe" Permanent="yes" Id="Net6Setup">
                 <RemotePayload Version="6.0.22.0" Size="57538680" Hash="CCB617E2C2ECF05A1CD0EC4EFE8148B1CD29DB3F" ProductName="Runtime components" Description="Runtime components"/>
+                <ExitCode Behavior="success" Value="1638" />
+            </ExePackage>
+        </PackageGroup>
+        <PackageGroup Id="WinApp">
+            <ExePackage InstallCommand="/q" DetectCondition="Installed" Name="windowsappruntimeinstall-x64.exe" Compressed="no" DownloadUrl="https://aka.ms/windowsappsdk/1.4/latest/windowsappruntimeinstall-x64.exe" Permanent="yes" Id="AppSDK1_4_3">
+                <RemotePayload Version="1.4.0.0" Size="65994272" Hash="564D1E97433C96E62C78EE82D4E4FD72E0EBF498" ProductName="Windows App Runtime" Description="Windows App Runtime components"/>
                 <ExitCode Behavior="success" Value="1638" />
             </ExePackage>
         </PackageGroup>

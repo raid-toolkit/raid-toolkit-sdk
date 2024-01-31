@@ -5,10 +5,10 @@ namespace Raid.Toolkit.Extensibility.Utilities;
 
 public class AsyncObservable : Observable
 {
-    private readonly IAppUI AppUI;
-    public AsyncObservable(IAppUI appUI)
+    private readonly IAppDispatcher Dispatcher;
+    public AsyncObservable(IAppDispatcher dispatcher)
     {
-        AppUI = appUI;
+        Dispatcher = dispatcher;
     }
     private readonly object _syncRoot = new();
     private ConcurrentBag<string>? dirtyKeys;
@@ -20,7 +20,7 @@ public class AsyncObservable : Observable
             if (dirtyKeys == null)
             {
                 ConcurrentBag<string> newBag = new() { propertyName };
-                AppUI.Dispatch(() =>
+                Dispatcher.Dispatch(() =>
                 {
                     lock (_syncRoot)
                     {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Raid.Toolkit.Common;
 
 namespace Raid.Toolkit.Extensibility.Host.Services
 {
@@ -23,15 +24,17 @@ namespace Raid.Toolkit.Extensibility.Host.Services
             Category = category;
             TargetDescription = targetDescription;
             Target = target;
+			ErrorMessage = string.Empty;
+			HelpMessage = string.Empty;
         }
     }
 
     public class ErrorService
     {
         public readonly Dictionary<string, ErrorEventArgs> CurrentErrors = new();
-        public event EventHandler<ErrorEventArgs> OnError;
-        public event EventHandler<ErrorEventArgs> OnErrorAdded;
-        public event EventHandler<ErrorEventArgs> OnErrorCleared;
+        public event EventHandler<ErrorEventArgs>? OnError;
+        public event EventHandler<ErrorEventArgs>? OnErrorAdded;
+        public event EventHandler<ErrorEventArgs>? OnErrorCleared;
 
         public TrackedOperation TrackOperation(ServiceErrorCategory category, string targetDescription, object target)
         {

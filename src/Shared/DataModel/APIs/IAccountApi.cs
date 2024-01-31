@@ -1,3 +1,6 @@
+using Raid.Toolkit.Common.API;
+using Raid.Toolkit.Common.API.Messages;
+
 using System;
 using System.Threading.Tasks;
 

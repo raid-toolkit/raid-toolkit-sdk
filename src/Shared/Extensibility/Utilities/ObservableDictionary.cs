@@ -487,11 +487,11 @@ public class ObservableDictionary<TKey, TValue> :
     {
         if (array == null)
         {
-            throw new ArgumentNullException("CopyTo() failed:  array parameter was null");
+            throw new ArgumentNullException(nameof(array));
         }
         if ((index < 0) || (index > array.Length))
         {
-            throw new ArgumentOutOfRangeException("CopyTo() failed:  index parameter was outside the bounds of the supplied array");
+            throw new ArgumentOutOfRangeException(nameof(index));
         }
         if ((array.Length - index) < _keyedEntryCollection.Count)
         {
@@ -605,7 +605,7 @@ public class ObservableDictionary<TKey, TValue> :
         remove { CollectionChanged -= value; }
     }
 
-    protected virtual event NotifyCollectionChangedEventHandler CollectionChanged;
+    protected event NotifyCollectionChangedEventHandler CollectionChanged;
 
     #endregion INotifyCollectionChanged
 
@@ -617,18 +617,20 @@ public class ObservableDictionary<TKey, TValue> :
         remove { PropertyChanged -= value; }
     }
 
-    protected virtual event PropertyChangedEventHandler PropertyChanged;
+    protected event PropertyChangedEventHandler PropertyChanged;
 
-    #endregion INotifyPropertyChanged
+	#endregion INotifyPropertyChanged
 
-    #endregion interfaces
+	#endregion interfaces
 
-    #region protected classes
+	#region protected classes
 
-    #region KeyedDictionaryEntryCollection<TKey>
+	#region KeyedDictionaryEntryCollection<TKey>
 
-    protected class KeyedDictionaryEntryCollection<TKey> : KeyedCollection<TKey, DictionaryEntry>
-    {
+#pragma warning disable CS0693 // Type parameter has the same name as the type parameter from outer type
+	protected class KeyedDictionaryEntryCollection<TKey> : KeyedCollection<TKey, DictionaryEntry>
+#pragma warning restore CS0693 // Type parameter has the same name as the type parameter from outer type
+	{
         #region constructors
 
         #region public
@@ -664,8 +666,10 @@ public class ObservableDictionary<TKey, TValue> :
     #region Enumerator
 
     [Serializable, StructLayout(LayoutKind.Sequential)]
-    public struct Enumerator<TKey, TValue> : IEnumerator<KeyValuePair<TKey, TValue>>, IDisposable, IDictionaryEnumerator, IEnumerator
-    {
+#pragma warning disable CS0693 // Type parameter has the same name as the type parameter from outer type
+	public struct Enumerator<TKey, TValue> : IEnumerator<KeyValuePair<TKey, TValue>>, IDisposable, IDictionaryEnumerator, IEnumerator
+#pragma warning restore CS0693 // Type parameter has the same name as the type parameter from outer type
+	{
         #region constructors
 
         internal Enumerator(ObservableDictionary<TKey, TValue> dictionary, bool isDictionaryEntryEnumerator)
@@ -683,7 +687,7 @@ public class ObservableDictionary<TKey, TValue> :
 
         #region public
 
-        public KeyValuePair<TKey, TValue> Current
+        public readonly KeyValuePair<TKey, TValue> Current
         {
             get
             {
@@ -700,7 +704,7 @@ public class ObservableDictionary<TKey, TValue> :
 
         #region public
 
-        public void Dispose()
+        public readonly void Dispose()
         {
         }
 
@@ -722,7 +726,7 @@ public class ObservableDictionary<TKey, TValue> :
 
         #region private
 
-        private void ValidateCurrent()
+        private readonly void ValidateCurrent()
         {
             if (_index == -1)
             {
@@ -734,7 +738,7 @@ public class ObservableDictionary<TKey, TValue> :
             }
         }
 
-        private void ValidateVersion()
+        private readonly void ValidateVersion()
         {
             if (_version != _dictionary._version)
             {
@@ -742,13 +746,13 @@ public class ObservableDictionary<TKey, TValue> :
             }
         }
 
-        #endregion private
+		#endregion private
 
-        #endregion methods
+		#endregion methods
 
-        #region IEnumerator implementation
+		#region IEnumerator implementation
 
-        object IEnumerator.Current
+		readonly object IEnumerator.Current
         {
             get
             {
@@ -768,19 +772,19 @@ public class ObservableDictionary<TKey, TValue> :
             _current = new KeyValuePair<TKey, TValue>();
         }
 
-        #endregion IEnumerator implementation
+		#endregion IEnumerator implementation
 
-        #region IDictionaryEnumerator implementation
+		#region IDictionaryEnumerator implementation
 
-        DictionaryEntry IDictionaryEnumerator.Entry
+		readonly DictionaryEntry IDictionaryEnumerator.Entry
         {
-            get
+			get
             {
                 ValidateCurrent();
                 return new DictionaryEntry(_current.Key, _current.Value);
             }
         }
-        object IDictionaryEnumerator.Key
+		readonly object IDictionaryEnumerator.Key
         {
             get
             {
@@ -788,7 +792,7 @@ public class ObservableDictionary<TKey, TValue> :
                 return _current.Key;
             }
         }
-        object IDictionaryEnumerator.Value
+		readonly object IDictionaryEnumerator.Value
         {
             get
             {

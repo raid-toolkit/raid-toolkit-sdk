@@ -4,11 +4,11 @@
         <AssemblyName>Raid.Toolkit.Extensibility.Host</AssemblyName>
         <RootNamespace>Raid.Toolkit.Extensibility</RootNamespace>
         <Nullable>enable</Nullable>
+        <NBGV_ThisAssemblyNamespace>$(RootNamespace)</NBGV_ThisAssemblyNamespace>
     </PropertyGroup>
     <Import Project="$(BuildTargetProps)" />
 
     <ItemGroup>
-        <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
         <PackageReference Include="CustomExtensions.WinUI" Version="0.1.10-beta" />
         <PackageReference Include="il2cpptoolkit.common" Version="2.0.134-alpha" />
         <PackageReference Include="il2cpptoolkit.metadata" Version="2.0.134-alpha" />
@@ -16,6 +16,8 @@
         <PackageReference Include="il2cpptoolkit.runtime" Version="2.0.134-alpha" />
         <PackageReference Include="il2cpptoolkit.target.netcore" Version="2.0.134-alpha" />
         <PackageReference Include="System.Threading.Tasks.Dataflow" Version="7.0.0" />
+        <PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.5.0" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
         <Reference Include="Raid.Interop">
@@ -28,10 +30,6 @@
 
     <ItemGroup>
         <ProjectReference Include="..\Model\Model.csproj" />
-        <ProjectReference Include="..\Model.Prebuild\Model.Prebuild.csproj">
-            <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
-            <Private>False</Private>
-        </ProjectReference>
         <ProjectReference Include="..\Extensibility\Extensibility.csproj" />
     </ItemGroup>
 </Project>

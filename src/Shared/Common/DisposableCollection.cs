@@ -1,39 +1,38 @@
 using System;
 using System.Collections.Generic;
 
-namespace Raid.Toolkit.Common
+namespace Raid.Toolkit.Common;
+
+public class DisposableCollection : HashSet<IDisposable>, IDisposable
 {
-    public class DisposableCollection : HashSet<IDisposable>, IDisposable
+    private bool IsDisposed;
+
+    protected virtual void Dispose(bool disposing)
     {
-        private bool IsDisposed;
-
-        protected virtual void Dispose(bool disposing)
+        if (!IsDisposed)
         {
-            if (!IsDisposed)
+            if (disposing)
             {
-                if (disposing)
-                {
-                    Reset();
-                }
-
-                IsDisposed = true;
+                Reset();
             }
-        }
 
-        public void Reset()
-        {
-            foreach (var item in this)
-            {
-                item.Dispose();
-            }
-            Clear();
+            IsDisposed = true;
         }
+    }
 
-        public void Dispose()
+    public void Reset()
+    {
+        foreach (var item in this)
         {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
+            item.Dispose();
         }
+        Clear();
+    }
+
+    public void Dispose()
+    {
+        // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
     }
 }

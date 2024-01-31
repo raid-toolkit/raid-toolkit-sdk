@@ -1,6 +1,8 @@
+using System.Diagnostics.CodeAnalysis;
+
 namespace Raid.Toolkit.Extension;
 
 public interface IGetAccountDataApi<T> where T : class
 {
-    bool TryGetData(out T data);
+	bool TryGetData([NotNullWhen(true)] out T? data);
 }

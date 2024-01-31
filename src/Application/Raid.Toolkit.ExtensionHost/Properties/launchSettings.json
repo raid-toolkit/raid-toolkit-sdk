@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Raid.Toolkit.ExtensionHost (Unpackaged)": {
+      "commandName": "Project",
+      "commandLineArgs": "run Raid.ModelExplorer",
+      "hotReloadEnabled": true
+    }
+  }
+}

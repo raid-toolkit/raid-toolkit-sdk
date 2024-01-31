@@ -38,16 +38,18 @@ namespace Raid.Toolkit.DataModel
 
         public static string Localize(this LocalizedText key)
         {
-            if (LocalizedStrings.TryGetValue(key.Key, out string value))
-                return value;
-            return key.LocalizedValue ?? key.DefaultValue;
+			if (string.IsNullOrEmpty(key.Key))
+				return string.Empty;
+            if (LocalizedStrings.TryGetValue(key.Key!, out string? value))
+                return value ?? string.Empty;
+            return key.LocalizedValue ?? key.DefaultValue ?? string.Empty;
         }
 
         public static string LocalizeByKey(string key)
         {
-            if (LocalizedStrings.TryGetValue(key, out string value))
-                return value;
-            return null;
+            if (LocalizedStrings.TryGetValue(key, out string? value))
+                return value ?? string.Empty;
+            return string.Empty;
         }
 
         private static T Deserialize<T>(string resourceName)
@@ -59,7 +61,7 @@ namespace Raid.Toolkit.DataModel
             using (var sr = new StreamReader(stream))
             using (var textReader = new JsonTextReader(sr))
             {
-                return serializer.Deserialize<T>(textReader);
+                return serializer.Deserialize<T>(textReader) ?? throw new KeyNotFoundException();
             }
         }
 

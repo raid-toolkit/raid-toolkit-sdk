@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
+using Raid.Toolkit.Common;
+using Raid.Toolkit.Common.API;
+using Raid.Toolkit.Common.API.Messages;
+
 namespace Raid.Toolkit.DataModel
 {
+    [DeprecatedInV3]
     [PublicApi("realtime-api")]
     public interface IRealtimeApi
     {
@@ -27,15 +32,17 @@ namespace Raid.Toolkit.DataModel
         Task<ViewInfo> GetCurrentViewInfo(string accountId);
     }
 
+    [DeprecatedInV3]
     public class ViewInfo
     {
         [JsonProperty("viewId")]
         public int? ViewId;
 
         [JsonProperty("viewKey")]
-        public string ViewKey;
+        public string? ViewKey;
     }
 
+    [DeprecatedInV3]
     public class GivenDamage
     {
         [JsonProperty("demonLord")]
@@ -44,10 +51,11 @@ namespace Raid.Toolkit.DataModel
         public long? Hydra;
     }
 
+    [DeprecatedInV3]
     public class LastBattleDataObject
     {
         [JsonProperty("battleKindId")]
-        public string BattleKindId;
+        public string? BattleKindId;
 
         [JsonProperty("heroesExperience")]
         public int HeroesExperience;
@@ -59,13 +67,13 @@ namespace Raid.Toolkit.DataModel
         public int? Turns;
 
         [JsonProperty("givenDamage")]
-        public GivenDamage GivenDamage;
+        public GivenDamage? GivenDamage;
 
         [JsonProperty("tournamentPointsByStateId")]
-        public Dictionary<int, int> TournamentPointsByStateId;
+        public Dictionary<int, int>? TournamentPointsByStateId;
 
         [JsonProperty("masteryPointsByHeroId")]
-        public Dictionary<int, Dictionary<string, int>> MasteryPointsByHeroId;
+        public Dictionary<int, Dictionary<string, int>>? MasteryPointsByHeroId;
     }
 
 }

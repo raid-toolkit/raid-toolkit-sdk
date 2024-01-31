@@ -1,6 +1,8 @@
 using System;
 using System.Reflection;
 using System.Threading.Tasks;
+
+using Raid.Toolkit.Common.API.Messages;
 using Raid.Toolkit.DataModel;
 
 namespace Raid.Client

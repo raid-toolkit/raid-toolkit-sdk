@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="Raid.Toolkit.ExtensionHost.ProgressUI"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:converters="using:CommunityToolkit.WinUI.UI.Converters"
+	mc:Ignorable="d">
+	<UserControl.Resources>
+		<converters:BoolToObjectConverter x:Key="ProgressSuccessConverter"
+                                          FalseValue="{ThemeResource AccentFillColorDefaultBrush}"
+                                          TrueValue="{ThemeResource SystemFillColorSuccessBrush}" />
+
+	</UserControl.Resources>
+
+	<StackPanel Orientation="Vertical" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+		<TextBlock HorizontalAlignment="Center" Text="{x:Bind Model.ProgressMessage, Mode=OneWay}" />
+		<ProgressBar HorizontalAlignment="Stretch" Margin="12" Minimum="0" Maximum="100" 
+					 Value="{x:Bind Model.Progress, Mode=OneWay}" 
+					 IsIndeterminate="{x:Bind Model.ProgressIndeterminate}" 
+					 ShowError="{x:Bind Model.ProgressError, Mode=OneWay}"
+					 Foreground="{x:Bind Model.ProgressSuccess, Converter={StaticResource ProgressSuccessConverter}, Mode=OneWay}"
+					 />
+		<TextBlock HorizontalAlignment="Center" 
+				   Text="{x:Bind Model.ProgressStepMessage, Mode=OneWay}" 
+				   Foreground="{StaticResource SystemColorDisabledTextBrush}" />
+
+		<Button Margin="12" HorizontalAlignment="Center" Visibility="{x:Bind Model.ProgressSuccess, Mode=OneWay}" Click="HideButton_Click">OK!</Button>
+		<Button Margin="12" HorizontalAlignment="Center" Visibility="{x:Bind Model.ProgressError, Mode=OneWay}" Click="CloseButton_Click">Close</Button>
+	</StackPanel>
+</UserControl>

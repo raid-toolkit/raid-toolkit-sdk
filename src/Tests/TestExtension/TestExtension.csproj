@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Import Project="$(BuildTargetProps)" />
+
+    <PropertyGroup>
+        <AssemblyName>TestExtension</AssemblyName>
+        <RootNamespace>TestExtension</RootNamespace>
+        <!-- https://github.com/dotnet/maui/issues/5886#issuecomment-1123106200 -->
+        <EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
+        <InstallRTKExtensionAfterBuild>false</InstallRTKExtensionAfterBuild>
+        <GenerateInterop>false</GenerateInterop>
+        <Nullable>enable</Nullable>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\Build\Tasks\Tasks.csproj">
+            <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </ProjectReference>
+        <ProjectReference Include="..\..\Shared\Extensibility\Extensibility.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <RTKExtensionManifest Include="manifest.json" />
+    </ItemGroup>
+
+</Project>

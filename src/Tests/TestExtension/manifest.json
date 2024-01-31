@@ -1,0 +1,10 @@
+{
+	"id": "TestExtension",
+	"type": "TestExtension.Extension",
+	"asm": "TestExtension.dll",
+	"displayName": "TestExtension",
+	"description": "Extracts account data",
+	"codegen": { "types": [] },
+	"requireVersion": "3.0.0",
+	"compatibleVersion": "3.0.0"
+}

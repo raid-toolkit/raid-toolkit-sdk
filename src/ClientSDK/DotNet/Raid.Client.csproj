@@ -2,7 +2,6 @@
 
     <ItemGroup>
         <ProjectReference Include="$(SourceDir)Shared\Common\Common.csproj" />
-        <ProjectReference Include="$(SourceDir)Shared\DataModel\DataModel.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -10,7 +9,7 @@
     </ItemGroup>
 
     <PropertyGroup>
-        <TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
+        <TargetFrameworks>net6.0-windows</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <UseWindowsForms>true</UseWindowsForms>
         <OutputType>Library</OutputType>
@@ -18,6 +17,7 @@
         <RootNamespace>Raid.Client</RootNamespace>
         <NuspecProperties>version=$(Version)</NuspecProperties>
         <Platforms>x64</Platforms>
+        <NBGV_ThisAssemblyNamespace>$(RootNamespace)</NBGV_ThisAssemblyNamespace>
     </PropertyGroup>
 
 </Project>

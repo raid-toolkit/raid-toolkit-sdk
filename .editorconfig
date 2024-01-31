@@ -18,9 +18,9 @@ trim_trailing_whitespace = false
 # dotnet_diagnostic.IDE0005.severity = warn
 # dotnet_diagnostic.IDE0051.severity = error
 # dotnet_diagnostic.IDE0090.severity = error
-dotnet_diagnostic.IDE0130.severity = none
+#dotnet_diagnostic.IDE0130.severity = none
 # var
-dotnet_diagnostic.IDE0008.severity = none
+#dotnet_diagnostic.IDE0008.severity = none
 # if-braces
 dotnet_diagnostic.IDE0011.severity = none
 indent_style = tab

@@ -3,46 +3,46 @@
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <Nullable>enable</Nullable>
-        <ValidateExecutableReferencesMatchSelfContained>false</ValidateExecutableReferencesMatchSelfContained>
-        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <RootNamespace>Raid.Toolkit</RootNamespace>
         <ApplicationIcon>..\Assets\AppIcon.ico</ApplicationIcon>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
         <IsPackable>false</IsPackable>
-
+        <Nullable>enable</Nullable>
         <UseWinUI>true</UseWinUI>
         <WindowsPackageType>None</WindowsPackageType>
         <SelfContained>false</SelfContained>
-        <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
         <AssemblyTitle>Raid Toolkit</AssemblyTitle>
         <ProductName>Raid Toolkit</ProductName>
+        <NBGV_ThisAssemblyNamespace>$(RootNamespace)</NBGV_ThisAssemblyNamespace>
     </PropertyGroup>
 
     <PropertyGroup>
         <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     </PropertyGroup>
 
+    <Target Name="Pack">
+    </Target>
+
     <ItemGroup>
-        <AdditionalFiles Include="NativeMethods.txt" />
         <Manifest Include="$(ApplicationManifest)" />
     </ItemGroup>
 
     <ItemGroup>
         <FrameworkReference Include="Microsoft.WindowsDesktop.App.WindowsForms" />
         <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
-        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.230822000" GeneratePathProperty="true" />
+        <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.4.231115000" GeneratePathProperty="true" />
         <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.25267-preview" />
         <PackageReference Include="Microsoft.Windows.CsWin32" Version="0.2.138-beta" PrivateAssets="all" />
-        <PackageReference Include="WinUIEx" Version="2.0.0" />
-
-        <PackageReference Include="CommandLineParser" Version="2.9.1" />
         <PackageReference Include="CommunityToolkit.Common" Version="8.2.1" />
         <PackageReference Include="CommunityToolkit.WinUI" Version="7.1.2" />
         <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
         <PackageReference Include="CommunityToolkit.WinUI.UI.Controls" Version="7.1.2" />
-        <PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.4.0" />
+
+        <PackageReference Include="WinUIEx" Version="2.3.3" />
+        <PackageReference Include="CommandLineParser" Version="2.9.1" />
+        <PackageReference Include="Karambolo.Extensions.Logging.File" Version="3.5.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-        <PackageReference Include="SuperSocket.WebSocket.Server" Version="2.0.0-beta.10" />
         <PackageReference Include="Il2CppToolkit.Injection.Client" Version="2.0.145-alpha" GeneratePathProperty="true" />
         <Reference Include="Raid.Interop">
             <HintPath>$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
@@ -60,49 +60,14 @@
         <Content Include="$(PkgIl2CppToolkit_Injection_Client)\runtimes\win10-x64\native\Il2CppToolkit.Injection.Host.dll">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
-        <Content Include="UI.WinUI\Assets\AppIcon.ico" />
-        <Content Include="UI.WinUI\Assets\DevIcon.ico" />
-        <Content Include="UI.WinUI\Assets\Icon_128.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_22.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_256.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_300.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_32.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_48.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_512.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_64.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\Icon_88.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
-        <Content Include="UI.WinUI\Assets\RaidToolkitLarge.png">
-            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-        </Content>
         <!--<Content Include="$(ProjectPriFullPath)" Link="$(ProjectPriFileName)">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>-->
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="$(SourceDir)Extensions\Account\Account.csproj" />
-        <ProjectReference Include="$(SourceDir)Extensions\Realtime\Realtime.csproj" />
         <ProjectReference Include="$(SourceDir)Shared\Extensibility\Extensibility.csproj" />
         <ProjectReference Include="$(SourceDir)Shared\Extensibility.Host\Extensibility.Host.csproj" />
-        <ProjectReference Include="..\Raid.Toolkit.Application.Core\Raid.Toolkit.Application.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
@@ -114,34 +79,81 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Content Update="Assets\Icon_128.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Assets\Icon_22.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Assets\Icon_256.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Assets\Icon_300.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Assets\Icon_32.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Assets\Icon_48.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Assets\Icon_512.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Assets\Icon_64.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Assets\Icon_88.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+        <Content Update="Assets\RaidToolkitLarge.png">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+
+    <ItemGroup>
         <EmbeddedResource Update="UI.WinUI\Forms\FormsResources.resx">
             <SubType>Designer</SubType>
             <LastGenOutput>FormsResources.Designer.cs</LastGenOutput>
             <Generator>ResXFileCodeGenerator</Generator>
         </EmbeddedResource>
     </ItemGroup>
+    <PropertyGroup>
+        <ExtensionHostProjectDir>$(SourceDir)Application\Raid.Toolkit.ExtensionHost\</ExtensionHostProjectDir>
+    </PropertyGroup>
+    <ItemGroup>
+        <ExtensionHostRootFiles Include="$(ExtensionHostProjectDir)$(OutDir)App.xbf" />
+        <ExtensionHostRootFiles Include="$(ExtensionHostProjectDir)$(OutDir)Raid.Toolkit.ExtensionHost.*" />
+        <ExtensionHostUIFiles Include="$(ExtensionHostProjectDir)$(OutDir)UI\*" />
+    </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Copy SourceFiles="@(ExtensionHostRootFiles)" DestinationFolder="$(TargetDir)" />
+        <Copy SourceFiles="@(ExtensionHostUIFiles)" DestinationFolder="$(TargetDir)UI" />
+    </Target>
 
     <ItemGroup>
-        <Page Update="UI.WinUI\AccountsWindow.xaml">
+        <ApplicationDefinition Include="RTKApplication.xaml" Condition="'$(EnableDefaultApplicationDefinition)' != 'false' And Exists('$(MSBuildProjectDirectory)/RTKApplication.xaml')">
+            <Generator>MSBuild:Compile</Generator>
             <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-        </Page>
+        </ApplicationDefinition>
+        <Page Remove="RTKApplication.xaml" />
+        <None Remove="RTKApplication.xaml" />
+    </ItemGroup>
+
+    <ItemGroup>
         <Page Update="UI.WinUI\ExtensionsWindow.xaml">
-            <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-            <SubType>Designer</SubType>
-        </Page>
-        <Page Update="UI.WinUI\InstallExtensionWindow.xaml">
-            <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+            <Generator>MSBuild:Compile</Generator>
         </Page>
         <Page Update="UI.WinUI\MainWindow.xaml">
-            <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
+            <Generator>MSBuild:Compile</Generator>
         </Page>
         <Page Update="UI.WinUI\SettingsPanel.xaml">
-            <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
         </Page>
         <Page Update="UI.WinUI\Themes\Generic.xaml">
-            <XamlRuntime>$(DefaultXamlRuntime)</XamlRuntime>
-            <SubType>Designer</SubType>
+            <Generator>MSBuild:Compile</Generator>
         </Page>
     </ItemGroup>
+
 </Project>

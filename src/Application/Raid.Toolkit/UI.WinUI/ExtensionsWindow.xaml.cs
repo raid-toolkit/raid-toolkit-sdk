@@ -22,6 +22,8 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 
+using WinUIEx;
+
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
@@ -40,8 +42,8 @@ namespace Raid.Toolkit.UI.WinUI
 
             ExtensionList.ItemsSource = PackageManager.GetAllPackages().ToList();
 
-            CenterWindowInMonitor();
-        }
+			this.CenterOnScreen(400, 475);
+		}
 
         private void ExtensionList_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {

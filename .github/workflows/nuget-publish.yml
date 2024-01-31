@@ -1,0 +1,80 @@
+name: Nuget Publish
+
+on:
+  push:
+    branches:
+      - main
+      - release/**
+    paths:
+      - version.json
+      - .github/workflows/nuget-publish.yml
+      - Directory.Build.props
+      - 'src/Build/**'
+      - 'src/Shared/**'
+      - 'src/Template/**'
+      - '!**/*.md'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    env:
+      IS_CI: true
+      Solution_Name: SDK-CI.sln
+
+    steps:
+      - uses: mickem/clean-after-action@v1
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+          fetch-depth: 0
+
+      - name: Set branch-based environment variables
+        uses: iamtheyammer/branch-env-vars@v1.0.4
+
+      # Install the .NET Core workload
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: |
+            6.0.x
+            7.0.x
+
+      # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
+      - name: Setup MSBuild.exe
+        uses: microsoft/setup-msbuild@v1.0.2
+
+      # Versions
+      - uses: dotnet/nbgv@master
+        id: rtk_version
+        with:
+          setAllVars: true
+
+      - uses: actions/cache/restore@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      # Restore the application to populate the obj folder with RuntimeIdentifiers
+      # Restore the application to populate the obj folder with RuntimeIdentifiers
+      - name: Restore the application
+        run: dotnet restore $env:Solution_Name
+
+      # Pack
+      - name: Pack Dependencies
+        run: dotnet pack $env:Solution_Name -c Release --include-symbols --include-source -p:PackageOutputPath="$(Get-Location)\publish\nuget"
+
+      # NuGet Push
+      - name: Push client package to Nuget registry
+        run: |
+          dotnet nuget push publish/nuget/Raid.Toolkit.Common.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:NUGET_PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:NUGET_PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.Host.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:NUGET_PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.Tasks.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:NUGET_PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Build.Tasks.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:NUGET_PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+        env:
+          NUGET_PUBLISH_TOKEN: ${{ secrets.NUGET_PUBLISH_TOKEN }}

@@ -1,0 +1,6 @@
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Raid.Toolkit")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Raid.Toolkit.ExtensionHost")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Raid.Toolkit.Extensibility")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Raid.Toolkit.Extensibility.Host")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Raid.Toolkit.Build.Tasks")]
+[assembly: System.Runtime.CompilerServices.InternalsVisibleTo("Raid.Toolkit.Loader")]

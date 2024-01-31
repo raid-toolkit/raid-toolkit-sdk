@@ -1,14 +1,12 @@
 using System;
 using System.ComponentModel;
-using System.Drawing;
 
 namespace Raid.Toolkit.Extensibility;
 
 public interface IMenuEntry
 {
+	string Id { get; set; }
 	string DisplayName { get; }
-	[Obsolete("Use ImageUrl instead")]
-	Image? Image { get; }
 	string? ImageUrl { get; }
 	bool IsEnabled { get; }
 	bool IsVisible { get; }
@@ -42,8 +40,6 @@ public class MenuEntry : IMenuEntry
 	public event EventHandler? Activate;
 	public string Id { get; set; }
 	public string DisplayName { get; set; }
-	[Obsolete("Use ImageUrl instead")]
-	public Image? Image { get; set; }
 	public string? ImageUrl { get; set; }
 	public bool IsEnabled { get; set; }
 	public bool IsVisible { get; set; }

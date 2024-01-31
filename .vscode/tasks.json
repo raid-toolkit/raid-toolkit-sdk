@@ -5,16 +5,15 @@
   "tasks": [
     {
       "label": "build",
-      "command": "dotnet",
+      "command": "\"${env:VSInstallDir}MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\"",
       "type": "shell",
       "args": [
-        "build",
+        "SDK.sln",
         "--nologo",
-        "-m:1",
-        "-nodeReuse:false",
-        "-p:RTKTasks=true",
+        "-m", // allow parallel build
         "-p:GenerateFullPaths=true",
-        "/consoleloggerparameters:NoSummary"
+        "-verbosity:minimal",
+        "/consoleloggerparameters:Summary"
       ],
       "group": {
         "kind": "build",
@@ -39,7 +38,6 @@
         "--output",
         "publish/RTK",
         "-p:Configuration=Debug",
-        "-p:RTKTasks=true",
         "-p:Platform=x64",
         "-p:DeployOnBuild=true",
         "-p:GenerateFullPaths=true",
@@ -62,7 +60,6 @@
         "--nologo",
         "-m:1",
         "-nodeReuse:false",
-        "-p:RTKTasks=true",
         "-p:GenerateFullPaths=true",
         "-p:Configuration=Release",
         "/consoleloggerparameters:NoSummary"

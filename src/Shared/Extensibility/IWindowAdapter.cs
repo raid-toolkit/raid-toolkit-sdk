@@ -10,14 +10,13 @@ public interface IWindowAdapter
 	Point Location { get; set; }
 	Size Size { get; set; }
 	void Show();
-
 	event EventHandler<WindowAdapterCloseEventArgs> Closing;
 	event EventHandler<WindowAdapterEventArgs> Shown;
 	event EventHandler<WindowAdapterSizeChangedEventArgs> Resized;
 }
 public interface IWindowAdapter<out T> : IWindowAdapter where T : class
 {
-	public T GetOwner();
+	T GetOwner();
 }
 public class WindowAdapterEventArgs : EventArgs
 {

@@ -1,11 +1,10 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Raid.Toolkit.Extensibility.Host
+namespace Raid.Toolkit.Extensibility.Host;
+
+public interface IServiceManager
 {
-    public interface IServiceManager
-    {
-        IDisposable AddService(IBackgroundService service);
-        Task ProcessInstance(IGameInstance instance);
-    }
+	IDisposable AddService(IBackgroundService service);
+	Task ProcessInstance(IGameInstance instance);
 }

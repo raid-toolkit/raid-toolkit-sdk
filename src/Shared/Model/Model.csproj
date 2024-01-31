@@ -7,31 +7,22 @@
         <PackageReference Include="il2cpptoolkit.runtime" Version="2.0.134-alpha" />
         <PackageReference Include="il2cpptoolkit.target.netcore" Version="2.0.134-alpha" />
         <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-	</ItemGroup>
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Common\Common.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-        <Content Include="$(BinDir)v4.7.2\Raid.Interop.dll" copyToOutput="true">
-            <Pack>true</Pack>
-            <PackagePath>lib\net472</PackagePath>
-        </Content>
-        <Content Include="$(BinDir)v6.0\Raid.Interop.dll" copyToOutput="true">
-            <Pack>true</Pack>
-            <PackagePath>lib\net6.0-windows7.0</PackagePath>
-        </Content>
-    </ItemGroup>
-
     <PropertyGroup>
-        <TargetFrameworks>net472;net6.0-windows</TargetFrameworks>
+        <TargetFrameworks>net472;net6.0</TargetFrameworks>
         <LangVersion>10.0</LangVersion>
         <OutputType>Library</OutputType>
-        <AssemblyName>Raid.Model</AssemblyName>
-        <RootNamespace>Raid.Model</RootNamespace>
+        <AssemblyName>Raid.Toolkit.Loader</AssemblyName>
+        <RootNamespace>Raid.Toolkit.Loader</RootNamespace>
         <Platforms>x64</Platforms>
+        <Nullable>enable</Nullable>
+        <NBGV_ThisAssemblyNamespace>$(RootNamespace)</NBGV_ThisAssemblyNamespace>
     </PropertyGroup>
 
 </Project>

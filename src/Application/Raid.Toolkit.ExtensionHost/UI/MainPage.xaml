@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Page
+    x:Class="Raid.Toolkit.ExtensionHost.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Raid.Toolkit.ExtensionHost"
+	xmlns:viewModel="using:Raid.Toolkit.ExtensionHost.ViewModel"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
+	mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+	<Grid>
+		<controls:SwitchPresenter TargetType="viewModel:ExtensionHostUIState" Value="{x:Bind Model.State, Mode=OneWay}">
+			<controls:Case Value="None"></controls:Case>
+			<controls:Case Value="RequiresTrust">
+				<local:InstallExtensionUI Model="{x:Bind Model, Mode=OneWay}" />
+			</controls:Case>
+			<controls:Case Value="Progress">
+				<local:ProgressUI Model="{x:Bind Model, Mode=OneWay}" />
+			</controls:Case>
+			<controls:Case Value="About">
+				<local:ProgressUI Model="{x:Bind Model, Mode=OneWay}" />
+			</controls:Case>
+		</controls:SwitchPresenter>
+	</Grid>
+</Page>

@@ -1,60 +1,63 @@
 using System;
 using System.Diagnostics;
+
 using Client.Model;
-using Il2CppToolkit.Common.Errors;
+
 using Il2CppToolkit.Runtime;
 
-namespace Raid.Toolkit.Extensibility.Host
+namespace Raid.Toolkit.Extensibility.Host;
+
+public class GameInstance : IGameInstance, ILoadedGameInstance, IDisposable
 {
-    public class GameInstance : IGameInstance, IDisposable
-    {
-        public int Token { get; private set; }
-        public string Id { get; private set; }
-        public string AccountName { get; private set; }
-        public string AvatarUrl { get; private set; }
-        private bool IsDisposed;
+	public int Token { get; private set; }
+	public string? Id { get; private set; }
+	public string? AccountName { get; private set; }
+	public string? AvatarUrl { get; private set; }
+	public Il2CsRuntimeContext Runtime { get; private set; }
 
-        public Il2CsRuntimeContext Runtime { get; private set; }
-        public PropertyBag Properties { get; } = new();
+	string ILoadedGameInstance.Id => Id ?? throw new InvalidOperationException();
+	string ILoadedGameInstance.AvatarUrl => AvatarUrl ?? throw new InvalidOperationException();
 
-        public GameInstance(Process proc)
-        {
-            Token = proc.Id;
-        }
+	private bool IsDisposed;
 
-        public void InitializeOrThrow(Process proc)
-        {
-            Runtime ??= new(proc);
+	public GameInstance(Process proc)
+	{
+		Token = proc.Id;
+		Runtime = new(proc);
+		Id = AccountName = AvatarUrl = string.Empty;
+	}
 
-            ErrorHandler.VerifyElseThrow(Runtime != null, ServiceError.MethodCalledBeforeInitialization, "Method cannot be called before intialization");
-            var appModel = AppModel._instance.GetValue(Runtime);
+	public ILoadedGameInstance InitializeOrThrow(Process proc)
+	{
+		Runtime ??= new(proc);
 
-            var userWrapper = appModel._userWrapper;
-            var socialWrapper = userWrapper.Social.SocialData;
-            var globalId = socialWrapper.PlariumGlobalId;
-            var socialId = socialWrapper.SocialId;
-            AvatarUrl = $"https://raidtoolkit.com/img/avatars/{(int)userWrapper.UserGameSettings.GameSettings.Avatar}.png";
-            Id = string.Join('_', globalId, socialId).Sha256();
-            AccountName = userWrapper.UserGameSettings.GameSettings.Name;
-        }
+		var appModel = AppModel._instance.GetValue(Runtime);
+		var userWrapper = appModel._userWrapper;
+		var socialWrapper = userWrapper.Social.SocialData;
+		var globalId = socialWrapper.PlariumGlobalId;
+		var socialId = socialWrapper.SocialId;
+		AvatarUrl = $"https://raidtoolkit.com/img/avatars/{(int)userWrapper.UserGameSettings.GameSettings.Avatar}.png";
+		Id = string.Join('_', globalId, socialId).Sha256();
+		AccountName = userWrapper.UserGameSettings.GameSettings.Name;
+		return this;
+	}
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!IsDisposed)
-            {
-                if (disposing)
-                {
-                    Runtime?.Dispose();
-                }
-                IsDisposed = true;
-            }
-        }
+	protected virtual void Dispose(bool disposing)
+	{
+		if (!IsDisposed)
+		{
+			if (disposing)
+			{
+				Runtime?.Dispose();
+			}
+			IsDisposed = true;
+		}
+	}
 
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(disposing: true);
-            GC.SuppressFinalize(this);
-        }
-    }
+	public void Dispose()
+	{
+		// Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
+		Dispose(disposing: true);
+		GC.SuppressFinalize(this);
+	}
 }

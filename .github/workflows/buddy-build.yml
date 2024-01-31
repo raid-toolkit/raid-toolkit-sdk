@@ -11,7 +11,7 @@ jobs:
 
     env:
       IS_CI: true
-      Solution_Name: SDK.sln
+      Solution_Name: SDK-CI.sln
       Launcher_csproj: src\Application\Launcher\Launcher.csproj
       App_csproj: src\Application\Raid.Toolkit\Raid.Toolkit.csproj
       Client_csproj: src\ClientSDK\DotNet\Raid.Client.csproj
@@ -40,8 +40,8 @@ jobs:
         uses: actions/setup-dotnet@v1
         with:
           dotnet-version: |
-            5.0.x
             6.0.x
+            7.0.x
 
       # Add  MSBuild to the PATH: https://github.com/microsoft/setup-msbuild
       - name: Setup MSBuild.exe
@@ -62,14 +62,15 @@ jobs:
 
       # Restore the application to populate the obj folder with RuntimeIdentifiers
       - name: Restore the application
-        run: msbuild $env:Solution_Name /t:Restore /p:Configuration=Debug
+        run: dotnet restore $env:Solution_Name
 
-      # Publish RTK
+      # Build
       - name: Build App
-        run: msbuild $env:Solution_Name -m -t:"Build;Pack" -p:Configuration=Debug -p:Platform=x64 -p:PackageOutputPath="$(Get-Location)\publish\nuget"
+        run: dotnet build $env:Solution_Name -c Debug -p:PackageOutputPath="$(Get-Location)\publish\nuget"
 
-      - name: Build Launcher
-        run: msbuild $env:Launcher_csproj -m -t:Publish -p:TargetFramework=net5.0-windows -p:Configuration=Debug -p:Platform=x64 -p:PublishDir="$(Get-Location)\publish\RTK"
+      # Pack
+      - name: Pack Dependencies
+        run: dotnet pack $env:Solution_Name -c Debug --include-symbols --include-source --no-build -p:PackageOutputPath="$(Get-Location)\publish\nuget"
 
       - name: Build Setup
         run: |
@@ -92,23 +93,19 @@ jobs:
           token: ${{ secrets.RELEASE_STAGING_GITHUB }}
           repository: raid-toolkit/staged-release
           files: |
-            UPGRADE_2.0.md
-            publish/RTK/Raid.Toolkit.exe
-            src/Setup/out/RaidToolkit.msi
+            UPGRADE_3.0.md
             src/Setup/out/RaidToolkitSetup.exe
             ThirdPartyNotice.txt
 
       # NuGet Push
       - name: Push client package to PR registry
         run: |
-          dotnet nuget push publish/nuget/Raid.Common.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
-          dotnet nuget push publish/nuget/Raid.Client.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
-          dotnet nuget push publish/nuget/Raid.Model.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
-          dotnet nuget push publish/nuget/Raid.Toolkit.DataModel.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
-          dotnet nuget push publish/nuget/Raid.Toolkit.Injection.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Common.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.Host.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.Tasks.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Loader.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Build.Tasks.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:STAGING_NUGET_TOKEN -s $env:STAGING_NUGET_URL --skip-duplicate
         env:
           STAGING_NUGET_TOKEN: ${{ secrets.STAGING_NUGET_TOKEN }}
           STAGING_NUGET_URL: https://nuget.pkg.github.com/raid-toolkit/index.json
