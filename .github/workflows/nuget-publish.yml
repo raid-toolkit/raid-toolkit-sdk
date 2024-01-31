@@ -1,4 +1,4 @@
-name: App Publish
+name: Nuget Publish
 
 on:
   push:
@@ -7,12 +7,10 @@ on:
       - release/**
     paths:
       - version.json
-      - .github/workflows/app-publish.yml
+      - .github/workflows/nuget-publish.yml
       - Directory.Build.props
-      - 'src/Application/**'
       - 'src/Build/**'
       - 'src/Shared/**'
-      - 'src/Setup/**'
       - 'src/Template/**'
       - '!**/*.md'
 
@@ -22,7 +20,7 @@ jobs:
 
     env:
       IS_CI: true
-      Solution_Name: SDK.sln
+      Solution_Name: SDK-CI.sln
 
     steps:
       - uses: mickem/clean-after-action@v1
@@ -35,13 +33,6 @@ jobs:
 
       - name: Set branch-based environment variables
         uses: iamtheyammer/branch-env-vars@v1.0.4
-        with:
-          PRERELEASE: |
-            main:true
-            !default:false
-          PRERELEASEN: |
-            main:1
-            !default:0
 
       # Install the .NET Core workload
       - name: Install .NET Core
@@ -69,39 +60,13 @@ jobs:
             ${{ runner.os }}-nuget-
 
       # Restore the application to populate the obj folder with RuntimeIdentifiers
+      # Restore the application to populate the obj folder with RuntimeIdentifiers
       - name: Restore the application
         run: dotnet restore $env:Solution_Name
 
-      - name: Build Project
-        run: dotnet build $env:Solution_Name -c Release -p:PackageOutputPath="$(Get-Location)\publish\nuget"
-
-      - name: Pack Project
+      # Pack
+      - name: Pack Dependencies
         run: dotnet pack $env:Solution_Name -c Release --include-symbols --include-source -p:PackageOutputPath="$(Get-Location)\publish\nuget"
-
-      - name: Build Setup
-        run: |
-          $env:Path += ";C:\Program Files (x86)\WiX Toolset v3.11\bin"
-          heat.exe dir $env:BuildOutputDirectory -cg RaidToolkitBinaries -out out\RaidToolkitBinaries.wxs -dr BINDIR -srd -suid -sreg -g1 -var env.BuildOutputDirectory -ag
-          candle.exe -nologo -o out\ out\RaidToolkitBinaries.wxs Product.wxs Registry.wxs Bundle.wxs -ext WixBalExtension
-          light.exe -nologo -o out\RaidToolkit.msi out\Product.wixobj out\Registry.wixobj out\RaidToolkitBinaries.wixobj -ext WixBalExtension
-          light.exe -nologo -o out\RaidToolkitSetup.exe out\Bundle.wixobj -ext WixBalExtension
-        working-directory: ./src/Setup
-        env:
-          AppVersion: ${{ steps.rtk_version.outputs.Version }}
-          Prerelease: ${{ env.PRERELEASEN }}
-          BuildOutputDirectory: ..\Application\Raid.Toolkit\bin\x64\Release\net6.0-windows10.0.19041.0\win10-x64
-
-      - name: Create release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: v${{ steps.rtk_version.outputs.Version }}
-          prerelease: ${{ env.PRERELEASE }}
-          body_path: CHANGES.md
-          files: |
-            UPGRADE_3.0.md
-            src/Setup/out/RaidToolkitSetup.exe
-            src/Template/vsix/bin/release/RTKExtensionTemplate.vsix
-            ThirdPartyNotice.txt
 
       # NuGet Push
       - name: Push client package to Nuget registry
