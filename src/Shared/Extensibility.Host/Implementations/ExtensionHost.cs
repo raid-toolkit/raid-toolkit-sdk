@@ -202,11 +202,10 @@ namespace Raid.Toolkit.Extensibility.Host
             return new ExtensionStorage(storage, new(account.Id, Bundle.Id));
         }
 
-        public T CreateInstance<T>(params object[] args) where T : IDisposable
+        public T CreateInstance<T>(params object[] args)
         {
             IServiceProvider scope = ServiceProvider.CreateScope().ServiceProvider;
             T instance = ActivatorUtilities.CreateInstance<T>(scope, args);
-            _ = Instances.TryAdd(typeof(T), instance);
             return instance;
         }
 
