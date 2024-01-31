@@ -52,7 +52,8 @@
 
     <ItemGroup>
         <Reference Include="$(OutputAssemblyName)">
-            <HintPath>$(IntermediateOutputPath)$(OutputAssemblyFile)</HintPath>
+            <HintPath Condition=" '$(UseCachedRTKInterp)' == 'true' ">$(BinDir)$(TargetFrameworkVersion)\Raid.Interop.dll</HintPath>
+            <HintPath Condition=" '$(UseCachedRTKInterp)' != 'true' ">$(IntermediateOutputPath)$(OutputAssemblyFile)</HintPath>
             <Private>False</Private>
             <SpecificVersion>False</SpecificVersion>
             <CopyLocal>False</CopyLocal>

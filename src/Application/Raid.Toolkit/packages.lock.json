@@ -67,9 +67,6 @@
         "requested": "[2.0.145-alpha, )",
         "resolved": "2.0.145-alpha",
         "contentHash": "Xxwyf4aQAozYjeuVbzfEgw2lBD1MbFq9E2z8aMNSzKFECitZJOJC3yA2Ch6emKE58wb+z5Hy2vr35UoMMq591g==",
-        "requested": "[2.0.145-alpha, )",
-        "resolved": "2.0.145-alpha",
-        "contentHash": "Xxwyf4aQAozYjeuVbzfEgw2lBD1MbFq9E2z8aMNSzKFECitZJOJC3yA2Ch6emKE58wb+z5Hy2vr35UoMMq591g==",
         "dependencies": {
           "Google.Protobuf": "3.21.1",
           "Grpc.Net.Client": "2.46.0"
@@ -1615,11 +1612,6 @@
           "il2cpptoolkit.reversecompiler": "[2.0.134-alpha, )",
           "il2cpptoolkit.runtime": "[2.0.134-alpha, )",
           "il2cpptoolkit.target.netcore": "[2.0.134-alpha, )"
-          "il2cpptoolkit.common": "[2.0.134-alpha, )",
-          "il2cpptoolkit.metadata": "[2.0.134-alpha, )",
-          "il2cpptoolkit.reversecompiler": "[2.0.134-alpha, )",
-          "il2cpptoolkit.runtime": "[2.0.134-alpha, )",
-          "il2cpptoolkit.target.netcore": "[2.0.134-alpha, )"
         }
       },
       "Raid.Toolkit.Loader": {
@@ -1639,9 +1631,6 @@
     "net6.0-windows10.0.19041/win10-x64": {
       "Il2CppToolkit.Injection.Client": {
         "type": "Direct",
-        "requested": "[2.0.145-alpha, )",
-        "resolved": "2.0.145-alpha",
-        "contentHash": "Xxwyf4aQAozYjeuVbzfEgw2lBD1MbFq9E2z8aMNSzKFECitZJOJC3yA2Ch6emKE58wb+z5Hy2vr35UoMMq591g==",
         "requested": "[2.0.145-alpha, )",
         "resolved": "2.0.145-alpha",
         "contentHash": "Xxwyf4aQAozYjeuVbzfEgw2lBD1MbFq9E2z8aMNSzKFECitZJOJC3yA2Ch6emKE58wb+z5Hy2vr35UoMMq591g==",
