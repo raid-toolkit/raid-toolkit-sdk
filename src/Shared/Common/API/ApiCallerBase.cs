@@ -56,7 +56,7 @@ public class ApiCallerBase<T>
 
 	protected virtual void HandleEvent(SendEventMessage message)
 	{
-		var def = Api.GetMember<EventInfo>(message.EventName);
+		var def = Api.GetMemberByApiName<EventInfo>(message.EventName);
 		if (def.MemberInfo is not EventInfo eventInfo || !EventHandlers.TryGetValue(message.EventName, out List<Delegate>? handlers))
 			return;
 		Type eventArgsType = eventInfo!.EventHandlerType!.GetMethod("Invoke")!.GetParameters()[1].ParameterType;

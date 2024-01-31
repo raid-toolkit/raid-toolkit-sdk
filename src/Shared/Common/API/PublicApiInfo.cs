@@ -49,4 +49,11 @@ public class PublicApiInfo<T>
 			? member
 			: throw new MissingMethodException(member?.Scope ?? "", memberName);
 	}
+
+	public ApiMemberDefinition GetMemberByApiName<U>(string apiName) where U : MemberInfo
+	{
+		return PublicApiByPublicName.TryGetValue(apiName, out ApiMemberDefinition? member) && member.MemberInfo is U
+			? member
+			: throw new MissingMethodException(member?.Scope ?? "", apiName);
+	}
 }

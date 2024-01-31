@@ -89,7 +89,7 @@ public abstract class ApiServer<T> : IApiServer<SocketMessage>
 	{
 		try
 		{
-			ApiMemberDefinition eventMember = Api.GetMember<EventInfo>(subscriptionMessage.EventName);
+			ApiMemberDefinition eventMember = Api.GetMemberByApiName<EventInfo>(subscriptionMessage.EventName);
 			if (eventMember.MemberInfo is not EventInfo eventInfo)
 				return;
 			if (!EventHandlerDelegates.TryGetValue($"{session.Id}:{eventMember}:{subscriptionMessage.EventName}", out var handler))
