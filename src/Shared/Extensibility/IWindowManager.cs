@@ -1,4 +1,3 @@
-
 namespace Raid.Toolkit.Extensibility;
 
 public interface IWindowManager

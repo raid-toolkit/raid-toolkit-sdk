@@ -17,6 +17,9 @@
         "requested": "[2.0.134-alpha, )",
         "resolved": "2.0.134-alpha",
         "contentHash": "nurKHwSA3sFDNJgi72CTqxMc2ErdUM2PGqOr/l0PcLJ+SK4uUd2vQjv3EY1VWpkZuyeea2t4607vzz9uXfcLXQ==",
+        "requested": "[2.0.134-alpha, )",
+        "resolved": "2.0.134-alpha",
+        "contentHash": "nurKHwSA3sFDNJgi72CTqxMc2ErdUM2PGqOr/l0PcLJ+SK4uUd2vQjv3EY1VWpkZuyeea2t4607vzz9uXfcLXQ==",
         "dependencies": {
           "System.Memory": "4.5.5"
         }

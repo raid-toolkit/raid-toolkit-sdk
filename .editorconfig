@@ -22,7 +22,7 @@ trim_trailing_whitespace = false
 # var
 #dotnet_diagnostic.IDE0008.severity = none
 # if-braces
-#dotnet_diagnostic.IDE0011.severity = none
+dotnet_diagnostic.IDE0011.severity = none
 indent_style = tab
 indent_size = 4
 charset = utf-8

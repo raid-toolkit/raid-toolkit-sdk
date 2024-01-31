@@ -12,6 +12,7 @@ public class AccountEventArgs : EventArgs
 {
 	public AccountEventArgs() { }
 }
+
 public interface IAccount
 {
 	event EventHandler<AccountEventArgs> OnConnected;

@@ -10,12 +10,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="il2cpptoolkit.reversecompiler" Version="2.0.129-alpha" />
-        <PackageReference Include="il2cpptoolkit.target.netcore" Version="2.0.129-alpha" />
+        <PackageReference Include="il2cpptoolkit.reversecompiler" Version="2.0.134-alpha" />
+        <PackageReference Include="il2cpptoolkit.target.netcore" Version="2.0.134-alpha" />
         <ProjectReference Include="..\Model\Model.csproj" />
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-        <Exec Command="$(TargetDir)$(TargetName).exe $(BinDir)$(TargetFrameworkVersion)\" />
+        <Exec Command="&quot;$(TargetDir)$(TargetName).exe&quot; $(BinDir)$(TargetFrameworkVersion)" />
     </Target>
 </Project>
