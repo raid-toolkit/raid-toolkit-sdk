@@ -20,6 +20,6 @@ public class ExtensionHostChannelClient : ApiCallerBase<IExtensionHostChannel>, 
 
 	public Task<bool> ReloadManifest(string packageId)
 	{
-		return CallMethod<bool>(MethodBase.GetCurrentMethod()!, packageId);
+		return CallMethod<bool>(nameof(ReloadManifest), packageId);
 	}
 }

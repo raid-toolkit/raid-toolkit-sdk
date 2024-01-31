@@ -30,12 +30,12 @@ public class MenuManagerClient : ApiCallerBase<IMenuManagerApi>, IMenuManagerApi
 
 	public Task AddOrUpdateEntry(MenuEntryData entry)
 	{
-		return CallMethod(MethodBase.GetCurrentMethod()!, entry);
+		return CallMethod(nameof(AddOrUpdateEntry), entry);
 	}
 
 	public Task RemoveEntry(string id)
 	{
-		return CallMethod(MethodBase.GetCurrentMethod()!, id);
+		return CallMethod(nameof(RemoveEntry), id);
 	}
 
 	public IMenuEntry[] GetEntries()

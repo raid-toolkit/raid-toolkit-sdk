@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
 namespace Raid.Toolkit.Common.API;
@@ -71,15 +72,29 @@ public class ApiCallerBase<T>
 			handler.DynamicInvoke(this, eventArgs);
 	}
 
+	[Obsolete("Use CallMethod(string,...) instead")]
 	protected Task<U> CallMethod<U>(MethodBase method, params object[] args)
 	{
 		var def = Api.GetMember<MethodInfo>(method.Name);
 		return Client.Call<U>(def.Scope, def.Attribute.Name, args);
 	}
 
+	[Obsolete("Use CallMethod(string,...) instead")]
 	protected Task CallMethod(MethodBase method, params object[] args)
 	{
 		var def = Api.GetMember<MethodInfo>(method.Name);
+		return Client.Call(def.Scope, def.Attribute.Name, args);
+	}
+
+	protected Task<U> CallMethod<U>(string methodName, params object[] args)
+	{
+		var def = Api.GetMember<MethodInfo>(methodName);
+		return Client.Call<U>(def.Scope, def.Attribute.Name, args);
+	}
+
+	protected Task CallMethod(string methodName, params object[] args)
+	{
+		var def = Api.GetMember<MethodInfo>(methodName);
 		return Client.Call(def.Scope, def.Attribute.Name, args);
 	}
 

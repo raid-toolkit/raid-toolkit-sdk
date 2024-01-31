@@ -25,6 +25,6 @@ public class RuntimeManagerClient : ApiCallerBase<IRuntimeManager>, IRuntimeMana
 
 	public Task<InjectedRuntimeDescriptor[]> GetRuntimes()
 	{
-		return CallMethod<InjectedRuntimeDescriptor[]>(MethodBase.GetCurrentMethod()!);
+		return CallMethod<InjectedRuntimeDescriptor[]>(nameof(GetRuntimes));
 	}
 }
