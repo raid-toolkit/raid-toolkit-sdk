@@ -75,25 +75,6 @@
       "console": "integratedTerminal"
     },
     {
-      "name": "Launch Prebuild",
-      "type": "coreclr",
-      "request": "launch",
-      "preLaunchTask": "build",
-      "program": "${workspaceFolder}/SDK/Model.PreBuild/bin/Debug/net6.0/Model.PreBuild.exe",
-      "args": [
-        "${workspaceFolder}\\bin"
-      ],
-      "env": {
-        "FORCE": "true",
-        "RTK_DEBUG": "true",
-        "app:MemoryLogging": "Error"
-      },
-      "justMyCode": false,
-      "cwd": "${workspaceFolder}/SDK/Model.PreBuild",
-      "console": "internalConsole",
-      "stopAtEntry": false
-    },
-    {
       "name": "Launch Raid.Toolkit",
       "type": "coreclr",
       "request": "launch",
