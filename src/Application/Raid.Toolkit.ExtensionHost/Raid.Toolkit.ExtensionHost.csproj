@@ -54,7 +54,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Shared\Extensibility.Host\Extensibility.Host.csproj" />
-        <ProjectReference Include="..\..\Shared\Extensibility\Extensibility.csproj" />
+        <ProjectReference Include="..\..\Extensibility.Host\Extensibility.Host.csproj" />
+        <ProjectReference Include="..\..\Extensibility\Extensibility.csproj" />
     </ItemGroup>
 </Project>

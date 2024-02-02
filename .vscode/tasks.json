@@ -5,14 +5,12 @@
   "tasks": [
     {
       "label": "build",
-      "command": "\"${env:VSInstallDir}MSBuild\\Current\\Bin\\amd64\\MSBuild.exe\"",
+      "command": "dotnet",
       "type": "shell",
       "args": [
+        "build",
         "SDK.sln",
         "--nologo",
-        "-m", // allow parallel build
-        "-p:GenerateFullPaths=true",
-        "-verbosity:minimal",
         "/consoleloggerparameters:Summary"
       ],
       "group": {

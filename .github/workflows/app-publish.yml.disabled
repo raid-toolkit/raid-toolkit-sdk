@@ -9,11 +9,7 @@ on:
       - version.json
       - .github/workflows/app-publish.yml
       - Directory.Build.props
-      - 'src/Application/**'
-      - 'src/Build/**'
-      - 'src/Shared/**'
-      - 'src/Setup/**'
-      - 'src/Template/**'
+      - 'src/**'
       - '!**/*.md'
 
 jobs:
@@ -111,5 +107,6 @@ jobs:
           dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.Host.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:NUGET_PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Toolkit.Extensibility.Tasks.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:NUGET_PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
           dotnet nuget push publish/nuget/Raid.Toolkit.Build.Tasks.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:NUGET_PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
+          dotnet nuget push publish/nuget/Raid.Toolkit.Loader.${{ steps.rtk_version.outputs.NuGetPackageVersion }}.nupkg -k $env:NUGET_PUBLISH_TOKEN -s https://api.nuget.org/v3/index.json --skip-duplicate
         env:
           NUGET_PUBLISH_TOKEN: ${{ secrets.NUGET_PUBLISH_TOKEN }}

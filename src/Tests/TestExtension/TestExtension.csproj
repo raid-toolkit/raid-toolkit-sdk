@@ -13,12 +13,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Build\Tasks\Tasks.csproj">
+        <ProjectReference Include="..\..\Build.Tasks\Tasks.csproj">
             <ReferenceOutputAssembly>False</ReferenceOutputAssembly>
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </ProjectReference>
-        <ProjectReference Include="..\..\Shared\Extensibility\Extensibility.csproj" />
+        <ProjectReference Include="..\..\Extensibility\Extensibility.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -9,9 +9,7 @@ on:
       - version.json
       - .github/workflows/nuget-publish.yml
       - Directory.Build.props
-      - 'src/Build/**'
-      - 'src/Shared/**'
-      - 'src/Template/**'
+      - 'src/**'
       - '!**/*.md'
 
 jobs:
@@ -59,7 +57,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-nuget-
 
-      # Restore the application to populate the obj folder with RuntimeIdentifiers
       # Restore the application to populate the obj folder with RuntimeIdentifiers
       - name: Restore the application
         run: dotnet restore $env:Solution_Name
