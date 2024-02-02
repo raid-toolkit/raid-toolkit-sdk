@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extensions", "Extensions", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{08373AFF-D91F-4419-980A-78F4F7985B9B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "src\Shared\Model\Model.csproj", "{36CD0B45-CBC1-43E7-A748-87780606BD92}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loader", "src\Shared\Loader\Loader.csproj", "{36CD0B45-CBC1-43E7-A748-87780606BD92}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "src\Shared\Common\Common.csproj", "{4CDD09F0-5D87-42AC-BF89-00FCCCDC8CA5}"
 EndProject
