@@ -64,9 +64,9 @@
       },
       "Il2CppToolkit.Injection.Client": {
         "type": "Direct",
-        "requested": "[2.0.143-alpha, )",
-        "resolved": "2.0.143-alpha",
-        "contentHash": "PldHCrqSD3lZemDxvYr0hYvrfMKV0jVsYMQ5SFjFTaRCdcLTLNtg2sozA6bGYqoMBeAcVR6R3ijk0WJ0+uDh2g==",
+        "requested": "[2.1.1-alpha, )",
+        "resolved": "2.1.1-alpha",
+        "contentHash": "p0oDpYvYb5jWtKid9KkHr1xXGBkd+3rph9iSlYL4WbiHnH9ap1Lr2d9XCZrAJhzL6ZWZgnN+DTJp2Jdd3Ism1A==",
         "dependencies": {
           "Google.Protobuf": "3.21.1",
           "Grpc.Net.Client": "2.46.0"
@@ -298,36 +298,36 @@
       },
       "Il2CppToolkit.Common": {
         "type": "Transitive",
-        "resolved": "2.0.132-alpha",
-        "contentHash": "wCx3J+J3CwF+9lk+xCI54IZDL18L1Os9AkcUNKiy3Y24mG+97vPDNQ1Kqj2ZuEAy9jlpPAS7hKHSRfHUOjnqaQ==",
+        "resolved": "2.1.1-alpha",
+        "contentHash": "sOxjUBnqVdaBBXfIMKbNp7DMsLv0B0ncUvVTzdhfAI7YB+T3EQ7W/L54x2ruKIJCisuXEG4ddMmhc5mD5CRlOQ==",
         "dependencies": {
           "System.Memory": "4.5.5"
         }
       },
       "Il2CppToolkit.Metadata": {
         "type": "Transitive",
-        "resolved": "2.0.132-alpha",
-        "contentHash": "0xflJUIu/fb5ykCeFmbr3ln3Fr/RU7tj4hoDypbLs/OhE0y+GmYMwnk9hXQ1ynaYdSZT1cnPuEiKANyi6pkPyg==",
+        "resolved": "2.1.1-alpha",
+        "contentHash": "7w7Ltshxg50T/I918wAfD+JzsoFiG7702g2Sy+LYKdsAsCCzu/8xYihi1aXQb1Ediu9VLk+FDIXtcQL815MsPw==",
         "dependencies": {
-          "Il2CppToolkit.Common": "2.0.132-alpha"
+          "Il2CppToolkit.Common": "2.1.1-alpha"
         }
       },
       "Il2CppToolkit.ReverseCompiler": {
         "type": "Transitive",
-        "resolved": "2.0.132-alpha",
-        "contentHash": "VsadZn0TAxVSMJQOwa5vArUZPxHwyv1n1O95GTeQECSPgJUcJ3T4CX/kBvJ2w9XsncMh9Ha3s0kK113kyWvW/Q==",
+        "resolved": "2.1.1-alpha",
+        "contentHash": "0rqVu4qKEvoVCsLNs3R2ECfztN/XANcPCbfTkX0fSmc/1I5nf+EmBwmQkv88WWd+gLOOSuU3FH3bHEhsoWVxGg==",
         "dependencies": {
-          "Il2CppToolkit.Common": "2.0.132-alpha",
-          "Il2CppToolkit.Metadata": "2.0.132-alpha"
+          "Il2CppToolkit.Common": "2.1.1-alpha",
+          "Il2CppToolkit.Metadata": "2.1.1-alpha"
         }
       },
       "Il2CppToolkit.Runtime": {
         "type": "Transitive",
-        "resolved": "2.0.132-alpha",
-        "contentHash": "gYtKaIzvCU184zXLFsbgUaWBeaW4af8QWYI4LFGJqzOxVN9ylpdm9g/wVHmFakNRuxIAnLhwc3G3fJdFAfONeQ==",
+        "resolved": "2.1.1-alpha",
+        "contentHash": "pRs8tJOsEruHTYuED1k1u5uXSKvyS0r3bA3UYNzmWmRtHaL55GXIgRdx0Gcbqd2Yv+ZfyqRlXGGrqPP9nkqpbA==",
         "dependencies": {
-          "Il2CppToolkit.Common": "2.0.132-alpha",
-          "Il2CppToolkit.Injection.Client": "2.0.143-alpha",
+          "Il2CppToolkit.Common": "2.1.1-alpha",
+          "Il2CppToolkit.Injection.Client": "2.1.1-alpha",
           "ProcessMemoryUtilities.Net": "1.3.4",
           "System.Memory": "4.5.5",
           "Vestris.ResourceLib": "2.1.0"
@@ -335,15 +335,57 @@
       },
       "Il2CppToolkit.Target.NetCore": {
         "type": "Transitive",
-        "resolved": "2.0.132-alpha",
-        "contentHash": "AT1Qn6pv3tz5PZ9nhZRZiseY4QS7hwe9Y631zKbj9pH+VgsjT+aFQzCd3rLOGRU3oN0altB8t1SKIfLMsqvtgw==",
+        "resolved": "2.1.1-alpha",
+        "contentHash": "PmRwPqaH0vTbiMhy+X1QidqOtCczoNHyw7ogr7AED55+c1PVDu2g0p4m+ommc/hf42q/icUFu5h5cLV3blWV3A==",
         "dependencies": {
-          "Il2CppToolkit.Common": "2.0.132-alpha",
-          "Il2CppToolkit.Metadata": "2.0.132-alpha",
-          "Il2CppToolkit.ReverseCompiler": "2.0.132-alpha",
-          "Il2CppToolkit.Runtime": "2.0.132-alpha",
+          "Il2CppToolkit.Common": "2.1.1-alpha",
+          "Il2CppToolkit.Metadata": "2.1.1-alpha",
+          "Il2CppToolkit.ReverseCompiler": "2.1.1-alpha",
+          "Il2CppToolkit.Runtime": "2.1.1-alpha",
           "Mono.Cecil": "0.11.4",
           "Vestris.ResourceLib": "2.1.0"
+        }
+      },
+      "Microsoft.Build.Framework": {
+        "type": "Transitive",
+        "resolved": "17.1.0",
+        "contentHash": "7PPEbjuL/lKQ8ftblxwBZKf5alZCA4GDvBTiO3UAVxtRe52a2jL3mc8TpKNiJZzytGz7fKdR5ClDCs7+Uw4hMg==",
+        "dependencies": {
+          "Microsoft.Win32.Registry": "4.3.0",
+          "System.Security.Permissions": "4.7.0"
+        }
+      },
+      "Microsoft.Build.Tasks.Core": {
+        "type": "Transitive",
+        "resolved": "17.1.0",
+        "contentHash": "obCL4Tb2wpc684sCTlS4hriNhI+6MBqlVWOQoajo9zYv/aqAN53YdIZ3Lnw5XszoYCCQexy2sT/MNElMgoSN9g==",
+        "dependencies": {
+          "Microsoft.Build.Framework": "17.1.0",
+          "Microsoft.Build.Utilities.Core": "17.1.0",
+          "Microsoft.NET.StringTools": "1.0.0",
+          "Microsoft.Win32.Registry": "4.3.0",
+          "System.CodeDom": "4.4.0",
+          "System.Collections.Immutable": "5.0.0",
+          "System.Reflection.Metadata": "1.6.0",
+          "System.Resources.Extensions": "4.6.0",
+          "System.Security.Cryptography.Pkcs": "4.7.0",
+          "System.Security.Cryptography.Xml": "4.7.0",
+          "System.Security.Permissions": "4.7.0",
+          "System.Threading.Tasks.Dataflow": "6.0.0"
+        }
+      },
+      "Microsoft.Build.Utilities.Core": {
+        "type": "Transitive",
+        "resolved": "17.1.0",
+        "contentHash": "JqhQ4q6L4IyA0Wh3PrDrxHHYMVHyOLIusyC4imAnhcnZiOC4+CwgVRSdo8fLsQmvz0Jab8FFrU1NPZFbDoxRng==",
+        "dependencies": {
+          "Microsoft.Build.Framework": "17.1.0",
+          "Microsoft.NET.StringTools": "1.0.0",
+          "Microsoft.Win32.Registry": "4.3.0",
+          "System.Collections.Immutable": "5.0.0",
+          "System.Configuration.ConfigurationManager": "4.7.0",
+          "System.Security.Permissions": "4.7.0",
+          "System.Text.Encoding.CodePages": "4.0.1"
         }
       },
       "Microsoft.Extensions.Configuration": {
@@ -585,6 +627,15 @@
         "type": "Transitive",
         "resolved": "1.0.0.30",
         "contentHash": "pEGf7FSx2dRWJuoaSoXk+WYkZfYwhWoJKOyyo0XLRU6V2Ul02MjxRhoxggrzGz6jVFiT7R2NdPdV8M6N1F+QfA=="
+      },
+      "Microsoft.NET.StringTools": {
+        "type": "Transitive",
+        "resolved": "1.0.0",
+        "contentHash": "ZYVcoDM0LnSyT5nWoRGfShYdOecCw2sOXWwP6j1Z0u48Xq3+BVvZ+EiPCX9/8Gz439giW+O1H1kWF9Eb/w6rVg==",
+        "dependencies": {
+          "System.Memory": "4.5.4",
+          "System.Runtime.CompilerServices.Unsafe": "5.0.0"
+        }
       },
       "Microsoft.NETCore.Platforms": {
         "type": "Transitive",
@@ -889,6 +940,11 @@
           "System.Threading": "4.3.0"
         }
       },
+      "System.CodeDom": {
+        "type": "Transitive",
+        "resolved": "4.4.0",
+        "contentHash": "2sCCb7doXEwtYAbqzbF/8UAeDRMNmPaQbU2q50Psg1J9KzumyVVCgKQY8s53WIPTufNT0DpSe9QRvVjOzfDWBA=="
+      },
       "System.Collections": {
         "type": "Transitive",
         "resolved": "4.3.0",
@@ -914,6 +970,20 @@
           "System.Runtime.Extensions": "4.3.0",
           "System.Threading": "4.3.0",
           "System.Threading.Tasks": "4.3.0"
+        }
+      },
+      "System.Collections.Immutable": {
+        "type": "Transitive",
+        "resolved": "5.0.0",
+        "contentHash": "FXkLXiK0sVVewcso0imKQoOxjoPAj42R8HtjjbSjVPAzwDfzoyoznWxgA3c38LDbN9SJux1xXoXYAhz98j7r2g=="
+      },
+      "System.Configuration.ConfigurationManager": {
+        "type": "Transitive",
+        "resolved": "4.7.0",
+        "contentHash": "/anOTeSZCNNI2zDilogWrZ8pNqCmYbzGNexUnNhjW8k0sHqEZ2nHJBp147jBV3hGYswu5lINpNg1vxR7bnqvVA==",
+        "dependencies": {
+          "System.Security.Cryptography.ProtectedData": "4.7.0",
+          "System.Security.Permissions": "4.7.0"
         }
       },
       "System.Console": {
@@ -1251,6 +1321,11 @@
           "System.Runtime": "4.3.0"
         }
       },
+      "System.Reflection.Metadata": {
+        "type": "Transitive",
+        "resolved": "1.6.0",
+        "contentHash": "COC1aiAJjCoA5GBF+QKL2uLqEBew4JsCkQmoHKbN3TlOZKa2fKLz5CpiRQKDz0RsAOEGsVKqOD5bomsXq/4STQ=="
+      },
       "System.Reflection.Primitives": {
         "type": "Transitive",
         "resolved": "4.3.0",
@@ -1269,6 +1344,11 @@
           "System.Reflection": "4.3.0",
           "System.Runtime": "4.3.0"
         }
+      },
+      "System.Resources.Extensions": {
+        "type": "Transitive",
+        "resolved": "4.6.0",
+        "contentHash": "6aVCk8oTFZNT3Tx1jjiPi6+aipiJ3qMZYttAREKTRJidP50YvNeOn4PXrqzfA5qC23fLReq2JYp+nJwzj62HGw=="
       },
       "System.Resources.ResourceManager": {
         "type": "Transitive",
@@ -1386,21 +1466,8 @@
       },
       "System.Security.Cryptography.Cng": {
         "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "03idZOqFlsKRL4W+LuCpJ6dBYDUWReug6lZjBa3uJWnk5sPCUXckocevTaUA8iT/MFSrY/2HXkOt753xQ/cf8g==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "System.IO": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Runtime.Handles": "4.3.0",
-          "System.Runtime.InteropServices": "4.3.0",
-          "System.Security.Cryptography.Algorithms": "4.3.0",
-          "System.Security.Cryptography.Encoding": "4.3.0",
-          "System.Security.Cryptography.Primitives": "4.3.0",
-          "System.Text.Encoding": "4.3.0"
-        }
+        "resolved": "4.7.0",
+        "contentHash": "4WQjFuypWtxb/bl/YwEE7LYGn4fgpsikFfBU6xwEm4YBYiRAhXAEJ62lILBu2JJSFbClIAntFTGfDZafn8yZTg=="
       },
       "System.Security.Cryptography.Csp": {
         "type": "Transitive",
@@ -1461,6 +1528,14 @@
           "runtime.native.System.Security.Cryptography.OpenSsl": "4.3.0"
         }
       },
+      "System.Security.Cryptography.Pkcs": {
+        "type": "Transitive",
+        "resolved": "4.7.0",
+        "contentHash": "0Srzh6YlhjuMxaqMyeCCdZs22cucaUAG6SKDd3gNHBJmre0VZ71ekzWu9rvLD4YXPetyNdPvV6Qst+8C++9v3Q==",
+        "dependencies": {
+          "System.Security.Cryptography.Cng": "4.7.0"
+        }
+      },
       "System.Security.Cryptography.Primitives": {
         "type": "Transitive",
         "resolved": "4.3.0",
@@ -1474,6 +1549,11 @@
           "System.Threading": "4.3.0",
           "System.Threading.Tasks": "4.3.0"
         }
+      },
+      "System.Security.Cryptography.ProtectedData": {
+        "type": "Transitive",
+        "resolved": "4.7.0",
+        "contentHash": "ehYW0m9ptxpGWvE4zgqongBVWpSDU/JCFD4K7krxkQwSz/sFQjEXCUqpvencjy6DYDbn7Ig09R8GFffu8TtneQ=="
       },
       "System.Security.Cryptography.X509Certificates": {
         "type": "Transitive",
@@ -1507,6 +1587,24 @@
           "runtime.native.System.Security.Cryptography.OpenSsl": "4.3.0"
         }
       },
+      "System.Security.Cryptography.Xml": {
+        "type": "Transitive",
+        "resolved": "4.7.0",
+        "contentHash": "B6pAyxMvXGbZemb+ER877KSr6OKis+qAdxhhKKK36I6sgj2js8mbcEVviZEHYV8XRTWjbKsAq8Z/zoaegA30dA==",
+        "dependencies": {
+          "System.Security.Cryptography.Pkcs": "4.7.0",
+          "System.Security.Permissions": "4.7.0"
+        }
+      },
+      "System.Security.Permissions": {
+        "type": "Transitive",
+        "resolved": "4.7.0",
+        "contentHash": "dkOV6YYVBnYRa15/yv004eCGRBVADXw8qRbbNiCn/XpdJSUXkkUeIvdvFHkvnko4CdKMqG8yRHC4ox83LSlMsQ==",
+        "dependencies": {
+          "System.Security.AccessControl": "4.7.0",
+          "System.Windows.Extensions": "4.7.0"
+        }
+      },
       "System.Security.Principal.Windows": {
         "type": "Transitive",
         "resolved": "5.0.0",
@@ -1520,6 +1618,25 @@
           "Microsoft.NETCore.Platforms": "1.1.0",
           "Microsoft.NETCore.Targets": "1.1.0",
           "System.Runtime": "4.3.0"
+        }
+      },
+      "System.Text.Encoding.CodePages": {
+        "type": "Transitive",
+        "resolved": "4.0.1",
+        "contentHash": "h4z6rrA/hxWf4655D18IIZ0eaLRa3tQC/j+e26W+VinIHY0l07iEXaAvO0YSYq3MvCjMYy8Zs5AdC1sxNQOB7Q==",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.0.1",
+          "System.Collections": "4.0.11",
+          "System.Globalization": "4.0.11",
+          "System.IO": "4.1.0",
+          "System.Reflection": "4.1.0",
+          "System.Resources.ResourceManager": "4.0.1",
+          "System.Runtime": "4.1.0",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Runtime.Handles": "4.0.1",
+          "System.Runtime.InteropServices": "4.1.0",
+          "System.Text.Encoding": "4.0.11",
+          "System.Threading": "4.0.11"
         }
       },
       "System.Text.Encoding.Extensions": {
@@ -1612,6 +1729,14 @@
         "resolved": "4.5.0",
         "contentHash": "okurQJO6NRE/apDIP23ajJ0hpiNmJ+f0BwOlB/cSqTLQlw5upkf+5+96+iG2Jw40G1fCVCyPz/FhIABUjMR+RQ=="
       },
+      "System.Windows.Extensions": {
+        "type": "Transitive",
+        "resolved": "4.7.0",
+        "contentHash": "CeWTdRNfRaSh0pm2gDTJFwVaXfTq6Xwv/sA887iwPTneW7oMtMlpvDIO+U60+3GWTB7Aom6oQwv5VZVUhQRdPQ==",
+        "dependencies": {
+          "System.Drawing.Common": "4.7.0"
+        }
+      },
       "System.Xml.ReaderWriter": {
         "type": "Transitive",
         "resolved": "4.3.0",
@@ -1677,11 +1802,11 @@
           "Microsoft.Win32.Registry": "[5.0.0, )",
           "Newtonsoft.Json": "[13.0.3, )",
           "Raid.Common": "[1.0.0, )",
-          "il2cpptoolkit.common": "[2.0.132-alpha, )",
-          "il2cpptoolkit.metadata": "[2.0.132-alpha, )",
-          "il2cpptoolkit.reversecompiler": "[2.0.132-alpha, )",
-          "il2cpptoolkit.runtime": "[2.0.132-alpha, )",
-          "il2cpptoolkit.target.netcore": "[2.0.132-alpha, )"
+          "il2cpptoolkit.common": "[2.1.1-alpha, )",
+          "il2cpptoolkit.metadata": "[2.1.1-alpha, )",
+          "il2cpptoolkit.reversecompiler": "[2.1.1-alpha, )",
+          "il2cpptoolkit.runtime": "[2.1.1-alpha, )",
+          "il2cpptoolkit.target.netcore": "[2.1.1-alpha, )"
         }
       },
       "raid.toolkit.application.core": {
@@ -1689,7 +1814,7 @@
         "dependencies": {
           "CommandLineParser": "[2.9.1, )",
           "CustomExtensions.WinUI": "[0.1.10-beta, )",
-          "Il2CppToolkit.Injection.Client": "[2.0.143-alpha, )",
+          "Il2CppToolkit.Injection.Client": "[2.1.1-alpha, )",
           "Karambolo.Extensions.Logging.File": "[3.4.0, )",
           "Microsoft.Extensions.Hosting": "[6.0.1, )",
           "Newtonsoft.Json": "[13.0.3, )",
@@ -1715,9 +1840,9 @@
           "Microsoft.WindowsAppSDK": "[1.4.230822000, )",
           "Raid.Common": "[1.0.0, )",
           "Raid.Toolkit.DataModel": "[1.0.0, )",
-          "il2cpptoolkit.common": "[2.0.132-alpha, )",
-          "il2cpptoolkit.metadata": "[2.0.132-alpha, )",
-          "il2cpptoolkit.runtime": "[2.0.132-alpha, )"
+          "il2cpptoolkit.common": "[2.1.1-alpha, )",
+          "il2cpptoolkit.metadata": "[2.1.1-alpha, )",
+          "il2cpptoolkit.runtime": "[2.1.1-alpha, )"
         }
       },
       "Raid.Toolkit.Extensibility.Host": {
@@ -1730,34 +1855,51 @@
           "Raid.Model": "[1.0.0, )",
           "Raid.Toolkit.Extensibility": "[1.0.0, )",
           "System.Threading.Tasks.Dataflow": "[7.0.0, )",
-          "il2cpptoolkit.common": "[2.0.132-alpha, )",
-          "il2cpptoolkit.metadata": "[2.0.132-alpha, )",
-          "il2cpptoolkit.reversecompiler": "[2.0.132-alpha, )",
-          "il2cpptoolkit.runtime": "[2.0.132-alpha, )",
-          "il2cpptoolkit.target.netcore": "[2.0.132-alpha, )"
+          "il2cpptoolkit.common": "[2.1.1-alpha, )",
+          "il2cpptoolkit.metadata": "[2.1.1-alpha, )",
+          "il2cpptoolkit.reversecompiler": "[2.1.1-alpha, )",
+          "il2cpptoolkit.runtime": "[2.1.1-alpha, )",
+          "il2cpptoolkit.target.netcore": "[2.1.1-alpha, )"
+        }
+      },
+      "Raid.Toolkit.Extensibility.Tasks": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.Build.Tasks.Core": "[17.1.0, )",
+          "Microsoft.Win32.Registry": "[5.0.0, )",
+          "Newtonsoft.Json": "[13.0.3, )",
+          "Raid.Common": "[1.0.0, )",
+          "Raid.Model": "[1.0.0, )",
+          "il2cpptoolkit.common": "[2.1.1-alpha, )",
+          "il2cpptoolkit.metadata": "[2.1.1-alpha, )",
+          "il2cpptoolkit.reversecompiler": "[2.1.1-alpha, )",
+          "il2cpptoolkit.runtime": "[2.1.1-alpha, )",
+          "il2cpptoolkit.target.netcore": "[2.1.1-alpha, )"
         }
       },
       "Raid.Toolkit.Extension.Account": {
         "type": "Project",
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
-          "Raid.Toolkit.Extensibility": "[1.0.0, )"
+          "Raid.Toolkit.Extensibility": "[1.0.0, )",
+          "Raid.Toolkit.Extensibility.Tasks": "[1.0.0, )"
         }
       },
       "Raid.Toolkit.Extension.Realtime": {
         "type": "Project",
         "dependencies": {
           "Microsoft.Extensions.Logging.Abstractions": "[6.0.0, )",
-          "Raid.Toolkit.Extensibility": "[1.0.0, )"
+          "Raid.Toolkit.Extensibility": "[1.0.0, )",
+          "Raid.Toolkit.Extensibility.Tasks": "[1.0.0, )"
         }
       }
     },
     "net6.0-windows10.0.19041/win10-x64": {
       "Il2CppToolkit.Injection.Client": {
         "type": "Direct",
-        "requested": "[2.0.143-alpha, )",
-        "resolved": "2.0.143-alpha",
-        "contentHash": "PldHCrqSD3lZemDxvYr0hYvrfMKV0jVsYMQ5SFjFTaRCdcLTLNtg2sozA6bGYqoMBeAcVR6R3ijk0WJ0+uDh2g==",
+        "requested": "[2.1.1-alpha, )",
+        "resolved": "2.1.1-alpha",
+        "contentHash": "p0oDpYvYb5jWtKid9KkHr1xXGBkd+3rph9iSlYL4WbiHnH9ap1Lr2d9XCZrAJhzL6ZWZgnN+DTJp2Jdd3Ism1A==",
         "dependencies": {
           "Google.Protobuf": "3.21.1",
           "Grpc.Net.Client": "2.46.0"
@@ -2474,21 +2616,8 @@
       },
       "System.Security.Cryptography.Cng": {
         "type": "Transitive",
-        "resolved": "4.3.0",
-        "contentHash": "03idZOqFlsKRL4W+LuCpJ6dBYDUWReug6lZjBa3uJWnk5sPCUXckocevTaUA8iT/MFSrY/2HXkOt753xQ/cf8g==",
-        "dependencies": {
-          "Microsoft.NETCore.Platforms": "1.1.0",
-          "System.IO": "4.3.0",
-          "System.Resources.ResourceManager": "4.3.0",
-          "System.Runtime": "4.3.0",
-          "System.Runtime.Extensions": "4.3.0",
-          "System.Runtime.Handles": "4.3.0",
-          "System.Runtime.InteropServices": "4.3.0",
-          "System.Security.Cryptography.Algorithms": "4.3.0",
-          "System.Security.Cryptography.Encoding": "4.3.0",
-          "System.Security.Cryptography.Primitives": "4.3.0",
-          "System.Text.Encoding": "4.3.0"
-        }
+        "resolved": "4.7.0",
+        "contentHash": "4WQjFuypWtxb/bl/YwEE7LYGn4fgpsikFfBU6xwEm4YBYiRAhXAEJ62lILBu2JJSFbClIAntFTGfDZafn8yZTg=="
       },
       "System.Security.Cryptography.Csp": {
         "type": "Transitive",
@@ -2549,6 +2678,19 @@
           "runtime.native.System.Security.Cryptography.OpenSsl": "4.3.0"
         }
       },
+      "System.Security.Cryptography.Pkcs": {
+        "type": "Transitive",
+        "resolved": "4.7.0",
+        "contentHash": "0Srzh6YlhjuMxaqMyeCCdZs22cucaUAG6SKDd3gNHBJmre0VZ71ekzWu9rvLD4YXPetyNdPvV6Qst+8C++9v3Q==",
+        "dependencies": {
+          "System.Security.Cryptography.Cng": "4.7.0"
+        }
+      },
+      "System.Security.Cryptography.ProtectedData": {
+        "type": "Transitive",
+        "resolved": "4.7.0",
+        "contentHash": "ehYW0m9ptxpGWvE4zgqongBVWpSDU/JCFD4K7krxkQwSz/sFQjEXCUqpvencjy6DYDbn7Ig09R8GFffu8TtneQ=="
+      },
       "System.Security.Cryptography.X509Certificates": {
         "type": "Transitive",
         "resolved": "4.3.0",
@@ -2595,6 +2737,25 @@
           "Microsoft.NETCore.Targets": "1.1.0",
           "System.Runtime": "4.3.0",
           "runtime.any.System.Text.Encoding": "4.3.0"
+        }
+      },
+      "System.Text.Encoding.CodePages": {
+        "type": "Transitive",
+        "resolved": "4.0.1",
+        "contentHash": "h4z6rrA/hxWf4655D18IIZ0eaLRa3tQC/j+e26W+VinIHY0l07iEXaAvO0YSYq3MvCjMYy8Zs5AdC1sxNQOB7Q==",
+        "dependencies": {
+          "Microsoft.NETCore.Platforms": "1.0.1",
+          "System.Collections": "4.0.11",
+          "System.Globalization": "4.0.11",
+          "System.IO": "4.1.0",
+          "System.Reflection": "4.1.0",
+          "System.Resources.ResourceManager": "4.0.1",
+          "System.Runtime": "4.1.0",
+          "System.Runtime.Extensions": "4.1.0",
+          "System.Runtime.Handles": "4.0.1",
+          "System.Runtime.InteropServices": "4.1.0",
+          "System.Text.Encoding": "4.0.11",
+          "System.Threading": "4.0.11"
         }
       },
       "System.Text.Encoding.Extensions": {
@@ -2648,6 +2809,14 @@
           "Microsoft.NETCore.Targets": "1.1.0",
           "System.Runtime": "4.3.0",
           "runtime.any.System.Threading.Timer": "4.3.0"
+        }
+      },
+      "System.Windows.Extensions": {
+        "type": "Transitive",
+        "resolved": "4.7.0",
+        "contentHash": "CeWTdRNfRaSh0pm2gDTJFwVaXfTq6Xwv/sA887iwPTneW7oMtMlpvDIO+U60+3GWTB7Aom6oQwv5VZVUhQRdPQ==",
+        "dependencies": {
+          "System.Drawing.Common": "4.7.0"
         }
       }
     }

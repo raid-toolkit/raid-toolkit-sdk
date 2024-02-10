@@ -10,11 +10,11 @@
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.WinUI.Notifications" Version="7.1.2" />
         <PackageReference Include="CustomExtensions.WinUI" Version="0.1.10-beta" />
-        <PackageReference Include="il2cpptoolkit.common" Version="2.0.132-alpha" />
-        <PackageReference Include="il2cpptoolkit.metadata" Version="2.0.132-alpha" />
-        <PackageReference Include="il2cpptoolkit.reversecompiler" Version="2.0.132-alpha" />
-        <PackageReference Include="il2cpptoolkit.runtime" Version="2.0.132-alpha" />
-        <PackageReference Include="il2cpptoolkit.target.netcore" Version="2.0.132-alpha" />
+        <PackageReference Include="il2cpptoolkit.common" Version="2.1.1-alpha" />
+        <PackageReference Include="il2cpptoolkit.metadata" Version="2.1.1-alpha" />
+        <PackageReference Include="il2cpptoolkit.reversecompiler" Version="2.1.1-alpha" />
+        <PackageReference Include="il2cpptoolkit.runtime" Version="2.1.1-alpha" />
+        <PackageReference Include="il2cpptoolkit.target.netcore" Version="2.1.1-alpha" />
         <PackageReference Include="System.Threading.Tasks.Dataflow" Version="7.0.0" />
         <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="6.0.0" />
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
