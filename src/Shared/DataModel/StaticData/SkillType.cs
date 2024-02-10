@@ -948,16 +948,16 @@ namespace Raid.Toolkit.DataModel
         Replace = 1
     }
 
-    public class IgnoreProtectionEffectsParams
+    public class AddIgnoredEffectsParams
     {
-        [JsonProperty("ignoreBlockDamage")]
-        public bool IgnoreBlockDamage;
-
         [JsonProperty("ignoreShield")]
         public bool IgnoreShield;
 
         [JsonProperty("ignoreUnkillable")]
         public bool IgnoreUnkillable;
+
+        [JsonProperty("ignoredEffects")]
+        public IReadOnlyList<EffectKindId>? IgnoredEffects { get; set; }
     }
 
     public class ChangeEffectTargetParams
@@ -1230,8 +1230,8 @@ namespace Raid.Toolkit.DataModel
         [JsonProperty("multiplyStatusEffectParams")]
         public MultiplyStatusEffectParams? MultiplyStatusEffectParams;
 
-        [JsonProperty("ignoreProtectionEffectsParams")]
-        public IgnoreProtectionEffectsParams? IgnoreProtectionEffectsParams;
+        [JsonProperty("addIgnoredEffectsParams")]
+        public AddIgnoredEffectsParams? AddIgnoredEffectsParams;
 
         [JsonProperty("changeEffectTargetParams")]
         public ChangeEffectTargetParams? ChangeEffectTargetParams;

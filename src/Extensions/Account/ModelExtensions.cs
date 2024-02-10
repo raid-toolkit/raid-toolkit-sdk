@@ -285,14 +285,11 @@ namespace Raid.Toolkit.DataModel
 
         public static HeroType ToModel(this SharedModel.Meta.Heroes.HeroType type)
         {
-            SharedModel.Meta.Heroes.HeroVisualInfo? firstAvatar = type.VisualInfosBySkinId?.FirstOrDefault().Value;
             return new HeroType()
             {
                 Affinity = (Enums.Element)type.Element,
                 Ascended = type.Id % 10,
-                AvatarKey = firstAvatar?.AvatarName,
                 Faction = (Enums.HeroFraction)type.Fraction,
-                ModelName = firstAvatar?.ModelName,
                 Name = type.Name.ToModel(),
                 ShortName = type.ShortName?.ToModel() ?? type.Name.ToModel(),
                 Rarity = (Enums.HeroRarity)type.Rarity,
@@ -300,7 +297,6 @@ namespace Raid.Toolkit.DataModel
                 LeaderSkill = type.LeaderSkill?.ToModel(),
                 SkillTypeIds = type.AllSkillTypeIds?.ToArray(),
                 TypeId = type.Id,
-                UnscaledStats = type.BaseStats?.ToModel(),
                 Forms = type.Forms.Select(ToModel).ToArray()
             };
         }
@@ -698,14 +694,14 @@ namespace Raid.Toolkit.DataModel
             };
         }
 
-        public static IgnoreProtectionEffectsParams ToModel(
-            this SharedModel.Battle.Effects.EffectParams.IgnoreProtectionEffectsParams type)
+        public static AddIgnoredEffectsParams ToModel(
+            this SharedModel.Battle.Effects.EffectParams.AddIgnoredEffectsParams type)
         {
-            return new IgnoreProtectionEffectsParams
+            return new AddIgnoredEffectsParams
             {
-                IgnoreBlockDamage = type.IgnoreBlockDamage,
-                IgnoreShield = type.IgnoreShield,
-                IgnoreUnkillable = type.IgnoreUnkillable,
+                IgnoredEffects = type.IgnoredEffects?.Cast<EffectKindId>().ToList(),
+                IgnoreShield = type.IgnoreShield ?? false,
+                IgnoreUnkillable = type.IgnoreUnkillable ?? false,
             };
         }
 
@@ -885,7 +881,7 @@ namespace Raid.Toolkit.DataModel
                 PetrificationParams = type.PetrificationParams?.ToModel(),
                 StoneSkinParams = type.StoneSkinParams?.ToModel(),
                 ChangeEffectTargetParams = type.ChangeEffectTargetParams?.ToModel(),
-                IgnoreProtectionEffectsParams = type.IgnoreProtectionEffectsParams?.ToModel(),
+                AddIgnoredEffectsParams = type.AddIgnoredEffectsParams?.ToModel(),
                 MultiplyStatusEffectParams = type.MultiplyStatusEffectParams?.ToModel(),
                 PassiveBonusParams = type.PassiveBonusParams?.ToModel(),
                 HitTypeParams = type.HitTypeParams?.ToModel(),
